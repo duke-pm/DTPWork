@@ -42,7 +42,7 @@ function TabPanel(props) {
 function PossesionPage(props) {
 	const classes = useStyles(props);
 	const { t } = useTranslation('examplePage');
-	const [value, setValue] = React.useState(0);
+	const [value, setValue] = React.useState(1);
 
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
@@ -64,7 +64,7 @@ function PossesionPage(props) {
 						<Tab className="text-gray-800 font-sans" label="Tất cả ( )" {...a11yProps(0)} />
 						<Tab className="text-gray-800 font-sans	" label="Chưa sử dụng ( )" {...a11yProps(1)} />
 						<Tab className="text-gray-800 font-sans	" label="Đang sử dụng( )" {...a11yProps(2)} />
-						<Tab className="text-gray-800 font-sans	" label="Sửa chữa - bảo hàng( )" {...a11yProps(3)} />
+						<Tab className="text-gray-800 font-sans	" label="Sửa chữa - bảo hành( )" {...a11yProps(3)} />
 						<Tab className="text-gray-800 font-sans	" label="Hư hỏng( )" {...a11yProps(4)} />
 						<Tab className="text-gray-800 font-sans	" label="Mất( )" {...a11yProps(5)} />
 						<Tab className="text-gray-800 font-sans	" label="Thanh lí( )" {...a11yProps(6)} />

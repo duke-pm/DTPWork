@@ -42,7 +42,7 @@ export default function Select(props) {
 	};
 	return (
 		<FormGroup>
-			<label> {label} </label>
+			<label className="mb-16"> {label} </label>
 			<SelectField
 				styles={{
 					// Fixes the overlapping problem of the component

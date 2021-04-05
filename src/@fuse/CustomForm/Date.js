@@ -1,8 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
-import DateFnsUtils from '@date-io/date-fns';
 import { FormGroup, TextField } from '@material-ui/core';
-import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker } from '@material-ui/pickers';
+import { KeyboardDatePicker } from '@material-ui/pickers';
 
 export default function DateCustom({
 	field, // { name, value, onChange, onBlur }
@@ -25,7 +24,12 @@ export default function DateCustom({
 					margin="normal"
 					format="DD/MM/YYYY"
 					value={value}
-					variant="outlined"
+					inputVariant="outlined"
+					inputProps={{
+						style: {
+							height: '2px'
+						}
+					}}
 					onChange={handleDateChange}
 					helperText={touched[field.name] ? errors[field.name] : ''}
 					error={touched[field.name] && Boolean(errors[field.name])}
@@ -34,15 +38,6 @@ export default function DateCustom({
 					}}
 				/>
 			</FormGroup>
-			{/* {withFeedbackLabel && (
-				<FieldFeedbackLabel
-					error={errors[field.name]}
-					touched={touched[field.name]}
-					label={label}
-					type={type}
-					customFeedbackLabel={customFeedbackLabel}
-				/>
-			)} */}
 		</>
 	);
 }

@@ -4,21 +4,22 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import DateCustom from '@fuse/CustomForm/Date';
 import InputMonthCustom from '@fuse/CustomForm/InputMonthCustom';
+import InputTextArea from '@fuse/CustomForm/InputTextArea';
+import InputCurrency from '@fuse/CustomForm/InputCurrency';
 import InputCustom from '../../../../../@fuse/CustomForm/Input';
 import Select from '../../../../../@fuse/CustomForm/Select';
 
 const initial = {
 	namePossessionall: '',
 	amount: '',
-	history: '',
 	categoryPossessionall: '',
 	specification: '',
 	provider: '',
 	datePay: '',
 	dateService: '',
 	effect: '',
-	unitManagement: '',
-	peopleManagement: '',
+	price: '',
+	time_kh: '',
 	location: '',
 	note: '',
 	prefix: '',
@@ -65,7 +66,7 @@ export default function FormCustomEdit({ handleClose }) {
 										variant="outlined"
 									/>
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-3 mb-16 gap-8 ">
+								<div className="grid grid-cols-1 sm:grid-cols-2 mb-16 gap-8 ">
 									<Field
 										label="Loại tài sản (*)"
 										name="categoryPossessionall"
@@ -74,16 +75,7 @@ export default function FormCustomEdit({ handleClose }) {
 										className="mt-8 mb-16"
 									/>
 									<Field
-										label="Nguồn gốc"
-										autoFocus
-										name="history"
-										component={Select}
-										options={[{ value: 1, label: 'text' }]}
-										className="mx-4 mb-16"
-										variant="outlined"
-									/>
-									<Field
-										label="Số lượng"
+										label="Số lượng (*)"
 										autoFocus
 										name="amount"
 										type="number"
@@ -94,11 +86,10 @@ export default function FormCustomEdit({ handleClose }) {
 								</div>
 								<div className="grid mb-16 gap-8 ">
 									<Field
-										label="Quy cách tài sản"
+										label="Quy cách tài sản/Thông số"
 										autoFocus
 										name="specification"
-										type="text"
-										component={InputCustom}
+										component={InputTextArea}
 										className="mx-4 mb-16"
 										variant="outlined"
 									/>
@@ -145,6 +136,24 @@ export default function FormCustomEdit({ handleClose }) {
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-3 mb-16 gap-8 ">
 									<Field
+										label="Nguyên giá "
+										autoFocus
+										name="price"
+										type="number"
+										component={InputCurrency}
+										className="mx-4 mb-16"
+										variant="outlined"
+									/>
+									<Field
+										label="Thời gian KH "
+										autoFocus
+										name="time_kh"
+										type="number"
+										component={InputMonthCustom}
+										className="mx-4 mb-16"
+										variant="outlined"
+									/>
+									<Field
 										label="Đơn vị quản lí (*)"
 										autoFocus
 										name="unitManagement"
@@ -153,31 +162,12 @@ export default function FormCustomEdit({ handleClose }) {
 										className="mx-4 mb-16 flex-1"
 										variant="outlined"
 									/>
-									<Field
-										label="Người quản lí (*) "
-										autoFocus
-										name="peopleManagement"
-										type="number"
-										component={Select}
-										options={[{ value: 1, label: 'text' }]}
-										className="mx-4 mb-16 w-auto	"
-										variant="outlined"
-									/>
-									<Field
-										label="Vị trí địa lí"
-										autoFocus
-										name="location"
-										component={Select}
-										options={[{ value: 1, label: 'text' }]}
-										className="mx-4 mb-16"
-										variant="outlined"
-									/>
 								</div>
 							</div>
-							<h5 className="font-extrabold">Quy tắc đánh mã tài sản trong lô</h5>
+							{/* <h5 className="font-extrabold">Quy tắc đánh mã tài sản trong lô</h5> */}
 							<div className="px-16 sm:px-24">
 								<div className="grid grid-cols-1 sm:grid-cols-3 mb-16 gap-8 ">
-									<Field
+									{/* <Field
 										label="Tiền tố (*)"
 										autoFocus
 										name="prefix"
@@ -204,7 +194,7 @@ export default function FormCustomEdit({ handleClose }) {
 										options={[{ value: 1, label: 'text' }]}
 										className="mx-4 mb-16"
 										variant="outlined"
-									/>
+									/> */}
 								</div>
 							</div>
 						</DialogContent>
