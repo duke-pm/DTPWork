@@ -3,7 +3,7 @@ import React from 'react';
 // import { FieldFeedbackLabel } from './FieldFeedbackLabel';
 import { TextField, FormGroup } from '@material-ui/core';
 
-export default function InputCustom({
+export default function InputMonthCustom({
 	field, // { name, value, onChange, onBlur }
 	form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
 	label,
@@ -15,10 +15,10 @@ export default function InputCustom({
 	return (
 		<>
 			<FormGroup>
-				<label> {label} </label>
+				<label> {`${label} ${field && field.value} tháng `} </label>
 				<TextField
-					helperText={touched[field.name] ? errors[field.name] : ''}
-					error={touched[field.name] && Boolean(errors[field.name])}
+					helperText={touched.name ? errors.name : ''}
+					error={touched.name && Boolean(errors.name)}
 					type={type}
 					{...field}
 					{...props}

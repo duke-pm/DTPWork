@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-shadow */
 /* eslint-disable no-undef */
 import React from 'react';
@@ -41,8 +42,12 @@ export default function Select(props) {
 	};
 	return (
 		<FormGroup>
+			<label> {label} </label>
 			<SelectField
-				style={{ width: '100%' }}
+				styles={{
+					// Fixes the overlapping problem of the component
+					menu: provided => ({ ...provided, zIndex: 9999 })
+				}}
 				id={name}
 				{...field}
 				isClearable
@@ -51,10 +56,9 @@ export default function Select(props) {
 				onChange={handleSelectedOptionChange}
 				placeholder={placeholder}
 				options={options}
-				error={touched.name && Boolean(errors.name)}
+				// error={touched[field.name] && Boolean(errors[field.name])}
 			/>
-			{/* <ErrorMessage name={name} component="span" className="invalid-input" /> */}
-			{errors.name ? errors.name : ''}
+			{touched[field.name] && errors[field.name] ? <span className="text-red	"> {errors[field.name]} </span> : ''}
 		</FormGroup>
 	);
 }
