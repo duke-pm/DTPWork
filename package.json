@@ -16,6 +16,7 @@
         "@testing-library/react": "^11.2.2",
         "@testing-library/user-event": "^12.6.0",
         "@unicef/material-ui-currency-textfield": "^0.8.6",
+        "antd": "^4.15.0",
         "auth0-lock": "11.27.2",
         "autosuggest-highlight": "3.1.1",
         "axios": "0.21.1",

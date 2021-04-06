@@ -33,7 +33,6 @@ const useStyles = makeStyles(theme => ({
 	},
 	rootPaper: {
 		width: '100%',
-		marginTop: 30,
 		overflowX: 'auto'
 	},
 	modal: {
@@ -77,7 +76,7 @@ export default function PossessionUnused(props) {
 						label="Tìm kiếm"
 					/>
 				</div>
-				<div className="flex flex-col min-h-full sm:border-1 sm:rounded-16 overflow-hidden">
+				<div className="flex flex-col mt-36 min-h-full sm:border-1 sm:rounded-16 overflow-hidden">
 					<TableContainer className="flex flex-1">
 						<Paper className={classes.rootPaper}>
 							<Table className={classes.table} stickyHeader>

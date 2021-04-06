@@ -42,7 +42,7 @@ function TabPanel(props) {
 function PossesionPage(props) {
 	const classes = useStyles(props);
 	const { t } = useTranslation('examplePage');
-	const [value, setValue] = React.useState(1);
+	const [value, setValue] = React.useState(2);
 
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
