@@ -75,7 +75,7 @@ export default function FormCustomUsedEdit() {
 								<div className="grid grid-cols-1 sm:grid-cols-2 mb-16 gap-8 ">
 									<div className="flex flex-col">
 										<Field
-											label="Lí do phát"
+											label="Lí do thu hồi"
 											autoFocus
 											name="note"
 											component={InputTextAreaLg}

@@ -10,6 +10,7 @@ export default function InputTextAreaLg({
 	withFeedbackLabel = true,
 	customFeedbackLabel,
 	type,
+	row,
 	...props
 }) {
 	return (
@@ -20,7 +21,7 @@ export default function InputTextAreaLg({
 					helperText={touched[field.name] ? errors[field.name] : ''}
 					error={touched[field.name] && Boolean(errors[field.name])}
 					multiline
-					rows={2}
+					rows={row}
 					variant="outlined"
 					type={type}
 					{...field}

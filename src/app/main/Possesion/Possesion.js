@@ -42,7 +42,7 @@ function TabPanel(props) {
 function PossesionPage(props) {
 	const classes = useStyles(props);
 	const { t } = useTranslation('examplePage');
-	const [value, setValue] = React.useState(2);
+	const [value, setValue] = React.useState(4);
 
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
@@ -65,9 +65,8 @@ function PossesionPage(props) {
 						<Tab className="text-gray-800 font-sans	" label="Chưa sử dụng ( )" {...a11yProps(1)} />
 						<Tab className="text-gray-800 font-sans	" label="Đang sử dụng( )" {...a11yProps(2)} />
 						<Tab className="text-gray-800 font-sans	" label="Sửa chữa - bảo hành( )" {...a11yProps(3)} />
-						<Tab className="text-gray-800 font-sans	" label="Hư hỏng( )" {...a11yProps(4)} />
-						<Tab className="text-gray-800 font-sans	" label="Mất( )" {...a11yProps(5)} />
-						<Tab className="text-gray-800 font-sans	" label="Thanh lí( )" {...a11yProps(6)} />
+						<Tab className="text-gray-800 font-sans	" label="Hư hỏng - Mất" {...a11yProps(4)} />
+						<Tab className="text-gray-800 font-sans	" label="Thanh lí( )" {...a11yProps(5)} />
 					</Tabs>
 				</AppBar>
 				<TabPanel value={value} index={0}>
@@ -86,9 +85,6 @@ function PossesionPage(props) {
 					<PossessionCorrupt />
 				</TabPanel>
 				<TabPanel value={value} index={5}>
-					<PossessionLose />
-				</TabPanel>
-				<TabPanel value={value} index={6}>
 					<PossessionPay />
 				</TabPanel>
 			</div>
