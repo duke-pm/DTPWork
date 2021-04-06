@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import { Upload, message } from 'antd';
@@ -18,7 +19,7 @@ export default function FileCustomVersion2({
 }) {
 	return (
 		<FormGroup>
-			<labe className="mb-16"> {label} </labe>
+			<label className="mb-16"> {label} </label>
 			<Dragger>
 				<p className="ant-upload-drag-icon">
 					<InboxOutlined />

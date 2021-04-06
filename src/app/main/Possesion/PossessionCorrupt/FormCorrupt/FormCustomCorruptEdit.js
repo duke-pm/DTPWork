@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { DialogContent, DialogActions, Button } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
 import DateCustom from '@fuse/CustomForm/Date';
@@ -6,6 +6,7 @@ import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
 import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
 import InputCustom from '@fuse/CustomForm/Input';
 import InputCurrency from '@fuse/CustomForm/InputCurrency';
+import FormConfirm from './ConfirmCorrupt';
 
 const initial = {
 	date: '',
@@ -15,8 +16,16 @@ const initial = {
 	file: ''
 };
 export default function FormCustomCorruptEdit() {
+	const [confirm, setConfirm] = useState(false);
+	const [type, setType] = useState('');
+	const handleConfirm = value => {
+		setConfirm(true);
+		setType(value);
+	};
+	const hanleCancleConfirm = () => setConfirm(false);
 	return (
 		<>
+			<FormConfirm type={type} open={confirm} handleClose={hanleCancleConfirm} />
 			<Formik
 				enableReinitialize
 				// validationSchema={checkValidateForm}
@@ -67,7 +76,7 @@ export default function FormCustomCorruptEdit() {
 								<div className="grid grid-cols-1 sm:grid-cols-2 mb-16 gap-8 ">
 									<div className="flex flex-col">
 										<Field
-											label="Lí do sửa chữa,bảo hành"
+											label="Nội dung"
 											autoFocus
 											name="note"
 											component={InputTextAreaLg}
@@ -89,6 +98,7 @@ export default function FormCustomCorruptEdit() {
 						</DialogContent>
 						<DialogActions>
 							<Button
+								onClick={() => handleConfirm('confirm')}
 								autoFocus
 								type="submit"
 								className="h-26 font-sans"
@@ -98,6 +108,7 @@ export default function FormCustomCorruptEdit() {
 								Xác nhận
 							</Button>
 							<Button
+								onClick={() => handleConfirm('doneConfirm')}
 								autoFocus
 								type="submit"
 								className="h-26 font-sans"

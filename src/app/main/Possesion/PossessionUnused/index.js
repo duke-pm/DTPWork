@@ -11,13 +11,13 @@ import {
 	TableBody,
 	TableContainer
 } from '@material-ui/core';
-import Tooltip from '@material-ui/core/Tooltip';
+import { Tooltip } from 'antd';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Search from '@material-ui/icons/Search';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
-import Fab from '@material-ui/core/Fab';
 import FormCustomUnused from './FormCustomUnused';
+import FormControlReport from '../FormControl/FormControlReport';
 
 // import FormCustomAll from './FormCustomAll';
 
@@ -50,17 +50,20 @@ const useStyles = makeStyles(theme => ({
 }));
 export default function PossessionUnused(props) {
 	const [open, setOpen] = React.useState(false);
-
+	const [openFormReport, setOpenFormReport] = React.useState(false);
 	const handleClose = () => {
 		setOpen(false);
 	};
 	const handleOpenForm = () => {
 		setOpen(true);
 	};
+	const handleOpenFormReport = () => setOpenFormReport(true);
+	const handleCloseFormReport = () => setOpenFormReport(false);
 	const classes = useStyles(props);
 	return (
 		<>
 			<FormCustomUnused open={open} handleClose={handleClose} />
+			<FormControlReport open={openFormReport} handleClose={handleCloseFormReport} />
 			<div className="flex flex-col">
 				<div className="flex flex-row justify-between">
 					<TextField
@@ -128,14 +131,36 @@ export default function PossessionUnused(props) {
 
 										<TableCell align="center" className="p-4 md:p-12">
 											<div className="flex items-center">
-												<Tooltip title="Thêm nhân viên vào tài sản" aria-label="add">
+												<Tooltip
+													placement="topLeft"
+													className=" font-sans"
+													title="Thêm nhân viên vào tài sản"
+													aria-label="add"
+												>
 													<IconButton onClick={handleOpenForm}>
 														<Icon>add</Icon>
 													</IconButton>
 												</Tooltip>
-												<IconButton>
-													<Icon>delete</Icon>
-												</IconButton>
+												<Tooltip
+													placement="topLeft"
+													className=" font-sans"
+													title="Báo hỏng tài sản"
+													aria-label="add"
+												>
+													<IconButton onClick={handleOpenFormReport}>
+														<Icon>build</Icon>
+													</IconButton>
+												</Tooltip>
+												<Tooltip
+													placement="topLeft"
+													className=" font-sans"
+													title="Báo mất tài sản"
+													aria-label="add"
+												>
+													<IconButton onClick={handleOpenFormReport}>
+														<Icon>report_problem</Icon>
+													</IconButton>
+												</Tooltip>
 											</div>
 										</TableCell>
 									</TableRow>

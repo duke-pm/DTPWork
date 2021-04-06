@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
 	TextField,
@@ -11,11 +11,12 @@ import {
 	TableBody,
 	TableContainer
 } from '@material-ui/core';
-import Tooltip from '@material-ui/core/Tooltip';
+import { Tooltip } from 'antd';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Search from '@material-ui/icons/Search';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
+import { PossessionContext } from '../PossessionContext';
 import FormCustomRepair from './FormCustomRepair';
 // import FormCustomUsed from './FormCustomUsed';
 
@@ -48,9 +49,13 @@ const useStyles = makeStyles(theme => ({
 }));
 export default function PossessionRepair(props) {
 	const [open, setOpen] = React.useState(false);
-
+	const possessionContext = useContext(PossessionContext);
+	const { handleOpenFormCycle } = possessionContext;
 	const handleClose = () => {
 		setOpen(false);
+	};
+	const handleOpenFormCycleView = type => {
+		handleOpenFormCycle(type);
 	};
 	const handleOpenForm = () => {
 		setOpen(true);
@@ -126,9 +131,22 @@ export default function PossessionRepair(props) {
 
 										<TableCell align="center" className="p-4 md:p-12">
 											<div className="flex items-center">
-												<Tooltip title="Sửa chữa bảo hành tài sản " aria-label="add">
+												<Tooltip
+													placement="topLeft"
+													title="Sửa chữa bảo hành tài sản "
+													aria-label="add"
+												>
 													<IconButton onClick={handleOpenForm}>
 														<Icon>build</Icon>
+													</IconButton>
+												</Tooltip>
+												<Tooltip
+													placement="topLeft"
+													title="Đưa vào sử dụng lại"
+													aria-label="add"
+												>
+													<IconButton onClick={() => handleOpenFormCycleView('repair')}>
+														<Icon>autorenew</Icon>
 													</IconButton>
 												</Tooltip>
 											</div>

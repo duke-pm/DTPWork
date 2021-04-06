@@ -7,8 +7,9 @@ import PossessionUnused from './PossessionUnused';
 import PossessionUsed from './PossessionUsed';
 import PossessionRepair from './PossessionRepair';
 import PossessionCorrupt from './PossessionCorrupt';
-import PossessionLose from './PossessionLose';
 import PossessionPay from './PossessionPay';
+import PossessionContextProvider from './PossessionContext';
+import FormControlCycle from './FormControl/FormControlCycle';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -49,46 +50,49 @@ function PossesionPage(props) {
 	};
 
 	return (
-		<div className={classes.root}>
-			<div className="container mx-auto ">
-				<AppBar className="bg-white mt-16" position="static">
-					<Tabs
-						value={value}
-						onChange={handleChange}
-						indicatorColor="primary"
-						textColor="primary"
-						variant="scrollable"
-						scrollButtons="auto"
-						aria-label="scrollable auto tabs example"
-					>
-						<Tab className="text-gray-800 font-sans" label="Tất cả ( )" {...a11yProps(0)} />
-						<Tab className="text-gray-800 font-sans	" label="Chưa sử dụng ( )" {...a11yProps(1)} />
-						<Tab className="text-gray-800 font-sans	" label="Đang sử dụng( )" {...a11yProps(2)} />
-						<Tab className="text-gray-800 font-sans	" label="Sửa chữa - bảo hành( )" {...a11yProps(3)} />
-						<Tab className="text-gray-800 font-sans	" label="Hư hỏng - Mất" {...a11yProps(4)} />
-						<Tab className="text-gray-800 font-sans	" label="Thanh lí( )" {...a11yProps(5)} />
-					</Tabs>
-				</AppBar>
-				<TabPanel value={value} index={0}>
-					<PossessionAll />
-				</TabPanel>
-				<TabPanel value={value} index={1}>
-					<PossessionUnused />
-				</TabPanel>
-				<TabPanel value={value} index={2}>
-					<PossessionUsed />
-				</TabPanel>
-				<TabPanel value={value} index={3}>
-					<PossessionRepair />
-				</TabPanel>
-				<TabPanel value={value} index={4}>
-					<PossessionCorrupt />
-				</TabPanel>
-				<TabPanel value={value} index={5}>
-					<PossessionPay />
-				</TabPanel>
+		<PossessionContextProvider>
+			<div className={classes.root}>
+				<div className="container mx-auto ">
+					<FormControlCycle />
+					<AppBar className="bg-white mt-16" position="static">
+						<Tabs
+							value={value}
+							onChange={handleChange}
+							indicatorColor="primary"
+							textColor="primary"
+							variant="scrollable"
+							scrollButtons="auto"
+							aria-label="scrollable auto tabs example"
+						>
+							<Tab className="text-gray-800 font-sans" label="Tất cả ( )" {...a11yProps(0)} />
+							<Tab className="text-gray-800 font-sans	" label="Chưa sử dụng ( )" {...a11yProps(1)} />
+							<Tab className="text-gray-800 font-sans	" label="Đang sử dụng( )" {...a11yProps(2)} />
+							<Tab className="text-gray-800 font-sans	" label="Sửa chữa - bảo hành( )" {...a11yProps(3)} />
+							<Tab className="text-gray-800 font-sans	" label="Hư hỏng - Mất" {...a11yProps(4)} />
+							<Tab className="text-gray-800 font-sans	" label="Thanh lí( )" {...a11yProps(5)} />
+						</Tabs>
+					</AppBar>
+					<TabPanel value={value} index={0}>
+						<PossessionAll />
+					</TabPanel>
+					<TabPanel value={value} index={1}>
+						<PossessionUnused />
+					</TabPanel>
+					<TabPanel value={value} index={2}>
+						<PossessionUsed />
+					</TabPanel>
+					<TabPanel value={value} index={3}>
+						<PossessionRepair />
+					</TabPanel>
+					<TabPanel value={value} index={4}>
+						<PossessionCorrupt />
+					</TabPanel>
+					<TabPanel value={value} index={5}>
+						<PossessionPay />
+					</TabPanel>
+				</div>
 			</div>
-		</div>
+		</PossessionContextProvider>
 	);
 }
 

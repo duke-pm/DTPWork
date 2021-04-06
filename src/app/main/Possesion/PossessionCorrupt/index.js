@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
 	TextField,
@@ -11,13 +11,12 @@ import {
 	TableBody,
 	TableContainer
 } from '@material-ui/core';
-import Tooltip from '@material-ui/core/Tooltip';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Search from '@material-ui/icons/Search';
+import { Tooltip } from 'antd';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import Fab from '@material-ui/core/Fab';
 import FormCustomCorrupt from './FormCorrupt';
+import { PossessionContext } from '../PossessionContext';
 
 // import FormCustomAll from './FormCustomAll';
 
@@ -50,9 +49,13 @@ const useStyles = makeStyles(theme => ({
 }));
 export default function PossessionCorrupt(props) {
 	const [open, setOpen] = React.useState(false);
-
+	const possessionContext = useContext(PossessionContext);
+	const { handleOpenFormCycle } = possessionContext;
 	const handleClose = () => {
 		setOpen(false);
+	};
+	const handleOpenFormCycleView = type => {
+		handleOpenFormCycle(type);
 	};
 	const handleOpenForm = () => {
 		setOpen(true);
@@ -66,21 +69,19 @@ export default function PossessionCorrupt(props) {
 					<div className="flex flex-row justify-around">
 						<TextField
 							className={classes.InputSearch}
-							InputProps={{
-								startAdornment: (
-									<InputAdornment position="start">
-										<Search />
-									</InputAdornment>
-								)
-							}}
 							id="standard-basic"
 							label="Tìm kiếm"
+							inputProps={{
+								style: {
+									height: '2px'
+								}
+							}}
 							variant="outlined"
 						/>
-						<Button variant="contained" className="ml-16 font-sans" color="primary" component="span">
+						<Button variant="contained" className="ml-16 font-sans h-26" color="primary" component="span">
 							Báo hỏng (0)
 						</Button>
-						<Button variant="contained" className="ml-16 font-sans" color="secondary" component="span">
+						<Button variant="contained" className="ml-16 font-sans h-26" color="secondary" component="span">
 							Báo mất(0)
 						</Button>
 					</div>
@@ -137,9 +138,18 @@ export default function PossessionCorrupt(props) {
 
 										<TableCell align="center" className="p-4 md:p-12">
 											<div className="flex items-center">
-												<Tooltip title="Xem chi tiết" aria-label="add">
+												<Tooltip placement="topLeft" title="Xem chi tiết" aria-label="add">
 													<IconButton onClick={handleOpenForm}>
 														<Icon>info</Icon>
+													</IconButton>
+												</Tooltip>
+												<Tooltip
+													placement="topLeft"
+													title="Đưa vào sử dụng lại"
+													aria-label="add"
+												>
+													<IconButton onClick={() => handleOpenFormCycleView('repair')}>
+														<Icon>autorenew</Icon>
 													</IconButton>
 												</Tooltip>
 											</div>

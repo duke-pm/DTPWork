@@ -11,12 +11,13 @@ import {
 	TableBody,
 	TableContainer
 } from '@material-ui/core';
-import Tooltip from '@material-ui/core/Tooltip';
+import { Tooltip } from 'antd';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Search from '@material-ui/icons/Search';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import FormCustomUsed from './FormCustomUsed';
+import FormControlReport from '../FormControl/FormControlReport';
 // import FormCustomUnused from './FormCustomUnused';
 
 // import FormCustomAll from './FormCustomAll';
@@ -50,17 +51,20 @@ const useStyles = makeStyles(theme => ({
 }));
 export default function PossessionUsed(props) {
 	const [open, setOpen] = React.useState(false);
-
+	const [openFormReport, setOpenFormReport] = React.useState(false);
 	const handleClose = () => {
 		setOpen(false);
 	};
 	const handleOpenForm = () => {
 		setOpen(true);
 	};
+	const handleOpenFormReport = () => setOpenFormReport(true);
+	const handleCloseFormReport = () => setOpenFormReport(false);
 	const classes = useStyles(props);
 	return (
 		<>
 			<FormCustomUsed open={open} handleClose={handleClose} />
+			<FormControlReport open={openFormReport} handleClose={handleCloseFormReport} />
 			<div className="flex flex-col">
 				<div className="flex flex-row justify-between">
 					<TextField
@@ -128,9 +132,19 @@ export default function PossessionUsed(props) {
 
 										<TableCell align="center" className="p-4 md:p-12">
 											<div className="flex items-center">
-												<Tooltip title="Thu hồi tài sản" aria-label="add">
+												<Tooltip placement="topLeft" title="Thu hồi tài sản" aria-label="add">
 													<IconButton onClick={handleOpenForm}>
 														<Icon>backspace</Icon>
+													</IconButton>
+												</Tooltip>
+												<Tooltip placement="topLeft" title="Báo hỏng tài sản" aria-label="add">
+													<IconButton onClick={handleOpenFormReport}>
+														<Icon>build</Icon>
+													</IconButton>
+												</Tooltip>
+												<Tooltip placement="topLeft" title="Báo mất tài sản" aria-label="add">
+													<IconButton onClick={handleOpenFormReport}>
+														<Icon>report_problem</Icon>
 													</IconButton>
 												</Tooltip>
 											</div>
