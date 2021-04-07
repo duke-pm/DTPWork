@@ -2,6 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Tabs, Tab, Box } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import FuseAnimate from '@fuse/core/FuseAnimate';
 import PossessionAll from './PossessionAll';
 import PossessionUnused from './PossessionUnused';
 import PossessionUsed from './PossessionUsed';
@@ -43,7 +44,7 @@ function TabPanel(props) {
 function PossesionPage(props) {
 	const classes = useStyles(props);
 	const { t } = useTranslation('examplePage');
-	const [value, setValue] = React.useState(4);
+	const [value, setValue] = React.useState(0);
 
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
@@ -73,22 +74,34 @@ function PossesionPage(props) {
 						</Tabs>
 					</AppBar>
 					<TabPanel value={value} index={0}>
-						<PossessionAll />
+						<FuseAnimate animation="transition.slideUpIn">
+							<PossessionAll />
+						</FuseAnimate>
 					</TabPanel>
 					<TabPanel value={value} index={1}>
-						<PossessionUnused />
+						<FuseAnimate animation="transition.slideUpIn">
+							<PossessionUnused />
+						</FuseAnimate>
 					</TabPanel>
 					<TabPanel value={value} index={2}>
-						<PossessionUsed />
+						<FuseAnimate animation="transition.slideUpIn">
+							<PossessionUsed />
+						</FuseAnimate>
 					</TabPanel>
 					<TabPanel value={value} index={3}>
-						<PossessionRepair />
+						<FuseAnimate animation="transition.slideUpIn">
+							<PossessionRepair />
+						</FuseAnimate>
 					</TabPanel>
 					<TabPanel value={value} index={4}>
-						<PossessionCorrupt />
+						<FuseAnimate animation="transition.slideUpIn">
+							<PossessionCorrupt />
+						</FuseAnimate>
 					</TabPanel>
 					<TabPanel value={value} index={5}>
-						<PossessionPay />
+						<FuseAnimate animation="transition.slideUpIn">
+							<PossessionPay />
+						</FuseAnimate>
 					</TabPanel>
 				</div>
 			</div>

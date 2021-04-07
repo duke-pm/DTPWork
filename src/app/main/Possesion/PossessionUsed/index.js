@@ -16,6 +16,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Search from '@material-ui/icons/Search';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
+import FuseAnimate from '@fuse/core/FuseAnimate';
 import FormCustomUsed from './FormCustomUsed';
 import FormControlReport from '../FormControl/FormControlReport';
 // import FormCustomUnused from './FormCustomUnused';
@@ -66,20 +67,21 @@ export default function PossessionUsed(props) {
 			<FormCustomUsed open={open} handleClose={handleClose} />
 			<FormControlReport open={openFormReport} handleClose={handleCloseFormReport} />
 			<div className="flex flex-col">
-				<div className="flex flex-row justify-between">
-					<TextField
-						className={classes.InputSearch}
-						InputProps={{
-							startAdornment: (
-								<InputAdornment position="start">
-									<Search />
-								</InputAdornment>
-							)
-						}}
-						id="standard-basic"
-						label="Tìm kiếm"
-					/>
-				</div>
+				<FuseAnimate animation="transition.slideLeftIn" delay={300}>
+					<div className="flex flex-row justify-between">
+						<TextField
+							className={classes.InputSearch}
+							inputProps={{
+								style: {
+									height: '2px'
+								}
+							}}
+							id="standard-basic"
+							label="Tìm kiếm"
+							variant="outlined"
+						/>
+					</div>
+				</FuseAnimate>
 				<div className="flex flex-col mt-36 min-h-full sm:border-1 sm:rounded-16 overflow-hidden">
 					<TableContainer className="flex flex-1">
 						<Paper className={classes.rootPaper}>

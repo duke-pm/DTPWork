@@ -15,6 +15,7 @@ import { Tooltip } from 'antd';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import Fab from '@material-ui/core/Fab';
+import FuseAnimate from '@fuse/core/FuseAnimate';
 import FormCustomCorrupt from './FormCorrupt';
 import { PossessionContext } from '../PossessionContext';
 
@@ -65,27 +66,39 @@ export default function PossessionCorrupt(props) {
 		<>
 			<FormCustomCorrupt open={open} handleClose={handleClose} />
 			<div className="flex flex-col">
-				<div className="flex flex-row justify-between">
-					<div className="flex flex-row justify-around">
-						<TextField
-							className={classes.InputSearch}
-							id="standard-basic"
-							label="Tìm kiếm"
-							inputProps={{
-								style: {
-									height: '2px'
-								}
-							}}
-							variant="outlined"
-						/>
-						<Button variant="contained" className="ml-16 font-sans h-26" color="primary" component="span">
-							Báo hỏng (0)
-						</Button>
-						<Button variant="contained" className="ml-16 font-sans h-26" color="secondary" component="span">
-							Báo mất(0)
-						</Button>
+				<FuseAnimate animation="transition.slideLeftIn" delay={300}>
+					<div className="flex flex-row justify-between">
+						<div className="flex flex-row justify-around">
+							<TextField
+								className={classes.InputSearch}
+								id="standard-basic"
+								label="Tìm kiếm"
+								inputProps={{
+									style: {
+										height: '2px'
+									}
+								}}
+								variant="outlined"
+							/>
+							<Button
+								variant="contained"
+								className="ml-16 font-sans h-26"
+								color="primary"
+								component="span"
+							>
+								Báo hỏng (0)
+							</Button>
+							<Button
+								variant="contained"
+								className="ml-16 font-sans h-26"
+								color="secondary"
+								component="span"
+							>
+								Báo mất(0)
+							</Button>
+						</div>
 					</div>
-				</div>
+				</FuseAnimate>
 				<div className="flex flex-col mt-36 min-h-full sm:border-1 sm:rounded-16 overflow-hidden">
 					<TableContainer className="flex flex-1">
 						<Paper className={classes.rootPaper}>

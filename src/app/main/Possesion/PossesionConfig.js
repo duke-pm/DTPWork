@@ -1,5 +1,5 @@
+import React from 'react';
 import i18next from 'i18next';
-import Possesion from './Possesion';
 import en from './i18n/en';
 import tr from './i18n/tr';
 import ar from './i18n/ar';
@@ -17,7 +17,7 @@ const PossesionConfig = {
 	routes: [
 		{
 			path: '/tai-san',
-			component: Possesion
+			component: React.lazy(() => import('./Possesion'))
 		}
 	]
 };
