@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Button, Paper, Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Search from '@material-ui/icons/Search';
+import FuseAnimate from '@fuse/core/FuseAnimate';
 import FormCustomAll from './FormCustomAll';
 
 const useStyles = makeStyles(theme => ({
@@ -49,38 +50,40 @@ export default function PossessionAll(props) {
 		<>
 			<FormCustomAll open={open} handleClose={handleClose} />
 			<div className="flex flex-col">
-				<div className="flex flex-row justify-between">
-					<TextField
-						className={classes.InputSearch}
-						InputProps={{
-							startAdornment: (
-								<InputAdornment position="start">
-									<Search />
-								</InputAdornment>
-							)
-						}}
-						id="standard-basic"
-						label="Tìm kiếm"
-					/>
-					<Button onClick={handleOpen} className="h-26" variant="contained" color="primary">
-						{' '}
-						<svg
-							className="h-14 w-14"
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
-						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								strokeWidth={2}
-								d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-							/>
-						</svg>
-						Thêm mới
-					</Button>
-				</div>
+				<FuseAnimate animation="transition.slideLeftIn" delay={300}>
+					<div className="flex flex-row justify-between">
+						<TextField
+							className={classes.InputSearch}
+							inputProps={{
+								style: {
+									height: '2px'
+								}
+							}}
+							id="standard-basic"
+							label="Tìm kiếm"
+							variant="outlined"
+						/>
+						<Button onClick={handleOpen} className="h-26" variant="contained" color="primary">
+							{' '}
+							<svg
+								className="h-14 w-14"
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+							>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									strokeWidth={2}
+									d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+								/>
+							</svg>
+							Thêm mới
+						</Button>
+					</div>
+				</FuseAnimate>
+
 				<Paper className={classes.rootPaper}>
 					<Table className={classes.table} stickyHeader aria-label="sticky table" size="large">
 						<TableHead>

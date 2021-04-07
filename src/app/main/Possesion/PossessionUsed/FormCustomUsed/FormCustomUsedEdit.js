@@ -78,6 +78,7 @@ export default function FormCustomUsedEdit() {
 											label="Lí do thu hồi"
 											autoFocus
 											name="note"
+											row={2}
 											component={InputTextAreaLg}
 											className="mx-4 mb-16"
 											variant="outlined"
