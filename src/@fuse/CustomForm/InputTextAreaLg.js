@@ -2,6 +2,9 @@
 import React from 'react';
 // import { FieldFeedbackLabel } from './FieldFeedbackLabel';
 import { TextField, FormGroup } from '@material-ui/core';
+import { Input } from 'antd';
+
+const { TextArea } = Input;
 
 export default function InputTextAreaLg({
 	field, // { name, value, onChange, onBlur }
@@ -17,16 +20,7 @@ export default function InputTextAreaLg({
 		<>
 			<FormGroup>
 				<label className="mb-16"> {label} </label>
-				<TextField
-					helperText={touched[field.name] ? errors[field.name] : ''}
-					error={touched[field.name] && Boolean(errors[field.name])}
-					multiline
-					rows={row}
-					variant="outlined"
-					type={type}
-					{...field}
-					{...props}
-				/>
+				<TextArea rows={row} variant="outlined" type={type} {...field} {...props} />
 			</FormGroup>
 		</>
 	);

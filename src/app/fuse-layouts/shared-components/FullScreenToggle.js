@@ -76,7 +76,7 @@ const HeaderFullScreenToggle = props => {
 	}
 
 	return (
-		<Tooltip title="Fullscreen toggle" placement="bottom">
+		<Tooltip title="Hiển thị toàn màn hình" placement="bottom">
 			<IconButton onClick={toggleFullScreen} className={clsx('w-40 h-40', props.className)}>
 				<Icon>{isFullScreen ? 'fullscreen_exit' : 'fullscreen'}</Icon>
 			</IconButton>

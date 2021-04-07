@@ -78,7 +78,7 @@ export default function FormCustomUsedEdit() {
 											label="Lí do thu hồi"
 											autoFocus
 											name="note"
-											row={2}
+											row={4}
 											component={InputTextAreaLg}
 											className="mx-4 mb-16"
 											variant="outlined"
@@ -95,6 +95,7 @@ export default function FormCustomUsedEdit() {
 									<Field
 										label="File Đính kèm"
 										autoFocus
+										style={{ height: '39.5px' }}
 										name="file"
 										component={FileCustomVersion2}
 										className="mx-4 mb-16"

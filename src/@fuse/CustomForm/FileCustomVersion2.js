@@ -15,6 +15,7 @@ export default function FileCustomVersion2({
 	withFeedbackLabel = true,
 	customFeedbackLabel,
 	type,
+	style,
 	...props
 }) {
 	return (
@@ -24,7 +25,7 @@ export default function FileCustomVersion2({
 				<p className="ant-upload-drag-icon">
 					<InboxOutlined />
 				</p>
-				<p style={{ height: '34px' }} className="ant-upload-text">
+				<p style={style} className="ant-upload-text">
 					Chọn hoặc kéo thả vào khu vực này
 				</p>
 				<p className="ant-upload-hint">Hỗ trợ tải lên một lần hoặc hàng loạt.</p>

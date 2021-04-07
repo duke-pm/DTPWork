@@ -10,7 +10,7 @@ const initial = {
 	note: '',
 	file: ''
 };
-export default function FormControlReportEdit() {
+export default function FormControlReportEdit({ typeReport }) {
 	return (
 		<>
 			<Formik
@@ -72,20 +72,21 @@ export default function FormControlReportEdit() {
 							</div>
 							<div className="px-16 sm:px-24">
 								<h5 className="font-extrabold text-gray-800 font-sans text-base ">
-									Thông tin báo hỏng / mất
+									Thông tin báo {typeReport === 'service' ? 'hỏng' : 'mất'}
 								</h5>
 								<div className="grid grid-cols-1 sm:grid-cols-2 mb-16 gap-8 ">
 									<div className="flex flex-col">
 										<Field
-											label="Lí do báo hỏng/báo mất "
+											label={`Lí do báo ${typeReport === 'service' ? 'hỏng' : 'mất'}`}
 											autoFocus
 											name="note"
+											row={4}
 											component={InputTextAreaLg}
 											className="mx-4 mb-16"
 											variant="outlined"
 										/>
 										<Field
-											label="Ngày báo hỏng (*) "
+											label={`Ngày báo ${typeReport === 'service' ? 'hỏng' : 'mất'}`}
 											autoFocus
 											name="date"
 											component={DateCustom}
@@ -97,6 +98,7 @@ export default function FormControlReportEdit() {
 										label="File Đính kèm"
 										autoFocus
 										name="file"
+										style={{ height: '39.5px' }}
 										component={FileCustomVersion2}
 										className="mx-4 mb-16"
 										variant="outlined"

@@ -89,7 +89,7 @@ export default function FormCustomRepairEdit() {
 											label="Lí do sửa chữa,bảo hành"
 											autoFocus
 											name="note"
-											row={2}
+											row={4}
 											component={InputTextAreaLg}
 											className="mx-4 mb-16"
 											variant="outlined"
@@ -107,6 +107,7 @@ export default function FormCustomRepairEdit() {
 										label="File Đính kèm"
 										autoFocus
 										name="file"
+										style={{ height: '40px' }}
 										component={FileCustomVersion2}
 										className="mx-4 mb-16"
 										variant="outlined"

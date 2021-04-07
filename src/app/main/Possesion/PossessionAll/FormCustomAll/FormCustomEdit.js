@@ -4,10 +4,11 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import DateCustom from '@fuse/CustomForm/Date';
 import InputMonthCustom from '@fuse/CustomForm/InputMonthCustom';
-import InputTextArea from '@fuse/CustomForm/InputTextArea';
+import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
 import InputCurrency from '@fuse/CustomForm/InputCurrency';
+import InputNumberCustom from '@fuse/CustomForm/InputNumberCustom';
 import InputCustom from '../../../../../@fuse/CustomForm/Input';
-import Select from '../../../../../@fuse/CustomForm/Select';
+import SelectCustom from '../../../../../@fuse/CustomForm/Select';
 
 const initial = {
 	namePossessionall: '',
@@ -70,7 +71,7 @@ export default function FormCustomEdit({ handleClose }) {
 									<Field
 										label="Loại tài sản (*)"
 										name="categoryPossessionall"
-										component={Select}
+										component={SelectCustom}
 										options={[{ value: 1, label: 'text' }]}
 										className="mt-8 mb-16"
 									/>
@@ -79,7 +80,7 @@ export default function FormCustomEdit({ handleClose }) {
 										autoFocus
 										name="amount"
 										type="number"
-										component={InputCustom}
+										component={InputNumberCustom}
 										className="mx-4 mb-16"
 										variant="outlined"
 									/>
@@ -89,7 +90,8 @@ export default function FormCustomEdit({ handleClose }) {
 										label="Quy cách tài sản/Thông số"
 										autoFocus
 										name="specification"
-										component={InputTextArea}
+										component={InputTextAreaLg}
+										row={2}
 										className="mx-4 mb-16"
 										variant="outlined"
 									/>
@@ -100,7 +102,7 @@ export default function FormCustomEdit({ handleClose }) {
 										autoFocus
 										name="provider"
 										type="text"
-										component={Select}
+										component={SelectCustom}
 										options={[{ value: 1, label: 'text' }]}
 										className="mx-4 mb-16"
 										variant="outlined"
@@ -129,9 +131,8 @@ export default function FormCustomEdit({ handleClose }) {
 										autoFocus
 										name="dateService"
 										type="number"
-										component={InputMonthCustom}
+										component={InputNumberCustom}
 										className="mx-4 mb-16"
-										variant="outlined"
 									/>
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-3 mb-16 gap-8 ">
@@ -157,8 +158,11 @@ export default function FormCustomEdit({ handleClose }) {
 										label="Đơn vị quản lí (*)"
 										autoFocus
 										name="unitManagement"
-										component={Select}
-										options={[{ value: 1, label: 'text' }]}
+										component={SelectCustom}
+										options={[
+											{ value: 1, label: 'text' },
+											{ value: 2, label: 'text2' }
+										]}
 										className="mx-4 mb-16 flex-1"
 										variant="outlined"
 									/>

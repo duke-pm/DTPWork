@@ -4,9 +4,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ErrorMessage } from 'formik';
-// import { Select } from "antd";
+import { Select } from 'antd';
+import 'antd/dist/antd.css';
 import { FormGroup } from '@material-ui/core';
-import SelectField from 'react-select';
 
 Select.propTypes = {
 	field: PropTypes.object.isRequired,
@@ -23,42 +23,25 @@ Select.defaultProps = {
 	disabled: false,
 	options: []
 };
-export default function Select(props) {
-	const { field, form, options, label, placeholder, isMulti, handleChangeState } = props;
+export default function SelectCustom(props) {
+	const { Option } = Select;
+	const { field, form, options, label, setFieldValue } = props;
 	const { name, value } = field;
 	const { errors, touched } = form;
-	const selectedOption = options.find(option => option.value === value);
-	const handleSelectedOptionChange = selectedOption => {
-		const selectedValue = selectedOption ? selectedOption.value : '';
-
-		const changeEvent = {
-			target: {
-				name,
-				value: selectedValue
-			}
-		};
-		field.onChange(changeEvent);
-		return handleChangeState ? handleChangeState(changeEvent) : null;
+	const handleSelect = type => {
+		form.setFieldValue(name, type);
 	};
 	return (
 		<FormGroup>
 			<label className="mb-16"> {label} </label>
-			<SelectField
-				styles={{
-					// Fixes the overlapping problem of the component
-					menu: provided => ({ ...provided, zIndex: 9999 })
-				}}
-				id={name}
-				{...field}
-				isClearable
-				value={selectedOption}
-				isMulti={isMulti}
-				onChange={handleSelectedOptionChange}
-				placeholder={placeholder}
-				options={options}
-				// error={touched[field.name] && Boolean(errors[field.name])}
-			/>
-			{touched[field.name] && errors[field.name] ? <span className="text-red	"> {errors[field.name]} </span> : ''}
+			<Select {...field} {...props} style={{ zIndex: 2000 }} value={value} onChange={handleSelect}>
+				{options.map(option => (
+					<Option key={option.value} value={option.value}>
+						{option.label}
+					</Option>
+				))}
+			</Select>
+			{errors[name] && touched[name] ? <div className="text-red">{errors[name]}</div> : null}
 		</FormGroup>
 	);
 }

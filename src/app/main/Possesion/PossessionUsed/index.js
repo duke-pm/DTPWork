@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
 	TextField,
@@ -19,6 +19,7 @@ import Icon from '@material-ui/core/Icon';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import FormCustomUsed from './FormCustomUsed';
 import FormControlReport from '../FormControl/FormControlReport';
+import { PossessionContext } from '../PossessionContext';
 // import FormCustomUnused from './FormCustomUnused';
 
 // import FormCustomAll from './FormCustomAll';
@@ -52,20 +53,22 @@ const useStyles = makeStyles(theme => ({
 }));
 export default function PossessionUsed(props) {
 	const [open, setOpen] = React.useState(false);
-	const [openFormReport, setOpenFormReport] = React.useState(false);
+	const possessionContext = useContext(PossessionContext);
+	const { handleOpenFormReport } = possessionContext;
+	const handleFormOpenReport = type => {
+		handleOpenFormReport(type);
+	};
 	const handleClose = () => {
 		setOpen(false);
 	};
 	const handleOpenForm = () => {
 		setOpen(true);
 	};
-	const handleOpenFormReport = () => setOpenFormReport(true);
-	const handleCloseFormReport = () => setOpenFormReport(false);
 	const classes = useStyles(props);
 	return (
 		<>
 			<FormCustomUsed open={open} handleClose={handleClose} />
-			<FormControlReport open={openFormReport} handleClose={handleCloseFormReport} />
+			<FormControlReport />
 			<div className="flex flex-col">
 				<FuseAnimate animation="transition.slideLeftIn" delay={300}>
 					<div className="flex flex-row justify-between">
@@ -140,12 +143,12 @@ export default function PossessionUsed(props) {
 													</IconButton>
 												</Tooltip>
 												<Tooltip placement="topLeft" title="Báo hỏng tài sản" aria-label="add">
-													<IconButton onClick={handleOpenFormReport}>
+													<IconButton onClick={() => handleFormOpenReport('service')}>
 														<Icon>build</Icon>
 													</IconButton>
 												</Tooltip>
 												<Tooltip placement="topLeft" title="Báo mất tài sản" aria-label="add">
-													<IconButton onClick={handleOpenFormReport}>
+													<IconButton onClick={() => handleFormOpenReport('lose')}>
 														<Icon>report_problem</Icon>
 													</IconButton>
 												</Tooltip>

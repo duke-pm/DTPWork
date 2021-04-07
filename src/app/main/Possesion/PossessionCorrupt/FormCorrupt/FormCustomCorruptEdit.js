@@ -82,7 +82,7 @@ export default function FormCustomCorruptEdit() {
 											component={InputTextAreaLg}
 											className="mx-4 mb-16"
 											variant="outlined"
-											row={8}
+											row={7}
 										/>
 									</div>
 									<Field
