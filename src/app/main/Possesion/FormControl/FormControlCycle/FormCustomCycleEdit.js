@@ -89,7 +89,7 @@ export default function FormCustomCycleEdit() {
 											label="Lí do sửa chữa,bảo hành"
 											autoFocus
 											name="note"
-											row={2}
+											row={4}
 											component={InputTextAreaLg}
 											className="mx-4 mb-16"
 											variant="outlined"
@@ -106,6 +106,7 @@ export default function FormCustomCycleEdit() {
 									<Field
 										label="File Đính kèm"
 										autoFocus
+										style={{ height: '40px' }}
 										name="file"
 										component={FileCustomVersion2}
 										className="mx-4 mb-16"

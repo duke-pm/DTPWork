@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 // import { FieldFeedbackLabel } from './FieldFeedbackLabel';
-import { TextField, FormGroup } from '@material-ui/core';
+import { FormGroup } from '@material-ui/core';
+import { Input } from 'antd';
 
 export default function InputMonthCustom({
 	field, // { name, value, onChange, onBlur }
@@ -16,7 +17,7 @@ export default function InputMonthCustom({
 		<>
 			<FormGroup>
 				<label className="mb-16"> {`${label} ${field && field.value} tháng `} </label>
-				<TextField
+				<Input
 					helperText={touched.name ? errors.name : ''}
 					error={touched.name && Boolean(errors.name)}
 					type={type}

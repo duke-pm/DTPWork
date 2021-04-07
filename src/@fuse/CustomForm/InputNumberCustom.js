@@ -2,23 +2,28 @@
 import React from 'react';
 // import { FieldFeedbackLabel } from './FieldFeedbackLabel';
 import { FormGroup } from '@material-ui/core';
-import { Input } from 'antd';
-import { ErrorMessage } from 'formik';
+import { InputNumber } from 'antd';
 
-export default function InputCustom({
+export default function InputNumberCustom({
 	field,
-	form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+	form: { touched, errors, setFieldValue }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
 	label,
 	withFeedbackLabel = true,
 	customFeedbackLabel,
 	type,
 	...props
 }) {
+	const onChange = number => {
+		setFieldValue(field.name, number);
+	};
 	return (
 		<>
 			<FormGroup>
-				<label className="mb-16"> {label} </label>
-				<Input type={type} {...field} {...props} />
+				<label className="mb-16">
+					{' '}
+					{label} {field.value ? `${field.value} tháng ` : null}{' '}
+				</label>
+				<InputNumber style={{ width: '100%' }} type={type} {...field} {...props} onChange={onChange} />
 				{errors[field.name] && touched[field.name] ? (
 					<div className="text-red">{errors[field.name]}</div>
 				) : null}

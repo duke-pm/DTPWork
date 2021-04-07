@@ -5,8 +5,8 @@ import { Formik, Form, Field } from 'formik';
 import Select from '@fuse/CustomForm/Select';
 import InputCustom from '@fuse/CustomForm/Input';
 import DateCustom from '@fuse/CustomForm/Date';
-import InputTextArea from '@fuse/CustomForm/InputTextArea';
 import FileCustom from '@fuse/CustomForm/FileCustom';
+import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
 
 const initial = {
 	customer: '',
@@ -127,9 +127,9 @@ export default function FormCustomUnusedEdit() {
 										label="Lí do phát"
 										autoFocus
 										name="note"
-										component={InputTextArea}
+										row={2}
+										component={InputTextAreaLg}
 										className="mx-4 mb-16"
-										variant="outlined"
 									/>
 								</div>
 							</div>

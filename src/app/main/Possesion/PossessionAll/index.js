@@ -1,15 +1,25 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField, Button, Paper, Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Search from '@material-ui/icons/Search';
+import {
+	TextField,
+	Paper,
+	Table,
+	TableHead,
+	TableRow,
+	TableCell,
+	TableBody,
+	TableContainer,
+	Button
+} from '@material-ui/core';
 import FuseAnimate from '@fuse/core/FuseAnimate';
-import FormCustomAll from './FormCustomAll';
+import PossessionAll from './FormCustomAll';
+
+// import FormCustomAll from './FormCustomAll';
 
 const useStyles = makeStyles(theme => ({
-	InputSearch: {
-		width: '200px'
-	},
+	// InputSearch: {
+	// 	width: '160px'
+	// },
 	table: {
 		minWidth: 800
 	},
@@ -18,7 +28,6 @@ const useStyles = makeStyles(theme => ({
 	},
 	rootPaper: {
 		width: '100%',
-		marginTop: 30,
 		overflowX: 'auto'
 	},
 	modal: {
@@ -34,26 +43,23 @@ const useStyles = makeStyles(theme => ({
 		width: 900
 	}
 }));
-export default function PossessionAll(props) {
+export default function PossessionUnused(props) {
 	const [open, setOpen] = React.useState(false);
-
-	const handleOpen = () => {
-		setOpen(true);
-	};
-
 	const handleClose = () => {
 		setOpen(false);
 	};
-
+	const handleOpenForm = () => {
+		setOpen(true);
+	};
 	const classes = useStyles(props);
 	return (
 		<>
-			<FormCustomAll open={open} handleClose={handleClose} />
+			<PossessionAll open={open} handleClose={handleClose} />
 			<div className="flex flex-col">
 				<FuseAnimate animation="transition.slideLeftIn" delay={300}>
 					<div className="flex flex-row justify-between">
 						<TextField
-							className={classes.InputSearch}
+							className="w-auto"
 							inputProps={{
 								style: {
 									height: '2px'
@@ -63,10 +69,10 @@ export default function PossessionAll(props) {
 							label="Tìm kiếm"
 							variant="outlined"
 						/>
-						<Button onClick={handleOpen} className="h-26" variant="contained" color="primary">
+						<Button onClick={handleOpenForm} className="h-auto w-auto" variant="contained" color="primary">
 							{' '}
 							<svg
-								className="h-14 w-14"
+								className="h-10 w-10"
 								xmlns="http://www.w3.org/2000/svg"
 								fill="none"
 								viewBox="0 0 24 24"
@@ -80,41 +86,99 @@ export default function PossessionAll(props) {
 								/>
 							</svg>
 							Thêm mới
-						</Button>
+						</Button>{' '}
 					</div>
 				</FuseAnimate>
+				<div className="flex flex-col mt-36 min-h-full sm:border-1 sm:rounded-16 overflow-hidden">
+					<TableContainer className="flex flex-1">
+						<Paper className={classes.rootPaper}>
+							<Table className={classes.table} stickyHeader>
+								<TableHead>
+									<TableRow>
+										<TableCell
+											className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
+											align="center"
+										>
+											Mã sản phẩm
+										</TableCell>
+										<TableCell
+											className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
+											align="center"
+										>
+											Tên sản phẩm
+										</TableCell>
+										<TableCell
+											className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
+											align="center"
+										>
+											Nhóm tài sản
+										</TableCell>
+										<TableCell
+											className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
+											align="center"
+										>
+											Ngày mua{' '}
+										</TableCell>
+										<TableCell
+											className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
+											align="center"
+										>
+											Nguyên giá
+										</TableCell>
+										<TableCell
+											className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
+											align="center"
+										/>
+									</TableRow>
+								</TableHead>
+								<TableBody>
+									<TableRow>
+										<TableCell align="center"> MT-20020 </TableCell>
+										<TableCell align="center"> abbott @withinpixels.com </TableCell>
+										<TableCell align="center">Thiết bị</TableCell>
+										<TableCell align="center"> 02/04/2020 </TableCell>
+										<TableCell align="center"> 02/04/2020 </TableCell>
 
-				<Paper className={classes.rootPaper}>
-					<Table className={classes.table} stickyHeader aria-label="sticky table" size="large">
-						<TableHead>
-							<TableRow>
-								<TableCell className="text-gray-800 font-sans w-screen" align="center">
-									Mã sản phẩm
-								</TableCell>
-								<TableCell className="text-gray-800 font-sans w-screen" align="center">
-									Tên sản phẩm
-								</TableCell>
-								<TableCell className="text-gray-800 font-sans  w-screen" align="center">
-									Nhóm tài sản
-								</TableCell>
-								<TableCell className="text-gray-800 font-sans  w-screen" align="center">
-									Ngày mua{' '}
-								</TableCell>
-								<TableCell className="text-gray-800 font-sans  w-screen" align="center">
-									Nguyên giá
-								</TableCell>
-							</TableRow>
-						</TableHead>
-						<TableBody>
-							<TableRow>
-								<TableCell align="center"> MT-20020 </TableCell>
-								<TableCell align="center"> Máy tính cá nhân </TableCell>
-								<TableCell align="center">Thiết bị</TableCell>
-								<TableCell align="center"> 02/04/2020 </TableCell>
-							</TableRow>
-						</TableBody>
-					</Table>
-				</Paper>
+										{/* <TableCell align="center" className="p-4 md:p-12">
+											<div className="flex items-center">
+												<Tooltip
+													placement="topLeft"
+													className=" font-sans"
+													title="Thêm nhân viên vào tài sản"
+													aria-label="add"
+												>
+													<IconButton onClick={handleOpenForm}>
+														<Icon>add</Icon>
+													</IconButton>
+												</Tooltip>
+												<Tooltip
+													placement="topLeft"
+													className=" font-sans"
+													title="Báo hỏng tài sản"
+													aria-label="add"
+												>
+													<IconButton onClick={() => handleFormOpenReport('service')}>
+														<Icon>build</Icon>
+													</IconButton>
+												</Tooltip>
+												<Tooltip
+													placement="topLeft"
+													className=" font-sans"
+													title="Báo mất tài sản"
+													aria-label="add"
+												>
+													<IconButton onClick={() => handleFormOpenReport('lose')}>
+														<Icon>report_problem</Icon>
+													</IconButton>
+												</Tooltip>
+											</div>
+										</TableCell> */}
+									</TableRow>
+								</TableBody>
+							</Table>
+						</Paper>
+					</TableContainer>
+				</div>
 			</div>
 		</>
 	);

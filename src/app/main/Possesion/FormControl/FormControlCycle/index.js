@@ -4,12 +4,13 @@ import { PossessionContext } from '../../PossessionContext';
 import FormCustomCycleEdit from './FormCustomCycleEdit';
 // import FormControlReportEdit from './FormControlReportEdit';
 
-export default function FormControlCycle({ handleClose, open }) {
+export default function FormControlCycle() {
 	const possessionContext = useContext(PossessionContext);
 	const { formCycle, typeCycle, handleCloseFormCycle } = possessionContext;
 	return (
 		<Dialog
 			fullWidth
+			style={{ zIndex: 20 }}
 			maxWidth="md"
 			onClose={handleCloseFormCycle}
 			aria-labelledby="customized-dialog-title"
