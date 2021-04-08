@@ -1,5 +1,3 @@
-import FuseSearch from '@fuse/core/FuseSearch';
-import FuseShortcuts from '@fuse/core/FuseShortcuts';
 import AppBar from '@material-ui/core/AppBar';
 import Hidden from '@material-ui/core/Hidden';
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';

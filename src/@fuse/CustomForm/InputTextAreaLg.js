@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 // import { FieldFeedbackLabel } from './FieldFeedbackLabel';
-import { TextField, FormGroup } from '@material-ui/core';
+import { FormGroup } from '@material-ui/core';
 import { Input } from 'antd';
 
 const { TextArea } = Input;
@@ -19,7 +19,7 @@ export default function InputTextAreaLg({
 	return (
 		<>
 			<FormGroup>
-				<label className="mb-16"> {label} </label>
+				<label className="mb-10"> {label} </label>
 				<TextArea rows={row} variant="outlined" type={type} {...field} {...props} />
 			</FormGroup>
 		</>

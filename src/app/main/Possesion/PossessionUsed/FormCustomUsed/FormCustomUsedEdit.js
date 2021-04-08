@@ -27,52 +27,57 @@ export default function FormCustomUsedEdit() {
 							<div className="px-16 sm:px-24">
 								<div className=" grid grid-cols-1 sm:grid-cols-2">
 									<div className="flex-col flex ">
-										<h5 className="font-extrabold text-gray-800 font-sans mb-16 text-base ">
-											Thông tin tài sản
-										</h5>
-										<div className="flex-rows justify-around flex ">
+										<div className="flex flex-row">
+											<h5 className="font-extrabold">Thông tin tài sản.</h5>
+											<span className="border-b-1 mt-3 ml-6 border-fuchsia w-auto  sm:w-4/6 h-10" />
+										</div>
+										<div className="flex-rows justify-between flex ">
 											<div className="flex flex-col">
-												<p className="p-16"> Mã sản phẩm </p>
-												<p className="p-16"> Tên sản phẩm </p>
-												<p className="p-16"> Nhóm sản phẩm </p>
-												<p className="p-16"> Ngày mua </p>
-												<p className="p-16"> Tình trạng </p>
-												<p className="p-16"> Mô tả </p>
+												<p className="p-6"> Mã sản phẩm </p>
+												<p className="p-6"> Tên sản phẩm </p>
+												<p className="p-6"> Nhóm sản phẩm </p>
+												<p className="p-6"> Ngày mua </p>
+												<p className="p-6"> Tình trạng </p>
+												<p className="p-6"> Mô tả </p>
 											</div>
-											<div className="flex flex-col">
-												<p className="p-16 font-extrabold"> Mã sản phẩm </p>
-												<p className="p-16 font-extrabold"> Tên sản phẩm </p>
-												<p className="p-16 font-extrabold"> Nhóm sản phẩm </p>
-												<p className="p-16 font-extrabold"> Ngày mua </p>
-												<p className="p-16 font-extrabold"> Tình trạng </p>
-												<p className="p-16 font-extrabold"> Mô tả </p>
+											<div className="flex flex-col sm:mr-96 mr-auto">
+												<p className="p-6 font-extrabold"> Mã sản phẩm </p>
+												<p className="p-6 font-extrabold"> Tên sản phẩm </p>
+												<p className="p-6 font-extrabold"> Nhóm sản phẩm </p>
+												<p className="p-6 font-extrabold"> Ngày mua </p>
+												<p className="p-6 font-extrabold"> Tình trạng </p>
+												<p className="p-6 font-extrabold"> Mô tả ngắn </p>
 											</div>
 										</div>
 									</div>
 									<div className="flex-col flex ">
-										<h5 className="font-extrabold text-gray-800 font-sans text-base ">
-											Thông tin Nhân viên sử dụng
-										</h5>
-										<div className="flex-row justify-around flex ">
-											<div className="flex flex-col">
-												<p className="p-16"> Nhân viên </p>
-												<p className="p-16"> Chức vụ </p>
-												<p className="p-16"> Bộ phận </p>
-												<p className="p-16"> Khu vực </p>
+										<div className="flex flex-row">
+											<h5 className="font-extrabold">Thông tin nhân viên sử dụng.</h5>
+											<span className="border-b-1 mt-3 ml-6 border-fuchsia w-auto sm:w-3/6 h-10" />
+										</div>
+										<div className="flex-row justify- flex ">
+											<div className="flex flex-col ">
+												<p className="p-6"> Nhân viên </p>
+												<p className="p-6"> Chức vụ </p>
+												<p className="p-6"> Bộ phận </p>
+												<p className="p-6"> Khu vực </p>
 											</div>
-											<div className="flex flex-col">
-												<p className="p-16 font-extrabold">Nhân viên</p>
-												<p className="p-16 font-extrabold"> Chức vụ </p>
-												<p className="p-16 font-extrabold"> Bộ phận </p>
-												<p className="p-16 font-extrabold"> Khu vực </p>
+											<div className="flex flex-col sm:mr-86 mr-auto">
+												<p className="p-6 font-extrabold">Nhân viên viên phòng test length </p>
+												<p className="p-6 font-extrabold"> Chức vụ </p>
+												<p className="p-6 font-extrabold"> Bộ phận </p>
+												<p className="p-6 font-extrabold"> Khu vực </p>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 							<div className="px-16 sm:px-24">
-								<h5 className="font-extrabold text-gray-800 font-sans text-base ">Thông tin thu hồi</h5>
-								<div className="grid grid-cols-1 sm:grid-cols-2 mb-16 gap-8 ">
+								<div className="flex flex-row">
+									<h5 className="font-extrabold">Thông tin thu hồi.</h5>
+									<span className="border-b-1 mt-3 ml-6 border-fuchsia w-3/6 sm:w-5/6 h-10" />
+								</div>
+								<div className="grid grid-cols-1 sm:grid-cols-2 p-4 mb-16 gap-8 ">
 									<div className="flex flex-col">
 										<Field
 											label="Lí do thu hồi"
@@ -95,7 +100,7 @@ export default function FormCustomUsedEdit() {
 									<Field
 										label="File Đính kèm"
 										autoFocus
-										style={{ height: '39.5px' }}
+										style={{ height: '34.5px' }}
 										name="file"
 										component={FileCustomVersion2}
 										className="mx-4 mb-16"

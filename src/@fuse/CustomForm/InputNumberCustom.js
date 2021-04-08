@@ -19,7 +19,7 @@ export default function InputNumberCustom({
 	return (
 		<>
 			<FormGroup>
-				<label className="mb-16">
+				<label className="mb-10">
 					{' '}
 					{label} {field.value ? `${field.value} tháng ` : null}{' '}
 				</label>

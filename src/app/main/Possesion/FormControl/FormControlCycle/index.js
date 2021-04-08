@@ -2,11 +2,10 @@ import React, { useContext } from 'react';
 import { Dialog, AppBar, Toolbar, Typography } from '@material-ui/core';
 import { PossessionContext } from '../../PossessionContext';
 import FormCustomCycleEdit from './FormCustomCycleEdit';
-// import FormControlReportEdit from './FormControlReportEdit';
 
 export default function FormControlCycle() {
 	const possessionContext = useContext(PossessionContext);
-	const { formCycle, typeCycle, handleCloseFormCycle } = possessionContext;
+	const { formCycle, handleCloseFormCycle } = possessionContext;
 	return (
 		<Dialog
 			fullWidth

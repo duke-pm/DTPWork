@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
-import { Upload, message } from 'antd';
+import { Upload } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import { FormGroup } from '@material-ui/core';
@@ -20,7 +20,7 @@ export default function FileCustomVersion2({
 }) {
 	return (
 		<FormGroup>
-			<label className="mb-16"> {label} </label>
+			<label className="mb-10"> {label} </label>
 			<Dragger>
 				<p className="ant-upload-drag-icon">
 					<InboxOutlined />

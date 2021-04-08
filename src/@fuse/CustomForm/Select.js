@@ -3,7 +3,6 @@
 /* eslint-disable no-undef */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ErrorMessage } from 'formik';
 import { Select } from 'antd';
 import 'antd/dist/antd.css';
 import { FormGroup } from '@material-ui/core';
@@ -25,7 +24,7 @@ Select.defaultProps = {
 };
 export default function SelectCustom(props) {
 	const { Option } = Select;
-	const { field, form, options, label, setFieldValue } = props;
+	const { field, form, options, label } = props;
 	const { name, value } = field;
 	const { errors, touched } = form;
 	const handleSelect = type => {
@@ -33,7 +32,7 @@ export default function SelectCustom(props) {
 	};
 	return (
 		<FormGroup>
-			<label className="mb-16"> {label} </label>
+			<label className="mb-10"> {label} </label>
 			<Select {...field} {...props} style={{ zIndex: 2000 }} value={value} onChange={handleSelect}>
 				{options.map(option => (
 					<Option key={option.value} value={option.value}>
