@@ -31,41 +31,45 @@ export default function FormCustomUnusedEdit() {
 				{({ handleSubmit, isSubmitting }) => (
 					<Form>
 						<DialogContent dividers>
-							<h5 className="font-extrabold text-gray-800 font-sans text-base">Thông tin tài sản</h5>
 							<div className="px-16 sm:px-24">
-								<div className=" grid grid-cols-1 sm:grid-cols-2 gap-48			">
-									<div className="flex-row justify-around flex ">
+								<div className="flex justify-between flex-row">
+									<h5 className="font-extrabold">Thông tin tài sản.</h5>
+									<span className="border-b-1 mt-3 ml-6 border-fuchsia w-auto sm:w-5/6 h-10" />
+								</div>
+								<div className=" grid grid-cols-1 sm:grid-cols-2 gap-48">
+									<div className="flex-row justify-between flex ">
 										<div className="flex flex-col">
-											<p className="p-16"> Mã sản phẩm </p>
-											<p className="p-16"> Tên sản phẩm </p>
-											<p className="p-16"> Nhóm sản phẩm </p>
-											<p className="p-16"> Mô tả </p>
+											<p className="p-6"> Mã sản phẩm </p>
+											<p className="p-6"> Tên sản phẩm </p>
+											<p className="p-6"> Nhóm sản phẩm </p>
+											<p className="p-6"> Mô tả </p>
 										</div>
-										<div className="flex flex-col">
-											<p className="p-16 font-extrabold"> Mã sản phẩm </p>
-											<p className="p-16 font-extrabold"> Tên sản phẩm </p>
-											<p className="p-16 font-extrabold"> Nhóm sản phẩm </p>
-											<p className="p-16 font-extrabold"> Mô tả </p>
+										<div className="flex sm:mr-96 mr-auto flex-col">
+											<p className="p-6 font-extrabold"> Mã sản phẩm </p>
+											<p className="p-6 font-extrabold"> Tên sản phẩm </p>
+											<p className="p-6 font-extrabold"> Nhóm sản phẩm </p>
+											<p className="p-6 font-extrabold"> Mô tả </p>
 										</div>
 									</div>
-									<div className="flex-row justify-around flex ">
+									<div className="flex-row justify-between flex ">
 										<div className="flex flex-col">
-											<p className="p-16">Ngày mua </p>
-											<p className="p-16"> Nguyên giá </p>
-											<p className="p-16"> Tình trạng </p>
+											<p className="p-6">Ngày mua </p>
+											<p className="p-6"> Nguyên giá </p>
+											<p className="p-166"> Tình trạng </p>
 										</div>
-										<div className="flex flex-col">
-											<p className="p-16 font-extrabold"> Ngày mua </p>
-											<p className="p-16 font-extrabold"> Nguyên giá </p>
-											<p className="p-16 font-extrabold"> Tình trạng </p>
+										<div className="flex sm:mr-96 mr-auto flex-col">
+											<p className="p-6 font-extrabold"> Ngày mua </p>
+											<p className="p-6 font-extrabold"> Nguyên giá </p>
+											<p className="p-6 font-extrabold"> Tình trạng </p>
 										</div>
 									</div>
 								</div>
 							</div>
-							<h5 className="font-extrabold text-gray-800 font-sans mb-16 text-base ">
-								Thông tin cấp phát tài sản
-							</h5>
 							<div className="px-16 sm:px-24">
+								<div className="flex justify-between flex-row">
+									<h5 className="font-extrabold">Thông tin cấp phát tài sản.</h5>
+									<span className="border-b-1 mt-3 ml-6 border-fuchsia w-auto sm:w-9/12 h-10" />
+								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 mb-16 gap-8 ">
 									<Field
 										label="Nhân viên được cấp phát (*)"

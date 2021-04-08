@@ -1,9 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
-// import { FieldFeedbackLabel } from './FieldFeedbackLabel';
 import { FormGroup } from '@material-ui/core';
 import { Input } from 'antd';
-import { ErrorMessage } from 'formik';
 
 export default function InputCustom({
 	field,
@@ -17,7 +15,7 @@ export default function InputCustom({
 	return (
 		<>
 			<FormGroup>
-				<label className="mb-16"> {label} </label>
+				<label className="mb-10"> {label} </label>
 				<Input type={type} {...field} {...props} />
 				{errors[field.name] && touched[field.name] ? (
 					<div className="text-red">{errors[field.name]}</div>

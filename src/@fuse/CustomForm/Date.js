@@ -1,8 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import { FormGroup } from '@material-ui/core';
-import { KeyboardDatePicker } from '@material-ui/pickers';
-import { DatePicker, Space } from 'antd';
+import { DatePicker } from 'antd';
 
 export default function DateCustom({
 	field, // { name, value, onChange, onBlur }
@@ -20,7 +19,7 @@ export default function DateCustom({
 	return (
 		<>
 			<FormGroup>
-				<label className="mb-16"> {label} </label>
+				<label className="mb-10"> {label} </label>
 				<DatePicker
 					placeholder="Vui lòng chọn ngày"
 					margin="normal"

@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
-import { Button, FormGroup, TextField, Fab } from '@material-ui/core';
+import { FormGroup, Fab } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 
 export default function FileCustom({
@@ -14,7 +14,7 @@ export default function FileCustom({
 }) {
 	return (
 		<FormGroup>
-			<label className="mb-16"> {label} </label>
+			<label className="mb-10"> {label} </label>
 			<label htmlFor="upload-photo">
 				<input style={{ display: 'none' }} id="upload-photo" name="upload-photo" type="file" />
 

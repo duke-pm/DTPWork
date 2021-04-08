@@ -16,7 +16,7 @@ export default function InputCurrency({
 	return (
 		<>
 			<FormGroup>
-				{label && <label className="mb-16"> {label}</label>}
+				{label && <label className="mb-10"> {label}</label>}
 				<NumberFormat
 					name={name}
 					customInput={Input}

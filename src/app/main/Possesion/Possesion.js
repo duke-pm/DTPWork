@@ -1,11 +1,8 @@
-import { makeStyles } from '@material-ui/core/styles';
-import { AppBar, Tabs, Tab, Box, Container, Typography } from '@material-ui/core';
+import { Tabs, Tab, Box, Typography } from '@material-ui/core';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import FusePageCarded from '@fuse/core/FusePageCarded';
-import { Link, useParams } from 'react-router-dom';
-import Icon from '@material-ui/core/Icon';
+import { Link } from 'react-router-dom';
 import PossessionAll from './PossessionAll';
 import PossessionUnused from './PossessionUnused';
 import PossessionUsed from './PossessionUsed';
@@ -15,13 +12,6 @@ import PossessionPay from './PossessionPay';
 import PossessionContextProvider from './PossessionContext';
 import FormControlCycle from './FormControl/FormControlCycle';
 
-const useStyles = makeStyles(theme => ({
-	root: {
-		flexGrow: 1,
-		width: '100%',
-		backgroundColor: theme.palette.background.paper
-	}
-}));
 function a11yProps(index) {
 	return {
 		id: `scrollable-auto-tab-${index}`,
@@ -45,8 +35,6 @@ function TabPanel(props) {
 }
 
 function PossesionPage(props) {
-	const classes = useStyles(props);
-	const { t } = useTranslation('examplePage');
 	const [value, setValue] = React.useState(0);
 
 	const handleChange = (event, newValue) => {
@@ -79,6 +67,7 @@ function PossesionPage(props) {
 	// };
 	return (
 		<PossessionContextProvider>
+			<FormControlCycle />
 			<FusePageCarded
 				classes={{
 					// content: 'flex',
@@ -95,7 +84,7 @@ function PossesionPage(props) {
 									// to="/apps/e-commerce/orders"
 									color="inherit"
 								>
-									{xhtm}
+									{/* {xhtm} */}
 								</Typography>
 							</FuseAnimate>
 						</div>
@@ -123,29 +112,19 @@ function PossesionPage(props) {
 				content={
 					<div className="p-16 sm:p-24">
 						<TabPanel value={value} index={0}>
-							<FuseAnimate animation="transition.slideUpIn">
-								<PossessionAll />
-							</FuseAnimate>
+							<PossessionAll />
 						</TabPanel>
 						<TabPanel value={value} index={1}>
-							<FuseAnimate animation="transition.slideUpIn">
-								<PossessionUnused />
-							</FuseAnimate>
+							<PossessionUnused />
 						</TabPanel>
 						<TabPanel value={value} index={2}>
-							<FuseAnimate animation="transition.slideUpIn">
-								<PossessionUsed />
-							</FuseAnimate>
+							<PossessionUsed />
 						</TabPanel>
 						<TabPanel value={value} index={3}>
-							<FuseAnimate animation="transition.slideUpIn">
-								<PossessionRepair />
-							</FuseAnimate>
+							<PossessionRepair />
 						</TabPanel>
 						<TabPanel value={value} index={4}>
-							<FuseAnimate animation="transition.slideUpIn">
-								<PossessionCorrupt />
-							</FuseAnimate>
+							<PossessionCorrupt />
 						</TabPanel>
 						<TabPanel value={value} index={5}>
 							<FuseAnimate animation="transition.slideUpIn">
