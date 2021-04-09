@@ -7,6 +7,7 @@ import InputMonthCustom from '@fuse/CustomForm/InputMonthCustom';
 import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
 import InputCurrency from '@fuse/CustomForm/InputCurrency';
 import InputNumberCustom from '@fuse/CustomForm/InputNumberCustom';
+import { notification } from 'antd';
 import InputCustom from '../../../../../@fuse/CustomForm/Input';
 import SelectCustom from '../../../../../@fuse/CustomForm/Select';
 
@@ -39,7 +40,24 @@ export default function FormCustomEdit({ handleClose }) {
 		prefix: Yup.string().required('Tiền tố không được để trống')
 	});
 	const saveForm = values => {
-		console.log(values);
+		// notification.open({
+		// 	message: 'Notification Title',
+		// 	description:
+		// 		'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+		// 	onClick: () => {
+		// 		console.log('Notification Clicked!');
+		// 	}
+		// });
+	};
+	const openNotification = () => {
+		notification.success({
+			message: 'Notification Title',
+			description:
+				'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+			onClick: () => {
+				console.log('Notification Clicked!');
+			}
+		});
 	};
 	return (
 		<>
@@ -206,7 +224,7 @@ export default function FormCustomEdit({ handleClose }) {
 							</div>
 						</DialogContent>
 						<DialogActions>
-							<Button autoFocus type="submit" color="primary">
+							<Button autoFocus onClick={openNotification} type="submit" color="primary">
 								Lưu
 							</Button>
 						</DialogActions>
