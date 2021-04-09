@@ -71,7 +71,7 @@ function PossesionPage(props) {
 			<FusePageCarded
 				classes={{
 					// content: 'flex',
-					header: 'min-h-72 h-72 sm:h-136 sm:min-h-136'
+					header: 'min-h-10 h-10	sm:h-16 sm:min-h-16'
 				}}
 				header={
 					<div className="flex flex-1 w-full items-center justify-between">

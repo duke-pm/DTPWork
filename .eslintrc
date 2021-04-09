@@ -35,6 +35,7 @@
                 ]
             }
         ],
+        "import/prefer-default-export": "off",
         "no-unused-vars": "off",
         "no-param-reassign": "off",
         "no-console": "off",
@@ -54,6 +55,8 @@
         "react/forbid-prop-types": "off",
         "react/require-default-props": "off",
         "react/default-props-match-prop-types": "off",
-        "react/no-unused-prop-types": "off"
+        "react/no-unused-prop-types": "off",
+        'camelcase': 'off',
+
     }
 }

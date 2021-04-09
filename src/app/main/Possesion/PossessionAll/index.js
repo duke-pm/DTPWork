@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import FuseAnimate from '@fuse/core/FuseAnimate';
+import FuseLoading from '@fuse/core/FuseLoading';
 import { Paper, Table, TableHead, TableRow, TableCell, TableBody, TableContainer } from '@material-ui/core';
 import PossessionAll from './FormCustomAll';
 import ActionComponent from './Component/ActionComponent';
@@ -53,7 +54,7 @@ export default function PossessionUnused(props) {
 							<FuseAnimate delay={200} animation="transition.slideUpIn">
 								<Table className={classes.table} stickyHeader>
 									<TableHead>
-										<TableRow>
+										<TableRow className="h-64 cursor-pointer" hover>
 											<TableCell
 												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
 												align="center"
@@ -87,7 +88,7 @@ export default function PossessionUnused(props) {
 										</TableRow>
 									</TableHead>
 									<TableBody>
-										<TableRow>
+										<TableRow className="h-64 cursor-pointer" hover>
 											<TableCell align="center"> abbott @withinpixels.com </TableCell>
 											<TableCell align="center">Thiết bị</TableCell>
 											<TableCell align="center"> 02/04/2020 </TableCell>

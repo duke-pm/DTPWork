@@ -16,6 +16,7 @@ import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import AppsIcon from '@material-ui/icons/Apps';
+import FuseLoading from '@fuse/core/FuseLoading';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import FormCustomUnused from './FormCustomUnused';
 import FormControlReport from '../FormControl/FormControlReport';
@@ -54,8 +55,10 @@ const useStyles = makeStyles(theme => ({
 export default function PossessionUnused(props) {
 	const [open, setOpen] = React.useState(false);
 	const [actionMenu, setActionMenu] = useState(null);
+	const [loading, setLoading] = React.useState(false);
 	const possessionContext = useContext(PossessionContext);
 	const { handleOpenFormReport } = possessionContext;
+	const classes = useStyles(props);
 	const handleFormOpenReport = type => {
 		setActionMenu(null);
 		handleOpenFormReport(type);
@@ -75,7 +78,9 @@ export default function PossessionUnused(props) {
 	const actionMenuClose = () => {
 		setActionMenu(null);
 	};
-	const classes = useStyles(props);
+	if (!loading) {
+		return <FuseLoading />;
+	}
 	return (
 		<>
 			<FormCustomUnused open={open} handleClose={handleClose} />
