@@ -7,9 +7,9 @@ import FusePageCardedHeader from './FusePageCardedHeader';
 import FusePageCardedSidebar from './FusePageCardedSidebar';
 
 const drawerWidth = 240;
-const headerHeight = 200;
+const headerHeight = 80;
 const toolbarHeight = 64;
-const headerContentHeight = headerHeight - toolbarHeight;
+// const headerContentHeight = headerHeight - toolbarHeight;
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -49,9 +49,9 @@ const useStyles = makeStyles(theme => ({
 		}
 	},
 	header: {
-		height: headerContentHeight,
-		minHeight: headerContentHeight,
-		maxHeight: headerContentHeight,
+		// height: headerContentHeight,
+		// minHeight: headerContentHeight,
+		// maxHeight: headerContentHeight,
 		display: 'flex',
 		color: theme.palette.primary.contrastText
 	},
