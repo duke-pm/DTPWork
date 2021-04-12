@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import { Paper, Table, TableHead, TableRow, TableCell, TableBody, TableContainer } from '@material-ui/core';
+import Panigation from '@fuse/core/FusePanigate';
 import PossessionAll from './FormCustomAll';
 import ActionComponent from './Component/ActionComponent';
 // import FormCustomAll from './FormCustomAll';
@@ -99,6 +100,29 @@ export default function PossessionUnused(props) {
 							</FuseAnimate>
 						</Paper>
 					</TableContainer>
+					<div className="flex justify-end  mt-48 mb-16 ">
+						<Paper className="rounded-8 shadow">
+							<Panigation />
+						</Paper>
+					</div>
+					{/* <TablePagination
+						component={Panigation}
+						classes={{
+							root: 'flex-shrink-0 border-t-1'
+						}}
+						rowsPerPageOptions={[5, 10, 25, { label: 'All' }]}
+						colSpan={5}
+						// count={data.length}
+						// rowsPerPage={pageSize}
+						// page={pageIndex}
+						SelectProps={{
+							inputProps: { 'aria-label': 'rows per page' },
+							native: false
+						}}
+						// onChangePage={handleChangePage}
+						// onChangeRowsPerPage={handleChangeRowsPerPage}
+						// ActionsComponent={ContactsTablePaginationActions}
+					/> */}
 				</div>
 			</div>
 		</>
