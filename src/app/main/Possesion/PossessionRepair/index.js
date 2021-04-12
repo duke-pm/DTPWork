@@ -81,7 +81,7 @@ export default function PossessionRepair(props) {
 				<ActionComponent />
 
 				<FuseAnimate delay={200} animation="transition.slideUpIn">
-					<div className="flex flex-col mt-36 min-h-full overflow-hidden">
+					<div className="flex flex-col mt-36 min-h-full shadow-2xl  sm:border-1 sm:rounded-4 overflow-hidden">
 						<TableContainer className="flex flex-1">
 							<Paper className={classes.rootPaper}>
 								<Table className={classes.table} stickyHeader>
