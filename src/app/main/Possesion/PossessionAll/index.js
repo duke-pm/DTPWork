@@ -1,8 +1,18 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import FuseAnimate from '@fuse/core/FuseAnimate';
-import { Paper, Table, TableHead, TableRow, TableCell, TableBody, TableContainer } from '@material-ui/core';
+import {
+	Paper,
+	Table,
+	TableHead,
+	TableRow,
+	TableCell,
+	TableBody,
+	TableContainer,
+	TablePagination
+} from '@material-ui/core';
 import Panigation from '@fuse/core/FusePanigate';
+import FuseScrollbars from '@fuse/core/FuseScrollbars';
 import PossessionAll from './FormCustomAll';
 import ActionComponent from './Component/ActionComponent';
 // import FormCustomAll from './FormCustomAll';
@@ -20,6 +30,9 @@ const useStyles = makeStyles(theme => ({
 	rootPaper: {
 		width: '100%',
 		overflowX: 'auto'
+	},
+	TableContainer: {
+		maxHeight: '520px'
 	},
 	modal: {
 		display: 'flex',
@@ -48,13 +61,13 @@ export default function PossessionUnused(props) {
 			<PossessionAll open={open} handleClose={handleClose} />
 			<div className="flex flex-col">
 				<ActionComponent handleOpenForm={handleOpenForm} />
-				<div className="flex flex-col mt-36 min-h-full overflow-hidden">
-					<TableContainer className="flex flex-1">
-						<Paper className={classes.rootPaper}>
-							<FuseAnimate delay={200} animation="transition.slideUpIn">
-								<Table className={classes.table} stickyHeader>
+				<FuseAnimate animation="transition.slideUpIn" delay={200}>
+					<div className="flex flex-col mt-36 min-h-full shadow-2xl  sm:border-1 sm:rounded-4 overflow-hidden">
+						<TableContainer className={`${classes.TableContainer} flex flex-1`}>
+							<Paper className={classes.rootPaper}>
+								<Table className={`${classes.table}`} stickyHeader>
 									<TableHead>
-										<TableRow className="h-64 cursor-pointer" hover>
+										<TableRow>
 											<TableCell
 												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
 												align="center"
@@ -88,42 +101,112 @@ export default function PossessionUnused(props) {
 										</TableRow>
 									</TableHead>
 									<TableBody>
-										<TableRow className="h-64 cursor-pointer" hover>
+										<TableRow hover className="h-4 cursor-pointer">
+											<TableCell align="center"> MT-20020 </TableCell>
 											<TableCell align="center"> abbott @withinpixels.com </TableCell>
 											<TableCell align="center">Thiết bị</TableCell>
 											<TableCell align="center"> 02/04/2020 </TableCell>
+											<TableCell align="center"> 02/04/2020 </TableCell>
+										</TableRow>
+										<TableRow>
+											<TableCell align="center"> MT-20020 </TableCell>
+											<TableCell align="center"> abbott @withinpixels.com </TableCell>
+											<TableCell align="center">Thiết bị</TableCell>
+											<TableCell align="center"> 02/04/2020 </TableCell>
+											<TableCell align="center"> 02/04/2020 </TableCell>
+										</TableRow>
+										<TableRow>
+											<TableCell align="center"> MT-20020 </TableCell>
+											<TableCell align="center"> abbott @withinpixels.com </TableCell>
+											<TableCell align="center">Thiết bị</TableCell>
+											<TableCell align="center"> 02/04/2020 </TableCell>
+											<TableCell align="center"> 02/04/2020 </TableCell>
+										</TableRow>
+										<TableRow>
+											<TableCell align="center"> MT-20020 </TableCell>
+											<TableCell align="center"> abbott @withinpixels.com </TableCell>
+											<TableCell align="center">Thiết bị</TableCell>
+											<TableCell align="center"> 02/04/2020 </TableCell>
+											<TableCell align="center"> 02/04/2020 </TableCell>
+										</TableRow>
+										<TableRow>
+											<TableCell align="center"> MT-20020 </TableCell>
+											<TableCell align="center"> abbott @withinpixels.com </TableCell>
+											<TableCell align="center">Thiết bị</TableCell>
+											<TableCell align="center"> 02/04/2020 </TableCell>
+											<TableCell align="center"> 02/04/2020 </TableCell>
+										</TableRow>
+										<TableRow>
+											<TableCell align="center"> MT-20020 </TableCell>
+											<TableCell align="center"> abbott @withinpixels.com </TableCell>
+											<TableCell align="center">Thiết bị</TableCell>
+											<TableCell align="center"> 02/04/2020 </TableCell>
+											<TableCell align="center"> 02/04/2020 </TableCell>
+										</TableRow>
+										<TableRow>
+											<TableCell align="center"> MT-20020 </TableCell>
+											<TableCell align="center"> abbott @withinpixels.com </TableCell>
+											<TableCell align="center">Thiết bị</TableCell>
+											<TableCell align="center"> 02/04/2020 </TableCell>
+											<TableCell align="center"> 02/04/2020 </TableCell>
+										</TableRow>
+										<TableRow>
+											<TableCell align="center"> MT-20020 </TableCell>
+											<TableCell align="center"> abbott @withinpixels.com </TableCell>
+											<TableCell align="center">Thiết bị</TableCell>
+											<TableCell align="center"> 02/04/2020 </TableCell>
+											<TableCell align="center"> 02/04/2020 </TableCell>
+										</TableRow>
+										<TableRow>
+											<TableCell align="center"> MT-20020 </TableCell>
+											<TableCell align="center"> abbott @withinpixels.com </TableCell>
+											<TableCell align="center">Thiết bị</TableCell>
+											<TableCell align="center"> 02/04/2020 </TableCell>
+											<TableCell align="center"> 02/04/2020 </TableCell>
+										</TableRow>
+										<TableRow>
+											<TableCell align="center"> MT-20020 </TableCell>
+											<TableCell align="center"> abbott @withinpixels.com </TableCell>
+											<TableCell align="center">Thiết bị</TableCell>
+											<TableCell align="center"> 02/04/2020 </TableCell>
+											<TableCell align="center"> 02/04/2020 </TableCell>
+										</TableRow>
+										<TableRow>
+											<TableCell align="center"> MT-20020 </TableCell>
+											<TableCell align="center"> abbott @withinpixels.com </TableCell>
+											<TableCell align="center">Thiết bị</TableCell>
+											<TableCell align="center"> 02/04/2020 </TableCell>
+											<TableCell align="center"> 02/04/2020 </TableCell>
+										</TableRow>
+										<TableRow>
+											<TableCell align="center"> MT-20020 </TableCell>
+											<TableCell align="center"> abbott @withinpixels.com </TableCell>
+											<TableCell align="center">Thiết bị</TableCell>
+											<TableCell align="center"> 02/04/2020 </TableCell>
+											<TableCell align="center"> 02/04/2020 </TableCell>
+										</TableRow>
+										<TableRow>
+											<TableCell align="center"> MT-20020 </TableCell>
+											<TableCell align="center"> abbott @withinpixels.com </TableCell>
+											<TableCell align="center">Thiết bị</TableCell>
 											<TableCell align="center"> 02/04/2020 </TableCell>
 											<TableCell align="center"> 02/04/2020 </TableCell>
 										</TableRow>
 									</TableBody>
 								</Table>
-							</FuseAnimate>
-						</Paper>
-					</TableContainer>
-					<div className="flex justify-end  mt-48 mb-16 ">
-						<Paper className="rounded-8 shadow">
-							<Panigation />
-						</Paper>
+							</Paper>
+						</TableContainer>
+						<TablePagination
+							rowsPerPageOptions={[10, 25, 100]}
+							component="div"
+							count={20}
+							// rowsPerPage={rowsPerPage}
+							page={1}
+							// onChangePage={handleChangePage}
+							// onChangeRowsPerPage={handleChangeRowsPerPage}
+						/>
 					</div>
-					{/* <TablePagination
-						component={Panigation}
-						classes={{
-							root: 'flex-shrink-0 border-t-1'
-						}}
-						rowsPerPageOptions={[5, 10, 25, { label: 'All' }]}
-						colSpan={5}
-						// count={data.length}
-						// rowsPerPage={pageSize}
-						// page={pageIndex}
-						SelectProps={{
-							inputProps: { 'aria-label': 'rows per page' },
-							native: false
-						}}
-						// onChangePage={handleChangePage}
-						// onChangeRowsPerPage={handleChangeRowsPerPage}
-						// ActionsComponent={ContactsTablePaginationActions}
-					/> */}
-				</div>
+				</FuseAnimate>
 			</div>
 		</>
 	);
