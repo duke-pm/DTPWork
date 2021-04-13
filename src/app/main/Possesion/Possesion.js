@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import FusePageCarded from '@fuse/core/FusePageCarded';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import PossessionAll from './PossessionAll';
 import PossessionUnused from './PossessionUnused';
 import PossessionUsed from './PossessionUsed';
@@ -11,6 +12,7 @@ import PossessionCorrupt from './PossessionCorrupt';
 import PossessionPay from './PossessionPay';
 import PossessionContextProvider from './PossessionContext';
 import FormControlCycle from './FormControl/FormControlCycle';
+import * as actions from './_redux/possesionActions';
 
 function a11yProps(index) {
 	return {
@@ -35,6 +37,7 @@ function TabPanel(props) {
 }
 
 function PossesionPage(props) {
+	const dispatch = useDispatch();
 	const [value, setValue] = React.useState(0);
 
 	const handleChange = (event, newValue) => {
@@ -43,7 +46,7 @@ function PossesionPage(props) {
 	useEffect(() => {
 		switch (value) {
 			case 0:
-				console.log(value);
+				dispatch(actions.fetchPossesionAll());
 				break;
 			case 1:
 				console.log(value);

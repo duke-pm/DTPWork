@@ -1,6 +1,6 @@
 import * as requestFrom from '../posseionCruds';
 
-import possesionSlice, { callTypes } from '../possesionSlice';
+import { callTypes, possesionSlice } from '../possesionSlice';
 
 const { actions } = possesionSlice;
 
@@ -33,9 +33,14 @@ export const cyclePossesion = data => dispatch => {
 // fetch
 export const fetchPossesionAll = params => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.list }));
+	const paramsReq = {
+		StatusID: 0
+	};
 	return requestFrom
-		.fetchDataPossesion(params)
-		.then(() => {})
+		.fetchDataPossesion(paramsReq)
+		.then(res => {
+			console.log(res);
+		})
 		.catch(() => {});
 };
 export const createdPossesionAll = data => dispatch => {

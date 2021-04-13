@@ -13,7 +13,7 @@ export const callTypes = {
 	action: 'actions'
 };
 
-const possesionSlice = createSlice({
+export const possesionSlice = createSlice({
 	name: 'possesion',
 	initialState: initialPossesionState,
 	reducers: {
@@ -64,4 +64,3 @@ const possesionSlice = createSlice({
 		}
 	}
 });
-export default possesionSlice.reducer;
