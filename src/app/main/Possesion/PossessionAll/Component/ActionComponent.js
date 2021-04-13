@@ -1,25 +1,49 @@
-import { Button, TextField } from '@material-ui/core';
+/* eslint-disable import/no-extraneous-dependencies */
+import { Button, IconButton, Paper, TextField } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
+import { LoadingOutlined } from '@ant-design/icons';
 import FuseAnimate from '@fuse/core/FuseAnimate';
+import InputBase from '@material-ui/core/InputBase';
+import SearchIcon from '@material-ui/icons/Search';
+import { Spin } from 'antd';
+
+const useStyles = makeStyles(theme => ({
+	root: {
+		padding: '2px 4px',
+		display: 'flex',
+		alignItems: 'center',
+		width: 400
+	},
+	input: {
+		marginLeft: theme.spacing(1),
+		flex: 1
+	},
+	iconButton: {
+		padding: 10
+	},
+	divider: {
+		height: 28,
+		margin: 4
+	}
+}));
 
 export default function ActionComponent(props) {
+	const classes = useStyles();
 	return (
 		<FuseAnimate animation="transition.slideLeftIn" delay={300}>
 			<div className="flex flex-col sm:flex-row justify-between">
-				<TextField
-					id="outlined-full-width"
-					label="Tìm kiếm"
-					inputProps={{
-						style: {
-							height: '2px'
-						}
-					}}
-					// margin="normal"
-					InputLabelProps={{
-						shrink: true
-					}}
-					variant="outlined"
-				/>
+				<Paper component="form" className={classes.root}>
+					<InputBase
+						className={classes.input}
+						placeholder="Tìm kiếm"
+						inputProps={{ 'aria-label': 'search google maps' }}
+					/>
+					<IconButton type="button" className={classes.iconButton} aria-label="search">
+						<SearchIcon />
+					</IconButton>
+					{/* <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} /> */}
+				</Paper>
 				<Button
 					onClick={props.handleOpenForm}
 					className="mt-8 sm:mt-0 max-w-sm md:max-w-lg h-26"

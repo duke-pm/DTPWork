@@ -8,12 +8,12 @@ import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
 import InputCurrency from '@fuse/CustomForm/InputCurrency';
 import InputNumberCustom from '@fuse/CustomForm/InputNumberCustom';
 import { notification } from 'antd';
-import InputCustom from '../../../../../@fuse/CustomForm/Input';
+import { AntDatePicker, AntInput, AntSelect } from '@fuse/CustomForm/CreateAntField';
 import SelectCustom from '../../../../../@fuse/CustomForm/Select';
 
 const initial = {
 	namePossessionall: '',
-	amount: '',
+	amount: null,
 	categoryPossessionall: '',
 	specification: '',
 	provider: '',
@@ -24,22 +24,23 @@ const initial = {
 	time_kh: '',
 	location: '',
 	note: '',
-	prefix: '',
-	valueStart: '',
-	valueLength: ''
+	unitManagement: ''
+	// prefix: '',
+	// valueStart: '',
+	// valueLength: ''
 };
 export default function FormCustomEdit({ handleClose }) {
 	const checkValidateForm = Yup.object().shape({
 		namePossessionall: Yup.string().required('Tên tài sản không được để trống'),
 		categoryPossessionall: Yup.string().required('Loại tài sản không được để trống'),
-		datePay: Yup.string().required('Ngày mua không được để trống'),
-		amount: Yup.string().required('Số lượng không được để trống'),
-		unitManagement: Yup.string().required('Đơn vị quản lý không được để trống'),
-		peopleManagement: Yup.string().required('Người quản lý không được để trống'),
-		location: Yup.string().required('Vị trí địa lí không được để trống'),
-		prefix: Yup.string().required('Tiền tố không được để trống')
+		datePay: Yup.date().required('Ngày mua không được để trống').nullable(),
+		amount: Yup.number()
+			.typeError('Số lượng phải là dạng số và không được để trống. ')
+			.required('Số lượng không được để trống'),
+		unitManagement: Yup.string().required('Đơn vị quản lý không được để trống')
 	});
 	const saveForm = values => {
+		console.log(values);
 		// notification.open({
 		// 	message: 'Notification Title',
 		// 	description:
@@ -77,31 +78,37 @@ export default function FormCustomEdit({ handleClose }) {
 								<span className="border-b-1 mt-3 ml-6 border-fuchsia w-3/6 sm:w-5/6 h-10" />
 							</div>
 							<div className="px-16 sm:px-24">
-								<div className="grid mb-16  gap-8 ">
+								<div className="grid gap-8 ">
 									<Field
 										label="Tên tài sản (*)"
 										autoFocus
 										name="namePossessionall"
 										type="text"
-										component={InputCustom}
-										className="mx-4 mb-16"
+										component={AntInput}
+										className="mx-4"
 										variant="outlined"
+										hasFeedback
+										placeholder="Vui lòng điền tên tài sản"
 									/>
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 mb-16 gap-8 ">
+								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
 									<Field
 										label="Loại tài sản (*)"
 										name="categoryPossessionall"
-										component={SelectCustom}
+										component={AntSelect}
 										options={[{ value: 1, label: 'text' }]}
 										className="mt-8 mb-16"
+										hasFeedback
+										placeholder="Vui lòng chọn loại tài sản"
 									/>
 									<Field
 										label="Số lượng (*)"
 										autoFocus
 										name="amount"
+										placeholder="Vui lòng điền số lượng"
 										type="number"
-										component={InputNumberCustom}
+										hasFeedback
+										component={AntInput}
 										className="mx-4 mb-16"
 										variant="outlined"
 									/>
@@ -113,6 +120,7 @@ export default function FormCustomEdit({ handleClose }) {
 										name="specification"
 										component={InputTextAreaLg}
 										row={2}
+										placeholder="Vui lòng điền nội dung"
 										className="mx-4 mb-16"
 										variant="outlined"
 									/>
@@ -134,10 +142,12 @@ export default function FormCustomEdit({ handleClose }) {
 										label="Ngày mua (*) "
 										autoFocus
 										name="datePay"
-										type="text"
-										component={DateCustom}
+										// value={initial.datePay}
+										placeholder="Vui lòng chọn ngày mua"
+										format="DD/MM/YYYY"
+										component={AntDatePicker}
 										className="mx-4 mb-16"
-										variant="outlined"
+										hasFeedback
 									/>
 									<Field
 										label="Thời gian hiệu lực"
@@ -150,9 +160,10 @@ export default function FormCustomEdit({ handleClose }) {
 									<Field
 										label="Thời gian bảo hành "
 										autoFocus
+										placeholder="Vui lòng chọn thời gian bảo hành"
 										name="dateService"
 										type="number"
-										component={InputNumberCustom}
+										component={AntInput}
 										className="mx-4 mb-16"
 									/>
 								</div>
@@ -162,6 +173,7 @@ export default function FormCustomEdit({ handleClose }) {
 										autoFocus
 										name="price"
 										type="number"
+										placeholder="Vui lòng điền nguyên giá"
 										component={InputCurrency}
 										className="mx-4 mb-16"
 										variant="outlined"
@@ -170,22 +182,19 @@ export default function FormCustomEdit({ handleClose }) {
 										label="Thời gian KH "
 										autoFocus
 										name="time_kh"
+										component={AntInput}
 										type="number"
-										component={InputMonthCustom}
+										placeholder="Vui lòng chọn thời gian KH"
 										className="mx-4 mb-16"
 										variant="outlined"
 									/>
 									<Field
 										label="Đơn vị quản lí (*)"
-										autoFocus
 										name="unitManagement"
-										component={SelectCustom}
-										options={[
-											{ value: 1, label: 'text' },
-											{ value: 2, label: 'text2' }
-										]}
-										className="mx-4 mb-16 flex-1"
-										variant="outlined"
+										component={AntSelect}
+										options={[{ value: 1, label: 'text' }]}
+										className="mt-8 mb-16"
+										hasFeedback
 									/>
 								</div>
 							</div>
@@ -224,7 +233,13 @@ export default function FormCustomEdit({ handleClose }) {
 							</div>
 						</DialogContent>
 						<DialogActions>
-							<Button autoFocus onClick={openNotification} type="submit" color="primary">
+							<Button
+								variant="contained"
+								autoFocus
+								onClick={openNotification}
+								type="submit"
+								color="primary"
+							>
 								Lưu
 							</Button>
 						</DialogActions>

@@ -3,9 +3,11 @@
 /* eslint-disable no-undef */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Select } from 'antd';
+import { Select, Form } from 'antd';
 import 'antd/dist/antd.css';
 import { FormGroup } from '@material-ui/core';
+
+const FormItem = Form.Item;
 
 Select.propTypes = {
 	field: PropTypes.object.isRequired,

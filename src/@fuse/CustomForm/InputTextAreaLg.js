@@ -13,6 +13,7 @@ export default function InputTextAreaLg({
 	withFeedbackLabel = true,
 	customFeedbackLabel,
 	type,
+	placeholder,
 	row,
 	...props
 }) {
@@ -20,7 +21,14 @@ export default function InputTextAreaLg({
 		<>
 			<FormGroup>
 				<label className="mb-10"> {label} </label>
-				<TextArea rows={row} variant="outlined" type={type} {...field} {...props} />
+				<TextArea
+					placeholder={placeholder || ''}
+					rows={row}
+					variant="outlined"
+					type={type}
+					{...field}
+					{...props}
+				/>
 			</FormGroup>
 		</>
 	);

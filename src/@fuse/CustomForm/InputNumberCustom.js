@@ -2,7 +2,7 @@
 import React from 'react';
 // import { FieldFeedbackLabel } from './FieldFeedbackLabel';
 import { FormGroup } from '@material-ui/core';
-import { InputNumber } from 'antd';
+import { Input } from 'antd';
 
 export default function InputNumberCustom({
 	field,
@@ -13,17 +13,11 @@ export default function InputNumberCustom({
 	type,
 	...props
 }) {
-	const onChange = number => {
-		setFieldValue(field.name, number);
-	};
 	return (
 		<>
 			<FormGroup>
-				<label className="mb-10">
-					{' '}
-					{label} {field.value ? `${field.value} tháng ` : null}{' '}
-				</label>
-				<InputNumber style={{ width: '100%' }} type={type} {...field} {...props} onChange={onChange} />
+				<label className="mb-10"> {label}</label>
+				<Input type="number" style={{ width: '100%' }} {...field} {...props} />
 				{errors[field.name] && touched[field.name] ? (
 					<div className="text-red">{errors[field.name]}</div>
 				) : null}

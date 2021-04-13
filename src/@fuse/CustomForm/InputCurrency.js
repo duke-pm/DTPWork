@@ -10,6 +10,7 @@ export default function InputCurrency({
 	label,
 	withFeedbackLabel = true,
 	customFeedbackLabel,
+	placeholder,
 	type = 'text',
 	...props
 }) {
@@ -21,6 +22,7 @@ export default function InputCurrency({
 					name={name}
 					customInput={Input}
 					value={value}
+					placeholder={placeholder || ' '}
 					onValueChange={val => setFieldValue(name, val.floatValue)}
 					thousandSeparator
 					prefix="VNĐ "

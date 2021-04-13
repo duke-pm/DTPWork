@@ -17,18 +17,7 @@ export default function InputMonthCustom({
 		<>
 			<FormGroup>
 				<label className="mb-10"> {`${label} ${field && field.value} tháng `} </label>
-				<Input
-					helperText={touched.name ? errors.name : ''}
-					error={touched.name && Boolean(errors.name)}
-					type={type}
-					{...field}
-					{...props}
-					inputProps={{
-						style: {
-							height: '2px'
-						}
-					}}
-				/>
+				<Input error={touched.name && Boolean(errors.name)} type={type} {...field} {...props} />
 			</FormGroup>
 			{/* {withFeedbackLabel && (
 				<FieldFeedbackLabel

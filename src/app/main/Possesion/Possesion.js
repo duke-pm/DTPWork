@@ -1,5 +1,5 @@
 import { Tabs, Tab, Box, Typography } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import FusePageCarded from '@fuse/core/FusePageCarded';
 import { Link } from 'react-router-dom';
@@ -40,31 +40,55 @@ function PossesionPage(props) {
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
+	useEffect(() => {
+		switch (value) {
+			case 0:
+				console.log(value);
+				break;
+			case 1:
+				console.log(value);
+				break;
+			case 2:
+				console.log(value);
+				break;
+			case 3:
+				console.log(value);
+				break;
+			case 4:
+				console.log(value);
+				break;
+			case 5:
+				console.log(value);
+				break;
+			default:
+				console.log(value);
+		}
+	}, [value]);
 	// const renderRouteMenu = () => {
-	let xhtm;
-	switch (value) {
-		case 0:
-			xhtm = 'Tất cả';
-			break;
-		case 1:
-			xhtm = 'Chưa sử dụng';
-			break;
-		case 2:
-			xhtm = 'Đang sử dụng';
-			break;
-		case 3:
-			xhtm = 'Sửa chữa - bảo hành';
-			break;
-		case 4:
-			xhtm = 'Hư hỏng - Mất';
-			break;
-		case 5:
-			xhtm = 'Thanh lí';
-			break;
-		default:
-			xhtm = 'Tất cả';
-	}
-	// };
+	// let xhtm;
+	// switch (value) {
+	// 	case 0:
+	// 		xhtm = 'Tất cả';
+	// 		break;
+	// 	case 1:
+	// 		xhtm = 'Chưa sử dụng';
+	// 		break;
+	// 	case 2:
+	// 		xhtm = 'Đang sử dụng';
+	// 		break;
+	// 	case 3:
+	// 		xhtm = 'Sửa chữa - bảo hành';
+	// 		break;
+	// 	case 4:
+	// 		xhtm = 'Hư hỏng - Mất';
+	// 		break;
+	// 	case 5:
+	// 		xhtm = 'Thanh lí';
+	// 		break;
+	// 	default:
+	// 		xhtm = 'Tất cả';
+	// }
+	// // };
 	return (
 		<PossessionContextProvider>
 			<FormControlCycle />
@@ -110,7 +134,7 @@ function PossesionPage(props) {
 					</Tabs>
 				}
 				content={
-					<div className="p-16 sm:p-24">
+					<div className="">
 						<TabPanel value={value} index={0}>
 							<PossessionAll />
 						</TabPanel>
