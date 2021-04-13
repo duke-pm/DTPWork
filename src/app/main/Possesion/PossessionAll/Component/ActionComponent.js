@@ -9,12 +9,6 @@ import SearchIcon from '@material-ui/icons/Search';
 import { Spin } from 'antd';
 
 const useStyles = makeStyles(theme => ({
-	root: {
-		padding: '2px 4px',
-		display: 'flex',
-		alignItems: 'center',
-		width: 400
-	},
 	input: {
 		marginLeft: theme.spacing(1),
 		flex: 1
@@ -33,7 +27,7 @@ export default function ActionComponent(props) {
 	return (
 		<FuseAnimate animation="transition.slideLeftIn" delay={300}>
 			<div className="flex flex-col sm:flex-row justify-between">
-				<Paper component="form" className={classes.root}>
+				<Paper component="form" className="w-full sm:w-1/4 flex justify-between">
 					<InputBase
 						className={classes.input}
 						placeholder="Tìm kiếm"

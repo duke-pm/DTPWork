@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
 	Table,
@@ -74,7 +74,6 @@ export default function PossessionUnused(props) {
 	const actionMenuClick = event => {
 		setActionMenu(event.currentTarget);
 	};
-
 	const actionMenuClose = () => {
 		setActionMenu(null);
 	};

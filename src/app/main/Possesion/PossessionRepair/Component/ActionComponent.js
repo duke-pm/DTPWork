@@ -28,7 +28,7 @@ export default function ActionComponent(props, { handleOpenForm }) {
 	return (
 		<FuseAnimate animation="transition.slideLeftIn" delay={300}>
 			<div className="flex flex-col sm:flex-row justify-between">
-				<Paper component="form" className={classes.root}>
+				<Paper component="form" className="w-full sm:w-1/4 flex justify-between">
 					<InputBase
 						className={classes.input}
 						placeholder="Tìm kiếm"

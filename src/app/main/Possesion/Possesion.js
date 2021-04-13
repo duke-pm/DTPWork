@@ -125,7 +125,7 @@ function PossesionPage(props) {
 						scrollButtons="auto"
 						aria-label="scrollable auto tabs example"
 					>
-						<Tab className="font-sans" label="Tất cả ( )" {...a11yProps(0)} />
+						<Tab className="font-sans" label="Tất cả ()" {...a11yProps(0)} />
 						<Tab className="font-sans	" label="Chưa sử dụng ( )" {...a11yProps(1)} />
 						<Tab className=" font-sans	" label="Đang sử dụng( )" {...a11yProps(2)} />
 						<Tab className=" font-sans	" label="Sửa chữa - bảo hành( )" {...a11yProps(3)} />

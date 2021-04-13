@@ -28,37 +28,37 @@ export default function ActionComponent(props, { handleOpenForm }) {
 	return (
 		<FuseAnimate animation="transition.slideLeftIn" delay={300}>
 			<div className="flex flex-col sm:flex-row justify-between">
-				<div className="flex flex-col sm:flex-row  justify-around">
-					<Paper component="form" className={classes.root}>
-						<InputBase
-							className={classes.input}
-							placeholder="Tìm kiếm"
-							inputProps={{ 'aria-label': 'search google maps' }}
-						/>
-						<IconButton type="button" className={classes.iconButton} aria-label="search">
-							<SearchIcon />
-						</IconButton>
-					</Paper>
-					<div className="flex mt-8 sm:mt-0 flex-row sm:flex-row">
-						<Button
-							variant="contained"
-							className="sm:ml-16 ml-0 font-sans h-26"
-							color="primary"
-							component="span"
-						>
-							Báo hỏng (0)
-						</Button>
-						<Button
-							variant="contained"
-							className="sm:ml-16 ml-8 font-sans h-26"
-							color="secondary"
-							component="span"
-						>
-							Báo mất(0)
-						</Button>
-					</div>
+				{/* <div className="flex flex-col sm:flex-row  justify-around"> */}
+				<Paper component="form" className="w-full sm:w-1/4 flex justify-between">
+					<InputBase
+						className={classes.input}
+						placeholder="Tìm kiếm"
+						inputProps={{ 'aria-label': 'search google maps' }}
+					/>
+					<IconButton type="button" className={classes.iconButton} aria-label="search">
+						<SearchIcon />
+					</IconButton>
+				</Paper>
+				<div className="flex mt-8 sm:mt-0 flex-row sm:flex-row">
+					<Button
+						variant="contained"
+						className="sm:ml-16 ml-0 font-sans h-26"
+						color="primary"
+						component="span"
+					>
+						Báo hỏng (0)
+					</Button>
+					<Button
+						variant="contained"
+						className="sm:ml-16 ml-8 font-sans h-26"
+						color="secondary"
+						component="span"
+					>
+						Báo mất(0)
+					</Button>
 				</div>
 			</div>
+			{/* </div> */}
 		</FuseAnimate>
 	);
 }
