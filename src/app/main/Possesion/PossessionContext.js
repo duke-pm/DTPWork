@@ -7,7 +7,8 @@ export default function PossessionContextProvider({ children }) {
 	const [formReport, setFormReport] = useState(false);
 	const [typeReport, setTypeReport] = useState('');
 	const [typeCycle, setTypeCycle] = useState('');
-
+	const [rowPage, setRowPage] = React.useState(25);
+	const [page, setPage] = React.useState(0);
 	const handleOpenFormCycle = type => {
 		setFormCycle(true);
 		setTypeCycle(type);
@@ -28,7 +29,11 @@ export default function PossessionContextProvider({ children }) {
 				formCycle,
 				typeCycle,
 				typeReport,
-				formReport
+				formReport,
+				rowPage,
+				setRowPage,
+				page,
+				setPage
 			}}
 		>
 			{children}

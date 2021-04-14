@@ -6,7 +6,8 @@ const initialPossesionState = {
 	entities: null,
 	entitiesEdit: undefined,
 	total_count: 0,
-	lastErrors: null
+	total_items: null,
+	lastErrors: false
 };
 export const callTypes = {
 	list: 'list',
@@ -20,6 +21,7 @@ export const possesionSlice = createSlice({
 		catchErrors: (state, action) => {
 			if (action.payload.callType === callTypes.list) {
 				state.listloading = false;
+				state.lastErrors = true;
 			} else {
 				state.actionLoading = true;
 			}
@@ -33,11 +35,13 @@ export const possesionSlice = createSlice({
 			}
 		},
 		possesionsFetch: (state, action) => {
-			const { data, total_result } = action.payload;
+			const { data } = action.payload;
 			state.listloading = false;
 			state.error = null;
-			state.entities = data;
-			state.total_count = total_result;
+			state.lastErrors = false;
+			state.entities = data.data.listItem;
+			state.total_items = data.data.header;
+			state.total_count = data.totalRow;
 		},
 		possesionCreated: (state, action) => {
 			const { data } = action.payload;

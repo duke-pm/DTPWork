@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import FusePageCarded from '@fuse/core/FusePageCarded';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import PossessionAll from './PossessionAll';
 import PossessionUnused from './PossessionUnused';
 import PossessionUsed from './PossessionUsed';
@@ -39,59 +39,18 @@ function TabPanel(props) {
 function PossesionPage(props) {
 	const dispatch = useDispatch();
 	const [value, setValue] = React.useState(0);
-
+	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
+	const total_Record = currentState && currentState.total_items;
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
 	useEffect(() => {
-		switch (value) {
-			case 0:
-				dispatch(actions.fetchPossesionAll());
-				break;
-			case 1:
-				console.log(value);
-				break;
-			case 2:
-				console.log(value);
-				break;
-			case 3:
-				console.log(value);
-				break;
-			case 4:
-				console.log(value);
-				break;
-			case 5:
-				console.log(value);
-				break;
-			default:
-				console.log(value);
+		if (value === 5) {
+			dispatch(actions.fetchPossesionAll(6));
+		} else {
+			dispatch(actions.fetchPossesionAll(value));
 		}
 	}, [value]);
-	// const renderRouteMenu = () => {
-	// let xhtm;
-	// switch (value) {
-	// 	case 0:
-	// 		xhtm = 'Tất cả';
-	// 		break;
-	// 	case 1:
-	// 		xhtm = 'Chưa sử dụng';
-	// 		break;
-	// 	case 2:
-	// 		xhtm = 'Đang sử dụng';
-	// 		break;
-	// 	case 3:
-	// 		xhtm = 'Sửa chữa - bảo hành';
-	// 		break;
-	// 	case 4:
-	// 		xhtm = 'Hư hỏng - Mất';
-	// 		break;
-	// 	case 5:
-	// 		xhtm = 'Thanh lí';
-	// 		break;
-	// 	default:
-	// 		xhtm = 'Tất cả';
-	// }
-	// // };
 	return (
 		<PossessionContextProvider>
 			<FormControlCycle />
@@ -128,35 +87,57 @@ function PossesionPage(props) {
 						scrollButtons="auto"
 						aria-label="scrollable auto tabs example"
 					>
-						<Tab className="font-sans" label="Tất cả ()" {...a11yProps(0)} />
-						<Tab className="font-sans	" label="Chưa sử dụng ( )" {...a11yProps(1)} />
-						<Tab className=" font-sans	" label="Đang sử dụng( )" {...a11yProps(2)} />
-						<Tab className=" font-sans	" label="Sửa chữa - bảo hành( )" {...a11yProps(3)} />
-						<Tab className=" font-sans	" label="Hư hỏng - Mất" {...a11yProps(4)} />
-						<Tab className=" font-sans	" label="Thanh lí( )" {...a11yProps(5)} />
+						<Tab className="font-sans" label="Tất cả" {...a11yProps(0)} />
+						<Tab
+							className="font-sans	"
+							label={`Chưa sử dụng (${(total_Record && total_Record.countNoUseYet) || 0})`}
+							{...a11yProps(1)}
+						/>
+						<Tab
+							className=" font-sans	"
+							label={`Đang sử dụng (${(total_Record && total_Record.countUsing) || 0})`}
+							{...a11yProps(2)}
+						/>
+						<Tab
+							className=" font-sans	"
+							label={`Sửa chữa - bảo hành (${(total_Record && total_Record.countWarrantyRepair) || 0} - ${
+								(total_Record && total_Record.countDamaged) || 0
+							} )`}
+							{...a11yProps(3)}
+						/>
+						<Tab
+							className=" font-sans	"
+							label={`Hư hỏng - mất (${(total_Record && total_Record.countDamaged) || 0} - ${
+								(total_Record && total_Record.countLost) || 0
+							} )`}
+							{...a11yProps(4)}
+						/>
+						<Tab
+							className=" font-sans	"
+							label={`Thanh lí (${(total_Record && total_Record.countLiquidation) || 0})`}
+							{...a11yProps(5)}
+						/>
 					</Tabs>
 				}
 				content={
 					<div className="">
 						<TabPanel value={value} index={0}>
-							<PossessionAll />
+							<PossessionAll value={value} />
 						</TabPanel>
 						<TabPanel value={value} index={1}>
-							<PossessionUnused />
+							<PossessionUnused value={value} />
 						</TabPanel>
 						<TabPanel value={value} index={2}>
-							<PossessionUsed />
+							<PossessionUsed value={value} />
 						</TabPanel>
 						<TabPanel value={value} index={3}>
-							<PossessionRepair />
+							<PossessionRepair value={value} />
 						</TabPanel>
 						<TabPanel value={value} index={4}>
-							<PossessionCorrupt />
+							<PossessionCorrupt value={value} />
 						</TabPanel>
 						<TabPanel value={value} index={5}>
-							<FuseAnimate animation="transition.slideUpIn">
-								<PossessionPay />
-							</FuseAnimate>
+							<PossessionPay value={value} />
 						</TabPanel>
 					</div>
 				}

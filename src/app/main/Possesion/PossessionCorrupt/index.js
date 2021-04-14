@@ -12,12 +12,19 @@ import {
 	Popover,
 	MenuItem,
 	ListItemIcon,
-	ListItemText
+	ListItemText,
+	Typography
 } from '@material-ui/core';
+import * as moment from 'moment';
+import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import AppsIcon from '@material-ui/icons/Apps';
+import Panigation from '@fuse/core/FusePanigate';
+import { useSelector, shallowEqual } from 'react-redux';
 import FuseAnimate from '@fuse/core/FuseAnimate';
+import FuseLoading from '@fuse/core/FuseLoading';
+import image from '@fuse/assets/group.png';
 import FormCustomCorrupt from './FormCorrupt';
 import { PossessionContext } from '../PossessionContext';
 import ActionComponent from './Component/ActionComponent';
@@ -49,9 +56,21 @@ const useStyles = makeStyles(theme => ({
 		width: 900
 	}
 }));
+const chipColor = {
+	4: 'bg-purple text-white',
+	5: 'bg-green-700 text-white'
+};
+const chipText = {
+	4: 'Hư hỏng',
+	5: 'Mất'
+};
 export default function PossessionCorrupt(props) {
 	const [open, setOpen] = React.useState(false);
 	const [actionMenu, setActionMenu] = React.useState(null);
+	const [rowPage, setRowPage] = React.useState(10);
+	const [page, setPage] = React.useState(1);
+	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
+	const { listloading, entities, lastErrors, total_count } = currentState;
 	const possessionContext = useContext(PossessionContext);
 	const { handleOpenFormCycle } = possessionContext;
 	const handleClose = () => {
@@ -72,7 +91,17 @@ export default function PossessionCorrupt(props) {
 	const actionMenuClose = () => {
 		setActionMenu(null);
 	};
+	const handleRowChange = e => {
+		setRowPage(parseInt(e.target.value, 10));
+		setPage(0);
+	};
+	const handleChangePage = (event, newPage) => {
+		setPage(newPage);
+	};
 	const classes = useStyles(props);
+	if (listloading) {
+		return <FuseLoading />;
+	}
 	return (
 		<>
 			<FormCustomCorrupt open={open} handleClose={handleClose} />
@@ -123,54 +152,98 @@ export default function PossessionCorrupt(props) {
 											>
 												Nguyên giá
 											</TableCell>
+											<TableCell
+												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
+												align="center"
+											>
+												Trạng thái
+											</TableCell>
 										</TableRow>
 									</TableHead>
 									<TableBody>
-										<TableRow>
-											<TableCell align="center" className="p-4 md:p-12">
-												<IconButton onClick={actionMenuClick} aria-label="delete">
-													<MenuIcon />
-												</IconButton>
-												<Popover
-													open={Boolean(actionMenu)}
-													anchorEl={actionMenu}
-													onClose={actionMenuClose}
-													anchorOrigin={{
-														vertical: 'center',
-														horizontal: 'right'
-													}}
-													transformOrigin={{
-														vertical: 'top',
-														horizontal: 'left'
-													}}
-												>
-													<MenuItem onClick={handleOpenForm} role="button">
-														<ListItemIcon className="min-w-40">
-															<Icon>info</Icon>
-														</ListItemIcon>
-														<ListItemText primary="Xem chi tiết" />
-													</MenuItem>
-													<MenuItem
-														onClick={() => handleOpenFormCycleView('repair')}
-														role="button"
-													>
-														<ListItemIcon className="min-w-40">
-															<Icon>autorenew</Icon>
-														</ListItemIcon>
-														<ListItemText primary="Đưa vào sử dụng lại" />
-													</MenuItem>
-												</Popover>
-											</TableCell>
-											<TableCell align="center"> MT-20020 </TableCell>
-											<TableCell align="center"> abbott @withinpixels.com </TableCell>
-											<TableCell align="center">Thiết bị</TableCell>
-											<TableCell align="center"> 02/04/2020 </TableCell>
-											<TableCell align="center"> 02/04/2020 </TableCell>
-										</TableRow>
+										{entities &&
+											entities.map(items => (
+												<TableRow key={items.assetID}>
+													<TableCell align="center" className="p-4 md:p-12">
+														<IconButton onClick={actionMenuClick} aria-label="delete">
+															<MenuIcon />
+														</IconButton>
+														<Popover
+															open={Boolean(actionMenu)}
+															anchorEl={actionMenu}
+															onClose={actionMenuClose}
+															anchorOrigin={{
+																vertical: 'center',
+																horizontal: 'right'
+															}}
+															transformOrigin={{
+																vertical: 'top',
+																horizontal: 'left'
+															}}
+														>
+															<MenuItem onClick={handleOpenForm} role="button">
+																<ListItemIcon className="min-w-40">
+																	<Icon>info</Icon>
+																</ListItemIcon>
+																<ListItemText primary="Xem chi tiết" />
+															</MenuItem>
+															<MenuItem
+																onClick={() => handleOpenFormCycleView('repair')}
+																role="button"
+															>
+																<ListItemIcon className="min-w-40">
+																	<Icon>autorenew</Icon>
+																</ListItemIcon>
+																<ListItemText primary="Đưa vào sử dụng lại" />
+															</MenuItem>
+														</Popover>
+													</TableCell>
+													<TableCell align="left">{items.assetName} </TableCell>
+													<TableCell align="left">{items.groupName}</TableCell>
+													<TableCell align="left">
+														{moment(items.purchaseDate).format('DD-MM-YYYY')}{' '}
+													</TableCell>
+													<TableCell align="left">
+														{' '}
+														{currencyFormat(items.originalPrice)}{' '}
+													</TableCell>
+													<TableCell align="left">
+														<div
+															className={`inline text-12 p-4 rounded-full truncate ${
+																chipColor[items.statusID]
+															}`}
+														>
+															{chipText[items.statusID]}
+														</div>
+													</TableCell>
+												</TableRow>
+											))}
 									</TableBody>
 								</Table>
+								{(entities && entities.length === 0) || lastErrors ? (
+									<FuseAnimate delay={300}>
+										<div className="flex items-center justify-center h-auto">
+											<img
+												className="rounded-full mx-auto"
+												src={image}
+												alt=""
+												width="384"
+												height="512"
+											/>
+										</div>
+									</FuseAnimate>
+								) : null}
 							</Paper>
 						</TableContainer>
+						{entities && entities.length !== 0 && (
+							<Panigation
+								page={page}
+								handleChangePage={handleChangePage}
+								rowPage={rowPage}
+								handleChangeRowsPerPage={handleRowChange}
+								count={total_count}
+							/>
+						)}
 					</div>
 				</FuseAnimate>
 			</div>

@@ -1,3 +1,4 @@
+import { notification } from 'antd';
 import * as requestFrom from '../posseionCruds';
 
 import { callTypes, possesionSlice } from '../possesionSlice';
@@ -31,17 +32,40 @@ export const cyclePossesion = data => dispatch => {
 // =========================== PossesionAll ============================= //
 
 // fetch
-export const fetchPossesionAll = params => dispatch => {
+export const fetchPossesionAll = (value, limit, page) => dispatch => {
+	console.log({ value, limit, page });
 	dispatch(actions.startCall({ callType: callTypes.list }));
 	const paramsReq = {
-		StatusID: 0
+		StatusID: value,
+		PageSize: limit || 25,
+		PageNum: page || 1
 	};
 	return requestFrom
 		.fetchDataPossesion(paramsReq)
 		.then(res => {
-			console.log(res);
+			const { data } = res;
+			if (!data.isError) {
+				dispatch(actions.possesionsFetch({ data }));
+			} else {
+				notification.success({
+					message: 'Đã có lỗi xảy ra vui lòng thử lại',
+					description: `${data.errorMessage}`,
+					onClick: () => {
+						console.log('Notification Clicked!');
+					}
+				});
+			}
 		})
-		.catch(() => {});
+		.catch(err => {
+			dispatch(actions.catchErrors({ callType: callTypes.list }));
+			notification.success({
+				message: 'Đã có lỗi xảy ra vui lòng thử lại',
+				description: `${err}`,
+				onClick: () => {
+					console.log('Notification Clicked!');
+				}
+			});
+		});
 };
 export const createdPossesionAll = data => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.actions }));
@@ -53,13 +77,6 @@ export const createdPossesionAll = data => dispatch => {
 
 // =========================== PossionUnUsed ============================= //
 
-export const fetchPossesionUnUsed = params => dispatch => {
-	dispatch(actions.startCall({ callType: callTypes.list }));
-	return requestFrom
-		.fetchDataPossesion(params)
-		.then(() => {})
-		.catch(() => {});
-};
 export const addPersonalPossesion = data => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.actions }));
 	return requestFrom
@@ -69,10 +86,13 @@ export const addPersonalPossesion = data => dispatch => {
 };
 
 // =========================== Possesion Used ============================= //
-export const fetchPossesionUsed = params => dispatch => {
+export const fetchPossesionUsed = value => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.list }));
+	const paramsReq = {
+		StatusID: value
+	};
 	return requestFrom
-		.fetchDataPossesion(params)
+		.fetchDataPossesion(paramsReq)
 		.then(() => {})
 		.catch(() => {});
 };
