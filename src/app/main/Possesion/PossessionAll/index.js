@@ -2,13 +2,29 @@
 import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import FuseAnimate from '@fuse/core/FuseAnimate';
-import { Paper, Table, TableHead, TableRow, TableCell, TableBody, TableContainer } from '@material-ui/core';
+import {
+	Paper,
+	Table,
+	TableHead,
+	TableRow,
+	TableCell,
+	TableBody,
+	TableContainer,
+	Popover,
+	MenuItem,
+	ListItemIcon,
+	ListItemText
+} from '@material-ui/core';
 import * as moment from 'moment';
 import Panigation from '@fuse/core/FusePanigate';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import FuseLoading from '@fuse/core/FuseLoading';
 import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import image from '@fuse/assets/group.png';
+import IconButton from '@material-ui/core/IconButton';
+import AppsIcon from '@material-ui/icons/Apps';
+import MenuIcon from '@material-ui/icons/Menu';
+import Icon from '@material-ui/core/Icon';
 import PossessionAll from './FormCustomAll';
 import ActionComponent from './Component/ActionComponent';
 import * as actions from '../_redux/possesionActions';
@@ -68,6 +84,7 @@ export default function PossessionUnused(props) {
 	const possesionContext = useContext(PossessionContext);
 	const { rowPage, setRowPage, page, setPage } = possesionContext;
 	const [open, setOpen] = React.useState(false);
+	const [actionMenu, setActionMenu] = React.useState(null);
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count } = currentState;
 	const dispatch = useDispatch();
@@ -85,6 +102,13 @@ export default function PossessionUnused(props) {
 	};
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
+		dispatch(actions.fetchPossesionAll(value, rowPage, page + 1));
+	};
+	const actionMenuClick = event => {
+		setActionMenu(event.currentTarget);
+	};
+	const actionMenuClose = () => {
+		setActionMenu(null);
 	};
 	const classes = useStyles(props);
 	if (listloading) {
@@ -94,7 +118,7 @@ export default function PossessionUnused(props) {
 		<>
 			<PossessionAll open={open} handleClose={handleClose} />
 			<div className="flex flex-col">
-				<ActionComponent handleOpenForm={handleOpenForm} />
+				<ActionComponent value={value} handleOpenForm={handleOpenForm} />
 				<FuseAnimate animation="transition.slideUpIn" delay={200}>
 					<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
 						<TableContainer className={`${classes.TableContainer} flex flex-1`}>
@@ -102,6 +126,14 @@ export default function PossessionUnused(props) {
 								<Table className={`${classes.table}`} stickyHeader>
 									<TableHead>
 										<TableRow>
+											<TableCell
+												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans"
+												align="left"
+											>
+												<IconButton aria-label="delete">
+													<AppsIcon />
+												</IconButton>
+											</TableCell>
 											<TableCell
 												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
 												align="left"
@@ -145,6 +177,34 @@ export default function PossessionUnused(props) {
 											!lastErrors &&
 											entities.map(items => (
 												<TableRow key={items.assetID} hover className={classes.tableHead}>
+													<TableCell align="center" className="p-4 md:p-12">
+														<MenuIcon
+															className="cursor-pointer"
+															onClick={actionMenuClick}
+															aria-label="delete"
+														/>
+														<Popover
+															elevation={1}
+															open={Boolean(actionMenu)}
+															anchorEl={actionMenu}
+															onClose={actionMenuClose}
+															anchorOrigin={{
+																vertical: 'center',
+																horizontal: 'right'
+															}}
+															transformOrigin={{
+																vertical: 'top',
+																horizontal: 'left'
+															}}
+														>
+															<MenuItem onClick={handleOpenForm} role="button">
+																<ListItemIcon className="min-w-40">
+																	<Icon>edit</Icon>
+																</ListItemIcon>
+																<ListItemText primary="Chỉnh sửa" />
+															</MenuItem>
+														</Popover>
+													</TableCell>
 													<TableCell align="left"> {items.assetCode} </TableCell>
 													<TableCell align="left">{items.assetName} </TableCell>
 													<TableCell align="left">{items.groupName}</TableCell>

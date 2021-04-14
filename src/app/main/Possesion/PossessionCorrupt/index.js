@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -21,13 +22,14 @@ import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import AppsIcon from '@material-ui/icons/Apps';
 import Panigation from '@fuse/core/FusePanigate';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import FuseLoading from '@fuse/core/FuseLoading';
 import image from '@fuse/assets/group.png';
 import FormCustomCorrupt from './FormCorrupt';
 import { PossessionContext } from '../PossessionContext';
 import ActionComponent from './Component/ActionComponent';
+import * as actions from '../_redux/possesionActions';
 
 const useStyles = makeStyles(theme => ({
 	InputSearch: {
@@ -65,6 +67,8 @@ const chipText = {
 	5: 'Mất'
 };
 export default function PossessionCorrupt(props) {
+	const { value } = props;
+	const dispatch = useDispatch();
 	const [open, setOpen] = React.useState(false);
 	const [actionMenu, setActionMenu] = React.useState(null);
 	const [rowPage, setRowPage] = React.useState(10);
@@ -94,9 +98,12 @@ export default function PossessionCorrupt(props) {
 	const handleRowChange = e => {
 		setRowPage(parseInt(e.target.value, 10));
 		setPage(0);
+		const rowPage = parseInt(e.target.value, 10);
+		dispatch(actions.fetchPossesionAll(value, rowPage));
 	};
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
+		dispatch(actions.fetchPossesionAll(value, rowPage, page + 1));
 	};
 	const classes = useStyles(props);
 	if (listloading) {
@@ -106,7 +113,7 @@ export default function PossessionCorrupt(props) {
 		<>
 			<FormCustomCorrupt open={open} handleClose={handleClose} />
 			<div className="flex flex-col">
-				<ActionComponent />
+				<ActionComponent value={props.value} />
 				<FuseAnimate animation="transition.slideUpIn" delay={200}>
 					<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
 						<TableContainer className="flex flex-1">

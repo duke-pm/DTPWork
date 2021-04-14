@@ -99,6 +99,7 @@ export default function PossessionUsed(props) {
 	};
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
+		dispatch(actions.fetchPossesionAll(value, rowPage, page + 1));
 	};
 	if (listloading) {
 		return <FuseLoading />;
@@ -108,7 +109,7 @@ export default function PossessionUsed(props) {
 			<FormCustomUsed open={open} handleClose={handleClose} />
 			<FormControlReport />
 			<div className="flex flex-col">
-				<ActionComponent />
+				<ActionComponent value={props.value} />
 				<FuseAnimate delay={200} animation="transition.slideUpIn">
 					<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
 						<TableContainer className="flex flex-1">
@@ -158,10 +159,12 @@ export default function PossessionUsed(props) {
 										{entities &&
 											entities.map(items => (
 												<TableRow key={items.assetID} hover>
-													<TableCell align="center" className="p-4 md:p-12">
-														<IconButton onClick={actionMenuClick} aria-label="delete">
-															<MenuIcon />
-														</IconButton>
+													<TableCell align="left" className="p-4 md:p-12">
+														<MenuIcon
+															className="cursor-pointer"
+															onClick={actionMenuClick}
+															aria-label="delete"
+														/>
 														<Popover
 															open={Boolean(actionMenu)}
 															anchorEl={actionMenu}

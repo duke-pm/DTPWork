@@ -55,7 +55,7 @@ const useStyles = makeStyles(theme => ({
 	},
 	paper: {
 		backgroundColor: theme.palette.background.paper,
-		// boxShadow: theme.shadows[5],
+		boxShadow: theme.shadows[5],
 		padding: theme.spacing(2, 4, 3),
 		width: 900
 	}
@@ -96,6 +96,7 @@ export default function PossessionUnused(props) {
 	};
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
+		dispatch(actions.fetchPossesionAll(value, rowPage, page + 1));
 	};
 	if (listloading) {
 		return <FuseLoading />;
@@ -105,9 +106,9 @@ export default function PossessionUnused(props) {
 			<FormCustomUnused open={open} handleClose={handleClose} />
 			<FormControlReport />
 			<div className="flex flex-col">
-				<ActionComponent />
+				<ActionComponent value={value} />
 				<FuseAnimate delay={200} animation="transition.slideUpIn">
-					<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
+					<div className="flex flex-col mt-16 min-h-full  sm:border-1 sm:rounded-4 overflow-hidden">
 						<TableContainer className="flex flex-1">
 							<Paper className={classes.rootPaper}>
 								<Table className={classes.table} stickyHeader>
@@ -157,12 +158,15 @@ export default function PossessionUnused(props) {
 										{entities &&
 											!lastErrors &&
 											entities.map(items => (
-												<TableRow key={items.assetID}>
+												<TableRow hover key={items.assetID}>
 													<TableCell align="center" className="p-4 md:p-12">
-														<IconButton onClick={actionMenuClick} aria-label="delete">
-															<MenuIcon />
-														</IconButton>
+														<MenuIcon
+															className="cursor-pointer"
+															onClick={actionMenuClick}
+															aria-label="delete"
+														/>
 														<Popover
+															elevation={1}
 															open={Boolean(actionMenu)}
 															anchorEl={actionMenu}
 															onClose={actionMenuClose}

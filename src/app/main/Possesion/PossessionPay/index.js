@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -21,11 +22,13 @@ import AppsIcon from '@material-ui/icons/Apps';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import image from '@fuse/assets/group.png';
 import Panigation from '@fuse/core/FusePanigate';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import FuseLoading from '@fuse/core/FuseLoading';
 import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import * as moment from 'moment';
 import { PossessionContext } from '../PossessionContext';
+import * as actions from '../_redux/possesionActions';
+
 // import FormCustomRepair from './FormCustomRepair';
 // import ActionComponent from './Component/ActionComponent';
 
@@ -59,6 +62,8 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 export default function PossessionPay(props) {
+	const { value } = props;
+	const dispatch = useDispatch();
 	const [open, setOpen] = React.useState(false);
 	const [actionMenu, setActionMenu] = React.useState(null);
 	const [rowPage, setRowPage] = React.useState(10);
@@ -89,9 +94,12 @@ export default function PossessionPay(props) {
 	const handleRowChange = e => {
 		setRowPage(parseInt(e.target.value, 10));
 		setPage(0);
+		const rowPage = parseInt(e.target.value, 10);
+		dispatch(actions.fetchPossesionAll(value, rowPage));
 	};
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
+		dispatch(actions.fetchPossesionAll(value, rowPage, page + 1));
 	};
 	const classes = useStyles(props);
 	if (listloading) {

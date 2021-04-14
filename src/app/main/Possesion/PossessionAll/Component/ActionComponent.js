@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable import/no-extraneous-dependencies */
 import { Button, IconButton, Paper, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -7,6 +8,8 @@ import FuseAnimate from '@fuse/core/FuseAnimate';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import { Spin } from 'antd';
+import { useDispatch } from 'react-redux';
+import * as actions from '../../_redux/possesionActions';
 
 const useStyles = makeStyles(theme => ({
 	input: {
@@ -22,24 +25,50 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-export default function ActionComponent(props) {
+export default function ActionComponent({ value, handleOpenForm }) {
 	const classes = useStyles();
+	const dispatch = useDispatch();
+	const [search, setSearch] = React.useState('');
+	const handleSearch = e => {
+		e.preventDefault();
+		dispatch(actions.searchPossesion(value, search));
+	};
+	onkeypress = e => {
+		if (e.key === 'Enter') {
+			e.preventDefault();
+			dispatch(actions.searchPossesion(value, search));
+		}
+	};
+	const onHandleChange = e => {
+		setSearch(e.target.value);
+		if (e.target.value.length <= 0) {
+			dispatch(actions.searchPossesion(value, search));
+		}
+	};
 	return (
 		<FuseAnimate animation="transition.slideLeftIn" delay={300}>
 			<div className="flex flex-col sm:flex-row justify-between">
 				<Paper component="form" className="w-full sm:w-1/4 flex justify-between">
 					<InputBase
+						onKeyPress={e => onkeypress(e)}
+						onChange={e => onHandleChange(e)}
 						className={classes.input}
+						value={search}
 						placeholder="Tìm kiếm"
 						inputProps={{ 'aria-label': 'search google maps' }}
 					/>
-					<IconButton type="button" className={classes.iconButton} aria-label="search">
+					<IconButton
+						onClick={e => handleSearch(e)}
+						type="button"
+						className={classes.iconButton}
+						aria-label="search"
+					>
 						<SearchIcon />
 					</IconButton>
 					{/* <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} /> */}
 				</Paper>
 				<Button
-					onClick={props.handleOpenForm}
+					onClick={handleOpenForm}
 					className="mt-8 sm:mt-0 max-w-sm md:max-w-lg h-26"
 					variant="contained"
 					color="primary"

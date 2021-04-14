@@ -1,5 +1,5 @@
 import { Tabs, Tab, Box, Typography } from '@material-ui/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import FusePageCarded from '@fuse/core/FusePageCarded';
 import { Link } from 'react-router-dom';
@@ -10,7 +10,7 @@ import PossessionUsed from './PossessionUsed';
 import PossessionRepair from './PossessionRepair';
 import PossessionCorrupt from './PossessionCorrupt';
 import PossessionPay from './PossessionPay';
-import PossessionContextProvider from './PossessionContext';
+import PossessionContextProvider, { PossessionContext } from './PossessionContext';
 import FormControlCycle from './FormControl/FormControlCycle';
 import * as actions from './_redux/possesionActions';
 
@@ -38,7 +38,8 @@ function TabPanel(props) {
 
 function PossesionPage(props) {
 	const dispatch = useDispatch();
-	const [value, setValue] = React.useState(0);
+	const possessionContext = useContext(PossessionContext);
+	const { value, setValue, rowPage, page } = possessionContext;
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
 	const total_Record = currentState && currentState.total_items;
 	const handleChange = (event, newValue) => {
@@ -46,13 +47,13 @@ function PossesionPage(props) {
 	};
 	useEffect(() => {
 		if (value === 5) {
-			dispatch(actions.fetchPossesionAll(6));
+			dispatch(actions.fetchPossesionAll(6, rowPage));
 		} else {
-			dispatch(actions.fetchPossesionAll(value));
+			dispatch(actions.fetchPossesionAll(value, rowPage));
 		}
 	}, [value]);
 	return (
-		<PossessionContextProvider>
+		<>
 			<FormControlCycle />
 			<FusePageCarded
 				classes={{
@@ -87,7 +88,11 @@ function PossesionPage(props) {
 						scrollButtons="auto"
 						aria-label="scrollable auto tabs example"
 					>
-						<Tab className="font-sans" label="Tất cả" {...a11yProps(0)} />
+						<Tab
+							className="font-sans"
+							label={`Tất cả (${(total_Record && total_Record.countAll) || 0})`}
+							{...a11yProps(0)}
+						/>
 						<Tab
 							className="font-sans	"
 							label={`Chưa sử dụng (${(total_Record && total_Record.countNoUseYet) || 0})`}
@@ -100,9 +105,7 @@ function PossesionPage(props) {
 						/>
 						<Tab
 							className=" font-sans	"
-							label={`Sửa chữa - bảo hành (${(total_Record && total_Record.countWarrantyRepair) || 0} - ${
-								(total_Record && total_Record.countDamaged) || 0
-							} )`}
+							label={`Sửa chữa - bảo hành (${(total_Record && total_Record.countWarrantyRepair) || 0})`}
 							{...a11yProps(3)}
 						/>
 						<Tab
@@ -142,7 +145,7 @@ function PossesionPage(props) {
 					</div>
 				}
 			/>
-		</PossessionContextProvider>
+		</>
 	);
 }
 

@@ -17,7 +17,7 @@ const PossesionConfig = {
 	routes: [
 		{
 			path: '/tai-san',
-			component: React.lazy(() => import('./Possesion'))
+			component: React.lazy(() => import('./index'))
 		}
 	]
 };

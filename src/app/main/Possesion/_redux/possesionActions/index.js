@@ -27,13 +27,49 @@ export const cyclePossesion = data => dispatch => {
 		.then(() => {})
 		.catch(() => {});
 };
+
+export const searchPossesion = (value, search, limit, page) => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.actions }));
+	const paramsReq = {
+		Search: search,
+		StatusID: value,
+		PageSize: limit || 25,
+		PageNum: page || 1
+	};
+	return requestFrom
+		.fetchDataPossesion(paramsReq)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				dispatch(actions.possesionsFetch({ data }));
+			} else {
+				notification.success({
+					message: 'Đã có lỗi xảy ra vui lòng thử lại',
+					description: `${data.errorMessage}`,
+					onClick: () => {
+						console.log('Notification Clicked!');
+					}
+				});
+			}
+		})
+		.catch(err => {
+			dispatch(actions.catchErrors({ callType: callTypes.list }));
+			notification.success({
+				message: 'Đã có lỗi xảy ra vui lòng thử lại',
+				description: `${err}`,
+				onClick: () => {
+					console.log('Notification Clicked!');
+				}
+			});
+		});
+};
+
 // export const fetchPersonal = ()=>{}
 
 // =========================== PossesionAll ============================= //
 
 // fetch
 export const fetchPossesionAll = (value, limit, page) => dispatch => {
-	console.log({ value, limit, page });
 	dispatch(actions.startCall({ callType: callTypes.list }));
 	const paramsReq = {
 		StatusID: value,
