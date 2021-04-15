@@ -5,6 +5,7 @@ const initialPossesionState = {
 	actionLoading: false,
 	entities: null,
 	entitiesEdit: undefined,
+	entitiesInformation: null,
 	total_count: 0,
 	total_items: null,
 	lastErrors: false
@@ -43,11 +44,19 @@ export const possesionSlice = createSlice({
 			state.total_items = data.data.header;
 			state.total_count = data.totalRow;
 		},
+		possesionFetch: (state, action) => {
+			const { data } = action.payload;
+			state.actionLoading = false;
+			state.entitiesEdit = data;
+		},
 		possesionCreated: (state, action) => {
 			const { data } = action.payload;
 			state.actionLoading = false;
 			state.error = null;
-			state.entities = [...state.entities, data];
+			const { countAll } = state.total_items;
+			state.total_items.countAll = countAll + 1;
+			// state.total_items = [...state.total_items, state.total_items.countAll + 1];
+			// state.entities = [...state.entities, data];
 		},
 		possesionUpdate: (state, action) => {
 			const { data } = action.payload;
@@ -65,6 +74,13 @@ export const possesionSlice = createSlice({
 			return {
 				...state
 			};
+		},
+		informationsFetch: (state, action) => {
+			const { data } = action.payload;
+			state.listloading = false;
+			state.error = null;
+			state.lastErrors = false;
+			state.entitiesInformation = data.data;
 		}
 	}
 });

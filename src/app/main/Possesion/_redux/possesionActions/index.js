@@ -1,6 +1,7 @@
+/* eslint-disable no-shadow */
 import { notification } from 'antd';
+import * as moment from 'moment';
 import * as requestFrom from '../posseionCruds';
-
 import { callTypes, possesionSlice } from '../possesionSlice';
 
 const { actions } = possesionSlice;
@@ -12,6 +13,33 @@ export const reportFailurePossesion = data => dispatch => {
 		.updateDataPossesion(data)
 		.then(() => {})
 		.catch(() => {});
+};
+export const getInformationCompany = params => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.actions }));
+	const paramsReq = {
+		ListType: params
+	};
+	return requestFrom
+		.getInformationCompany(paramsReq)
+		.then(res => {
+			console.log(res);
+			const { data } = res;
+			console.log(data);
+			if (!data.isError) {
+				dispatch(actions.informationsFetch({ data }));
+			} else {
+				notification.success({
+					message: 'Đã có lỗi xảy ra vui lòng thử lại',
+					description: `${data.errorMessage}`,
+					onClick: () => {
+						console.log('Notification Clicked!');
+					}
+				});
+			}
+		})
+		.catch(err => {
+			dispatch(actions.catchErrors({ callType: callTypes.list }));
+		});
 };
 export const reportLosePossesion = data => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.actions }));
@@ -69,12 +97,13 @@ export const searchPossesion = (value, search, limit, page) => dispatch => {
 // =========================== PossesionAll ============================= //
 
 // fetch
-export const fetchPossesionAll = (value, limit, page) => dispatch => {
+export const fetchPossesionAll = (value, limit, page, search) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.list }));
 	const paramsReq = {
 		StatusID: value,
 		PageSize: limit || 25,
-		PageNum: page || 1
+		PageNum: page || 1,
+		Search: search || ''
 	};
 	return requestFrom
 		.fetchDataPossesion(paramsReq)
@@ -103,12 +132,36 @@ export const fetchPossesionAll = (value, limit, page) => dispatch => {
 			});
 		});
 };
+export const setTaskEditPossesionAll = data => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.actions }));
+	dispatch(actions.possesionFetch({ data }));
+};
+
 export const createdPossesionAll = data => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.actions }));
-	return requestFrom
-		.createdDataPossesion()
-		.then(() => {})
-		.catch(() => {});
+	dispatch(actions.possesionCreated({ data }));
+	// const dataReq = {
+	// 	Qty: data.qty,
+	// 	AssetName: data.assetName,
+	// 	AssetGroup: data.assetGroup,
+	// 	Suppiler: data.suppiler,
+	// 	WarrantyPeriod: data.warrantyPeriod,
+	// 	EffectiveDate: data.effectiveDate && moment(new Date(data.effectiveDate)).format('DD/MM/YYY'),
+	// 	PurchaseDate: moment(new Date(data.purchaseDate)).format('DD/MM/YYY'),
+	// 	DepreciationPeriod: data.depreciationPeriod,
+	// 	OriginalPrice: data.originalPrice,
+	// 	DeptCode: data.deptCodeManager,
+	// 	Descr: data.descr
+	// };
+	// console.log(dataReq);
+	// return requestFrom
+	// 	.createdDataPossesion(dataReq)
+	// 	.then(res => {
+	// 		const { data } = res;
+	// 		console.log(res);
+	// 		return data;
+	// 	})
+	// 	.catch(() => {});
 };
 
 // =========================== PossionUnUsed ============================= //

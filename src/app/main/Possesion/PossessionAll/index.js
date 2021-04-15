@@ -82,30 +82,42 @@ const chipText = {
 export default function PossessionUnused(props) {
 	const { value } = props;
 	const possesionContext = useContext(PossessionContext);
-	const { rowPage, setRowPage, page, setPage } = possesionContext;
+	const { rowPage, setRowPage, page, setPage, search } = possesionContext;
 	const [open, setOpen] = React.useState(false);
 	const [actionMenu, setActionMenu] = React.useState(null);
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count } = currentState;
 	const dispatch = useDispatch();
 	const handleClose = () => {
+		dispatch(actions.setTaskEditPossesionAll(null));
 		setOpen(false);
 	};
-	const handleOpenForm = () => {
+	const handleOpenForm = items => {
+		setActionMenu(null);
+		const params = 'Supplier,Company,AssetType,AssetGroup,AssetGroupDetail';
+		dispatch(actions.getInformationCompany(params));
+		dispatch(actions.setTaskEditPossesionAll(null));
+		setOpen(true);
+	};
+	const handleOpenFormEdit = items => {
+		setActionMenu(null);
 		setOpen(true);
 	};
 	const handleRowChange = e => {
 		setRowPage(parseInt(e.target.value, 10));
 		setPage(0);
-		const rowPage = parseInt(e.target.value, 10);
-		dispatch(actions.fetchPossesionAll(value, rowPage));
+		const rowPageParse = parseInt(e.target.value, 10);
+		dispatch(actions.fetchPossesionAll(value, rowPageParse, 1, search));
 	};
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
-		dispatch(actions.fetchPossesionAll(value, rowPage, page + 1));
+		dispatch(actions.fetchPossesionAll(value, rowPage, newPage + 1, search));
 	};
-	const actionMenuClick = event => {
+	const actionMenuClick = (event, items) => {
+		const params = 'Supplier';
+		dispatch(actions.getInformationCompany(params));
 		setActionMenu(event.currentTarget);
+		dispatch(actions.setTaskEditPossesionAll(items));
 	};
 	const actionMenuClose = () => {
 		setActionMenu(null);
@@ -180,7 +192,7 @@ export default function PossessionUnused(props) {
 													<TableCell align="center" className="p-4 md:p-12">
 														<MenuIcon
 															className="cursor-pointer"
-															onClick={actionMenuClick}
+															onClick={event => actionMenuClick(event, items)}
 															aria-label="delete"
 														/>
 														<Popover
@@ -197,7 +209,7 @@ export default function PossessionUnused(props) {
 																horizontal: 'left'
 															}}
 														>
-															<MenuItem onClick={handleOpenForm} role="button">
+															<MenuItem onClick={handleOpenFormEdit} role="button">
 																<ListItemIcon className="min-w-40">
 																	<Icon>edit</Icon>
 																</ListItemIcon>

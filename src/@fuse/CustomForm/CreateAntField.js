@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
-import { DatePicker, Form, Input, TimePicker, Select } from 'antd';
+import { DatePicker, Form, Input, InputNumber, TimePicker, Select } from 'antd';
 import 'antd/dist/antd.css';
 import { FormGroup } from '@material-ui/core';
 
@@ -15,7 +15,10 @@ const CreateAntField = AntComponent => ({
 	selectOptions,
 	submitCount,
 	placeholder,
+	disabled,
 	type,
+	notFoundContent,
+	handleChangeState,
 	...props
 }) => {
 	const touched = form.touched[field.name];
@@ -24,7 +27,10 @@ const CreateAntField = AntComponent => ({
 	const submittedError = hasError && submitted;
 	const touchedError = hasError && touched;
 	const onInputChange = ({ target: { value } }) => form.setFieldValue(field.name, value);
-	const onChange = value => form.setFieldValue(field.name, value);
+	const onChange = value => {
+		form.setFieldValue(field.name, value);
+		return handleChangeState ? handleChangeState(value) : null;
+	};
 	const onBlur = () => form.setFieldTouched(field.name, true);
 	return (
 		<FormGroup>
@@ -40,6 +46,9 @@ const CreateAntField = AntComponent => ({
 					style={{ width: '100%' }}
 					{...field}
 					{...props}
+					disabled={disabled}
+					defaultValue={field.value}
+					notFoundContent={notFoundContent || ''}
 					onBlur={onBlur}
 					placeholder={placeholder || ' '}
 					onChange={type ? onInputChange : onChange}
@@ -54,4 +63,4 @@ const CreateAntField = AntComponent => ({
 export const AntSelect = CreateAntField(Select);
 export const AntDatePicker = CreateAntField(DatePicker);
 export const AntInput = CreateAntField(Input);
-export const AntTimePicker = CreateAntField(TimePicker);
+export const AntInputNumber = CreateAntField(InputNumber);

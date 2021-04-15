@@ -66,10 +66,8 @@ export default function PossessionPay(props) {
 	const dispatch = useDispatch();
 	const [open, setOpen] = React.useState(false);
 	const [actionMenu, setActionMenu] = React.useState(null);
-	const [rowPage, setRowPage] = React.useState(10);
-	const [page, setPage] = React.useState(1);
 	const possessionContext = useContext(PossessionContext);
-	const { handleOpenFormCycle } = possessionContext;
+	const { handleOpenFormCycle, rowPage, setRowPage, page, setPage, search } = possessionContext;
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count } = currentState;
 
@@ -95,11 +93,11 @@ export default function PossessionPay(props) {
 		setRowPage(parseInt(e.target.value, 10));
 		setPage(0);
 		const rowPage = parseInt(e.target.value, 10);
-		dispatch(actions.fetchPossesionAll(value, rowPage));
+		dispatch(actions.fetchPossesionAll(value, rowPage, page + 1, search));
 	};
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
-		dispatch(actions.fetchPossesionAll(value, rowPage, page + 1));
+		dispatch(actions.fetchPossesionAll(value, rowPage, page + 1, search));
 	};
 	const classes = useStyles(props);
 	if (listloading) {

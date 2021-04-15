@@ -1,34 +1,51 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import { FormGroup } from '@material-ui/core';
-import { DatePicker } from 'antd';
+import { DatePicker, Form } from 'antd';
+import * as moment from 'moment';
+
+const FormItem = Form.Item;
 
 export default function DateCustom({
 	field, // { name, value, onChange, onBlur }
-	form: { touched, errors, setFieldValue }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+	form, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
 	label,
 	withFeedbackLabel = true,
 	customFeedbackLabel,
 	type,
+	hasFeedback,
+	submitCount,
 	...props
 }) {
-	const { value, name } = field;
+	const touched = form.touched[field.name];
+	const submitted = submitCount > 0;
+	const hasError = form.errors[field.name];
+	const submittedError = hasError && submitted;
+	const touchedError = hasError && touched;
+	const { value } = field;
 	const handleDateChange = (date, dateString) => {
-		setFieldValue(name, date);
+		form.setFieldValue(field.name, date);
 	};
+	const dateFormat = 'DD-MM-YYYY';
 	return (
 		<>
 			<FormGroup>
 				<label className="mb-10"> {label} </label>
-				<DatePicker
-					placeholder="Vui lòng chọn ngày"
-					margin="normal"
-					format="DD/MM/YYYY"
-					value={value}
-					onChange={handleDateChange}
-					helperText={touched[field.name] ? errors[field.name] : ''}
-					error={touched[field.name] && Boolean(errors[field.name])}
-				/>
+				<FormItem
+					rules={[{ required: true }]}
+					hasFeedback={!!((hasFeedback && submitted) || (hasFeedback && touched))}
+					help={submittedError || touchedError ? hasError : false}
+					validateStatus={submittedError || touchedError ? 'error' : 'success'}
+				>
+					<DatePicker
+						style={{ width: '100%' }}
+						placeholder="Vui lòng chọn ngày"
+						margin="normal"
+						format={dateFormat}
+						value={value ? moment(moment(value), dateFormat) : null}
+						onChange={handleDateChange}
+					/>
+				</FormItem>
 			</FormGroup>
 		</>
 	);

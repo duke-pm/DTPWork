@@ -36,7 +36,7 @@ function ToolbarLayout1(props) {
 
 					<div className="flex  items-center px-16 flex-1">
 						<Typography component="span" className="font-bold flex text-lg	">
-							Quản lí tài sản
+							Quản lý tài sản
 						</Typography>
 					</div>
 

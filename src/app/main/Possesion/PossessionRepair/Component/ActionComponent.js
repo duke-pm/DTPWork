@@ -1,10 +1,11 @@
 import { IconButton, InputBase, Paper, TextField } from '@material-ui/core';
-import React from 'react';
+import React, { useContext } from 'react';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import SearchIcon from '@material-ui/icons/Search';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import * as actions from '../../_redux/possesionActions';
+import { PossessionContext } from '../../PossessionContext';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -29,21 +30,25 @@ export default function ActionComponent(props, { handleOpenForm }) {
 	const classes = useStyles(props);
 	const { value } = props;
 	const dispatch = useDispatch();
-	const [search, setSearch] = React.useState('');
+	const possesionConext = useContext(PossessionContext);
+	const { search, setSearch, rowPage, page, setPage } = possesionConext;
 	const handleSearch = e => {
 		e.preventDefault();
-		dispatch(actions.searchPossesion(value, search));
+		setPage(0);
+		dispatch(actions.searchPossesion(value, search, rowPage, page));
 	};
 	onkeypress = e => {
 		if (e.key === 'Enter') {
+			setPage(0);
 			e.preventDefault();
-			dispatch(actions.searchPossesion(value, search));
+			dispatch(actions.searchPossesion(value, search, rowPage, page));
 		}
 	};
 	const onHandleChange = e => {
 		setSearch(e.target.value);
 		if (e.target.value.length <= 0) {
-			dispatch(actions.searchPossesion(value, search));
+			setPage(0);
+			dispatch(actions.searchPossesion(value, search, rowPage, page));
 		}
 	};
 	return (
