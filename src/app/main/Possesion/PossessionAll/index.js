@@ -94,7 +94,7 @@ export default function PossessionUnused(props) {
 	};
 	const handleOpenForm = items => {
 		setActionMenu(null);
-		const params = 'Supplier,Company,AssetType,AssetGroup,AssetGroupDetail';
+		const params = 'Supplier,Company,AssetType,AssetGroup,AssetGroupDetail,Department';
 		dispatch(actions.getInformationCompany(params));
 		dispatch(actions.setTaskEditPossesionAll(null));
 		setOpen(true);

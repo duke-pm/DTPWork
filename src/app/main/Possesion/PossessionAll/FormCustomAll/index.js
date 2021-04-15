@@ -12,9 +12,9 @@ const initial = {
 	assetGroup: '',
 	specification: '',
 	suppiler: '',
-	purchaseDate: '',
+	purchaseDate: moment(Date.now()),
 	warrantyPeriod: '',
-	effectiveDate: '',
+	effectiveDate: moment(Date.now()),
 	originalPrice: '',
 	time_kh: '',
 	location: '',
@@ -26,7 +26,8 @@ const initial = {
 	company: '',
 	category: '',
 	group: '',
-	asset: ''
+	asset: '',
+	prefix: ''
 	// prefix: '',
 	// valueStart: '',
 	// valueLength: ''
@@ -39,10 +40,11 @@ export default function FormCustomAll({ handleClose, open }) {
 		}),
 		shallowEqual
 	);
-	const saveAsset = values => {
+	const saveAsset = (values, prefix) => {
 		// if (entitiesEdit && entitiesEdit.assetID) {
-		dispatch(actions.createdPossesionAll(values)).then(data => {
-			if (!data.isError) {
+		console.log(moment(values.purchaseDate).format('MM-DD-YYYY'));
+		dispatch(actions.createdPossesionAll(values, prefix)).then(data => {
+			if (data && !data.isError) {
 				notification.success({
 					message: 'Thành công!',
 					description: 'Tạo thông báo mới thành công'
@@ -55,8 +57,6 @@ export default function FormCustomAll({ handleClose, open }) {
 				});
 			}
 		});
-		// }
-		const PurchaseDate = moment(new Date(values.PurchaseDate)).format('DD/MM/YYY');
 	};
 	return (
 		<Dialog

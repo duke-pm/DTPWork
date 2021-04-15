@@ -1,4 +1,5 @@
 /* eslint-disable no-shadow */
+import { TimeParse } from '@fuse/core/TimeParse';
 import { notification } from 'antd';
 import * as moment from 'moment';
 import * as requestFrom from '../posseionCruds';
@@ -137,31 +138,35 @@ export const setTaskEditPossesionAll = data => dispatch => {
 	dispatch(actions.possesionFetch({ data }));
 };
 
-export const createdPossesionAll = data => dispatch => {
+export const createdPossesionAll = (data, prefix) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.actions }));
 	dispatch(actions.possesionCreated({ data }));
-	// const dataReq = {
-	// 	Qty: data.qty,
-	// 	AssetName: data.assetName,
-	// 	AssetGroup: data.assetGroup,
-	// 	Suppiler: data.suppiler,
-	// 	WarrantyPeriod: data.warrantyPeriod,
-	// 	EffectiveDate: data.effectiveDate && moment(new Date(data.effectiveDate)).format('DD/MM/YYY'),
-	// 	PurchaseDate: moment(new Date(data.purchaseDate)).format('DD/MM/YYY'),
-	// 	DepreciationPeriod: data.depreciationPeriod,
-	// 	OriginalPrice: data.originalPrice,
-	// 	DeptCode: data.deptCodeManager,
-	// 	Descr: data.descr
-	// };
-	// console.log(dataReq);
-	// return requestFrom
-	// 	.createdDataPossesion(dataReq)
-	// 	.then(res => {
-	// 		const { data } = res;
-	// 		console.log(res);
-	// 		return data;
-	// 	})
-	// 	.catch(() => {});
+	const dataReq = {
+		Qty: data.qty,
+		Lang: 'vi',
+		AssetName: data.assetName,
+		Suppiler: data.suppiler,
+		WarrantyPeriod: data.warrantyPeriod,
+		EffectiveDate: data.effectiveDate && moment(data.effectiveDate).format('DD-MM-YYYY'),
+		PurchaseDate: moment(data.purchaseDate).format('DD-MM-YYYY'),
+		DepreciationPeriod: data.depreciationPeriod,
+		OriginalPrice: data.originalPrice,
+		DeptCode: 'LA0000',
+		Descr: data.descr,
+		CmpnID: data.company,
+		AssetTypeID: data.category,
+		AssetGroupID: data.group,
+		AssetGroupDetailID: prefix
+	};
+	console.log(dataReq);
+	return requestFrom
+		.createdDataPossesion(dataReq)
+		.then(res => {
+			const { data } = res;
+			console.log(res);
+			return data;
+		})
+		.catch(() => {});
 };
 
 // =========================== PossionUnUsed ============================= //

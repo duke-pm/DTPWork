@@ -47,7 +47,6 @@ const CreateAntField = AntComponent => ({
 					{...field}
 					{...props}
 					disabled={disabled}
-					defaultValue={field.value}
 					notFoundContent={notFoundContent || ''}
 					onBlur={onBlur}
 					placeholder={placeholder || ' '}

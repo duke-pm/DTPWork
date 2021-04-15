@@ -7,13 +7,12 @@ import DateCustom from '@fuse/CustomForm/Date';
 import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
 import InputCurrency from '@fuse/CustomForm/InputCurrency';
 import { notification, Spin } from 'antd';
-import { AntInput, AntInputNumber, AntSelect } from '@fuse/CustomForm/CreateAntField';
+import { AntDatePicker, AntInput, AntInputNumber, AntSelect } from '@fuse/CustomForm/CreateAntField';
 import SelectCustom from '../../../../../@fuse/CustomForm/Select';
 
 export default function FormCustomEdit({ handleClose, saveAsset, initialValue }) {
 	const checkValidateForm = Yup.object().shape({
 		assetName: Yup.string().required('Tên tài sản không được để trống'),
-		assetGroup: Yup.string().required('Loại tài sản không được để trống'),
 		purchaseDate: Yup.date().required('Ngày mua không được để trống').nullable(),
 		qty: Yup.number()
 			.typeError('Số lượng phải là dạng số và không được để trống. ')
@@ -21,7 +20,7 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue })
 		deptCodeManager: Yup.string().required('Đơn vị quản lý không được để trống'),
 		company: Yup.string().required('Công ty không được để trống'),
 		category: Yup.string().required('Loại không được để trống'),
-		group: Yup.string().required('Nhóm không được để trống'),
+		group: Yup.string().required('Nhóm không được để trống')
 		// asset: Yup.string().required('Tiền đố không được để trống')
 	});
 	const [disableCateogry, setDisableCategory] = React.useState(true);
@@ -32,11 +31,21 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue })
 	const [arrAsset, setArrAsset] = React.useState([]);
 	const [companyParse, setcompanyParse] = React.useState(null);
 	const [prefix, setPrefix] = React.useState('');
+	const [groupSelected, setGroupSelected] = React.useState('');
+	const [assetSelected, setAssetSelected] = React.useState('');
+	const [code, setCode] = React.useState(null);
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
 	const { entitiesInformation } = currentState;
 	const suppiler =
 		entitiesInformation && entitiesInformation.supplier
 			? entitiesInformation.supplier.reduce(
+					(arr, curr) => [...arr, { value: curr.supplierID, label: curr.supplierName }],
+					[]
+			  )
+			: [];
+	const department =
+		entitiesInformation && entitiesInformation.department
+			? entitiesInformation.department.reduce(
 					(arr, curr) => [...arr, { value: curr.supplierID, label: curr.supplierName }],
 					[]
 			  )
@@ -62,6 +71,7 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue })
 					[]
 			  )
 			: [];
+	// data lấy từ đây parse ra từ store đang test nên chưa tối ưu
 	const assetDetail =
 		entitiesInformation && entitiesInformation.assetGroupDetail
 			? entitiesInformation.assetGroupDetail.reduce(
@@ -75,13 +85,12 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue })
 		);
 		setcompanyParse(arrayParse);
 		setDisableCategory(false);
+		if (code) {
+			setPrefix(arrayParse.shortName.concat('.', code));
+		}
 	};
 	const onChangeCategory = value => {
-		const arrGroupParese = group.reduce(
-			(arr, curr) => (curr.typeID === value ? [...arr, { value: curr.value, label: curr.label }] : arr),
-			[]
-		);
-		console.log(arrGroupParese);
+		const arrGroupParese = group.filter(i => i.typeID === value).map(e => ({ label: e.label, value: e.value }));
 		const arrAssetDetail = assetDetail.reduce(
 			(arr, curr) =>
 				curr.value === arrGroupParese && arrGroupParese[0].value
@@ -89,33 +98,48 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue })
 					: arr,
 			[]
 		);
+		setGroupSelected('');
+		setAssetSelected('');
+		setPrefix('');
 		setArrAsset(arrAssetDetail);
 		setArrayGroup(arrGroupParese);
 		setDisableGroup(false);
 	};
 	const onChangeGroup = value => {
-		const arrAssetDetail = assetDetail.reduce(
+		setGroupSelected(value);
+		const arrAssetDetailParse = assetDetail.reduce(
 			(arr, curr) => (curr.value === value ? [...arr, { value: curr.value, label: curr.label }] : arr),
 			[]
 		);
-		setArrAsset(arrAssetDetail);
+		const test = assetDetail.reduce(
+			(arr, curr) =>
+				curr.value === arrAssetDetailParse[0].value
+					? { value: curr.value, label: curr.label, code: curr.code }
+					: arr,
+			{}
+		);
+		setAssetSelected('');
+		setPrefix('');
+		setArrAsset(arrAssetDetailParse);
 		setDisableAsset(false);
 	};
 	const onChangeAsset = value => {
+		setAssetSelected(value);
 		const arrAssetDetail = assetDetail.reduce(
 			(arr, curr) => (curr.value === value ? { value: curr.value, label: curr.label, code: curr.code } : arr),
 			{}
 		);
+		setCode(arrAssetDetail.code);
 		setPrefix(companyParse.shortName.concat('.', arrAssetDetail.code));
 	};
 	return (
 		<>
 			<Formik
 				enableReinitialize
-				validationSchema={checkValidateForm}
+				// validationSchema={checkValidateForm}
 				initialValues={initialValue}
 				onSubmit={values => {
-					saveAsset(values);
+					saveAsset(values, prefix);
 				}}
 			>
 				{({ handleSubmit, isSubmitting }) => (
@@ -177,8 +201,9 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue })
 									<Field
 										label="Ngày mua (*) "
 										autoFocus
-										value={initialValue.purchaseDate}
+										defaultValue={initialValue.purchaseDate}
 										name="purchaseDate"
+										format="DD-MM-YYYY"
 										placeholder="Vui lòng chọn ngày mua"
 										component={DateCustom}
 										className="mx-4 mb-16"
@@ -187,7 +212,9 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue })
 									<Field
 										label="Thời gian hiệu lực"
 										autoFocus
+										defaultValue={initialValue.effectiveDate}
 										name="effectiveDate"
+										format="DD-MM-YYYY"
 										component={DateCustom}
 										className="mx-4 mb-16"
 									/>
@@ -222,8 +249,9 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue })
 									<Field
 										label="Đơn vị quản lí (*)"
 										name="deptCodeManager"
+										notFoundContent={<Spin size="small" />}
 										component={AntSelect}
-										options={[{ value: 1, label: 'text' }]}
+										options={department}
 										className="mt-8 mb-16"
 										hasFeedback
 									/>
@@ -263,7 +291,8 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue })
 											label="Nhóm (*)"
 											autoFocus
 											name="group"
-											value={arrGroup && arrGroup[0] ? arrGroup[0].value : null}
+											dafaultValue={initialValue.group}
+											value={groupSelected}
 											disabled={!!disableGroup}
 											handleChangeState={onChangeGroup}
 											component={AntSelect}
@@ -275,7 +304,8 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue })
 											label="Tài sản (*)"
 											autoFocus
 											name="asset"
-											value={arrAsset && arrAsset[0] ? arrAsset[0].value : null}
+											dafaultValue={initialValue.asset}
+											value={assetSelected}
 											disabled={!!disableAsset}
 											component={AntSelect}
 											handleChangeState={onChangeAsset}
@@ -288,7 +318,6 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue })
 											autoFocus
 											disabled
 											value={prefix}
-											name="prefix"
 											component={AntInput}
 											type="text"
 											className="mx-4 mb-16 flex-1"
