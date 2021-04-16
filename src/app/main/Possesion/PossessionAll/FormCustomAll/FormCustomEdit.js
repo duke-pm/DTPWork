@@ -6,8 +6,8 @@ import { useSelector, shallowEqual } from 'react-redux';
 import DateCustom from '@fuse/CustomForm/Date';
 import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
 import InputCurrency from '@fuse/CustomForm/InputCurrency';
-import { notification, Spin } from 'antd';
-import { AntDatePicker, AntInput, AntInputNumber, AntSelect } from '@fuse/CustomForm/CreateAntField';
+import { Spin } from 'antd';
+import { AntInput, AntInputNumber, AntSelect } from '@fuse/CustomForm/CreateAntField';
 import SelectCustom from '../../../../../@fuse/CustomForm/Select';
 
 export default function FormCustomEdit({ handleClose, saveAsset, initialValue }) {
@@ -17,16 +17,16 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue })
 		qty: Yup.number()
 			.typeError('Số lượng phải là dạng số và không được để trống. ')
 			.required('Số lượng không được để trống'),
-		deptCodeManager: Yup.string().required('Đơn vị quản lý không được để trống'),
+		// deptCodeManager: Yup.string().required('Đơn vị quản lý không được để trống'),
 		company: Yup.string().required('Công ty không được để trống'),
 		category: Yup.string().required('Loại không được để trống'),
-		group: Yup.string().required('Nhóm không được để trống')
-		// asset: Yup.string().required('Tiền đố không được để trống')
+		group: Yup.string().required('Nhóm không được để trống'),
+		asset: Yup.string().required('Tiền đố không được để trống')
 	});
 	const [disableCateogry, setDisableCategory] = React.useState(true);
 	const [disableGroup, setDisableGroup] = React.useState(true);
 	const [disableAsset, setDisableAsset] = React.useState(true);
-	const [disablePrefix, setDisablePrefix] = React.useState(true);
+	// const [disablePrefix, setDisablePrefix] = React.useState(true);
 	const [arrGroup, setArrayGroup] = React.useState([]);
 	const [arrAsset, setArrAsset] = React.useState([]);
 	const [companyParse, setcompanyParse] = React.useState(null);
@@ -46,7 +46,7 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue })
 	const department =
 		entitiesInformation && entitiesInformation.department
 			? entitiesInformation.department.reduce(
-					(arr, curr) => [...arr, { value: curr.supplierID, label: curr.supplierName }],
+					(arr, curr) => [...arr, { value: curr.deptCode, label: curr.deptName }],
 					[]
 			  )
 			: [];
@@ -75,7 +75,10 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue })
 	const assetDetail =
 		entitiesInformation && entitiesInformation.assetGroupDetail
 			? entitiesInformation.assetGroupDetail.reduce(
-					(arr, curr) => [...arr, { value: curr.absID, label: curr.itemName, code: curr.itemCode }],
+					(arr, curr) => [
+						...arr,
+						{ value: curr.absID, label: curr.itemName, code: curr.itemCode, groupID: curr.groupID }
+					],
 					[]
 			  )
 			: [];
@@ -108,16 +111,16 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue })
 	const onChangeGroup = value => {
 		setGroupSelected(value);
 		const arrAssetDetailParse = assetDetail.reduce(
-			(arr, curr) => (curr.value === value ? [...arr, { value: curr.value, label: curr.label }] : arr),
+			(arr, curr) => (curr.groupID === value ? [...arr, { value: curr.value, label: curr.label }] : arr),
 			[]
 		);
-		const test = assetDetail.reduce(
-			(arr, curr) =>
-				curr.value === arrAssetDetailParse[0].value
-					? { value: curr.value, label: curr.label, code: curr.code }
-					: arr,
-			{}
-		);
+		// const test = assetDetail.reduce(
+		// 	(arr, curr) =>
+		// 		curr.value === arrAssetDetailParse[0].value
+		// 			? { value: curr.value, label: curr.label, code: curr.code }
+		// 			: arr,
+		// 	{}
+		// );
 		setAssetSelected('');
 		setPrefix('');
 		setArrAsset(arrAssetDetailParse);
@@ -136,7 +139,7 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue })
 		<>
 			<Formik
 				enableReinitialize
-				// validationSchema={checkValidateForm}
+				validationSchema={checkValidateForm}
 				initialValues={initialValue}
 				onSubmit={values => {
 					saveAsset(values, prefix);

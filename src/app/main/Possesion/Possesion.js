@@ -2,7 +2,6 @@ import { Tabs, Tab, Box, Typography } from '@material-ui/core';
 import React, { useEffect, useContext } from 'react';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import FusePageCarded from '@fuse/core/FusePageCarded';
-import { Link } from 'react-router-dom';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import PossessionAll from './PossessionAll';
 import PossessionUnused from './PossessionUnused';
@@ -68,7 +67,7 @@ function PossesionPage(props) {
 							<FuseAnimate animation="transition.slideRightIn" delay={300}>
 								<Typography
 									className="text-16 sm:text-20 truncate"
-									component={Link}
+									// component={Link}
 									// role="button"
 									// to="/apps/e-commerce/orders"
 									color="inherit"

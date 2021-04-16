@@ -46,6 +46,7 @@ const CreateAntField = AntComponent => ({
 					style={{ width: '100%' }}
 					{...field}
 					{...props}
+					showSearch
 					disabled={disabled}
 					notFoundContent={notFoundContent || ''}
 					onBlur={onBlur}
