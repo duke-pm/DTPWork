@@ -50,20 +50,20 @@ export const possesionSlice = createSlice({
 			state.entitiesEdit = data;
 		},
 		possesionCreated: (state, action) => {
-			const { data } = action.payload;
+			const { dataReq } = action.payload;
 			state.actionLoading = false;
 			state.error = null;
 			const { countAll } = state.total_items;
-			state.total_items.countAll = countAll + 1;
-			// state.total_items = [...state.total_items, state.total_items.countAll + 1];
-			// state.entities = [...state.entities, data];
+			state.total_items.countAll = countAll + newArr.length;
+			const newArr = [...state.entities, ...dataReq];
+			state.entities = newArr;
 		},
 		possesionUpdate: (state, action) => {
-			const { data } = action.payload;
+			const { dataReq } = action.payload;
 			const { entities } = state;
-			const index = entities.findIndex(items => items.id === data.id);
+			const index = entities.findIndex(items => items.assetID === dataReq.assetID);
 			if (index !== -1) {
-				const newList = [...entities.slice(0, index), data, ...entities.slice(index + 1)];
+				const newList = [...entities.slice(0, index), dataReq, ...entities.slice(index + 1)];
 				return {
 					...state,
 					entities: newList

@@ -139,7 +139,7 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue })
 		<>
 			<Formik
 				enableReinitialize
-				validationSchema={checkValidateForm}
+				validationSchema={initialValue.assetID ? false : checkValidateForm}
 				initialValues={initialValue}
 				onSubmit={values => {
 					saveAsset(values, prefix);

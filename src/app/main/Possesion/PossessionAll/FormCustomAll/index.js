@@ -7,6 +7,7 @@ import FormCustomEdit from './FormCustomEdit';
 import * as actions from '../../_redux/possesionActions';
 
 const initial = {
+	assetID: '',
 	assetName: '',
 	qty: null,
 	assetGroup: '',
@@ -41,22 +42,37 @@ export default function FormCustomAll({ handleClose, open }) {
 		shallowEqual
 	);
 	const saveAsset = (values, prefix) => {
-		// if (entitiesEdit && entitiesEdit.assetID) {
-		console.log(moment(values.purchaseDate).format('MM-DD-YYYY'));
-		dispatch(actions.createdPossesionAll(values, prefix)).then(data => {
-			if (data && !data.isError) {
-				notification.success({
-					message: 'Thành công!',
-					description: 'Tạo thông báo mới thành công'
-				});
-				handleClose();
-			} else {
-				notification.warning({
-					message: 'Thất bại!',
-					description: 'Tạo thông báo mới thất bại vui lòng thử lại'
-				});
-			}
-		});
+		if (entitiesEdit && entitiesEdit.assetID) {
+			dispatch(actions.updatedPossesionAll(values)).then(data => {
+				if (data && !data.isError) {
+					notification.success({
+						message: 'Thành công!',
+						description: 'Cập nhật thành công'
+					});
+					handleClose();
+				} else {
+					notification.warning({
+						message: 'Thất bại!',
+						description: 'Cập nhật thất bại vui lòng thử lại'
+					});
+				}
+			});
+		} else {
+			dispatch(actions.createdPossesionAll(values, prefix)).then(data => {
+				if (data && !data.isError) {
+					notification.success({
+						message: 'Thành công!',
+						description: 'Tạo thông báo mới thành công'
+					});
+					handleClose();
+				} else {
+					notification.warning({
+						message: 'Thất bại!',
+						description: 'Tạo thông báo mới thất bại vui lòng thử lại'
+					});
+				}
+			});
+		}
 	};
 	return (
 		<Dialog

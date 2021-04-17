@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 const baseUrl = process.env.REACT_APP_API_URL;
-const url = 'api/Assets';
+export const url = `${baseUrl}/api/Assets/Create`;
+export const urlUpdate = `${baseUrl}/api/Assets/Update`;
+export const urlGet = `${baseUrl}/api/Assets/GetList`;
 const urlRule = 'api/Assets/GetList';
 const urlInformation = 'api/MasterData/GetDataForForm';
 export const fetchDataPossesion = params => {
@@ -9,11 +11,19 @@ export const fetchDataPossesion = params => {
 };
 
 export const createdDataPossesion = data => {
-	return axios.post(`${baseUrl}/${url}/Create`, data);
+	return axios({
+		method: 'POST',
+		url,
+		data
+	});
 };
 
 export const updateDataPossesion = data => {
-	return axios.put(`${baseUrl}/${url}/Update`, data);
+	return axios({
+		method: 'PUT',
+		url: urlUpdate,
+		data
+	});
 };
 
 export const getInformationCompany = params => {

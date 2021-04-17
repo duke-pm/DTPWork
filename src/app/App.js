@@ -25,7 +25,7 @@ const jss = create({
 });
 
 const generateClassName = createGenerateClassName();
-setupAxios(axios, store);
+// setupAxios(axios, store);
 const App = () => {
 	return (
 		<AppContext.Provider

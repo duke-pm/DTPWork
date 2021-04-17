@@ -1,11 +1,15 @@
 /* eslint-disable no-shadow */
-import { TimeParse } from '@fuse/core/TimeParse';
 import { notification } from 'antd';
 import * as moment from 'moment';
+import { extend } from 'umi-request';
 import * as requestFrom from '../posseionCruds';
 import { callTypes, possesionSlice } from '../possesionSlice';
 
 const { actions } = possesionSlice;
+const request = extend({
+	// errorHandler,
+	headers: { 'Content-Type': 'application/json', Accept: 'application/json' }
+});
 
 // =========================== Action PossesionGobale =========================== //
 export const reportFailurePossesion = data => dispatch => {
@@ -140,7 +144,7 @@ export const setTaskEditPossesionAll = data => dispatch => {
 
 export const createdPossesionAll = (data, prefix) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.actions }));
-	dispatch(actions.possesionCreated({ data }));
+	// dispatch(actions.possesionCreated({ data }));
 	const dataReq = {
 		Qty: data.qty,
 		Lang: 'vi',
@@ -156,14 +160,62 @@ export const createdPossesionAll = (data, prefix) => dispatch => {
 		CmpnID: data.company,
 		AssetTypeID: data.category,
 		AssetGroupID: data.group,
-		AssetGroupDetailID: prefix
+		PreAssetCode: prefix,
+		AssetGroupDetailID: data.asset
 	};
-	console.log(dataReq);
 	return requestFrom
 		.createdDataPossesion(dataReq)
 		.then(res => {
 			const { data } = res;
-			console.log(res);
+			if (!data.isError) {
+				const dataReq = data.data;
+				dispatch(actions.possesionCreated({ dataReq }));
+			} else {
+				notification.success({
+					message: 'Đã có lỗi xảy ra vui lòng thử lại',
+					description: `${data.errorMessage}`,
+					onClick: () => {
+						console.log('Notification Clicked!');
+					}
+				});
+			}
+			return data;
+		})
+		.catch(() => {});
+};
+
+export const updatedPossesionAll = data => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.actions }));
+	// dispatch(actions.possesionCreated({ data }));
+	const dataReq = {
+		Lang: 'vi',
+		AssetID: data.assetID,
+		AssetName: data.assetName,
+		Suppiler: data.suppiler,
+		WarrantyPeriod: data.warrantyPeriod,
+		EffectiveDate: data.effectiveDate && moment(data.effectiveDate).format('YYYY-MM-DD'),
+		PurchaseDate: moment(data.purchaseDate).format('YYYY-MM-DD'),
+		DepreciationPeriod: data.depreciationPeriod,
+		OriginalPrice: data.originalPrice,
+		DeptCode: data.deptCodeManager,
+		Descr: data.descr
+	};
+	return requestFrom
+		.updateDataPossesion(dataReq)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				const dataReq = data.data[0];
+				dispatch(actions.possesionUpdate({ dataReq }));
+			} else {
+				notification.success({
+					message: 'Đã có lỗi xảy ra vui lòng thử lại',
+					description: `${data.errorMessage}`,
+					onClick: () => {
+						console.log('Notification Clicked!');
+					}
+				});
+			}
 			return data;
 		})
 		.catch(() => {});
