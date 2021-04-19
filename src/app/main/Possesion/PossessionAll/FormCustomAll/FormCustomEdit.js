@@ -8,7 +8,6 @@ import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
 import InputCurrency from '@fuse/CustomForm/InputCurrency';
 import { Spin } from 'antd';
 import { AntInput, AntInputNumber, AntSelect } from '@fuse/CustomForm/CreateAntField';
-import SelectCustom from '../../../../../@fuse/CustomForm/Select';
 
 export default function FormCustomEdit({ handleClose, saveAsset, initialValue, actionLoading }) {
 	const checkValidateForm = Yup.object().shape({
@@ -154,15 +153,15 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 									<span className="border-b-1 mt-3 ml-6 border-fuchsia w-3/6 sm:w-5/6 h-10" />
 								</div>
 								{!initialValue.assetID && (
-									<div className="grid grid-cols-1 sm:grid-cols-4  gap-8 ">
+									<div className="grid grid-cols-1 sm:grid-cols-3  gap-8 ">
 										<Field
 											label="Số lượng (*)"
 											autoFocus
 											name="qty"
-											placeholder="Vui lòng điền số lượng"
+											placeholder="Vui lòng nhập số lượng tài sản cần tạo"
 											hasFeedback
 											component={AntInputNumber}
-											className="mx-4 mb-16"
+											// className="mx-4"
 										/>
 									</div>
 								)}
@@ -183,10 +182,10 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 										name="suppiler"
 										component={AntSelect}
 										options={suppiler}
-										className="mx-4 mb-16"
+										className="mx-4"
 									/>
 								</div>
-								<div className="grid mb-16 gap-8 ">
+								<div className="grid gap-8 ">
 									<Field
 										label="Quy cách tài sản/Thông số"
 										autoFocus
@@ -194,13 +193,13 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 										component={InputTextAreaLg}
 										row={2}
 										placeholder="Vui lòng điền nội dung"
-										className="mx-4 mb-16"
+										className="mx-4"
 									/>
 								</div>
 								{/* <div className="grid mb-16 gap-8 ">
 									
 								</div> */}
-								<div className="grid grid-cols-1 sm:grid-cols-3 mb-16 gap-8 ">
+								<div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-12 ">
 									<Field
 										label="Ngày mua (*) "
 										autoFocus
@@ -209,7 +208,7 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 										format="DD-MM-YYYY"
 										placeholder="Vui lòng chọn ngày mua"
 										component={DateCustom}
-										className="mx-4 mb-16"
+										className="mx-4"
 										hasFeedback
 									/>
 									<Field
@@ -219,19 +218,19 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 										name="effectiveDate"
 										format="DD-MM-YYYY"
 										component={DateCustom}
-										className="mx-4 mb-16"
+										className="mx-4"
 									/>
 									<Field
-										label="Thời gian bảo hành "
+										label="Thời gian bảo hành (tháng) "
 										autoFocus
-										placeholder="Vui lòng chọn thời gian bảo hành"
+										placeholder="Số tháng bảo hành của tài sản"
 										name="warrantyPeriod"
 										type="number"
 										component={AntInput}
-										className="mx-4 mb-16"
+										className="mx-4"
 									/>
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-3 mb-16 gap-8 ">
+								<div className="grid grid-cols-1 sm:grid-cols-3 gap-8 ">
 									<Field
 										label="Nguyên giá "
 										autoFocus
@@ -239,23 +238,23 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 										type="number"
 										placeholder="Vui lòng điền nguyên giá"
 										component={InputCurrency}
-										className="mx-4 mb-16"
+										className="mx-4"
 									/>
 									<Field
-										label="Thời gian KH "
+										label="Thời gian KH (tháng) "
 										autoFocus
 										name="depreciationPeriod"
 										component={AntInputNumber}
-										placeholder="Vui lòng chọn thời gian KH"
-										className="mx-4 mb-16"
+										placeholder="Số tháng khấu hao của tài sản"
+										className="mx-4"
 									/>
 									<Field
-										label="Đơn vị quản lí (*)"
+										label="Bộ phận quản lí (*)"
 										name="deptCodeManager"
 										notFoundContent={<Spin size="small" />}
 										component={AntSelect}
 										options={department}
-										className="mt-8 mb-16"
+										className=""
 										hasFeedback
 									/>
 								</div>
@@ -266,7 +265,7 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 										<h5 className="font-extrabold">Quy tắc đánh mã tài sản trong lô</h5>
 										<span className="border-b-1 mt-3 ml-6 border-fuchsia w-auto sm:w-8/12 h-10" />
 									</div>
-									<div className="grid grid-cols-1 sm:grid-cols-2 mb-16 gap-8 ">
+									<div className="grid grid-cols-1 sm:grid-cols-2 mb:6 gap-8 ">
 										<Field
 											label="Công ty (*)"
 											autoFocus
@@ -275,32 +274,32 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 											handleChangeState={onChangeCompany}
 											component={AntSelect}
 											options={company}
-											className="mx-4 mb-16 w-auto	"
+											className="mx-4 w-auto	"
 											hasFeedback
 										/>
 										<Field
-											label="Loại (*)"
+											label="Loại tài sản (*)"
 											autoFocus
-											disabled={!!disableCateogry}
+											readOnly={!!disableCateogry}
 											name="category"
 											component={AntSelect}
 											handleChangeState={onChangeCategory}
 											options={category}
-											className="mx-4 mb-16"
+											className="mx-4"
 											variant="outlined"
 											hasFeedback
 										/>
 										<Field
-											label="Nhóm (*)"
+											label="Nhóm tài sản (*)"
 											autoFocus
 											name="group"
 											dafaultValue={initialValue.group}
 											value={groupSelected}
-											disabled={!!disableGroup}
+											readOnly={!!disableGroup}
 											handleChangeState={onChangeGroup}
 											component={AntSelect}
 											options={arrGroup}
-											className="mx-4 mb-16"
+											className="mx-4"
 											hasFeedback
 										/>
 										<Field
@@ -309,21 +308,21 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 											name="asset"
 											dafaultValue={initialValue.asset}
 											value={assetSelected}
-											disabled={!!disableAsset}
+											readOnly={!!disableAsset}
 											component={AntSelect}
 											handleChangeState={onChangeAsset}
 											options={arrAsset}
-											className="mx-4 mb-16"
+											className="mx-4"
 											hasFeedback
 										/>
 										<Field
 											label="Tiền tố (*)"
 											autoFocus
-											disabled
+											readOnly
 											value={prefix}
 											component={AntInput}
 											type="text"
-											className="mx-4 mb-16 flex-1"
+											className="mx-4 flex-1"
 											hasFeedback
 										/>
 									</div>

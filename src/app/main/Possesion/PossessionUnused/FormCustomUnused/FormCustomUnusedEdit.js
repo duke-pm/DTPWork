@@ -2,18 +2,18 @@
 import React, { useState } from 'react';
 import { DialogContent, DialogActions, Button } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
-import Select from '@fuse/CustomForm/Select';
-import InputCustom from '@fuse/CustomForm/Input';
+// import Select from '@fuse/CustomForm/Select';
+// import InputCustom from '@fuse/CustomForm/Input';
 import DateCustom from '@fuse/CustomForm/Date';
 import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
 import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
 import * as moment from 'moment';
+import * as Yup from 'yup';
 import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import { AntSelect, AntInput } from '@fuse/CustomForm/CreateAntField';
-import SelectAntd from '@fuse/CustomForm/SelectAntd';
+// import SelectAntd from '@fuse/CustomForm/SelectAntd';
 
 export default function FormCustomUnusedEdit({ entitiesEdit, entitiesInformation }) {
-	const [arrDepartment, setArrDepartmentDepartment] = useState([]);
 	const [intialState, setInitialState] = useState({
 		customer: '',
 		position: '',
@@ -23,7 +23,11 @@ export default function FormCustomUnusedEdit({ entitiesEdit, entitiesInformation
 		file: '',
 		note: ''
 	});
-	const [region, setRegion] = useState([]);
+	const checkValidateForm = Yup.object().shape({
+		customer: Yup.string().required('Nhân viên không được để trống'),
+		department: Yup.string().required('Bộ phận không được để trống').nullable(),
+		location: Yup.string().required('Khu vực không được để trống')
+	});
 	const employees =
 		entitiesInformation && entitiesInformation.employees
 			? entitiesInformation.employees.reduce(
@@ -58,31 +62,49 @@ export default function FormCustomUnusedEdit({ entitiesEdit, entitiesInformation
 		const newDataEmployee = employees.reduce((arr, curr) => (curr.value === value ? curr : arr));
 		if (newDataEmployee) {
 			setInitialState({
+				...intialState,
 				customer: newDataEmployee.value,
 				position: newDataEmployee.jobTitle,
 				department: newDataEmployee.deptCode,
-				location: newDataEmployee.regionCode
-				// date: moment(Date.now()),
-				// file: '',
-				// note: ''
+				location: newDataEmployee.regionCode,
+				date: moment(Date.now()),
+				file: '',
+				note: ''
 			});
-
-			const Depar = entitiesInformation.department.reduce((arr, curr) =>
-				curr.deptCode === newDataEmployee.deptCode ? { label: curr.deptName, value: curr.deptCode } : arr
-			);
-			setArrDepartmentDepartment(Depar.value);
 		}
 	};
 	// console.log(initial);
-	console.log(arrDepartment);
+	const onChangeDepartment = value => {
+		setInitialState({
+			...intialState,
+			department: value
+		});
+	};
+	const onChangeRegion = value => {
+		setInitialState({
+			...intialState,
+			location: value
+		});
+	};
+	const handleInputChangeNote = e => {
+		setInitialState({
+			...intialState,
+			note: e.target.value
+		});
+	};
+	const handleChangeImage = file => {
+		setInitialState({
+			...intialState,
+			file
+		});
+	};
 	return (
 		<>
 			<Formik
 				enableReinitialize
-				// validationSchema={checkValidateForm}
+				validationSchema={checkValidateForm}
 				initialValues={intialState}
 				onSubmit={values => {
-					// saveForm(values);
 					console.log(values);
 				}}
 			>
@@ -139,7 +161,7 @@ export default function FormCustomUnusedEdit({ entitiesEdit, entitiesInformation
 									<h5 className="font-extrabold">Thông tin cấp phát tài sản.</h5>
 									<span className="border-b-1 mt-3 ml-6 border-fuchsia w-auto sm:w-9/12 h-10" />
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 mb-16 gap-8 ">
+								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
 									<Field
 										label="Nhân viên được cấp phát (*)"
 										name="customer"
@@ -149,22 +171,23 @@ export default function FormCustomUnusedEdit({ entitiesEdit, entitiesInformation
 										className="mt-8 mb-16"
 									/>
 									<Field
-										label="Vị trí công việc (*)"
+										label="Vị trí công việc"
 										autoFocus
 										type="text"
-										component={AntInput}
-										value={intialState.position}
+										// value={intialState.position}
 										name="position"
+										// handleInputChange={handleInputChangePostion}
+										component={AntInput}
 										className="mx-4 mb-16"
-										variant="outlined"
 									/>
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 mb-16 gap-8 ">
+								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
 									<Field
 										label="Bộ phận (*)"
 										name="department"
 										value={intialState.department}
 										component={AntSelect}
+										handleChangeState={onChangeDepartment}
 										options={department}
 										className="mt-8 mb-16"
 									/>
@@ -175,39 +198,42 @@ export default function FormCustomUnusedEdit({ entitiesEdit, entitiesInformation
 										component={AntSelect}
 										value={intialState.location}
 										options={regionEmployee}
+										handleChangeState={onChangeRegion}
 										className="mx-4 mb-16"
 									/>
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 mb-16 gap-8 ">
-									<Field
-										label="Ngày Cấp (*) "
-										autoFocus
-										defaultValue={intialState.date}
-										name="date"
-										format="DD-MM-YYYY"
-										placeholder="Vui lòng chọn ngày mua"
-										component={DateCustom}
-										className="mx-4 mb-16"
-										hasFeedback
-									/>
+								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
+									<div className="flex flex-col">
+										<Field
+											label="Ngày Cấp (*) "
+											autoFocus
+											defaultValue={intialState.date}
+											name="date"
+											format="DD-MM-YYYY"
+											placeholder="Vui lòng chọn ngày mua"
+											component={DateCustom}
+											className="mx-4 mb-16"
+											hasFeedback
+										/>
+										<Field
+											label="Lí do phát"
+											autoFocus
+											// value={intialState.note}
+											name="note"
+											row={3}
+											handleInputChangeNote={handleInputChangeNote}
+											component={InputTextAreaLg}
+											className="mx-4 mb-16"
+										/>
+									</div>
 									<Field
 										label="File đính kèm"
 										autoFocus
-										name="date"
-										type="text"
+										name="file"
+										style={{ height: '35.5px' }}
 										component={FileCustomVersion2}
 										className="mx-4 mb-16"
-										variant="outlined"
-									/>
-								</div>
-								<div className="grid mb-16 gap-8 ">
-									<Field
-										label="Lí do phát"
-										autoFocus
-										name="note"
-										row={2}
-										component={InputTextAreaLg}
-										className="mx-4 mb-16"
+										handleChangeImage={handleChangeImage}
 									/>
 								</div>
 							</div>

@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Dialog, AppBar, Toolbar, Typography } from '@material-ui/core';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import * as moment from 'moment';
-import { notification } from 'antd';
+import { notificationConfig } from '@fuse/core/DtpConfig';
 import FormCustomEdit from './FormCustomEdit';
 import * as actions from '../../_redux/possesionActions';
 
 const initial = {
 	assetID: '',
 	assetName: '',
-	qty: null,
+	qty: 1,
 	assetGroup: '',
 	specification: '',
 	suppiler: '',
@@ -46,31 +46,19 @@ export default function FormCustomAll({ handleClose, open, rowPage }) {
 		if (entitiesEdit && entitiesEdit.assetID) {
 			dispatch(actions.updatedPossesionAll(values)).then(data => {
 				if (data && !data.isError) {
-					notification.success({
-						message: 'Thành công!',
-						description: 'Cập nhật thành công'
-					});
+					notificationConfig('success', 'Thành công!', 'Cập nhật thành công');
 					handleClose();
 				} else {
-					notification.warning({
-						message: 'Thất bại!',
-						description: 'Cập nhật thất bại vui lòng thử lại'
-					});
+					notificationConfig('warning', 'Thất bại!', 'Cập nhật thất bại vui lòng thử lại');
 				}
 			});
 		} else {
 			dispatch(actions.createdPossesionAll(values, prefix, rowPage)).then(data => {
 				if (data && !data.isError) {
-					notification.success({
-						message: 'Thành công!',
-						description: 'Tạo thông báo mới thành công'
-					});
+					notificationConfig('success', 'Thành công!', 'Tạo mới thành công');
 					handleClose();
 				} else {
-					notification.warning({
-						message: 'Thất bại!',
-						description: 'Tạo thông báo mới thất bại vui lòng thử lại'
-					});
+					notificationConfig('warning', 'Thất bại!', 'Tạo mới thất bại');
 				}
 			});
 		}
@@ -87,7 +75,7 @@ export default function FormCustomAll({ handleClose, open, rowPage }) {
 			<AppBar position="static" className="shadow-md">
 				<Toolbar className="flex w-full">
 					<Typography variant="subtitle1" color="inherit">
-						Ghi gia tăng tài sản theo lô
+						{entitiesEdit && entitiesEdit.assetID ? 'Cập nhật mới tài sản' : 'Tạo mới tài sản'}
 					</Typography>
 				</Toolbar>
 			</AppBar>

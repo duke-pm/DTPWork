@@ -1,15 +1,11 @@
 /* eslint-disable no-shadow */
+import { notificationConfig } from '@fuse/core/DtpConfig';
 import { notification } from 'antd';
 import * as moment from 'moment';
-import { extend } from 'umi-request';
 import * as requestFrom from '../posseionCruds';
 import { callTypes, possesionSlice } from '../possesionSlice';
 
 const { actions } = possesionSlice;
-const request = extend({
-	// errorHandler,
-	headers: { 'Content-Type': 'application/json', Accept: 'application/json' }
-});
 
 // =========================== Action PossesionGobale =========================== //
 export const reportFailurePossesion = data => dispatch => {
@@ -76,24 +72,12 @@ export const searchPossesion = (value, search, limit, page) => dispatch => {
 			if (!data.isError) {
 				dispatch(actions.possesionsFetch({ data }));
 			} else {
-				notification.success({
-					message: 'Đã có lỗi xảy ra vui lòng thử lại',
-					description: `${data.errorMessage}`,
-					onClick: () => {
-						console.log('Notification Clicked!');
-					}
-				});
+				notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', data.errorMessage);
 			}
 		})
 		.catch(err => {
 			dispatch(actions.catchErrors({ callType: callTypes.list }));
-			notification.success({
-				message: 'Đã có lỗi xảy ra vui lòng thử lại',
-				description: `${err}`,
-				onClick: () => {
-					console.log('Notification Clicked!');
-				}
-			});
+			notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', err);
 		});
 };
 
@@ -117,24 +101,12 @@ export const fetchPossesionAll = (value, limit, page, search) => dispatch => {
 			if (!data.isError) {
 				dispatch(actions.possesionsFetch({ data }));
 			} else {
-				notification.success({
-					message: 'Đã có lỗi xảy ra vui lòng thử lại',
-					description: `${data.errorMessage}`,
-					onClick: () => {
-						console.log('Notification Clicked!');
-					}
-				});
+				notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', data.errorMessage);
 			}
 		})
 		.catch(err => {
 			dispatch(actions.catchErrors({ callType: callTypes.list }));
-			notification.success({
-				message: 'Đã có lỗi xảy ra vui lòng thử lại',
-				description: `${err}`,
-				onClick: () => {
-					console.log('Notification Clicked!');
-				}
-			});
+			notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', err);
 		});
 };
 export const setTaskEditPossesionAll = data => dispatch => {
@@ -171,13 +143,7 @@ export const createdPossesionAll = (data, prefix, rowPage) => dispatch => {
 				const dataReq = data.data;
 				dispatch(actions.possesionCreated({ dataReq, rowPage }));
 			} else {
-				notification.success({
-					message: 'Đã có lỗi xảy ra vui lòng thử lại',
-					description: `${data.errorMessage}`,
-					onClick: () => {
-						console.log('Notification Clicked!');
-					}
-				});
+				notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', data.errorMessage);
 			}
 			return data;
 		})
@@ -208,13 +174,7 @@ export const updatedPossesionAll = data => dispatch => {
 				const dataReq = data.data[0];
 				dispatch(actions.possesionUpdate({ dataReq }));
 			} else {
-				notification.success({
-					message: 'Đã có lỗi xảy ra vui lòng thử lại',
-					description: `${data.errorMessage}`,
-					onClick: () => {
-						console.log('Notification Clicked!');
-					}
-				});
+				notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', data.errorMessage);
 			}
 			return data;
 		})
@@ -225,6 +185,13 @@ export const updatedPossesionAll = data => dispatch => {
 
 export const addPersonalPossesion = data => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.actions }));
+	const formData = new FormData();
+	formData.append('customer', data.file);
+	formData.append('department', data.department);
+	formData.append('location', data.location);
+	formData.append('note', data.note);
+	formData.append('position', data.position);
+	formData.append('date', moment(data.date).format('YYYY-MM-DD'));
 	return requestFrom
 		.updateDataPossesion(data)
 		.then(() => {})

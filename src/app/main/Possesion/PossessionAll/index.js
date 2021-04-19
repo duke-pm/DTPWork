@@ -68,8 +68,8 @@ const chipColor = {
 	2: 'bg-green text-white',
 	3: 'bg-orange text-black',
 	4: 'bg-purple text-white',
-	5: 'bg-green-700 text-white',
-	6: 'bg-pink text-white'
+	5: 'bg-red-700 text-white',
+	6: 'bg-yellow-900 text-white'
 };
 const chipText = {
 	1: 'Chưa sử dụng',
@@ -150,13 +150,13 @@ export default function PossessionUnused(props) {
 												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
 												align="left"
 											>
-												Mã sản phẩm
+												Mã tài sản
 											</TableCell>
 											<TableCell
 												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
 												align="left"
 											>
-												Tên sản phẩm
+												Tên tài sẵn
 											</TableCell>
 											<TableCell
 												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"

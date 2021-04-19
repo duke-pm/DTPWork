@@ -1,13 +1,11 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable import/no-extraneous-dependencies */
-import { Button, IconButton, Paper, TextField } from '@material-ui/core';
+import { Button, IconButton, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React, { useContext } from 'react';
-import { LoadingOutlined } from '@ant-design/icons';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
-import { Spin } from 'antd';
 import { useDispatch } from 'react-redux';
 import * as actions from '../../_redux/possesionActions';
 import { PossessionContext } from '../../PossessionContext';

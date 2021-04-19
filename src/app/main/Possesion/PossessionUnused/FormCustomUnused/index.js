@@ -1,11 +1,11 @@
 import React from 'react';
 import { Dialog, AppBar, Toolbar, Typography } from '@material-ui/core';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import FormCustomUnusedEdit from './FormCustomUnusedEdit';
 
 export default function FormCustomUnused({ handleClose, open }) {
-	const dispatch = useDispatch();
-	const { entitiesEdit, actionLoading, entitiesInformation } = useSelector(
+	// const dispatch = useDispatch();
+	const { entitiesEdit, entitiesInformation } = useSelector(
 		state => ({
 			entitiesEdit: state.possesion.entitiesEdit,
 			actionLoading: state.possesion.actionLoading,

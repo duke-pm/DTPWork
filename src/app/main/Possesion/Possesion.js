@@ -9,7 +9,7 @@ import PossessionUsed from './PossessionUsed';
 import PossessionRepair from './PossessionRepair';
 import PossessionCorrupt from './PossessionCorrupt';
 import PossessionPay from './PossessionPay';
-import PossessionContextProvider, { PossessionContext } from './PossessionContext';
+import { PossessionContext } from './PossessionContext';
 import FormControlCycle from './FormControl/FormControlCycle';
 import * as actions from './_redux/possesionActions';
 
@@ -38,7 +38,7 @@ function TabPanel(props) {
 function PossesionPage(props) {
 	const dispatch = useDispatch();
 	const possessionContext = useContext(PossessionContext);
-	const { value, setValue, rowPage, page, setPage, setRowPage } = possessionContext;
+	const { value, setValue, rowPage, setPage, setRowPage } = possessionContext;
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
 	const total_Record = currentState && currentState.total_items;
 	const handleChange = (event, newValue) => {
@@ -52,7 +52,7 @@ function PossesionPage(props) {
 		} else {
 			dispatch(actions.fetchPossesionAll(value, rowPage));
 		}
-	}, [value]);
+	}, [value, rowPage, dispatch]);
 	return (
 		<>
 			<FormControlCycle />

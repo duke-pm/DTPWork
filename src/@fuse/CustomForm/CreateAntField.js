@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
-import { DatePicker, Form, Input, InputNumber, TimePicker, Select } from 'antd';
+import { DatePicker, Form, Input, InputNumber, Select } from 'antd';
 import 'antd/dist/antd.css';
 import { FormGroup } from '@material-ui/core';
 
@@ -15,8 +15,10 @@ const CreateAntField = AntComponent => ({
 	selectOptions,
 	submitCount,
 	placeholder,
+	handleInputChange,
 	disabled,
 	type,
+	readOnly,
 	notFoundContent,
 	handleChangeState,
 	...props
@@ -26,10 +28,13 @@ const CreateAntField = AntComponent => ({
 	const hasError = form.errors[field.name];
 	const submittedError = hasError && submitted;
 	const touchedError = hasError && touched;
-	const onInputChange = ({ target: { value } }) => form.setFieldValue(field.name, value);
+	const onInputChange = ({ target }) => {
+		console.log(target.value);
+		form.setFieldValue(field.name, target.value);
+		return handleInputChange ? handleInputChange(target) : null;
+	};
 	const onChange = value => {
 		form.setFieldValue(field.name, value);
-		console.log(value);
 		return handleChangeState ? handleChangeState(value) : null;
 	};
 	const onBlur = () => form.setFieldTouched(field.name, true);
@@ -48,8 +53,8 @@ const CreateAntField = AntComponent => ({
 					{...field}
 					{...props}
 					showSearch
-					defaultValue={field.value}
-					disabled={disabled}
+					className={readOnly ? 'readOnly' : ''}
+					defaultValue={field.value || ''}
 					notFoundContent={notFoundContent || ''}
 					onBlur={onBlur}
 					placeholder={placeholder || ' '}

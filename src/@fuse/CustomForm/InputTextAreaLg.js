@@ -8,15 +8,20 @@ const { TextArea } = Input;
 
 export default function InputTextAreaLg({
 	field, // { name, value, onChange, onBlur }
-	form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+	form: { touched, errors, setFieldValue }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
 	label,
 	withFeedbackLabel = true,
 	customFeedbackLabel,
 	type,
+	handleInputChangeNote,
 	placeholder,
 	row,
 	...props
 }) {
+	const onChange = e => {
+		setFieldValue(field.name, e.target.value);
+		return handleInputChangeNote ? handleInputChangeNote(e) : null;
+	};
 	return (
 		<>
 			<FormGroup>
@@ -24,10 +29,11 @@ export default function InputTextAreaLg({
 				<TextArea
 					placeholder={placeholder || ''}
 					rows={row}
+					onChange={e => onChange(e)}
 					variant="outlined"
 					type={type}
-					{...field}
-					{...props}
+					// {...field}
+					// {...props}
 				/>
 			</FormGroup>
 		</>

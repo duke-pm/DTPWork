@@ -1,5 +1,5 @@
 /* eslint-disable no-shadow */
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
 	Table,
@@ -30,7 +30,7 @@ import FormControlReport from '../FormControl/FormControlReport';
 import { PossessionContext } from '../PossessionContext';
 import ActionComponent from './Component/ActionComponent';
 import * as actions from '../_redux/possesionActions';
-
+import PossessionAll from '../PossessionAll/FormCustomAll';
 // import FormCustomAll from './FormCustomAll';
 
 const useStyles = makeStyles(theme => ({
@@ -66,19 +66,21 @@ const useStyles = makeStyles(theme => ({
 export default function PossessionUnused(props) {
 	const { value } = props;
 	const [open, setOpen] = React.useState(false);
+	const [editAssets, setEditAssets] = useState(false);
 	const dispatch = useDispatch();
 	const [actionMenu, setActionMenu] = useState(null);
 	const possessionContext = useContext(PossessionContext);
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count } = currentState;
-	const { handleOpenFormReport, rowPage, setRowPage, page, setPage, search } = possessionContext;
+	const { rowPage, setRowPage, page, setPage, search } = possessionContext;
 	const classes = useStyles(props);
-	const handleFormOpenReport = type => {
-		setActionMenu(null);
-		handleOpenFormReport(type);
-	};
+	// const handleFormOpenReport = type => {
+	// 	setActionMenu(null);
+	// 	handleOpenFormReport(type);
+	// };
 	const handleClose = () => {
 		setOpen(false);
+		setEditAssets(false);
 	};
 	const handleOpenForm = () => {
 		setActionMenu(null);
@@ -104,12 +106,17 @@ export default function PossessionUnused(props) {
 		setPage(newPage);
 		dispatch(actions.fetchPossesionAll(value, rowPage, page + 1, search));
 	};
+	const handleOpenFormEdit = items => {
+		setActionMenu(null);
+		setEditAssets(true);
+	};
 	if (listloading) {
 		return <FuseLoading />;
 	}
 	return (
 		<>
 			<FormCustomUnused open={open} handleClose={handleClose} />
+			<PossessionAll rowPage={rowPage} open={editAssets} handleClose={handleClose} />
 			<FormControlReport />
 			<div className="flex flex-col">
 				<ActionComponent value={value} />
@@ -132,13 +139,13 @@ export default function PossessionUnused(props) {
 												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
 												align="left"
 											>
-												Mã sản phẩm
+												Mã tài sản
 											</TableCell>
 											<TableCell
 												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
 												align="left"
 											>
-												Tên sản phẩm
+												Tên tài sản
 											</TableCell>
 											<TableCell
 												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
@@ -191,7 +198,7 @@ export default function PossessionUnused(props) {
 																</ListItemIcon>
 																<ListItemText primary="Thêm nhân viên vào tài sản" />
 															</MenuItem>
-															<MenuItem
+															{/* <MenuItem
 																onClick={() => handleFormOpenReport('service')}
 																role="button"
 															>
@@ -199,8 +206,8 @@ export default function PossessionUnused(props) {
 																	<Icon>build</Icon>
 																</ListItemIcon>
 																<ListItemText primary="Báo hỏng tài sản" />
-															</MenuItem>
-															<MenuItem
+															</MenuItem> */}
+															{/* <MenuItem
 																onClick={() => handleFormOpenReport('lose')}
 																role="button"
 															>
@@ -208,6 +215,12 @@ export default function PossessionUnused(props) {
 																	<Icon>report_problem</Icon>
 																</ListItemIcon>
 																<ListItemText primary="Báo mất tài sản" />
+															</MenuItem> */}
+															<MenuItem onClick={handleOpenFormEdit} role="button">
+																<ListItemIcon className="min-w-40">
+																	<Icon>edit</Icon>
+																</ListItemIcon>
+																<ListItemText primary="Chỉnh sửa tài sản" />
 															</MenuItem>
 														</Popover>
 													</TableCell>

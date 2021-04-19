@@ -13,12 +13,10 @@ import {
 	Popover,
 	MenuItem,
 	ListItemText,
-	ListItemIcon,
-	Typography
+	ListItemIcon
 } from '@material-ui/core';
 import Panigation from '@fuse/core/FusePanigate';
 import image from '@fuse/assets/group.png';
-import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import MenuIcon from '@material-ui/icons/Menu';
 import AppsIcon from '@material-ui/icons/Apps';

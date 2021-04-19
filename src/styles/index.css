@@ -98,6 +98,10 @@ a[role=button] {
 form label {
     z-index: 99;
 }
+.readOnly
+{
+	pointer-events: none;
+}
 
 @keyframes autofill {
     0%,100% {

@@ -1,17 +1,16 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-shadow */
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 // import { FormGroup, Label, FormFeedback } from 'reactstrap';
-import { ErrorMessage } from 'formik';
+// import { ErrorMessage } from 'formik';
 // import { Select } from "antd";
 import SelectField from 'react-select';
 import { FormGroup } from '@material-ui/core';
 
 export function SelectCustomer(props) {
 	const { field, form, options, label, placeholder, isMulti, handleChangeState, valueProps } = props;
-	const { name, value } = field;
-	console.log(field);
+	const { name } = field;
 	const { errors, touched } = form;
 	const showError = errors[name] && touched[name];
 

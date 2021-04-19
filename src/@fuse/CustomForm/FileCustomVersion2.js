@@ -15,11 +15,13 @@ export default function FileCustomVersion2({
 	withFeedbackLabel = true,
 	customFeedbackLabel,
 	type,
+	handleChangeImage,
 	style,
 	...props
 }) {
 	const handleChangeFile = info => {
 		setFieldValue(field.name, info.file.originFileObj);
+		return handleChangeImage ? handleChangeImage(info.file.originFileObj) : null;
 	};
 	return (
 		<FormGroup>

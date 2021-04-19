@@ -12,8 +12,8 @@ import {
 	Popover,
 	MenuItem,
 	ListItemIcon,
-	ListItemText,
-	Typography
+	ListItemText
+	// Typography
 } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
@@ -64,16 +64,16 @@ const useStyles = makeStyles(theme => ({
 export default function PossessionPay(props) {
 	const { value } = props;
 	const dispatch = useDispatch();
-	const [open, setOpen] = React.useState(false);
+	const [, setOpen] = React.useState(false);
 	const [actionMenu, setActionMenu] = React.useState(null);
 	const possessionContext = useContext(PossessionContext);
 	const { handleOpenFormCycle, rowPage, setRowPage, page, setPage, search } = possessionContext;
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count } = currentState;
 
-	const handleClose = () => {
-		setOpen(false);
-	};
+	// const handleClose = () => {
+	// 	setOpen(false);
+	// };
 	const handleOpenFormCycleView = type => {
 		setActionMenu(null);
 		handleOpenFormCycle(type);
