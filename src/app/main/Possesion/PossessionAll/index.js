@@ -128,7 +128,7 @@ export default function PossessionUnused(props) {
 	}
 	return (
 		<>
-			<PossessionAll open={open} handleClose={handleClose} />
+			<PossessionAll rowPage={rowPage} open={open} handleClose={handleClose} />
 			<div className="flex flex-col">
 				<ActionComponent value={value} handleOpenForm={handleOpenForm} />
 				<FuseAnimate animation="transition.slideUpIn" delay={200}>

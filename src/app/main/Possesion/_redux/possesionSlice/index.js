@@ -50,13 +50,14 @@ export const possesionSlice = createSlice({
 			state.entitiesEdit = data;
 		},
 		possesionCreated: (state, action) => {
-			const { dataReq } = action.payload;
+			const { dataReq, rowPage } = action.payload;
 			state.actionLoading = false;
 			state.error = null;
 			const { countAll } = state.total_items;
-			state.total_items.countAll = countAll + newArr.length;
-			const newArr = [...state.entities, ...dataReq];
-			state.entities = newArr;
+			state.total_items.countAll = countAll + dataReq.length;
+			const newArr = [...dataReq, ...state.entities];
+			const dataRows = newArr.slice(0, rowPage);
+			state.entities = dataRows;
 		},
 		possesionUpdate: (state, action) => {
 			const { dataReq } = action.payload;

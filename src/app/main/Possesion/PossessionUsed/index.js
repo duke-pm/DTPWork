@@ -51,6 +51,9 @@ const useStyles = makeStyles(theme => ({
 		width: '100%',
 		overflowX: 'auto'
 	},
+	TableContainer: {
+		maxHeight: '600px'
+	},
 	modal: {
 		display: 'flex',
 		alignItems: 'start',
@@ -112,7 +115,7 @@ export default function PossessionUsed(props) {
 				<ActionComponent value={props.value} />
 				<FuseAnimate delay={200} animation="transition.slideUpIn">
 					<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
-						<TableContainer className="flex flex-1">
+						<TableContainer className={`${classes.TableContainer} flex flex-1`}>
 							<Paper className={classes.rootPaper}>
 								<Table className={classes.table} stickyHeader>
 									<TableHead>

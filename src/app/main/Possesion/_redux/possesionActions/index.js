@@ -142,7 +142,7 @@ export const setTaskEditPossesionAll = data => dispatch => {
 	dispatch(actions.possesionFetch({ data }));
 };
 
-export const createdPossesionAll = (data, prefix) => dispatch => {
+export const createdPossesionAll = (data, prefix, rowPage) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.actions }));
 	// dispatch(actions.possesionCreated({ data }));
 	const dataReq = {
@@ -169,7 +169,7 @@ export const createdPossesionAll = (data, prefix) => dispatch => {
 			const { data } = res;
 			if (!data.isError) {
 				const dataReq = data.data;
-				dispatch(actions.possesionCreated({ dataReq }));
+				dispatch(actions.possesionCreated({ dataReq, rowPage }));
 			} else {
 				notification.success({
 					message: 'Đã có lỗi xảy ra vui lòng thử lại',

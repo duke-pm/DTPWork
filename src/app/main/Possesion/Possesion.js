@@ -44,7 +44,7 @@ function PossesionPage(props) {
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 		setPage(0);
-		setRowPage(2);
+		setRowPage(25);
 	};
 	useEffect(() => {
 		if (value === 5) {

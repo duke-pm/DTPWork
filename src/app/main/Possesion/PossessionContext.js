@@ -7,7 +7,7 @@ export default function PossessionContextProvider({ children }) {
 	const [formReport, setFormReport] = useState(false);
 	const [typeReport, setTypeReport] = useState('');
 	const [typeCycle, setTypeCycle] = useState('');
-	const [rowPage, setRowPage] = React.useState(2);
+	const [rowPage, setRowPage] = React.useState(25);
 	const [page, setPage] = React.useState(0);
 	const [value, setValue] = React.useState(0);
 	const [search, setSearch] = React.useState('');

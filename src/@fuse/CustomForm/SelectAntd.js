@@ -11,8 +11,9 @@ export default function SelectAntd({
 	field, // { name, value, onChange, onBlur }
 	form, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
 	label,
+	valueProps,
 	handleChangeState,
-	selectOptions,
+	options,
 	hasFeedback,
 	notFoundContent,
 	submitCount,
@@ -27,7 +28,7 @@ export default function SelectAntd({
 		form.setFieldValue(field.name, value);
 		return handleChangeState ? handleChangeState(value) : null;
 	};
-	console.log(hasFeedback);
+	console.log(options);
 	return (
 		<>
 			<FormGroup>
@@ -39,15 +40,10 @@ export default function SelectAntd({
 					help={submittedError || touchedError ? hasError : false}
 					validateStatus={submittedError || touchedError ? 'error' : hasFeedback && 'success'}
 				>
-					<Select
-						notFoundContent={notFoundContent}
-						{...field}
-						{...props}
-						style={{ zIndex: 2000, width: '100%' }}
-						value={field.value}
-						onChange={handleSelect}
-					>
-						{selectOptions && selectOptions.map(name => <Option key={name}>{name}</Option>)}
+					<Select defaultValue={valueProps} onChange={handleSelect}>
+						{options.map(items => (
+							<Option key={items.value}> {items.label} </Option>
+						))}
 					</Select>
 				</FormItem>
 			</FormGroup>

@@ -10,7 +10,7 @@ const { Dragger } = Upload;
 
 export default function FileCustomVersion2({
 	field, // { name, value, onChange, onBlur }
-	form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+	form: { touched, errors, setFieldValue }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
 	label,
 	withFeedbackLabel = true,
 	customFeedbackLabel,
@@ -18,10 +18,13 @@ export default function FileCustomVersion2({
 	style,
 	...props
 }) {
+	const handleChangeFile = info => {
+		setFieldValue(field.name, info.file.originFileObj);
+	};
 	return (
 		<FormGroup>
 			<label className="mb-10"> {label} </label>
-			<Dragger>
+			<Dragger onChange={handleChangeFile}>
 				<p className="ant-upload-drag-icon">
 					<InboxOutlined />
 				</p>

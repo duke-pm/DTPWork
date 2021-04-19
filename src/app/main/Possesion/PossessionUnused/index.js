@@ -40,6 +40,9 @@ const useStyles = makeStyles(theme => ({
 	table: {
 		minWidth: 800
 	},
+	TableContainer: {
+		maxHeight: '600px'
+	},
 	cellTabel: {
 		width: 340
 	},
@@ -82,8 +85,11 @@ export default function PossessionUnused(props) {
 		setOpen(true);
 	};
 
-	const actionMenuClick = event => {
+	const actionMenuClick = (event, items) => {
+		const params = 'Employee,Department,Region';
 		setActionMenu(event.currentTarget);
+		dispatch(actions.getInformationCompany(params));
+		dispatch(actions.setTaskEditPossesionAll(items));
 	};
 	const actionMenuClose = () => {
 		setActionMenu(null);
@@ -109,7 +115,7 @@ export default function PossessionUnused(props) {
 				<ActionComponent value={value} />
 				<FuseAnimate delay={200} animation="transition.slideUpIn">
 					<div className="flex flex-col mt-16 min-h-full  sm:border-1 sm:rounded-4 overflow-hidden">
-						<TableContainer className="flex flex-1">
+						<TableContainer className={`${classes.TableContainer} flex flex-1`}>
 							<Paper className={classes.rootPaper}>
 								<Table className={classes.table} stickyHeader>
 									<TableHead>
@@ -162,7 +168,7 @@ export default function PossessionUnused(props) {
 													<TableCell align="center" className="p-4 md:p-12">
 														<MenuIcon
 															className="cursor-pointer"
-															onClick={actionMenuClick}
+															onClick={event => actionMenuClick(event, items)}
 															aria-label="delete"
 														/>
 														<Popover

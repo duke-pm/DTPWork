@@ -33,11 +33,12 @@ const initial = {
 	// valueStart: '',
 	// valueLength: ''
 };
-export default function FormCustomAll({ handleClose, open }) {
+export default function FormCustomAll({ handleClose, open, rowPage }) {
 	const dispatch = useDispatch();
-	const { entitiesEdit } = useSelector(
+	const { entitiesEdit, actionLoading } = useSelector(
 		state => ({
-			entitiesEdit: state.possesion.entitiesEdit
+			entitiesEdit: state.possesion.entitiesEdit,
+			actionLoading: state.possesion.actionLoading
 		}),
 		shallowEqual
 	);
@@ -58,7 +59,7 @@ export default function FormCustomAll({ handleClose, open }) {
 				}
 			});
 		} else {
-			dispatch(actions.createdPossesionAll(values, prefix)).then(data => {
+			dispatch(actions.createdPossesionAll(values, prefix, rowPage)).then(data => {
 				if (data && !data.isError) {
 					notification.success({
 						message: 'Thành công!',
@@ -91,6 +92,7 @@ export default function FormCustomAll({ handleClose, open }) {
 				</Toolbar>
 			</AppBar>
 			<FormCustomEdit
+				actionLoading={actionLoading}
 				saveAsset={saveAsset}
 				initialValue={entitiesEdit && entitiesEdit.assetID ? entitiesEdit : initial}
 				handleClose={handleClose}

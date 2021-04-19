@@ -10,7 +10,7 @@ import { Spin } from 'antd';
 import { AntInput, AntInputNumber, AntSelect } from '@fuse/CustomForm/CreateAntField';
 import SelectCustom from '../../../../../@fuse/CustomForm/Select';
 
-export default function FormCustomEdit({ handleClose, saveAsset, initialValue }) {
+export default function FormCustomEdit({ handleClose, saveAsset, initialValue, actionLoading }) {
 	const checkValidateForm = Yup.object().shape({
 		assetName: Yup.string().required('Tên tài sản không được để trống'),
 		purchaseDate: Yup.date().required('Ngày mua không được để trống').nullable(),
@@ -331,9 +331,13 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue })
 							)}
 						</DialogContent>
 						<DialogActions>
-							<Button variant="contained" autoFocus type="submit" color="primary">
-								{initialValue.assetID ? 'Cập nhật' : 'Thêm mới'}
-							</Button>
+							{actionLoading ? (
+								<Spin size="middle" />
+							) : (
+								<Button variant="contained" autoFocus type="submit" color="primary">
+									{initialValue.assetID ? 'Cập nhật' : 'Thêm mới'}
+								</Button>
+							)}
 						</DialogActions>
 					</Form>
 				)}

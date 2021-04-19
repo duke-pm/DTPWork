@@ -29,6 +29,7 @@ const CreateAntField = AntComponent => ({
 	const onInputChange = ({ target: { value } }) => form.setFieldValue(field.name, value);
 	const onChange = value => {
 		form.setFieldValue(field.name, value);
+		console.log(value);
 		return handleChangeState ? handleChangeState(value) : null;
 	};
 	const onBlur = () => form.setFieldTouched(field.name, true);
@@ -47,6 +48,7 @@ const CreateAntField = AntComponent => ({
 					{...field}
 					{...props}
 					showSearch
+					defaultValue={field.value}
 					disabled={disabled}
 					notFoundContent={notFoundContent || ''}
 					onBlur={onBlur}
