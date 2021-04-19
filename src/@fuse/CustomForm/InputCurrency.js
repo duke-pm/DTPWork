@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
-import { FormGroup, TextField } from '@material-ui/core';
-import CurrencyTextField from '@unicef/material-ui-currency-textfield';
+import NumberFormat from 'react-number-format';
+import { FormGroup } from '@material-ui/core';
+import { Input } from 'antd';
 
 export default function InputCurrency({
 	field: { name, value }, // { name, value, onChange, onBlur }
@@ -9,27 +10,34 @@ export default function InputCurrency({
 	label,
 	withFeedbackLabel = true,
 	customFeedbackLabel,
+	placeholder,
 	type = 'text',
 	...props
 }) {
 	return (
 		<>
 			<FormGroup>
-				<label className="mb-16"> {label}</label>
-				<CurrencyTextField
-					currencySymbol="VNĐ"
-					variant="outlined"
-					// minimumValue="0"
-					outputFormat="string"
-					decimalCharacter="."
-					digitGroupSeparator=","
-					inputProps={{
-						style: {
-							height: '2px'
-						}
-					}}
+				{label && <label className="mb-10"> {label}</label>}
+				<NumberFormat
+					name={name}
+					customInput={Input}
+					value={value}
+					placeholder={placeholder || ' '}
+					onValueChange={val => setFieldValue(name, val.floatValue)}
+					thousandSeparator
+					prefix="VNĐ "
 				/>
 			</FormGroup>
+
+			{/* {withFeedbackLabel && (
+				<FieldFeedbackLabel
+					error={errors[name]}
+					touched={touched[name]}
+					label={label}
+					type={type}
+					customFeedbackLabel={customFeedbackLabel}
+				/>
+			)} */}
 		</>
 	);
 }

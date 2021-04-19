@@ -1,23 +1,36 @@
+/* eslint-disable no-shadow */
 import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-	TextField,
-	Button,
 	Paper,
 	Table,
 	TableHead,
 	TableRow,
 	TableCell,
 	TableBody,
-	TableContainer
+	TableContainer,
+	Popover,
+	MenuItem,
+	ListItemIcon,
+	ListItemText,
+	Typography
 } from '@material-ui/core';
-import { Tooltip } from 'antd';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Search from '@material-ui/icons/Search';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
+import MenuIcon from '@material-ui/icons/Menu';
+import AppsIcon from '@material-ui/icons/Apps';
+import FuseAnimate from '@fuse/core/FuseAnimate';
+import image from '@fuse/assets/group.png';
+import Panigation from '@fuse/core/FusePanigate';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+import FuseLoading from '@fuse/core/FuseLoading';
+import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
+import * as moment from 'moment';
 import { PossessionContext } from '../PossessionContext';
 import FormCustomRepair from './FormCustomRepair';
+import ActionComponent from './Component/ActionComponent';
+import * as actions from '../_redux/possesionActions';
+
 // import FormCustomUsed from './FormCustomUsed';
 
 const useStyles = makeStyles(theme => ({
@@ -48,115 +61,178 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 export default function PossessionRepair(props) {
+	const { value } = props;
+	const dispatch = useDispatch();
 	const [open, setOpen] = React.useState(false);
+	const [actionMenu, setActionMenu] = React.useState(null);
 	const possessionContext = useContext(PossessionContext);
-	const { handleOpenFormCycle } = possessionContext;
+	const { handleOpenFormCycle, rowPage, setRowPage, page, setPage, search } = possessionContext;
+	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
+	const { listloading, entities, lastErrors, total_count } = currentState;
+
 	const handleClose = () => {
 		setOpen(false);
 	};
 	const handleOpenFormCycleView = type => {
+		setActionMenu(null);
 		handleOpenFormCycle(type);
 	};
 	const handleOpenForm = () => {
+		setActionMenu(null);
 		setOpen(true);
 	};
+	const actionMenuClick = event => {
+		setActionMenu(event.currentTarget);
+	};
+
+	const actionMenuClose = () => {
+		setActionMenu(null);
+	};
+	const handleRowChange = e => {
+		setRowPage(parseInt(e.target.value, 10));
+		setPage(0);
+		const rowPage = parseInt(e.target.value, 10);
+		dispatch(actions.fetchPossesionAll(value, rowPage, page + 1, search));
+	};
+	const handleChangePage = (event, newPage) => {
+		setPage(newPage);
+		dispatch(actions.fetchPossesionAll(value, rowPage, page + 1, search));
+	};
 	const classes = useStyles(props);
+	if (listloading) {
+		return <FuseLoading />;
+	}
 	return (
 		<>
 			<FormCustomRepair open={open} handleClose={handleClose} />
 			<div className="flex flex-col">
-				<div className="flex flex-row justify-between">
-					<TextField
-						className={classes.InputSearch}
-						InputProps={{
-							startAdornment: (
-								<InputAdornment position="start">
-									<Search />
-								</InputAdornment>
-							)
-						}}
-						id="standard-basic"
-						label="Tìm kiếm"
-					/>
-				</div>
-				<div className="flex flex-col mt-36 min-h-full sm:border-1 sm:rounded-16 overflow-hidden">
-					<TableContainer className="flex flex-1">
-						<Paper className={classes.rootPaper}>
-							<Table className={classes.table} stickyHeader>
-								<TableHead>
-									<TableRow>
-										<TableCell
-											className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
-											align="center"
-										>
-											Mã sản phẩm
-										</TableCell>
-										<TableCell
-											className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
-											align="center"
-										>
-											Tên sản phẩm
-										</TableCell>
-										<TableCell
-											className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
-											align="center"
-										>
-											Nhóm tài sản
-										</TableCell>
-										<TableCell
-											className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
-											align="center"
-										>
-											Ngày mua{' '}
-										</TableCell>
-										<TableCell
-											className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
-											align="center"
-										>
-											Nguyên giá
-										</TableCell>
-										<TableCell
-											className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
-											align="center"
-										/>
-									</TableRow>
-								</TableHead>
-								<TableBody>
-									<TableRow>
-										<TableCell align="center"> MT-20020 </TableCell>
-										<TableCell align="center"> abbott @withinpixels.com </TableCell>
-										<TableCell align="center">Thiết bị</TableCell>
-										<TableCell align="center"> 02/04/2020 </TableCell>
-										<TableCell align="center"> 02/04/2020 </TableCell>
+				<ActionComponent value={props.value} />
 
-										<TableCell align="center" className="p-4 md:p-12">
-											<div className="flex items-center">
-												<Tooltip
-													placement="topLeft"
-													title="Sửa chữa bảo hành tài sản "
-													aria-label="add"
-												>
-													<IconButton onClick={handleOpenForm}>
-														<Icon>build</Icon>
-													</IconButton>
-												</Tooltip>
-												<Tooltip
-													placement="topLeft"
-													title="Đưa vào sử dụng lại"
-													aria-label="add"
-												>
-													<IconButton onClick={() => handleOpenFormCycleView('repair')}>
-														<Icon>autorenew</Icon>
-													</IconButton>
-												</Tooltip>
-											</div>
-										</TableCell>
-									</TableRow>
-								</TableBody>
-							</Table>
-						</Paper>
-					</TableContainer>
-				</div>
+				<FuseAnimate delay={200} animation="transition.slideUpIn">
+					<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
+						<TableContainer className="flex flex-1">
+							<Paper className={classes.rootPaper}>
+								<Table className={classes.table} stickyHeader>
+									<TableHead>
+										<TableRow>
+											<TableCell
+												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans"
+												align="left"
+											>
+												<IconButton aria-label="delete">
+													<AppsIcon />
+												</IconButton>
+											</TableCell>
+											<TableCell
+												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
+												align="left"
+											>
+												Mã sản phẩm
+											</TableCell>
+											<TableCell
+												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
+												align="left"
+											>
+												Tên sản phẩm
+											</TableCell>
+											<TableCell
+												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
+												align="left"
+											>
+												Nhóm tài sản
+											</TableCell>
+											<TableCell
+												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
+												align="left"
+											>
+												Ngày mua{' '}
+											</TableCell>
+											<TableCell
+												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
+												align="left"
+											>
+												Nguyên giá
+											</TableCell>
+										</TableRow>
+									</TableHead>
+									<TableBody>
+										{entities &&
+											entities.map(items => (
+												<TableRow key={items.assetID} hover>
+													<TableCell align="right" className="p-4 md:p-12">
+														<IconButton onClick={actionMenuClick} aria-label="delete">
+															<MenuIcon />
+														</IconButton>
+														<Popover
+															open={Boolean(actionMenu)}
+															anchorEl={actionMenu}
+															onClose={actionMenuClose}
+															anchorOrigin={{
+																vertical: 'center',
+																horizontal: 'right'
+															}}
+															transformOrigin={{
+																vertical: 'top',
+																horizontal: 'left'
+															}}
+														>
+															<MenuItem onClick={handleOpenForm} role="button">
+																<ListItemIcon className="min-w-40">
+																	<Icon>settings</Icon>
+																</ListItemIcon>
+																<ListItemText primary="Sửa chữa bảo hành tài sản" />
+															</MenuItem>
+															<MenuItem
+																onClick={() => handleOpenFormCycleView('repair')}
+																role="button"
+															>
+																<ListItemIcon className="min-w-40">
+																	<Icon>autorenew</Icon>
+																</ListItemIcon>
+																<ListItemText primary="Đưa vào sử dụng lại" />
+															</MenuItem>
+														</Popover>
+													</TableCell>
+													<TableCell align="left"> {items.assetCode} </TableCell>
+													<TableCell align="left">{items.assetName} </TableCell>
+													<TableCell align="left">{items.groupName}</TableCell>
+													<TableCell align="left">
+														{moment(items.purchaseDate).format('DD-MM-YYYY')}{' '}
+													</TableCell>
+													<TableCell align="left">
+														{' '}
+														{currencyFormat(items.originalPrice)}{' '}
+													</TableCell>
+												</TableRow>
+											))}
+									</TableBody>
+								</Table>
+								{(entities && entities.length === 0) || lastErrors ? (
+									<FuseAnimate delay={300}>
+										<div className="flex items-center justify-center h-auto">
+											<img
+												className="rounded-full mx-auto"
+												src={image}
+												alt=""
+												width="384"
+												height="512"
+											/>
+										</div>
+									</FuseAnimate>
+								) : null}
+							</Paper>
+						</TableContainer>
+						{entities && entities.length !== 0 && (
+							<Panigation
+								page={page}
+								handleChangePage={handleChangePage}
+								rowPage={rowPage}
+								handleChangeRowsPerPage={handleRowChange}
+								count={total_count}
+							/>
+						)}
+					</div>
+				</FuseAnimate>
 			</div>
 		</>
 	);

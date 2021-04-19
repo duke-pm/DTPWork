@@ -1,23 +1,18 @@
-import { makeStyles } from '@material-ui/core/styles';
-import { AppBar, Tabs, Tab, Box } from '@material-ui/core';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { Tabs, Tab, Box, Typography } from '@material-ui/core';
+import React, { useEffect, useContext } from 'react';
+import FuseAnimate from '@fuse/core/FuseAnimate';
+import FusePageCarded from '@fuse/core/FusePageCarded';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import PossessionAll from './PossessionAll';
 import PossessionUnused from './PossessionUnused';
 import PossessionUsed from './PossessionUsed';
 import PossessionRepair from './PossessionRepair';
 import PossessionCorrupt from './PossessionCorrupt';
 import PossessionPay from './PossessionPay';
-import PossessionContextProvider from './PossessionContext';
+import PossessionContextProvider, { PossessionContext } from './PossessionContext';
 import FormControlCycle from './FormControl/FormControlCycle';
+import * as actions from './_redux/possesionActions';
 
-const useStyles = makeStyles(theme => ({
-	root: {
-		flexGrow: 1,
-		width: '100%',
-		backgroundColor: theme.palette.background.paper
-	}
-}));
 function a11yProps(index) {
 	return {
 		id: `scrollable-auto-tab-${index}`,
@@ -31,7 +26,7 @@ function TabPanel(props) {
 		<div
 			role="tabpanel"
 			hidden={value !== index}
-			id={`scrollable-auto-tabpanel-${index}`}
+			// id={`scrollable-auto-tabpanel-${index}`}
 			aria-labelledby={`scrollable-auto-tab-${index}`}
 			{...other}
 		>
@@ -41,58 +36,117 @@ function TabPanel(props) {
 }
 
 function PossesionPage(props) {
-	const classes = useStyles(props);
-	const { t } = useTranslation('examplePage');
-	const [value, setValue] = React.useState(4);
-
+	const dispatch = useDispatch();
+	const possessionContext = useContext(PossessionContext);
+	const { value, setValue, rowPage, page, setPage, setRowPage } = possessionContext;
+	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
+	const total_Record = currentState && currentState.total_items;
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
+		setPage(0);
+		setRowPage(25);
 	};
-
+	useEffect(() => {
+		if (value === 5) {
+			dispatch(actions.fetchPossesionAll(6, rowPage));
+		} else {
+			dispatch(actions.fetchPossesionAll(value, rowPage));
+		}
+	}, [value]);
 	return (
-		<PossessionContextProvider>
-			<div className={classes.root}>
-				<div className="container mx-auto ">
-					<FormControlCycle />
-					<AppBar className="bg-white mt-16" position="static">
-						<Tabs
-							value={value}
-							onChange={handleChange}
-							indicatorColor="primary"
-							textColor="primary"
-							variant="scrollable"
-							scrollButtons="auto"
-							aria-label="scrollable auto tabs example"
-						>
-							<Tab className="text-gray-800 font-sans" label="Tất cả ( )" {...a11yProps(0)} />
-							<Tab className="text-gray-800 font-sans	" label="Chưa sử dụng ( )" {...a11yProps(1)} />
-							<Tab className="text-gray-800 font-sans	" label="Đang sử dụng( )" {...a11yProps(2)} />
-							<Tab className="text-gray-800 font-sans	" label="Sửa chữa - bảo hành( )" {...a11yProps(3)} />
-							<Tab className="text-gray-800 font-sans	" label="Hư hỏng - Mất" {...a11yProps(4)} />
-							<Tab className="text-gray-800 font-sans	" label="Thanh lí( )" {...a11yProps(5)} />
-						</Tabs>
-					</AppBar>
-					<TabPanel value={value} index={0}>
-						<PossessionAll />
-					</TabPanel>
-					<TabPanel value={value} index={1}>
-						<PossessionUnused />
-					</TabPanel>
-					<TabPanel value={value} index={2}>
-						<PossessionUsed />
-					</TabPanel>
-					<TabPanel value={value} index={3}>
-						<PossessionRepair />
-					</TabPanel>
-					<TabPanel value={value} index={4}>
-						<PossessionCorrupt />
-					</TabPanel>
-					<TabPanel value={value} index={5}>
-						<PossessionPay />
-					</TabPanel>
-				</div>
-			</div>
-		</PossessionContextProvider>
+		<>
+			<FormControlCycle />
+			<FusePageCarded
+				classes={{
+					// content: 'flex',
+					header: 'min-h-10 h-10	sm:h-16 sm:min-h-16'
+				}}
+				header={
+					<div className="flex flex-1 w-full items-center justify-between">
+						<div className="flex flex-1 flex-col items-center sm:items-start">
+							<FuseAnimate animation="transition.slideRightIn" delay={300}>
+								<Typography
+									className="text-16 sm:text-20 truncate"
+									// component={Link}
+									// role="button"
+									// to="/apps/e-commerce/orders"
+									color="inherit"
+								>
+									{/* {xhtm} */}
+								</Typography>
+							</FuseAnimate>
+						</div>
+					</div>
+				}
+				contentToolbar={
+					<Tabs
+						classes={{ root: 'w-full h-64' }}
+						value={value}
+						onChange={handleChange}
+						indicatorColor="primary"
+						textColor="primary"
+						variant="scrollable"
+						scrollButtons="auto"
+						aria-label="scrollable auto tabs example"
+					>
+						<Tab
+							className="font-sans"
+							label={`Tất cả (${(total_Record && total_Record.countAll) || 0})`}
+							{...a11yProps(0)}
+						/>
+						<Tab
+							className="font-sans	"
+							label={`Chưa sử dụng (${(total_Record && total_Record.countNoUseYet) || 0})`}
+							{...a11yProps(1)}
+						/>
+						<Tab
+							className=" font-sans	"
+							label={`Đang sử dụng (${(total_Record && total_Record.countUsing) || 0})`}
+							{...a11yProps(2)}
+						/>
+						<Tab
+							className=" font-sans	"
+							label={`Sửa chữa - bảo hành (${(total_Record && total_Record.countWarrantyRepair) || 0})`}
+							{...a11yProps(3)}
+						/>
+						<Tab
+							className=" font-sans	"
+							label={`Hư hỏng - mất (${(total_Record && total_Record.countDamaged) || 0} - ${
+								(total_Record && total_Record.countLost) || 0
+							} )`}
+							{...a11yProps(4)}
+						/>
+						<Tab
+							className=" font-sans	"
+							label={`Thanh lí (${(total_Record && total_Record.countLiquidation) || 0})`}
+							{...a11yProps(5)}
+						/>
+					</Tabs>
+				}
+				content={
+					<div className="">
+						<TabPanel value={value} index={0}>
+							<PossessionAll value={value} />
+						</TabPanel>
+						<TabPanel value={value} index={1}>
+							<PossessionUnused value={value} />
+						</TabPanel>
+						<TabPanel value={value} index={2}>
+							<PossessionUsed value={value} />
+						</TabPanel>
+						<TabPanel value={value} index={3}>
+							<PossessionRepair value={value} />
+						</TabPanel>
+						<TabPanel value={value} index={4}>
+							<PossessionCorrupt value={value} />
+						</TabPanel>
+						<TabPanel value={value} index={5}>
+							<PossessionPay value={value} />
+						</TabPanel>
+					</div>
+				}
+			/>
+		</>
 	);
 }
 

@@ -1,23 +1,35 @@
-import React from 'react';
+/* eslint-disable no-shadow */
+import React, { useContext, useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-	TextField,
-	Button,
-	Paper,
 	Table,
 	TableHead,
 	TableRow,
 	TableCell,
 	TableBody,
-	TableContainer
+	TableContainer,
+	Popover,
+	ListItemIcon,
+	MenuItem,
+	ListItemText,
+	Paper
 } from '@material-ui/core';
-import { Tooltip } from 'antd';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Search from '@material-ui/icons/Search';
-import IconButton from '@material-ui/core/IconButton';
+import Panigation from '@fuse/core/FusePanigate';
+import image from '@fuse/assets/group.png';
 import Icon from '@material-ui/core/Icon';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import AppsIcon from '@material-ui/icons/Apps';
+import FuseLoading from '@fuse/core/FuseLoading';
+import FuseAnimate from '@fuse/core/FuseAnimate';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
+import * as moment from 'moment';
 import FormCustomUnused from './FormCustomUnused';
 import FormControlReport from '../FormControl/FormControlReport';
+import { PossessionContext } from '../PossessionContext';
+import ActionComponent from './Component/ActionComponent';
+import * as actions from '../_redux/possesionActions';
 
 // import FormCustomAll from './FormCustomAll';
 
@@ -27,6 +39,9 @@ const useStyles = makeStyles(theme => ({
 	},
 	table: {
 		minWidth: 800
+	},
+	TableContainer: {
+		maxHeight: '600px'
 	},
 	cellTabel: {
 		width: 340
@@ -49,126 +64,193 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 export default function PossessionUnused(props) {
+	const { value } = props;
 	const [open, setOpen] = React.useState(false);
-	const [openFormReport, setOpenFormReport] = React.useState(false);
+	const dispatch = useDispatch();
+	const [actionMenu, setActionMenu] = useState(null);
+	const possessionContext = useContext(PossessionContext);
+	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
+	const { listloading, entities, lastErrors, total_count } = currentState;
+	const { handleOpenFormReport, rowPage, setRowPage, page, setPage, search } = possessionContext;
+	const classes = useStyles(props);
+	const handleFormOpenReport = type => {
+		setActionMenu(null);
+		handleOpenFormReport(type);
+	};
 	const handleClose = () => {
 		setOpen(false);
 	};
 	const handleOpenForm = () => {
+		setActionMenu(null);
 		setOpen(true);
 	};
-	const handleOpenFormReport = () => setOpenFormReport(true);
-	const handleCloseFormReport = () => setOpenFormReport(false);
-	const classes = useStyles(props);
+
+	const actionMenuClick = (event, items) => {
+		const params = 'Employee,Department,Region';
+		setActionMenu(event.currentTarget);
+		dispatch(actions.getInformationCompany(params));
+		dispatch(actions.setTaskEditPossesionAll(items));
+	};
+	const actionMenuClose = () => {
+		setActionMenu(null);
+	};
+	const handleRowChange = e => {
+		setRowPage(parseInt(e.target.value, 10));
+		setPage(0);
+		const rowPage = parseInt(e.target.value, 10);
+		dispatch(actions.fetchPossesionAll(value, rowPage, page + 1, search));
+	};
+	const handleChangePage = (event, newPage) => {
+		setPage(newPage);
+		dispatch(actions.fetchPossesionAll(value, rowPage, page + 1, search));
+	};
+	if (listloading) {
+		return <FuseLoading />;
+	}
 	return (
 		<>
 			<FormCustomUnused open={open} handleClose={handleClose} />
-			<FormControlReport open={openFormReport} handleClose={handleCloseFormReport} />
+			<FormControlReport />
 			<div className="flex flex-col">
-				<div className="flex flex-row justify-between">
-					<TextField
-						className={classes.InputSearch}
-						InputProps={{
-							startAdornment: (
-								<InputAdornment position="start">
-									<Search />
-								</InputAdornment>
-							)
-						}}
-						id="standard-basic"
-						label="Tìm kiếm"
-					/>
-				</div>
-				<div className="flex flex-col mt-36 min-h-full sm:border-1 sm:rounded-16 overflow-hidden">
-					<TableContainer className="flex flex-1">
-						<Paper className={classes.rootPaper}>
-							<Table className={classes.table} stickyHeader>
-								<TableHead>
-									<TableRow>
-										<TableCell
-											className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
-											align="center"
-										>
-											Mã sản phẩm
-										</TableCell>
-										<TableCell
-											className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
-											align="center"
-										>
-											Tên sản phẩm
-										</TableCell>
-										<TableCell
-											className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
-											align="center"
-										>
-											Nhóm tài sản
-										</TableCell>
-										<TableCell
-											className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
-											align="center"
-										>
-											Ngày mua{' '}
-										</TableCell>
-										<TableCell
-											className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
-											align="center"
-										>
-											Nguyên giá
-										</TableCell>
-										<TableCell
-											className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
-											align="center"
-										/>
-									</TableRow>
-								</TableHead>
-								<TableBody>
-									<TableRow>
-										<TableCell align="center"> MT-20020 </TableCell>
-										<TableCell align="center"> abbott @withinpixels.com </TableCell>
-										<TableCell align="center">Thiết bị</TableCell>
-										<TableCell align="center"> 02/04/2020 </TableCell>
-										<TableCell align="center"> 02/04/2020 </TableCell>
-
-										<TableCell align="center" className="p-4 md:p-12">
-											<div className="flex items-center">
-												<Tooltip
-													placement="topLeft"
-													className=" font-sans"
-													title="Thêm nhân viên vào tài sản"
-													aria-label="add"
-												>
-													<IconButton onClick={handleOpenForm}>
-														<Icon>add</Icon>
-													</IconButton>
-												</Tooltip>
-												<Tooltip
-													placement="topLeft"
-													className=" font-sans"
-													title="Báo hỏng tài sản"
-													aria-label="add"
-												>
-													<IconButton onClick={handleOpenFormReport}>
-														<Icon>build</Icon>
-													</IconButton>
-												</Tooltip>
-												<Tooltip
-													placement="topLeft"
-													className=" font-sans"
-													title="Báo mất tài sản"
-													aria-label="add"
-												>
-													<IconButton onClick={handleOpenFormReport}>
-														<Icon>report_problem</Icon>
-													</IconButton>
-												</Tooltip>
-											</div>
-										</TableCell>
-									</TableRow>
-								</TableBody>
-							</Table>
-						</Paper>
-					</TableContainer>
-				</div>
+				<ActionComponent value={value} />
+				<FuseAnimate delay={200} animation="transition.slideUpIn">
+					<div className="flex flex-col mt-16 min-h-full  sm:border-1 sm:rounded-4 overflow-hidden">
+						<TableContainer className={`${classes.TableContainer} flex flex-1`}>
+							<Paper className={classes.rootPaper}>
+								<Table className={classes.table} stickyHeader>
+									<TableHead>
+										<TableRow>
+											<TableCell
+												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans"
+												align="left"
+											>
+												<IconButton aria-label="delete">
+													<AppsIcon />
+												</IconButton>
+											</TableCell>
+											<TableCell
+												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
+												align="left"
+											>
+												Mã sản phẩm
+											</TableCell>
+											<TableCell
+												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
+												align="left"
+											>
+												Tên sản phẩm
+											</TableCell>
+											<TableCell
+												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
+												align="left"
+											>
+												Nhóm tài sản
+											</TableCell>
+											<TableCell
+												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
+												align="left"
+											>
+												Ngày mua{' '}
+											</TableCell>
+											<TableCell
+												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
+												align="left"
+											>
+												Nguyên giá
+											</TableCell>
+										</TableRow>
+									</TableHead>
+									<TableBody>
+										{entities &&
+											!lastErrors &&
+											entities.map(items => (
+												<TableRow hover key={items.assetID}>
+													<TableCell align="center" className="p-4 md:p-12">
+														<MenuIcon
+															className="cursor-pointer"
+															onClick={event => actionMenuClick(event, items)}
+															aria-label="delete"
+														/>
+														<Popover
+															elevation={1}
+															open={Boolean(actionMenu)}
+															anchorEl={actionMenu}
+															onClose={actionMenuClose}
+															anchorOrigin={{
+																vertical: 'center',
+																horizontal: 'right'
+															}}
+															transformOrigin={{
+																vertical: 'top',
+																horizontal: 'left'
+															}}
+														>
+															<MenuItem onClick={handleOpenForm} role="button">
+																<ListItemIcon className="min-w-40">
+																	<Icon>add</Icon>
+																</ListItemIcon>
+																<ListItemText primary="Thêm nhân viên vào tài sản" />
+															</MenuItem>
+															<MenuItem
+																onClick={() => handleFormOpenReport('service')}
+																role="button"
+															>
+																<ListItemIcon className="min-w-40">
+																	<Icon>build</Icon>
+																</ListItemIcon>
+																<ListItemText primary="Báo hỏng tài sản" />
+															</MenuItem>
+															<MenuItem
+																onClick={() => handleFormOpenReport('lose')}
+																role="button"
+															>
+																<ListItemIcon className="min-w-40">
+																	<Icon>report_problem</Icon>
+																</ListItemIcon>
+																<ListItemText primary="Báo mất tài sản" />
+															</MenuItem>
+														</Popover>
+													</TableCell>
+													<TableCell align="left"> {items.assetCode} </TableCell>
+													<TableCell align="left">{items.assetName} </TableCell>
+													<TableCell align="left">{items.groupName}</TableCell>
+													<TableCell align="left">
+														{moment(items.purchaseDate).format('DD-MM-YYYY')}{' '}
+													</TableCell>
+													<TableCell align="left">
+														{' '}
+														{currencyFormat(items.originalPrice)}{' '}
+													</TableCell>
+												</TableRow>
+											))}
+									</TableBody>
+								</Table>
+								{(entities && entities.length === 0) || lastErrors ? (
+									<FuseAnimate delay={300}>
+										<div className="flex items-center justify-center h-auto">
+											<img
+												className="rounded-full mx-auto"
+												src={image}
+												alt=""
+												width="384"
+												height="512"
+											/>
+										</div>
+									</FuseAnimate>
+								) : null}
+							</Paper>
+						</TableContainer>
+						{entities && entities.length !== 0 && (
+							<Panigation
+								page={page}
+								handleChangePage={handleChangePage}
+								rowPage={rowPage}
+								handleChangeRowsPerPage={handleRowChange}
+								count={total_count}
+							/>
+						)}
+					</div>
+				</FuseAnimate>
 			</div>
 		</>
 	);

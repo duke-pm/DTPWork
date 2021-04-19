@@ -11,7 +11,7 @@ const navigationConfig = [
 	{
 		id: 'applications',
 		title: 'Applications',
-		translate: 'Quản lí',
+		translate: 'Quản lý',
 		type: 'group',
 		icon: 'apps',
 		children: [

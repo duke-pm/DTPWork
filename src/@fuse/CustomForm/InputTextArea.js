@@ -15,7 +15,7 @@ export default function InputTextArea({
 	return (
 		<>
 			<FormGroup>
-				<label className="mb-16"> {label} </label>
+				<label className="mb-10"> {label} </label>
 				<TextField
 					helperText={touched[field.name] ? errors[field.name] : ''}
 					error={touched[field.name] && Boolean(errors[field.name])}

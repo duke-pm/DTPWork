@@ -1,17 +1,15 @@
-import FuseSearch from '@fuse/core/FuseSearch';
-import FuseShortcuts from '@fuse/core/FuseShortcuts';
 import AppBar from '@material-ui/core/AppBar';
 import Hidden from '@material-ui/core/Hidden';
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import NavbarMobileToggleButton from 'app/fuse-layouts/shared-components/NavbarMobileToggleButton';
-import QuickPanelToggleButton from 'app/fuse-layouts/shared-components/quickPanel/QuickPanelToggleButton';
 import clsx from 'clsx';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectToolbarTheme } from 'app/store/fuse/settingsSlice';
+import UserMenu from 'app/fuse-layouts/shared-components/UserMenu';
+import { Typography } from '@material-ui/core';
 import FullScreenToggle from '../../shared-components/FullScreenToggle';
-import LanguageSwitcher from '../../shared-components/LanguageSwitcher';
 
 const useStyles = makeStyles(theme => ({
 	root: {}
@@ -20,9 +18,7 @@ const useStyles = makeStyles(theme => ({
 function ToolbarLayout1(props) {
 	const config = useSelector(({ fuse }) => fuse.settings.current.layout.config);
 	const toolbarTheme = useSelector(selectToolbarTheme);
-
 	const classes = useStyles(props);
-
 	return (
 		<ThemeProvider theme={toolbarTheme}>
 			<AppBar
@@ -38,20 +34,15 @@ function ToolbarLayout1(props) {
 						</Hidden>
 					)}
 
-					<div className="flex flex-1">
-						<Hidden mdDown>
-							<FuseShortcuts className="px-16" />
-						</Hidden>
+					<div className="flex  items-center px-16 flex-1">
+						<Typography component="span" className="font-bold flex text-lg	">
+							Quản lý tài sản
+						</Typography>
 					</div>
 
 					<div className="flex items-center px-16">
-						<LanguageSwitcher />
-
 						<FullScreenToggle />
-
-						<FuseSearch />
-
-						<QuickPanelToggleButton />
+						<UserMenu />
 					</div>
 
 					{config.navbar.display && config.navbar.position === 'right' && (

@@ -11,10 +11,12 @@ import rtl from 'jss-rtl';
 import React from 'react';
 import Provider from 'react-redux/es/components/Provider';
 import { Router } from 'react-router-dom';
+import axios from 'axios';
 import AppContext from './AppContext';
 import { Auth } from './auth';
 import routes from './fuse-configs/routesConfig';
 import store from './store';
+import setupAxios from './store/setupAxios';
 
 const jss = create({
 	...jssPreset(),
@@ -23,7 +25,7 @@ const jss = create({
 });
 
 const generateClassName = createGenerateClassName();
-
+// setupAxios(axios, store);
 const App = () => {
 	return (
 		<AppContext.Provider

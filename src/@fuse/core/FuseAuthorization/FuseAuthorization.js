@@ -16,7 +16,9 @@ class FuseAuthorization extends Component {
 	}
 
 	componentDidMount() {
-		if (!this.state.accessGranted) {
+		const { userRole } = this.props;
+		// check role to login
+		if (!userRole && userRole.length >= 0) {
 			this.redirectRoute();
 		}
 	}

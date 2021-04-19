@@ -40,7 +40,7 @@ export function generateSettings(_defaultSettings, _newSettings) {
 	 */
 	Object.entries(response.theme).forEach(([key, value]) => {
 		if (value !== 'mainThemeDark' && value !== 'mainThemeLight' && !FuseThemesConfig[value]) {
-			response.theme[key] = 'default';
+			response.theme[key] = 'light1';
 		}
 	});
 

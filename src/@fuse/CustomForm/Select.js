@@ -1,33 +1,21 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-shadow */
-/* eslint-disable no-undef */
 import React from 'react';
 import PropTypes from 'prop-types';
+// import { FormGroup, Label, FormFeedback } from 'reactstrap';
 import { ErrorMessage } from 'formik';
 // import { Select } from "antd";
-import { FormGroup } from '@material-ui/core';
 import SelectField from 'react-select';
+import { FormGroup } from '@material-ui/core';
 
-Select.propTypes = {
-	field: PropTypes.object.isRequired,
-	form: PropTypes.object.isRequired,
-
-	label: PropTypes.string,
-	placeholder: PropTypes.string,
-	disabled: PropTypes.bool,
-	option: PropTypes.array
-};
-Select.defaultProps = {
-	label: '',
-	placeholder: '',
-	disabled: false,
-	options: []
-};
-export default function Select(props) {
-	const { field, form, options, label, placeholder, isMulti, handleChangeState } = props;
+export function SelectCustomer(props) {
+	const { field, form, options, label, placeholder, isMulti, handleChangeState, valueProps } = props;
 	const { name, value } = field;
+	console.log(field);
 	const { errors, touched } = form;
-	const selectedOption = options.find(option => option.value === value);
+	const showError = errors[name] && touched[name];
+
+	const selectedOption = options.find(option => option.value === valueProps);
 	const handleSelectedOptionChange = selectedOption => {
 		const selectedValue = selectedOption ? selectedOption.value : '';
 
@@ -42,12 +30,9 @@ export default function Select(props) {
 	};
 	return (
 		<FormGroup>
-			<label className="mb-16"> {label} </label>
+			<label className="mb-10"> {label} </label>
 			<SelectField
-				styles={{
-					// Fixes the overlapping problem of the component
-					menu: provided => ({ ...provided, zIndex: 9999 })
-				}}
+				style={{ width: '100%' }}
 				id={name}
 				{...field}
 				isClearable
@@ -56,9 +41,9 @@ export default function Select(props) {
 				onChange={handleSelectedOptionChange}
 				placeholder={placeholder}
 				options={options}
-				// error={touched[field.name] && Boolean(errors[field.name])}
+				className={showError ? 'is-invalid' : ''}
 			/>
-			{touched[field.name] && errors[field.name] ? <span className="text-red	"> {errors[field.name]} </span> : ''}
+			{/* <ErrorMessage name={name} component={FormFeedback} /> */}
 		</FormGroup>
 	);
 }

@@ -1,10 +1,27 @@
 import React from 'react';
 import { Dialog, AppBar, Toolbar, Typography } from '@material-ui/core';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import FormCustomUnusedEdit from './FormCustomUnusedEdit';
 
 export default function FormCustomUnused({ handleClose, open }) {
+	const dispatch = useDispatch();
+	const { entitiesEdit, actionLoading, entitiesInformation } = useSelector(
+		state => ({
+			entitiesEdit: state.possesion.entitiesEdit,
+			actionLoading: state.possesion.actionLoading,
+			entitiesInformation: state.possesion.entitiesInformation
+		}),
+		shallowEqual
+	);
 	return (
-		<Dialog fullWidth maxWidth="md" onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+		<Dialog
+			style={{ zIndex: 20 }}
+			fullWidth
+			maxWidth="md"
+			onClose={handleClose}
+			aria-labelledby="customized-dialog-title"
+			open={open}
+		>
 			<AppBar position="static" className="shadow-md">
 				<Toolbar className="flex w-full">
 					<Typography variant="subtitle1" color="inherit">
@@ -12,7 +29,11 @@ export default function FormCustomUnused({ handleClose, open }) {
 					</Typography>
 				</Toolbar>
 			</AppBar>
-			<FormCustomUnusedEdit handleClose={handleClose} />
+			<FormCustomUnusedEdit
+				entitiesInformation={entitiesInformation}
+				entitiesEdit={entitiesEdit}
+				handleClose={handleClose}
+			/>
 		</Dialog>
 	);
 }
