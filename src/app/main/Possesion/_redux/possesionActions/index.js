@@ -183,28 +183,32 @@ export const updatedPossesionAll = data => dispatch => {
 
 // =========================== PossionUnUsed ============================= //
 
-export const addPersonalPossesion = data => dispatch => {
+export const addPersonalPossesion = (data, id) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.actions }));
 	const formData = new FormData();
-	formData.append('customer', data.file);
-	formData.append('department', data.department);
-	formData.append('location', data.location);
-	formData.append('note', data.note);
-	formData.append('position', data.position);
-	formData.append('date', moment(data.date).format('YYYY-MM-DD'));
+	formData.append('AssetID', id);
+	formData.append('EmpCode', data.customer);
+	formData.append('DeptCode', data.department);
+	formData.append('RegionCode', data.location);
+	formData.append('Reasons', data.note);
+	formData.append('JobTitle', data.position);
+	formData.append('FileUpload', data.file);
+	formData.append('TypeUpdate', 'Allocation');
+	formData.append('TransDate', moment(data.date).format('YYYY-MM-DD'));
 	return requestFrom
-		.updateDataPossesion(data)
+		.updateTypeAsset(formData)
 		.then(res => {
 			const { data } = res;
-			if (!data.error) {
-				const dataRes = data.data;
-				dispatch(actions.possesionUpdatedUnUsed({ dataRes }));
+			if (!data.isError) {
+				dispatch(actions.possesionUpdatedUnUsed({ id }));
 			} else {
 				notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', data.errorMessage);
 			}
+			return data;
 		})
 		.catch(error => {
-			notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', data.errorMessage);
+			dispatch(actions.catchErrors({ callType: callTypes.action }));
+			// notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', error);
 		});
 };
 
@@ -219,12 +223,33 @@ export const fetchPossesionUsed = value => dispatch => {
 		.then(() => {})
 		.catch(() => {});
 };
-export const withdrawPossesion = data => dispatch => {
+export const withdrawPossesion = (data, entitiesEdit) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.actions }));
+	const formData = new FormData();
+	formData.append('AssetID', entitiesEdit.assetID);
+	formData.append('EmpCode', entitiesEdit.empCode);
+	formData.append('DeptCode', entitiesEdit.deptCodeManager);
+	formData.append('RegionCode', entitiesEdit.regionCode);
+	formData.append('JobTitle', entitiesEdit.jobTitle);
+	formData.append('Reasons', data.note);
+	formData.append('TransDate', moment(data.date).format('YYYY-MM-DD'));
+	formData.append('FileUpload', data.file || data.file);
+	formData.append('TypeUpdate', 'Recovery');
 	return requestFrom
-		.updateDataPossesion(data)
-		.then(() => {})
-		.catch(() => {});
+		.updateTypeAsset(formData)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				const id = entitiesEdit.assetID;
+				dispatch(actions.updatePossesionWithDraw({ id }));
+			} else {
+				notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', data.errorMessage);
+			}
+			return data;
+		})
+		.catch(error => {
+			notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', error);
+		});
 };
 // =========================== Possesion Repair ============================= //
 

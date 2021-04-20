@@ -19,7 +19,6 @@ import * as moment from 'moment';
 import Panigation from '@fuse/core/FusePanigate';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import FuseLoading from '@fuse/core/FuseLoading';
-import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import image from '@fuse/assets/group.png';
 import IconButton from '@material-ui/core/IconButton';
 import AppsIcon from '@material-ui/icons/Apps';
@@ -173,13 +172,13 @@ export default function PossessionUnused(props) {
 												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
 												align="left"
 											>
-												Nguyên giá
+												BP Quản lý
 											</TableCell>
 											<TableCell
 												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
 												align="left"
 											>
-												BP Quản lý
+												Nhân viên
 											</TableCell>
 											<TableCell
 												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
@@ -228,11 +227,10 @@ export default function PossessionUnused(props) {
 													<TableCell align="left">
 														{moment(items.purchaseDate).format('DD-MM-YYYY')}{' '}
 													</TableCell>
-													<TableCell align="left">
-														{' '}
-														{currencyFormat(items.originalPrice)}{' '}
-													</TableCell>
 													<TableCell align="left">{items.deptNameManager}</TableCell>
+													<TableCell align="left">
+														{items && items.empName ? items.empName : null}
+													</TableCell>
 													<TableCell align="left">
 														<div
 															className={`inline text-12 p-4 rounded-full truncate ${

@@ -15,7 +15,13 @@ import { Spin } from 'antd';
 import SelectAntd from '@fuse/CustomForm/SelectAntd';
 // import SelectAntd from '@fuse/CustomForm/SelectAntd';
 
-export default function FormCustomUnusedEdit({ entitiesEdit, entitiesInformation, saveAddAsset, actionLoading }) {
+export default function FormCustomUnusedEdit({
+	entitiesEdit,
+	entitiesInformation,
+	saveAddAsset,
+	actionLoading,
+	handleClose
+}) {
 	const [intialState, setInitialState] = useState({
 		customer: '',
 		position: '',
@@ -122,9 +128,9 @@ export default function FormCustomUnusedEdit({ entitiesEdit, entitiesInformation
 								<div className=" grid grid-cols-1 sm:grid-cols-2 gap-48">
 									<div className="flex-row justify-between flex ">
 										<div className="flex flex-col">
-											<p className="p-6"> Mã sản phẩm </p>
-											<p className="p-6"> Tên sản phẩm </p>
-											<p className="p-6"> Nhóm sản phẩm </p>
+											<p className="p-6"> Mã tài sản </p>
+											<p className="p-6"> Tên tài sản </p>
+											<p className="p-6"> Nhóm tài sản </p>
 											<p className="p-6"> Mô tả </p>
 										</div>
 										<div className="flex sm:mr-96 mr-auto flex-col">
@@ -257,7 +263,8 @@ export default function FormCustomUnusedEdit({ entitiesEdit, entitiesInformation
 							)}
 							<Button
 								autoFocus
-								type="submit"
+								onClick={() => handleClose()}
+								type="button"
 								className="h-26 font-sans"
 								variant="contained"
 								color="primary"

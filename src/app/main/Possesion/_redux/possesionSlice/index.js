@@ -24,7 +24,7 @@ export const possesionSlice = createSlice({
 				state.listloading = false;
 				state.lastErrors = true;
 			} else {
-				state.actionLoading = true;
+				state.actionLoading = false;
 			}
 		},
 		startCall: (state, action) => {
@@ -77,12 +77,22 @@ export const possesionSlice = createSlice({
 			};
 		},
 		possesionUpdatedUnUsed: (state, action) => {
-			const { dataRes } = action.payload;
-			const { entities } = state;
-			state.entities = entities.filter(item => item.assetID !== dataRes.assetID);
+			const { id } = action.payload;
+			const { entities, total_count } = state;
+			state.entities = entities.filter(item => item.assetID !== id);
 			const { countNoUseYet, countUsing } = state.total_items;
 			state.total_items.countNoUseYet = countNoUseYet - 1;
 			state.total_items.countUsing = countUsing + 1;
+			state.total_count = total_count - 1;
+		},
+		updatePossesionWithDraw: (state, action) => {
+			const { id } = action.payload;
+			const { entities, total_count } = state;
+			state.entities = entities.filter(item => item.assetID !== id);
+			const { countNoUseYet, countUsing } = state.total_items;
+			state.total_items.countNoUseYet = countNoUseYet + 1;
+			state.total_items.countUsing = countUsing - 1;
+			state.total_count = total_count - 1;
 		},
 		informationsFetch: (state, action) => {
 			const { data } = action.payload;

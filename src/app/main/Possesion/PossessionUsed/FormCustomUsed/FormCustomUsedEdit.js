@@ -4,20 +4,34 @@ import { Formik, Form, Field } from 'formik';
 import DateCustom from '@fuse/CustomForm/Date';
 import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
 import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
+import * as moment from 'moment';
+import { makeStyles } from '@material-ui/core/styles';
+import { Spin } from 'antd';
+import * as Yup from 'yup';
 
 const initial = {
 	date: '',
 	note: '',
 	file: ''
 };
-export default function FormCustomUsedEdit() {
+const useStyles = makeStyles(theme => ({
+	widthFont: {
+		width: '20rem'
+	}
+}));
+export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionLoading }) {
+	const checkValidateForm = Yup.object().shape({
+		date: Yup.string().required('Ngày thu hồi không được để trống')
+	});
+	const classes = useStyles();
 	return (
 		<>
 			<Formik
 				enableReinitialize
-				// validationSchema={checkValidateForm}
+				validationSchema={checkValidateForm}
 				initialValues={initial}
 				onSubmit={values => {
+					saveWithDraw(values);
 					// saveForm(values);
 				}}
 			>
@@ -31,22 +45,38 @@ export default function FormCustomUsedEdit() {
 											<h5 className="font-extrabold">Thông tin tài sản.</h5>
 											<span className="border-b-1 mt-3 ml-6 border-fuchsia w-auto  sm:w-4/6 h-10" />
 										</div>
-										<div className="flex-rows justify-between flex ">
-											<div className="flex flex-col">
-												<p className="p-6"> Mã sản phẩm </p>
-												<p className="p-6"> Tên sản phẩm </p>
-												<p className="p-6"> Nhóm sản phẩm </p>
+										<div className="flex-row justify-between flex ">
+											<div className={`${classes.widthFont} flex flex-col`}>
+												<p className="p-6"> Mã tài sản </p>
+												<p className="p-6"> Tên tài sản </p>
+												<p className="p-6"> Nhóm tài sản </p>
 												<p className="p-6"> Ngày mua </p>
 												<p className="p-6"> Tình trạng </p>
 												<p className="p-6"> Mô tả </p>
 											</div>
-											<div className="flex flex-col sm:mr-96 mr-auto">
-												<p className="p-6 font-extrabold"> Mã sản phẩm </p>
-												<p className="p-6 font-extrabold"> Tên sản phẩm </p>
-												<p className="p-6 font-extrabold"> Nhóm sản phẩm </p>
-												<p className="p-6 font-extrabold"> Ngày mua </p>
+											<div className="flex flex-col">
+												<p className="p-6 font-extrabold">
+													{' '}
+													{entitiesEdit && entitiesEdit.assetCode}
+												</p>
+												<p className="p-6 font-extrabold">
+													{' '}
+													{entitiesEdit && entitiesEdit.assetName}{' '}
+												</p>
+												<p className="p-6 font-extrabold">
+													{' '}
+													{entitiesEdit && entitiesEdit.groupName}{' '}
+												</p>
+												<p className="p-6 font-extrabold">
+													{' '}
+													{entitiesEdit &&
+														moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY')}{' '}
+												</p>
 												<p className="p-6 font-extrabold"> Tình trạng </p>
-												<p className="p-6 font-extrabold"> Mô tả ngắn </p>
+												<p className="p-6 font-extrabold">
+													{' '}
+													{entitiesEdit && entitiesEdit.descr}{' '}
+												</p>
 											</div>
 										</div>
 									</div>
@@ -56,17 +86,28 @@ export default function FormCustomUsedEdit() {
 											<span className="border-b-1 mt-3 ml-6 border-fuchsia w-auto sm:w-3/6 h-10" />
 										</div>
 										<div className="flex-row justify- flex ">
-											<div className="flex flex-col ">
+											<div className={`${classes.widthFont} flex flex-col`}>
 												<p className="p-6"> Nhân viên </p>
 												<p className="p-6"> Chức vụ </p>
 												<p className="p-6"> Bộ phận </p>
 												<p className="p-6"> Khu vực </p>
 											</div>
 											<div className="flex flex-col sm:mr-86 mr-auto">
-												<p className="p-6 font-extrabold">Nhân viên viên phòng test length </p>
-												<p className="p-6 font-extrabold"> Chức vụ </p>
-												<p className="p-6 font-extrabold"> Bộ phận </p>
-												<p className="p-6 font-extrabold"> Khu vực </p>
+												<p className="p-6 font-extrabold">
+													{entitiesEdit && entitiesEdit.empName}{' '}
+												</p>
+												<p className="p-6 font-extrabold">
+													{' '}
+													{entitiesEdit && entitiesEdit.jobTitle}{' '}
+												</p>
+												<p className="p-6 font-extrabold">
+													{' '}
+													{entitiesEdit && entitiesEdit.deptNameManager}{' '}
+												</p>
+												<p className="p-6 font-extrabold">
+													{' '}
+													{entitiesEdit && entitiesEdit.regionName}{' '}
+												</p>
 											</div>
 										</div>
 									</div>
@@ -92,9 +133,9 @@ export default function FormCustomUsedEdit() {
 											label="Ngày thu hồi (*) "
 											autoFocus
 											name="date"
+											format="DD/MM/YYYY"
 											component={DateCustom}
 											className="mx-4 mb-16"
-											variant="outlined"
 										/>
 									</div>
 									<Field
@@ -110,15 +151,19 @@ export default function FormCustomUsedEdit() {
 							</div>
 						</DialogContent>
 						<DialogActions>
-							<Button
-								autoFocus
-								type="submit"
-								className="h-26 font-sans"
-								variant="contained"
-								color="secondary"
-							>
-								Lưu
-							</Button>
+							{actionLoading ? (
+								<Spin size="middle" />
+							) : (
+								<Button
+									autoFocus
+									type="submit"
+									className="h-26 font-sans"
+									variant="contained"
+									color="secondary"
+								>
+									Lưu
+								</Button>
+							)}
 							<Button
 								autoFocus
 								type="submit"

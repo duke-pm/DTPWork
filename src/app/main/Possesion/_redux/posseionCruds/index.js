@@ -6,6 +6,7 @@ export const urlUpdate = `${baseUrl}/api/Assets/Update`;
 export const urlGet = `${baseUrl}/api/Assets/GetList`;
 const urlRule = 'api/Assets/GetList';
 const urlInformation = 'api/MasterData/GetDataForForm';
+const UrlType = `${baseUrl}/api/AssetTrans/ProcessAsset`;
 export const fetchDataPossesion = params => {
 	return axios.get(`${baseUrl}/${urlRule}`, { params });
 };
@@ -25,7 +26,13 @@ export const updateDataPossesion = data => {
 		data
 	});
 };
-
+export const updateTypeAsset = data => {
+	return axios({
+		method: 'POST',
+		url: UrlType,
+		data
+	});
+};
 export const getInformationCompany = params => {
 	return axios.get(`${baseUrl}/${urlInformation}`, { params });
 };

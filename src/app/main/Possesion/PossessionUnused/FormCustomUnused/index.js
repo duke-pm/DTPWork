@@ -16,7 +16,7 @@ export default function FormCustomUnused({ handleClose, open }) {
 		shallowEqual
 	);
 	const saveAddAsset = values => {
-		dispatch(actions.addPersonalPossesion(values)).then(data => {
+		dispatch(actions.addPersonalPossesion(values, entitiesEdit.assetID)).then(data => {
 			if (data && !data.isError) {
 				notificationConfig('success', ' Thành công!', 'Thêm nhân viên vào tài sản thành công');
 				handleClose();

@@ -21,9 +21,8 @@ import Icon from '@material-ui/core/Icon';
 import MenuIcon from '@material-ui/icons/Menu';
 import AppsIcon from '@material-ui/icons/Apps';
 import FuseAnimate from '@fuse/core/FuseAnimate';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import FuseLoading from '@fuse/core/FuseLoading';
-import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import * as moment from 'moment';
 import * as actions from '../_redux/possesionActions';
 import FormCustomUsed from './FormCustomUsed';
@@ -66,6 +65,7 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 export default function PossessionUsed(props) {
+	const dispatch = useDispatch();
 	const [open, setOpen] = React.useState(false);
 	const [actionMenu, setActionMenu] = React.useState(null);
 	const classes = useStyles(props);
@@ -87,6 +87,7 @@ export default function PossessionUsed(props) {
 	};
 	const actionMenuClick = (event, items) => {
 		setActionMenu(event.currentTarget);
+		dispatch(actions.setTaskEditPossesionAll(items));
 	};
 
 	const actionMenuClose = () => {
@@ -152,7 +153,13 @@ export default function PossessionUsed(props) {
 												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
 												align="left"
 											>
-												Nguyên giá
+												BP Quản lý
+											</TableCell>
+											<TableCell
+												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
+												align="left"
+											>
+												Nhân viên
 											</TableCell>
 										</TableRow>
 									</TableHead>
@@ -211,9 +218,10 @@ export default function PossessionUsed(props) {
 													<TableCell align="left">
 														{moment(items.purchaseDate).format('DD-MM-YYYY')}{' '}
 													</TableCell>
+													<TableCell align="left">{items.deptNameManager}</TableCell>
 													<TableCell align="left">
 														{' '}
-														{currencyFormat(items.originalPrice)}{' '}
+														{items && items.empName ? items.empName : null}
 													</TableCell>
 												</TableRow>
 											))}
