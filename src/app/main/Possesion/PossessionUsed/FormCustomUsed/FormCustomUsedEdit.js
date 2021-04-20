@@ -102,7 +102,7 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 												</p>
 												<p className="p-6 font-extrabold">
 													{' '}
-													{entitiesEdit && entitiesEdit.deptNameManager}{' '}
+													{entitiesEdit && entitiesEdit.deptName}{' '}
 												</p>
 												<p className="p-6 font-extrabold">
 													{' '}

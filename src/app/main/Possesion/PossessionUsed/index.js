@@ -218,7 +218,7 @@ export default function PossessionUsed(props) {
 													<TableCell align="left">
 														{moment(items.purchaseDate).format('DD-MM-YYYY')}{' '}
 													</TableCell>
-													<TableCell align="left">{items.deptNameManager}</TableCell>
+													<TableCell align="left">{items.deptName}</TableCell>
 													<TableCell align="left">
 														{' '}
 														{items && items.empName ? items.empName : null}
