@@ -10,10 +10,12 @@ import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
 import * as moment from 'moment';
 import * as Yup from 'yup';
 import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
-import { AntSelect, AntInput } from '@fuse/CustomForm/CreateAntField';
+import { AntInput } from '@fuse/CustomForm/CreateAntField';
+import { Spin } from 'antd';
+import SelectAntd from '@fuse/CustomForm/SelectAntd';
 // import SelectAntd from '@fuse/CustomForm/SelectAntd';
 
-export default function FormCustomUnusedEdit({ entitiesEdit, entitiesInformation }) {
+export default function FormCustomUnusedEdit({ entitiesEdit, entitiesInformation, saveAddAsset, actionLoading }) {
 	const [intialState, setInitialState] = useState({
 		customer: '',
 		position: '',
@@ -105,6 +107,7 @@ export default function FormCustomUnusedEdit({ entitiesEdit, entitiesInformation
 				validationSchema={checkValidateForm}
 				initialValues={intialState}
 				onSubmit={values => {
+					saveAddAsset(values);
 					console.log(values);
 				}}
 			>
@@ -165,7 +168,7 @@ export default function FormCustomUnusedEdit({ entitiesEdit, entitiesInformation
 									<Field
 										label="Nhân viên được cấp phát (*)"
 										name="customer"
-										component={AntSelect}
+										component={SelectAntd}
 										options={employees}
 										handleChangeState={onHandleChangeEmployee}
 										className="mt-8 mb-16"
@@ -186,7 +189,7 @@ export default function FormCustomUnusedEdit({ entitiesEdit, entitiesInformation
 										label="Bộ phận (*)"
 										name="department"
 										value={intialState.department}
-										component={AntSelect}
+										component={SelectAntd}
 										handleChangeState={onChangeDepartment}
 										options={department}
 										className="mt-8 mb-16"
@@ -195,7 +198,7 @@ export default function FormCustomUnusedEdit({ entitiesEdit, entitiesInformation
 										label="khu vực (*)"
 										autoFocus
 										name="location"
-										component={AntSelect}
+										component={SelectAntd}
 										value={intialState.location}
 										options={regionEmployee}
 										handleChangeState={onChangeRegion}
@@ -239,15 +242,19 @@ export default function FormCustomUnusedEdit({ entitiesEdit, entitiesInformation
 							</div>
 						</DialogContent>
 						<DialogActions>
-							<Button
-								autoFocus
-								type="submit"
-								className="h-26 font-sans"
-								variant="contained"
-								color="secondary"
-							>
-								Lưu
-							</Button>
+							{actionLoading ? (
+								<Spin size="middle" />
+							) : (
+								<Button
+									autoFocus
+									type="submit"
+									className="h-26 font-sans"
+									variant="contained"
+									color="secondary"
+								>
+									Lưu
+								</Button>
+							)}
 							<Button
 								autoFocus
 								type="submit"

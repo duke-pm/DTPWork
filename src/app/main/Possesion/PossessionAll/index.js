@@ -87,9 +87,9 @@ export default function PossessionUnused(props) {
 	const [actionMenu, setActionMenu] = React.useState(null);
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count } = currentState;
+	const classes = useStyles(props);
 	const dispatch = useDispatch();
 	const handleClose = () => {
-		dispatch(actions.setTaskEditPossesionAll(null));
 		setOpen(false);
 	};
 	const handleOpenForm = items => {
@@ -122,7 +122,6 @@ export default function PossessionUnused(props) {
 	const actionMenuClose = () => {
 		setActionMenu(null);
 	};
-	const classes = useStyles(props);
 	if (listloading) {
 		return <FuseLoading />;
 	}
@@ -156,7 +155,7 @@ export default function PossessionUnused(props) {
 												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
 												align="left"
 											>
-												Tên tài sẵn
+												Tên tài sản
 											</TableCell>
 											<TableCell
 												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
@@ -175,6 +174,12 @@ export default function PossessionUnused(props) {
 												align="left"
 											>
 												Nguyên giá
+											</TableCell>
+											<TableCell
+												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
+												align="left"
+											>
+												BP Quản lý
 											</TableCell>
 											<TableCell
 												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
@@ -227,6 +232,7 @@ export default function PossessionUnused(props) {
 														{' '}
 														{currencyFormat(items.originalPrice)}{' '}
 													</TableCell>
+													<TableCell align="left">{items.deptNameManager}</TableCell>
 													<TableCell align="left">
 														<div
 															className={`inline text-12 p-4 rounded-full truncate ${

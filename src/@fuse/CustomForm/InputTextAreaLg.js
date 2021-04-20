@@ -30,7 +30,6 @@ export default function InputTextAreaLg({
 					placeholder={placeholder || ''}
 					rows={row}
 					onChange={e => onChange(e)}
-					variant="outlined"
 					type={type}
 					// {...field}
 					// {...props}

@@ -20,7 +20,7 @@ const initial = {
 	time_kh: '',
 	location: '',
 	note: '',
-	deptCodeManager: '',
+	deptCodeManager: 'LA0000',
 	descr: '',
 	DepreciationPeriod: '',
 

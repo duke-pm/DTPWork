@@ -88,7 +88,7 @@ export default function PossessionUnused(props) {
 	};
 
 	const actionMenuClick = (event, items) => {
-		const params = 'Employee,Department,Region';
+		const params = 'Employee,Department,Region,Supplier';
 		setActionMenu(event.currentTarget);
 		dispatch(actions.getInformationCompany(params));
 		dispatch(actions.setTaskEditPossesionAll(items));
@@ -165,6 +165,12 @@ export default function PossessionUnused(props) {
 											>
 												Nguyên giá
 											</TableCell>
+											<TableCell
+												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
+												align="left"
+											>
+												BP Quản lý
+											</TableCell>
 										</TableRow>
 									</TableHead>
 									<TableBody>
@@ -198,24 +204,6 @@ export default function PossessionUnused(props) {
 																</ListItemIcon>
 																<ListItemText primary="Thêm nhân viên vào tài sản" />
 															</MenuItem>
-															{/* <MenuItem
-																onClick={() => handleFormOpenReport('service')}
-																role="button"
-															>
-																<ListItemIcon className="min-w-40">
-																	<Icon>build</Icon>
-																</ListItemIcon>
-																<ListItemText primary="Báo hỏng tài sản" />
-															</MenuItem> */}
-															{/* <MenuItem
-																onClick={() => handleFormOpenReport('lose')}
-																role="button"
-															>
-																<ListItemIcon className="min-w-40">
-																	<Icon>report_problem</Icon>
-																</ListItemIcon>
-																<ListItemText primary="Báo mất tài sản" />
-															</MenuItem> */}
 															<MenuItem onClick={handleOpenFormEdit} role="button">
 																<ListItemIcon className="min-w-40">
 																	<Icon>edit</Icon>
@@ -234,6 +222,7 @@ export default function PossessionUnused(props) {
 														{' '}
 														{currencyFormat(items.originalPrice)}{' '}
 													</TableCell>
+													<TableCell align="left">{items.deptNameManager}</TableCell>
 												</TableRow>
 											))}
 									</TableBody>

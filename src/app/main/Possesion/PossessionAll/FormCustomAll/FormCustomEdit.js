@@ -4,7 +4,7 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { useSelector, shallowEqual } from 'react-redux';
 import DateCustom from '@fuse/CustomForm/Date';
-import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
+import InputTextArea from '@fuse/CustomForm/InputTextArea';
 import InputCurrency from '@fuse/CustomForm/InputCurrency';
 import { Spin } from 'antd';
 import { AntInput, AntInputNumber, AntSelect } from '@fuse/CustomForm/CreateAntField';
@@ -134,6 +134,7 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 		setCode(arrAssetDetail.code);
 		setPrefix(companyParse.shortName.concat('.', arrAssetDetail.code));
 	};
+	console.log(initialValue);
 	return (
 		<>
 			<Formik
@@ -188,9 +189,8 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 								<div className="grid gap-8 ">
 									<Field
 										label="Quy cách tài sản/Thông số"
-										autoFocus
 										name="descr"
-										component={InputTextAreaLg}
+										component={InputTextArea}
 										row={2}
 										placeholder="Vui lòng điền nội dung"
 										className="mx-4"
@@ -259,7 +259,7 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 									/>
 								</div>
 							</div>
-							{!initialValue.assetID && (
+							{!initialValue.assetID ? (
 								<div className="px-16 sm:px-24">
 									<div className="flex justify-between flex-row">
 										<h5 className="font-extrabold">Quy tắc đánh mã tài sản trong lô</h5>
@@ -327,7 +327,7 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 										/>
 									</div>
 								</div>
-							)}
+							) : null}
 						</DialogContent>
 						<DialogActions>
 							{actionLoading ? (

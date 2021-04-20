@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import { FormGroup } from '@material-ui/core';
-import { DatePicker, Form, Select } from 'antd';
+import { Form, Select } from 'antd';
 import 'antd/dist/antd.css';
 
 const FormItem = Form.Item;
@@ -28,7 +28,6 @@ export default function SelectAntd({
 		form.setFieldValue(field.name, value);
 		return handleChangeState ? handleChangeState(value) : null;
 	};
-	console.log(options);
 	return (
 		<>
 			<FormGroup>
@@ -36,13 +35,24 @@ export default function SelectAntd({
 				<FormItem
 					style={{ width: '100%' }}
 					rules={[{ required: true }]}
-					hasFeedback={!!((hasFeedback && submitted) || (hasFeedback && touched)) || hasFeedback}
+					hasFeedback={!!((hasFeedback && submitted) || (hasFeedback && touched))}
 					help={submittedError || touchedError ? hasError : false}
 					validateStatus={submittedError || touchedError ? 'error' : hasFeedback && 'success'}
 				>
-					<Select defaultValue={valueProps} onChange={handleSelect}>
-						{options.map(items => (
-							<Option key={items.value}> {items.label} </Option>
+					<Select
+						{...field}
+						{...props}
+						showSearch
+						optionFilterProp="children"
+						filterOption={(input, option) =>
+							option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 ||
+							option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0
+						}
+						defaultValue={field.value}
+						onChange={handleSelect}
+					>
+						{options.map(p => (
+							<Option value={p.value}>{p.label}</Option>
 						))}
 					</Select>
 				</FormItem>

@@ -194,8 +194,18 @@ export const addPersonalPossesion = data => dispatch => {
 	formData.append('date', moment(data.date).format('YYYY-MM-DD'));
 	return requestFrom
 		.updateDataPossesion(data)
-		.then(() => {})
-		.catch(() => {});
+		.then(res => {
+			const { data } = res;
+			if (!data.error) {
+				const dataRes = data.data;
+				dispatch(actions.possesionUpdatedUnUsed({ dataRes }));
+			} else {
+				notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', data.errorMessage);
+			}
+		})
+		.catch(error => {
+			notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', data.errorMessage);
+		});
 };
 
 // =========================== Possesion Used ============================= //

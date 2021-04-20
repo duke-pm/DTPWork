@@ -76,6 +76,14 @@ export const possesionSlice = createSlice({
 				...state
 			};
 		},
+		possesionUpdatedUnUsed: (state, action) => {
+			const { dataRes } = action.payload;
+			const { entities } = state;
+			state.entities = entities.filter(item => item.assetID !== dataRes.assetID);
+			const { countNoUseYet, countUsing } = state.total_items;
+			state.total_items.countNoUseYet = countNoUseYet - 1;
+			state.total_items.countUsing = countUsing + 1;
+		},
 		informationsFetch: (state, action) => {
 			const { data } = action.payload;
 			state.listloading = false;

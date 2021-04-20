@@ -118,7 +118,7 @@ function PossesionPage(props) {
 						/>
 						<Tab
 							className=" font-sans	"
-							label={`Thanh lí (${(total_Record && total_Record.countLiquidation) || 0})`}
+							label={`Thanh lý (${(total_Record && total_Record.countLiquidation) || 0})`}
 							{...a11yProps(5)}
 						/>
 					</Tabs>

@@ -85,7 +85,7 @@ export default function PossessionUsed(props) {
 		setActionMenu(null);
 		setOpen(true);
 	};
-	const actionMenuClick = event => {
+	const actionMenuClick = (event, items) => {
 		setActionMenu(event.currentTarget);
 	};
 
@@ -163,7 +163,7 @@ export default function PossessionUsed(props) {
 													<TableCell align="left" className="p-4 md:p-12">
 														<MenuIcon
 															className="cursor-pointer"
-															onClick={actionMenuClick}
+															onClick={e => actionMenuClick(e, items)}
 															aria-label="delete"
 														/>
 														<Popover
