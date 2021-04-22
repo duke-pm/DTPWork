@@ -1,11 +1,21 @@
 import React, { useContext } from 'react';
 import { Dialog, AppBar, Toolbar, Typography } from '@material-ui/core';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { PossessionContext } from '../../PossessionContext';
 import FormControlReportEdit from './FormControlReportEdit';
 
 export default function FormControlReport() {
 	const possessionContext = useContext(PossessionContext);
 	const { handleCloseFormReport, typeReport, formReport } = possessionContext;
+	const dispatch = useDispatch();
+	const { entitiesEdit, actionLoading, entitiesInformation } = useSelector(
+		state => ({
+			entitiesEdit: state.possesion.entitiesEdit,
+			actionLoading: state.possesion.actionLoading,
+			entitiesInformation: state.possesion.entitiesInformation
+		}),
+		shallowEqual
+	);
 	return (
 		<Dialog
 			style={{ zIndex: 20 }}
@@ -22,7 +32,11 @@ export default function FormControlReport() {
 					</Typography>
 				</Toolbar>
 			</AppBar>
-			<FormControlReportEdit typeReport={typeReport} handleClose={handleCloseFormReport} />
+			<FormControlReportEdit
+				entitiesEdit={entitiesEdit}
+				typeReport={typeReport}
+				handleClose={handleCloseFormReport}
+			/>
 		</Dialog>
 	);
 }

@@ -4,13 +4,15 @@ import { Formik, Form, Field } from 'formik';
 import DateCustom from '@fuse/CustomForm/Date';
 import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
 import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
+import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
+import * as moment from 'moment';
 
 const initial = {
 	date: '',
 	note: '',
 	file: ''
 };
-export default function FormControlReportEdit({ typeReport }) {
+export default function FormControlReportEdit({ typeReport, entitiesEdit }) {
 	return (
 		<>
 			<Formik
@@ -25,49 +27,46 @@ export default function FormControlReportEdit({ typeReport }) {
 					<Form>
 						<DialogContent dividers>
 							<div className="px-16 sm:px-24">
-								<div className=" grid grid-cols-1 sm:grid-cols-2">
-									<div className="flex-col flex ">
-										<div className="flex flex-row">
-											<h5 className="font-extrabold">Thông tin tài sản.</h5>
-											<span className="border-b-1 mt-3 ml-6 border-fuchsia w-auto  sm:w-4/6 h-10" />
+								<div className="flex justify-between flex-row">
+									<h5 className="font-extrabold">Thông tin tài sản.</h5>
+									<span className="border-b-1 mt-3 ml-6 border-fuchsia w-auto sm:w-5/6 h-10" />
+								</div>
+								<div className=" grid grid-cols-1 sm:grid-cols-2 gap-48">
+									<div className="flex-row justify-between flex ">
+										<div className="flex flex-col">
+											<p className="p-6"> Mã tài sản </p>
+											<p className="p-6"> Tên tài sản </p>
+											<p className="p-6"> Nhóm tài sản </p>
+											<p className="p-6"> Mô tả </p>
 										</div>
-										<div className="flex-rows justify-between flex ">
-											<div className="flex flex-col">
-												<p className="p-6"> Mã sản phẩm </p>
-												<p className="p-6"> Tên sản phẩm </p>
-												<p className="p-6"> Nhóm sản phẩm </p>
-												<p className="p-6"> Ngày mua </p>
-												<p className="p-6"> Tình trạng </p>
-												<p className="p-6"> Mô tả </p>
-											</div>
-											<div className="flex flex-col sm:mr-96 mr-auto">
-												<p className="p-6 font-extrabold"> Mã sản phẩm </p>
-												<p className="p-6 font-extrabold"> Tên sản phẩm </p>
-												<p className="p-6 font-extrabold"> Nhóm sản phẩm </p>
-												<p className="p-6 font-extrabold"> Ngày mua </p>
-												<p className="p-6 font-extrabold"> Tình trạng </p>
-												<p className="p-6 font-extrabold"> Mô tả ngắn </p>
-											</div>
+										<div className="flex sm:mr-96 mr-auto flex-col">
+											<p className="p-6 font-extrabold">
+												{entitiesEdit && entitiesEdit.assetCode}
+											</p>
+											<p className="p-6 font-extrabold">
+												{entitiesEdit && entitiesEdit.assetName}
+											</p>
+											<p className="p-6 font-extrabold">
+												{entitiesEdit && entitiesEdit.groupName}
+											</p>
+											<p className="p-6 font-extrabold"> {entitiesEdit && entitiesEdit.descr}</p>
 										</div>
 									</div>
-									<div className="flex-col flex ">
-										<div className="flex flex-row">
-											<h5 className="font-extrabold">Thông tin nhân viên sử dụng.</h5>
-											<span className="border-b-1 mt-3 ml-6 border-fuchsia w-auto sm:w-3/6 h-10" />
+									<div className="flex-row justify-between flex ">
+										<div className="flex flex-col">
+											<p className="p-6">Ngày mua </p>
+											<p className="p-6"> Nguyên giá </p>
+											<p className="p-166"> Tình trạng </p>
 										</div>
-										<div className="flex-row justify- flex ">
-											<div className="flex flex-col ">
-												<p className="p-6"> Nhân viên </p>
-												<p className="p-6"> Chức vụ </p>
-												<p className="p-6"> Bộ phận </p>
-												<p className="p-6"> Khu vực </p>
-											</div>
-											<div className="flex flex-col sm:mr-86 mr-auto">
-												<p className="p-6 font-extrabold">Nhân viên viên phòng test length </p>
-												<p className="p-6 font-extrabold"> Chức vụ </p>
-												<p className="p-6 font-extrabold"> Bộ phận </p>
-												<p className="p-6 font-extrabold"> Khu vực </p>
-											</div>
+										<div className="flex sm:mr-96 mr-auto flex-col">
+											<p className="p-6 font-extrabold">
+												{entitiesEdit && moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY')}
+											</p>
+											<p className="p-6 font-extrabold">
+												{' '}
+												{entitiesEdit && currencyFormat(entitiesEdit.originalPrice)}
+											</p>
+											<p className="p-6 font-extrabold"> Chưa sử dụng </p>
 										</div>
 									</div>
 								</div>
@@ -120,7 +119,7 @@ export default function FormControlReportEdit({ typeReport }) {
 								variant="contained"
 								color="secondary"
 							>
-								Đồng ý
+								Gửi yêu cầu
 							</Button>
 							<Button
 								autoFocus

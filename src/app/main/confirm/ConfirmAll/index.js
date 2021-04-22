@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
-/* eslint-disable no-undef */
 import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import FuseAnimate from '@fuse/core/FuseAnimate';
 import {
 	Paper,
 	Table,
@@ -12,32 +12,29 @@ import {
 	TableContainer,
 	Popover,
 	MenuItem,
-	ListItemText,
-	ListItemIcon
+	ListItemIcon,
+	ListItemText
 } from '@material-ui/core';
+import * as moment from 'moment';
 import Panigation from '@fuse/core/FusePanigate';
-import image from '@fuse/assets/group.png';
-import Icon from '@material-ui/core/Icon';
-import MenuIcon from '@material-ui/icons/Menu';
-import AppsIcon from '@material-ui/icons/Apps';
-import FuseAnimate from '@fuse/core/FuseAnimate';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import FuseLoading from '@fuse/core/FuseLoading';
-import * as moment from 'moment';
-import * as actions from '../_redux/possesionActions';
-import FormCustomUsed from './FormCustomUsed';
-import FormControlReport from '../FormControl/FormControlReport';
-import { PossessionContext } from '../PossessionContext';
-import ActionComponent from './Component/ActionComponent';
-import FormRequest from './FormRequest';
-
-// import FormCustomUnused from './FormCustomUnused';
-
-// import FormCustomAll from './FormCustomAll';
+import image from '@fuse/assets/group.png';
+import IconButton from '@material-ui/core/IconButton';
+import AppsIcon from '@material-ui/icons/Apps';
+import MenuIcon from '@material-ui/icons/Menu';
+import Icon from '@material-ui/core/Icon';
+// import PossessionAll from './FormCustomAll';
+// import ActionComponent from './Component/ActionComponent';
+// import * as actions from '../_redux/possesionActions';
+// import { PossessionContext } from '../PossessionContext';
 
 const useStyles = makeStyles(theme => ({
-	InputSearch: {
-		width: '200px'
+	// InputSearch: {
+	// 	width: '160px'
+	// },
+	tableHead: {
+		height: 44
 	},
 	table: {
 		minWidth: 800
@@ -65,74 +62,82 @@ const useStyles = makeStyles(theme => ({
 		width: 900
 	}
 }));
-export default function PossessionUsed(props) {
-	const dispatch = useDispatch();
-	const [open, setOpen] = React.useState(false);
-	const [formRequest, setFormRequest] = React.useState(false);
+const chipColor = {
+	1: 'bg-blue text-white',
+	2: 'bg-green text-white',
+	3: 'bg-orange text-black',
+	4: 'bg-purple text-white',
+	5: 'bg-red-700 text-white',
+	6: 'bg-yellow-900 text-white'
+};
+const chipText = {
+	1: 'Chưa sử dụng',
+	2: 'Đang sử dụng',
+	3: 'Sửa chữa-bảo hành',
+	4: 'Hư hỏng',
+	5: 'Mất ',
+	6: 'Thanh lí'
+};
+export default function PossessionUnused(props) {
+	const { value } = props;
 	const [actionMenu, setActionMenu] = React.useState(null);
-	const classes = useStyles(props);
-	const possessionContext = useContext(PossessionContext);
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count } = currentState;
-
-	const { handleOpenFormReport, rowPage, setRowPage, page, setPage, search } = possessionContext;
-	const handleOpenFormRequest = () => {
-		setFormRequest(true);
-	};
-	const handleCloseFormRequest = () => {
-		setFormRequest(false);
-	};
-	const handleFormOpenReport = type => {
+	const classes = useStyles(props);
+	const dispatch = useDispatch();
+	// const handleClose = () => {
+	// 	setOpen(false);
+	// };
+	const handleOpenForm = items => {
 		setActionMenu(null);
-		handleOpenFormReport(type);
+		// const params = 'Supplier,Company,AssetType,AssetGroup,AssetGroupDetail,Department';
+		// dispatch(actions.getInformationCompany(params));
+		// dispatch(actions.setTaskEditPossesionAll(null));
+		// setOpen(true);
 	};
-	const handleClose = () => {
-		setOpen(false);
-	};
-	const handleOpenForm = () => {
+	const handleOpenFormEdit = items => {
 		setActionMenu(null);
-		setOpen(true);
-	};
-	const actionMenuClick = (event, items) => {
-		setActionMenu(event.currentTarget);
-		dispatch(actions.setTaskEditPossesionAll(items));
-	};
-
-	const actionMenuClose = () => {
-		setActionMenu(null);
+		// setOpen(true);
 	};
 	const handleRowChange = e => {
-		setRowPage(parseInt(e.target.value, 10));
-		setPage(0);
-		const rowPage = parseInt(e.target.value, 10);
-		dispatch(actions.fetchPossesionAll(value, rowPage, page + 1, search));
+		// setRowPage(parseInt(e.target.value, 10));
+		// setPage(0);
+		const rowPageParse = parseInt(e.target.value, 10);
+		// dispatch(actions.fetchPossesionAll(value, rowPageParse, 1, search));
 	};
 	const handleChangePage = (event, newPage) => {
-		setPage(newPage);
-		dispatch(actions.fetchPossesionAll(value, rowPage, page + 1, search));
+		// setPage(newPage);
+		// dispatch(actions.fetchPossesionAll(value, rowPage, newPage + 1, search));
+	};
+	const actionMenuClick = (event, items) => {
+		// const params = 'Supplier';
+		// dispatch(actions.getInformationCompany(params));
+		setActionMenu(event.currentTarget);
+		// dispatch(actions.setTaskEditPossesionAll(items));
+	};
+	const actionMenuClose = () => {
+		setActionMenu(null);
 	};
 	if (listloading) {
 		return <FuseLoading />;
 	}
 	return (
 		<>
-			<FormCustomUsed open={open} handleClose={handleClose} />
-			<FormRequest open={formRequest} handleClose={handleCloseFormRequest} />
-			<FormControlReport />
 			<div className="flex flex-col">
-				<ActionComponent handleOpenForm={handleOpenFormRequest} value={props.value} />
-				<FuseAnimate delay={200} animation="transition.slideUpIn">
+				<FuseAnimate animation="transition.slideUpIn" delay={200}>
 					<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
 						<TableContainer className={`${classes.TableContainer} flex flex-1`}>
 							<Paper className={classes.rootPaper}>
-								<Table className={classes.table} stickyHeader>
+								<Table className={`${classes.table}`} stickyHeader>
 									<TableHead>
 										<TableRow>
 											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans "
+												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans"
 												align="left"
 											>
-												<AppsIcon />
+												<IconButton aria-label="delete">
+													<AppsIcon />
+												</IconButton>
 											</TableCell>
 											<TableCell
 												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
@@ -170,19 +175,27 @@ export default function PossessionUsed(props) {
 											>
 												Nhân viên
 											</TableCell>
+											<TableCell
+												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
+												align="left"
+											>
+												Trạng thái
+											</TableCell>
 										</TableRow>
 									</TableHead>
 									<TableBody>
 										{entities &&
+											!lastErrors &&
 											entities.map(items => (
-												<TableRow key={items.assetID} hover>
-													<TableCell align="left" className="p-4 md:p-12">
+												<TableRow key={items.assetID} hover className={classes.tableHead}>
+													<TableCell align="center" className="p-4 md:p-12">
 														<MenuIcon
 															className="cursor-pointer"
-															onClick={e => actionMenuClick(e, items)}
+															onClick={event => actionMenuClick(event, items)}
 															aria-label="delete"
 														/>
 														<Popover
+															elevation={1}
 															open={Boolean(actionMenu)}
 															anchorEl={actionMenu}
 															onClose={actionMenuClose}
@@ -195,29 +208,11 @@ export default function PossessionUsed(props) {
 																horizontal: 'left'
 															}}
 														>
-															<MenuItem onClick={handleOpenForm} role="button">
+															<MenuItem onClick={handleOpenFormEdit} role="button">
 																<ListItemIcon className="min-w-40">
-																	<Icon>backspace</Icon>
+																	<Icon>edit</Icon>
 																</ListItemIcon>
-																<ListItemText primary="Thu hồi tài sản" />
-															</MenuItem>
-															<MenuItem
-																onClick={() => handleFormOpenReport('service')}
-																role="button"
-															>
-																<ListItemIcon className="min-w-40">
-																	<Icon>build</Icon>
-																</ListItemIcon>
-																<ListItemText primary="Báo hỏng tài sản" />
-															</MenuItem>
-															<MenuItem
-																onClick={() => handleFormOpenReport('lose')}
-																role="button"
-															>
-																<ListItemIcon className="min-w-40">
-																	<Icon>report_problem</Icon>
-																</ListItemIcon>
-																<ListItemText primary="Báo mất tài sản" />
+																<ListItemText primary="Chỉnh sửa" />
 															</MenuItem>
 														</Popover>
 													</TableCell>
@@ -227,10 +222,18 @@ export default function PossessionUsed(props) {
 													<TableCell align="left">
 														{moment(items.purchaseDate).format('DD-MM-YYYY')}{' '}
 													</TableCell>
-													<TableCell align="left">{items.deptName}</TableCell>
+													<TableCell align="left">{items.deptNameManager}</TableCell>
 													<TableCell align="left">
-														{' '}
 														{items && items.empName ? items.empName : null}
+													</TableCell>
+													<TableCell align="left">
+														<div
+															className={`inline text-12 p-4 rounded-full truncate ${
+																chipColor[items.statusID]
+															}`}
+														>
+															{chipText[items.statusID]}
+														</div>
 													</TableCell>
 												</TableRow>
 											))}
@@ -251,7 +254,7 @@ export default function PossessionUsed(props) {
 								) : null}
 							</Paper>
 						</TableContainer>
-						{entities && entities.length !== 0 && (
+						{/* {entities && entities.length !== 0 && (
 							<Panigation
 								page={page}
 								handleChangePage={handleChangePage}
@@ -259,7 +262,7 @@ export default function PossessionUsed(props) {
 								handleChangeRowsPerPage={handleRowChange}
 								count={total_count}
 							/>
-						)}
+						)} */}
 					</div>
 				</FuseAnimate>
 			</div>
