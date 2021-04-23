@@ -215,7 +215,6 @@ export default function FormCustomUnusedEdit({
 									<div className="flex flex-col">
 										<Field
 											label="Ngày Cấp (*) "
-											autoFocus
 											defaultValue={intialState.date}
 											name="date"
 											format="DD-MM-YYYY"
@@ -226,7 +225,6 @@ export default function FormCustomUnusedEdit({
 										/>
 										<Field
 											label="Lí do phát"
-											autoFocus
 											// value={intialState.note}
 											name="note"
 											row={3}
@@ -237,7 +235,6 @@ export default function FormCustomUnusedEdit({
 									</div>
 									<Field
 										label="File đính kèm"
-										autoFocus
 										name="file"
 										style={{ height: '35.5px' }}
 										component={FileCustomVersion2}
@@ -251,18 +248,11 @@ export default function FormCustomUnusedEdit({
 							{actionLoading ? (
 								<Spin size="middle" />
 							) : (
-								<Button
-									autoFocus
-									type="submit"
-									className="h-26 font-sans"
-									variant="contained"
-									color="secondary"
-								>
+								<Button type="submit" className="h-26 font-sans" variant="contained" color="secondary">
 									Lưu
 								</Button>
 							)}
 							<Button
-								autoFocus
 								onClick={() => handleClose()}
 								type="button"
 								className="h-26 font-sans"

@@ -131,7 +131,6 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 										/>
 										<Field
 											label="Ngày thu hồi (*) "
-											autoFocus
 											name="date"
 											format="DD/MM/YYYY"
 											component={DateCustom}
@@ -140,7 +139,6 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 									</div>
 									<Field
 										label="File Đính kèm"
-										autoFocus
 										style={{ height: '34.5px' }}
 										name="file"
 										component={FileCustomVersion2}
@@ -154,23 +152,11 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 							{actionLoading ? (
 								<Spin size="middle" />
 							) : (
-								<Button
-									autoFocus
-									type="submit"
-									className="h-26 font-sans"
-									variant="contained"
-									color="secondary"
-								>
+								<Button type="submit" className="h-26 font-sans" variant="contained" color="secondary">
 									Lưu
 								</Button>
 							)}
-							<Button
-								autoFocus
-								type="submit"
-								className="h-26 font-sans"
-								variant="contained"
-								color="primary"
-							>
+							<Button type="submit" className="h-26 font-sans" variant="contained" color="primary">
 								Hủy
 							</Button>
 						</DialogActions>

@@ -33,15 +33,62 @@ const initial = {
 	// valueStart: '',
 	// valueLength: ''
 };
-export default function FormCustomAll({ handleClose, open, rowPage }) {
+function FormCustomAll({ handleClose, open, rowPage }) {
 	const dispatch = useDispatch();
-	const { entitiesEdit, actionLoading } = useSelector(
+	const { entitiesEdit, actionLoading, entitiesInformation } = useSelector(
 		state => ({
 			entitiesEdit: state.possesion.entitiesEdit,
-			actionLoading: state.possesion.actionLoading
+			actionLoading: state.possesion.actionLoading,
+			entitiesInformation: state.possesion.entitiesInformation
 		}),
 		shallowEqual
 	);
+	const suppiler =
+		entitiesInformation && entitiesInformation.supplier
+			? entitiesInformation.supplier.reduce(
+					(arr, curr) => [...arr, { value: curr.supplierID, label: curr.supplierName }],
+					[]
+			  )
+			: [];
+	const department =
+		entitiesInformation && entitiesInformation.department
+			? entitiesInformation.department.reduce(
+					(arr, curr) => [...arr, { value: curr.deptCode, label: curr.deptName }],
+					[]
+			  )
+			: [];
+	const company =
+		entitiesInformation && entitiesInformation.company
+			? entitiesInformation.company.reduce(
+					(arr, curr) => [...arr, { value: curr.cmpnID, label: curr.cmpnName, shortName: curr.shortName }],
+					[]
+			  )
+			: [];
+	const category =
+		entitiesInformation && entitiesInformation.assetType
+			? entitiesInformation.assetType.reduce(
+					(arr, curr) => [...arr, { value: curr.typeID, label: curr.typeName }],
+					[]
+			  )
+			: [];
+	const group =
+		entitiesInformation && entitiesInformation.assetGroup
+			? entitiesInformation.assetGroup.reduce(
+					(arr, curr) => [...arr, { value: curr.groupID, label: curr.groupName, typeID: curr.typeID }],
+					[]
+			  )
+			: [];
+	// data lấy từ đây parse ra từ store đang test nên chưa tối ưu
+	const assetDetail =
+		entitiesInformation && entitiesInformation.assetGroupDetail
+			? entitiesInformation.assetGroupDetail.reduce(
+					(arr, curr) => [
+						...arr,
+						{ value: curr.absID, label: curr.itemName, code: curr.itemCode, groupID: curr.groupID }
+					],
+					[]
+			  )
+			: [];
 	const saveAsset = (values, prefix) => {
 		if (entitiesEdit && entitiesEdit.assetID) {
 			dispatch(actions.updatedPossesionAll(values)).then(data => {
@@ -67,7 +114,7 @@ export default function FormCustomAll({ handleClose, open, rowPage }) {
 		<Dialog
 			style={{ zIndex: 20 }}
 			fullWidth
-			maxWidth="md"
+			maxWidth="lg"
 			onClose={handleClose}
 			aria-labelledby="customized-dialog-title"
 			open={open}
@@ -80,6 +127,12 @@ export default function FormCustomAll({ handleClose, open, rowPage }) {
 				</Toolbar>
 			</AppBar>
 			<FormCustomEdit
+				assetDetail={assetDetail}
+				group={group}
+				category={category}
+				company={company}
+				department={department}
+				suppiler={suppiler}
 				actionLoading={actionLoading}
 				saveAsset={saveAsset}
 				initialValue={entitiesEdit && entitiesEdit.assetID ? entitiesEdit : initial}
@@ -88,3 +141,4 @@ export default function FormCustomAll({ handleClose, open, rowPage }) {
 		</Dialog>
 	);
 }
+export default React.memo(FormCustomAll);

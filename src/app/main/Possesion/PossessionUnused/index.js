@@ -18,7 +18,7 @@ import Panigation from '@fuse/core/FusePanigate';
 import image from '@fuse/assets/group.png';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AppsIcon from '@material-ui/icons/Apps';
 import FuseLoading from '@fuse/core/FuseLoading';
 import FuseAnimate from '@fuse/core/FuseAnimate';
@@ -31,6 +31,7 @@ import { PossessionContext } from '../PossessionContext';
 import ActionComponent from './Component/ActionComponent';
 import * as actions from '../_redux/possesionActions';
 import PossessionAll from '../PossessionAll/FormCustomAll';
+import { rowPossesion } from './ConfigPossessionUnused';
 // import FormCustomAll from './FormCustomAll';
 
 const useStyles = makeStyles(theme => ({
@@ -135,42 +136,14 @@ export default function PossessionUnused(props) {
 													<AppsIcon />
 												</IconButton>
 											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
-												align="left"
-											>
-												Mã tài sản
-											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
-												align="left"
-											>
-												Tên tài sản
-											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
-												align="left"
-											>
-												Nhóm tài sản
-											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
-												align="left"
-											>
-												Ngày mua{' '}
-											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
-												align="left"
-											>
-												Nguyên giá
-											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
-												align="left"
-											>
-												BP Quản lý
-											</TableCell>
+											{rowPossesion.map(row => (
+												<TableCell
+													className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
+													align={row.align}
+												>
+													{row.label}
+												</TableCell>
+											))}
 										</TableRow>
 									</TableHead>
 									<TableBody>
@@ -179,7 +152,7 @@ export default function PossessionUnused(props) {
 											entities.map(items => (
 												<TableRow hover key={items.assetID}>
 													<TableCell align="center" className="p-4 md:p-12">
-														<MenuIcon
+														<MoreVertIcon
 															className="cursor-pointer"
 															onClick={event => actionMenuClick(event, items)}
 															aria-label="delete"

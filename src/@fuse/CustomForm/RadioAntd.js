@@ -23,9 +23,9 @@ export default function RadioAntd({
 	const hasError = form.errors[field.name];
 	const submittedError = hasError && submitted;
 	const touchedError = hasError && touched;
-	const onChange = value => {
-		form.setFieldValue(field.name, value);
-		return handleChangeState ? handleChangeState(value) : null;
+	const onChange = e => {
+		form.setFieldValue(field.name, e.target.value);
+		return handleChangeState ? handleChangeState(e.target.value) : null;
 	};
 	return (
 		<>
@@ -38,7 +38,7 @@ export default function RadioAntd({
 					help={submittedError || touchedError ? hasError : false}
 					validateStatus={submittedError || touchedError ? 'error' : hasFeedback && 'success'}
 				>
-					<Radio.Group options={options} onChange={onChange} />
+					<Radio.Group defaultValue={field.value} options={options} onChange={onChange} />
 				</FormItem>
 			</FormGroup>
 		</>

@@ -101,6 +101,24 @@ export const possesionSlice = createSlice({
 			state.error = null;
 			state.lastErrors = false;
 			state.entitiesInformation = data.data;
+		},
+		reportFromUser: (state, action) => {
+			const { dataRes } = action.payload;
+			console.log(dataRes);
+			const { entities } = state;
+			const index = entities.findIndex(items => items.assetID === dataRes.assetID);
+			if (index !== -1) {
+				const newList = [...entities.slice(0, index), dataRes, ...entities.slice(index + 1)];
+				return {
+					...state,
+					entities: newList
+				};
+			}
+			state.error = null;
+			state.actionLoading = false;
+			return {
+				...state
+			};
 		}
 	}
 });

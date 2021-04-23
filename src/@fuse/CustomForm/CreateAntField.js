@@ -54,7 +54,7 @@ const CreateAntField = AntComponent => ({
 					showSearch
 					className={readOnly ? 'readOnly' : ''}
 					defaultValue={field.value || ''}
-					notFoundContent={notFoundContent || ''}
+					// notFoundContent={notFoundContent || null}
 					onBlur={onBlur}
 					placeholder={placeholder || ' '}
 					onChange={type ? onInputChange : onChange}

@@ -10,26 +10,28 @@ import {
 	TableCell,
 	TableBody,
 	TableContainer,
-	Popover,
 	MenuItem,
 	ListItemText,
-	ListItemIcon
+	ListItemIcon,
+	Button
 } from '@material-ui/core';
 import Panigation from '@fuse/core/FusePanigate';
 import image from '@fuse/assets/group.png';
 import Icon from '@material-ui/core/Icon';
-import MenuIcon from '@material-ui/icons/Menu';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AppsIcon from '@material-ui/icons/Apps';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import FuseLoading from '@fuse/core/FuseLoading';
 import * as moment from 'moment';
+import { Popover } from 'antd';
 import * as actions from '../_redux/possesionActions';
 import FormCustomUsed from './FormCustomUsed';
 import FormControlReport from '../FormControl/FormControlReport';
 import { PossessionContext } from '../PossessionContext';
 import ActionComponent from './Component/ActionComponent';
 import FormRequest from './FormRequest';
+import { chipColor, rowPossesion } from './ConfigPossessionUnused';
 
 // import FormCustomUnused from './FormCustomUnused';
 
@@ -65,6 +67,35 @@ const useStyles = makeStyles(theme => ({
 		width: 900
 	}
 }));
+const Content = props => {
+	const { items } = props;
+	return (
+		<div>
+			<MenuItem onClick={() => props.handleOpenForm(items)} role="button">
+				<ListItemIcon className="min-w-40">
+					<Icon>backspace</Icon>
+				</ListItemIcon>
+				<ListItemText primary="Thu hồi tài sản" />
+			</MenuItem>
+			{!props.items.isProcessing ? (
+				<>
+					<MenuItem onClick={() => props.handleFormOpenReport('service', items)} role="button">
+						<ListItemIcon className="min-w-40">
+							<Icon>build</Icon>
+						</ListItemIcon>
+						<ListItemText primary="Báo hỏng tài sản" />
+					</MenuItem>
+					<MenuItem onClick={() => props.handleFormOpenReport('lose', items)} role="button">
+						<ListItemIcon className="min-w-40">
+							<Icon>report_problem</Icon>
+						</ListItemIcon>
+						<ListItemText primary="Báo mất tài sản" />
+					</MenuItem>
+				</>
+			) : null}
+		</div>
+	);
+};
 export default function PossessionUsed(props) {
 	const dispatch = useDispatch();
 	const [open, setOpen] = React.useState(false);
@@ -82,25 +113,21 @@ export default function PossessionUsed(props) {
 	const handleCloseFormRequest = () => {
 		setFormRequest(false);
 	};
-	const handleFormOpenReport = type => {
-		setActionMenu(null);
+	const handleFormOpenReport = (type, items) => {
+		dispatch(actions.setTaskEditPossesionAll(items));
 		handleOpenFormReport(type);
 	};
 	const handleClose = () => {
 		setOpen(false);
 	};
-	const handleOpenForm = () => {
-		setActionMenu(null);
+	const handleOpenForm = items => {
+		dispatch(actions.setTaskEditPossesionAll(items));
 		setOpen(true);
 	};
-	const actionMenuClick = (event, items) => {
-		setActionMenu(event.currentTarget);
-		dispatch(actions.setTaskEditPossesionAll(items));
-	};
-
-	const actionMenuClose = () => {
-		setActionMenu(null);
-	};
+	// const actionMenuClick = (event, items) => {
+	// 	setActionMenu(event.currentTarget);
+	// 	dispatch(actions.setTaskEditPossesionAll(items));
+	// };
 	const handleRowChange = e => {
 		setRowPage(parseInt(e.target.value, 10));
 		setPage(0);
@@ -134,42 +161,14 @@ export default function PossessionUsed(props) {
 											>
 												<AppsIcon />
 											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
-												align="left"
-											>
-												Mã tài sản
-											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
-												align="left"
-											>
-												Tên tài sản
-											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
-												align="left"
-											>
-												Nhóm tài sản
-											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
-												align="left"
-											>
-												Ngày mua{' '}
-											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
-												align="left"
-											>
-												BP Quản lý
-											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
-												align="left"
-											>
-												Nhân viên
-											</TableCell>
+											{rowPossesion.map(row => (
+												<TableCell
+													className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
+													align={row.align}
+												>
+													{row.label}
+												</TableCell>
+											))}
 										</TableRow>
 									</TableHead>
 									<TableBody>
@@ -177,12 +176,20 @@ export default function PossessionUsed(props) {
 											entities.map(items => (
 												<TableRow key={items.assetID} hover>
 													<TableCell align="left" className="p-4 md:p-12">
-														<MenuIcon
-															className="cursor-pointer"
-															onClick={e => actionMenuClick(e, items)}
-															aria-label="delete"
-														/>
 														<Popover
+															content={() => (
+																<Content
+																	handleOpenForm={handleOpenForm}
+																	items={items}
+																	handleFormOpenReport={handleFormOpenReport}
+																/>
+															)}
+															title="Title"
+														>
+															<MoreVertIcon className="cursor-pointer" />
+														</Popover>
+														{/* <Popover
+															itemID={items}
 															open={Boolean(actionMenu)}
 															anchorEl={actionMenu}
 															onClose={actionMenuClose}
@@ -201,25 +208,29 @@ export default function PossessionUsed(props) {
 																</ListItemIcon>
 																<ListItemText primary="Thu hồi tài sản" />
 															</MenuItem>
-															<MenuItem
-																onClick={() => handleFormOpenReport('service')}
-																role="button"
-															>
-																<ListItemIcon className="min-w-40">
-																	<Icon>build</Icon>
-																</ListItemIcon>
-																<ListItemText primary="Báo hỏng tài sản" />
-															</MenuItem>
-															<MenuItem
-																onClick={() => handleFormOpenReport('lose')}
-																role="button"
-															>
-																<ListItemIcon className="min-w-40">
-																	<Icon>report_problem</Icon>
-																</ListItemIcon>
-																<ListItemText primary="Báo mất tài sản" />
-															</MenuItem>
-														</Popover>
+															{!items.isProcessing ? (
+																<>
+																	<MenuItem
+																		onClick={() => handleFormOpenReport('service')}
+																		role="button"
+																	>
+																		<ListItemIcon className="min-w-40">
+																			<Icon>build</Icon>
+																		</ListItemIcon>
+																		<ListItemText primary="Báo hỏng tài sản" />
+																	</MenuItem>
+																	<MenuItem
+																		onClick={() => handleFormOpenReport('lose')}
+																		role="button"
+																	>
+																		<ListItemIcon className="min-w-40">
+																			<Icon>report_problem</Icon>
+																		</ListItemIcon>
+																		<ListItemText primary="Báo mất tài sản" />
+																	</MenuItem>
+																</>
+															) : null}
+														</Popover> */}
 													</TableCell>
 													<TableCell align="left"> {items.assetCode} </TableCell>
 													<TableCell align="left">{items.assetName} </TableCell>
@@ -227,10 +238,25 @@ export default function PossessionUsed(props) {
 													<TableCell align="left">
 														{moment(items.purchaseDate).format('DD-MM-YYYY')}{' '}
 													</TableCell>
-													<TableCell align="left">{items.deptName}</TableCell>
+													<TableCell align="left">{items.deptNameManager}</TableCell>
 													<TableCell align="left">
 														{' '}
 														{items && items.empName ? items.empName : null}
+													</TableCell>
+													<TableCell align="left">
+														<div
+															className={`inline text-12 p-4 rounded-full truncate ${
+																items.isProcessing
+																	? items.requestTypeName === 'Đã báo hỏng'
+																		? 'bg-purple text-white'
+																		: 'bg-red-700 text-white'
+																	: 'bg-green text-white'
+															}`}
+														>
+															{items.isProcessing
+																? items.requestTypeName
+																: 'Đang sử dụng'}
+														</div>
 													</TableCell>
 												</TableRow>
 											))}

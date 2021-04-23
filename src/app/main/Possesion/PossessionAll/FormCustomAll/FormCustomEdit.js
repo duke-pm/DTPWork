@@ -9,14 +9,24 @@ import InputCurrency from '@fuse/CustomForm/InputCurrency';
 import { Spin } from 'antd';
 import { AntInput, AntInputNumber, AntSelect } from '@fuse/CustomForm/CreateAntField';
 
-export default function FormCustomEdit({ handleClose, saveAsset, initialValue, actionLoading }) {
+export default function FormCustomEdit({
+	handleClose,
+	saveAsset,
+	initialValue,
+	actionLoading,
+	assetDetail,
+	group,
+	category,
+	company,
+	department,
+	suppiler
+}) {
 	const checkValidateForm = Yup.object().shape({
 		assetName: Yup.string().required('Tên tài sản không được để trống'),
 		purchaseDate: Yup.date().required('Ngày mua không được để trống').nullable(),
 		qty: Yup.number()
 			.typeError('Số lượng phải là dạng số và không được để trống. ')
 			.required('Số lượng không được để trống'),
-		// deptCodeManager: Yup.string().required('Đơn vị quản lý không được để trống'),
 		company: Yup.string().required('Công ty không được để trống'),
 		category: Yup.string().required('Loại không được để trống'),
 		group: Yup.string().required('Nhóm không được để trống'),
@@ -25,7 +35,6 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 	const [disableCateogry, setDisableCategory] = React.useState(true);
 	const [disableGroup, setDisableGroup] = React.useState(true);
 	const [disableAsset, setDisableAsset] = React.useState(true);
-	// const [disablePrefix, setDisablePrefix] = React.useState(true);
 	const [arrGroup, setArrayGroup] = React.useState([]);
 	const [arrAsset, setArrAsset] = React.useState([]);
 	const [companyParse, setcompanyParse] = React.useState(null);
@@ -33,54 +42,6 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 	const [groupSelected, setGroupSelected] = React.useState('');
 	const [assetSelected, setAssetSelected] = React.useState('');
 	const [code, setCode] = React.useState(null);
-	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
-	const { entitiesInformation } = currentState;
-	const suppiler =
-		entitiesInformation && entitiesInformation.supplier
-			? entitiesInformation.supplier.reduce(
-					(arr, curr) => [...arr, { value: curr.supplierID, label: curr.supplierName }],
-					[]
-			  )
-			: [];
-	const department =
-		entitiesInformation && entitiesInformation.department
-			? entitiesInformation.department.reduce(
-					(arr, curr) => [...arr, { value: curr.deptCode, label: curr.deptName }],
-					[]
-			  )
-			: [];
-	const company =
-		entitiesInformation && entitiesInformation.company
-			? entitiesInformation.company.reduce(
-					(arr, curr) => [...arr, { value: curr.cmpnID, label: curr.cmpnName, shortName: curr.shortName }],
-					[]
-			  )
-			: [];
-	const category =
-		entitiesInformation && entitiesInformation.assetType
-			? entitiesInformation.assetType.reduce(
-					(arr, curr) => [...arr, { value: curr.typeID, label: curr.typeName }],
-					[]
-			  )
-			: [];
-	const group =
-		entitiesInformation && entitiesInformation.assetGroup
-			? entitiesInformation.assetGroup.reduce(
-					(arr, curr) => [...arr, { value: curr.groupID, label: curr.groupName, typeID: curr.typeID }],
-					[]
-			  )
-			: [];
-	// data lấy từ đây parse ra từ store đang test nên chưa tối ưu
-	const assetDetail =
-		entitiesInformation && entitiesInformation.assetGroupDetail
-			? entitiesInformation.assetGroupDetail.reduce(
-					(arr, curr) => [
-						...arr,
-						{ value: curr.absID, label: curr.itemName, code: curr.itemCode, groupID: curr.groupID }
-					],
-					[]
-			  )
-			: [];
 	const onChangeCompany = value => {
 		const arrayParse = company.reduce((arr, curr) =>
 			curr.value === value ? { value: curr.value, label: curr.label, shortName: curr.shortName } : arr
@@ -113,13 +74,6 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 			(arr, curr) => (curr.groupID === value ? [...arr, { value: curr.value, label: curr.label }] : arr),
 			[]
 		);
-		// const test = assetDetail.reduce(
-		// 	(arr, curr) =>
-		// 		curr.value === arrAssetDetailParse[0].value
-		// 			? { value: curr.value, label: curr.label, code: curr.code }
-		// 			: arr,
-		// 	{}
-		// );
 		setAssetSelected('');
 		setPrefix('');
 		setArrAsset(arrAssetDetailParse);
@@ -169,7 +123,6 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
 									<Field
 										label="Tên tài sản (*)"
-										autoFocus
 										name="assetName"
 										type="text"
 										component={AntInput}
@@ -179,7 +132,6 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 									/>
 									<Field
 										label="Nhà cung cấp"
-										autoFocus
 										name="suppiler"
 										component={AntSelect}
 										options={suppiler}
@@ -202,7 +154,6 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 								<div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-12 ">
 									<Field
 										label="Ngày mua (*) "
-										autoFocus
 										defaultValue={initialValue.purchaseDate}
 										name="purchaseDate"
 										format="DD-MM-YYYY"
@@ -213,7 +164,6 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 									/>
 									<Field
 										label="Thời gian hiệu lực"
-										autoFocus
 										defaultValue={initialValue.effectiveDate}
 										name="effectiveDate"
 										format="DD-MM-YYYY"
@@ -222,7 +172,6 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 									/>
 									<Field
 										label="Thời gian bảo hành (tháng) "
-										autoFocus
 										placeholder="Số tháng bảo hành của tài sản"
 										name="warrantyPeriod"
 										type="number"
@@ -233,7 +182,6 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 								<div className="grid grid-cols-1 sm:grid-cols-3 gap-8 ">
 									<Field
 										label="Nguyên giá "
-										autoFocus
 										name="originalPrice"
 										type="number"
 										placeholder="Vui lòng điền nguyên giá"
@@ -242,7 +190,6 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 									/>
 									<Field
 										label="Thời gian KH (tháng) "
-										autoFocus
 										name="depreciationPeriod"
 										component={AntInputNumber}
 										placeholder="Số tháng khấu hao của tài sản"
@@ -268,7 +215,6 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 									<div className="grid grid-cols-1 sm:grid-cols-2 mb:6 gap-8 ">
 										<Field
 											label="Công ty (*)"
-											autoFocus
 											name="company"
 											notFoundContent={<Spin size="small" />}
 											handleChangeState={onChangeCompany}
@@ -279,7 +225,6 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 										/>
 										<Field
 											label="Loại tài sản (*)"
-											autoFocus
 											readOnly={!!disableCateogry}
 											name="category"
 											component={AntSelect}
@@ -291,7 +236,6 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 										/>
 										<Field
 											label="Nhóm tài sản (*)"
-											autoFocus
 											name="group"
 											dafaultValue={initialValue.group}
 											value={groupSelected}
@@ -304,7 +248,6 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 										/>
 										<Field
 											label="Tài sản (*)"
-											autoFocus
 											name="asset"
 											dafaultValue={initialValue.asset}
 											value={assetSelected}
@@ -317,7 +260,6 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 										/>
 										<Field
 											label="Tiền tố (*)"
-											autoFocus
 											readOnly
 											value={prefix}
 											component={AntInput}
@@ -333,7 +275,7 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 							{actionLoading ? (
 								<Spin size="middle" />
 							) : (
-								<Button variant="contained" autoFocus type="submit" color="primary">
+								<Button variant="contained" type="submit" color="primary">
 									{initialValue.assetID ? 'Cập nhật' : 'Thêm mới'}
 								</Button>
 							)}

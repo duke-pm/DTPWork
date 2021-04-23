@@ -4,8 +4,9 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import { DialogContent, DialogActions, Button } from '@material-ui/core';
-import { Formik, Field } from 'formik';
-import { Table, Input, Popconfirm, Form, Spin } from 'antd';
+import { Formik, Field, Form } from 'formik';
+import { DeleteOutlined } from '@ant-design/icons';
+import { Table, Input, Popconfirm, Spin } from 'antd';
 import NumberFormat from 'react-number-format';
 import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import { AntInput } from '@fuse/CustomForm/CreateAntField';
@@ -13,11 +14,11 @@ import SelectAntd from '@fuse/CustomForm/SelectAntd';
 import DateCustom from '@fuse/CustomForm/Date';
 import * as moment from 'moment';
 import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
-import CheckboxAntd from '@fuse/CustomForm/CheckboxAntd';
 import RadioAntd from '@fuse/CustomForm/RadioAntd';
 
 export default function FormCustomEdit({ handleClose, saveAsset, initialValue, actionLoading }) {
 	const [dataSource, setDataSource] = useState([]);
+	const dialogContent = useRef();
 	const initialState = {
 		name: '',
 		department: null,
@@ -25,8 +26,8 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 		region: '',
 		locationUse: '',
 		reason: '',
-		assetsCategory: '',
-		plan: '',
+		assetsCategory: 'new',
+		plan: true,
 		supplier: ''
 	};
 	const onInputChange = (key, index) => e => {
@@ -35,6 +36,12 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 		setTotal(newData, index);
 		setDataSource(newData);
 	};
+	const onChangeFormatCurr = (key, index) => value => {
+		const newData = [...dataSource];
+		newData[index][key] = value.floatValue;
+		setDataSource(newData);
+		setTotal(newData, index);
+	};
 	const setTotal = (data, index) => {
 		data[index].totalCount = data[index].count * data[index].bill;
 	};
@@ -42,33 +49,57 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 		{
 			dataIndex: 'desc',
 			title: 'Mô tả',
-			render: (text, record, index) => <Input value={text} onChange={onInputChange('desc', index)} />
+			width: '40%',
+			render: (text, record, index) => (
+				<Input className="CustomInput" value={text} onChange={onInputChange('desc', index)} />
+			)
 		},
 		{
 			dataIndex: 'count',
 			title: 'Số lượng',
-			render: (text, record, index) => <Input value={text} onChange={onInputChange('count', index)} />
+			width: '10%',
+			render: (text, record, index) => (
+				<Input
+					className="CustomInput text-right"
+					type="number"
+					value={text}
+					onChange={onInputChange('count', index)}
+				/>
+			)
 		},
 		{
 			dataIndex: 'bill',
 			title: 'Đơn giá',
-			render: (text, record, index) => <Input value={text} onChange={onInputChange('bill', index)} />
+			width: '20%',
+			render: (text, record, index) => (
+				<NumberFormat
+					customInput={Input}
+					className="CustomInput text-right"
+					value={text}
+					onValueChange={onChangeFormatCurr('bill', index)}
+					thousandSeparator
+					// prefix="VNĐ "
+				/>
+			)
 		},
 		{
 			dataIndex: 'totalCount',
 			title: 'Thành tiền',
-			render: (text, record, index) => <h4>{currencyFormat(text)}</h4>
+			render: (text, record, index) => <h4 className="text-right">{currencyFormat(text)}</h4>
 		},
 		{
 			dataIndex: 'totalCount',
-			title: 'Thành tiền',
+			title: 'Hành động',
+			align: 'center',
+			width: '10%',
 			render: (text, record, index) => (
 				<Popconfirm title="Bạn có chắc xóa tài sản không?" onConfirm={() => handleDeleteRow(record.id)}>
-					<a>Xóa tài sản</a>
+					<DeleteOutlined className="text-xl text-center " style={{ color: 'red' }} />
 				</Popconfirm>
 			)
 		}
 	];
+
 	const handleAdd = () => {
 		const newData = {
 			id: dataSource.length + 1,
@@ -83,8 +114,8 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 		const newArr = dataSource.filter(item => item.id !== id);
 		setDataSource(newArr);
 	};
-	const onConfirm = () => {
-		console.log(dataSource);
+	const onConfirm = values => {
+		console.log({ values, dataSource });
 	};
 	return (
 		<>
@@ -92,12 +123,12 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 				enableReinitialize
 				initialValues={initialState}
 				onSubmit={values => {
-					console.log(dataSource);
+					onConfirm(values);
 				}}
 			>
 				{({ handleSubmit, isSubmitting }) => (
 					<Form>
-						<DialogContent dividers>
+						<DialogContent ref={dialogContent} dividers>
 							<div className="px-16 sm:px-24">
 								<div className="flex justify-between flex-row">
 									<h5 className="font-extrabold">Thông tin cấp phát tài sản.</h5>
@@ -168,13 +199,14 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 								</Button>
 								<Table
 									rowKey="id"
-									rowClassName={() => 'editable-row'}
+									className="time-table-row-select"
 									columns={columns}
 									bordered
+									pagination={false}
 									dataSource={dataSource}
 								/>
 							</div>
-							<div className="px-16 sm:px-24">
+							<div className="px-16 sm:px-24 mt-16">
 								<div className="flex justify-between flex-row">
 									<h5 className="font-extrabold">Nội dung.</h5>
 									<span className="border-b-1 mt-3 ml-6 border-fuchsia w-auto sm:w-11/12 h-10" />
@@ -206,8 +238,8 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 										<Field
 											label="Loại tài sản (*)"
 											name="assetsCategory"
-											// value={initialState.assetsCategory}
-											component={CheckboxAntd}
+											value={initialState.assetsCategory}
+											component={RadioAntd}
 											options={[
 												{ label: 'Mua mới', value: 'new' },
 												{ label: 'Bổ sung thêm', value: 'bosung' }
@@ -218,7 +250,7 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 										<Field
 											label="Khoản mua sắm này có nằm trong kế hoạch (*)"
 											name="plan"
-											// value={initialState.assetsCategory}
+											value={initialState.plan}
 											component={RadioAntd}
 											options={[
 												{ label: 'Có', value: true },
@@ -245,7 +277,7 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 							{actionLoading ? (
 								<Spin size="middle" />
 							) : (
-								<Button variant="contained" autoFocus onClick={onConfirm} color="primary">
+								<Button variant="contained" type="submit" color="primary">
 									Gửi yêu cầu
 								</Button>
 							)}

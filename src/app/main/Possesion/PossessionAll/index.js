@@ -1,5 +1,5 @@
 /* eslint-disable no-shadow */
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import {
@@ -22,22 +22,22 @@ import FuseLoading from '@fuse/core/FuseLoading';
 import image from '@fuse/assets/group.png';
 import IconButton from '@material-ui/core/IconButton';
 import AppsIcon from '@material-ui/icons/Apps';
-import MenuIcon from '@material-ui/icons/Menu';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Icon from '@material-ui/core/Icon';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
 import PossessionAll from './FormCustomAll';
 import ActionComponent from './Component/ActionComponent';
 import * as actions from '../_redux/possesionActions';
 import { PossessionContext } from '../PossessionContext';
+import { chipColor, chipText, rowPossesion } from './ConfigPossessionAll';
 
 const useStyles = makeStyles(theme => ({
-	// InputSearch: {
-	// 	width: '160px'
-	// },
 	tableHead: {
 		height: 44
 	},
 	table: {
-		minWidth: 800
+		minWidth: 1540,
+		overflowX: 'auto'
 	},
 	cellTabel: {
 		width: 340
@@ -62,28 +62,17 @@ const useStyles = makeStyles(theme => ({
 		width: 900
 	}
 }));
-const chipColor = {
-	1: 'bg-blue text-white',
-	2: 'bg-green text-white',
-	3: 'bg-orange text-black',
-	4: 'bg-purple text-white',
-	5: 'bg-red-700 text-white',
-	6: 'bg-yellow-900 text-white'
-};
-const chipText = {
-	1: 'Chưa sử dụng',
-	2: 'Đang sử dụng',
-	3: 'Sửa chữa-bảo hành',
-	4: 'Hư hỏng',
-	5: 'Mất ',
-	6: 'Thanh lí'
-};
+
 export default function PossessionUnused(props) {
 	const { value } = props;
 	const possesionContext = useContext(PossessionContext);
 	const { rowPage, setRowPage, page, setPage, search } = possesionContext;
-	const [open, setOpen] = React.useState(false);
-	const [actionMenu, setActionMenu] = React.useState(null);
+	const [open, setOpen] = useState(false);
+	const [order, setOrder] = useState({
+		direction: 'asc',
+		id: null
+	});
+	const [actionMenu, setActionMenu] = useState(null);
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count } = currentState;
 	const classes = useStyles(props);
@@ -121,6 +110,18 @@ export default function PossessionUnused(props) {
 	const actionMenuClose = () => {
 		setActionMenu(null);
 	};
+	const createSortHandler = property => event => {
+		const id = property;
+		let direction = 'desc';
+
+		if (order.id === property && order.direction === 'desc') {
+			direction = 'asc';
+		}
+		setOrder({
+			direction,
+			id
+		});
+	};
 	if (listloading) {
 		return <FuseLoading />;
 	}
@@ -144,48 +145,24 @@ export default function PossessionUnused(props) {
 													<AppsIcon />
 												</IconButton>
 											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
-												align="left"
-											>
-												Mã tài sản
-											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
-												align="left"
-											>
-												Tên tài sản
-											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
-												align="left"
-											>
-												Nhóm tài sản
-											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
-												align="left"
-											>
-												Ngày mua{' '}
-											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
-												align="left"
-											>
-												BP Quản lý
-											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
-												align="left"
-											>
-												Nhân viên
-											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
-												align="left"
-											>
-												Trạng thái
-											</TableCell>
+											{rowPossesion.map(row => (
+												<TableCell
+													className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
+													align={row.align}
+												>
+													{row.sort ? (
+														<TableSortLabel
+															active={order.id === row.id}
+															direction={order.direction}
+															onClick={createSortHandler(row.id)}
+														>
+															{row.label}
+														</TableSortLabel>
+													) : (
+														row.label
+													)}
+												</TableCell>
+											))}
 										</TableRow>
 									</TableHead>
 									<TableBody>
@@ -194,7 +171,7 @@ export default function PossessionUnused(props) {
 											entities.map(items => (
 												<TableRow key={items.assetID} hover className={classes.tableHead}>
 													<TableCell align="center" className="p-4 md:p-12">
-														<MenuIcon
+														<MoreVertIcon
 															className="cursor-pointer"
 															onClick={event => actionMenuClick(event, items)}
 															aria-label="delete"

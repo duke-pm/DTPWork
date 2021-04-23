@@ -8,12 +8,37 @@ import { callTypes, possesionSlice } from '../possesionSlice';
 const { actions } = possesionSlice;
 
 // =========================== Action PossesionGobale =========================== //
-export const reportFailurePossesion = data => dispatch => {
+// =========================== Báo hỏng tài sản =========================== //
+export const reportFailurePossesion = (information, data) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.actions }));
+	const formData = new FormData();
+	formData.append('AssetID', information.assetID);
+	formData.append('TypeUpdate', 'Damage');
+	formData.append('EmpCode', information.empCode);
+	formData.append('DeptCode', information.deptCodeManager);
+	formData.append('RegionCode', information.regionCode);
+	formData.append('JobTitle', information.jobTitle);
+	formData.append('FileUpload', data.file || '');
+	formData.append('OccurredDate', moment(data.date).format('YYYY-MM-DD'));
+	formData.append('Reasons', data.note);
+	formData.append('Lang', 'vi');
 	return requestFrom
-		.updateDataPossesion(data)
-		.then(() => {})
-		.catch(() => {});
+		.reportFromUser(formData)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				const dataRes = data.data;
+				console.log(dataRes);
+				dispatch(actions.reportFromUser({ dataRes }));
+			} else {
+				notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', data.errorMessage);
+				dispatch(actions.catchErrors({ callType: callTypes.action }));
+			}
+			return data;
+		})
+		.catch(() => {
+			dispatch(actions.catchErrors({ callType: callTypes.action }));
+		});
 };
 export const getInformationCompany = params => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.actions }));
@@ -42,12 +67,37 @@ export const getInformationCompany = params => dispatch => {
 			dispatch(actions.catchErrors({ callType: callTypes.list }));
 		});
 };
-export const reportLosePossesion = data => dispatch => {
+// =========================== Báo mất tài sản =========================== //
+
+export const reportLosePossesion = (information, data) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.actions }));
+	const formData = new FormData();
+	formData.append('AssetID', information.assetID);
+	formData.append('TypeUpdate', 'Lost');
+	formData.append('EmpCode', information.empCode);
+	formData.append('DeptCode', information.deptCodeManager);
+	formData.append('RegionCode', information.regionCode);
+	formData.append('JobTitle', information.jobTitle);
+	formData.append('FileUpload', data.file || '');
+	formData.append('OccurredDate', moment(data.date).format('YYYY-MM-DD'));
+	formData.append('Reasons', data.note);
+	formData.append('Lang', 'vi');
 	return requestFrom
-		.updateDataPossesion(data)
-		.then(() => {})
-		.catch(() => {});
+		.reportFromUser(formData)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				const dataRes = data.data;
+				dispatch(actions.reportFromUser({ dataRes }));
+			} else {
+				notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', data.errorMessage);
+				dispatch(actions.catchErrors({ callType: callTypes.action }));
+			}
+			return data;
+		})
+		.catch(() => {
+			dispatch(actions.catchErrors({ callType: callTypes.action }));
+		});
 };
 export const cyclePossesion = data => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.actions }));
@@ -106,7 +156,7 @@ export const fetchPossesionAll = (value, limit, page, search) => dispatch => {
 		})
 		.catch(err => {
 			dispatch(actions.catchErrors({ callType: callTypes.list }));
-			notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', err);
+			notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại');
 		});
 };
 export const setTaskEditPossesionAll = data => dispatch => {
@@ -250,6 +300,13 @@ export const withdrawPossesion = (data, entitiesEdit) => dispatch => {
 		.catch(error => {
 			notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', error);
 		});
+};
+export const requestAssetFromUser = (data, assets) => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.action }));
+	return requestFrom
+		.requestAsset()
+		.then(() => {})
+		.catch(() => {});
 };
 // =========================== Possesion Repair ============================= //
 
