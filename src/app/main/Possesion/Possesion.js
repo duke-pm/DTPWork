@@ -46,19 +46,20 @@ function PossesionPage(props) {
 		setPage(0);
 		setRowPage(25);
 	};
+	const params = 'Region,Department,Employee,Supplier,Company,AssetType,AssetGroup,AssetGroupDetail';
 	useEffect(() => {
-		const params = 'Region,Department,Employee,Supplier,Company,AssetType,AssetGroup,AssetGroupDetail';
 		dispatch(actions.getInformationCompany(params));
 		if (value === 5) {
 			dispatch(actions.fetchPossesionAll(6, rowPage));
 		} else {
 			dispatch(actions.fetchPossesionAll(value, rowPage));
 		}
-	}, [value, rowPage, dispatch]);
+	}, [value, rowPage, dispatch, params]);
 	return (
 		<>
 			<FormControlCycle />
 			<FusePageCarded
+				innerScroll
 				classes={{
 					// content: 'flex',
 					header: 'min-h-10 h-10	sm:h-16 sm:min-h-16'

@@ -16,6 +16,7 @@ export default function SelectAntd({
 	options,
 	hasFeedback,
 	notFoundContent,
+	readOnly,
 	submitCount,
 	...props
 }) {
@@ -43,6 +44,7 @@ export default function SelectAntd({
 						{...field}
 						{...props}
 						showSearch
+						className={readOnly ? 'readOnly' : ''}
 						optionFilterProp="children"
 						filterOption={(input, option) =>
 							option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 ||

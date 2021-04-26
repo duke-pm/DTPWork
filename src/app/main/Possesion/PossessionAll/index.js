@@ -2,34 +2,17 @@
 import React, { useContext, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import FuseAnimate from '@fuse/core/FuseAnimate';
-import {
-	Paper,
-	Table,
-	TableHead,
-	TableRow,
-	TableCell,
-	TableBody,
-	TableContainer,
-	Popover,
-	MenuItem,
-	ListItemIcon,
-	ListItemText
-} from '@material-ui/core';
-import * as moment from 'moment';
+import { Paper, Table, TableContainer } from '@material-ui/core';
 import Panigation from '@fuse/core/FusePanigate';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import FuseLoading from '@fuse/core/FuseLoading';
 import image from '@fuse/assets/group.png';
-import IconButton from '@material-ui/core/IconButton';
-import AppsIcon from '@material-ui/icons/Apps';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import Icon from '@material-ui/core/Icon';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
 import PossessionAll from './FormCustomAll';
 import ActionComponent from './Component/ActionComponent';
 import * as actions from '../_redux/possesionActions';
 import { PossessionContext } from '../PossessionContext';
-import { chipColor, chipText, rowPossesion } from './ConfigPossessionAll';
+import TableHeader from './Component/TableHeader';
+import TableBodyAssetAll from './Component/TableBody';
 
 const useStyles = makeStyles(theme => ({
 	tableHead: {
@@ -63,7 +46,7 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-export default function PossessionUnused(props) {
+export default function PossessionAllPage(props) {
 	const { value } = props;
 	const possesionContext = useContext(PossessionContext);
 	const { rowPage, setRowPage, page, setPage, search } = possesionContext;
@@ -72,24 +55,20 @@ export default function PossessionUnused(props) {
 		direction: 'asc',
 		id: null
 	});
-	const [actionMenu, setActionMenu] = useState(null);
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count } = currentState;
 	const classes = useStyles(props);
 	const dispatch = useDispatch();
-	const handleClose = () => {
+	const handleClose = React.useCallback(() => {
 		setOpen(false);
-	};
-	const handleOpenForm = items => {
-		setActionMenu(null);
-		const params = 'Supplier,Company,AssetType,AssetGroup,AssetGroupDetail,Department';
-		dispatch(actions.getInformationCompany(params));
+	}, []);
+	const handleOpenForm = () => {
 		dispatch(actions.setTaskEditPossesionAll(null));
 		setOpen(true);
 	};
 	const handleOpenFormEdit = items => {
-		setActionMenu(null);
 		setOpen(true);
+		dispatch(actions.setTaskEditPossesionAll(items));
 	};
 	const handleRowChange = e => {
 		setRowPage(parseInt(e.target.value, 10));
@@ -100,15 +79,6 @@ export default function PossessionUnused(props) {
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
 		dispatch(actions.fetchPossesionAll(value, rowPage, newPage + 1, search));
-	};
-	const actionMenuClick = (event, items) => {
-		const params = 'Supplier';
-		dispatch(actions.getInformationCompany(params));
-		setActionMenu(event.currentTarget);
-		dispatch(actions.setTaskEditPossesionAll(items));
-	};
-	const actionMenuClose = () => {
-		setActionMenu(null);
 	};
 	const createSortHandler = property => event => {
 		const id = property;
@@ -135,91 +105,13 @@ export default function PossessionUnused(props) {
 						<TableContainer className={`${classes.TableContainer} flex flex-1`}>
 							<Paper className={classes.rootPaper}>
 								<Table className={`${classes.table}`} stickyHeader>
-									<TableHead>
-										<TableRow>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans"
-												align="left"
-											>
-												<IconButton aria-label="delete">
-													<AppsIcon />
-												</IconButton>
-											</TableCell>
-											{rowPossesion.map(row => (
-												<TableCell
-													className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
-													align={row.align}
-												>
-													{row.sort ? (
-														<TableSortLabel
-															active={order.id === row.id}
-															direction={order.direction}
-															onClick={createSortHandler(row.id)}
-														>
-															{row.label}
-														</TableSortLabel>
-													) : (
-														row.label
-													)}
-												</TableCell>
-											))}
-										</TableRow>
-									</TableHead>
-									<TableBody>
-										{entities &&
-											!lastErrors &&
-											entities.map(items => (
-												<TableRow key={items.assetID} hover className={classes.tableHead}>
-													<TableCell align="center" className="p-4 md:p-12">
-														<MoreVertIcon
-															className="cursor-pointer"
-															onClick={event => actionMenuClick(event, items)}
-															aria-label="delete"
-														/>
-														<Popover
-															elevation={1}
-															open={Boolean(actionMenu)}
-															anchorEl={actionMenu}
-															onClose={actionMenuClose}
-															anchorOrigin={{
-																vertical: 'center',
-																horizontal: 'right'
-															}}
-															transformOrigin={{
-																vertical: 'top',
-																horizontal: 'left'
-															}}
-														>
-															<MenuItem onClick={handleOpenFormEdit} role="button">
-																<ListItemIcon className="min-w-40">
-																	<Icon>edit</Icon>
-																</ListItemIcon>
-																<ListItemText primary="Chỉnh sửa" />
-															</MenuItem>
-														</Popover>
-													</TableCell>
-													<TableCell align="left"> {items.assetCode} </TableCell>
-													<TableCell align="left">{items.assetName} </TableCell>
-													<TableCell align="left">{items.groupName}</TableCell>
-													<TableCell align="left">
-														{moment(items.purchaseDate).format('DD-MM-YYYY')}{' '}
-													</TableCell>
-													<TableCell align="left">{items.deptNameManager}</TableCell>
-													<TableCell align="left">
-														{items && items.empName ? items.empName : null}
-													</TableCell>
-													<TableCell align="left">
-														<div
-															className={`inline text-12 p-4 rounded-full truncate ${
-																chipColor[items.statusID]
-															}`}
-														>
-															{chipText[items.statusID]}
-														</div>
-													</TableCell>
-												</TableRow>
-											))}
-									</TableBody>
+									<TableHeader createSortHandler={createSortHandler} order={order} />
+									<TableBodyAssetAll
+										handleOpenFormEdit={handleOpenFormEdit}
+										entities={entities}
+										lastErrors={lastErrors}
+										classes={classes}
+									/>
 								</Table>
 								{(entities && entities.length === 0) || lastErrors ? (
 									<FuseAnimate delay={300}>

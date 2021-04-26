@@ -1,10 +1,8 @@
 import React from 'react';
 import { Dialog, AppBar, Toolbar, Typography, IconButton, makeStyles } from '@material-ui/core';
-import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import { notificationConfig } from '@fuse/core/DtpConfig';
+import { useSelector, shallowEqual } from 'react-redux';
 // import FormCustomUsedEdit from './FormCustomUsedEdit';
 import CloseIcon from '@material-ui/icons/Close';
-import * as action from '../../_redux/possesionActions';
 import FormCustomEdit from './FormCustomEdit';
 
 const useStyles = makeStyles({
@@ -13,8 +11,7 @@ const useStyles = makeStyles({
 	}
 });
 
-export default function FormRequest({ handleClose, open }) {
-	const dispatch = useDispatch();
+export default function FormAllocation({ handleClose, open, setReasonReject }) {
 	const classes = useStyles();
 	const { actionLoading, entitiesInformation } = useSelector(
 		state => ({
@@ -24,16 +21,10 @@ export default function FormRequest({ handleClose, open }) {
 		}),
 		shallowEqual
 	);
-	const handleSubmitForm = (values, assets) => {
-		dispatch(action.requestAssetFromUserAction(values, assets)).then(data => {
-			if (data && !data.isError) {
-				notificationConfig('success', 'Thành công!', 'Yêu cầu thành công !!');
-				handleClose();
-			} else {
-				// notificationConfig('warning', 'Thất bại!', 'Yêu cầu thất bại vui lòng thử lại');
-			}
-		});
+	const handleOpenReject = () => {
+		setReasonReject(true);
 	};
+	// const handleSubmitForm = (values, assets) => {};
 	return (
 		<Dialog
 			fullWidth
@@ -51,14 +42,15 @@ export default function FormRequest({ handleClose, open }) {
 						<CloseIcon />
 					</IconButton>
 					<Typography variant="subtitle1" color="inherit">
-						Yêu cầu cấp phát tài sản
+						Thôn tin yêu cầu cấp phát tài sản
 					</Typography>
 				</Toolbar>
 			</AppBar>
 			<FormCustomEdit
+				handleOpenReject={handleOpenReject}
 				actionLoading={actionLoading}
 				entitiesInformation={entitiesInformation}
-				handleSubmitForm={handleSubmitForm}
+				// handleSubmitForm={handleSubmitForm}
 			/>
 		</Dialog>
 	);

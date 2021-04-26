@@ -16,8 +16,7 @@ import {
 	ListItemText
 } from '@material-ui/core';
 import * as moment from 'moment';
-import Panigation from '@fuse/core/FusePanigate';
-import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import FuseLoading from '@fuse/core/FuseLoading';
 import image from '@fuse/assets/group.png';
 import IconButton from '@material-ui/core/IconButton';
@@ -80,29 +79,28 @@ const chipText = {
 	6: 'Thanh lí'
 };
 export default function ConfirmDamaged(props) {
-	const { value } = props;
 	const [actionMenu, setActionMenu] = React.useState(null);
 	const ConfirmContextDamage = useContext(ConfirmContext);
 	const { setFormControl, setType } = ConfirmContextDamage;
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
-	const { listloading, entities, lastErrors, total_count } = currentState;
+	const { listloading, entities, lastErrors } = currentState;
 	const classes = useStyles(props);
-	const dispatch = useDispatch();
+	// const dispatch = useDispatch();
 	const handleOpenFormEdit = items => {
 		setActionMenu(null);
 		setFormControl(true);
 		setType('damaged');
 	};
-	const handleRowChange = e => {
-		// setRowPage(parseInt(e.target.value, 10));
-		// setPage(0);
-		const rowPageParse = parseInt(e.target.value, 10);
-		// dispatch(actions.fetchPossesionAll(value, rowPageParse, 1, search));
-	};
-	const handleChangePage = (event, newPage) => {
-		// setPage(newPage);
-		// dispatch(actions.fetchPossesionAll(value, rowPage, newPage + 1, search));
-	};
+	// const handleRowChange = e => {
+	// setRowPage(parseInt(e.target.value, 10));
+	// setPage(0);
+	// const rowPageParse = parseInt(e.target.value, 10);
+	// dispatch(actions.fetchPossesionAll(value, rowPageParse, 1, search));
+	// };
+	// const handleChangePage = (event, newPage) => {
+	// setPage(newPage);
+	// dispatch(actions.fetchPossesionAll(value, rowPage, newPage + 1, search));
+	// };
 	const actionMenuClick = (event, items) => {
 		// const params = 'Supplier';
 		// dispatch(actions.getInformationCompany(params));

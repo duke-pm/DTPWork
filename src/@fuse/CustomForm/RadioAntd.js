@@ -15,6 +15,7 @@ export default function RadioAntd({
 	options,
 	hasFeedback,
 	notFoundContent,
+	readOnly,
 	submitCount,
 	...props
 }) {
@@ -33,6 +34,7 @@ export default function RadioAntd({
 				<label className="mb-10"> {label} </label>
 				<FormItem
 					style={{ width: '100%' }}
+					className={readOnly ? 'readOnly' : ''}
 					rules={[{ required: true }]}
 					hasFeedback={!!((hasFeedback && submitted) || (hasFeedback && touched))}
 					help={submittedError || touchedError ? hasError : false}

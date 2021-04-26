@@ -10,7 +10,7 @@ export default function FormControlReport() {
 	const possessionContext = useContext(PossessionContext);
 	const { handleCloseFormReport, typeReport, formReport } = possessionContext;
 	const dispatch = useDispatch();
-	const { entitiesEdit, actionLoading, entitiesInformation } = useSelector(
+	const { entitiesEdit, actionLoading } = useSelector(
 		state => ({
 			entitiesEdit: state.possesion.entitiesEdit,
 			actionLoading: state.possesion.actionLoading,

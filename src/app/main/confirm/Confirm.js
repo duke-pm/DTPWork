@@ -1,13 +1,15 @@
 import { Tabs, Tab, Box, Typography } from '@material-ui/core';
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import FusePageCarded from '@fuse/core/FusePageCarded';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import { ConfirmContext } from './ConfirmContext';
 import ConfirmAll from './ConfirmAll';
 import ConfirmDamaged from './ConfirmDamaged';
 import ConfirmLose from './ConfirmLose';
-import FormCustomCorrupt from './FormControlConfirm';
+import FormAllocation from './FormControlConfirm/Allocation';
+import FormConfirmGobal from './FormControlConfirm/ConfirmCorrupt';
+import FormCustomCorrupt from './FormControlConfirm/FormCustomCorrupt';
 
 function a11yProps(index) {
 	return {
@@ -32,9 +34,18 @@ function TabPanel(props) {
 }
 
 function PossesionPage(props) {
-	const dispatch = useDispatch();
 	const confirmContext = useContext(ConfirmContext);
-	const { value, setValue, formControl, setFormControl } = confirmContext;
+	const {
+		value,
+		setValue,
+		formControl,
+		setFormControl,
+		formAllocation,
+		setFormAllocation,
+		typeReasonReject,
+		reasonReject,
+		setReasonReject
+	} = confirmContext;
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
 	const total_Record = currentState && currentState.total_items;
 	const handleChange = (event, newValue) => {
@@ -52,8 +63,21 @@ function PossesionPage(props) {
 	const handleCloseForm = () => {
 		setFormControl(false);
 	};
+	const handleCloseFormAllocation = () => {
+		setFormAllocation(false);
+	};
+	const hanleCancle = () => {
+		setReasonReject(false);
+	};
+	console.log({ reasonReject });
 	return (
 		<>
+			<FormConfirmGobal type={typeReasonReject} open={reasonReject} handleClose={hanleCancle} />
+			<FormAllocation
+				setReasonReject={setReasonReject}
+				open={formAllocation}
+				handleClose={handleCloseFormAllocation}
+			/>
 			<FormCustomCorrupt open={formControl} handleClose={handleCloseForm} />
 			<FusePageCarded
 				classes={{
@@ -90,7 +114,7 @@ function PossesionPage(props) {
 					>
 						<Tab
 							className="font-sans"
-							label={`Tất cả (${(total_Record && total_Record.countAll) || 0})`}
+							label={`Cấp phát (${(total_Record && total_Record.countAll) || 0})`}
 							{...a11yProps(0)}
 						/>
 						<Tab

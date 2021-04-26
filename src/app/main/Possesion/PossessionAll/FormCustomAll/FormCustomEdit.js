@@ -1,16 +1,14 @@
 import React from 'react';
 import { DialogContent, DialogActions, Button } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
-import * as Yup from 'yup';
-import { useSelector, shallowEqual } from 'react-redux';
 import DateCustom from '@fuse/CustomForm/Date';
 import InputTextArea from '@fuse/CustomForm/InputTextArea';
 import InputCurrency from '@fuse/CustomForm/InputCurrency';
 import { Spin } from 'antd';
 import { AntInput, AntInputNumber, AntSelect } from '@fuse/CustomForm/CreateAntField';
+import { checkValidateFormConfig } from '../ConfigPossessionAll';
 
-export default function FormCustomEdit({
-	handleClose,
+function FormCustomEdit({
 	saveAsset,
 	initialValue,
 	actionLoading,
@@ -21,17 +19,6 @@ export default function FormCustomEdit({
 	department,
 	suppiler
 }) {
-	const checkValidateForm = Yup.object().shape({
-		assetName: Yup.string().required('Tên tài sản không được để trống'),
-		purchaseDate: Yup.date().required('Ngày mua không được để trống').nullable(),
-		qty: Yup.number()
-			.typeError('Số lượng phải là dạng số và không được để trống. ')
-			.required('Số lượng không được để trống'),
-		company: Yup.string().required('Công ty không được để trống'),
-		category: Yup.string().required('Loại không được để trống'),
-		group: Yup.string().required('Nhóm không được để trống'),
-		asset: Yup.string().required('Tiền đố không được để trống')
-	});
 	const [disableCateogry, setDisableCategory] = React.useState(true);
 	const [disableGroup, setDisableGroup] = React.useState(true);
 	const [disableAsset, setDisableAsset] = React.useState(true);
@@ -93,7 +80,7 @@ export default function FormCustomEdit({
 		<>
 			<Formik
 				enableReinitialize
-				validationSchema={initialValue.assetID ? false : checkValidateForm}
+				validationSchema={initialValue.assetID ? false : checkValidateFormConfig}
 				initialValues={initialValue}
 				onSubmit={values => {
 					saveAsset(values, prefix);
@@ -286,3 +273,4 @@ export default function FormCustomEdit({
 		</>
 	);
 }
+export default React.memo(FormCustomEdit);

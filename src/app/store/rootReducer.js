@@ -1,5 +1,6 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import auth from 'app/auth/store';
+import { confirmSlice } from 'app/main/confirm/_redux/confirmSlice';
 import fuse from './fuse';
 import i18n from './i18nSlice';
 import { possesionSlice } from '../main/Possesion/_redux/possesionSlice';
@@ -12,6 +13,7 @@ const createReducer = asyncReducers => (state, action) => {
 		i18n,
 		possesion: possesionSlice.reducer,
 		memberships,
+		confirm: confirmSlice.reducer,
 		...asyncReducers
 	});
 

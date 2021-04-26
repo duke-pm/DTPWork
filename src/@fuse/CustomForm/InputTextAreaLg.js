@@ -17,6 +17,7 @@ export default function InputTextAreaLg({
 	submitCount,
 	handleInputChangeNote,
 	placeholder,
+	readOnly,
 	hasFeedback,
 	row,
 	...props
@@ -42,6 +43,7 @@ export default function InputTextAreaLg({
 					validateStatus={submittedError || touchedError ? 'error' : 'success'}
 				>
 					<TextArea
+						className={readOnly ? 'readOnly' : ''}
 						placeholder={placeholder || ''}
 						rows={row}
 						onChange={e => onChange(e)}

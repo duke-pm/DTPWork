@@ -48,9 +48,7 @@ export const getInformationCompany = params => dispatch => {
 	return requestFrom
 		.getInformationCompany(paramsReq)
 		.then(res => {
-			console.log(res);
 			const { data } = res;
-			console.log(data);
 			if (!data.isError) {
 				dispatch(actions.informationsFetch({ data }));
 			} else {

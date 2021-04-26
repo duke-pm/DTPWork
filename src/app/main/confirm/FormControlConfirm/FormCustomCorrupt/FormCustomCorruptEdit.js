@@ -3,7 +3,6 @@ import { DialogContent, DialogActions, Button } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
 import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
 import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
-import FormConfirm from './ConfirmCorrupt';
 
 const initial = {
 	date: '',
@@ -13,16 +12,15 @@ const initial = {
 	file: ''
 };
 export default function FormCustomCorruptEdit() {
-	const [confirm, setConfirm] = useState(false);
-	const [type, setType] = useState('');
+	const [, setConfirm] = useState(false);
+	const [, setType] = useState('');
 	const handleConfirm = value => {
 		setConfirm(true);
 		setType(value);
 	};
-	const hanleCancleConfirm = () => setConfirm(false);
+	// const hanleCancleConfirm = () => setConfirm(false);
 	return (
 		<>
-			<FormConfirm type={type} open={confirm} handleClose={hanleCancleConfirm} />
 			<Formik
 				enableReinitialize
 				// validationSchema={checkValidateForm}

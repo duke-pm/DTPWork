@@ -1,5 +1,5 @@
 import React from 'react';
-import { MenuItem, ListItemText, ListItemIcon, Button } from '@material-ui/core';
+import { MenuItem, ListItemText, ListItemIcon } from '@material-ui/core';
 import Icon from '@material-ui/core/Icon';
 
 export const PossesionAction = props => {

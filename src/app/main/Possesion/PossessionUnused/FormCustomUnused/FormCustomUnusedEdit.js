@@ -8,11 +8,11 @@ import DateCustom from '@fuse/CustomForm/Date';
 import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
 import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
 import * as moment from 'moment';
-import * as Yup from 'yup';
-import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import { AntInput } from '@fuse/CustomForm/CreateAntField';
 import { Spin } from 'antd';
 import SelectAntd from '@fuse/CustomForm/SelectAntd';
+import { checkValidateForm } from '../ConfigPossessionUnused';
+import ContentForm from './ContentForm';
 // import SelectAntd from '@fuse/CustomForm/SelectAntd';
 
 export default function FormCustomUnusedEdit({
@@ -30,11 +30,6 @@ export default function FormCustomUnusedEdit({
 		date: moment(Date.now()),
 		file: '',
 		note: ''
-	});
-	const checkValidateForm = Yup.object().shape({
-		customer: Yup.string().required('Nhân viên không được để trống'),
-		department: Yup.string().required('Bộ phận không được để trống').nullable(),
-		location: Yup.string().required('Khu vực không được để trống')
 	});
 	const employees =
 		entitiesInformation && entitiesInformation.employees
@@ -81,7 +76,6 @@ export default function FormCustomUnusedEdit({
 			});
 		}
 	};
-	// console.log(initial);
 	const onChangeDepartment = value => {
 		setInitialState({
 			...intialState,
@@ -125,45 +119,7 @@ export default function FormCustomUnusedEdit({
 									<h5 className="font-extrabold">Thông tin tài sản.</h5>
 									<span className="border-b-1 mt-3 ml-6 border-fuchsia w-auto sm:w-5/6 h-10" />
 								</div>
-								<div className=" grid grid-cols-1 sm:grid-cols-2 gap-48">
-									<div className="flex-row justify-between flex ">
-										<div className="flex flex-col">
-											<p className="p-6"> Mã tài sản </p>
-											<p className="p-6"> Tên tài sản </p>
-											<p className="p-6"> Nhóm tài sản </p>
-											<p className="p-6"> Mô tả </p>
-										</div>
-										<div className="flex sm:mr-96 mr-auto flex-col">
-											<p className="p-6 font-extrabold">
-												{entitiesEdit && entitiesEdit.assetCode}
-											</p>
-											<p className="p-6 font-extrabold">
-												{entitiesEdit && entitiesEdit.assetName}
-											</p>
-											<p className="p-6 font-extrabold">
-												{entitiesEdit && entitiesEdit.groupName}
-											</p>
-											<p className="p-6 font-extrabold"> {entitiesEdit && entitiesEdit.descr}</p>
-										</div>
-									</div>
-									<div className="flex-row justify-between flex ">
-										<div className="flex flex-col">
-											<p className="p-6">Ngày mua </p>
-											<p className="p-6"> Nguyên giá </p>
-											<p className="p-166"> Tình trạng </p>
-										</div>
-										<div className="flex sm:mr-96 mr-auto flex-col">
-											<p className="p-6 font-extrabold">
-												{entitiesEdit && moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY')}
-											</p>
-											<p className="p-6 font-extrabold">
-												{' '}
-												{entitiesEdit && currencyFormat(entitiesEdit.originalPrice)}
-											</p>
-											<p className="p-6 font-extrabold"> Chưa sử dụng </p>
-										</div>
-									</div>
-								</div>
+								<ContentForm entitiesEdit={entitiesEdit} />
 							</div>
 							<div className="px-16 sm:px-24">
 								<div className="flex justify-between flex-row">

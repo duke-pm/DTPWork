@@ -1,4 +1,4 @@
-import * as Yup from 'yup';
+// import * as Yup from 'yup';
 
 export const chipColor = {
 	1: 'bg-blue text-white',
@@ -16,8 +16,7 @@ export const chipText = {
 	5: 'Mất ',
 	6: 'Thanh lí'
 };
-
-export const rowPossesion = [
+export const rowConfirmAllocation = [
 	{
 		id: 'assetId',
 		align: 'left',
@@ -57,15 +56,3 @@ export const rowPossesion = [
 		label: 'Trạng thái'
 	}
 ];
-
-export const checkValidateFormConfig = Yup.object().shape({
-	assetName: Yup.string().required('Tên tài sản không được để trống'),
-	purchaseDate: Yup.date().required('Ngày mua không được để trống').nullable(),
-	qty: Yup.number()
-		.typeError('Số lượng phải là dạng số và không được để trống. ')
-		.required('Số lượng không được để trống'),
-	company: Yup.string().required('Công ty không được để trống'),
-	category: Yup.string().required('Loại không được để trống'),
-	group: Yup.string().required('Nhóm không được để trống'),
-	asset: Yup.string().required('Tiền đố không được để trống')
-});

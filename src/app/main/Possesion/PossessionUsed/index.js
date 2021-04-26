@@ -18,7 +18,7 @@ import FormControlReport from '../FormControl/FormControlReport';
 import { PossessionContext } from '../PossessionContext';
 import ActionComponent from './Component/ActionComponent';
 import FormRequest from './FormRequest';
-import { chipColor, rowPossesion } from './ConfigPossessionUsed';
+import { rowPossesion } from './ConfigPossessionUsed';
 import { PossesionAction } from './PossessionAction';
 
 // import FormCustomUnused from './FormCustomUnused';
@@ -59,7 +59,6 @@ export default function PossessionUsed(props) {
 	const dispatch = useDispatch();
 	const [open, setOpen] = React.useState(false);
 	const [formRequest, setFormRequest] = React.useState(false);
-	const [actionMenu, setActionMenu] = React.useState(null);
 	const classes = useStyles(props);
 	const possessionContext = useContext(PossessionContext);
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
@@ -118,6 +117,7 @@ export default function PossessionUsed(props) {
 											</TableCell>
 											{rowPossesion.map(row => (
 												<TableCell
+													key={row.id}
 													className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
 													align={row.align}
 												>

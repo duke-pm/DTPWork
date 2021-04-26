@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Dialog, AppBar, Toolbar, Typography } from '@material-ui/core';
 import FormCustomCorruptEdit from './FormCustomCorruptEdit';
-import { ConfirmContext } from '../ConfirmContext';
+import { ConfirmContext } from '../../ConfirmContext';
 
 export default function FormCustomCorrupt({ handleClose, open }) {
 	const ConfirmContextLose = useContext(ConfirmContext);

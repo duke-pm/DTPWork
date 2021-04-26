@@ -15,9 +15,8 @@ import DateCustom from '@fuse/CustomForm/Date';
 import * as moment from 'moment';
 import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
 import RadioAntd from '@fuse/CustomForm/RadioAntd';
-import { validateSchema } from '../ConfigPossessionUsed';
 
-export default function FormCustomEdit({ handleSubmitForm, actionLoading, entitiesInformation }) {
+export default function FormCustomEdit({ handleSubmitForm, actionLoading, entitiesInformation, handleOpenReject }) {
 	const [dataSource, setDataSource] = useState([]);
 	const [optionDept, setOptionsDept] = useState([]);
 	const [optionRegion, setOptionsRegion] = useState([]);
@@ -164,7 +163,6 @@ export default function FormCustomEdit({ handleSubmitForm, actionLoading, entiti
 		<>
 			<Formik
 				enableReinitialize
-				validationSchema={validateSchema}
 				initialValues={initialState}
 				onSubmit={values => {
 					onConfirm(values);
@@ -180,6 +178,7 @@ export default function FormCustomEdit({ handleSubmitForm, actionLoading, entiti
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-4 gap-8 ">
 									<Field
+										readOnly
 										label="Nhân viên (*)"
 										name="name"
 										component={AntInput}
@@ -188,6 +187,7 @@ export default function FormCustomEdit({ handleSubmitForm, actionLoading, entiti
 										className="mt-8 mb-16"
 									/>
 									<Field
+										readOnly
 										label="Bộ phận (*)"
 										name="department"
 										value={initialState.department}
@@ -197,6 +197,7 @@ export default function FormCustomEdit({ handleSubmitForm, actionLoading, entiti
 										className="mt-8 mb-16"
 									/>
 									<Field
+										readOnly
 										label="Khu vực (*)"
 										name="region"
 										value={initialState.region}
@@ -206,6 +207,7 @@ export default function FormCustomEdit({ handleSubmitForm, actionLoading, entiti
 										className="mt-8 mb-16"
 									/>
 									<Field
+										readOnly
 										label="Ngày yêu cầu (*) "
 										autoFocus
 										defaultValue={initialState.dateRequest}
@@ -257,6 +259,7 @@ export default function FormCustomEdit({ handleSubmitForm, actionLoading, entiti
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-1 gap-8 ">
 									<Field
+										readOnly
 										label="Nơi dùng (*)"
 										name="locationUse"
 										component={SelectAntd}
@@ -267,6 +270,7 @@ export default function FormCustomEdit({ handleSubmitForm, actionLoading, entiti
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-1 gap-8 ">
 									<Field
+										readOnly
 										label="Lí do (*)"
 										name="reason"
 										value={initialState.reason}
@@ -279,6 +283,7 @@ export default function FormCustomEdit({ handleSubmitForm, actionLoading, entiti
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-16 ">
 									<div className="flex flex-col">
 										<Field
+											readOnly
 											label="Loại tài sản (*)"
 											name="assetsCategory"
 											value={initialState.assetsCategory}
@@ -291,6 +296,7 @@ export default function FormCustomEdit({ handleSubmitForm, actionLoading, entiti
 											className="mt-8 mb-16"
 										/>
 										<Field
+											readOnly
 											label="Khoản mua sắm này có nằm trong kế hoạch (*)"
 											name="plan"
 											value={initialState.plan}
@@ -304,6 +310,7 @@ export default function FormCustomEdit({ handleSubmitForm, actionLoading, entiti
 										/>
 									</div>
 									<Field
+										readOnly
 										label="Nhà cung cấp đề nghị (nếu có)"
 										autoFocus
 										// value={intialState.note}
@@ -320,9 +327,19 @@ export default function FormCustomEdit({ handleSubmitForm, actionLoading, entiti
 							{actionLoading ? (
 								<Spin size="middle" />
 							) : (
-								<Button variant="contained" type="submit" color="primary">
-									Gửi yêu cầu
-								</Button>
+								<>
+									<Button variant="contained" type="submit" color="primary">
+										Xác nhận
+									</Button>
+									<Button
+										onClick={() => handleOpenReject('Allocation')}
+										variant="contained"
+										type="button"
+										color="secondary"
+									>
+										Không xác nhận
+									</Button>
+								</>
 							)}
 						</DialogActions>
 					</Form>

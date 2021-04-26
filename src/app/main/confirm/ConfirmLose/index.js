@@ -16,8 +16,7 @@ import {
 	ListItemText
 } from '@material-ui/core';
 import * as moment from 'moment';
-import Panigation from '@fuse/core/FusePanigate';
-import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import FuseLoading from '@fuse/core/FuseLoading';
 import image from '@fuse/assets/group.png';
 import IconButton from '@material-ui/core/IconButton';
@@ -25,7 +24,6 @@ import AppsIcon from '@material-ui/icons/Apps';
 import MenuIcon from '@material-ui/icons/Menu';
 import Icon from '@material-ui/core/Icon';
 import { ConfirmContext } from '../ConfirmContext';
-import FormCustomCorrupt from '../FormControlConfirm';
 // import PossessionAll from './FormCustomAll';
 // import ActionComponent from './Component/ActionComponent';
 // import * as actions from '../_redux/possesionActions';
@@ -80,14 +78,12 @@ const chipText = {
 	6: 'Thanh lí'
 };
 export default function ConfirmLose(props) {
-	const { value } = props;
 	const ConfirmContextLose = useContext(ConfirmContext);
 	const { setFormControl, setType } = ConfirmContextLose;
 	const [actionMenu, setActionMenu] = React.useState(null);
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
-	const { listloading, entities, lastErrors, total_count } = currentState;
+	const { listloading, entities, lastErrors } = currentState;
 	const classes = useStyles(props);
-	const dispatch = useDispatch();
 	const handleOpenFormEdit = items => {
 		setActionMenu(null);
 		setFormControl(true);
@@ -101,16 +97,16 @@ export default function ConfirmLose(props) {
 	// 	setActionMenu(null);
 	// 	// setOpen(true);
 	// };
-	const handleRowChange = e => {
-		// setRowPage(parseInt(e.target.value, 10));
-		// setPage(0);
-		const rowPageParse = parseInt(e.target.value, 10);
-		// dispatch(actions.fetchPossesionAll(value, rowPageParse, 1, search));
-	};
-	const handleChangePage = (event, newPage) => {
-		// setPage(newPage);
-		// dispatch(actions.fetchPossesionAll(value, rowPage, newPage + 1, search));
-	};
+	// const handleRowChange = e => {
+	// setRowPage(parseInt(e.target.value, 10));
+	// setPage(0);
+	// const rowPageParse = parseInt(e.target.value, 10);
+	// dispatch(actions.fetchPossesionAll(value, rowPageParse, 1, search));
+	// };
+	// const handleChangePage = (event, newPage) => {
+	// setPage(newPage);
+	// dispatch(actions.fetchPossesionAll(value, rowPage, newPage + 1, search));
+	// };
 	const actionMenuClick = (event, items) => {
 		// const params = 'Supplier';
 		// dispatch(actions.getInformationCompany(params));
