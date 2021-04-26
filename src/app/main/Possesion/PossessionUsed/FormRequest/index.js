@@ -27,25 +27,23 @@ const useStyles = makeStyles({
 export default function FormRequest({ handleClose, open }) {
 	const dispatch = useDispatch();
 	const classes = useStyles();
-	const { entitiesEdit, actionLoading } = useSelector(
+	const { entitiesEdit, actionLoading, entitiesInformation } = useSelector(
 		state => ({
 			entitiesEdit: state.possesion.entitiesEdit,
-			actionLoading: state.possesion.actionLoading
+			actionLoading: state.possesion.actionLoading,
+			entitiesInformation: state.possesion.entitiesInformation
 		}),
 		shallowEqual
 	);
-	const saveWithDraw = values => {
-		dispatch(action.withdrawPossesion(values, entitiesEdit)).then(data => {
+	const handleSubmitForm = (values, assets) => {
+		dispatch(action.requestAssetFromUserAction(values, assets)).then(data => {
 			if (data && !data.isError) {
-				notificationConfig('success', 'Thành công!', 'Cập nhật thành công');
+				notificationConfig('success', 'Thành công!', 'Yêu cầu thành công !!');
 				handleClose();
 			} else {
-				notificationConfig('warning', 'Thất bại!', 'Cập nhật thất bại vui lòng thử lại');
+				// notificationConfig('warning', 'Thất bại!', 'Yêu cầu thất bại vui lòng thử lại');
 			}
 		});
-	};
-	const handleSubmitForm = values => {
-		console.log(values);
 	};
 	return (
 		<Dialog
@@ -68,7 +66,11 @@ export default function FormRequest({ handleClose, open }) {
 					</Typography>
 				</Toolbar>
 			</AppBar>
-			<FormCustomEdit handleSubmitForm={handleSubmitForm} />
+			<FormCustomEdit
+				actionLoading={actionLoading}
+				entitiesInformation={entitiesInformation}
+				handleSubmitForm={handleSubmitForm}
+			/>
 		</Dialog>
 	);
 }

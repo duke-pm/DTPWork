@@ -7,6 +7,7 @@ export const urlReport = `${baseUrl}/api/HandlingRequest/Create`;
 const urlRule = 'api/Assets/GetList';
 const urlInformation = 'api/MasterData/GetDataForForm';
 const UrlType = `${baseUrl}/api/AssetTrans/ProcessAsset`;
+const UrlRequestUser = `${baseUrl}/api/ProvideRequest/Create`;
 export const fetchDataPossesion = params => {
 	return axios.get(`${baseUrl}/${urlRule}`, { params });
 };
@@ -44,6 +45,13 @@ export const reportFromUser = data => {
 	return axios({
 		method: 'POST',
 		url: urlReport,
+		data
+	});
+};
+export const requestFromUser = data => {
+	return axios({
+		method: 'POST',
+		url: UrlRequestUser,
 		data
 	});
 };

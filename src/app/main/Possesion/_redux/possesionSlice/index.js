@@ -40,6 +40,7 @@ export const possesionSlice = createSlice({
 			state.listloading = false;
 			state.error = null;
 			state.lastErrors = false;
+			state.actionLoading = false;
 			state.entities = data.data.listItem;
 			state.total_items = data.data.header;
 			state.total_count = data.totalRow;
@@ -101,6 +102,10 @@ export const possesionSlice = createSlice({
 			state.error = null;
 			state.lastErrors = false;
 			state.entitiesInformation = data.data;
+		},
+		requestFromUser: (state, action) => {
+			state.error = null;
+			state.actionLoading = false;
 		},
 		reportFromUser: (state, action) => {
 			const { dataRes } = action.payload;

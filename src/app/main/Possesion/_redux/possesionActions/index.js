@@ -298,15 +298,39 @@ export const withdrawPossesion = (data, entitiesEdit) => dispatch => {
 			return data;
 		})
 		.catch(error => {
-			notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', error);
+			dispatch(actions.catchErrors({ callType: callTypes.action }));
 		});
 };
-export const requestAssetFromUser = (data, assets) => dispatch => {
+export const requestAssetFromUserAction = (data, assets) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
+	const dataReq = {
+		EmpCode: data.name,
+		DeptCode: data.department,
+		RegionCode: data.region,
+		DocDate: moment(data.dateRequest).format('YYYY-MM-DD'),
+		Location: data.locationUse,
+		Reason: data.reason,
+		DocType: data.assetsCategory,
+		IsBudget: data.plan,
+		SupplierName: data.supplier,
+		Lang: 'vi',
+		ListAssets: assets
+	};
 	return requestFrom
-		.requestAsset()
-		.then(() => {})
-		.catch(() => {});
+		.requestFromUser(dataReq)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				dispatch(actions.requestFromUser());
+			} else {
+				notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', data.errorMessage);
+				dispatch(actions.catchErrors({ callType: callTypes.action }));
+			}
+			return data;
+		})
+		.catch(() => {
+			dispatch(actions.catchErrors({ callType: callTypes.action }));
+		});
 };
 // =========================== Possesion Repair ============================= //
 

@@ -47,6 +47,8 @@ function PossesionPage(props) {
 		setRowPage(25);
 	};
 	useEffect(() => {
+		const params = 'Region,Department,Employee,Supplier,Company,AssetType,AssetGroup,AssetGroupDetail';
+		dispatch(actions.getInformationCompany(params));
 		if (value === 5) {
 			dispatch(actions.fetchPossesionAll(6, rowPage));
 		} else {

@@ -16,19 +16,78 @@ import * as moment from 'moment';
 import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
 import RadioAntd from '@fuse/CustomForm/RadioAntd';
 
-export default function FormCustomEdit({ handleClose, saveAsset, initialValue, actionLoading }) {
+export default function FormCustomEdit({
+	handleClose,
+	saveAsset,
+	handleSubmitForm,
+	actionLoading,
+	entitiesInformation
+}) {
 	const [dataSource, setDataSource] = useState([]);
+	const [optionDept, setOptionsDept] = useState([]);
+	const [optionRegion, setOptionsRegion] = useState([]);
+	const [optionLocation, setOptionsLocation] = useState([]);
 	const dialogContent = useRef();
-	const initialState = {
-		name: '',
+	// const initialState = {
+	// 	name: '',
+	// 	department: null,
+	// 	dateRequest: moment(Date.now()),
+	// 	region: '',
+	// 	locationUse: '',
+	// 	reason: '',
+	// 	assetsCategory: 'new',
+	// 	plan: true,
+	// 	supplier: ''
+	// };
+	const [initialState, setInitialState] = useState({
+		name: 'D0850',
 		department: null,
 		dateRequest: moment(Date.now()),
 		region: '',
 		locationUse: '',
 		reason: '',
-		assetsCategory: 'new',
+		assetsCategory: 'N',
 		plan: true,
 		supplier: ''
+	});
+	useEffect(() => {
+		if (entitiesInformation) {
+			const newInformation = entitiesInformation.employees.reduce((arr, curr) =>
+				curr.value === initialState.name ? curr : arr
+			);
+			const OptionLocation = entitiesInformation.department.reduce(
+				(arr, curr) => [...arr, { label: curr.deptName, value: curr.deptCode }],
+				[]
+			);
+			const OptionDepart = entitiesInformation.department.reduce(
+				(arr, curr) => [...arr, { value: curr.deptCode, label: curr.deptName }],
+				[]
+			);
+			const OptionRegion = entitiesInformation.region.reduce(
+				(arr, curr) => [...arr, { value: curr.regionCode, label: curr.regionName }],
+				[]
+			);
+			setOptionsLocation(OptionLocation);
+			setOptionsDept(OptionDepart);
+			setOptionsRegion(OptionRegion);
+			setInitialState({
+				...initialState,
+				department: newInformation.deptCode,
+				region: newInformation.regionCode
+			});
+		}
+	}, []);
+	const onChangeDepartment = value => {
+		setInitialState({
+			...initialState,
+			department: value
+		});
+	};
+	const onChangeRegion = value => {
+		setInitialState({
+			...initialState,
+			location: value
+		});
 	};
 	const onInputChange = (key, index) => e => {
 		const newData = [...dataSource];
@@ -43,19 +102,19 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 		setTotal(newData, index);
 	};
 	const setTotal = (data, index) => {
-		data[index].totalCount = data[index].count * data[index].bill;
+		data[index].TotalAmt = data[index].Qty * data[index].UnitPrice;
 	};
 	const columns = [
 		{
-			dataIndex: 'desc',
+			dataIndex: 'Descr',
 			title: 'Mô tả',
 			width: '40%',
 			render: (text, record, index) => (
-				<Input className="CustomInput" value={text} onChange={onInputChange('desc', index)} />
+				<Input className="CustomInput" value={text} onChange={onInputChange('Descr', index)} />
 			)
 		},
 		{
-			dataIndex: 'count',
+			dataIndex: 'Qty',
 			title: 'Số lượng',
 			width: '10%',
 			render: (text, record, index) => (
@@ -63,12 +122,12 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 					className="CustomInput text-right"
 					type="number"
 					value={text}
-					onChange={onInputChange('count', index)}
+					onChange={onInputChange('Qty', index)}
 				/>
 			)
 		},
 		{
-			dataIndex: 'bill',
+			dataIndex: 'UnitPrice',
 			title: 'Đơn giá',
 			width: '20%',
 			render: (text, record, index) => (
@@ -76,19 +135,19 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 					customInput={Input}
 					className="CustomInput text-right"
 					value={text}
-					onValueChange={onChangeFormatCurr('bill', index)}
+					onValueChange={onChangeFormatCurr('UnitPrice', index)}
 					thousandSeparator
 					// prefix="VNĐ "
 				/>
 			)
 		},
 		{
-			dataIndex: 'totalCount',
+			dataIndex: 'TotalAmt',
 			title: 'Thành tiền',
 			render: (text, record, index) => <h4 className="text-right">{currencyFormat(text)}</h4>
 		},
 		{
-			dataIndex: 'totalCount',
+			dataIndex: 'action',
 			title: 'Hành động',
 			align: 'center',
 			width: '10%',
@@ -103,10 +162,10 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 	const handleAdd = () => {
 		const newData = {
 			id: dataSource.length + 1,
-			desc: '',
-			count: 1,
-			bill: '',
-			totalCount: ''
+			Descr: '',
+			Qty: 1,
+			UnitPrice: '',
+			TotalAmt: ''
 		};
 		setDataSource([...dataSource, newData]);
 	};
@@ -115,7 +174,7 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 		setDataSource(newArr);
 	};
 	const onConfirm = values => {
-		console.log({ values, dataSource });
+		handleSubmitForm(values, dataSource);
 	};
 	return (
 		<>
@@ -148,8 +207,8 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 										name="department"
 										value={initialState.department}
 										component={SelectAntd}
-										// handleChangeState={onChangeDepartment}
-										options={[]}
+										handleChangeState={onChangeDepartment}
+										options={optionDept}
 										className="mt-8 mb-16"
 									/>
 									<Field
@@ -157,15 +216,15 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 										name="region"
 										value={initialState.region}
 										component={SelectAntd}
-										// handleChangeState={onChangeDepartment}
-										options={[]}
+										handleChangeState={onChangeRegion}
+										options={optionRegion}
 										className="mt-8 mb-16"
 									/>
 									<Field
 										label="Ngày yêu cầu (*) "
 										autoFocus
 										defaultValue={initialState.dateRequest}
-										name="date"
+										name="dateRequest"
 										format="DD-MM-YYYY"
 										placeholder="Vui lòng chọn ngày yêu cầu"
 										component={DateCustom}
@@ -215,10 +274,9 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 									<Field
 										label="Nơi dùng (*)"
 										name="locationUse"
-										value={initialState.locationUse}
 										component={SelectAntd}
 										// handleChangeState={onChangeDepartment}
-										options={[]}
+										options={optionLocation}
 										className="mt-8"
 									/>
 								</div>
@@ -241,8 +299,8 @@ export default function FormCustomEdit({ handleClose, saveAsset, initialValue, a
 											value={initialState.assetsCategory}
 											component={RadioAntd}
 											options={[
-												{ label: 'Mua mới', value: 'new' },
-												{ label: 'Bổ sung thêm', value: 'bosung' }
+												{ label: 'Mua mới', value: 'N' },
+												{ label: 'Bổ sung thêm', value: 'A' }
 											]}
 											// handleChangeState={onChangeDepartment}
 											className="mt-8 mb-16"

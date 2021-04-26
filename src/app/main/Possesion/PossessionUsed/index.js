@@ -2,22 +2,9 @@
 /* eslint-disable no-undef */
 import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-	Paper,
-	Table,
-	TableHead,
-	TableRow,
-	TableCell,
-	TableBody,
-	TableContainer,
-	MenuItem,
-	ListItemText,
-	ListItemIcon,
-	Button
-} from '@material-ui/core';
+import { Paper, Table, TableHead, TableRow, TableCell, TableBody, TableContainer } from '@material-ui/core';
 import Panigation from '@fuse/core/FusePanigate';
 import image from '@fuse/assets/group.png';
-import Icon from '@material-ui/core/Icon';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AppsIcon from '@material-ui/icons/Apps';
 import FuseAnimate from '@fuse/core/FuseAnimate';
@@ -31,7 +18,8 @@ import FormControlReport from '../FormControl/FormControlReport';
 import { PossessionContext } from '../PossessionContext';
 import ActionComponent from './Component/ActionComponent';
 import FormRequest from './FormRequest';
-import { chipColor, rowPossesion } from './ConfigPossessionUnused';
+import { chipColor, rowPossesion } from './ConfigPossessionUsed';
+import { PossesionAction } from './PossessionAction';
 
 // import FormCustomUnused from './FormCustomUnused';
 
@@ -67,35 +55,6 @@ const useStyles = makeStyles(theme => ({
 		width: 900
 	}
 }));
-const Content = props => {
-	const { items } = props;
-	return (
-		<div>
-			<MenuItem onClick={() => props.handleOpenForm(items)} role="button">
-				<ListItemIcon className="min-w-40">
-					<Icon>backspace</Icon>
-				</ListItemIcon>
-				<ListItemText primary="Thu hồi tài sản" />
-			</MenuItem>
-			{!props.items.isProcessing ? (
-				<>
-					<MenuItem onClick={() => props.handleFormOpenReport('service', items)} role="button">
-						<ListItemIcon className="min-w-40">
-							<Icon>build</Icon>
-						</ListItemIcon>
-						<ListItemText primary="Báo hỏng tài sản" />
-					</MenuItem>
-					<MenuItem onClick={() => props.handleFormOpenReport('lose', items)} role="button">
-						<ListItemIcon className="min-w-40">
-							<Icon>report_problem</Icon>
-						</ListItemIcon>
-						<ListItemText primary="Báo mất tài sản" />
-					</MenuItem>
-				</>
-			) : null}
-		</div>
-	);
-};
 export default function PossessionUsed(props) {
 	const dispatch = useDispatch();
 	const [open, setOpen] = React.useState(false);
@@ -124,10 +83,6 @@ export default function PossessionUsed(props) {
 		dispatch(actions.setTaskEditPossesionAll(items));
 		setOpen(true);
 	};
-	// const actionMenuClick = (event, items) => {
-	// 	setActionMenu(event.currentTarget);
-	// 	dispatch(actions.setTaskEditPossesionAll(items));
-	// };
 	const handleRowChange = e => {
 		setRowPage(parseInt(e.target.value, 10));
 		setPage(0);
@@ -177,60 +132,18 @@ export default function PossessionUsed(props) {
 												<TableRow key={items.assetID} hover>
 													<TableCell align="left" className="p-4 md:p-12">
 														<Popover
+															placement="rightTop"
 															content={() => (
-																<Content
+																<PossesionAction
 																	handleOpenForm={handleOpenForm}
 																	items={items}
 																	handleFormOpenReport={handleFormOpenReport}
 																/>
 															)}
-															title="Title"
+															title="Hành động"
 														>
 															<MoreVertIcon className="cursor-pointer" />
 														</Popover>
-														{/* <Popover
-															itemID={items}
-															open={Boolean(actionMenu)}
-															anchorEl={actionMenu}
-															onClose={actionMenuClose}
-															anchorOrigin={{
-																vertical: 'center',
-																horizontal: 'right'
-															}}
-															transformOrigin={{
-																vertical: 'top',
-																horizontal: 'left'
-															}}
-														>
-															<MenuItem onClick={handleOpenForm} role="button">
-																<ListItemIcon className="min-w-40">
-																	<Icon>backspace</Icon>
-																</ListItemIcon>
-																<ListItemText primary="Thu hồi tài sản" />
-															</MenuItem>
-															{!items.isProcessing ? (
-																<>
-																	<MenuItem
-																		onClick={() => handleFormOpenReport('service')}
-																		role="button"
-																	>
-																		<ListItemIcon className="min-w-40">
-																			<Icon>build</Icon>
-																		</ListItemIcon>
-																		<ListItemText primary="Báo hỏng tài sản" />
-																	</MenuItem>
-																	<MenuItem
-																		onClick={() => handleFormOpenReport('lose')}
-																		role="button"
-																	>
-																		<ListItemIcon className="min-w-40">
-																			<Icon>report_problem</Icon>
-																		</ListItemIcon>
-																		<ListItemText primary="Báo mất tài sản" />
-																	</MenuItem>
-																</>
-															) : null}
-														</Popover> */}
 													</TableCell>
 													<TableCell align="left"> {items.assetCode} </TableCell>
 													<TableCell align="left">{items.assetName} </TableCell>
