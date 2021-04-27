@@ -77,7 +77,7 @@ export default function PossessionUnused(props) {
 	};
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
-		dispatch(actions.fetchPossesionAll(value, rowPage, page + 1, search));
+		dispatch(actions.fetchPossesionAll(value, rowPage, newPage + 1, search));
 	};
 	const handleOpenFormEdit = items => {
 		setEditAssets(true);

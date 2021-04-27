@@ -64,7 +64,7 @@ export default function PossessionUsed(props) {
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count } = currentState;
 
-	const { handleOpenFormReport, rowPage, setRowPage, page, setPage, search } = possessionContext;
+	const { handleOpenFormReport, rowPage, setRowPage, page, setPage, search, value } = possessionContext;
 	const handleOpenFormRequest = () => {
 		setFormRequest(true);
 	};
@@ -90,7 +90,7 @@ export default function PossessionUsed(props) {
 	};
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
-		dispatch(actions.fetchPossesionAll(value, rowPage, page + 1, search));
+		dispatch(actions.fetchPossesionAll(value, rowPage, newPage + 1, search));
 	};
 	if (listloading) {
 		return <FuseLoading />;
