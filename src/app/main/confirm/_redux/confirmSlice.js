@@ -4,6 +4,8 @@ const initialState = {
 	listloading: false,
 	actionLoading: false,
 	entities: null,
+	entitiesDetail: null,
+	newEntitiesDetail: null,
 	entitiesEdit: undefined,
 	total_count: 0,
 	total_items: null,
@@ -36,11 +38,23 @@ export const confirmSlice = createSlice({
 			}
 		},
 		confirmsFetch: (state, action) => {
-			// const { data } = action.payload;
+			const { data } = action.payload;
 			state.listloading = false;
 			state.error = null;
 			state.lastErrors = false;
 			state.actionLoading = false;
+			state.entitiesDetail = data.data.listRequestDetail;
+			state.entities = data.data.listRequest;
+			state.total_items = data.data.header;
+			state.total_count = data.totalRow;
+		},
+		confirmFetch: (state, action) => {
+			const { data } = action.payload;
+			state.actionLoading = false;
+			state.entitiesEdit = data;
+			const { requestID } = data;
+			const { entitiesDetail } = state;
+			state.newEntitiesDetail = entitiesDetail.filter(item => item.requestID === requestID);
 		}
 	}
 });

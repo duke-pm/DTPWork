@@ -5,7 +5,11 @@ import { ConfirmContext } from '../../ConfirmContext';
 
 export default function FormCustomCorrupt({ handleClose, open }) {
 	const ConfirmContextLose = useContext(ConfirmContext);
-	const { type } = ConfirmContextLose;
+	const { type, setReasonReject, setTypeReasonReject } = ConfirmContextLose;
+	const handleOpenFormReject = () => {
+		setReasonReject(true);
+		setTypeReasonReject(type);
+	};
 	return (
 		<Dialog
 			style={{ zIndex: 20 }}
@@ -22,7 +26,7 @@ export default function FormCustomCorrupt({ handleClose, open }) {
 					</Typography>
 				</Toolbar>
 			</AppBar>
-			<FormCustomCorruptEdit handleClose={handleClose} />
+			<FormCustomCorruptEdit handleOpenFormReject={handleOpenFormReject} handleClose={handleClose} />
 		</Dialog>
 	);
 }

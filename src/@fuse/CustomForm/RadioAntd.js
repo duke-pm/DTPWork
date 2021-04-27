@@ -40,7 +40,13 @@ export default function RadioAntd({
 					help={submittedError || touchedError ? hasError : false}
 					validateStatus={submittedError || touchedError ? 'error' : hasFeedback && 'success'}
 				>
-					<Radio.Group defaultValue={field.value} options={options} onChange={onChange} />
+					<Radio.Group
+						{...field}
+						{...props}
+						defaultValue={field.value}
+						options={options}
+						onChange={onChange}
+					/>
 				</FormItem>
 			</FormGroup>
 		</>

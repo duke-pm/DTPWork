@@ -13,13 +13,12 @@ export default function FormConfirmGobal({ open }) {
 	const handleClose = () => {
 		setReasonReject(false);
 	};
-	console.log(open);
 	return (
 		<Dialog fullWidth maxWidth="sm" onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
 			<AppBar position="static" className="shadow-md">
 				<Toolbar className="flex w-full">
 					<Typography variant="subtitle1" color="inherit">
-						Xác nhận báo cáo hỏng
+						Lí do không xác nhận.
 					</Typography>
 				</Toolbar>
 			</AppBar>

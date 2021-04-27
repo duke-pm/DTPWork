@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { DialogContent, DialogActions, Button } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
 import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
@@ -11,14 +11,7 @@ const initial = {
 	price: '',
 	file: ''
 };
-export default function FormCustomCorruptEdit() {
-	const [, setConfirm] = useState(false);
-	const [, setType] = useState('');
-	const handleConfirm = value => {
-		setConfirm(true);
-		setType(value);
-	};
-	// const hanleCancleConfirm = () => setConfirm(false);
+export default function FormCustomCorruptEdit({ handleOpenFormReject }) {
 	return (
 		<>
 			<Formik
@@ -99,7 +92,6 @@ export default function FormCustomCorruptEdit() {
 						</DialogContent>
 						<DialogActions>
 							<Button
-								onClick={() => handleConfirm('confirm')}
 								autoFocus
 								type="submit"
 								className="h-26 font-sans"
@@ -109,7 +101,7 @@ export default function FormCustomCorruptEdit() {
 								Xác nhận
 							</Button>
 							<Button
-								onClick={() => handleConfirm('doneConfirm')}
+								onClick={handleOpenFormReject}
 								autoFocus
 								type="submit"
 								className="h-26 font-sans"

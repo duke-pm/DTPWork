@@ -1,12 +1,12 @@
 import { TableBody, TableCell, TableRow } from '@material-ui/core';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { Popover } from 'antd';
 import React from 'react';
+import { Popover } from 'antd';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import * as moment from 'moment';
-import DamagedActions from './DamagedActions';
-import { chipColor, chipText } from '../DamagedConfig';
+import { chipColor, chipText } from '../LoseConfig';
+import LoseActions from './LoseActions';
 
-export default function TableBodyDamaged({ entities, lastErrors, classes, handleOpenForm }) {
+export default function TableBodyLose({ entities, lastErrors, classes, handleOpenForm }) {
 	return (
 		<TableBody>
 			{entities &&
@@ -16,7 +16,7 @@ export default function TableBodyDamaged({ entities, lastErrors, classes, handle
 						<TableCell align="center" className="p-4 md:p-12">
 							<Popover
 								placement="rightTop"
-								content={() => <DamagedActions items={items} handleOpenForm={handleOpenForm} />}
+								content={() => <LoseActions items={items} handleOpenForm={handleOpenForm} />}
 								title="Hành động"
 							>
 								<MoreVertIcon className="cursor-pointer" />

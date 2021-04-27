@@ -2,162 +2,74 @@
 /* eslint-disable no-shadow */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { DialogContent, DialogActions, Button } from '@material-ui/core';
 import { Formik, Field, Form } from 'formik';
-import { DeleteOutlined } from '@ant-design/icons';
-import { Table, Input, Popconfirm, Spin } from 'antd';
-import NumberFormat from 'react-number-format';
+import { Table, Spin } from 'antd';
 import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import { AntInput } from '@fuse/CustomForm/CreateAntField';
-import SelectAntd from '@fuse/CustomForm/SelectAntd';
-import DateCustom from '@fuse/CustomForm/Date';
-import * as moment from 'moment';
-import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
+import InputTextArea from '@fuse/CustomForm/InputTextArea';
 import RadioAntd from '@fuse/CustomForm/RadioAntd';
 
-export default function FormCustomEdit({ handleSubmitForm, actionLoading, entitiesInformation, handleOpenReject }) {
-	const [dataSource, setDataSource] = useState([]);
-	const [optionDept, setOptionsDept] = useState([]);
-	const [optionRegion, setOptionsRegion] = useState([]);
-	const [optionLocation, setOptionsLocation] = useState([]);
+export default function FormCustomEdit({
+	handleSubmitForm,
+	actionLoading,
+	entitiesEdit,
+	handleOpenReject,
+	newEntitiesEdit
+}) {
 	const dialogContent = useRef();
-	const [initialState, setInitialState] = useState({
-		name: 'D0850',
+	let initialState = {
+		name: '',
 		department: null,
-		dateRequest: moment(Date.now()),
+		dateRequest: '',
 		region: '',
 		locationUse: '',
 		reason: '',
-		assetsCategory: 'N',
-		plan: true,
+		assetsCategory: '',
+		plan: false,
 		supplier: ''
-	});
-	useEffect(() => {
-		if (entitiesInformation) {
-			const newInformation = entitiesInformation.employees.reduce((arr, curr) =>
-				curr.value === initialState.name ? curr : arr
-			);
-			const OptionLocation = entitiesInformation.department.reduce(
-				(arr, curr) => [...arr, { label: curr.deptName, value: curr.deptCode }],
-				[]
-			);
-			const OptionDepart = entitiesInformation.department.reduce(
-				(arr, curr) => [...arr, { value: curr.deptCode, label: curr.deptName }],
-				[]
-			);
-			const OptionRegion = entitiesInformation.region.reduce(
-				(arr, curr) => [...arr, { value: curr.regionCode, label: curr.regionName }],
-				[]
-			);
-			setOptionsLocation(OptionLocation);
-			setOptionsDept(OptionDepart);
-			setOptionsRegion(OptionRegion);
-			setInitialState({
-				...initialState,
-				department: newInformation.deptCode,
-				region: newInformation.regionCode
-			});
-		}
-	}, []);
-	const onChangeDepartment = value => {
-		setInitialState({
-			...initialState,
-			department: value
-		});
 	};
-	const onChangeRegion = value => {
-		setInitialState({
-			...initialState,
-			location: value
-		});
-	};
-	const onInputChange = (key, index) => e => {
-		const newData = [...dataSource];
-		newData[index][key] = e.target.value;
-		setTotal(newData, index);
-		setDataSource(newData);
-	};
-	const onChangeFormatCurr = (key, index) => value => {
-		const newData = [...dataSource];
-		newData[index][key] = value.floatValue;
-		setDataSource(newData);
-		setTotal(newData, index);
-	};
-	const setTotal = (data, index) => {
-		data[index].TotalAmt = data[index].Qty * data[index].UnitPrice;
-	};
+	if (entitiesEdit) {
+		initialState = {
+			name: entitiesEdit.fullName,
+			department: entitiesEdit.deptName,
+			dateRequest: entitiesEdit.requestDate,
+			region: entitiesEdit.regionName,
+			locationUse: entitiesEdit.locationName,
+			assetsCategory: entitiesEdit.docType,
+			plan: entitiesEdit.isBudget,
+			supplier: entitiesEdit.supplierName,
+			reason: entitiesEdit.reason
+		};
+	}
 	const columns = [
 		{
-			dataIndex: 'Descr',
+			dataIndex: 'descr',
 			title: 'Mô tả',
-			width: '40%',
-			render: (text, record, index) => (
-				<Input className="CustomInput" value={text} onChange={onInputChange('Descr', index)} />
-			)
+			width: '40%'
 		},
 		{
-			dataIndex: 'Qty',
+			dataIndex: 'qty',
 			title: 'Số lượng',
 			width: '10%',
-			render: (text, record, index) => (
-				<Input
-					className="CustomInput text-right"
-					type="number"
-					value={text}
-					onChange={onInputChange('Qty', index)}
-				/>
-			)
+			render: (text, record, index) => <p className="text-right">{text}</p>
 		},
 		{
-			dataIndex: 'UnitPrice',
+			dataIndex: 'unitPrice',
 			title: 'Đơn giá',
 			width: '20%',
-			render: (text, record, index) => (
-				<NumberFormat
-					customInput={Input}
-					className="CustomInput text-right"
-					value={text}
-					onValueChange={onChangeFormatCurr('UnitPrice', index)}
-					thousandSeparator
-					// prefix="VNĐ "
-				/>
-			)
+			render: (text, record, index) => <p className="text-right">{currencyFormat(text)}</p>
 		},
 		{
-			dataIndex: 'TotalAmt',
+			dataIndex: 'totalAmt',
 			title: 'Thành tiền',
 			render: (text, record, index) => <h4 className="text-right">{currencyFormat(text)}</h4>
-		},
-		{
-			dataIndex: 'action',
-			title: 'Hành động',
-			align: 'center',
-			width: '10%',
-			render: (text, record, index) => (
-				<Popconfirm title="Bạn có chắc xóa tài sản không?" onConfirm={() => handleDeleteRow(record.id)}>
-					<DeleteOutlined className="text-xl text-center " style={{ color: 'red' }} />
-				</Popconfirm>
-			)
 		}
 	];
 
-	const handleAdd = () => {
-		const newData = {
-			id: dataSource.length + 1,
-			Descr: '',
-			Qty: 1,
-			UnitPrice: '',
-			TotalAmt: ''
-		};
-		setDataSource([...dataSource, newData]);
-	};
-	const handleDeleteRow = id => {
-		const newArr = dataSource.filter(item => item.id !== id);
-		setDataSource(newArr);
-	};
 	const onConfirm = values => {
-		handleSubmitForm(values, dataSource);
+		// handleSubmitForm(values, dataSource);
 	};
 	return (
 		<>
@@ -182,41 +94,29 @@ export default function FormCustomEdit({ handleSubmitForm, actionLoading, entiti
 										label="Nhân viên (*)"
 										name="name"
 										component={AntInput}
-										// options={employees}
-										// handleChangeState={onHandleChangeEmployee}
 										className="mt-8 mb-16"
 									/>
 									<Field
 										readOnly
 										label="Bộ phận (*)"
 										name="department"
-										value={initialState.department}
-										component={SelectAntd}
-										handleChangeState={onChangeDepartment}
-										options={optionDept}
+										component={AntInput}
 										className="mt-8 mb-16"
 									/>
 									<Field
 										readOnly
 										label="Khu vực (*)"
 										name="region"
-										value={initialState.region}
-										component={SelectAntd}
-										handleChangeState={onChangeRegion}
-										options={optionRegion}
+										component={AntInput}
 										className="mt-8 mb-16"
 									/>
 									<Field
 										readOnly
 										label="Ngày yêu cầu (*) "
-										autoFocus
-										defaultValue={initialState.dateRequest}
 										name="dateRequest"
-										format="DD-MM-YYYY"
 										placeholder="Vui lòng chọn ngày yêu cầu"
-										component={DateCustom}
+										component={AntInput}
 										className="mx-4 mb-16"
-										hasFeedback
 									/>
 								</div>
 							</div>
@@ -225,31 +125,13 @@ export default function FormCustomEdit({ handleSubmitForm, actionLoading, entiti
 									<h5 className="font-extrabold">Danh sách tài sản yêu cầu.</h5>
 									<span className="border-b-1 mt-3 ml-6 border-fuchsia w-auto sm:w-10/12 h-10" />
 								</div>
-								<Button onClick={handleAdd} className="mb-16" variant="contained" color="primary">
-									{' '}
-									<svg
-										className="h-16 w-16"
-										xmlns="http://www.w3.org/2000/svg"
-										fill="none"
-										viewBox="0 0 24 24"
-										stroke="currentColor"
-									>
-										<path
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											strokeWidth={2}
-											d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-										/>
-									</svg>
-									Thêm tài sản
-								</Button>
 								<Table
-									rowKey="id"
+									rowKey="requestID"
 									className="time-table-row-select"
 									columns={columns}
 									bordered
 									pagination={false}
-									dataSource={dataSource}
+									dataSource={newEntitiesEdit}
 								/>
 							</div>
 							<div className="px-16 sm:px-24 mt-16">
@@ -262,9 +144,7 @@ export default function FormCustomEdit({ handleSubmitForm, actionLoading, entiti
 										readOnly
 										label="Nơi dùng (*)"
 										name="locationUse"
-										component={SelectAntd}
-										// handleChangeState={onChangeDepartment}
-										options={optionLocation}
+										component={AntInput}
 										className="mt-8"
 									/>
 								</div>
@@ -273,9 +153,7 @@ export default function FormCustomEdit({ handleSubmitForm, actionLoading, entiti
 										readOnly
 										label="Lí do (*)"
 										name="reason"
-										value={initialState.reason}
-										component={InputTextAreaLg}
-										// handleChangeState={onChangeDepartment}
+										component={InputTextArea}
 										className="mt-8 mb-16"
 										row={3}
 									/>
@@ -286,26 +164,22 @@ export default function FormCustomEdit({ handleSubmitForm, actionLoading, entiti
 											readOnly
 											label="Loại tài sản (*)"
 											name="assetsCategory"
-											value={initialState.assetsCategory}
 											component={RadioAntd}
 											options={[
 												{ label: 'Mua mới', value: 'N' },
 												{ label: 'Bổ sung thêm', value: 'A' }
 											]}
-											// handleChangeState={onChangeDepartment}
 											className="mt-8 mb-16"
 										/>
 										<Field
 											readOnly
 											label="Khoản mua sắm này có nằm trong kế hoạch (*)"
 											name="plan"
-											value={initialState.plan}
 											component={RadioAntd}
 											options={[
 												{ label: 'Có', value: true },
 												{ label: 'Không', value: false }
 											]}
-											// handleChangeState={onChangeDepartment}
 											className="mt-8 mb-16"
 										/>
 									</div>
@@ -313,11 +187,9 @@ export default function FormCustomEdit({ handleSubmitForm, actionLoading, entiti
 										readOnly
 										label="Nhà cung cấp đề nghị (nếu có)"
 										autoFocus
-										// value={intialState.note}
 										name="supplier"
 										row={3}
-										// handleInputChangeNote={handleInputChangeNote}
-										component={InputTextAreaLg}
+										component={InputTextArea}
 										className="mx-4 mb-16"
 									/>
 								</div>

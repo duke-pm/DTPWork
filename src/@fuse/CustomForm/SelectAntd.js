@@ -46,9 +46,9 @@ export default function SelectAntd({
 						showSearch
 						className={readOnly ? 'readOnly' : ''}
 						optionFilterProp="children"
-						filterOption={(input, option) =>
-							option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 ||
-							option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0
+						filterOption={
+							(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+							// option.props.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
 						}
 						defaultValue={field.value}
 						onChange={handleSelect}

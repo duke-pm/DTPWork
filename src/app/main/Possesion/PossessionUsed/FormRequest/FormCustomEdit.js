@@ -182,6 +182,7 @@ export default function FormCustomEdit({ handleSubmitForm, actionLoading, entiti
 									<Field
 										label="Nhân viên (*)"
 										name="name"
+										readOnly
 										component={AntInput}
 										// options={employees}
 										// handleChangeState={onHandleChangeEmployee}
@@ -190,6 +191,7 @@ export default function FormCustomEdit({ handleSubmitForm, actionLoading, entiti
 									<Field
 										label="Bộ phận (*)"
 										name="department"
+										readOnly
 										value={initialState.department}
 										component={SelectAntd}
 										handleChangeState={onChangeDepartment}
@@ -199,6 +201,7 @@ export default function FormCustomEdit({ handleSubmitForm, actionLoading, entiti
 									<Field
 										label="Khu vực (*)"
 										name="region"
+										readOnly
 										value={initialState.region}
 										component={SelectAntd}
 										handleChangeState={onChangeRegion}

@@ -6,6 +6,7 @@ import InputTextArea from '@fuse/CustomForm/InputTextArea';
 import InputCurrency from '@fuse/CustomForm/InputCurrency';
 import { Spin } from 'antd';
 import { AntInput, AntInputNumber, AntSelect } from '@fuse/CustomForm/CreateAntField';
+import SelectAntd from '@fuse/CustomForm/SelectAntd';
 import { checkValidateFormConfig } from '../ConfigPossessionAll';
 
 function FormCustomEdit({
@@ -75,7 +76,6 @@ function FormCustomEdit({
 		setCode(arrAssetDetail.code);
 		setPrefix(companyParse.shortName.concat('.', arrAssetDetail.code));
 	};
-	console.log(initialValue);
 	return (
 		<>
 			<Formik
@@ -135,9 +135,6 @@ function FormCustomEdit({
 										className="mx-4"
 									/>
 								</div>
-								{/* <div className="grid mb-16 gap-8 ">
-									
-								</div> */}
 								<div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-12 ">
 									<Field
 										label="Ngày mua (*) "
@@ -205,7 +202,7 @@ function FormCustomEdit({
 											name="company"
 											notFoundContent={<Spin size="small" />}
 											handleChangeState={onChangeCompany}
-											component={AntSelect}
+											component={SelectAntd}
 											options={company}
 											className="mx-4 w-auto	"
 											hasFeedback
@@ -214,7 +211,7 @@ function FormCustomEdit({
 											label="Loại tài sản (*)"
 											readOnly={!!disableCateogry}
 											name="category"
-											component={AntSelect}
+											component={SelectAntd}
 											handleChangeState={onChangeCategory}
 											options={category}
 											className="mx-4"
@@ -228,7 +225,7 @@ function FormCustomEdit({
 											value={groupSelected}
 											readOnly={!!disableGroup}
 											handleChangeState={onChangeGroup}
-											component={AntSelect}
+											component={SelectAntd}
 											options={arrGroup}
 											className="mx-4"
 											hasFeedback
@@ -239,7 +236,7 @@ function FormCustomEdit({
 											dafaultValue={initialValue.asset}
 											value={assetSelected}
 											readOnly={!!disableAsset}
-											component={AntSelect}
+											component={SelectAntd}
 											handleChangeState={onChangeAsset}
 											options={arrAsset}
 											className="mx-4"

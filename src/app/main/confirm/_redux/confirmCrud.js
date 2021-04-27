@@ -2,16 +2,16 @@ import axios from 'axios';
 
 const baseUrl = process.env.REACT_APP_API_URL;
 
-const urlFetch = '';
+const url = 'api/ProvideRequest';
 
-export const fetchDataConfirmApi = params => {
-	return axios.get(`${baseUrl}/${urlFetch}`, { params });
+export const listProvideRequest = params => {
+	return axios.get(`${baseUrl}/${url}/GetList`, { params });
 };
 
-export const approveToUserApi = data => {
+export const updateTypeProviderRequest = data => {
 	return axios({
 		method: 'POST',
-		url: urlFetch,
+		url,
 		data
 	});
 };

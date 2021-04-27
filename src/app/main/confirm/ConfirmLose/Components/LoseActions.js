@@ -1,13 +1,13 @@
 import { Icon, ListItemIcon, ListItemText, MenuItem } from '@material-ui/core';
 import React from 'react';
 
-export default function DamagedActions({ handleOpenForm, items }) {
+export default function LoseActions({ handleOpenForm, items }) {
 	return (
 		<MenuItem onClick={() => handleOpenForm(items)} role="button">
 			<ListItemIcon className="min-w-40">
-				<Icon>edit</Icon>
+				<Icon>warning</Icon>
 			</ListItemIcon>
-			<ListItemText primary="Báo hỏng tài sản" />
+			<ListItemText primary="Báo mất" />
 		</MenuItem>
 	);
 }

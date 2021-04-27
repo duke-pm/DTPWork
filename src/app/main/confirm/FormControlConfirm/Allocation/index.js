@@ -11,20 +11,20 @@ const useStyles = makeStyles({
 	}
 });
 
-export default function FormAllocation({ handleClose, open, setReasonReject }) {
+export default function FormAllocation({ handleClose, open, setReasonReject, setTypeReasonReject }) {
 	const classes = useStyles();
-	const { actionLoading, entitiesInformation } = useSelector(
+	const { actionLoading, entitiesEdit, newEntitiesDetail } = useSelector(
 		state => ({
-			entitiesEdit: state.possesion.entitiesEdit,
-			actionLoading: state.possesion.actionLoading,
-			entitiesInformation: state.possesion.entitiesInformation
+			entitiesEdit: state.confirm.entitiesEdit,
+			actionLoading: state.confirm.actionLoading,
+			newEntitiesDetail: state.confirm.newEntitiesDetail
 		}),
 		shallowEqual
 	);
 	const handleOpenReject = () => {
 		setReasonReject(true);
+		setTypeReasonReject('allocation');
 	};
-	// const handleSubmitForm = (values, assets) => {};
 	return (
 		<Dialog
 			fullWidth
@@ -42,14 +42,15 @@ export default function FormAllocation({ handleClose, open, setReasonReject }) {
 						<CloseIcon />
 					</IconButton>
 					<Typography variant="subtitle1" color="inherit">
-						Thôn tin yêu cầu cấp phát tài sản
+						Thông tin yêu cầu cấp phát tài sản
 					</Typography>
 				</Toolbar>
 			</AppBar>
 			<FormCustomEdit
 				handleOpenReject={handleOpenReject}
 				actionLoading={actionLoading}
-				entitiesInformation={entitiesInformation}
+				entitiesEdit={entitiesEdit}
+				newEntitiesEdit={newEntitiesDetail}
 				// handleSubmitForm={handleSubmitForm}
 			/>
 		</Dialog>

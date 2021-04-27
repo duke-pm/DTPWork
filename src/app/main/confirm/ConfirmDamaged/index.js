@@ -2,37 +2,15 @@
 import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import FuseAnimate from '@fuse/core/FuseAnimate';
-import {
-	Paper,
-	Table,
-	TableHead,
-	TableRow,
-	TableCell,
-	TableBody,
-	TableContainer,
-	Popover,
-	MenuItem,
-	ListItemIcon,
-	ListItemText
-} from '@material-ui/core';
-import * as moment from 'moment';
+import { Paper, Table, TableContainer } from '@material-ui/core';
 import { useSelector, shallowEqual } from 'react-redux';
 import FuseLoading from '@fuse/core/FuseLoading';
 import image from '@fuse/assets/group.png';
-import IconButton from '@material-ui/core/IconButton';
-import AppsIcon from '@material-ui/icons/Apps';
-import MenuIcon from '@material-ui/icons/Menu';
-import Icon from '@material-ui/core/Icon';
 import { ConfirmContext } from '../ConfirmContext';
-// import PossessionAll from './FormCustomAll';
-// import ActionComponent from './Component/ActionComponent';
-// import * as actions from '../_redux/possesionActions';
-// import { PossessionContext } from '../PossessionContext';
+import TableBodyDamaged from './DamagedComponets/TableBodyDamaged';
+import TableHeaderDamaged from './DamagedComponets/TableHeaderDamaged';
 
 const useStyles = makeStyles(theme => ({
-	// InputSearch: {
-	// 	width: '160px'
-	// },
 	tableHead: {
 		height: 44
 	},
@@ -62,24 +40,7 @@ const useStyles = makeStyles(theme => ({
 		width: 900
 	}
 }));
-const chipColor = {
-	1: 'bg-blue text-white',
-	2: 'bg-green text-white',
-	3: 'bg-orange text-black',
-	4: 'bg-purple text-white',
-	5: 'bg-red-700 text-white',
-	6: 'bg-yellow-900 text-white'
-};
-const chipText = {
-	1: 'Chưa sử dụng',
-	2: 'Đang sử dụng',
-	3: 'Sửa chữa-bảo hành',
-	4: 'Hư hỏng',
-	5: 'Mất ',
-	6: 'Thanh lí'
-};
 export default function ConfirmDamaged(props) {
-	const [actionMenu, setActionMenu] = React.useState(null);
 	const ConfirmContextDamage = useContext(ConfirmContext);
 	const { setFormControl, setType } = ConfirmContextDamage;
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
@@ -87,7 +48,6 @@ export default function ConfirmDamaged(props) {
 	const classes = useStyles(props);
 	// const dispatch = useDispatch();
 	const handleOpenFormEdit = items => {
-		setActionMenu(null);
 		setFormControl(true);
 		setType('damaged');
 	};
@@ -101,15 +61,6 @@ export default function ConfirmDamaged(props) {
 	// setPage(newPage);
 	// dispatch(actions.fetchPossesionAll(value, rowPage, newPage + 1, search));
 	// };
-	const actionMenuClick = (event, items) => {
-		// const params = 'Supplier';
-		// dispatch(actions.getInformationCompany(params));
-		setActionMenu(event.currentTarget);
-		// dispatch(actions.setTaskEditPossesionAll(items));
-	};
-	const actionMenuClose = () => {
-		setActionMenu(null);
-	};
 	if (listloading) {
 		return <FuseLoading />;
 	}
@@ -121,115 +72,13 @@ export default function ConfirmDamaged(props) {
 						<TableContainer className={`${classes.TableContainer} flex flex-1`}>
 							<Paper className={classes.rootPaper}>
 								<Table className={`${classes.table}`} stickyHeader>
-									<TableHead>
-										<TableRow>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans"
-												align="left"
-											>
-												<IconButton aria-label="delete">
-													<AppsIcon />
-												</IconButton>
-											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
-												align="left"
-											>
-												Mã tài sản
-											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
-												align="left"
-											>
-												Tên tài sản
-											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
-												align="left"
-											>
-												Nhóm tài sản
-											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
-												align="left"
-											>
-												Ngày mua{' '}
-											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
-												align="left"
-											>
-												BP Quản lý
-											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
-												align="left"
-											>
-												Nhân viên
-											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
-												align="left"
-											>
-												Trạng thái
-											</TableCell>
-										</TableRow>
-									</TableHead>
-									<TableBody>
-										{entities &&
-											!lastErrors &&
-											entities.map(items => (
-												<TableRow key={items.assetID} hover className={classes.tableHead}>
-													<TableCell align="center" className="p-4 md:p-12">
-														<MenuIcon
-															className="cursor-pointer"
-															onClick={event => actionMenuClick(event, items)}
-															aria-label="delete"
-														/>
-														<Popover
-															elevation={1}
-															open={Boolean(actionMenu)}
-															anchorEl={actionMenu}
-															onClose={actionMenuClose}
-															anchorOrigin={{
-																vertical: 'center',
-																horizontal: 'right'
-															}}
-															transformOrigin={{
-																vertical: 'top',
-																horizontal: 'left'
-															}}
-														>
-															<MenuItem onClick={handleOpenFormEdit} role="button">
-																<ListItemIcon className="min-w-40">
-																	<Icon>edit</Icon>
-																</ListItemIcon>
-																<ListItemText primary="Báo hỏng tài sản" />
-															</MenuItem>
-														</Popover>
-													</TableCell>
-													<TableCell align="left"> {items.assetCode} </TableCell>
-													<TableCell align="left">{items.assetName} </TableCell>
-													<TableCell align="left">{items.groupName}</TableCell>
-													<TableCell align="left">
-														{moment(items.purchaseDate).format('DD-MM-YYYY')}{' '}
-													</TableCell>
-													<TableCell align="left">{items.deptNameManager}</TableCell>
-													<TableCell align="left">
-														{items && items.empName ? items.empName : null}
-													</TableCell>
-													<TableCell align="left">
-														<div
-															className={`inline text-12 p-4 rounded-full truncate ${
-																chipColor[items.statusID]
-															}`}
-														>
-															{chipText[items.statusID]}
-														</div>
-													</TableCell>
-												</TableRow>
-											))}
-									</TableBody>
+									<TableHeaderDamaged />
+									<TableBodyDamaged
+										entities={entities}
+										lastErrors={lastErrors}
+										classes={classes}
+										handleOpenForm={handleOpenFormEdit}
+									/>
 								</Table>
 								{(entities && entities.length === 0) || lastErrors ? (
 									<FuseAnimate delay={300}>

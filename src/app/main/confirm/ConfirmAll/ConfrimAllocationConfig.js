@@ -4,51 +4,42 @@ export const chipColor = {
 	1: 'bg-blue text-white',
 	2: 'bg-green text-white',
 	3: 'bg-orange text-black',
-	4: 'bg-purple text-white',
-	5: 'bg-red-700 text-white',
-	6: 'bg-yellow-900 text-white'
+	4: 'bg-purple text-white'
 };
 export const chipText = {
-	1: 'Chưa sử dụng',
-	2: 'Đang sử dụng',
-	3: 'Sửa chữa-bảo hành',
-	4: 'Hư hỏng',
-	5: 'Mất ',
-	6: 'Thanh lí'
+	1: 'Chờ phê duyệt',
+	2: 'Đã duyệt',
+	3: 'Hoàn thành',
+	4: 'Từ chối'
 };
 export const rowConfirmAllocation = [
 	{
-		id: 'assetId',
+		id: 'empCode',
 		align: 'left',
-		label: 'Mã tài sản',
+		label: 'Mã nhân viên',
 		sort: true
 	},
 	{
-		id: 'assetName',
+		id: 'fullName',
 		align: 'left',
-		label: 'Tên tài sản',
+		label: 'Tên nhân viên',
 		sort: true
 	},
 	{
-		id: 'assetGroup',
+		id: 'deptName',
 		align: 'left',
-		label: 'Nhóm tài sản',
+		label: 'Bộ phận',
 		sort: true
 	},
 	{
-		id: 'purschaseDate',
+		id: 'regionName',
 		align: 'left',
-		label: 'Ngày mua'
+		label: 'Khu vực'
 	},
 	{
-		id: 'depart',
+		id: 'requestDate',
 		align: 'left',
-		label: 'BP Quản lý'
-	},
-	{
-		id: 'empName',
-		align: 'left',
-		label: 'Nhân viên'
+		label: 'Ngày yêu cầu'
 	},
 	{
 		id: 'status',

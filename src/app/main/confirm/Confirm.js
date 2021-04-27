@@ -1,8 +1,8 @@
 import { Tabs, Tab, Box, Typography } from '@material-ui/core';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import FusePageCarded from '@fuse/core/FusePageCarded';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { ConfirmContext } from './ConfirmContext';
 import ConfirmAll from './ConfirmAll';
 import ConfirmDamaged from './ConfirmDamaged';
@@ -10,6 +10,7 @@ import ConfirmLose from './ConfirmLose';
 import FormAllocation from './FormControlConfirm/Allocation';
 import FormConfirmGobal from './FormControlConfirm/ConfirmCorrupt';
 import FormCustomCorrupt from './FormControlConfirm/FormCustomCorrupt';
+import * as actions from './_redux/confirmAction';
 
 function a11yProps(index) {
 	return {
@@ -34,8 +35,11 @@ function TabPanel(props) {
 }
 
 function PossesionPage(props) {
+	const dispatch = useDispatch();
 	const confirmContext = useContext(ConfirmContext);
 	const {
+		page,
+		rowPage,
 		value,
 		setValue,
 		formControl,
@@ -43,37 +47,34 @@ function PossesionPage(props) {
 		formAllocation,
 		setFormAllocation,
 		typeReasonReject,
+		setTypeReasonReject,
 		reasonReject,
 		setReasonReject
 	} = confirmContext;
-	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
+	const { currentState } = useSelector(state => ({ currentState: state.confirm }), shallowEqual);
 	const total_Record = currentState && currentState.total_items;
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 		// setPage(0);
 		// setRowPage(25);
 	};
-	// useEffect(() => {
-	// 	if (value === 5) {
-	// 		dispatch(actions.fetchPossesionAll(6, rowPage));
-	// 	} else {
-	// 		dispatch(actions.fetchPossesionAll(value, rowPage));
-	// 	}
-	// }, [value, rowPage, dispatch]);
-	const handleCloseForm = () => {
-		setFormControl(false);
-	};
-	const handleCloseFormAllocation = () => {
-		setFormAllocation(false);
-	};
-	const hanleCancle = () => {
-		setReasonReject(false);
-	};
-	console.log({ reasonReject });
+	useEffect(() => {
+		switch (value) {
+			case 0:
+				dispatch(actions.fetchDataConfirms(0, rowPage, page + 1));
+				break;
+			default:
+				return false;
+		}
+	}, [page, rowPage, dispatch]);
+	const handleCloseForm = () => setFormControl(false);
+	const handleCloseFormAllocation = () => setFormAllocation(false);
+	const hanleCancle = () => setReasonReject(false);
 	return (
 		<>
 			<FormConfirmGobal type={typeReasonReject} open={reasonReject} handleClose={hanleCancle} />
 			<FormAllocation
+				setTypeReasonReject={setTypeReasonReject}
 				setReasonReject={setReasonReject}
 				open={formAllocation}
 				handleClose={handleCloseFormAllocation}
@@ -114,17 +115,17 @@ function PossesionPage(props) {
 					>
 						<Tab
 							className="font-sans"
-							label={`Cấp phát (${(total_Record && total_Record.countAll) || 0})`}
+							label={`Cấp phát (${(total_Record && total_Record.countAllocation) || 0})`}
 							{...a11yProps(0)}
 						/>
 						<Tab
 							className="font-sans	"
-							label={`Báo hỏng (${(total_Record && total_Record.countNoUseYet) || 0})`}
+							label={`Báo hỏng (${(total_Record && total_Record.countDamage) || 0})`}
 							{...a11yProps(1)}
 						/>
 						<Tab
 							className=" font-sans	"
-							label={`Báo mất (${(total_Record && total_Record.countUsing) || 0})`}
+							label={`Báo mất (${(total_Record && total_Record.countLost) || 0})`}
 							{...a11yProps(2)}
 						/>
 					</Tabs>
