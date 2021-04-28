@@ -12,8 +12,8 @@ export const fetchDataConfirms = (status, limit, page, search, FromDate, ToDate)
 		StatusID: status || 0,
 		PageSize: limit || 25,
 		PageNum: page || 1,
-		FromDate: FromDate ? moment(FromDate).format('YYYY/MM/DD') : null,
-		ToDate: ToDate ? moment(ToDate).format('YYYY/MM/DD') : null
+		FromDate: FromDate ? moment(FromDate).format('YYYY/MM/DD') : moment().startOf('month').format('YYYY/MM/DD'),
+		ToDate: ToDate ? moment(ToDate).format('YYYY/MM/DD') : moment().endOf('month').format('YYYY/MM/DD')
 	};
 	return requestFrom
 		.listProvideRequest(paramsReq)

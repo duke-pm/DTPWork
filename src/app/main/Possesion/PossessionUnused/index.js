@@ -1,6 +1,5 @@
 /* eslint-disable no-shadow */
 import React, { useContext, useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { Table, TableCell, TableBody, TableContainer, Paper, TableRow } from '@material-ui/core';
 import { Popover, Spin } from 'antd';
 import Panigation from '@fuse/core/FusePanigate';
@@ -19,38 +18,8 @@ import * as actions from '../_redux/possesionActions';
 import PossessionAll from '../PossessionAll/FormCustomAll';
 import TableHeaderUnUsed from './Component/TableHeaderUnUsed';
 import PossesionActions from './Component/PossesionActions';
-// import FormCustomAll from './FormCustomAll';
+import { useStyles } from './StyleCustomAll';
 
-const useStyles = makeStyles(theme => ({
-	InputSearch: {
-		width: '200px'
-	},
-	table: {
-		minWidth: 800
-	},
-	TableContainer: {
-		maxHeight: '600px'
-	},
-	cellTabel: {
-		width: 340
-	},
-	rootPaper: {
-		width: '100%',
-		overflowX: 'auto'
-	},
-	modal: {
-		display: 'flex',
-		alignItems: 'start',
-		marginTop: 80,
-		justifyContent: 'center'
-	},
-	paper: {
-		backgroundColor: theme.palette.background.paper,
-		boxShadow: theme.shadows[5],
-		padding: theme.spacing(2, 4, 3),
-		width: 900
-	}
-}));
 function PossessionUnused(props) {
 	const { value } = props;
 	const [open, setOpen] = React.useState(false);

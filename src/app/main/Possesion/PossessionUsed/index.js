@@ -1,7 +1,6 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-undef */
 import React, { useContext, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Table, TableHead, TableRow, TableCell, TableBody, TableContainer } from '@material-ui/core';
 import Panigation from '@fuse/core/FusePanigate';
 import image from '@fuse/assets/group.png';
@@ -20,41 +19,8 @@ import ActionComponent from './Component/ActionComponent';
 import FormRequest from './FormRequest';
 import { rowPossesion } from './ConfigPossessionUsed';
 import { PossesionAction } from './PossessionAction';
+import { useStyles } from './StyleCustomAll';
 
-// import FormCustomUnused from './FormCustomUnused';
-
-// import FormCustomAll from './FormCustomAll';
-
-const useStyles = makeStyles(theme => ({
-	InputSearch: {
-		width: '200px'
-	},
-	table: {
-		minWidth: 800
-	},
-	cellTabel: {
-		width: 340
-	},
-	rootPaper: {
-		width: '100%',
-		overflowX: 'auto'
-	},
-	TableContainer: {
-		maxHeight: '600px'
-	},
-	modal: {
-		display: 'flex',
-		alignItems: 'start',
-		marginTop: 80,
-		justifyContent: 'center'
-	},
-	paper: {
-		backgroundColor: theme.palette.background.paper,
-		boxShadow: theme.shadows[5],
-		padding: theme.spacing(2, 4, 3),
-		width: 900
-	}
-}));
 export default function PossessionUsed(props) {
 	const dispatch = useDispatch();
 	const [open, setOpen] = React.useState(false);

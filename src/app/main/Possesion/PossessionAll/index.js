@@ -1,6 +1,5 @@
 /* eslint-disable no-shadow */
 import React, { useContext, useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import { Paper, Table, TableContainer } from '@material-ui/core';
 import Panigation from '@fuse/core/FusePanigate';
@@ -14,38 +13,7 @@ import * as actions from '../_redux/possesionActions';
 import { PossessionContext } from '../PossessionContext';
 import TableHeader from './Component/TableHeader';
 import TableBodyAssetAll from './Component/TableBody';
-
-const useStyles = makeStyles(theme => ({
-	tableHead: {
-		height: 44
-	},
-	table: {
-		minWidth: 1540,
-		overflowX: 'auto'
-	},
-	cellTabel: {
-		width: 340
-	},
-	rootPaper: {
-		width: '100%',
-		overflowX: 'auto'
-	},
-	TableContainer: {
-		maxHeight: '600px'
-	},
-	modal: {
-		display: 'flex',
-		alignItems: 'start',
-		marginTop: 80,
-		justifyContent: 'center'
-	},
-	paper: {
-		backgroundColor: theme.palette.background.paper,
-		boxShadow: theme.shadows[5],
-		padding: theme.spacing(2, 4, 3),
-		width: 900
-	}
-}));
+import { useStyles } from './StyleCustomAll';
 
 function PossessionAllPage(props) {
 	const { value } = props;
