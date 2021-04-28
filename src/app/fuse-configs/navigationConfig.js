@@ -22,6 +22,14 @@ const navigationConfig = [
 				type: 'item',
 				icon: 'whatshot',
 				url: '/tai-san'
+			},
+			{
+				id: 'confirm',
+				title: 'Xét duyệt',
+				translate: 'Xét duyệt',
+				type: 'item',
+				icon: 'check',
+				url: '/xet-duyet'
 			}
 		]
 	}

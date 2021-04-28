@@ -1,4 +1,4 @@
-import { IconButton, InputBase, Paper, TextField } from '@material-ui/core';
+import { IconButton, InputBase, Paper, Button } from '@material-ui/core';
 import React, { useContext } from 'react';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import SearchIcon from '@material-ui/icons/Search';
@@ -26,10 +26,9 @@ const useStyles = makeStyles(theme => ({
 		margin: 4
 	}
 }));
-export default function ActionComponent(props, { handleOpenForm }) {
-	const classes = useStyles(props);
+export default function ActionComponent({ handleOpenForm, value }) {
+	const classes = useStyles();
 	const dispatch = useDispatch();
-	const { value } = props;
 	const possesionConext = useContext(PossessionContext);
 	const { search, setSearch, rowPage, page, setPage } = possesionConext;
 	const handleSearch = e => {
@@ -72,6 +71,29 @@ export default function ActionComponent(props, { handleOpenForm }) {
 						<SearchIcon />
 					</IconButton>
 				</Paper>
+				<Button
+					onClick={handleOpenForm}
+					className="mt-8 sm:mt-0 max-w-sm md:max-w-lg h-26"
+					variant="contained"
+					color="primary"
+				>
+					{' '}
+					<svg
+						className="h-16 w-16"
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
+					>
+						<path
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							strokeWidth={2}
+							d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+						/>
+					</svg>
+					Yêu cầu cấp phát tài sản
+				</Button>{' '}
 			</div>
 		</FuseAnimate>
 	);

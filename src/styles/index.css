@@ -94,9 +94,23 @@ a[role=button] {
         border-radius: 20px;
     }
 }
+.ant-table-cell .ant-input {
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+}
 
+.ant-table-cell .ant-input:focus {
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+}
 form label {
     z-index: 99;
+}
+.readOnly
+{
+	pointer-events: none;
 }
 
 @keyframes autofill {

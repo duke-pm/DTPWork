@@ -13,8 +13,7 @@ import {
 	Popover,
 	MenuItem,
 	ListItemIcon,
-	ListItemText,
-	Typography
+	ListItemText
 } from '@material-ui/core';
 import * as moment from 'moment';
 import { currencyFormat } from '@fuse/core/FuseFormatCurrency';

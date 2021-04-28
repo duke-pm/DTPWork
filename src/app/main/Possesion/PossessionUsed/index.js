@@ -1,37 +1,25 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-undef */
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-	Paper,
-	Table,
-	TableHead,
-	TableRow,
-	TableCell,
-	TableBody,
-	TableContainer,
-	Popover,
-	MenuItem,
-	ListItemText,
-	ListItemIcon,
-	Typography
-} from '@material-ui/core';
+import { Paper, Table, TableHead, TableRow, TableCell, TableBody, TableContainer } from '@material-ui/core';
 import Panigation from '@fuse/core/FusePanigate';
 import image from '@fuse/assets/group.png';
-import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
-import MenuIcon from '@material-ui/icons/Menu';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AppsIcon from '@material-ui/icons/Apps';
 import FuseAnimate from '@fuse/core/FuseAnimate';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import FuseLoading from '@fuse/core/FuseLoading';
-import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import * as moment from 'moment';
+import { Popover, Spin } from 'antd';
 import * as actions from '../_redux/possesionActions';
 import FormCustomUsed from './FormCustomUsed';
 import FormControlReport from '../FormControl/FormControlReport';
 import { PossessionContext } from '../PossessionContext';
 import ActionComponent from './Component/ActionComponent';
+import FormRequest from './FormRequest';
+import { rowPossesion } from './ConfigPossessionUsed';
+import { PossesionAction } from './PossessionAction';
 
 // import FormCustomUnused from './FormCustomUnused';
 
@@ -68,41 +56,37 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 export default function PossessionUsed(props) {
+	const dispatch = useDispatch();
 	const [open, setOpen] = React.useState(false);
-	const [actionMenu, setActionMenu] = React.useState(null);
+	const [formRequest, setFormRequest] = React.useState(false);
 	const classes = useStyles(props);
 	const possessionContext = useContext(PossessionContext);
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
-	const { listloading, entities, lastErrors, total_count } = currentState;
-
-	const { handleOpenFormReport, rowPage, setRowPage, page, setPage, search } = possessionContext;
-	const handleFormOpenReport = type => {
-		setActionMenu(null);
+	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;
+	const { handleOpenFormReport, rowPage, setRowPage, page, setPage, search, value } = possessionContext;
+	const handleOpenFormRequest = () => setFormRequest(true);
+	const handleClose = () => setOpen(false);
+	const handleCloseFormRequest = () => setFormRequest(false);
+	useEffect(() => {
+		dispatch(actions.fetchPossesionAll(2));
+	}, [dispatch]);
+	const handleFormOpenReport = (type, items) => {
+		dispatch(actions.setTaskEditPossesionAll(items));
 		handleOpenFormReport(type);
 	};
-	const handleClose = () => {
-		setOpen(false);
-	};
-	const handleOpenForm = () => {
-		setActionMenu(null);
+	const handleOpenForm = items => {
+		dispatch(actions.setTaskEditPossesionAll(items));
 		setOpen(true);
-	};
-	const actionMenuClick = event => {
-		setActionMenu(event.currentTarget);
-	};
-
-	const actionMenuClose = () => {
-		setActionMenu(null);
 	};
 	const handleRowChange = e => {
 		setRowPage(parseInt(e.target.value, 10));
 		setPage(0);
 		const rowPage = parseInt(e.target.value, 10);
-		dispatch(actions.fetchPossesionAll(value, rowPage, page + 1, search));
+		dispatch(actions.fetchPossesionAllPanigate(value, rowPage, page + 1, search));
 	};
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
-		dispatch(actions.fetchPossesionAll(value, rowPage, page + 1, search));
+		dispatch(actions.fetchPossesionAllPanigate(value, rowPage, newPage + 1, search));
 	};
 	if (listloading) {
 		return <FuseLoading />;
@@ -110,9 +94,10 @@ export default function PossessionUsed(props) {
 	return (
 		<>
 			<FormCustomUsed open={open} handleClose={handleClose} />
+			<FormRequest open={formRequest} handleClose={handleCloseFormRequest} />
 			<FormControlReport />
 			<div className="flex flex-col">
-				<ActionComponent value={props.value} />
+				<ActionComponent handleOpenForm={handleOpenFormRequest} value={props.value} />
 				<FuseAnimate delay={200} animation="transition.slideUpIn">
 					<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
 						<TableContainer className={`${classes.TableContainer} flex flex-1`}>
@@ -126,36 +111,15 @@ export default function PossessionUsed(props) {
 											>
 												<AppsIcon />
 											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
-												align="left"
-											>
-												Mã sản phẩm
-											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
-												align="left"
-											>
-												Tên sản phẩm
-											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
-												align="left"
-											>
-												Nhóm tài sản
-											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
-												align="left"
-											>
-												Ngày mua{' '}
-											</TableCell>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans  w-screen"
-												align="left"
-											>
-												Nguyên giá
-											</TableCell>
+											{rowPossesion.map(row => (
+												<TableCell
+													key={row.id}
+													className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
+													align={row.align}
+												>
+													{row.label}
+												</TableCell>
+											))}
 										</TableRow>
 									</TableHead>
 									<TableBody>
@@ -163,48 +127,18 @@ export default function PossessionUsed(props) {
 											entities.map(items => (
 												<TableRow key={items.assetID} hover>
 													<TableCell align="left" className="p-4 md:p-12">
-														<MenuIcon
-															className="cursor-pointer"
-															onClick={actionMenuClick}
-															aria-label="delete"
-														/>
 														<Popover
-															open={Boolean(actionMenu)}
-															anchorEl={actionMenu}
-															onClose={actionMenuClose}
-															anchorOrigin={{
-																vertical: 'center',
-																horizontal: 'right'
-															}}
-															transformOrigin={{
-																vertical: 'top',
-																horizontal: 'left'
-															}}
+															placement="rightTop"
+															content={() => (
+																<PossesionAction
+																	handleOpenForm={handleOpenForm}
+																	items={items}
+																	handleFormOpenReport={handleFormOpenReport}
+																/>
+															)}
+															title="Hành động"
 														>
-															<MenuItem onClick={handleOpenForm} role="button">
-																<ListItemIcon className="min-w-40">
-																	<Icon>backspace</Icon>
-																</ListItemIcon>
-																<ListItemText primary="Thu hồi tài sản" />
-															</MenuItem>
-															<MenuItem
-																onClick={() => handleFormOpenReport('service')}
-																role="button"
-															>
-																<ListItemIcon className="min-w-40">
-																	<Icon>build</Icon>
-																</ListItemIcon>
-																<ListItemText primary="Báo hỏng tài sản" />
-															</MenuItem>
-															<MenuItem
-																onClick={() => handleFormOpenReport('lose')}
-																role="button"
-															>
-																<ListItemIcon className="min-w-40">
-																	<Icon>report_problem</Icon>
-																</ListItemIcon>
-																<ListItemText primary="Báo mất tài sản" />
-															</MenuItem>
+															<MoreVertIcon className="cursor-pointer" />
 														</Popover>
 													</TableCell>
 													<TableCell align="left"> {items.assetCode} </TableCell>
@@ -213,9 +147,25 @@ export default function PossessionUsed(props) {
 													<TableCell align="left">
 														{moment(items.purchaseDate).format('DD-MM-YYYY')}{' '}
 													</TableCell>
+													<TableCell align="left">{items.deptNameManager}</TableCell>
 													<TableCell align="left">
 														{' '}
-														{currencyFormat(items.originalPrice)}{' '}
+														{items && items.empName ? items.empName : null}
+													</TableCell>
+													<TableCell align="left">
+														<div
+															className={`inline text-12 p-4 rounded-full truncate ${
+																items.isProcessing
+																	? items.requestTypeName === 'Đã báo hỏng'
+																		? 'bg-purple text-white'
+																		: 'bg-red-700 text-white'
+																	: 'bg-green text-white'
+															}`}
+														>
+															{items.isProcessing
+																? items.requestTypeName
+																: 'Đang sử dụng'}
+														</div>
 													</TableCell>
 												</TableRow>
 											))}
@@ -237,13 +187,16 @@ export default function PossessionUsed(props) {
 							</Paper>
 						</TableContainer>
 						{entities && entities.length !== 0 && (
-							<Panigation
-								page={page}
-								handleChangePage={handleChangePage}
-								rowPage={rowPage}
-								handleChangeRowsPerPage={handleRowChange}
-								count={total_count}
-							/>
+							<div className="flex flex-row items-center justify-end">
+								{actionLoading && <Spin />}
+								<Panigation
+									page={page}
+									handleChangePage={handleChangePage}
+									rowPage={rowPage}
+									handleChangeRowsPerPage={handleRowChange}
+									count={total_count}
+								/>
+							</div>
 						)}
 					</div>
 				</FuseAnimate>

@@ -3,9 +3,11 @@ import axios from 'axios';
 const baseUrl = process.env.REACT_APP_API_URL;
 export const url = `${baseUrl}/api/Assets/Create`;
 export const urlUpdate = `${baseUrl}/api/Assets/Update`;
-export const urlGet = `${baseUrl}/api/Assets/GetList`;
+export const urlReport = `${baseUrl}/api/HandlingRequest/Create`;
 const urlRule = 'api/Assets/GetList';
 const urlInformation = 'api/MasterData/GetDataForForm';
+const UrlType = `${baseUrl}/api/AssetTrans/ProcessAsset`;
+const UrlRequestUser = `${baseUrl}/api/ProvideRequest/Create`;
 export const fetchDataPossesion = params => {
 	return axios.get(`${baseUrl}/${urlRule}`, { params });
 };
@@ -25,7 +27,34 @@ export const updateDataPossesion = data => {
 		data
 	});
 };
-
+export const updateTypeAsset = data => {
+	return axios({
+		method: 'POST',
+		url: UrlType,
+		data
+	});
+};
+export const requestAsset = data => {
+	return axios({
+		method: 'POST',
+		url: UrlType,
+		data
+	});
+};
+export const reportFromUser = data => {
+	return axios({
+		method: 'POST',
+		url: urlReport,
+		data
+	});
+};
+export const requestFromUser = data => {
+	return axios({
+		method: 'POST',
+		url: UrlRequestUser,
+		data
+	});
+};
 export const getInformationCompany = params => {
 	return axios.get(`${baseUrl}/${urlInformation}`, { params });
 };
