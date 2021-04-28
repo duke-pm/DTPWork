@@ -90,7 +90,7 @@ function FormCustomEdit({
 					<Form>
 						<DialogContent dividers>
 							<div className="px-16 sm:px-24">
-								<div className="flex flex-row">
+								<div className="flex justify-between flex-row">
 									<h5 className="font-extrabold">Thông tin tài sản</h5>
 									<span className="border-b-1 mt-3 ml-6 border-fuchsia w-3/6 sm:w-5/6 h-10" />
 								</div>
@@ -194,12 +194,13 @@ function FormCustomEdit({
 								<div className="px-16 sm:px-24">
 									<div className="flex justify-between flex-row">
 										<h5 className="font-extrabold">Quy tắc đánh mã tài sản trong lô</h5>
-										<span className="border-b-1 mt-3 ml-6 border-fuchsia w-auto sm:w-8/12 h-10" />
+										<span className="border-b-1 mt-3 ml-6 border-fuchsia w-auto sm:w-9/12 h-10" />
 									</div>
-									<div className="grid grid-cols-1 sm:grid-cols-2 mb:6 gap-8 ">
+									<div className="grid grid-cols-1 sm:grid-cols-3 mb:6 gap-8 ">
 										<Field
 											label="Công ty (*)"
 											name="company"
+											placeholder="Vui lòng chọn công ty "
 											notFoundContent={<Spin size="small" />}
 											handleChangeState={onChangeCompany}
 											component={SelectAntd}
@@ -212,6 +213,7 @@ function FormCustomEdit({
 											readOnly={!!disableCateogry}
 											name="category"
 											component={SelectAntd}
+											placeholder="Vui lòng chọn tài sản "
 											handleChangeState={onChangeCategory}
 											options={category}
 											className="mx-4"

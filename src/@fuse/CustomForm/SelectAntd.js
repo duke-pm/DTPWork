@@ -14,6 +14,7 @@ export default function SelectAntd({
 	valueProps,
 	handleChangeState,
 	options,
+	placeholder,
 	hasFeedback,
 	notFoundContent,
 	readOnly,
@@ -44,6 +45,7 @@ export default function SelectAntd({
 						{...field}
 						{...props}
 						showSearch
+						placeholder={placeholder || ''}
 						className={readOnly ? 'readOnly' : ''}
 						optionFilterProp="children"
 						filterOption={

@@ -65,7 +65,7 @@ export const checkValidateFormConfig = Yup.object().shape({
 		.typeError('Số lượng phải là dạng số và không được để trống. ')
 		.required('Số lượng không được để trống'),
 	company: Yup.string().required('Công ty không được để trống'),
-	category: Yup.string().required('Loại không được để trống'),
-	group: Yup.string().required('Nhóm không được để trống'),
-	asset: Yup.string().required('Tiền đố không được để trống')
+	category: Yup.string().required('Loại tài sản không được để trống'),
+	group: Yup.string().required('Nhóm tài sản không được để trống'),
+	asset: Yup.string().required('Tài sản không được để trống')
 });

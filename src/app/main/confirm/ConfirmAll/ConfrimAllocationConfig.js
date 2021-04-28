@@ -2,8 +2,8 @@
 
 export const chipColor = {
 	1: 'bg-blue text-white',
-	2: 'bg-green text-white',
-	3: 'bg-orange text-black',
+	2: 'bg-orange text-black',
+	3: 'bg-green text-white',
 	4: 'bg-purple text-white'
 };
 export const chipText = {

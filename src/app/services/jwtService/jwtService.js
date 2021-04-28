@@ -1,7 +1,10 @@
 import FuseUtils from '@fuse/utils/FuseUtils';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
+import Cookies from 'js-cookie';
 /* eslint-disable camelcase */
+const baseUrl = process.env.REACT_APP_API_URL;
+const url = 'api/User/Login';
 
 class JwtService extends FuseUtils.EventEmitter {
 	init() {
@@ -59,22 +62,24 @@ class JwtService extends FuseUtils.EventEmitter {
 	};
 
 	signInWithEmailAndPassword = (email, password) => {
+		console.log({ email, password });
+		const data = {
+			Username: email,
+			Password: password
+		};
 		return new Promise((resolve, reject) => {
-			axios
-				.get('/api/auth', {
-					data: {
-						email,
-						password
-					}
-				})
-				.then(response => {
-					if (response.data.user) {
-						this.setSession(response.data.access_token);
-						resolve(response.data.user);
-					} else {
-						reject(response.data.error);
-					}
-				});
+			axios({
+				method: 'POST',
+				url: `${baseUrl}/${url}`,
+				data
+			}).then(response => {
+				if (response.data.data) {
+					this.setCookie(response.data.data.access_token);
+					resolve(response.data.data);
+				} else {
+					reject(response.data.error);
+				}
+			});
 		});
 	};
 
@@ -114,6 +119,16 @@ class JwtService extends FuseUtils.EventEmitter {
 			axios.defaults.headers.common.Authorization = `Bearer ${access_token}`;
 		} else {
 			localStorage.removeItem('jwt_access_token');
+			delete axios.defaults.headers.common.Authorization;
+		}
+	};
+
+	setCookie = access_token => {
+		if (access_token) {
+			Cookies.set('token', access_token, { expires: 7 });
+			axios.defaults.headers.common.Authorization = `Bearer ${access_token}`;
+		} else {
+			Cookies.remove('token');
 			delete axios.defaults.headers.common.Authorization;
 		}
 	};

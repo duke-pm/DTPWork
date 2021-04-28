@@ -16,9 +16,7 @@ class FuseAuthorization extends Component {
 	}
 
 	componentDidMount() {
-		const { userRole } = this.props;
-		// check role to login
-		if (!userRole && userRole.length >= 0) {
+		if (!this.state.accessGranted) {
 			this.redirectRoute();
 		}
 	}
@@ -71,6 +69,7 @@ class FuseAuthorization extends Component {
 	}
 
 	render() {
+		console.log(this.props.userRole);
 		// console.info('Fuse Authorization rendered', accessGranted);
 		return this.state.accessGranted ? <>{this.props.children}</> : null;
 	}
@@ -78,7 +77,7 @@ class FuseAuthorization extends Component {
 
 function mapStateToProps({ auth }) {
 	return {
-		userRole: auth.user.role
+		userRole: auth.user.userName
 	};
 }
 

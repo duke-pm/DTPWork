@@ -1,8 +1,9 @@
 import React from 'react';
-import { Dialog, AppBar, Toolbar, Typography } from '@material-ui/core';
+import { Dialog, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import * as moment from 'moment';
 import { notificationConfig } from '@fuse/core/DtpConfig';
+import CloseIcon from '@material-ui/icons/Close';
 import FormCustomEdit from './FormCustomEdit';
 import * as actions from '../../_redux/possesionActions';
 
@@ -110,16 +111,12 @@ function FormCustomAll({ handleClose, open, rowPage }) {
 		}
 	};
 	return (
-		<Dialog
-			style={{ zIndex: 20 }}
-			fullWidth
-			maxWidth="lg"
-			onClose={handleClose}
-			aria-labelledby="customized-dialog-title"
-			open={open}
-		>
+		<Dialog style={{ zIndex: 20 }} fullWidth maxWidth="lg" aria-labelledby="customized-dialog-title" open={open}>
 			<AppBar position="static" className="shadow-md">
 				<Toolbar className="flex w-full">
+					<IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
+						<CloseIcon />
+					</IconButton>
 					<Typography variant="subtitle1" color="inherit">
 						{entitiesEdit && entitiesEdit.assetID ? 'Cập nhật mới tài sản' : 'Tạo mới tài sản'}
 					</Typography>

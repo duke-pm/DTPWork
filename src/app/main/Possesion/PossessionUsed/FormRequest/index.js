@@ -41,7 +41,6 @@ export default function FormRequest({ handleClose, open }) {
 			maxWidth="lg"
 			classes={{ scrollPaper: classes.scrollPaper }}
 			// fullScreen
-			onClose={handleClose}
 			aria-labelledby="customized-dialog-title"
 			open={open}
 		>

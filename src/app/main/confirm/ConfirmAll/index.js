@@ -1,5 +1,5 @@
 /* eslint-disable no-shadow */
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Panigation from '@fuse/core/FusePanigate';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import { Paper, Table, TableContainer } from '@material-ui/core';
@@ -12,9 +12,11 @@ import { ConfirmContext } from '../ConfirmContext';
 import ActionComponent from './Components/FilterActionComponent';
 import * as action from '../_redux/confirmAction';
 import { useStyles } from './StyleCustomAll';
+import HistoryAllocation from './Components/HistoryAllocation';
 
 export default function ConfrimAllocation(props) {
 	const dispatch = useDispatch();
+	const [history, setHistory] = useState();
 	const AllocationContext = useContext(ConfirmContext);
 	const {
 		setFormAllocation,
@@ -30,6 +32,8 @@ export default function ConfrimAllocation(props) {
 	const { currentState } = useSelector(state => ({ currentState: state.confirm }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;
 	const classes = useStyles(props);
+	const handleOpenHistory = () => setHistory(true);
+	const handleCloseHistory = () => setHistory(false);
 	const handleOpenForm = items => {
 		dispatch(action.fetchDataConfirm(items));
 		setFormAllocation(true);
@@ -48,6 +52,7 @@ export default function ConfrimAllocation(props) {
 	}
 	return (
 		<>
+			<HistoryAllocation handleCloseHistory={handleCloseHistory} open={history} />
 			<div className="flex flex-col">
 				<ActionComponent actionLoading={actionLoading} />
 				<FuseAnimate animation="transition.slideUpIn" delay={200}>
@@ -59,6 +64,7 @@ export default function ConfrimAllocation(props) {
 									<BodyTableAllocation
 										classes={classes}
 										entities={entities}
+										handleOpenHistory={handleOpenHistory}
 										handleOpenForm={handleOpenForm}
 										lastErrors={lastErrors}
 									/>

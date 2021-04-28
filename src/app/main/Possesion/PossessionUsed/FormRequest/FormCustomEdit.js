@@ -60,7 +60,7 @@ export default function FormCustomEdit({ handleSubmitForm, actionLoading, entiti
 				region: newInformation.regionCode
 			});
 		}
-	}, [initialState, entitiesInformation]);
+	}, []);
 	const onChangeDepartment = value => {
 		setInitialState({
 			...initialState,
@@ -128,13 +128,14 @@ export default function FormCustomEdit({ handleSubmitForm, actionLoading, entiti
 		{
 			dataIndex: 'TotalAmt',
 			title: 'Thành tiền',
+			width: '10%',
 			render: (text, record, index) => <h4 className="text-right">{currencyFormat(text)}</h4>
 		},
 		{
 			dataIndex: 'action',
 			title: 'Hành động',
 			align: 'center',
-			width: '10%',
+			width: '20%',
 			render: (text, record, index) => (
 				<Popconfirm title="Bạn có chắc xóa tài sản không?" onConfirm={() => handleDeleteRow(record.id)}>
 					<DeleteOutlined className="text-xl text-center " style={{ color: 'red' }} />
@@ -246,11 +247,11 @@ export default function FormCustomEdit({ handleSubmitForm, actionLoading, entiti
 								</Button>
 								<Table
 									rowKey="id"
-									className="time-table-row-select"
 									columns={columns}
 									bordered
 									pagination={false}
 									dataSource={dataSource}
+									scroll={{ y: 300 }}
 								/>
 							</div>
 							<div className="px-16 sm:px-24 mt-16">

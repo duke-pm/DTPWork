@@ -7,9 +7,12 @@ import { TextFieldFormsy } from '@fuse/core/formsy';
 import Formsy from 'formsy-react';
 import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Icon, IconButton, InputAdornment } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import { submitLogin } from 'app/auth/store/loginSlice';
+
 // import Auth0LoginTab from './tabs/Auth0LoginTab';
 // import FirebaseLoginTab from './tabs/FirebaseLoginTab';
 // import JWTLoginTab from './tabs/JWTLoginTab';
@@ -34,7 +37,34 @@ const useStyles = makeStyles(theme => ({
 
 function Login() {
 	const classes = useStyles();
+	const login = useSelector(({ auth }) => auth.login);
 
+	const [isFormValid, setIsFormValid] = useState(false);
+	const [showPassword, setShowPassword] = useState(false);
+
+	const formRef = useRef(null);
+
+	useEffect(() => {
+		if (login.error && (login.error.email || login.error.password)) {
+			formRef.current.updateInputsWithError({
+				...login.error
+			});
+			disableButton();
+		}
+	}, [login.error]);
+
+	function disableButton() {
+		setIsFormValid(false);
+	}
+
+	function enableButton() {
+		setIsFormValid(true);
+	}
+	const dispatch = useDispatch();
+	function handleSubmit(model) {
+		console.log(model);
+		dispatch(submitLogin(model));
+	}
 	return (
 		<div
 			className={clsx(
@@ -71,17 +101,17 @@ function Login() {
 							</FuseAnimate>
 							<div className="w-full">
 								<Formsy
-									// onValidSubmit={handleSubmit}
-									// onValid={enableButton}
-									// onInvalid={disableButton}
-									// ref={formRef}
+									onValidSubmit={handleSubmit}
+									onValid={enableButton}
+									onInvalid={disableButton}
+									ref={formRef}
 									className="flex flex-col justify-center w-full"
 								>
 									<TextFieldFormsy
 										className="mb-16"
 										type="text"
-										name="username"
-										label="Email"
+										name="email"
+										label="Username/Email"
 										validations={{
 											minLength: 4
 										}}
@@ -114,14 +144,12 @@ function Login() {
 										}}
 										InputProps={{
 											className: 'pr-2',
-											// type: showPassword ? 'text' : 'password',
+											type: showPassword ? 'text' : 'password',
 											endAdornment: (
 												<InputAdornment position="end">
-													<IconButton
-													// onClick={() => setShowPassword(!showPassword)}
-													>
+													<IconButton onClick={() => setShowPassword(!showPassword)}>
 														<Icon className="text-20" color="action">
-															visibility
+															{showPassword ? 'visibility' : 'visibility_off'}
 														</Icon>
 													</IconButton>
 												</InputAdornment>
@@ -137,10 +165,10 @@ function Login() {
 										color="primary"
 										className="w-full mx-auto mt-16"
 										aria-label="LOG IN"
-										// disabled={!isFormValid}
-										value="firebase"
+										disabled={!isFormValid}
+										value="legacy"
 									>
-										Đăng nhập
+										Login
 									</Button>
 								</Formsy>
 							</div>
