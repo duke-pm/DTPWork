@@ -2,7 +2,6 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable import/no-extraneous-dependencies */
 import { IconButton, Paper } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import React, { useContext } from 'react';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import InputBase from '@material-ui/core/InputBase';
@@ -12,22 +11,9 @@ import { DatePicker, Select } from 'antd';
 import * as moment from 'moment';
 import { ConfirmContext } from '../../ConfirmContext';
 import * as actions from '../../_redux/confirmAction';
+import { useStyles } from '../StyleCustomAll';
 
 const { RangePicker } = DatePicker;
-
-const useStyles = makeStyles(theme => ({
-	input: {
-		marginLeft: theme.spacing(1),
-		flex: 1
-	},
-	iconButton: {
-		padding: 10
-	},
-	divider: {
-		height: 28,
-		margin: 4
-	}
-}));
 
 export default function ActionComponent({ actionLoading }) {
 	const classes = useStyles();
@@ -49,8 +35,7 @@ export default function ActionComponent({ actionLoading }) {
 	const handleSearch = e => {
 		e.preventDefault();
 		setPage(0);
-		const searchHandle = e.target.value;
-		dispatch(actions.searchConfirms(status, rowPage, page, searchHandle, dateStart, dateEnd));
+		dispatch(actions.searchConfirms(status, rowPage, page, search, dateStart, dateEnd));
 	};
 	onkeypress = e => {
 		if (e.key === 'Enter') {
@@ -101,6 +86,8 @@ export default function ActionComponent({ actionLoading }) {
 					</Paper>
 					<Paper className="ml-16">
 						<RangePicker
+							bordered={false}
+							defaultValue={[moment().startOf('month'), moment().endOf('month')]}
 							ranges={{
 								'Hôm nay': [moment(), moment()],
 								'Tháng này': [moment().startOf('month'), moment().endOf('month')]

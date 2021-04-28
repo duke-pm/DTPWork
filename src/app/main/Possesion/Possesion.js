@@ -38,7 +38,7 @@ function TabPanel(props) {
 function PossesionPage(props) {
 	const dispatch = useDispatch();
 	const possessionContext = useContext(PossessionContext);
-	const { value, setValue, rowPage, setPage, setRowPage } = possessionContext;
+	const { value, setValue, setPage, setRowPage } = possessionContext;
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
 	const total_Record = currentState && currentState.total_items;
 	const handleChange = (event, newValue) => {

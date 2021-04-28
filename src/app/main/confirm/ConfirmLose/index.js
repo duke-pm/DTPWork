@@ -1,6 +1,5 @@
 /* eslint-disable no-shadow */
 import React, { useContext } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import { Paper, Table, TableContainer } from '@material-ui/core';
 import { useSelector, shallowEqual } from 'react-redux';
@@ -9,40 +8,7 @@ import image from '@fuse/assets/group.png';
 import { ConfirmContext } from '../ConfirmContext';
 import TableHeader from './Components/TableHeader';
 import TableBodyLose from './Components/TableBodyLose';
-
-const useStyles = makeStyles(theme => ({
-	// InputSearch: {
-	// 	width: '160px'
-	// },
-	tableHead: {
-		height: 44
-	},
-	table: {
-		minWidth: 800
-	},
-	cellTabel: {
-		width: 340
-	},
-	rootPaper: {
-		width: '100%',
-		overflowX: 'auto'
-	},
-	TableContainer: {
-		maxHeight: '600px'
-	},
-	modal: {
-		display: 'flex',
-		alignItems: 'start',
-		marginTop: 80,
-		justifyContent: 'center'
-	},
-	paper: {
-		backgroundColor: theme.palette.background.paper,
-		boxShadow: theme.shadows[5],
-		padding: theme.spacing(2, 4, 3),
-		width: 900
-	}
-}));
+import { useStyles } from './StyleCustomAll';
 
 export default function ConfirmLose(props) {
 	const ConfirmContextLose = useContext(ConfirmContext);

@@ -1,6 +1,5 @@
 /* eslint-disable no-shadow */
 import React, { useContext } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Panigation from '@fuse/core/FusePanigate';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import { Paper, Table, TableContainer } from '@material-ui/core';
@@ -12,40 +11,8 @@ import BodyTableAllocation from './Components/BodyTableAllocation';
 import { ConfirmContext } from '../ConfirmContext';
 import ActionComponent from './Components/FilterActionComponent';
 import * as action from '../_redux/confirmAction';
+import { useStyles } from './StyleCustomAll';
 
-const useStyles = makeStyles(theme => ({
-	// InputSearch: {
-	// 	width: '160px'
-	// },
-	tableHead: {
-		height: 44
-	},
-	table: {
-		minWidth: 800
-	},
-	cellTabel: {
-		width: 340
-	},
-	rootPaper: {
-		width: '100%',
-		overflowX: 'auto'
-	},
-	TableContainer: {
-		maxHeight: '600px'
-	},
-	modal: {
-		display: 'flex',
-		alignItems: 'start',
-		marginTop: 80,
-		justifyContent: 'center'
-	},
-	paper: {
-		backgroundColor: theme.palette.background.paper,
-		boxShadow: theme.shadows[5],
-		padding: theme.spacing(2, 4, 3),
-		width: 900
-	}
-}));
 export default function ConfrimAllocation(props) {
 	const dispatch = useDispatch();
 	const AllocationContext = useContext(ConfirmContext);
