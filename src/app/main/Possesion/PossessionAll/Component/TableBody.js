@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import PossessionAction from './PossessionAction';
 import { chipColor, chipText } from '../ConfigPossessionAll';
 
-function TableBodyAssetAll({ entities, lastErrors, classes, handleOpenFormEdit }) {
+const TableBodyAssetAll = ({ entities, lastErrors, classes, handleOpenFormEdit }) => {
 	return (
 		<TableBody>
 			{entities &&
@@ -39,5 +39,5 @@ function TableBodyAssetAll({ entities, lastErrors, classes, handleOpenFormEdit }
 				))}
 		</TableBody>
 	);
-}
+};
 export default TableBodyAssetAll;

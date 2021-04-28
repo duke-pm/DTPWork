@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-undef */
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Table, TableHead, TableRow, TableCell, TableBody, TableContainer } from '@material-ui/core';
 import Panigation from '@fuse/core/FusePanigate';
@@ -11,7 +11,7 @@ import FuseAnimate from '@fuse/core/FuseAnimate';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import FuseLoading from '@fuse/core/FuseLoading';
 import * as moment from 'moment';
-import { Popover } from 'antd';
+import { Popover, Spin } from 'antd';
 import * as actions from '../_redux/possesionActions';
 import FormCustomUsed from './FormCustomUsed';
 import FormControlReport from '../FormControl/FormControlReport';
@@ -62,21 +62,17 @@ export default function PossessionUsed(props) {
 	const classes = useStyles(props);
 	const possessionContext = useContext(PossessionContext);
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
-	const { listloading, entities, lastErrors, total_count } = currentState;
-
+	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;
 	const { handleOpenFormReport, rowPage, setRowPage, page, setPage, search, value } = possessionContext;
-	const handleOpenFormRequest = () => {
-		setFormRequest(true);
-	};
-	const handleCloseFormRequest = () => {
-		setFormRequest(false);
-	};
+	const handleOpenFormRequest = () => setFormRequest(true);
+	const handleClose = () => setOpen(false);
+	const handleCloseFormRequest = () => setFormRequest(false);
+	useEffect(() => {
+		dispatch(actions.fetchPossesionAll(2));
+	}, [dispatch]);
 	const handleFormOpenReport = (type, items) => {
 		dispatch(actions.setTaskEditPossesionAll(items));
 		handleOpenFormReport(type);
-	};
-	const handleClose = () => {
-		setOpen(false);
 	};
 	const handleOpenForm = items => {
 		dispatch(actions.setTaskEditPossesionAll(items));
@@ -86,11 +82,11 @@ export default function PossessionUsed(props) {
 		setRowPage(parseInt(e.target.value, 10));
 		setPage(0);
 		const rowPage = parseInt(e.target.value, 10);
-		dispatch(actions.fetchPossesionAll(value, rowPage, page + 1, search));
+		dispatch(actions.fetchPossesionAllPanigate(value, rowPage, page + 1, search));
 	};
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
-		dispatch(actions.fetchPossesionAll(value, rowPage, newPage + 1, search));
+		dispatch(actions.fetchPossesionAllPanigate(value, rowPage, newPage + 1, search));
 	};
 	if (listloading) {
 		return <FuseLoading />;
@@ -191,13 +187,16 @@ export default function PossessionUsed(props) {
 							</Paper>
 						</TableContainer>
 						{entities && entities.length !== 0 && (
-							<Panigation
-								page={page}
-								handleChangePage={handleChangePage}
-								rowPage={rowPage}
-								handleChangeRowsPerPage={handleRowChange}
-								count={total_count}
-							/>
+							<div className="flex flex-row items-center justify-end">
+								{actionLoading && <Spin />}
+								<Panigation
+									page={page}
+									handleChangePage={handleChangePage}
+									rowPage={rowPage}
+									handleChangeRowsPerPage={handleRowChange}
+									count={total_count}
+								/>
+							</div>
 						)}
 					</div>
 				</FuseAnimate>

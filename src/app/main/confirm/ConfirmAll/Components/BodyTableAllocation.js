@@ -2,7 +2,6 @@ import { TableBody, TableRow, TableCell } from '@material-ui/core';
 import { Popover } from 'antd';
 import React from 'react';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import * as moment from 'moment';
 import { chipColor, chipText } from '../ConfrimAllocationConfig';
 import ActionsAllocation from './ActionsAllocation';
 

@@ -78,7 +78,6 @@ function FormCustomAll({ handleClose, open, rowPage }) {
 					[]
 			  )
 			: [];
-	// data lấy từ đây parse ra từ store đang test nên chưa tối ưu
 	const assetDetail =
 		entitiesInformation && entitiesInformation.assetGroupDetail
 			? entitiesInformation.assetGroupDetail.reduce(

@@ -157,6 +157,29 @@ export const fetchPossesionAll = (value, limit, page, search) => dispatch => {
 			notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại');
 		});
 };
+export const fetchPossesionAllPanigate = (value, limit, page, search) => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.actions }));
+	const paramsReq = {
+		StatusID: value,
+		PageSize: limit || 25,
+		PageNum: page || 1,
+		Search: search || ''
+	};
+	return requestFrom
+		.fetchDataPossesion(paramsReq)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				dispatch(actions.possesionsFetch({ data }));
+			} else {
+				notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', data.errorMessage);
+			}
+		})
+		.catch(err => {
+			dispatch(actions.catchErrors({ callType: callTypes.list }));
+			notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại');
+		});
+};
 export const setTaskEditPossesionAll = data => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.actions }));
 	dispatch(actions.possesionFetch({ data }));

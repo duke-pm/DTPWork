@@ -49,12 +49,7 @@ function PossesionPage(props) {
 	const params = 'Region,Department,Employee,Supplier,Company,AssetType,AssetGroup,AssetGroupDetail';
 	useEffect(() => {
 		dispatch(actions.getInformationCompany(params));
-		if (value === 5) {
-			dispatch(actions.fetchPossesionAll(6, rowPage));
-		} else {
-			dispatch(actions.fetchPossesionAll(value, rowPage));
-		}
-	}, [value, rowPage, dispatch, params]);
+	}, [dispatch]);
 	return (
 		<>
 			<FormControlCycle />

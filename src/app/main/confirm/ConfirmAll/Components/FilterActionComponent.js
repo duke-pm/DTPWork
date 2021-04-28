@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable import/no-extraneous-dependencies */
-import { Button, IconButton, Paper } from '@material-ui/core';
+import { IconButton, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React, { useContext } from 'react';
 import FuseAnimate from '@fuse/core/FuseAnimate';

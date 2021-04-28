@@ -1,8 +1,8 @@
 /* eslint-disable no-shadow */
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Table, TableCell, TableBody, TableContainer, Paper, TableRow } from '@material-ui/core';
-import { Popover } from 'antd';
+import { Popover, Spin } from 'antd';
 import Panigation from '@fuse/core/FusePanigate';
 import image from '@fuse/assets/group.png';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -51,16 +51,19 @@ const useStyles = makeStyles(theme => ({
 		width: 900
 	}
 }));
-export default function PossessionUnused(props) {
+function PossessionUnused(props) {
 	const { value } = props;
 	const [open, setOpen] = React.useState(false);
 	const [editAssets, setEditAssets] = useState(false);
 	const dispatch = useDispatch();
 	const possessionContext = useContext(PossessionContext);
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
-	const { listloading, entities, lastErrors, total_count } = currentState;
+	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;
 	const { rowPage, setRowPage, page, setPage, search } = possessionContext;
 	const classes = useStyles(props);
+	useEffect(() => {
+		dispatch(actions.fetchPossesionAll(1));
+	}, [dispatch]);
 	const handleClose = () => {
 		setOpen(false);
 		setEditAssets(false);
@@ -73,11 +76,11 @@ export default function PossessionUnused(props) {
 		setRowPage(parseInt(e.target.value, 10));
 		setPage(0);
 		const rowPage = parseInt(e.target.value, 10);
-		dispatch(actions.fetchPossesionAll(value, rowPage, page + 1, search));
+		dispatch(actions.fetchPossesionAllPanigate(value, rowPage, page + 1, search));
 	};
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
-		dispatch(actions.fetchPossesionAll(value, rowPage, newPage + 1, search));
+		dispatch(actions.fetchPossesionAllPanigate(value, rowPage, newPage + 1, search));
 	};
 	const handleOpenFormEdit = items => {
 		setEditAssets(true);
@@ -150,13 +153,16 @@ export default function PossessionUnused(props) {
 							</Paper>
 						</TableContainer>
 						{entities && entities.length !== 0 && (
-							<Panigation
-								page={page}
-								handleChangePage={handleChangePage}
-								rowPage={rowPage}
-								handleChangeRowsPerPage={handleRowChange}
-								count={total_count}
-							/>
+							<div className="flex flex-row items-center justify-end">
+								{actionLoading && <Spin />}
+								<Panigation
+									page={page}
+									handleChangePage={handleChangePage}
+									rowPage={rowPage}
+									handleChangeRowsPerPage={handleRowChange}
+									count={total_count}
+								/>
+							</div>
 						)}
 					</div>
 				</FuseAnimate>
@@ -164,3 +170,4 @@ export default function PossessionUnused(props) {
 		</>
 	);
 }
+export default React.memo(PossessionUnused);

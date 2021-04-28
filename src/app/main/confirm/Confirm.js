@@ -66,7 +66,7 @@ function PossesionPage(props) {
 			default:
 				return false;
 		}
-	}, [page, rowPage, dispatch]);
+	}, [page, rowPage, dispatch, value]);
 	const handleCloseForm = () => setFormControl(false);
 	const handleCloseFormAllocation = () => setFormAllocation(false);
 	const hanleCancle = () => setReasonReject(false);

@@ -60,7 +60,7 @@ export default function FormCustomEdit({ handleSubmitForm, actionLoading, entiti
 				region: newInformation.regionCode
 			});
 		}
-	}, []);
+	}, [initialState, entitiesInformation]);
 	const onChangeDepartment = value => {
 		setInitialState({
 			...initialState,
