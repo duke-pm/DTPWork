@@ -62,7 +62,6 @@ class JwtService extends FuseUtils.EventEmitter {
 	};
 
 	signInWithEmailAndPassword = (email, password) => {
-		console.log({ email, password });
 		const data = {
 			Username: email,
 			Password: password
@@ -74,7 +73,12 @@ class JwtService extends FuseUtils.EventEmitter {
 				data
 			}).then(response => {
 				if (response.data.data) {
-					this.setCookie(response.data.data.access_token);
+					this.setCookie(
+						response.data.data.access_token,
+						response.data.data.userName,
+						response.data.data.refresh_token,
+						response.data.data.expires_in
+					);
 					resolve(response.data.data);
 				} else {
 					reject(response.data.error);
@@ -93,7 +97,7 @@ class JwtService extends FuseUtils.EventEmitter {
 				})
 				.then(response => {
 					if (response.data.user) {
-						this.setSession(response.data.access_token);
+						this.setSession(response.data.access_token, response.data.userName);
 						resolve(response.data.user);
 					} else {
 						this.logout();
@@ -123,9 +127,12 @@ class JwtService extends FuseUtils.EventEmitter {
 		}
 	};
 
-	setCookie = access_token => {
+	setCookie = (access_token, role, refresh_token, expires_in) => {
+		console.log({ role });
 		if (access_token) {
-			Cookies.set('token', access_token, { expires: 7 });
+			Cookies.set('token', access_token, { expires: 20 });
+			Cookies.set('role', role, { expires: 20 });
+			Cookies.set('refresh_token', refresh_token, { expires: expires_in });
 			axios.defaults.headers.common.Authorization = `Bearer ${access_token}`;
 		} else {
 			Cookies.remove('token');

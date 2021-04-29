@@ -4,11 +4,11 @@ import React from 'react';
 
 export default function PossessionAction({ handleOpenFormEdit, items }) {
 	return (
-		<MenuItem onClick={() => handleOpenFormEdit(items)} role="button">
+		<MenuItem role="button">
 			<ListItemIcon className="min-w-40">
-				<Icon>edit</Icon>
+				<Icon>history</Icon>
 			</ListItemIcon>
-			<ListItemText primary="Chỉnh sửa" />
+			<ListItemText primary="Xem lịch sử" />
 		</MenuItem>
 	);
 }

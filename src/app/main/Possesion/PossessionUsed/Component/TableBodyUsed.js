@@ -1,26 +1,25 @@
 import { TableBody, TableCell, TableRow } from '@material-ui/core';
 import { Popover } from 'antd';
 import React from 'react';
+import moment from 'moment';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
-import * as moment from 'moment';
-import PossesionActions from './PossesionActions';
+import { PossesionActionUsed } from './PossessionUsedAction';
 
-function TableBodyUnUsed({ handleOpenForm, handleOpenFormEdit, entities, lastErrors }) {
+export default function TableBodyUsed({ entities, handleOpenForm, handleFormOpenReport }) {
 	return (
 		<TableBody>
 			{entities &&
 				entities.map(items => (
-					<TableRow hover key={items.assetID}>
-						<TableCell align="center" className="p-4 md:p-12">
+					<TableRow key={items.assetID} hover>
+						<TableCell align="left" className="p-4 md:p-12">
 							<Popover
 								overlayStyle={{ zIndex: '19' }}
 								placement="rightTop"
 								content={() => (
-									<PossesionActions
+									<PossesionActionUsed
 										handleOpenForm={handleOpenForm}
 										items={items}
-										handleOpenFormEdit={handleOpenFormEdit}
+										handleFormOpenReport={handleFormOpenReport}
 									/>
 								)}
 								title="Hành động"
@@ -32,11 +31,23 @@ function TableBodyUnUsed({ handleOpenForm, handleOpenFormEdit, entities, lastErr
 						<TableCell align="left">{items.assetName} </TableCell>
 						<TableCell align="left">{items.groupName}</TableCell>
 						<TableCell align="left">{moment(items.purchaseDate).format('DD-MM-YYYY')} </TableCell>
-						<TableCell align="left"> {currencyFormat(items.originalPrice)} </TableCell>
 						<TableCell align="left">{items.deptNameManager}</TableCell>
+						<TableCell align="left"> {items && items.empName ? items.empName : null}</TableCell>
+						<TableCell align="left">
+							<div
+								className={`inline text-12 p-4 rounded-full truncate ${
+									items.isProcessing
+										? items.requestTypeName === 'Đã báo hỏng'
+											? 'bg-purple text-white'
+											: 'bg-red-700 text-white'
+										: 'bg-green text-white'
+								}`}
+							>
+								{items.isProcessing ? items.requestTypeName : 'Đang sử dụng'}
+							</div>
+						</TableCell>
 					</TableRow>
 				))}
 		</TableBody>
 	);
 }
-export default TableBodyUnUsed;

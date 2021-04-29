@@ -7,8 +7,8 @@ import FuseAnimate from '@fuse/core/FuseAnimate';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import { useDispatch } from 'react-redux';
-import * as actions from '../../_redux/possesionActions';
-import { PossessionContext } from '../../PossessionContext';
+import * as actions from '../../../_redux/possesionActions';
+import { PossessionContext } from '../../../PossessionContext';
 
 const useStyles = makeStyles(theme => ({
 	input: {

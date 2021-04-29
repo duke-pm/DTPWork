@@ -3,7 +3,7 @@ import { Popover } from 'antd';
 import React from 'react';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import * as moment from 'moment';
-import PossessionAction from './PossessionAction';
+import PossessionAction from './ActionComponent/PossessionAction';
 import { chipColor, chipText } from '../ConfigPossessionAll';
 
 const TableBodyAssetAll = ({ entities, lastErrors, classes, handleOpenFormEdit }) => {
@@ -15,6 +15,7 @@ const TableBodyAssetAll = ({ entities, lastErrors, classes, handleOpenFormEdit }
 					<TableRow key={items.assetID} hover className={classes.tableHead}>
 						<TableCell align="center" className="p-4 md:p-12">
 							<Popover
+								overlayStyle={{ zIndex: '19' }}
 								placement="rightTop"
 								content={() => (
 									<PossessionAction items={items} handleOpenFormEdit={handleOpenFormEdit} />

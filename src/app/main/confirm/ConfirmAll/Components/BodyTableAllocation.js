@@ -14,6 +14,7 @@ export default function BodyTableAllocation({ entities, lastErrors, classes, han
 					<TableRow key={items.requestID} hover className={classes.tableHead}>
 						<TableCell align="center" className="p-4 md:p-12">
 							<Popover
+								overlayStyle={{ zIndex: '19' }}
 								placement="rightTop"
 								content={() => (
 									<ActionsAllocation

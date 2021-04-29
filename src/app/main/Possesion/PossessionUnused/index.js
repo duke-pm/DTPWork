@@ -19,6 +19,7 @@ import PossessionAll from '../PossessionAll/FormCustomAll';
 import TableHeaderUnUsed from './Component/TableHeaderUnUsed';
 import PossesionActions from './Component/PossesionActions';
 import { useStyles } from './StyleCustomAll';
+import TableBodyUnUsed from './Component/TableBodyUnUsed';
 
 function PossessionUnused(props) {
 	const { value } = props;
@@ -71,40 +72,12 @@ function PossessionUnused(props) {
 							<Paper className={classes.rootPaper}>
 								<Table className={classes.table} stickyHeader>
 									<TableHeaderUnUsed />
-									<TableBody>
-										{entities &&
-											!lastErrors &&
-											entities.map(items => (
-												<TableRow hover key={items.assetID}>
-													<TableCell align="center" className="p-4 md:p-12">
-														<Popover
-															placement="rightTop"
-															content={() => (
-																<PossesionActions
-																	handleOpenForm={handleOpenForm}
-																	items={items}
-																	handleOpenFormEdit={handleOpenFormEdit}
-																/>
-															)}
-															title="Hành động"
-														>
-															<MoreVertIcon className="cursor-pointer" />
-														</Popover>
-													</TableCell>
-													<TableCell align="left"> {items.assetCode} </TableCell>
-													<TableCell align="left">{items.assetName} </TableCell>
-													<TableCell align="left">{items.groupName}</TableCell>
-													<TableCell align="left">
-														{moment(items.purchaseDate).format('DD-MM-YYYY')}{' '}
-													</TableCell>
-													<TableCell align="left">
-														{' '}
-														{currencyFormat(items.originalPrice)}{' '}
-													</TableCell>
-													<TableCell align="left">{items.deptNameManager}</TableCell>
-												</TableRow>
-											))}
-									</TableBody>
+									<TableBodyUnUsed
+										handleOpenForm={handleOpenForm}
+										handleOpenFormEdit={handleOpenFormEdit}
+										entities={entities}
+										lastErrors={lastErrors}
+									/>
 								</Table>
 								{(entities && entities.length === 0) || lastErrors ? (
 									<FuseAnimate delay={300}>

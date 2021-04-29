@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
-import { Dialog, AppBar, Toolbar, Typography } from '@material-ui/core';
+import { Dialog, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { notificationConfig } from '@fuse/core/DtpConfig';
+import CloseIcon from '@material-ui/icons/Close';
 import { PossessionContext } from '../../PossessionContext';
 import FormControlReportEdit from './FormControlReportEdit';
 import * as action from '../../_redux/possesionActions';
@@ -40,11 +41,13 @@ export default function FormControlReport() {
 			style={{ zIndex: 20 }}
 			fullWidth
 			maxWidth="md"
-			onClose={handleCloseFormReport}
 			aria-labelledby="customized-dialog-title"
 			open={formReport}
 		>
 			<AppBar position="static" className="shadow-md">
+				<IconButton edge="start" color="inherit" onClick={handleCloseFormReport} aria-label="close">
+					<CloseIcon />
+				</IconButton>
 				<Toolbar className="flex w-full">
 					<Typography variant="subtitle1" color="inherit">
 						{`${typeReport === 'service' ? 'Báo hỏng tài sản' : 'Báo mất tài sản'}`}

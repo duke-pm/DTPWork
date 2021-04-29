@@ -111,7 +111,7 @@ function FormCustomAll({ handleClose, open, rowPage }) {
 		}
 	};
 	return (
-		<Dialog style={{ zIndex: 20 }} fullWidth maxWidth="lg" aria-labelledby="customized-dialog-title" open={open}>
+		<Dialog style={{ zIndex: 20 }} fullWidth maxWidth="md" aria-labelledby="customized-dialog-title" open={open}>
 			<AppBar position="static" className="shadow-md">
 				<Toolbar className="flex w-full">
 					<IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">

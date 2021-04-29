@@ -156,7 +156,7 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 									Lưu
 								</Button>
 							)}
-							<Button type="submit" className="h-26 font-sans" variant="contained" color="primary">
+							<Button type="button" className="h-26 font-sans" variant="contained" color="primary">
 								Hủy
 							</Button>
 						</DialogActions>

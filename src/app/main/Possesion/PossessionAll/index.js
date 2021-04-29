@@ -8,7 +8,7 @@ import FuseLoading from '@fuse/core/FuseLoading';
 import image from '@fuse/assets/group.png';
 import { Spin } from 'antd';
 import PossessionAll from './FormCustomAll';
-import ActionComponent from './Component/ActionComponent';
+import ActionComponent from './Component/ActionComponent/ActionFilterComponent';
 import * as actions from '../_redux/possesionActions';
 import { PossessionContext } from '../PossessionContext';
 import TableHeader from './Component/TableHeader';

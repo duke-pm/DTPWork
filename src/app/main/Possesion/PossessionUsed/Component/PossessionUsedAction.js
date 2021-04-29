@@ -2,7 +2,7 @@ import React from 'react';
 import { MenuItem, ListItemText, ListItemIcon } from '@material-ui/core';
 import Icon from '@material-ui/core/Icon';
 
-export const PossesionAction = props => {
+export const PossesionActionUsed = props => {
 	const { items } = props;
 	return (
 		<div>

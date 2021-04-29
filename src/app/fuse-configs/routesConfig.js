@@ -8,7 +8,7 @@ import LoginConfig from 'app/main/login/LoginConfig';
 const routeConfigs = [PossesionConfig, LoginConfig, CheckConfig];
 
 const routes = [
-	...FuseUtils.generateRoutesFromConfigs(routeConfigs),
+	...FuseUtils.generateRoutesFromConfigs(routeConfigs, ['admin']),
 	{
 		path: '/',
 		component: () => <Redirect to="/tai-san" />

@@ -5,7 +5,6 @@ import { Paper, Table, TableHead, TableRow, TableCell, TableBody, TableContainer
 import Panigation from '@fuse/core/FusePanigate';
 import image from '@fuse/assets/group.png';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import AppsIcon from '@material-ui/icons/Apps';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import FuseLoading from '@fuse/core/FuseLoading';
@@ -15,11 +14,12 @@ import * as actions from '../_redux/possesionActions';
 import FormCustomUsed from './FormCustomUsed';
 import FormControlReport from '../FormControl/FormControlReport';
 import { PossessionContext } from '../PossessionContext';
-import ActionComponent from './Component/ActionComponent';
+import ActionComponent from './Component/ActionFliterComponent';
 import FormRequest from './FormRequest';
 import { rowPossesion } from './ConfigPossessionUsed';
-import { PossesionAction } from './PossessionAction';
 import { useStyles } from './StyleCustomAll';
+import TableHeaderUsed from './Component/TableHeaderUsed';
+import TableBodyUsed from './Component/TableBodyUsed';
 
 export default function PossessionUsed(props) {
 	const dispatch = useDispatch();
@@ -69,73 +69,12 @@ export default function PossessionUsed(props) {
 						<TableContainer className={`${classes.TableContainer} flex flex-1`}>
 							<Paper className={classes.rootPaper}>
 								<Table className={classes.table} stickyHeader>
-									<TableHead>
-										<TableRow>
-											<TableCell
-												className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans "
-												align="left"
-											>
-												<AppsIcon />
-											</TableCell>
-											{rowPossesion.map(row => (
-												<TableCell
-													key={row.id}
-													className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
-													align={row.align}
-												>
-													{row.label}
-												</TableCell>
-											))}
-										</TableRow>
-									</TableHead>
-									<TableBody>
-										{entities &&
-											entities.map(items => (
-												<TableRow key={items.assetID} hover>
-													<TableCell align="left" className="p-4 md:p-12">
-														<Popover
-															placement="rightTop"
-															content={() => (
-																<PossesionAction
-																	handleOpenForm={handleOpenForm}
-																	items={items}
-																	handleFormOpenReport={handleFormOpenReport}
-																/>
-															)}
-															title="Hành động"
-														>
-															<MoreVertIcon className="cursor-pointer" />
-														</Popover>
-													</TableCell>
-													<TableCell align="left"> {items.assetCode} </TableCell>
-													<TableCell align="left">{items.assetName} </TableCell>
-													<TableCell align="left">{items.groupName}</TableCell>
-													<TableCell align="left">
-														{moment(items.purchaseDate).format('DD-MM-YYYY')}{' '}
-													</TableCell>
-													<TableCell align="left">{items.deptNameManager}</TableCell>
-													<TableCell align="left">
-														{' '}
-														{items && items.empName ? items.empName : null}
-													</TableCell>
-													<TableCell align="left">
-														<div
-															className={`inline text-12 p-4 rounded-full truncate ${
-																items.isProcessing
-																	? items.requestTypeName === 'Đã báo hỏng'
-																		? 'bg-purple text-white'
-																		: 'bg-red-700 text-white'
-																	: 'bg-green text-white'
-															}`}
-														>
-															{items.isProcessing
-																? items.requestTypeName
-																: 'Đang sử dụng'}
-														</div>
-													</TableCell>
-												</TableRow>
-											))}
-									</TableBody>
+									<TableHeaderUsed />
+									<TableBodyUsed
+										entities={entities}
+										handleOpenForm={handleOpenForm}
+										handleFormOpenReport={handleFormOpenReport}
+									/>
 								</Table>
 								{(entities && entities.length === 0) || lastErrors ? (
 									<FuseAnimate delay={300}>
