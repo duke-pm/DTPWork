@@ -1,5 +1,3 @@
-import * as Yup from 'yup';
-
 export const chipColor = {
 	'Đã báo hỏng': 'bg-purple text-white',
 	'Đã báo mất': 'bg-red-700 text-white',

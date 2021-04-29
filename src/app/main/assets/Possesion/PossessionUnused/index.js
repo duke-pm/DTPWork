@@ -1,15 +1,12 @@
 /* eslint-disable no-shadow */
 import React, { useContext, useState, useEffect } from 'react';
-import { Table, TableCell, TableBody, TableContainer, Paper, TableRow } from '@material-ui/core';
-import { Popover, Spin } from 'antd';
+import { Table, TableContainer, Paper } from '@material-ui/core';
+import { Spin } from 'antd';
 import Panigation from '@fuse/core/FusePanigate';
 import image from '@fuse/assets/group.png';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import FuseLoading from '@fuse/core/FuseLoading';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
-import * as moment from 'moment';
 import FormCustomUnused from './FormCustomUnused';
 import FormControlReport from '../FormControl/FormControlReport';
 import { PossessionContext } from '../PossessionContext';
@@ -17,7 +14,6 @@ import ActionComponent from './Component/ActionComponent';
 import * as actions from '../_redux/possesionActions';
 import PossessionAll from '../PossessionAll/FormCustomAll';
 import TableHeaderUnUsed from './Component/TableHeaderUnUsed';
-import PossesionActions from './Component/PossesionActions';
 import { useStyles } from './StyleCustomAll';
 import TableBodyUnUsed from './Component/TableBodyUnUsed';
 

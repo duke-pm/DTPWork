@@ -1,6 +1,5 @@
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import { Icon } from '@material-ui/core';
-import { Typography } from 'antd';
 import React from 'react';
 
 export default function RequestProviderHeader() {

@@ -1,4 +1,4 @@
-import { AppBar, Dialog, DialogContent, DialogContentText, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Dialog, DialogContent, Toolbar, Typography } from '@material-ui/core';
 import React from 'react';
 
 export default function HistoryAllocation({ handleCloseHistory, open }) {

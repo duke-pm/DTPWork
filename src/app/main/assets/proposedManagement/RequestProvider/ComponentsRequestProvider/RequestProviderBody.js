@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { Formik, Field, Form } from 'formik';
@@ -182,6 +182,7 @@ export default function RequestProviderBody({
 										label="Nhân viên"
 										name="name"
 										readOnly
+										autoFocus
 										hasFeedback
 										component={AntInput}
 										// options={employees}
@@ -303,7 +304,6 @@ export default function RequestProviderBody({
 									/>
 									<Field
 										label="Nhà cung cấp đề nghị (nếu có)"
-										autoFocus
 										// value={intialState.note}
 										name="supplier"
 										row={3}

@@ -13,7 +13,7 @@ import Provider from 'react-redux/es/components/Provider';
 import { Router } from 'react-router-dom';
 // import axios from 'axios';
 import AppContext from './AppContext';
-import { Auth } from './auth';
+// import { Auth } from './auth';
 import routes from './fuse-configs/routesConfig';
 import store from './store';
 // import setupAxios from './store/setupAxios';

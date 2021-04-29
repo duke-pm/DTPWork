@@ -1,8 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import firebase from 'firebase/app';
 import 'firebase/auth';
 import history from '@history';
-import _ from '@lodash';
 import { setInitialSettings } from 'app/store/fuse/settingsSlice';
 import auth0Service from 'app/services/auth0Service';
 import firebaseService from 'app/services/firebaseService';
