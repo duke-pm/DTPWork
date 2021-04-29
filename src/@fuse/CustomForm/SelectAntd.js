@@ -33,11 +33,18 @@ export default function SelectAntd({
 	return (
 		<>
 			<FormGroup>
-				<label className="mb-10"> {label} </label>
+				<div className="flex flex-row">
+					<span> {label} </span>
+					{hasFeedback && (
+						<p style={{ marginBottom: '-20px' }} className="text-red ml-8">
+							{' '}
+							(*){' '}
+						</p>
+					)}
+				</div>
 				<FormItem
 					style={{ width: '100%' }}
 					rules={[{ required: true }]}
-					hasFeedback={!!((hasFeedback && submitted) || (hasFeedback && touched))}
 					help={submittedError || touchedError ? hasError : false}
 					validateStatus={submittedError || touchedError ? 'error' : hasFeedback && 'success'}
 				>

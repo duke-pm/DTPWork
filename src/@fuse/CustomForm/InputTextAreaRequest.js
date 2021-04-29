@@ -7,7 +7,7 @@ import { Input, Form } from 'antd';
 const { TextArea } = Input;
 const FormItem = Form.Item;
 
-export default function InputTextAreaLg({
+export default function InputTextAreaRequest({
 	field, // { name, value, onChange, onBlur }
 	form, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
 	label,
@@ -47,8 +47,8 @@ export default function InputTextAreaLg({
 						rows={row}
 						onChange={e => onChange(e)}
 						type={type}
-						// {...field}
-						// {...props}
+						{...field}
+						{...props}
 					/>
 				</FormItem>
 			</FormGroup>

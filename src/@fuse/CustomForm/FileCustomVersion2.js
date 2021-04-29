@@ -17,6 +17,7 @@ export default function FileCustomVersion2({
 	type,
 	handleChangeImage,
 	style,
+	hasFeedback,
 	...props
 }) {
 	const handleChangeFile = info => {
@@ -25,7 +26,15 @@ export default function FileCustomVersion2({
 	};
 	return (
 		<FormGroup>
-			<label className="mb-10"> {label} </label>
+			<div className="flex flex-row">
+				<span> {label} </span>
+				{hasFeedback && (
+					<p style={{ marginBottom: '-20px' }} className="text-red ml-8">
+						{' '}
+						(*){' '}
+					</p>
+				)}
+			</div>
 			<Dragger onChange={handleChangeFile}>
 				<p className="ant-upload-drag-icon">
 					<InboxOutlined />

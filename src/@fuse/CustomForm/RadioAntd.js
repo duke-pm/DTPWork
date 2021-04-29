@@ -36,7 +36,6 @@ export default function RadioAntd({
 					style={{ width: '100%' }}
 					className={readOnly ? 'readOnly' : ''}
 					rules={[{ required: true }]}
-					hasFeedback={!!((hasFeedback && submitted) || (hasFeedback && touched))}
 					help={submittedError || touchedError ? hasError : false}
 					validateStatus={submittedError || touchedError ? 'error' : hasFeedback && 'success'}
 				>
