@@ -37,6 +37,7 @@ export default function ConfirmDamaged(props) {
 	const handleOpenFormEdit = items => {
 		setFormControl(true);
 		setType('damaged');
+		dispatch(action.fetchDataConfirm(items));
 	};
 	const handleRowChange = e => {
 		const rowPageParse = parseInt(e.target.value, 10);

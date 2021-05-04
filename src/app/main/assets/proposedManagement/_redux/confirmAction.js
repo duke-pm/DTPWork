@@ -187,13 +187,13 @@ export const getAssetsUser = EmpCode => dispatch => {
 			notificationConfig('warning', 'Thất bại', 'Đã có lỗi xảy ra  vui lòng thử lại sau');
 		});
 };
-export const requestApprove = (data, status) => dispatch => {
+export const requestApprove = (data, status, values) => dispatch => {
 	const dataReq = {
 		RequestID: data.requestID,
 		RequestTypeID: data.requestTypeID,
 		PersonRequestID: data.personRequestID,
 		Status: status,
-		Reason: '',
+		Reason: values.note || '',
 		Lang: 'vi'
 	};
 	dispatch(actions.startCall({ callType: callTypes.action }));

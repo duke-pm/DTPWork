@@ -15,6 +15,7 @@ export default function TableBodyLose({ entities, lastErrors, classes, handleOpe
 					<TableRow key={items.requestID} hover className={classes.tableHead}>
 						<TableCell align="center" className="p-4 md:p-12">
 							<Popover
+								overlayStyle={{ zIndex: '19' }}
 								placement="rightTop"
 								content={() => <LoseActions items={items} handleOpenForm={handleOpenForm} />}
 								title="Hành động"

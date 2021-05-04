@@ -36,6 +36,7 @@ export default function ConfirmLose(props) {
 	const classes = useStyles(props);
 	const dispatch = useDispatch();
 	const handleOpenFormEdit = items => {
+		dispatch(action.fetchDataConfirm(items));
 		setFormControl(true);
 		setType('lose');
 	};
