@@ -19,3 +19,8 @@ export const getRoleCookies = () => {
 export const refresh_token = () => {
 	return Cookies.get('refresh_token') || null;
 };
+
+export const getDataUserLocalStorage = () => {
+	const data = JSON.parse(localStorage.getItem('data_user')) || null;
+	return data;
+};

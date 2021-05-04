@@ -7,7 +7,7 @@ import InputCurrency from '@fuse/CustomForm/InputCurrency';
 import { Spin } from 'antd';
 import { AntInput, AntInputNumber, AntSelect } from '@fuse/CustomForm/CreateAntField';
 import SelectAntd from '@fuse/CustomForm/SelectAntd';
-import { checkValidateFormConfig } from '../ConfigPossessionAll';
+import { checkValidateFormConfig, checkValidateFormConfigUpdate } from '../ConfigPossessionAll';
 
 function FormCustomEdit({
 	saveAsset,
@@ -81,7 +81,7 @@ function FormCustomEdit({
 		<>
 			<Formik
 				enableReinitialize
-				validationSchema={initialValue.assetID ? false : checkValidateFormConfig}
+				validationSchema={initialValue.assetID ? checkValidateFormConfigUpdate : checkValidateFormConfig}
 				initialValues={initialValue}
 				onSubmit={values => {
 					saveAsset(values, prefix);

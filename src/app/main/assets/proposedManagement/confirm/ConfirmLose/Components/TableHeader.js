@@ -3,7 +3,7 @@ import { IconButton, TableCell, TableHead, TableRow, TableSortLabel } from '@mat
 import AppsIcon from '@material-ui/icons/Apps';
 import { rowsConfig } from '../LoseConfig';
 
-export default function TableHeader() {
+export default function TableHeader({ sort, createSortHandler }) {
 	return (
 		<TableHead>
 			<TableRow>
@@ -18,7 +18,17 @@ export default function TableHeader() {
 						className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
 						align={row.align}
 					>
-						{row.sort ? <TableSortLabel>{row.label}</TableSortLabel> : row.label}
+						{row.sort ? (
+							<TableSortLabel
+								active={sort.id === row.id}
+								direction={sort.direction}
+								onClick={createSortHandler(row.id)}
+							>
+								{row.label}
+							</TableSortLabel>
+						) : (
+							row.label
+						)}
 					</TableCell>
 				))}
 			</TableRow>

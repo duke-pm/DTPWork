@@ -4,7 +4,6 @@ export const PossessionContext = createContext();
 
 export default function PossessionContextProvider({ children }) {
 	const [formCycle, setFormCycle] = useState(false);
-	const [formReport, setFormReport] = useState(false);
 	const [typeReport, setTypeReport] = useState('');
 	const [typeCycle, setTypeCycle] = useState('');
 	const [rowPage, setRowPage] = React.useState(25);
@@ -19,26 +18,18 @@ export default function PossessionContextProvider({ children }) {
 		setFormCycle(true);
 		setTypeCycle(type);
 	};
-	const handleOpenFormReport = type => {
-		setFormReport(true);
-		setTypeReport(type);
-	};
 	const handleCloseFormCycle = () => setFormCycle(false);
-	const handleCloseFormReport = () => setFormReport(false);
 	const valueMemo = useMemo(() => {
 		return {
 			formCycle,
-			handleOpenFormReport,
 			handleOpenFormCycle,
 			handleCloseFormCycle,
-			handleCloseFormReport,
 			setRowPage,
 			setPage,
 			setValue,
 			setSearch,
 			typeCycle,
 			typeReport,
-			formReport,
 			rowPage,
 			page,
 			value,
@@ -46,6 +37,6 @@ export default function PossessionContextProvider({ children }) {
 			sort,
 			setSort
 		};
-	}, [formCycle, formReport, page, rowPage, search, typeCycle, typeReport, value, sort, setSort]);
+	}, [formCycle, page, rowPage, search, typeCycle, typeReport, value, sort, setSort]);
 	return <PossessionContext.Provider value={valueMemo}>{children}</PossessionContext.Provider>;
 }

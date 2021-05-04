@@ -1,11 +1,12 @@
 /* eslint-disable no-shadow */
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Panigation from '@fuse/core/FusePanigate';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import { Paper, Table, TableContainer } from '@material-ui/core';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import FuseLoading from '@fuse/core/FuseLoading';
 import image from '@fuse/assets/group.png';
+import { Spin } from 'antd';
 import HeaderTableAllocation from './Components/HeaderTableAllocation';
 import BodyTableAllocation from './Components/BodyTableAllocation';
 import { ConfirmContext } from '../ConfirmContext';
@@ -27,7 +28,9 @@ export default function ConfrimAllocation(props) {
 		setRowPage,
 		search,
 		dateStart,
-		dateEnd
+		dateEnd,
+		sort,
+		setSort
 	} = AllocationContext;
 	const { currentState } = useSelector(state => ({ currentState: state.confirm }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;
@@ -38,14 +41,57 @@ export default function ConfrimAllocation(props) {
 		dispatch(action.fetchDataConfirm(items));
 		setFormAllocation(true);
 	};
+	useEffect(() => {
+		dispatch(action.fetchDataConfirms(0, rowPage, page, search, dateStart, dateEnd, 1));
+	}, [dispatch]);
 	const handleRowChange = e => {
 		const rowPageParse = parseInt(e.target.value, 10);
 		setRowPage(rowPageParse);
-		dispatch(action.fetchDataConfirms(status, rowPageParse, page, search, dateStart, dateEnd));
+		dispatch(
+			action.searchConfirms(
+				false,
+				status,
+				rowPageParse,
+				page,
+				1,
+				sort.id,
+				sort.direction,
+				search,
+				dateStart,
+				dateEnd
+			)
+		);
 	};
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
-		dispatch(action.fetchDataConfirms(status, rowPage, newPage + 1, search, dateStart, dateEnd));
+		dispatch(
+			action.searchConfirms(
+				false,
+				status,
+				rowPage,
+				newPage + 1,
+				1,
+				sort.id,
+				sort.direction,
+				search,
+				search,
+				dateStart,
+				dateEnd
+			)
+		);
+	};
+	const createSortHandler = property => event => {
+		const id = property;
+		let direction = 'desc';
+
+		if (sort.id === property && sort.direction === 'desc') {
+			direction = 'asc';
+		}
+		dispatch(action.searchConfirms(false, status, rowPage, page, 1, id, direction, search, dateStart, dateEnd));
+		setSort({
+			direction,
+			id
+		});
 	};
 	if (listloading) {
 		return <FuseLoading />;
@@ -60,7 +106,7 @@ export default function ConfrimAllocation(props) {
 						<TableContainer className={`${classes.TableContainer} flex flex-1`}>
 							<Paper className={classes.rootPaper}>
 								<Table className={`${classes.table}`} stickyHeader>
-									<HeaderTableAllocation />
+									<HeaderTableAllocation createSortHandler={createSortHandler} sort={sort} />
 									<BodyTableAllocation
 										classes={classes}
 										entities={entities}
@@ -85,13 +131,16 @@ export default function ConfrimAllocation(props) {
 							</Paper>
 						</TableContainer>
 						{entities && entities.length !== 0 && (
-							<Panigation
-								page={page}
-								handleChangePage={handleChangePage}
-								rowPage={rowPage}
-								handleChangeRowsPerPage={handleRowChange}
-								count={total_count}
-							/>
+							<div className="flex flex-row items-center justify-end">
+								{actionLoading && <Spin />}
+								<Panigation
+									page={page}
+									handleChangePage={handleChangePage}
+									rowPage={rowPage}
+									handleChangeRowsPerPage={handleRowChange}
+									count={total_count}
+								/>
+							</div>
 						)}
 					</div>
 				</FuseAnimate>

@@ -10,7 +10,6 @@ import FuseLoading from '@fuse/core/FuseLoading';
 import { Spin } from 'antd';
 import * as actions from '../_redux/possesionActions';
 import FormCustomUsed from './FormCustomUsed';
-import FormControlReport from '../FormControl/FormControlReport';
 import { PossessionContext } from '../PossessionContext';
 import ActionComponent from './Component/ActionFliterComponent';
 import { useStyles } from './StyleCustomAll';
@@ -24,26 +23,12 @@ export default function PossessionUsed(props) {
 	const possessionContext = useContext(PossessionContext);
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;
-	const {
-		handleOpenFormReport,
-		rowPage,
-		setRowPage,
-		page,
-		setPage,
-		search,
-		value,
-		sort,
-		setSort
-	} = possessionContext;
+	const { rowPage, setRowPage, page, setPage, search, value, sort, setSort } = possessionContext;
 	const handleOpenFormRequest = () => setFormRequest(true);
 	const handleClose = () => setOpen(false);
 	useEffect(() => {
 		dispatch(actions.fetchPossesionAll(2));
 	}, [dispatch]);
-	const handleFormOpenReport = (type, items) => {
-		dispatch(actions.setTaskEditPossesionAll(items));
-		handleOpenFormReport(type);
-	};
 	const handleOpenForm = items => {
 		dispatch(actions.setTaskEditPossesionAll(items));
 		setOpen(true);
@@ -77,7 +62,6 @@ export default function PossessionUsed(props) {
 	return (
 		<>
 			<FormCustomUsed open={open} handleClose={handleClose} />
-			<FormControlReport />
 			<div className="flex flex-col">
 				<ActionComponent handleOpenForm={handleOpenFormRequest} value={props.value} />
 				<FuseAnimate delay={200} animation="transition.slideUpIn">
@@ -86,11 +70,7 @@ export default function PossessionUsed(props) {
 							<Paper className={classes.rootPaper}>
 								<Table className={classes.table} stickyHeader>
 									<TableHeaderUsed createSortHandler={createSortHandler} sort={sort} />
-									<TableBodyUsed
-										entities={entities}
-										handleOpenForm={handleOpenForm}
-										handleFormOpenReport={handleFormOpenReport}
-									/>
+									<TableBodyUsed entities={entities} handleOpenForm={handleOpenForm} />
 								</Table>
 								{(entities && entities.length === 0) || lastErrors ? (
 									<FuseAnimate delay={300}>

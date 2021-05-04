@@ -68,16 +68,16 @@ export default function FormCustomEdit({
 		}
 	];
 
-	const onConfirm = values => {
-		// handleSubmitForm(values, dataSource);
-	};
+	// const onConfirm = values => {
+	// 	// handleSubmitForm(values, dataSource);
+	// };
 	return (
 		<>
 			<Formik
 				enableReinitialize
 				initialValues={initialState}
 				onSubmit={values => {
-					onConfirm(values);
+					handleSubmitForm();
 				}}
 			>
 				{({ handleSubmit, isSubmitting }) => (

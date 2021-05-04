@@ -92,6 +92,7 @@ function FormCustomAll({ handleClose, open, rowPage }) {
 	const saveAsset = (values, prefix) => {
 		if (entitiesEdit && entitiesEdit.assetID) {
 			dispatch(actions.updatedPossesionAll(values)).then(data => {
+				console.log(data);
 				if (data && !data.isError) {
 					notificationConfig('success', 'Thành công!', 'Cập nhật thành công');
 					handleClose();

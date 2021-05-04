@@ -3,7 +3,6 @@ import axios from 'axios';
 const baseUrl = process.env.REACT_APP_API_URL;
 export const url = `${baseUrl}/api/Assets/Create`;
 export const urlUpdate = `${baseUrl}/api/Assets/Update`;
-export const urlReport = `${baseUrl}/api/HandlingRequest/Create`;
 const urlRule = 'api/Assets/GetList';
 const urlInformation = 'api/MasterData/GetDataForForm';
 const UrlType = `${baseUrl}/api/AssetTrans/ProcessAsset`;
@@ -37,13 +36,6 @@ export const requestAsset = data => {
 	return axios({
 		method: 'POST',
 		url: UrlType,
-		data
-	});
-};
-export const reportFromUser = data => {
-	return axios({
-		method: 'POST',
-		url: urlReport,
 		data
 	});
 };

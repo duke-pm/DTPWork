@@ -1,6 +1,7 @@
 import { TableBody, TableRow, TableCell } from '@material-ui/core';
 import { Popover } from 'antd';
 import React from 'react';
+import * as moment from 'moment';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { chipColor, chipText } from '../ConfrimAllocationConfig';
 import ActionsAllocation from './ActionsAllocation';
@@ -32,10 +33,10 @@ export default function BodyTableAllocation({ entities, lastErrors, classes, han
 						<TableCell align="left">{items.fullName} </TableCell>
 						<TableCell align="left">{items.deptName}</TableCell>
 						<TableCell align="left">{items.regionName} </TableCell>
-						<TableCell align="left">{items.requestDate} </TableCell>
+						<TableCell align="left">{moment(items.requestDate).format('DD/MM/YYYY')} </TableCell>
 						<TableCell align="left">
-							<div className={`inline text-12 p-4 rounded-full truncate ${chipColor[items.status]}`}>
-								{chipText[items.status]}
+							<div className={`inline text-12 p-4 rounded-full truncate ${chipColor[items.statusID]}`}>
+								{chipText[items.statusID]}
 							</div>
 						</TableCell>
 					</TableRow>

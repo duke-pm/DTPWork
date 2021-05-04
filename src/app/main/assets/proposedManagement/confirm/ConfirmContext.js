@@ -15,6 +15,10 @@ export default function ConfirmContextProvider({ children }) {
 	const [dateEnd, setDateEnd] = useState('');
 	const [status, setStatus] = useState(0);
 	const [search, setSearch] = useState('');
+	const [sort, setSort] = useState({
+		direction: 'desc',
+		id: null
+	});
 	const valueMemo = useMemo(() => {
 		return {
 			search,
@@ -40,7 +44,9 @@ export default function ConfirmContextProvider({ children }) {
 			page,
 			setPage,
 			rowPage,
-			setRowPage
+			setRowPage,
+			sort,
+			setSort
 		};
 	}, [
 		value,
@@ -65,7 +71,9 @@ export default function ConfirmContextProvider({ children }) {
 		dateStart,
 		setDateStart,
 		search,
-		setSearch
+		setSearch,
+		sort,
+		setSort
 	]);
 	return <ConfirmContext.Provider value={valueMemo}>{children}</ConfirmContext.Provider>;
 }

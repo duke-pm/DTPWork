@@ -63,20 +63,14 @@ export const possesionSlice = createSlice({
 		},
 		possesionUpdate: (state, action) => {
 			const { dataReq } = action.payload;
-			const { entities } = state;
-			const index = entities.findIndex(items => items.assetID === dataReq.assetID);
-			if (index !== -1) {
-				const newList = [...entities.slice(0, index), dataReq, ...entities.slice(index + 1)];
-				return {
-					...state,
-					entities: newList
-				};
-			}
 			state.error = null;
 			state.actionLoading = false;
-			return {
-				...state
-			};
+			state.entities = state.entities.map(entity => {
+				if (entity.assetID === dataReq.assetID) {
+					return dataReq;
+				}
+				return entity;
+			});
 		},
 		possesionUpdatedUnUsed: (state, action) => {
 			const { id } = action.payload;
@@ -104,23 +98,6 @@ export const possesionSlice = createSlice({
 			state.error = null;
 			state.lastErrors = false;
 			state.entitiesInformation = data.data;
-		},
-		reportFromUser: (state, action) => {
-			const { dataRes } = action.payload;
-			const { entities } = state;
-			const index = entities.findIndex(items => items.assetID === dataRes.assetID);
-			if (index !== -1) {
-				const newList = [...entities.slice(0, index), dataRes, ...entities.slice(index + 1)];
-				return {
-					...state,
-					entities: newList
-				};
-			}
-			state.error = null;
-			state.actionLoading = false;
-			return {
-				...state
-			};
 		}
 	}
 });

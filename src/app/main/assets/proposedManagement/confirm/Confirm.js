@@ -35,11 +35,8 @@ function TabPanel(props) {
 }
 
 function PossesionPage(props) {
-	const dispatch = useDispatch();
 	const confirmContext = useContext(ConfirmContext);
 	const {
-		page,
-		rowPage,
 		value,
 		setValue,
 		formControl,
@@ -58,15 +55,6 @@ function PossesionPage(props) {
 		// setPage(0);
 		// setRowPage(25);
 	};
-	useEffect(() => {
-		switch (value) {
-			case 0:
-				dispatch(actions.fetchDataConfirms(0, rowPage, page + 1));
-				break;
-			default:
-				return false;
-		}
-	}, [page, rowPage, dispatch, value]);
 	const handleCloseForm = () => setFormControl(false);
 	const handleCloseFormAllocation = () => setFormAllocation(false);
 	const hanleCancle = () => setReasonReject(false);

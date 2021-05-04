@@ -24,13 +24,13 @@ export default function ContentFormReport({ entitiesEdit, classes }) {
 						<p className="p-6 font-extrabold"> {entitiesEdit && entitiesEdit.descr}</p>
 					</div>
 				</div>
-				<div className="flex-row justify-between flex ">
+				<div className="flex-row justify-around flex ">
 					<div className="flex flex-col">
 						<p className="p-6">Ngày mua </p>
 						<p className="p-6"> Nguyên giá </p>
 						<p className="p-166"> Tình trạng </p>
 					</div>
-					<div className="flex sm:mr-96 mr-auto flex-col">
+					<div className={`${classes.widthContent} flex sm:mr-96 mr-auto flex-col`}>
 						<p className="p-6 font-extrabold">
 							{entitiesEdit && moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY')}
 						</p>
@@ -38,7 +38,7 @@ export default function ContentFormReport({ entitiesEdit, classes }) {
 							{' '}
 							{entitiesEdit && currencyFormat(entitiesEdit.originalPrice)}
 						</p>
-						<p className="p-6 font-extrabold"> Chưa sử dụng </p>
+						<p className="p-6 font-extrabold"> Đang sử dụng </p>
 					</div>
 				</div>
 			</div>

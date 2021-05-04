@@ -79,6 +79,7 @@ class JwtService extends FuseUtils.EventEmitter {
 						response.data.data.refresh_token,
 						response.data.data.expires_in
 					);
+					this.setSession(response.data.data);
 					resolve(response.data.data);
 				} else {
 					reject(response.data.error);
@@ -117,18 +118,15 @@ class JwtService extends FuseUtils.EventEmitter {
 		});
 	};
 
-	setSession = access_token => {
-		if (access_token) {
-			localStorage.setItem('jwt_access_token', access_token);
-			axios.defaults.headers.common.Authorization = `Bearer ${access_token}`;
+	setSession = data => {
+		if (data) {
+			localStorage.setItem('data_user', JSON.stringify(data));
 		} else {
-			localStorage.removeItem('jwt_access_token');
-			delete axios.defaults.headers.common.Authorization;
+			localStorage.removeItem('data_user');
 		}
 	};
 
 	setCookie = (access_token, role, refresh_token, expires_in) => {
-		console.log({ role });
 		if (access_token) {
 			Cookies.set('token', access_token, { expires: 20 });
 			Cookies.set('role', role, { expires: 20 });

@@ -8,7 +8,7 @@ export default function PossessionAction({ handleOpenFormEdit, items }) {
 			<ListItemIcon className="min-w-40">
 				<Icon>history</Icon>
 			</ListItemIcon>
-			<ListItemText primary="Xem lịch sử" />
+			<ListItemText primary="Quá trình sử dụng" />
 		</MenuItem>
 	);
 }

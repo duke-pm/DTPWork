@@ -2,13 +2,16 @@ import FusePageCardedFix from '@fuse/core/FusePageCarded/FusePageCardedFix';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import * as moment from 'moment';
+import { getDataUserLocalStorage } from '@fuse/core/DtpConfig';
 import RequestProviderBody from './ComponentsRequestProvider/RequestProviderBody';
 import RequestProviderHeader from './ComponentsRequestProvider/RequestProviderHeader';
 import * as actions from '../_redux/confirmAction';
 
 export default function RequestProviderPage() {
+	const dataUser = getDataUserLocalStorage();
 	const [initialState, setInitialState] = useState({
-		name: 'D0850',
+		name: dataUser.empCode || '',
+		nameEmp: dataUser.fullName || '',
 		department: null,
 		dateRequest: moment(Date.now()),
 		region: '',

@@ -5,7 +5,7 @@ import moment from 'moment';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { PossesionActionUsed } from './PossessionUsedAction';
 
-export default function TableBodyUsed({ entities, handleOpenForm, handleFormOpenReport }) {
+export default function TableBodyUsed({ entities, handleOpenForm }) {
 	return (
 		<TableBody>
 			{entities &&
@@ -15,13 +15,7 @@ export default function TableBodyUsed({ entities, handleOpenForm, handleFormOpen
 							<Popover
 								overlayStyle={{ zIndex: '19' }}
 								placement="rightTop"
-								content={() => (
-									<PossesionActionUsed
-										handleOpenForm={handleOpenForm}
-										items={items}
-										handleFormOpenReport={handleFormOpenReport}
-									/>
-								)}
+								content={() => <PossesionActionUsed handleOpenForm={handleOpenForm} items={items} />}
 								title="Hành động"
 							>
 								<MoreVertIcon className="cursor-pointer" />

@@ -30,37 +30,81 @@ export default function ActionComponent({ actionLoading }) {
 		setStatus,
 		status,
 		dateEnd,
-		dateStart
+		dateStart,
+		sort
 	} = confirmConext;
 	const handleSearch = e => {
 		e.preventDefault();
 		setPage(0);
-		dispatch(actions.searchConfirms(status, rowPage, page, search, dateStart, dateEnd));
+		dispatch(
+			actions.searchConfirms(false, status, rowPage, page, 1, sort.id, sort.direction, search, dateStart, dateEnd)
+		);
 	};
 	onkeypress = e => {
 		if (e.key === 'Enter') {
 			e.preventDefault();
 			setPage(0);
-			dispatch(actions.searchConfirms(status, rowPage, page, search, dateStart, dateEnd));
+			dispatch(
+				actions.searchConfirms(
+					false,
+					status,
+					rowPage,
+					page,
+					1,
+					sort.id,
+					sort.direction,
+					search,
+					dateStart,
+					dateEnd
+				)
+			);
 		}
 	};
 	const onHandleChange = e => {
 		setSearch(e.target.value);
 		setPage(0);
 		if (e.target.value.length <= 0) {
-			dispatch(actions.searchConfirms(status, rowPage, page, e.target.value, dateStart, dateEnd));
+			dispatch(
+				actions.searchConfirms(
+					false,
+					status,
+					rowPage,
+					page,
+					1,
+					sort.id,
+					sort.direction,
+					e.target.value,
+					dateStart,
+					dateEnd
+				)
+			);
 		}
 	};
 	const handleChangeFilterDate = (date, dateString) => {
 		setPage(0);
-		dispatch(actions.searchConfirms(status, rowPage, page, search, date && date[0], date && date[1]));
+		dispatch(
+			actions.searchConfirms(
+				false,
+				status,
+				rowPage,
+				page,
+				1,
+				sort.id,
+				sort.direction,
+				search,
+				date && date[0],
+				date && date[1]
+			)
+		);
 		setDateEnd(date && date[0]);
 		setDateStart(date && date[1]);
 	};
 	const onHandleChangeStatus = value => {
 		setStatus(value);
 		setPage(0);
-		dispatch(actions.searchConfirms(value, rowPage, page, search, dateStart, dateEnd));
+		dispatch(
+			actions.searchConfirms(false, value, rowPage, page, 1, sort.id, sort.direction, search, dateStart, dateEnd)
+		);
 	};
 	return (
 		<>

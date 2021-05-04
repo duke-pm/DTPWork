@@ -156,18 +156,18 @@ export default function RequestProviderBody({
 		<>
 			<Formik
 				enableReinitialize
-				validationSchema={validateSchema}
+				// validationSchema={validateSchema}
 				initialValues={initialState}
 				onSubmit={(values, { resetForm }) => {
 					dispatch(actions.requestAssetFromUserAction(values, dataSource)).then(data => {
 						if (data && !data.isError) {
+							resetForm({});
+							setDataSource([]);
 							notificationConfig('success', 'Thành công!', 'Yêu cầu thành công !!');
 						} else {
 							// notificationConfig('warning', 'Thất bại!', 'Yêu cầu thất bại vui lòng thử lại');
 						}
 					});
-					resetForm({});
-					setDataSource([]);
 				}}
 			>
 				{({ handleSubmit, isSubmitting }) => (
@@ -180,7 +180,7 @@ export default function RequestProviderBody({
 								<div className="grid grid-cols-1 sm:grid-cols-4 gap-8 ">
 									<Field
 										label="Nhân viên"
-										name="name"
+										name="nameEmp"
 										readOnly
 										autoFocus
 										hasFeedback

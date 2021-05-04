@@ -38,6 +38,13 @@ const navigationConfig = [
 						url: '/quan-li-de-xuat/xet-duyet'
 					},
 					{
+						id: 'recomend',
+						title: 'Đề xuất cần xử lí',
+						transalate: 'Đề xuất cần xử lí',
+						type: 'item',
+						url: '/quan-li-de-xuat/de-xuat-can-xu-ly'
+					},
+					{
 						id: 'Report',
 						title: 'Báo hỏng/mất tài sản',
 						transalate: 'Báo hỏng/mất tài sản',

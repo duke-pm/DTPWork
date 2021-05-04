@@ -5,11 +5,13 @@ import PossesionConfig from 'app/main/assets/Possesion/PossesionConfig';
 import CheckConfig from 'app/main/assets/proposedManagement/confirm/checkConfig';
 import LoginConfig from 'app/main/login/LoginConfig';
 import RequestConfig from 'app/main/assets/proposedManagement/RequestProvider/RequestConfig';
+import HandlingConfig from 'app/main/assets/proposedManagement/HandlingRequest/HandlingConfig';
+import ResovleRequestConfig from 'app/main/assets/proposedManagement/ResovleRequest/ResovleRequestConfig';
 
-const routeConfigs = [PossesionConfig, LoginConfig, CheckConfig, RequestConfig];
+const routeConfigs = [PossesionConfig, LoginConfig, CheckConfig, RequestConfig, HandlingConfig, ResovleRequestConfig];
 
 const routes = [
-	...FuseUtils.generateRoutesFromConfigs(routeConfigs, ['admin']),
+	...FuseUtils.generateRoutesFromConfigs(routeConfigs, ['admin', 'nganhk', 'ducpt']),
 	{
 		path: '/',
 		component: () => <Redirect to="/tai-san" />
