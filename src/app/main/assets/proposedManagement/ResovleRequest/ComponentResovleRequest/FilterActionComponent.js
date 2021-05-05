@@ -4,19 +4,15 @@
 import { IconButton, Paper } from '@material-ui/core';
 import React, { useContext } from 'react';
 import { ThemeProvider } from '@material-ui/core/styles';
-import FuseAnimate from '@fuse/core/FuseAnimate';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import { useDispatch, useSelector } from 'react-redux';
 import { DatePicker, Select } from 'antd';
-import * as moment from 'moment';
 import { selectMainTheme } from 'app/store/fuse/settingsSlice';
 import { ResovleContext } from '../ResovleRequestContext';
 import * as actions from '../../_redux/confirmAction';
 import { useStyles } from './StyleCustomAll';
 import 'antd/dist/antd.css';
-
-const { RangePicker } = DatePicker;
 
 export default function ActionComponent({ actionLoading }) {
 	const classes = useStyles();
@@ -41,7 +37,7 @@ export default function ActionComponent({ actionLoading }) {
 		e.preventDefault();
 		setPage(0);
 		dispatch(
-			actions.searchConfirms(true, status, rowPage, page, 1, sort.id, sort.direction, search, dateStart, dateEnd)
+			actions.searchConfirms(true, status, rowPage, page, 0, sort.id, sort.direction, search, dateStart, dateEnd)
 		);
 	};
 	onkeypress = e => {
@@ -54,7 +50,7 @@ export default function ActionComponent({ actionLoading }) {
 					status,
 					rowPage,
 					page,
-					1,
+					0,
 					sort.id,
 					sort.direction,
 					search,
@@ -74,7 +70,7 @@ export default function ActionComponent({ actionLoading }) {
 					status,
 					rowPage,
 					page,
-					1,
+					0,
 					sort.id,
 					sort.direction,
 					e.target.value,
@@ -84,35 +80,46 @@ export default function ActionComponent({ actionLoading }) {
 			);
 		}
 	};
-	const handleChangeFilterDate = (date, dateString) => {
+	const handleChangeFilterDateStart = date => {
+		setDateStart(date);
 		setPage(0);
 		dispatch(
-			actions.searchConfirms(
-				true,
-				status,
-				rowPage,
-				page,
-				1,
-				sort.id,
-				sort.direction,
-				search,
-				date && date[0],
-				date && date[1]
-			)
+			actions.searchConfirms(true, status, rowPage, page, 0, sort.id, sort.direction, search, date, dateEnd)
 		);
-		setDateEnd(date && date[0]);
-		setDateStart(date && date[1]);
+	};
+	const handleChangeFilterDateEnd = date => {
+		setDateEnd(date);
+		setPage(0);
+		dispatch(
+			actions.searchConfirms(true, status, rowPage, page, 0, sort.id, sort.direction, search, dateStart, date)
+		);
 	};
 	const onHandleChangeStatus = value => {
 		setStatus(value);
 		setPage(0);
 		dispatch(
-			actions.searchConfirms(true, value, rowPage, page, 1, sort.id, sort.direction, search, dateStart, dateEnd)
+			actions.searchConfirms(true, value, rowPage, page, 0, sort.id, sort.direction, search, dateStart, dateEnd)
+		);
+	};
+	const onHandleChangeType = value => {
+		dispatch(
+			actions.searchConfirms(
+				true,
+				value,
+				rowPage,
+				page,
+				value,
+				sort.id,
+				sort.direction,
+				search,
+				dateStart,
+				dateEnd
+			)
 		);
 	};
 	return (
 		<ThemeProvider theme={mainTheme}>
-			<Paper component="form" className="w-full sm:w-1/4 flex justify-between">
+			<Paper component="form" style={{ height: '33px' }} className="w-full sm:w-1/4 h-31 flex justify-between">
 				<InputBase
 					onKeyPress={e => onkeypress(e)}
 					onChange={e => onHandleChange(e)}
@@ -131,20 +138,20 @@ export default function ActionComponent({ actionLoading }) {
 				</IconButton>
 			</Paper>
 			<Paper className="w-full sm:w-1/4 flex justify-between">
-				<RangePicker
-					bordered={false}
-					defaultValue={[moment().startOf('month'), moment().endOf('month')]}
-					ranges={{
-						'Hôm nay': [moment(), moment()],
-						'Tháng này': [moment().startOf('month'), moment().endOf('month')]
-					}}
+				<DatePicker
+					onChange={handleChangeFilterDateStart}
 					format="DD/MM/YYYY"
-					onChange={handleChangeFilterDate}
-					style={{ height: '100%' }}
-					placeholder={['Ngày bắt đầu', 'Ngày kết thúc']}
+					placeholder="Ngày bắt đầu"
+					style={{ width: '100%' }}
+				/>
+				<DatePicker
+					onChange={handleChangeFilterDateEnd}
+					format="DD/MM/YYYY"
+					placeholder="Ngày kết thúc"
+					style={{ width: '100%' }}
 				/>
 			</Paper>
-			<Paper className="w-full sm:w-1/4 flex justify-between">
+			<Paper className="w-full sm:w-1/5 flex justify-between">
 				<Select
 					loading={!!actionLoading}
 					onChange={onHandleChangeStatus}
@@ -157,6 +164,20 @@ export default function ActionComponent({ actionLoading }) {
 					<Select.Option value="2">Đã duyệt</Select.Option>
 					<Select.Option value="3">Hoàn thành</Select.Option>
 					<Select.Option value="4">Từ chối</Select.Option>
+				</Select>
+			</Paper>
+			<Paper className=" sm:w-1/5  flex justify-between">
+				<Select
+					loading={!!actionLoading}
+					onChange={onHandleChangeType}
+					bordered={false}
+					defaultValue="0"
+					style={{ width: '100%' }}
+				>
+					<Select.Option value="0">Tất cả</Select.Option>
+					<Select.Option value="1">Yêu cầu cấp phát</Select.Option>
+					<Select.Option value="2">Báo hỏng</Select.Option>
+					<Select.Option value="3">Báo mất</Select.Option>
 				</Select>
 			</Paper>
 		</ThemeProvider>

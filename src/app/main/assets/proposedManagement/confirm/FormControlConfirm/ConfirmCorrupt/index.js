@@ -15,6 +15,7 @@ import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
 import { notificationConfig } from '@fuse/core/DtpConfig';
 import { Spin } from 'antd';
 import CloseIcon from '@material-ui/icons/Close';
+import * as Yup from 'yup';
 import { ConfirmContext } from '../../ConfirmContext';
 import * as actions from '../../../_redux/confirmAction';
 // import FormCustomRepairEdit from './FormCustomRepairEdit';
@@ -22,6 +23,9 @@ const initial = {
 	note: ''
 };
 export default function FormConfirmGobal({ open }) {
+	const checkValidate = Yup.object().shape({
+		note: Yup.string().required('Lí do không được để trống')
+	});
 	const dispatch = useDispatch();
 	const ConfirmGobalContext = useContext(ConfirmContext);
 	const { setReasonReject, setFormAllocation } = ConfirmGobalContext;
@@ -59,7 +63,7 @@ export default function FormConfirmGobal({ open }) {
 			</AppBar>
 			<Formik
 				enableReinitialize
-				// validationSchema={checkValidateForm}
+				validationSchema={checkValidate}
 				initialValues={initial}
 				onSubmit={values => {
 					handleSubmitApprove(values);
@@ -73,6 +77,7 @@ export default function FormConfirmGobal({ open }) {
 									<Field
 										label="Lí do không xác nhận"
 										autoFocus
+										hasFeedback
 										name="note"
 										component={InputTextAreaLg}
 										className="mx-4 mb-16"

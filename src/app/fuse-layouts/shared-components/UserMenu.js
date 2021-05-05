@@ -6,9 +6,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logoutUser } from 'app/auth/store/userSlice';
 
 function UserMenu(props) {
+	const dispatch = useDispatch();
 	const [userMenu, setUserMenu] = useState(null);
 
 	const userMenuClick = event => {
@@ -18,7 +20,10 @@ function UserMenu(props) {
 	const userMenuClose = () => {
 		setUserMenu(null);
 	};
-
+	const handlelogoutUser = () => {
+		console.log('logout');
+		dispatch(logoutUser());
+	};
 	return (
 		<>
 			<Button className="min-h-40 min-w-40 px-0 md:px-16 py-0 md:py-6" onClick={userMenuClick}>
@@ -57,7 +62,7 @@ function UserMenu(props) {
 				}}
 			>
 				<>
-					<MenuItem component={Link} to="/login" role="button">
+					<MenuItem onClick={handlelogoutUser} role="button">
 						<ListItemIcon className="min-w-40">
 							<Icon>exit_to_app</Icon>
 						</ListItemIcon>

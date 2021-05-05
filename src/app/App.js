@@ -17,6 +17,7 @@ import AppContext from './AppContext';
 import routes from './fuse-configs/routesConfig';
 import store from './store';
 import setupAxios from './store/setupAxios';
+import { Auth } from './auth';
 
 const jss = create({
 	...jssPreset(),
@@ -25,7 +26,7 @@ const jss = create({
 });
 
 const generateClassName = createGenerateClassName();
-setupAxios(axios, store);
+setupAxios(axios);
 const App = () => {
 	return (
 		<AppContext.Provider
@@ -35,17 +36,17 @@ const App = () => {
 		>
 			<StylesProvider jss={jss} generateClassName={generateClassName}>
 				<Provider store={store}>
-					<MuiPickersUtilsProvider utils={MomentUtils}>
-						{/* <Auth> */}
-						<Router history={history}>
-							<FuseAuthorization>
-								<FuseTheme>
-									<FuseLayout />
-								</FuseTheme>
-							</FuseAuthorization>
-						</Router>
-						{/* </Auth> */}
-					</MuiPickersUtilsProvider>
+					<Auth>
+						<MuiPickersUtilsProvider utils={MomentUtils}>
+							<Router history={history}>
+								<FuseAuthorization>
+									<FuseTheme>
+										<FuseLayout />
+									</FuseTheme>
+								</FuseAuthorization>
+							</Router>
+						</MuiPickersUtilsProvider>
+					</Auth>
 				</Provider>
 			</StylesProvider>
 		</AppContext.Provider>

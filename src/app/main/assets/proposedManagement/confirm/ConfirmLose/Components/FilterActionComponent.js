@@ -8,12 +8,9 @@ import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import { useDispatch } from 'react-redux';
 import { DatePicker, Select } from 'antd';
-import * as moment from 'moment';
 import { ConfirmContext } from '../../ConfirmContext';
 import * as actions from '../../../_redux/confirmAction';
 import { useStyles } from '../StyleCustomAll';
-
-const { RangePicker } = DatePicker;
 
 export default function ActionComponent({ actionLoading }) {
 	const classes = useStyles();
@@ -80,24 +77,19 @@ export default function ActionComponent({ actionLoading }) {
 			);
 		}
 	};
-	const handleChangeFilterDate = (date, dateString) => {
+	const handleChangeFilterDateStart = date => {
+		setDateStart(date);
 		setPage(0);
 		dispatch(
-			actions.searchConfirms(
-				false,
-				status,
-				rowPage,
-				page,
-				3,
-				sort.id,
-				sort.direction,
-				search,
-				date && date[0],
-				date && date[1]
-			)
+			actions.searchConfirms(false, status, rowPage, page, 3, sort.id, sort.direction, search, date, dateEnd)
 		);
-		setDateEnd(date && date[0]);
-		setDateStart(date && date[1]);
+	};
+	const handleChangeFilterDateEnd = date => {
+		setDateEnd(date);
+		setPage(0);
+		dispatch(
+			actions.searchConfirms(false, status, rowPage, page, 3, sort.id, sort.direction, search, dateStart, date)
+		);
 	};
 	const onHandleChangeStatus = value => {
 		setStatus(value);
@@ -128,18 +120,18 @@ export default function ActionComponent({ actionLoading }) {
 							<SearchIcon />
 						</IconButton>
 					</Paper>
-					<Paper className="ml-16">
-						<RangePicker
-							bordered={false}
-							defaultValue={[moment().startOf('month'), moment().endOf('month')]}
-							ranges={{
-								'Hôm nay': [moment(), moment()],
-								'Tháng này': [moment().startOf('month'), moment().endOf('month')]
-							}}
+					<Paper className="ml-16 flex flex-row w-full sm:w-1/3 justify-around ">
+						<DatePicker
+							onChange={handleChangeFilterDateStart}
 							format="DD/MM/YYYY"
-							onChange={handleChangeFilterDate}
-							style={{ height: '100%' }}
-							placeholder={['Ngày bắt đầu', 'Ngày kết thúc']}
+							placeholder="Ngày bắt đầu"
+							style={{ width: '100%' }}
+						/>
+						<DatePicker
+							onChange={handleChangeFilterDateEnd}
+							format="DD/MM/YYYY"
+							placeholder="Ngày kết thúc"
+							style={{ width: '100%' }}
 						/>
 					</Paper>
 					<Paper style={{ width: '220px' }} className="ml-16">

@@ -35,24 +35,6 @@ export default function RequestProviderPage() {
 		}),
 		shallowEqual
 	);
-	const handleSubmitForm = (values, assets) => {
-		// dispatch(actions.requestAssetFromUserAction(values, assets)).then(data => {
-		// 	if (data && !data.isError) {
-		// 		notificationConfig('success', 'Thành công!', 'Yêu cầu thành công !!');
-		// 		setInitialState({
-		// 			...initialState,
-		// 			locationUse: '',
-		// 			reason: '',
-		// 			assetsCategory: 'N',
-		// 			plan: true,
-		// 			supplier: ''
-		// 		});
-		// 	} else {
-		// 		// notificationConfig('warning', 'Thất bại!', 'Yêu cầu thất bại vui lòng thử lại');
-		// 	}
-		// });
-		setDataSource([]);
-	};
 	return (
 		<FusePageCardedFix
 			classes={{
@@ -68,7 +50,6 @@ export default function RequestProviderPage() {
 					initialState={initialState}
 					setInitialState={setInitialState}
 					actionLoading={actionLoading}
-					handleSubmitForm={handleSubmitForm}
 					entitiesInformation={entitiesInformation}
 				/>
 			}

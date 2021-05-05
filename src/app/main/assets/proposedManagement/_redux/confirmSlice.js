@@ -85,7 +85,6 @@ export const confirmSlice = createSlice({
 		},
 		approveUpdate: (state, action) => {
 			const { dataReq } = action.payload;
-			console.log(dataReq);
 			state.error = null;
 			state.actionLoading = false;
 			state.entities = state.entities.map(entity => {
@@ -94,6 +93,14 @@ export const confirmSlice = createSlice({
 				}
 				return entity;
 			});
+		},
+		approveUpdateResolve: (state, action) => {
+			const { requestID } = action.payload;
+			state.error = null;
+			state.actionLoading = false;
+			const { entities } = state;
+			const newEntities = entities.filter(item => item.requestID !== requestID);
+			state.entities = newEntities;
 		}
 	}
 });

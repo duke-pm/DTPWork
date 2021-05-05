@@ -9,12 +9,24 @@ export default function ResovleRequestContext({ children }) {
 	const [dateEnd, setDateEnd] = useState('');
 	const [status, setStatus] = useState(0);
 	const [search, setSearch] = useState('');
+	const [diaglogAllocation, setDialogAllocation] = useState(false);
+	const [diaglogCorrupt, setDialogCorrupt] = useState(false);
+	const [typeDialogCorrupt, setTypeDialogCorrupt] = useState(false);
+	const [diaglogConfirmGobal, setDialogConfirmGobal] = useState(false);
 	const [sort, setSort] = useState({
 		direction: 'desc',
 		id: null
 	});
 	const valueMemo = useMemo(() => {
 		return {
+			diaglogAllocation,
+			setDialogAllocation,
+			diaglogCorrupt,
+			setDialogCorrupt,
+			typeDialogCorrupt,
+			setTypeDialogCorrupt,
+			diaglogConfirmGobal,
+			setDialogConfirmGobal,
 			search,
 			setSearch,
 			dateEnd,
@@ -44,7 +56,15 @@ export default function ResovleRequestContext({ children }) {
 		search,
 		setSearch,
 		sort,
-		setSort
+		setSort,
+		diaglogAllocation,
+		setDialogAllocation,
+		diaglogCorrupt,
+		setDialogCorrupt,
+		typeDialogCorrupt,
+		setTypeDialogCorrupt,
+		diaglogConfirmGobal,
+		setDialogConfirmGobal
 	]);
 	return <ResovleContext.Provider value={valueMemo}>{children}</ResovleContext.Provider>;
 }

@@ -2,9 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import 'firebase/auth';
 import history from '@history';
 import { setInitialSettings } from 'app/store/fuse/settingsSlice';
-import auth0Service from 'app/services/auth0Service';
-import firebaseService from 'app/services/firebaseService';
-import jwtService from 'app/services/jwtService';
+import { removeCookies, removeLocalStorage } from '@fuse/core/DtpConfig';
 
 export const setUserData = user => async (dispatch, getState) => {
 	/*
@@ -24,31 +22,16 @@ export const setUserData = user => async (dispatch, getState) => {
 };
 
 export const logoutUser = () => async (dispatch, getState) => {
-	const { user } = getState().auth;
-
-	if (!user.role || user.role.length === 0) {
-		// is guest
-		return null;
-	}
+	removeLocalStorage();
+	removeCookies();
+	// if (!user.role || user.role.length === 0) {
+	// 	// is guest
+	// 	return null;
+	// }
 
 	history.push({
-		pathname: '/'
+		pathname: '/login'
 	});
-
-	switch (user.from) {
-		case 'firebase': {
-			firebaseService.signOut();
-			break;
-		}
-		case 'auth0': {
-			auth0Service.logout();
-			break;
-		}
-		default: {
-			jwtService.logout();
-		}
-	}
-
 	dispatch(setInitialSettings());
 
 	return dispatch(userLoggedOut());

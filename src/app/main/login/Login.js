@@ -8,7 +8,6 @@ import Formsy from 'formsy-react';
 import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { Button, Icon, IconButton, InputAdornment } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { submitLogin } from 'app/auth/store/loginSlice';
@@ -62,7 +61,6 @@ function Login() {
 	}
 	const dispatch = useDispatch();
 	function handleSubmit(model) {
-		console.log(model);
 		dispatch(submitLogin(model));
 	}
 	return (
@@ -173,18 +171,6 @@ function Login() {
 								</Formsy>
 							</div>
 						</CardContent>
-
-						<div className="flex flex-col items-center justify-center pb-32">
-							<div>
-								<span className="font-medium mr-8">Don't have an account?</span>
-								<Link className="font-medium" to="/register">
-									Register
-								</Link>
-							</div>
-							<Link className="font-medium mt-8" to="/">
-								Back to Dashboard
-							</Link>
-						</div>
 					</Card>
 
 					<div

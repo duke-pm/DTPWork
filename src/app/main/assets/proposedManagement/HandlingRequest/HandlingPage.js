@@ -1,6 +1,6 @@
 import FusePageCardedFix from '@fuse/core/FusePageCarded/FusePageCardedFix';
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import HandlingBody from './ComponentHandlingRequest/HandlingBody';
 import HandlingHeader from './ComponentHandlingRequest/HandlingHeader';
 

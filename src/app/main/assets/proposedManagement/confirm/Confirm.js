@@ -1,8 +1,8 @@
 import { Tabs, Tab, Box, Typography } from '@material-ui/core';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import FusePageCarded from '@fuse/core/FusePageCarded';
-import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import { ConfirmContext } from './ConfirmContext';
 import ConfirmAll from './ConfirmAll';
 import ConfirmDamaged from './ConfirmDamaged';
@@ -10,7 +10,6 @@ import ConfirmLose from './ConfirmLose';
 import FormAllocation from './FormControlConfirm/Allocation';
 import FormConfirmGobal from './FormControlConfirm/ConfirmCorrupt';
 import FormCustomCorrupt from './FormControlConfirm/FormCustomCorrupt';
-import * as actions from '../_redux/confirmAction';
 
 function a11yProps(index) {
 	return {

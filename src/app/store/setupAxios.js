@@ -1,6 +1,6 @@
 import { getToken } from '@fuse/core/DtpConfig';
 
-export default function setupAxios(axios, store) {
+export default function setupAxios(axios) {
 	const token = getToken();
 	axios.interceptors.request.use(
 		config => {

@@ -1,4 +1,4 @@
-import { IconButton, InputBase, Paper, Button } from '@material-ui/core';
+import { IconButton, InputBase, Paper } from '@material-ui/core';
 import React, { useContext } from 'react';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import SearchIcon from '@material-ui/icons/Search';

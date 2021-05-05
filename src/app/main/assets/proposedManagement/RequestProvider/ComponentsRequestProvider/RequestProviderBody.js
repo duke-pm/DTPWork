@@ -156,7 +156,7 @@ export default function RequestProviderBody({
 		<>
 			<Formik
 				enableReinitialize
-				// validationSchema={validateSchema}
+				validationSchema={validateSchema}
 				initialValues={initialState}
 				onSubmit={(values, { resetForm }) => {
 					dispatch(actions.requestAssetFromUserAction(values, dataSource)).then(data => {

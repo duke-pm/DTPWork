@@ -58,8 +58,8 @@ export const searchConfirms = (
 		StatusID: value || 0,
 		PageSize: limit || 25,
 		PageNum: page || 1,
-		FromDate: FromDate ? moment(FromDate).format('YYYY/MM/DD') : moment().startOf('month').format('YYYY/MM/DD'),
-		ToDate: ToDate ? moment(ToDate).format('YYYY/MM/DD') : moment().endOf('month').format('YYYY/MM/DD'),
+		FromDate: FromDate ? moment(FromDate).format('YYYY/MM/DD') : null,
+		ToDate: ToDate ? moment(ToDate).format('YYYY/MM/DD') : null,
 		RequestTypeID: typeID,
 		SortColumn: id || null,
 		SortDirection: direction || null,
@@ -193,7 +193,7 @@ export const requestApprove = (data, status, values) => dispatch => {
 		RequestTypeID: data.requestTypeID,
 		PersonRequestID: data.personRequestID,
 		Status: status,
-		Reason: values.note || '',
+		Reason: values && values.note ? values.note : '',
 		Lang: 'vi'
 	};
 	dispatch(actions.startCall({ callType: callTypes.action }));
@@ -214,10 +214,30 @@ export const requestApprove = (data, status, values) => dispatch => {
 			dispatch(actions.catchError({ callType: callTypes.action }));
 		});
 };
-// export const updateTypeConfirm = data => dispatch => {
-// 	dispatch(actions.startCall({ callTypes: callTypes.action }));
-// 	return requestFrom
-// 		.approveToUserApi(data)
-// 		.then(() => {})
-// 		.catch(err => {});
-// };
+export const requestApproveResolve = (data, status, values) => dispatch => {
+	const dataReq = {
+		RequestID: data.requestID,
+		RequestTypeID: data.requestTypeID,
+		PersonRequestID: data.personRequestID,
+		Status: status,
+		Reason: values && values.note ? values.note : '',
+		Lang: 'vi'
+	};
+	dispatch(actions.startCall({ callType: callTypes.action }));
+	return requestFrom
+		.RequestApprove(dataReq)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				const requestID = dataReq.RequestID;
+				dispatch(actions.approveUpdateResolve({ requestID }));
+			} else {
+				notificationConfig('warning', 'Thất bại', data.errorMessage);
+				dispatch(actions.catchError({ callType: callTypes.action }));
+			}
+			return data;
+		})
+		.catch(err => {
+			dispatch(actions.catchError({ callType: callTypes.action }));
+		});
+};

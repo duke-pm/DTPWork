@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Dialog, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import FormCustomCorruptEdit from './FormCustomCorruptEdit';
 import { ConfirmContext } from '../../ConfirmContext';
 
@@ -32,6 +32,7 @@ export default function FormCustomCorrupt({ handleClose, open }) {
 				</Toolbar>
 			</AppBar>
 			<FormCustomCorruptEdit
+				type={type}
 				actionLoading={actionLoading}
 				setFormControl={setFormControl}
 				entitiesEdit={entitiesEdit}

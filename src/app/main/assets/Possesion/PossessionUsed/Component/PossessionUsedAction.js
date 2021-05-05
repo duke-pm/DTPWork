@@ -12,6 +12,12 @@ export const PossesionActionUsed = props => {
 				</ListItemIcon>
 				<ListItemText primary="Thu hồi tài sản" />
 			</MenuItem>
+			<MenuItem onClick={() => props.handleOpenFromService(items)} role="button">
+				<ListItemIcon className="min-w-40">
+					<Icon>build</Icon>
+				</ListItemIcon>
+				<ListItemText primary="Sửa chữa bảo hành tài sản" />
+			</MenuItem>
 		</div>
 	);
 };

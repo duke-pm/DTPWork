@@ -1,8 +1,8 @@
-import { Button, IconButton, InputBase, Paper } from '@material-ui/core';
+import { IconButton, InputBase, Paper } from '@material-ui/core';
 import React, { useContext } from 'react';
 import FuseAnimate from '@fuse/core/FuseAnimate';
-import { makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
+import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import * as actions from '../../_redux/possesionActions';
 import { PossessionContext } from '../../PossessionContext';
@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
 		margin: 4
 	}
 }));
-export default function ActionComponent(props, { handleOpenForm }) {
+export default function ActionComponentFilter(props, { handleOpenForm }) {
 	const classes = useStyles(props);
 	const { value } = props;
 	const dispatch = useDispatch();
@@ -34,12 +34,13 @@ export default function ActionComponent(props, { handleOpenForm }) {
 	const { search, setSearch, rowPage, page, setPage } = possesionConext;
 	const handleSearch = e => {
 		e.preventDefault();
+		setPage(0);
 		dispatch(actions.searchPossesion(value, search, rowPage, page));
 	};
 	onkeypress = e => {
 		if (e.key === 'Enter') {
-			e.preventDefault();
 			setPage(0);
+			e.preventDefault();
 			dispatch(actions.searchPossesion(value, search, rowPage, page));
 		}
 	};
@@ -53,12 +54,12 @@ export default function ActionComponent(props, { handleOpenForm }) {
 	return (
 		<FuseAnimate animation="transition.slideLeftIn" delay={300}>
 			<div className="flex flex-col sm:flex-row justify-between">
-				{/* <div className="flex flex-col sm:flex-row  justify-around"> */}
 				<Paper component="form" className="w-full sm:w-1/4 flex justify-between">
 					<InputBase
 						onKeyPress={e => onkeypress(e)}
 						onChange={e => onHandleChange(e)}
 						className={classes.input}
+						value={search}
 						placeholder="Tìm kiếm"
 						inputProps={{ 'aria-label': 'search google maps' }}
 					/>
@@ -71,26 +72,7 @@ export default function ActionComponent(props, { handleOpenForm }) {
 						<SearchIcon />
 					</IconButton>
 				</Paper>
-				<div className="flex mt-8 sm:mt-0 flex-row sm:flex-row">
-					<Button
-						variant="contained"
-						className="sm:ml-16 ml-0 font-sans h-26"
-						color="primary"
-						component="span"
-					>
-						Báo hỏng (0)
-					</Button>
-					<Button
-						variant="contained"
-						className="sm:ml-16 ml-8 font-sans h-26"
-						color="secondary"
-						component="span"
-					>
-						Báo mất(0)
-					</Button>
-				</div>
 			</div>
-			{/* </div> */}
 		</FuseAnimate>
 	);
 }

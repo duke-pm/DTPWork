@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 /* eslint-disable camelcase */
 const baseUrl = process.env.REACT_APP_API_URL;
 const url = 'api/User/Login';
+const urlRefreshToken = 'api/User/RefreshToken';
 
 class JwtService extends FuseUtils.EventEmitter {
 	init() {
@@ -21,7 +22,7 @@ class JwtService extends FuseUtils.EventEmitter {
 				return new Promise((resolve, reject) => {
 					if (err.response.status === 401 && err.config && !err.config.__isRetryRequest) {
 						// if you ever get an unauthorized response, logout the user
-						this.emit('onAutoLogout', 'Invalid access_token');
+						this.emit('onAutoLogout', 'Token không khả dụng');
 						this.setSession(null);
 					}
 					throw err;
@@ -88,21 +89,30 @@ class JwtService extends FuseUtils.EventEmitter {
 		});
 	};
 
-	signInWithToken = () => {
+	signInWithToken = refresToken => {
+		const dataReq = {
+			RefreshToken: refresToken,
+			Lang: 'vi'
+		};
+		console.log(dataReq);
 		return new Promise((resolve, reject) => {
-			axios
-				.get('/api/auth/access-token', {
-					data: {
-						access_token: this.getAccessToken()
-					}
-				})
+			axios({
+				method: 'POST',
+				url: `${baseUrl}/${urlRefreshToken}`,
+				data: dataReq
+			})
 				.then(response => {
-					if (response.data.user) {
-						this.setSession(response.data.access_token, response.data.userName);
-						resolve(response.data.user);
+					if (response.data.data) {
+						this.setCookie(
+							response.data.data.access_token,
+							response.data.data.userName,
+							response.data.data.refresh_token,
+							response.data.data.expires_in
+						);
+						this.setSession(response.data.data);
+						resolve(response.data.data);
 					} else {
-						this.logout();
-						reject(new Error('Failed to login with token.'));
+						reject(response.data.error);
 					}
 				})
 				.catch(error => {
@@ -128,6 +138,7 @@ class JwtService extends FuseUtils.EventEmitter {
 
 	setCookie = (access_token, role, refresh_token, expires_in) => {
 		if (access_token) {
+			console.log(access_token);
 			Cookies.set('token', access_token, { expires: 20 });
 			Cookies.set('role', role, { expires: 20 });
 			Cookies.set('refresh_token', refresh_token, { expires: expires_in });

@@ -4,8 +4,8 @@ import { Formik, Form, Field } from 'formik';
 import DateCustom from '@fuse/CustomForm/Date';
 import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
 import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
-import InputCustom from '@fuse/CustomForm/Input';
 import InputCurrency from '@fuse/CustomForm/InputCurrency';
+import { AntInput } from '@fuse/CustomForm/CreateAntField';
 
 const initial = {
 	date: '',
@@ -69,16 +69,16 @@ export default function FormCustomRepairEdit() {
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 mb-16 gap-8 ">
 									<Field
-										label="Tên đơn vị sửa chữa, bảo hành (*)"
+										label="Tên đơn vị sửa chữa, bảo hành"
 										name="nameService"
-										type="text"
-										component={InputCustom}
+										hasFeedback
+										component={AntInput}
 										className="mx-4 mb-16"
 										variant="outlined"
 									/>
 									<Field
-										label="Chi phí dự kiến (*)"
-										autoFocus
+										label="Chi phí dự kiến"
+										hasFeedback
 										name="price"
 										type="text"
 										component={InputCurrency}
@@ -90,7 +90,6 @@ export default function FormCustomRepairEdit() {
 									<div className="flex flex-col">
 										<Field
 											label="Lí do sửa chữa,bảo hành"
-											autoFocus
 											name="note"
 											row={4}
 											component={InputTextAreaLg}
@@ -98,9 +97,9 @@ export default function FormCustomRepairEdit() {
 											variant="outlined"
 										/>
 										<Field
-											label="Ngày sửa chữa, bảo hành (*) "
-											autoFocus
+											label="Ngày sửa chữa, bảo hành"
 											name="date"
+											hasFeedback
 											component={DateCustom}
 											className="mx-4 mb-16"
 											variant="outlined"
@@ -110,7 +109,7 @@ export default function FormCustomRepairEdit() {
 										label="File Đính kèm"
 										autoFocus
 										name="file"
-										style={{ height: '35px' }}
+										style={{ height: '48px' }}
 										component={FileCustomVersion2}
 										className="mx-4 mb-16"
 										variant="outlined"
@@ -119,22 +118,10 @@ export default function FormCustomRepairEdit() {
 							</div>
 						</DialogContent>
 						<DialogActions>
-							<Button
-								autoFocus
-								type="submit"
-								className="h-26 font-sans"
-								variant="contained"
-								color="secondary"
-							>
+							<Button type="submit" className="h-26 font-sans" variant="contained" color="secondary">
 								Lưu
 							</Button>
-							<Button
-								autoFocus
-								type="submit"
-								className="h-26 font-sans"
-								variant="contained"
-								color="primary"
-							>
+							<Button type="button" className="h-26 font-sans" variant="contained" color="primary">
 								Hủy
 							</Button>
 						</DialogActions>

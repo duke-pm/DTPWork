@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { Dialog, AppBar, Toolbar, Typography } from '@material-ui/core';
+import { Dialog, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
 import { PossessionContext } from '../../PossessionContext';
 import FormCustomCycleEdit from './FormCustomCycleEdit';
 
@@ -11,12 +12,14 @@ export default function FormControlCycle() {
 			fullWidth
 			style={{ zIndex: 20 }}
 			maxWidth="md"
-			onClose={handleCloseFormCycle}
 			aria-labelledby="customized-dialog-title"
 			open={formCycle}
 		>
 			<AppBar position="static" className="shadow-md">
 				<Toolbar className="flex w-full">
+					<IconButton edge="start" color="inherit" onClick={handleCloseFormCycle} aria-label="close">
+						<CloseIcon />
+					</IconButton>
 					<Typography variant="subtitle1" color="inherit">
 						Đưa vào sử dụng lại
 					</Typography>

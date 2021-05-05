@@ -23,7 +23,7 @@ export default function PossessionUsed(props) {
 	const possessionContext = useContext(PossessionContext);
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;
-	const { rowPage, setRowPage, page, setPage, search, value, sort, setSort } = possessionContext;
+	const { rowPage, setRowPage, page, setPage, search, value, sort, setSort, setFormService } = possessionContext;
 	const handleOpenFormRequest = () => setFormRequest(true);
 	const handleClose = () => setOpen(false);
 	useEffect(() => {
@@ -32,6 +32,10 @@ export default function PossessionUsed(props) {
 	const handleOpenForm = items => {
 		dispatch(actions.setTaskEditPossesionAll(items));
 		setOpen(true);
+	};
+	const handleOpenFromService = items => {
+		dispatch(actions.setTaskEditPossesionAll(items));
+		setFormService(true);
 	};
 	const handleRowChange = e => {
 		setRowPage(parseInt(e.target.value, 10));
@@ -70,7 +74,11 @@ export default function PossessionUsed(props) {
 							<Paper className={classes.rootPaper}>
 								<Table className={classes.table} stickyHeader>
 									<TableHeaderUsed createSortHandler={createSortHandler} sort={sort} />
-									<TableBodyUsed entities={entities} handleOpenForm={handleOpenForm} />
+									<TableBodyUsed
+										handleOpenFromService={handleOpenFromService}
+										entities={entities}
+										handleOpenForm={handleOpenForm}
+									/>
 								</Table>
 								{(entities && entities.length === 0) || lastErrors ? (
 									<FuseAnimate delay={300}>

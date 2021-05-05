@@ -1,7 +1,7 @@
 import React from 'react';
 import { DialogContent, DialogActions, Button } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
 import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
 import * as momemt from 'moment';
@@ -10,18 +10,15 @@ import { Spin } from 'antd';
 import * as actions from '../../../_redux/confirmAction';
 
 const initial = {
-	date: '',
-	nameService: '',
-	note: '',
-	price: '',
-	file: ''
+	note: ''
 };
 export default function FormCustomCorruptEdit({
 	handleOpenFormReject,
 	entitiesEdit,
 	handleClose,
 	setFormControl,
-	actionLoading
+	actionLoading,
+	type
 }) {
 	const dispatch = useDispatch();
 	return (
@@ -47,7 +44,6 @@ export default function FormCustomCorruptEdit({
 							<div className="px-16 sm:px-24">
 								<div className="flex justify-between flex-row">
 									<h5 className="font-extrabold">Thông tin tài sản.</h5>
-									<span className="border-b-1 mt-3 ml-6 border-fuchsia w-3/6 sm:w-5/6 h-10" />
 								</div>
 								<div className=" grid grid-cols-1 sm:grid-cols-2 gap-8">
 									<div className="flex-row justify-around flex ">
@@ -87,8 +83,9 @@ export default function FormCustomCorruptEdit({
 							</div>
 							<div className="px-16 sm:px-24">
 								<div className="flex justify-between flex-row">
-									<h5 className="font-extrabold">Thông tin tài sản bị hỏng/mất.</h5>
-									<span className="border-b-1 mt-3 ml-2 border-fuchsia w-auto sm:w-9/12 h-10" />
+									<h5 className="font-extrabold">
+										Thông tin tài sản bị {type === 'lose' ? ' mất' : 'hỏng'}
+									</h5>
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 mb-16 gap-8 ">
 									<div className="flex flex-col">
