@@ -126,7 +126,7 @@ export default function FormCustomEdit({
 									<h5 className="font-extrabold">Danh sách tài sản yêu cầu.</h5>
 								</div>
 								<Table
-									rowKey="requestID"
+									rowKey="descr"
 									className="time-table-row-select"
 									columns={columns}
 									bordered

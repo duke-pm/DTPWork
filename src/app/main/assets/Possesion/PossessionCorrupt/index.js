@@ -1,5 +1,5 @@
 /* eslint-disable no-shadow */
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Paper, Table, TableContainer } from '@material-ui/core';
 import Panigation from '@fuse/core/FusePanigate';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
@@ -22,21 +22,29 @@ export default function PossessionCorrupt(props) {
 	const { listloading, entities, lastErrors, total_count } = currentState;
 	const possessionContext = useContext(PossessionContext);
 	const {
-		handleOpenFormCycle,
 		rowPage,
 		setRowPage,
 		page,
 		setPage,
 		search,
 		setLiquiAsset,
-		setFormService
+		setFormService,
+		setTypeLiquiAsset,
+		typeSetFormService
 	} = possessionContext;
 	const handleClose = () => {
 		setOpen(false);
 	};
-	const handleOpenFormCycleView = type => handleOpenFormCycle(type);
-	const handleOpenFormLiquiAsset = () => setLiquiAsset(true);
-	const handleOpenFormService = () => setFormService(true);
+	const handleOpenFormLiquiAsset = item => {
+		setLiquiAsset(true);
+		setTypeLiquiAsset('damage');
+		dispatch(actions.setTaskEditPossesionAll(item));
+	};
+	const handleOpenFormService = item => {
+		setFormService(true);
+		typeSetFormService('damage');
+		dispatch(actions.setTaskEditPossesionAll(item));
+	};
 	const handleRowChange = e => {
 		setRowPage(parseInt(e.target.value, 10));
 		setPage(0);
@@ -47,6 +55,9 @@ export default function PossessionCorrupt(props) {
 		setPage(newPage);
 		dispatch(actions.fetchPossesionAll(value, rowPage, page + 1, search));
 	};
+	useEffect(() => {
+		dispatch(actions.fetchPossesionAll(4));
+	}, [dispatch]);
 	const classes = useStyles(props);
 	if (listloading) {
 		return <FuseLoading />;
@@ -68,7 +79,6 @@ export default function PossessionCorrupt(props) {
 										classes={classes}
 										handleOpenFormService={handleOpenFormService}
 										handleOpenFormLiquiAsset={handleOpenFormLiquiAsset}
-										handleOpenFormCycleView={handleOpenFormCycleView}
 									/>
 								</Table>
 								{(entities && entities.length === 0) || lastErrors ? (

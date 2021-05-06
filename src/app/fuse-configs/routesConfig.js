@@ -11,7 +11,7 @@ import ResovleRequestConfig from 'app/main/assets/proposedManagement/ResovleRequ
 const routeConfigs = [PossesionConfig, LoginConfig, CheckConfig, RequestConfig, HandlingConfig, ResovleRequestConfig];
 
 const routes = [
-	...FuseUtils.generateRoutesFromConfigs(routeConfigs, ['admin', 'nganhk', 'ducpt']),
+	...FuseUtils.generateRoutesFromConfigs(routeConfigs, ['admin', 'nganhk', 'ducpt', 'huyenndh', 'vyttt']),
 	{
 		path: '/',
 		component: () => <Redirect to="/tai-san" />

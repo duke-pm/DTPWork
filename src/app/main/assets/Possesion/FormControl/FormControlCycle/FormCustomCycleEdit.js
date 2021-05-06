@@ -6,23 +6,34 @@ import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
 import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
 import InputCurrency from '@fuse/CustomForm/InputCurrency';
 import { AntInput } from '@fuse/CustomForm/CreateAntField';
+import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
+import * as Yup from 'yup';
+import * as moment from 'moment';
+import { Spin } from 'antd';
 
 const initial = {
 	date: '',
 	nameService: '',
 	note: '',
 	price: '',
-	file: ''
+	file: '',
+	dateEnd: ''
 };
-export default function FormCustomCycleEdit({ handleClose }) {
+export default function FormCustomCycleEdit({ handleClose, entitiesEdit, handleSubmitCycle, actionLoading }) {
+	const validationSchema = Yup.object().shape({
+		dateEnd: Yup.string().required('Ngày kết thúc sửa chữa, bảo hành không được để trống'),
+		date: Yup.string().required('Ngày đưa vào sử dụng lại không được để trống'),
+		nameService: Yup.string().required('Tên sửa chữa, bảo hành không được để trống'),
+		price: Yup.string().required('Chi phí thực tế không được để trống')
+	});
 	return (
 		<>
 			<Formik
 				enableReinitialize
-				// validationSchema={checkValidateForm}
+				validationSchema={validationSchema}
 				initialValues={initial}
 				onSubmit={values => {
-					// saveForm(values);
+					handleSubmitCycle(values);
 				}}
 			>
 				{({ handleSubmit, isSubmitting }) => (
@@ -42,9 +53,9 @@ export default function FormCustomCycleEdit({ handleClose }) {
 											<p className="p-6"> Mô tả </p>
 										</div>
 										<div className="flex flex-col sm:mr-98 mr-auto">
-											<p className="p-6 font-extrabold"> Mã sản phẩm </p>
-											<p className="p-6 font-extrabold"> Tên sản phẩm </p>
-											<p className="p-6 font-extrabold"> Nhóm sản phẩm </p>
+											<p className="p-6 font-extrabold"> {entitiesEdit.assetCode || ''} </p>
+											<p className="p-6 font-extrabold"> {entitiesEdit.assetName || ''} </p>
+											<p className="p-6 font-extrabold"> {entitiesEdit.groupName || ''} </p>
 											<p className="p-6 font-extrabold"> Mô tả </p>
 										</div>
 									</div>
@@ -55,9 +66,15 @@ export default function FormCustomCycleEdit({ handleClose }) {
 											<p className="p-6"> Tình trạng </p>
 										</div>
 										<div className="flex flex-col sm:mr-98 mr-auto">
-											<p className="p-6 font-extrabold"> Ngày mua </p>
-											<p className="p-6 font-extrabold"> Nguyên giá </p>
-											<p className="p-6 font-extrabold"> Tình trạng </p>
+											<p className="p-6 font-extrabold">
+												{' '}
+												{moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY') || ''}{' '}
+											</p>
+											<p className="p-6 font-extrabold">
+												{' '}
+												{currencyFormat(entitiesEdit.originalPrice) || ''}{' '}
+											</p>
+											<p className="p-6 font-extrabold"> {entitiesEdit.statusName || ''} </p>
 										</div>
 									</div>
 								</div>
@@ -70,7 +87,7 @@ export default function FormCustomCycleEdit({ handleClose }) {
 									<div className="flex flex-col">
 										<Field
 											label="Ngày kết thúc sửa chữa, bảo hành"
-											name="date"
+											name="dateEnd"
 											hasFeedback
 											component={DateCustom}
 											className="mx-4 mb-16"
@@ -79,6 +96,7 @@ export default function FormCustomCycleEdit({ handleClose }) {
 										<Field
 											label="Tên đơn vị sửa chữa, bảo hành"
 											hasFeedback
+											type="text"
 											name="nameService"
 											component={AntInput}
 											className="mx-4 mb-16"
@@ -129,9 +147,14 @@ export default function FormCustomCycleEdit({ handleClose }) {
 							</div>
 						</DialogContent>
 						<DialogActions>
-							<Button type="submit" className="h-26 font-sans" variant="contained" color="secondary">
-								Lưu
-							</Button>
+							{actionLoading ? (
+								<Spin />
+							) : (
+								<Button type="submit" className="h-26 font-sans" variant="contained" color="secondary">
+									Lưu
+								</Button>
+							)}
+
 							<Button
 								onClick={handleClose}
 								type="button"

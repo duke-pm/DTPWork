@@ -1,12 +1,31 @@
 import React, { useContext } from 'react';
 import { Dialog, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+import { notificationConfig } from '@fuse/core/DtpConfig';
 import { PossessionContext } from '../../PossessionContext';
 import FormCustomCycleEdit from './FormCustomCycleEdit';
+import * as actions from '../../_redux/possesionActions';
 
 export default function FormControlCycle() {
+	const dispatch = useDispatch();
 	const possessionContext = useContext(PossessionContext);
 	const { formCycle, handleCloseFormCycle } = possessionContext;
+	const { entitiesEdit, actionLoading } = useSelector(
+		state => ({
+			entitiesEdit: state.possesion.entitiesEdit,
+			actionLoading: state.possesion.actionLoading
+		}),
+		shallowEqual
+	);
+	const handleSubmitCycle = values => {
+		dispatch(actions.assetReuse(values, entitiesEdit)).then(data => {
+			if (data && !data.isError) {
+				notificationConfig('success', 'Thành công', 'Đưa vào sử dụng lại thành công');
+				handleCloseFormCycle();
+			}
+		});
+	};
 	return (
 		<Dialog
 			fullWidth
@@ -25,7 +44,12 @@ export default function FormControlCycle() {
 					</Typography>
 				</Toolbar>
 			</AppBar>
-			<FormCustomCycleEdit handleClose={handleCloseFormCycle} />
+			<FormCustomCycleEdit
+				actionLoading={actionLoading}
+				handleSubmitCycle={handleSubmitCycle}
+				entitiesEdit={entitiesEdit}
+				handleClose={handleCloseFormCycle}
+			/>
 		</Dialog>
 	);
 }

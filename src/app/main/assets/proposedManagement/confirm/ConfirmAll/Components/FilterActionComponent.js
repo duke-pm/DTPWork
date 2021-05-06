@@ -8,6 +8,7 @@ import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import { useDispatch } from 'react-redux';
 import { DatePicker, Select } from 'antd';
+import * as moment from 'moment';
 import { ConfirmContext } from '../../ConfirmContext';
 import * as actions from '../../../_redux/confirmAction';
 import { useStyles } from '../StyleCustomAll';
@@ -124,12 +125,14 @@ export default function ActionComponent({ actionLoading }) {
 						<DatePicker
 							onChange={handleChangeFilterDateStart}
 							format="DD/MM/YYYY"
+							defaultValue={moment().startOf('month')}
 							placeholder="Ngày bắt đầu"
 							style={{ width: '100%' }}
 						/>
 						<DatePicker
 							onChange={handleChangeFilterDateEnd}
 							format="DD/MM/YYYY"
+							defaultValue={moment().endOf('month')}
 							placeholder="Ngày kết thúc"
 							style={{ width: '100%' }}
 						/>

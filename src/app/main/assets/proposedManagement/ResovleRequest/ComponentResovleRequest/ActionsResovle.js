@@ -20,12 +20,14 @@ export default function ActionsResovle({ handleOpenDialog, items }) {
 					<ListItemText primary="Xác nhận báo hỏng" />
 				</MenuItem>
 			) : (
-				<MenuItem onClick={() => handleOpenDialog('lost', items)} role="button">
-					<ListItemIcon className="min-w-40">
-						<Icon>warning</Icon>
-					</ListItemIcon>
-					<ListItemText primary="Xác nhận báo mất" />
-				</MenuItem>
+				items.requestTypeID === 3 && (
+					<MenuItem onClick={() => handleOpenDialog('lost', items)} role="button">
+						<ListItemIcon className="min-w-40">
+							<Icon>warning</Icon>
+						</ListItemIcon>
+						<ListItemText primary="Xác nhận báo mất" />
+					</MenuItem>
+				)
 			)}
 		</>
 	);

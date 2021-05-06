@@ -76,6 +76,7 @@ export default function RequestResovelTable(props) {
 		});
 	};
 	const handleOpenDialog = (type, data) => {
+		console.log({ type, data });
 		switch (type) {
 			case 'allocation':
 				setDialogAllocation(true);
@@ -86,10 +87,10 @@ export default function RequestResovelTable(props) {
 				dispatch(action.fetchDataConfirm(data));
 				setTypeDialogCorrupt('damage');
 				break;
-			case 'lose':
+			case 'lost':
 				setDialogCorrupt(true);
 				dispatch(action.fetchDataConfirm(data));
-				setTypeDialogCorrupt('lose');
+				setTypeDialogCorrupt('lost');
 				break;
 			default:
 				return false;

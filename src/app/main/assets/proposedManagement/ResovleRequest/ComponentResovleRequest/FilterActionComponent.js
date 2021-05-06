@@ -9,6 +9,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import { useDispatch, useSelector } from 'react-redux';
 import { DatePicker, Select } from 'antd';
 import { selectMainTheme } from 'app/store/fuse/settingsSlice';
+import * as moment from 'moment';
 import { ResovleContext } from '../ResovleRequestContext';
 import * as actions from '../../_redux/confirmAction';
 import { useStyles } from './StyleCustomAll';
@@ -140,12 +141,14 @@ export default function ActionComponent({ actionLoading }) {
 			<Paper className="w-full sm:w-1/4 flex justify-between">
 				<DatePicker
 					onChange={handleChangeFilterDateStart}
+					defaultValue={moment().startOf('month')}
 					format="DD/MM/YYYY"
 					placeholder="Ngày bắt đầu"
 					style={{ width: '100%' }}
 				/>
 				<DatePicker
 					onChange={handleChangeFilterDateEnd}
+					defaultValue={moment().endOf('month')}
 					format="DD/MM/YYYY"
 					placeholder="Ngày kết thúc"
 					style={{ width: '100%' }}
@@ -156,7 +159,7 @@ export default function ActionComponent({ actionLoading }) {
 					loading={!!actionLoading}
 					onChange={onHandleChangeStatus}
 					bordered={false}
-					defaultValue="0"
+					placeholder="Tìm kiếm theo trạng thái"
 					style={{ width: '100%' }}
 				>
 					<Select.Option value="0">Tất cả</Select.Option>
@@ -169,9 +172,9 @@ export default function ActionComponent({ actionLoading }) {
 			<Paper className=" sm:w-1/5  flex justify-between">
 				<Select
 					loading={!!actionLoading}
+					placeholder="Tìm kiếm theo loại yêu cầu"
 					onChange={onHandleChangeType}
 					bordered={false}
-					defaultValue="0"
 					style={{ width: '100%' }}
 				>
 					<Select.Option value="0">Tất cả</Select.Option>

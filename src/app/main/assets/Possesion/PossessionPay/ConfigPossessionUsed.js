@@ -1,10 +1,7 @@
-export const chipText = {
-	4: 'Hư hỏng',
-	5: 'Mất'
-};
 export const chipColor = {
-	4: 'bg-purple text-white',
-	5: 'bg-red-700 text-white'
+	'Đã báo hỏng': 'bg-purple text-white',
+	'Đã báo mất': 'bg-red-700 text-white',
+	false: 'bg-green text-white'
 };
 export const rowPossesion = [
 	{
@@ -29,24 +26,6 @@ export const rowPossesion = [
 		id: 'PurchaseDate',
 		align: 'left',
 		label: 'Ngày mua',
-		sort: true
-	},
-	{
-		id: 'DeptNameManager',
-		align: 'left',
-		label: 'BP Quản lý',
-		sort: true
-	},
-	{
-		id: 'EmpName',
-		align: 'left',
-		label: 'Nhân viên quản lý',
-		sort: true
-	},
-	{
-		id: 'StatusName',
-		align: 'left',
-		label: 'Trạng thái',
 		sort: true
 	}
 ];

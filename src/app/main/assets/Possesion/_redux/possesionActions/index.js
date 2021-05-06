@@ -266,32 +266,92 @@ export const withdrawPossesion = (data, entitiesEdit) => dispatch => {
 
 // =========================== Possesion Repair ============================= //
 
-export const fetchPossesionRepair = params => dispatch => {
-	dispatch(actions.startCall({ callType: callTypes.list }));
-	return requestFrom
-		.fetchDataPossesion(params)
-		.then(() => {})
-		.catch(() => {});
-};
-export const repairPossesion = data => dispatch => {
+export const repairPossesion = (data, entitiesEdit, typeFormService) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.actions }));
+	const formData = new FormData();
+	formData.append('AssetID', entitiesEdit.assetID);
+	formData.append('EmpCode', entitiesEdit.empCode);
+	formData.append('DeptCode', entitiesEdit.deptCodeManager);
+	formData.append('RegionCode', entitiesEdit.regionCode);
+	formData.append('JobTitle', entitiesEdit.jobTitle);
+	formData.append('Reasons', data.note);
+	formData.append('TransDate', moment(data.date).format('YYYY-MM-DD'));
+	formData.append('SupplierRepair', data.nameService);
+	formData.append('TypeUpdate', 'Repair');
+	formData.append('ExpCost', data.price);
 	return requestFrom
-		.updateDataPossesion(data)
-		.then(() => {})
-		.catch(() => {});
+		.updateTypeAsset(formData)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				const id = entitiesEdit.assetID;
+				dispatch(actions.repairAssets({ id, typeFormService }));
+			} else {
+				dispatch(actions.catchErrors({ callType: callTypes.action }));
+				notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', data.errorMessage);
+			}
+			return data;
+		})
+		.catch(() => {
+			dispatch(actions.catchErrors({ callType: callTypes.action }));
+		});
 };
-// =========================== Possesion Occupt ============================= //
-export const fetchPossesionOccupt = params => dispatch => {
-	dispatch(actions.startCall({ callType: callTypes.list }));
-	return requestFrom
-		.fetchDataPossesion(params)
-		.then(() => {})
-		.catch(() => {});
-};
-export const acceptPossesion = data => dispatch => {
+export const liquidationAsset = (data, entitiesEdit, typeliquiAsset) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.actions }));
+	const formData = new FormData();
+	formData.append('AssetID', entitiesEdit.assetID);
+	formData.append('EmpCode', entitiesEdit.empCode);
+	formData.append('DeptCode', entitiesEdit.deptCodeManager);
+	formData.append('RegionCode', entitiesEdit.regionCode);
+	formData.append('JobTitle', entitiesEdit.jobTitle);
+	formData.append('Reasons', data.note);
+	formData.append('TransDate', moment(data.date).format('YYYY-MM-DD'));
+	formData.append('TypeUpdate', 'Liquidate');
 	return requestFrom
-		.updateDataPossesion(data)
-		.then(() => {})
-		.catch(() => {});
+		.updateTypeAsset(formData)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				const id = entitiesEdit.assetID;
+				dispatch(actions.liquiAssets({ id, typeliquiAsset }));
+			} else {
+				dispatch(actions.catchErrors({ callType: callTypes.action }));
+				notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', data.errorMessage);
+			}
+			return data;
+		})
+		.catch(() => {
+			dispatch(actions.catchErrors({ callType: callTypes.action }));
+		});
+};
+export const assetReuse = (data, entitiesEdit) => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.actions }));
+	const formData = new FormData();
+	formData.append('AssetID', entitiesEdit.assetID);
+	formData.append('EmpCode', entitiesEdit.empCode);
+	formData.append('DeptCode', entitiesEdit.deptCodeManager);
+	formData.append('RegionCode', entitiesEdit.regionCode);
+	formData.append('JobTitle', entitiesEdit.jobTitle);
+	formData.append('Reasons', data.note);
+	formData.append('TransDate', moment(data.date).format('YYYY-MM-DD'));
+	formData.append('EndRepairDate', moment(data.dateEnd).format('YYYY-MM-DD'));
+	formData.append('SupplierRepair', data.nameService);
+	formData.append('TypeUpdate', 'Reuse');
+	formData.append('ActCost', data.price);
+	return requestFrom
+		.updateTypeAsset(formData)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				const id = entitiesEdit.assetID;
+				dispatch(actions.resuseAssets({ id }));
+			} else {
+				notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', data.errorMessage);
+				dispatch(actions.catchErrors({ callType: callTypes.action }));
+			}
+			return data;
+		})
+		.catch(() => {
+			dispatch(actions.catchErrors({ callType: callTypes.action }));
+		});
 };

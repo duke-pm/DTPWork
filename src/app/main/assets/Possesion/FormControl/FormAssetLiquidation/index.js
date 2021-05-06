@@ -9,7 +9,7 @@ import { PossessionContext } from '../../PossessionContext';
 
 export default function FormAssetLiquidation() {
 	const AssetContext = useContext(PossessionContext);
-	const { liquiAsset, setLiquiAsset } = AssetContext;
+	const { liquiAsset, setLiquiAsset, typeliquiAsset } = AssetContext;
 	const dispatch = useDispatch();
 	const handleClose = () => setLiquiAsset(false);
 	const { entitiesEdit, actionLoading } = useSelector(
@@ -20,12 +20,10 @@ export default function FormAssetLiquidation() {
 		shallowEqual
 	);
 	const saveWithDraw = values => {
-		dispatch(action.withdrawPossesion(values, entitiesEdit)).then(data => {
+		dispatch(action.liquidationAsset(values, entitiesEdit, typeliquiAsset)).then(data => {
 			if (data && !data.isError) {
-				notificationConfig('success', 'Thành công!', 'Cập nhật thành công');
+				notificationConfig('success', 'Thành công!', 'Thanh lý tài sản thành công');
 				setLiquiAsset(false);
-			} else {
-				notificationConfig('warning', 'Thất bại!', 'Cập nhật thất bại vui lòng thử lại');
 			}
 		});
 	};

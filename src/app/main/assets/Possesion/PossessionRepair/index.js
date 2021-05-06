@@ -1,5 +1,5 @@
 /* eslint-disable no-shadow */
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Paper, Table, TableContainer } from '@material-ui/core';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import image from '@fuse/assets/group.png';
@@ -19,12 +19,28 @@ export default function PossessionRepair(props) {
 	const { value } = props;
 	const dispatch = useDispatch();
 	const possessionContext = useContext(PossessionContext);
-	const { handleOpenFormCycle, rowPage, setRowPage, page, setPage, search, setLiquiAsset } = possessionContext;
+	const {
+		handleOpenFormCycle,
+		rowPage,
+		setRowPage,
+		page,
+		setPage,
+		search,
+		setLiquiAsset,
+		setTypeLiquiAsset
+	} = possessionContext;
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count } = currentState;
 
-	const handleOpenFormLiquiAsset = () => setLiquiAsset(true);
-	const handleOpenFormCycleView = type => handleOpenFormCycle(type);
+	const handleOpenFormLiquiAsset = items => {
+		setLiquiAsset(true);
+		setTypeLiquiAsset('repair');
+		dispatch(actions.setTaskEditPossesionAll(items));
+	};
+	const handleOpenFormCycleView = type => {
+		handleOpenFormCycle(type);
+		dispatch(actions.setTaskEditPossesionAll(type));
+	};
 	const handleRowChange = e => {
 		setRowPage(parseInt(e.target.value, 10));
 		setPage(0);
@@ -35,6 +51,9 @@ export default function PossessionRepair(props) {
 		setPage(newPage);
 		dispatch(actions.fetchPossesionAll(value, rowPage, page + 1, search));
 	};
+	useEffect(() => {
+		dispatch(actions.fetchPossesionAll(3));
+	}, [dispatch]);
 	const classes = useStyles(props);
 	if (listloading) {
 		return <FuseLoading />;

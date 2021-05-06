@@ -2,16 +2,16 @@ import { ListItemIcon, ListItemText, MenuItem } from '@material-ui/core';
 import React from 'react';
 import Icon from '@material-ui/core/Icon';
 
-export default function ActionHandleFunc({ handleOpenFormCycleView, handleOpenFormLiquiAsset }) {
+export default function ActionHandleFunc({ items, handleOpenFormCycleView, handleOpenFormLiquiAsset }) {
 	return (
 		<>
-			<MenuItem onClick={handleOpenFormLiquiAsset} role="button">
+			<MenuItem onClick={() => handleOpenFormLiquiAsset(items)} role="button">
 				<ListItemIcon className="min-w-40">
 					<Icon>shoppingCart</Icon>
 				</ListItemIcon>
 				<ListItemText primary="Thanh lý tài sản" />
 			</MenuItem>
-			<MenuItem onClick={handleOpenFormCycleView} role="button">
+			<MenuItem onClick={() => handleOpenFormCycleView(items)} role="button">
 				<ListItemIcon className="min-w-40">
 					<Icon>update</Icon>
 				</ListItemIcon>

@@ -53,10 +53,11 @@ export default function HandlingBody({ inititalState, handleClose, dataAssets, s
 				initialValues={inititalState}
 				onSubmit={(values, { resetForm }) => {
 					dispatch(actions.reportFailurePossesion(values, dataAssets, user)).then(data => {
+						console.log('data');
 						if (!data.isError) {
+							notificationConfig('success', 'Thành công', 'Gửi yêu cầu thành công');
 							resetForm({});
 							setDisable(true);
-							notificationConfig('success', 'Thành công', 'Gửi yêu cầu thành công');
 						}
 					});
 				}}

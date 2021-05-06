@@ -17,7 +17,7 @@ import HistoryAllocation from './Components/HistoryAllocation';
 
 export default function ConfrimAllocation(props) {
 	const dispatch = useDispatch();
-	const [history, setHistory] = useState();
+	const [history, setHistory] = useState(false);
 	const AllocationContext = useContext(ConfirmContext);
 	const {
 		setFormAllocation,

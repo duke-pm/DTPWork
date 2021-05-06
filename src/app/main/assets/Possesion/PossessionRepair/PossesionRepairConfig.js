@@ -34,11 +34,5 @@ export const rowPossesion = [
 		align: 'left',
 		label: 'Nhân viên quản lý',
 		sort: true
-	},
-	{
-		id: 'StatusName',
-		align: 'left',
-		label: 'Trạng thái',
-		sort: true
 	}
 ];
