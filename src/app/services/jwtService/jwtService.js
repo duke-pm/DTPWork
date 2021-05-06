@@ -22,6 +22,7 @@ class JwtService extends FuseUtils.EventEmitter {
 				return new Promise((resolve, reject) => {
 					if (err.response.status === 401 && err.config && !err.config.__isRetryRequest) {
 						// if you ever get an unauthorized response, logout the user
+						console.log('logout');
 						this.emit('onAutoLogout', 'Token không khả dụng');
 						this.setSession(null);
 					}
@@ -94,7 +95,6 @@ class JwtService extends FuseUtils.EventEmitter {
 			RefreshToken: refresToken,
 			Lang: 'vi'
 		};
-		console.log(dataReq);
 		return new Promise((resolve, reject) => {
 			axios({
 				method: 'POST',
@@ -122,12 +122,6 @@ class JwtService extends FuseUtils.EventEmitter {
 		});
 	};
 
-	updateUserData = user => {
-		return axios.post('/api/auth/user/update', {
-			user
-		});
-	};
-
 	setSession = data => {
 		if (data) {
 			localStorage.setItem('data_user', JSON.stringify(data));
@@ -142,7 +136,6 @@ class JwtService extends FuseUtils.EventEmitter {
 			Cookies.set('token', access_token, { expires: 20 });
 			Cookies.set('role', role, { expires: 20 });
 			Cookies.set('refresh_token', refresh_token, { expires: expires_in });
-			axios.defaults.headers.common.Authorization = `Bearer ${access_token}`;
 		} else {
 			Cookies.remove('token');
 			delete axios.defaults.headers.common.Authorization;

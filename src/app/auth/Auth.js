@@ -73,7 +73,6 @@ class Auth extends Component {
 				if (message) {
 					this.props.showMessage({ message });
 				}
-
 				this.props.logout();
 
 				resolve();

@@ -10,6 +10,7 @@ import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import { AntInput } from '@fuse/CustomForm/CreateAntField';
 import InputTextArea from '@fuse/CustomForm/InputTextArea';
 import RadioAntd from '@fuse/CustomForm/RadioAntd';
+import DateCustom from '@fuse/CustomForm/Date';
 
 export default function FormCustomEdit({
 	handleSubmitForm,
@@ -113,8 +114,9 @@ export default function FormCustomEdit({
 										readOnly
 										label="Ngày yêu cầu (*) "
 										name="dateRequest"
+										format="DD/MM/YYYY"
 										placeholder="Vui lòng chọn ngày yêu cầu"
-										component={AntInput}
+										component={DateCustom}
 										className="mx-4 mb-16"
 									/>
 								</div>

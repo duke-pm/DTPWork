@@ -13,6 +13,7 @@ export default function DateCustom({
 	withFeedbackLabel = true,
 	customFeedbackLabel,
 	type,
+	readOnly,
 	hasFeedback,
 	submitCount,
 	...props
@@ -46,6 +47,7 @@ export default function DateCustom({
 					validateStatus={submittedError || touchedError ? 'error' : 'success'}
 				>
 					<DatePicker
+						className={readOnly ? 'readOnly' : ''}
 						style={{ width: '100%' }}
 						placeholder="Vui lòng chọn ngày"
 						margin="normal"

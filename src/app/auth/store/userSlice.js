@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 import 'firebase/auth';
 import history from '@history';
 import { setInitialSettings } from 'app/store/fuse/settingsSlice';
@@ -24,11 +25,6 @@ export const setUserData = user => async (dispatch, getState) => {
 export const logoutUser = () => async (dispatch, getState) => {
 	removeLocalStorage();
 	removeCookies();
-	// if (!user.role || user.role.length === 0) {
-	// 	// is guest
-	// 	return null;
-	// }
-
 	history.push({
 		pathname: '/login'
 	});

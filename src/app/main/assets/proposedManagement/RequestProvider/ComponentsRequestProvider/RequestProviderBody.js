@@ -216,7 +216,7 @@ export default function RequestProviderBody({
 										autoFocus
 										defaultValue={initialState.dateRequest}
 										name="dateRequest"
-										format="DD-MM-YYYY"
+										format="DD/MM/YYYY"
 										placeholder="Vui lòng chọn ngày yêu cầu"
 										component={DateCustom}
 										className="mx-4 mb-16"

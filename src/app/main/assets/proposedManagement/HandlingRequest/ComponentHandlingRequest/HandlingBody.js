@@ -103,7 +103,6 @@ export default function HandlingBody({ inititalState, handleClose, dataAssets, s
 									<div className="flex flex-col">
 										<Field
 											label="Lí do báo hỏng/mất"
-											autoFocus
 											name="note"
 											row={4}
 											component={InputTextAreaRequest}
