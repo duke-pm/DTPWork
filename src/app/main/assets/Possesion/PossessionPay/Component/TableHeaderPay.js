@@ -15,9 +15,9 @@ export default function TableHeaderPay({ sort, createSortHandler }) {
 					>
 						{row.sort ? (
 							<TableSortLabel
-							// active={sort.id === row.id}
-							// direction={sort.direction}
-							// onClick={createSortHandler(row.id)}
+								active={sort.id === row.id}
+								direction={sort.direction}
+								onClick={createSortHandler(row.id)}
 							>
 								{row.label}
 							</TableSortLabel>

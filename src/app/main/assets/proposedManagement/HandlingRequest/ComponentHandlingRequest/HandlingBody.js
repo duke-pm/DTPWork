@@ -9,6 +9,7 @@ import RadioAntd from '@fuse/CustomForm/RadioAntd';
 import SelectAntd from '@fuse/CustomForm/SelectAntd';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { getDataUserLocalStorage, notificationConfig } from '@fuse/core/DtpConfig';
+import FuseAnimate from '@fuse/core/FuseAnimate';
 import ContentFormReport from './ContentFormReport';
 import * as actions from '../../_redux/confirmAction';
 import { validateSchema } from './HandlingRequestConfig';
@@ -25,11 +26,10 @@ export default function HandlingBody({ inititalState, handleClose, dataAssets, s
 	const [disable, setDisable] = useState(true);
 	const [user, setUser] = useState(null);
 	const dispatch = useDispatch();
-	const EmpCode = 'D0850';
 	useEffect(() => {
 		const data = getDataUserLocalStorage();
 		setUser(data);
-		dispatch(actions.getAssetsUser(EmpCode));
+		dispatch(actions.getAssetsUser());
 	}, [dispatch]);
 	const { actionLoading, assetsUser } = useSelector(
 		state => ({
@@ -46,23 +46,23 @@ export default function HandlingBody({ inititalState, handleClose, dataAssets, s
 		setDisable(false);
 	};
 	return (
-		<>
-			<Formik
-				enableReinitialize
-				validationSchema={validateSchema}
-				initialValues={inititalState}
-				onSubmit={(values, { resetForm }) => {
-					dispatch(actions.reportFailurePossesion(values, dataAssets, user)).then(data => {
-						console.log('data');
-						if (!data.isError) {
-							notificationConfig('success', 'Thành công', 'Gửi yêu cầu thành công');
-							resetForm({});
-							setDisable(true);
-						}
-					});
-				}}
-			>
-				{({ handleSubmit, isSubmitting, resetForm }) => (
+		<Formik
+			enableReinitialize
+			validationSchema={validateSchema}
+			initialValues={inititalState}
+			onSubmit={(values, { resetForm }) => {
+				dispatch(actions.reportFailurePossesion(values, dataAssets, user)).then(data => {
+					if (!data.isError) {
+						notificationConfig('success', 'Thành công', 'Gửi yêu cầu thành công');
+						dispatch(actions.getAssetsUser());
+						resetForm({});
+						setDisable(true);
+					}
+				});
+			}}
+		>
+			{({ handleSubmit, isSubmitting, resetForm }) => (
+				<FuseAnimate animation="transition.slideRightIn" delay={300}>
 					<Form className="flex flex-col w-full items-center justify-between mb-28 mt-28">
 						<div style={{ width: '80%' }} className="shadow-md">
 							<div className="px-16 sm:px-24">
@@ -157,8 +157,8 @@ export default function HandlingBody({ inititalState, handleClose, dataAssets, s
 							</div>
 						</div>
 					</Form>
-				)}
-			</Formik>
-		</>
+				</FuseAnimate>
+			)}
+		</Formik>
 	);
 }

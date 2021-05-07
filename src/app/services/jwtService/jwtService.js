@@ -2,6 +2,7 @@ import FuseUtils from '@fuse/utils/FuseUtils';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import Cookies from 'js-cookie';
+import { notificationConfig } from '@fuse/core/DtpConfig';
 /* eslint-disable camelcase */
 const baseUrl = process.env.REACT_APP_API_URL;
 const url = 'api/User/Login';
@@ -73,20 +74,25 @@ class JwtService extends FuseUtils.EventEmitter {
 				method: 'POST',
 				url: `${baseUrl}/${url}`,
 				data
-			}).then(response => {
-				if (response.data.data) {
-					this.setCookie(
-						response.data.data.access_token,
-						response.data.data.userName,
-						response.data.data.refresh_token,
-						response.data.data.expires_in
-					);
-					this.setSession(response.data.data);
-					resolve(response.data.data);
-				} else {
-					reject(response.data.error);
-				}
-			});
+			})
+				.then(response => {
+					if (response.data.data) {
+						this.setCookie(
+							response.data.data.access_token,
+							response.data.data.userName,
+							response.data.data.refresh_token,
+							response.data.data.expires_in
+						);
+						this.setSession(response.data.data);
+						resolve(response.data.data);
+					} else {
+						notificationConfig('warning', 'Thất bại', 'Vui lòng nhập đúng tài khoản và mật khẩu');
+						reject(response.data.error);
+					}
+				})
+				.catch(error => {
+					reject(error);
+				});
 		});
 	};
 

@@ -8,6 +8,7 @@ import FuseLoading from '@fuse/core/FuseLoading';
 import image from '@fuse/assets/group.png';
 import { Spin } from 'antd';
 import FuseScrollbars from '@fuse/core/FuseScrollbars';
+import FuseAnimate from '@fuse/core/FuseAnimate';
 import HeaderTableResovleRequest from './HeaderTableResovleRequest';
 import { ResovleContext } from '../ResovleRequestContext';
 import * as action from '../../_redux/confirmAction';
@@ -103,22 +104,23 @@ export default function RequestResovelTable(props) {
 		<>
 			<div className="w-full flex flex-col">
 				<FuseScrollbars className="flex-grow overflow-x-auto">
-					{/* <FuseAnimate animation="transition.slideUpIn" delay={200}> */}
-					<Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
-						<HeaderTableResovleRequest createSortHandler={createSortHandler} sort={sort} />
-						<BodyTableResovle
-							handleOpenDialog={handleOpenDialog}
-							classes={classes}
-							entities={entities}
-							lastErrors={lastErrors}
-						/>
+					<FuseAnimate animation="transition.slideUpIn" delay={200}>
+						<Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
+							<HeaderTableResovleRequest createSortHandler={createSortHandler} sort={sort} />
+							<BodyTableResovle
+								handleOpenDialog={handleOpenDialog}
+								classes={classes}
+								entities={entities}
+								lastErrors={lastErrors}
+							/>
 
-						{(entities && entities.length === 0) || lastErrors ? (
-							<div className="flex items-center justify-center h-auto w-4/5">
-								<img className="rounded-full mx-auto" src={image} alt="" width="484" height="512" />
-							</div>
-						) : null}
-					</Table>
+							{(entities && entities.length === 0) || lastErrors ? (
+								<div className="flex items-center justify-center h-auto w-4/5">
+									<img className="rounded-full mx-auto" src={image} alt="" width="484" height="512" />
+								</div>
+							) : null}
+						</Table>
+					</FuseAnimate>
 				</FuseScrollbars>
 				{entities && entities.length !== 0 && (
 					<div className="flex flex-row items-center justify-end">

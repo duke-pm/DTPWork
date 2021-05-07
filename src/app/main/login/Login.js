@@ -11,6 +11,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Button, Icon, IconButton, InputAdornment } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { submitLogin } from 'app/auth/store/loginSlice';
+import { showMessage } from 'app/store/fuse/messageSlice';
 
 // import Auth0LoginTab from './tabs/Auth0LoginTab';
 // import FirebaseLoginTab from './tabs/FirebaseLoginTab';
@@ -44,13 +45,10 @@ function Login() {
 	const formRef = useRef(null);
 
 	useEffect(() => {
-		if (login.error && (login.error.email || login.error.password)) {
-			formRef.current.updateInputsWithError({
-				...login.error
-			});
-			disableButton();
+		if (login.error) {
+			dispatch(showMessage({ message: 'Tài khoản và mật khẩu không đúng' }));
 		}
-	}, [login.error]);
+	});
 
 	function disableButton() {
 		setIsFormValid(false);
@@ -156,7 +154,11 @@ function Login() {
 										variant="outlined"
 										required
 									/>
-
+									{login.error && (
+										<FuseAnimate delay={300}>
+											<p className="text-red"> {login.error} </p>
+										</FuseAnimate>
+									)}
 									<Button
 										type="submit"
 										variant="contained"

@@ -31,24 +31,24 @@ export default function ActionComponentFilter(props, { handleOpenForm }) {
 	const { value } = props;
 	const dispatch = useDispatch();
 	const possesionConext = useContext(PossessionContext);
-	const { search, setSearch, rowPage, page, setPage } = possesionConext;
+	const { search, setSearch, rowPage, page, setPage, sort } = possesionConext;
 	const handleSearch = e => {
 		e.preventDefault();
 		setPage(0);
-		dispatch(actions.searchPossesion(value, search, rowPage, page));
+		dispatch(actions.searchPossesion(value, search, rowPage, page, sort.id, sort.direction));
 	};
 	onkeypress = e => {
 		if (e.key === 'Enter') {
 			setPage(0);
 			e.preventDefault();
-			dispatch(actions.searchPossesion(value, search, rowPage, page));
+			dispatch(actions.searchPossesion(value, search, rowPage, page, sort.id, sort.direction));
 		}
 	};
 	const onHandleChange = e => {
 		setSearch(e.target.value);
 		if (e.target.value.length <= 0) {
 			setPage(0);
-			dispatch(actions.searchPossesion(value, search, rowPage, page));
+			dispatch(actions.searchPossesion(value, search, rowPage, page, sort.id, sort.direction));
 		}
 	};
 	return (

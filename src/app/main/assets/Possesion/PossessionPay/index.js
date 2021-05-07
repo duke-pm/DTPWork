@@ -17,22 +17,35 @@ export default function PossessionPay(props) {
 	const { value } = props;
 	const dispatch = useDispatch();
 	const possessionContext = useContext(PossessionContext);
-	const { rowPage, setRowPage, page, setPage, search } = possessionContext;
+	const { rowPage, setRowPage, page, setPage, search, sort, setSort } = possessionContext;
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count } = currentState;
 
 	const handleRowChange = e => {
 		setRowPage(parseInt(e.target.value, 10));
 		setPage(0);
-		const rowPage = parseInt(e.target.value, 10);
-		dispatch(actions.fetchPossesionAll(value, rowPage, page + 1, search));
+		const rowPageParse = parseInt(e.target.value, 10);
+		dispatch(actions.fetchPossesionAllPanigate(value, rowPageParse, 1, search, sort.id, sort.direction));
 	};
 	useEffect(() => {
 		dispatch(actions.fetchPossesionAll(6));
 	}, [dispatch]);
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
-		dispatch(actions.fetchPossesionAll(value, rowPage, page + 1, search));
+		dispatch(actions.fetchPossesionAllPanigate(value, rowPage, newPage + 1, search, sort.id, sort.direction));
+	};
+	const createSortHandler = property => event => {
+		const id = property;
+		let direction = 'desc';
+
+		if (sort.id === property && sort.direction === 'desc') {
+			direction = 'asc';
+		}
+		dispatch(actions.fetchPossesionAllPanigate(value, rowPage, 1, search, id, direction));
+		setSort({
+			direction,
+			id
+		});
 	};
 	const classes = useStyles(props);
 	if (listloading) {
@@ -49,7 +62,7 @@ export default function PossessionPay(props) {
 						<TableContainer className="flex flex-1">
 							<Paper className={classes.rootPaper}>
 								<Table className={classes.table} stickyHeader>
-									<TableHeaderPay />
+									<TableHeaderPay createSortHandler={createSortHandler} sort={sort} />
 									<TableBodyPay entities={entities} />
 								</Table>
 								{(entities && entities.length === 0) || lastErrors ? (

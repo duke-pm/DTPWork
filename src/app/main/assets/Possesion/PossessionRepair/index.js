@@ -27,11 +27,12 @@ export default function PossessionRepair(props) {
 		setPage,
 		search,
 		setLiquiAsset,
-		setTypeLiquiAsset
+		setTypeLiquiAsset,
+		sort,
+		setSort
 	} = possessionContext;
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count } = currentState;
-
 	const handleOpenFormLiquiAsset = items => {
 		setLiquiAsset(true);
 		setTypeLiquiAsset('repair');
@@ -44,12 +45,25 @@ export default function PossessionRepair(props) {
 	const handleRowChange = e => {
 		setRowPage(parseInt(e.target.value, 10));
 		setPage(0);
-		const rowPage = parseInt(e.target.value, 10);
-		dispatch(actions.fetchPossesionAll(value, rowPage, page + 1, search));
+		const rowPageParse = parseInt(e.target.value, 10);
+		dispatch(actions.fetchPossesionAllPanigate(value, rowPageParse, 1, search, sort.id, sort.direction));
 	};
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
-		dispatch(actions.fetchPossesionAll(value, rowPage, page + 1, search));
+		dispatch(actions.fetchPossesionAllPanigate(value, rowPage, newPage + 1, search, sort.id, sort.direction));
+	};
+	const createSortHandler = property => event => {
+		const id = property;
+		let direction = 'desc';
+
+		if (sort.id === property && sort.direction === 'desc') {
+			direction = 'asc';
+		}
+		dispatch(actions.fetchPossesionAllPanigate(value, rowPage, 1, search, id, direction));
+		setSort({
+			direction,
+			id
+		});
 	};
 	useEffect(() => {
 		dispatch(actions.fetchPossesionAll(3));
@@ -67,7 +81,7 @@ export default function PossessionRepair(props) {
 						<TableContainer className={`${classes.TableContainer} flex flex-1`}>
 							<Paper className={classes.rootPaper}>
 								<Table className={classes.table} stickyHeader>
-									<TableHeaderRepair />
+									<TableHeaderRepair createSortHandler={createSortHandler} sort={sort} />
 									<TableBodyRepair
 										handleOpenFormCycleView={handleOpenFormCycleView}
 										handleOpenFormLiquiAsset={handleOpenFormLiquiAsset}

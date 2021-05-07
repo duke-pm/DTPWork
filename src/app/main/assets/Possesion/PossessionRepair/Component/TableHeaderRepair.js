@@ -3,7 +3,7 @@ import React from 'react';
 import AppsIcon from '@material-ui/icons/Apps';
 import { rowPossesion } from '../PossesionRepairConfig';
 
-export default function TableHeaderRepair() {
+export default function TableHeaderRepair({ sort, createSortHandler }) {
 	return (
 		<TableHead>
 			<TableRow>
@@ -20,9 +20,9 @@ export default function TableHeaderRepair() {
 					>
 						{row.sort ? (
 							<TableSortLabel
-							// active={sort.id === row.id}
-							// direction={sort.direction}
-							// onClick={createSortHandler(row.id)}
+								active={sort.id === row.id}
+								direction={sort.direction}
+								onClick={createSortHandler(row.id)}
 							>
 								{row.label}
 							</TableSortLabel>

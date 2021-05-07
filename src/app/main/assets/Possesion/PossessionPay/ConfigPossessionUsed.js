@@ -13,19 +13,16 @@ export const rowPossesion = [
 	{
 		id: 'AssetName',
 		align: 'left',
-		label: 'Tên tài sản',
-		sort: true
+		label: 'Tên tài sản'
 	},
 	{
 		id: 'GroupName',
 		align: 'left',
-		label: 'Nhóm tài sản',
-		sort: true
+		label: 'Nhóm tài sản'
 	},
 	{
 		id: 'PurchaseDate',
 		align: 'left',
-		label: 'Ngày mua',
-		sort: true
+		label: 'Ngày mua'
 	}
 ];

@@ -1,3 +1,4 @@
+import { notificationConfig } from '@fuse/core/DtpConfig';
 import { createSlice } from '@reduxjs/toolkit';
 import jwtService from 'app/services/jwtService';
 import { setUserData } from './userSlice';
@@ -11,16 +12,13 @@ export const submitLogin = ({ email, password }) => async dispatch => {
 			return dispatch(loginSuccess());
 		})
 		.catch(error => {
-			return dispatch(loginError(error));
+			return dispatch(loginError('Vui lòng nhập đúng tài khoản và mật khẩu'));
 		});
 };
 
 const initialState = {
 	success: false,
-	error: {
-		username: null,
-		password: null
-	}
+	error: null
 };
 
 const loginSlice = createSlice({

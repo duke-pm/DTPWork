@@ -30,7 +30,9 @@ export default function PossessionCorrupt(props) {
 		setLiquiAsset,
 		setFormService,
 		setTypeLiquiAsset,
-		typeSetFormService
+		typeSetFormService,
+		sort,
+		setSort
 	} = possessionContext;
 	const handleClose = () => {
 		setOpen(false);
@@ -48,12 +50,25 @@ export default function PossessionCorrupt(props) {
 	const handleRowChange = e => {
 		setRowPage(parseInt(e.target.value, 10));
 		setPage(0);
-		const rowPage = parseInt(e.target.value, 10);
-		dispatch(actions.fetchPossesionAll(value, rowPage, page + 1, search));
+		const rowPageParse = parseInt(e.target.value, 10);
+		dispatch(actions.fetchPossesionAllPanigate(value, rowPageParse, 1, search, sort.id, sort.direction));
 	};
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
-		dispatch(actions.fetchPossesionAll(value, rowPage, page + 1, search));
+		dispatch(actions.fetchPossesionAllPanigate(value, rowPage, newPage + 1, search, sort.id, sort.direction));
+	};
+	const createSortHandler = property => event => {
+		const id = property;
+		let direction = 'desc';
+
+		if (sort.id === property && sort.direction === 'desc') {
+			direction = 'asc';
+		}
+		dispatch(actions.fetchPossesionAllPanigate(value, rowPage, 1, search, id, direction));
+		setSort({
+			direction,
+			id
+		});
 	};
 	useEffect(() => {
 		dispatch(actions.fetchPossesionAll(4));
@@ -72,7 +87,7 @@ export default function PossessionCorrupt(props) {
 						<TableContainer className={`${classes.TableContainer} flex flex-1`}>
 							<Paper className={classes.rootPaper}>
 								<Table className={classes.table} stickyHeader>
-									<TableHeaderCorrupt />
+									<TableHeaderCorrupt createSortHandler={createSortHandler} sort={sort} />
 									<TableBodyCorrupt
 										entities={entities}
 										lastErrors={lastErrors}

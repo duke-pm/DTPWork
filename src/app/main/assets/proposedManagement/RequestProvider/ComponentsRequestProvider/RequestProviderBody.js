@@ -12,6 +12,7 @@ import DateCustom from '@fuse/CustomForm/Date';
 import RadioAntd from '@fuse/CustomForm/RadioAntd';
 import { notificationConfig } from '@fuse/core/DtpConfig';
 import InputTextAreaRequest from '@fuse/CustomForm/InputTextAreaRequest';
+import FuseAnimate from '@fuse/core/FuseAnimate';
 import * as actions from '../../_redux/confirmAction';
 import { validateSchema } from './ConfigRequestProvider';
 
@@ -171,161 +172,168 @@ export default function RequestProviderBody({
 				}}
 			>
 				{({ handleSubmit, isSubmitting }) => (
-					<Form className="flex flex-col w-full items-center justify-between mb-28 mt-28">
-						<div style={{ width: '80%' }} className="shadow-md">
-							<div className="px-16 w-full sm:px-24">
-								<div className="flex justify-between flex-row">
-									<h5 className="font-extrabold">Thông tin cấp phát tài sản.</h5>
-								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-4 gap-8 ">
-									<Field
-										label="Nhân viên"
-										name="nameEmp"
-										readOnly
-										autoFocus
-										hasFeedback
-										component={AntInput}
-										// options={employees}
-										// handleChangeState={onHandleChangeEmployee}
-										className="mt-8 mb-16"
-									/>
-									<Field
-										label="Bộ phận"
-										hasFeedback
-										name="department"
-										readOnly
-										value={initialState.department}
-										component={SelectAntd}
-										handleChangeState={onChangeDepartment}
-										options={optionDept}
-										className="mt-8 mb-16"
-									/>
-									<Field
-										label="Khu vực"
-										name="region"
-										readOnly
-										hasFeedback
-										value={initialState.region}
-										component={SelectAntd}
-										handleChangeState={onChangeRegion}
-										options={optionRegion}
-										className="mt-8 mb-16"
-									/>
-									<Field
-										label="Ngày yêu cầu "
-										autoFocus
-										defaultValue={initialState.dateRequest}
-										name="dateRequest"
-										format="DD/MM/YYYY"
-										placeholder="Vui lòng chọn ngày yêu cầu"
-										component={DateCustom}
-										className="mx-4 mb-16"
-										hasFeedback
-									/>
-								</div>
-							</div>
-							<div className="px-16 sm:px-24">
-								<div className="flex justify-between flex-row">
-									<h5 className="font-extrabold">Danh sách tài sản yêu cầu.</h5>
-								</div>
-								<Button onClick={handleAdd} className="mb-16" variant="contained" color="primary">
-									{' '}
-									<svg
-										className="h-16 w-16"
-										xmlns="http://www.w3.org/2000/svg"
-										fill="none"
-										viewBox="0 0 24 24"
-										stroke="currentColor"
-									>
-										<path
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											strokeWidth={2}
-											d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-										/>
-									</svg>
-									Thêm tài sản
-								</Button>
-								<Table
-									rowKey="id"
-									columns={columns}
-									bordered
-									pagination={false}
-									dataSource={dataSource}
-								/>
-							</div>
-							<div className="px-16 sm:px-24 mt-16">
-								<div className="flex justify-between flex-row">
-									<h5 className="font-extrabold">Nội dung.</h5>
-								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 gap-16 ">
-									<Field
-										label="Nơi dùng"
-										hasFeedback
-										name="locationUse"
-										component={SelectAntd}
-										options={optionLocation}
-										className="mt-8"
-									/>
-									<div className="flex flex-row justify-around">
+					<FuseAnimate animation="transition.slideRightIn" delay={300}>
+						<Form className="flex flex-col w-full items-center justify-between mb-28 mt-28">
+							<div style={{ width: '80%' }} className="shadow-md">
+								<div className="px-16 w-full sm:px-24">
+									<div className="flex justify-between flex-row">
+										<h5 className="font-extrabold">Thông tin cấp phát tài sản.</h5>
+									</div>
+									<div className="grid grid-cols-1 sm:grid-cols-4 gap-8 ">
 										<Field
-											label="Loại tài sản "
+											label="Nhân viên"
+											name="nameEmp"
+											readOnly
+											autoFocus
 											hasFeedback
-											name="assetsCategory"
-											component={RadioAntd}
-											options={[
-												{ label: 'Mua mới', value: 'N' },
-												{ label: 'Bổ sung thêm', value: 'A' }
-											]}
+											component={AntInput}
+											// options={employees}
+											// handleChangeState={onHandleChangeEmployee}
 											className="mt-8 mb-16"
 										/>
 										<Field
-											label="Khoản mua sắm này có nằm trong kế hoạch"
-											name="plan"
+											label="Bộ phận"
 											hasFeedback
-											component={RadioAntd}
-											options={[
-												{ label: 'Có', value: true },
-												{ label: 'Không', value: false }
-											]}
+											name="department"
+											readOnly
+											value={initialState.department}
+											component={SelectAntd}
+											handleChangeState={onChangeDepartment}
+											options={optionDept}
 											className="mt-8 mb-16"
+										/>
+										<Field
+											label="Khu vực"
+											name="region"
+											readOnly
+											hasFeedback
+											value={initialState.region}
+											component={SelectAntd}
+											handleChangeState={onChangeRegion}
+											options={optionRegion}
+											className="mt-8 mb-16"
+										/>
+										<Field
+											label="Ngày yêu cầu "
+											autoFocus
+											defaultValue={initialState.dateRequest}
+											name="dateRequest"
+											format="DD/MM/YYYY"
+											placeholder="Vui lòng chọn ngày yêu cầu"
+											component={DateCustom}
+											className="mx-4 mb-16"
+											hasFeedback
 										/>
 									</div>
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
-									<Field
-										label="Lí do"
-										hasFeedback
-										name="reason"
-										// value={initialState.reason || ''}
-										component={InputTextAreaRequest}
-										className="mt-8 mb-16"
-										row={3}
-									/>
-									<Field
-										label="Nhà cung cấp đề nghị (nếu có)"
-										// value={intialState.note}
-										name="supplier"
-										row={3}
-										component={InputTextAreaRequest}
-										className="mx-4 mb-16"
+								<div className="px-16 sm:px-24">
+									<div className="flex justify-between flex-row">
+										<h5 className="font-extrabold">Danh sách tài sản yêu cầu.</h5>
+									</div>
+									<Button onClick={handleAdd} className="mb-16" variant="contained" color="primary">
+										{' '}
+										<svg
+											className="h-16 w-16"
+											xmlns="http://www.w3.org/2000/svg"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+										>
+											<path
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												strokeWidth={2}
+												d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+											/>
+										</svg>
+										Thêm tài sản
+									</Button>
+									<Table
+										rowKey="id"
+										columns={columns}
+										bordered
+										pagination={false}
+										dataSource={dataSource}
 									/>
 								</div>
-							</div>
-							<div className="px-16 w-full sm:px-24 mb-28 flex justify-end">
-								{actionLoading ? (
-									<Spin size="middle" className="mr-16" />
-								) : (
-									<Button variant="contained" type="submit" className="mr-16" color="primary">
-										Gửi yêu cầu
+								<div className="px-16 sm:px-24 mt-16">
+									<div className="flex justify-between flex-row">
+										<h5 className="font-extrabold">Nội dung.</h5>
+									</div>
+									<div className="grid grid-cols-1 sm:grid-cols-2 gap-16 ">
+										<Field
+											label="Nơi dùng"
+											hasFeedback
+											name="locationUse"
+											component={SelectAntd}
+											options={optionLocation}
+											className="mt-8"
+										/>
+										<div className="flex flex-row justify-around">
+											<Field
+												label="Loại tài sản "
+												hasFeedback
+												name="assetsCategory"
+												component={RadioAntd}
+												options={[
+													{ label: 'Mua mới', value: 'N' },
+													{ label: 'Bổ sung thêm', value: 'A' }
+												]}
+												className="mt-8 mb-16"
+											/>
+											<Field
+												label="Khoản mua sắm này có nằm trong kế hoạch"
+												name="plan"
+												hasFeedback
+												component={RadioAntd}
+												options={[
+													{ label: 'Có', value: true },
+													{ label: 'Không', value: false }
+												]}
+												className="mt-8 mb-16"
+											/>
+										</div>
+									</div>
+									<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
+										<Field
+											label="Lí do"
+											hasFeedback
+											name="reason"
+											// value={initialState.reason || ''}
+											component={InputTextAreaRequest}
+											className="mt-8 mb-16"
+											row={3}
+										/>
+										<Field
+											label="Nhà cung cấp đề nghị (nếu có)"
+											// value={intialState.note}
+											name="supplier"
+											row={3}
+											component={InputTextAreaRequest}
+											className="mx-4 mb-16"
+										/>
+									</div>
+								</div>
+								<div className="px-16 w-full sm:px-24 mb-28 flex justify-end">
+									{actionLoading ? (
+										<Spin size="middle" className="mr-16" />
+									) : (
+										<Button variant="contained" type="submit" className="mr-16" color="primary">
+											Gửi yêu cầu
+										</Button>
+									)}
+									<Button
+										type="button"
+										className="h-26 font-sans"
+										variant="contained"
+										color="secondary"
+									>
+										Đặt lại
 									</Button>
-								)}
-								<Button type="button" className="h-26 font-sans" variant="contained" color="secondary">
-									Đặt lại
-								</Button>
+								</div>
 							</div>
-						</div>
-					</Form>
+						</Form>
+					</FuseAnimate>
 				)}
 			</Formik>
 		</>
