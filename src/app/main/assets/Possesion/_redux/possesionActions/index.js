@@ -22,10 +22,7 @@ export const getInformationCompany = params => dispatch => {
 			} else {
 				notification.success({
 					message: 'Đã có lỗi xảy ra vui lòng thử lại',
-					description: `${data.errorMessage}`,
-					onClick: () => {
-						console.log('Notification Clicked!');
-					}
+					description: `${data.errorMessage}`
 				});
 			}
 		})
@@ -353,5 +350,19 @@ export const assetReuse = (data, entitiesEdit) => dispatch => {
 		})
 		.catch(() => {
 			dispatch(actions.catchErrors({ callType: callTypes.action }));
+		});
+};
+export const getAssetHistory = id => dispatch => {
+	const paramsReq = {
+		ID: id
+	};
+	return requestFrom
+		.getAssetHistory(paramsReq)
+		.then(res => {
+			const { data } = res;
+			return data;
+		})
+		.catch(err => {
+			// dispatch(actions.catchErrors({ callType: callTypes.list }));
 		});
 };

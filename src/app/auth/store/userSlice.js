@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
 import 'firebase/auth';
 import history from '@history';
 import { setInitialSettings } from 'app/store/fuse/settingsSlice';
@@ -13,7 +12,6 @@ export const setUserData = user => async (dispatch, getState) => {
 	history.location.state = {
 		redirectUrl: '/' // for example 'apps/academy'
 	};
-	console.log(history.location);
 	/*
     Set User Settings
      */

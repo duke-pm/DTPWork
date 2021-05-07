@@ -17,7 +17,6 @@ export default function ResovleRequestContext({ children }) {
 		direction: 'desc',
 		id: null
 	});
-	console.log(diaglogCorrupt);
 	const valueMemo = useMemo(() => {
 		return {
 			diaglogAllocation,

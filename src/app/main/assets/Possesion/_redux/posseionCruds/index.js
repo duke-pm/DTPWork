@@ -6,6 +6,7 @@ export const urlUpdate = `/api/Assets/Update`;
 const urlRule = '/api/Assets/GetList';
 const urlInformation = '/api/MasterData/GetDataForForm';
 const UrlType = `/api/AssetTrans/ProcessAsset`;
+const UrlHistory = `/api/Assets/GetHistoryByID`;
 export const fetchDataPossesion = params => {
 	return request.get(`${urlRule}`, { params });
 };
@@ -42,4 +43,7 @@ export const requestAsset = data => {
 
 export const getInformationCompany = params => {
 	return request.get(`${urlInformation}`, { params });
+};
+export const getAssetHistory = params => {
+	return request.get(`${UrlHistory}`, { params });
 };

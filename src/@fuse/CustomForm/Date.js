@@ -25,7 +25,6 @@ export default function DateCustom({
 	const touchedError = hasError && touched;
 	const { value } = field;
 	const handleDateChange = (date, dateString) => {
-		console.log({ date, dateString });
 		form.setFieldValue(field.name, date);
 	};
 	const dateFormat = 'DD-MM-YYYY';

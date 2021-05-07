@@ -1,6 +1,5 @@
 /* eslint-disable no-shadow */
 import React, { useContext, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Table, TableContainer } from '@material-ui/core';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import image from '@fuse/assets/group.png';

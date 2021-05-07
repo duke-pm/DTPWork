@@ -108,7 +108,6 @@ export default function FormCustomUnusedEdit({
 				initialValues={intialState}
 				onSubmit={values => {
 					saveAddAsset(values);
-					console.log(values);
 				}}
 			>
 				{({ handleSubmit, isSubmitting }) => (

@@ -1,4 +1,3 @@
-import { notificationConfig } from '@fuse/core/DtpConfig';
 import { createSlice } from '@reduxjs/toolkit';
 import jwtService from 'app/services/jwtService';
 import { setUserData } from './userSlice';

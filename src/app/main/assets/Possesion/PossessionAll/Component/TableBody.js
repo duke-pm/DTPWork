@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import PossessionAction from './ActionComponent/PossessionAction';
 import { chipColor, chipText } from '../ConfigPossessionAll';
 
-const TableBodyAssetAll = ({ entities, lastErrors, classes, handleOpenFormEdit }) => {
+const TableBodyAssetAll = ({ entities, lastErrors, classes, HandleOpenHistory }) => {
 	return (
 		<TableBody>
 			{entities &&
@@ -17,9 +17,7 @@ const TableBodyAssetAll = ({ entities, lastErrors, classes, handleOpenFormEdit }
 							<Popover
 								overlayStyle={{ zIndex: '19' }}
 								placement="rightTop"
-								content={() => (
-									<PossessionAction items={items} handleOpenFormEdit={handleOpenFormEdit} />
-								)}
+								content={() => <PossessionAction HandleOpenHistory={HandleOpenHistory} items={items} />}
 								title="Hành động"
 							>
 								<MoreVertIcon className="cursor-pointer" />

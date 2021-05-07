@@ -23,7 +23,6 @@ class JwtService extends FuseUtils.EventEmitter {
 				return new Promise((resolve, reject) => {
 					if (err.response.status === 401 && err.config && !err.config.__isRetryRequest) {
 						// if you ever get an unauthorized response, logout the user
-						console.log('logout');
 						this.emit('onAutoLogout', 'Token không khả dụng');
 						this.setSession(null);
 					}
@@ -138,7 +137,6 @@ class JwtService extends FuseUtils.EventEmitter {
 
 	setCookie = (access_token, role, refresh_token, expires_in) => {
 		if (access_token) {
-			console.log(access_token);
 			Cookies.set('token', access_token, { expires: 20 });
 			Cookies.set('role', role, { expires: 20 });
 			Cookies.set('refresh_token', refresh_token, { expires: expires_in });

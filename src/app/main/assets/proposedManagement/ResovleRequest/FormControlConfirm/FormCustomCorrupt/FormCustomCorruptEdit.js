@@ -7,6 +7,7 @@ import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
 import * as momemt from 'moment';
 import { notificationConfig } from '@fuse/core/DtpConfig';
 import { Spin } from 'antd';
+import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import * as actions from '../../../_redux/confirmAction';
 
 const initial = {
@@ -45,38 +46,38 @@ export default function FormCustomCorruptEdit({
 								<div className="flex justify-between flex-row">
 									<h5 className="font-extrabold">Thông tin tài sản.</h5>
 								</div>
-								<div className=" grid grid-cols-1 sm:grid-cols-2 gap-8">
-									<div className="flex-row justify-around flex ">
+								<div className=" grid grid-cols-1 sm:grid-cols-2">
+									<div className="flex-row flex ">
 										<div className="flex flex-col">
-											<p className="p-2.5	"> Mã sản phẩm </p>
-											<p className="p-2.5	"> Tên sản phẩm </p>
-											<p className="p-2.5	"> Nhóm sản phẩm </p>
-											<p className="p-2.5	">Quy cách tài sản</p>
+											<p className="p-6	"> Mã sản phẩm </p>
+											<p className="p-6	"> Tên sản phẩm </p>
+											<p className="p-6	"> Nhóm sản phẩm </p>
+											<p className="p-6	">Quy cách tài sản</p>
 										</div>
-										<div className="flex flex-col">
-											<p className="p-2.5 font-extrabold"> {entitiesEdit.assetID || ''} </p>
-											<p className="p-2.5 font-extrabold"> {entitiesEdit.assetName || ''} </p>
-											<p className="p-2.5 font-extrabold"> Nhóm sản phẩm </p>
-											<p className="font-extrabold p-2.5"> </p>
+										<div className="flex mr-auto sm:mr-98 flex-col">
+											<p className="p-6 font-extrabold"> {entitiesEdit.assetID || ''} </p>
+											<p className="p-6 font-extrabold"> {entitiesEdit.assetName || ''} </p>
+											<p className="p-6 font-extrabold"> Nhóm sản phẩm </p>
+											<p className="font-extrabold p-6"> </p>
 										</div>
 									</div>
 									<div className="flex-row justify-around flex ">
 										<div className="flex flex-col">
-											<p className="p-2.5">Ngày mua </p>
+											<p className="p-6">Ngày mua </p>
 											{/* <p className="p-2.5">Số seri </p> */}
-											<p className="p-2.5"> Nguyên giá </p>
-											<p className="p-2.5"> Tình trạng </p>
+											<p className="p-6"> Nguyên giá </p>
+											<p className="p-6"> Tình trạng </p>
 										</div>
 										<div className="flex mr-auto sm:mr-98 flex-col">
-											<p className="p-2.5 font-extrabold">
+											<p className="p-6 font-extrabold">
 												{momemt(entitiesEdit.purchaseDate).format('DD/MM/YYYY') || ''}{' '}
 											</p>
 											{/* <p className="p-2.5 font-extrabold"> </p> */}
-											<p className="p-2.5 font-extrabold"> {entitiesEdit.originalPrice || ''} </p>
-											<p className="p-2.5 font-extrabold">
+											<p className="p-6 font-extrabold">
 												{' '}
-												{entitiesEdit.assetStatusName || ''}{' '}
+												{currencyFormat(entitiesEdit.originalPrice) || ''}{' '}
 											</p>
+											<p className="p-6 font-extrabold"> {entitiesEdit.assetStatusName || ''} </p>
 										</div>
 									</div>
 								</div>
@@ -99,7 +100,7 @@ export default function FormCustomCorruptEdit({
 											row={7}
 										/>
 									</div>
-									<Field
+									{/* <Field
 										label="File Đính kèm"
 										autoFocus
 										style={{ height: '35px' }}
@@ -107,7 +108,7 @@ export default function FormCustomCorruptEdit({
 										component={FileCustomVersion2}
 										className="mx-4 mb-16"
 										variant="outlined"
-									/>
+									/> */}
 								</div>
 							</div>
 						</DialogContent>

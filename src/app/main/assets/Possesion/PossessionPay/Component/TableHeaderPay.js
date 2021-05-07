@@ -1,6 +1,5 @@
 import { TableCell, TableHead, TableRow, TableSortLabel } from '@material-ui/core';
 import React from 'react';
-import AppsIcon from '@material-ui/icons/Apps';
 import { rowPossesion } from '../ConfigPossessionUsed';
 
 export default function TableHeaderPay({ sort, createSortHandler }) {

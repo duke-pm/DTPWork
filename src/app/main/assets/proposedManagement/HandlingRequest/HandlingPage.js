@@ -1,14 +1,15 @@
 import FusePageCardedFix from '@fuse/core/FusePageCarded/FusePageCardedFix';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import * as moment from 'moment';
 import HandlingBody from './ComponentHandlingRequest/HandlingBody';
 import HandlingHeader from './ComponentHandlingRequest/HandlingHeader';
 
 export default function HandlingPage() {
 	const inititalState = {
 		note: '',
-		status: '',
-		date: '',
+		status: 'Damage',
+		date: moment(Date.now()),
 		file: '',
 		assets: ''
 	};

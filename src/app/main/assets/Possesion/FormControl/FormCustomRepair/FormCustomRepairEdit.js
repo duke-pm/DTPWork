@@ -12,7 +12,7 @@ import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import { Spin } from 'antd';
 
 const initial = {
-	date: '',
+	date: moment(Date.now()),
 	nameService: '',
 	note: '',
 	price: '',

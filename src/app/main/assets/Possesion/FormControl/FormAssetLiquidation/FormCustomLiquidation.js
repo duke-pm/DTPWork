@@ -10,7 +10,7 @@ import { Spin } from 'antd';
 import * as Yup from 'yup';
 
 const initial = {
-	date: '',
+	date: moment(Date.now()),
 	note: '',
 	file: ''
 };

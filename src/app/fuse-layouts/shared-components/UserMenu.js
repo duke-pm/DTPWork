@@ -21,7 +21,6 @@ function UserMenu(props) {
 		setUserMenu(null);
 	};
 	const handlelogoutUser = () => {
-		console.log('logout');
 		dispatch(logoutUser());
 	};
 	return (

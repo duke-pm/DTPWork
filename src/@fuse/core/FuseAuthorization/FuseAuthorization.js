@@ -76,7 +76,9 @@ class FuseAuthorization extends Component {
 
 	render() {
 		// console.info('Fuse Authorization rendered', accessGranted);
-		return this.state.accessGranted ? <>{this.props.children}</> : <FuseSplashScreen />;
+		return this.state.accessGranted ? (
+			<React.Suspense fallback={<FuseSplashScreen />}>{this.props.children}</React.Suspense>
+		) : null;
 	}
 }
 

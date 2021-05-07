@@ -8,7 +8,6 @@ import { ResovleContext } from '../../ResovleRequestContext';
 export default function FormCustomCorrupt() {
 	const ConfirmContextLose = useContext(ResovleContext);
 	const { typeDialogCorrupt, setDialogConfirmGobal, setDialogCorrupt, diaglogCorrupt } = ConfirmContextLose;
-	console.log(diaglogCorrupt);
 	const { actionLoading, entitiesEdit } = useSelector(
 		state => ({
 			entitiesEdit: state.confirm.entitiesEdit,

@@ -169,7 +169,6 @@ export const reportFailurePossesion = (information, data, user) => dispatch => {
 };
 
 export const getAssetsUser = EmpCode => dispatch => {
-	console.log(EmpCode);
 	dispatch(actions.startCall({ callType: callTypes.list }));
 	const paramsReq = {
 		EmpCode

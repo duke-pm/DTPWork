@@ -3,10 +3,11 @@ import { DialogContent, DialogActions, Button } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
 import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
 import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
+import * as moment from 'moment';
 import FormConfirm from './ConfirmCorrupt';
 
 const initial = {
-	date: '',
+	date: moment(Date.now()),
 	nameService: '',
 	note: '',
 	price: '',

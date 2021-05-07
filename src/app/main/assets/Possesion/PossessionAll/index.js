@@ -14,6 +14,7 @@ import { PossessionContext } from '../PossessionContext';
 import TableHeader from './Component/TableHeader';
 import TableBodyAssetAll from './Component/TableBody';
 import { useStyles } from './StyleCustomAll';
+import ProcessingUseAsset from './Component/ProcessingUseAsset';
 
 function PossessionAllPage(props) {
 	const { value } = props;
@@ -22,6 +23,7 @@ function PossessionAllPage(props) {
 	const possesionContext = useContext(PossessionContext);
 	const { rowPage, setRowPage, page, setPage, search, sort, setSort } = possesionContext;
 	const [open, setOpen] = useState(false);
+	const [openHistory, setOpenHistory] = useState(false);
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;
 	const handleClose = React.useCallback(() => {
@@ -34,8 +36,8 @@ function PossessionAllPage(props) {
 		dispatch(actions.setTaskEditPossesionAll(null));
 		setOpen(true);
 	};
-	const handleOpenFormEdit = items => {
-		setOpen(true);
+	const HandleOpenHistory = items => {
+		setOpenHistory(true);
 		dispatch(actions.setTaskEditPossesionAll(items));
 	};
 	const handleRowChange = e => {
@@ -66,6 +68,7 @@ function PossessionAllPage(props) {
 	}
 	return (
 		<>
+			<ProcessingUseAsset setOpenHistory={setOpenHistory} openHistory={openHistory} />
 			<PossessionAll rowPage={rowPage} open={open} handleClose={handleClose} />
 			<div className="flex flex-col">
 				<ActionComponent value={value} handleOpenForm={handleOpenForm} />
@@ -76,7 +79,7 @@ function PossessionAllPage(props) {
 								<Table className={`${classes.table}`} stickyHeader>
 									<TableHeader createSortHandler={createSortHandler} sort={sort} />
 									<TableBodyAssetAll
-										handleOpenFormEdit={handleOpenFormEdit}
+										HandleOpenHistory={HandleOpenHistory}
 										entities={entities}
 										lastErrors={lastErrors}
 										classes={classes}

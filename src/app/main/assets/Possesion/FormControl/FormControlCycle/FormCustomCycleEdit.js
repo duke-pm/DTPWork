@@ -12,12 +12,12 @@ import * as moment from 'moment';
 import { Spin } from 'antd';
 
 const initial = {
-	date: '',
+	date: moment(Date.now()),
 	nameService: '',
 	note: '',
 	price: '',
 	file: '',
-	dateEnd: ''
+	dateEnd: moment(Date.now())
 };
 export default function FormCustomCycleEdit({ handleClose, entitiesEdit, handleSubmitCycle, actionLoading }) {
 	const validationSchema = Yup.object().shape({
