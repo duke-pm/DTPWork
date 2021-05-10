@@ -11,8 +11,8 @@ const TableBodyAssetAll = ({ entities, lastErrors, classes, HandleOpenHistory })
 		<TableBody>
 			{entities &&
 				!lastErrors &&
-				entities.map(items => (
-					<TableRow key={items.assetID} hover className={classes.tableHead}>
+				entities.map((items, index) => (
+					<TableRow key={index} hover className={classes.tableHead}>
 						<TableCell align="center" className="p-4 md:p-12">
 							<Popover
 								overlayStyle={{ zIndex: '19' }}

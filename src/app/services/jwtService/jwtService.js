@@ -137,8 +137,8 @@ class JwtService extends FuseUtils.EventEmitter {
 
 	setCookie = (access_token, role, refresh_token, expires_in) => {
 		if (access_token) {
-			Cookies.set('token', access_token, { expires: 20 });
-			Cookies.set('role', role, { expires: 20 });
+			Cookies.set('token', access_token, { expires: 1 });
+			Cookies.set('role', role, { expires: 1 });
 			Cookies.set('refresh_token', refresh_token, { expires: expires_in });
 		} else {
 			Cookies.remove('token');

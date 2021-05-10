@@ -5,6 +5,7 @@ import { Formik, Form, Field } from 'formik';
 import React, { useState, useEffect } from 'react';
 import { Button, makeStyles } from '@material-ui/core';
 import { Spin } from 'antd';
+import * as moment from 'moment';
 import RadioAntd from '@fuse/CustomForm/RadioAntd';
 import SelectAntd from '@fuse/CustomForm/SelectAntd';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
@@ -22,8 +23,15 @@ const useStyles = makeStyles(theme => ({
 		width: '60%'
 	}
 }));
-export default function HandlingBody({ inititalState, handleClose, dataAssets, setDataAssets }) {
+export default function HandlingBody({ handleClose, dataAssets, setDataAssets }) {
 	const [disable, setDisable] = useState(true);
+	const [initialstate, setInitialState] = useState({
+		note: '',
+		status: 'Damage',
+		date: moment(Date.now()),
+		file: '',
+		assets: ''
+	});
 	const [user, setUser] = useState(null);
 	const dispatch = useDispatch();
 	useEffect(() => {
@@ -41,6 +49,10 @@ export default function HandlingBody({ inititalState, handleClose, dataAssets, s
 	);
 	const classes = useStyles();
 	const handleChangeAssets = value => {
+		setInitialState({
+			...initialstate,
+			assets: value
+		});
 		const filterAssetUser = assetsUser.reduce((arr, curr) => (curr.value === value ? { ...curr } : arr));
 		setDataAssets(filterAssetUser);
 		setDisable(false);
@@ -48,15 +60,22 @@ export default function HandlingBody({ inititalState, handleClose, dataAssets, s
 	return (
 		<Formik
 			enableReinitialize
-			validationSchema={validateSchema}
-			initialValues={inititalState}
+			// validationSchema={validateSchema}
+			initialValues={initialstate}
 			onSubmit={(values, { resetForm }) => {
 				dispatch(actions.reportFailurePossesion(values, dataAssets, user)).then(data => {
 					if (!data.isError) {
 						notificationConfig('success', 'Thành công', 'Gửi yêu cầu thành công');
 						dispatch(actions.getAssetsUser());
-						resetForm({});
+						setInitialState({
+							note: '',
+							status: 'Damage',
+							date: moment(Date.now()),
+							file: '',
+							assets: ''
+						});
 						setDisable(true);
+						resetForm({});
 					}
 				});
 			}}

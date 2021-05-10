@@ -201,7 +201,7 @@ export const addPersonalPossesion = (data, id) => dispatch => {
 	formData.append('RegionCode', data.location);
 	formData.append('Reasons', data.note);
 	formData.append('JobTitle', data.position);
-	formData.append('FileUpload', data.file);
+	formData.append('FileUpload', data.file || '');
 	formData.append('TypeUpdate', 'Allocation');
 	formData.append('TransDate', moment(data.date).format('YYYY-MM-DD'));
 	return requestFrom
@@ -222,16 +222,6 @@ export const addPersonalPossesion = (data, id) => dispatch => {
 };
 
 // =========================== Possesion Used ============================= //
-export const fetchPossesionUsed = value => dispatch => {
-	dispatch(actions.startCall({ callType: callTypes.list }));
-	const paramsReq = {
-		StatusID: value
-	};
-	return requestFrom
-		.fetchDataPossesion(paramsReq)
-		.then(() => {})
-		.catch(() => {});
-};
 export const withdrawPossesion = (data, entitiesEdit) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.actions }));
 	const formData = new FormData();
@@ -242,7 +232,7 @@ export const withdrawPossesion = (data, entitiesEdit) => dispatch => {
 	formData.append('JobTitle', entitiesEdit.jobTitle);
 	formData.append('Reasons', data.note);
 	formData.append('TransDate', moment(data.date).format('YYYY-MM-DD'));
-	formData.append('FileUpload', data.file || data.file);
+	formData.append('FileUpload', data.file || '');
 	formData.append('TypeUpdate', 'Recovery');
 	return requestFrom
 		.updateTypeAsset(formData)

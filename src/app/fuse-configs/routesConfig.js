@@ -7,8 +7,19 @@ import LoginConfig from 'app/main/login/LoginConfig';
 import RequestConfig from 'app/main/assets/proposedManagement/RequestProvider/RequestConfig';
 import HandlingConfig from 'app/main/assets/proposedManagement/HandlingRequest/HandlingConfig';
 import ResovleRequestConfig from 'app/main/assets/proposedManagement/ResovleRequest/ResovleRequestConfig';
+import GroupUserConfig from 'app/main/govern/groupUser/GroupUserConfig';
+import SettingMenuConfig from 'app/main/govern/settingMenu/SettingMenuConfig';
 
-const routeConfigs = [PossesionConfig, LoginConfig, CheckConfig, RequestConfig, HandlingConfig, ResovleRequestConfig];
+const routeConfigs = [
+	PossesionConfig,
+	LoginConfig,
+	CheckConfig,
+	RequestConfig,
+	HandlingConfig,
+	ResovleRequestConfig,
+	GroupUserConfig,
+	SettingMenuConfig
+];
 
 const routes = [
 	...FuseUtils.generateRoutesFromConfigs(routeConfigs, ['admin', 'nganhk', 'ducpt', 'huyenndh', 'vyttt']),
