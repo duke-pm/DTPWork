@@ -61,7 +61,7 @@ export default function ProcessingUseAsset({ openHistory, setOpenHistory }) {
 					<IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
 						<CloseIcon />
 					</IconButton>
-					<Typography variant="subtitle1" color="inherit">
+					<Typography variant="subtitle1" style={{ color: 'white' }} color="inherit">
 						Quá trình sử dụng tài sản
 					</Typography>
 				</Toolbar>
@@ -77,14 +77,10 @@ export default function ProcessingUseAsset({ openHistory, setOpenHistory }) {
 				aria-label="scrollable auto tabs example"
 			>
 				<Tab className="font-sans" label={`Thông tin chung `} {...a11yProps(0)} />
-				<Tab className="font-sans" label={`Quá trình sử dụng `} {...a11yProps(1)} />
 			</Tabs>
 			<div>
 				<TabPanel value={value} index={0}>
 					<InformationProceeUseAsset entitiesEdit={entitiesEdit} />
-				</TabPanel>
-				<TabPanel value={value} index={1}>
-					<TableProcessingUseAsset entitiesEdit={entitiesEdit} />
 				</TabPanel>
 			</div>
 		</Dialog>

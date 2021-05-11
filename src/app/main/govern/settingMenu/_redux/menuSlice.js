@@ -31,6 +31,30 @@ export const menuSlice = createSlice({
 			} else {
 				state.actionLoading = true;
 			}
+		},
+		fetchsListMenuSettings: (state, action) => {
+			const { data } = action.payload;
+			state.listLoading = false;
+			state.lastErrors = false;
+			state.entities = data;
+			// state.total_count
+		},
+		createdMenuSettings: (state, action) => {
+			const { dataRes } = action.payload;
+			state.actionLoading = false;
+			state.error = null;
+			const newArr = [...dataRes, ...state.entities];
+			state.entities = newArr;
+		},
+		updatedMenuSettings: (state, action) => {
+			const { dataRes } = action.payload;
+			state.actionLoading = false;
+			state.entities = state.entities.map(entity => {
+				if (entity.assetID === dataRes.assetID) {
+					return dataRes;
+				}
+				return entity;
+			});
 		}
 	}
 });

@@ -160,7 +160,7 @@ export default function FormCustomUnusedEdit({
 										className="mt-8 mb-16"
 									/>
 									<Field
-										label="khu vực"
+										label="Khu vực"
 										autoFocus
 										readOnly
 										hasFeedback
@@ -185,7 +185,7 @@ export default function FormCustomUnusedEdit({
 											className="mx-4 mb-16"
 										/>
 										<Field
-											label="Lí do cấp phát"
+											label="Lý do cấp phát"
 											// value={intialState.note}
 											name="note"
 											row={3}

@@ -42,7 +42,6 @@ export default function FormCustomCycleEdit({ handleClose, entitiesEdit, handleS
 							<div className="px-16 sm:px-24">
 								<div className="flex justify-between flex-row">
 									<h5 className="font-extrabold">Thông tin tài sản.</h5>
-									<span className="border-b-1 mt-3 ml-6 border-fuchsia w-auto sm:w-5/6 h-10" />
 								</div>
 								<div className=" grid grid-cols-1 sm:grid-cols-2 gap-48">
 									<div className="flex-row justify-between flex ">
@@ -127,7 +126,7 @@ export default function FormCustomCycleEdit({ handleClose, entitiesEdit, handleS
 								<div className="grid grid-cols-1 sm:grid-cols-2 mb-16 gap-8 ">
 									<div className="flex flex-col">
 										<Field
-											label="Lí do đưa vào sử dụng lại"
+											label="Lý do đưa vào sử dụng lại"
 											name="note"
 											row={2}
 											component={InputTextAreaLg}

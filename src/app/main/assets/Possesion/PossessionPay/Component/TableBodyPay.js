@@ -12,6 +12,7 @@ export default function TableBodyPay({ entities }) {
 						<TableCell align="left">{items.assetName} </TableCell>
 						<TableCell align="left">{items.groupName}</TableCell>
 						<TableCell align="left">{moment(items.purchaseDate).format('DD-MM-YYYY')} </TableCell>
+						<TableCell align="left">{moment(items.transDate).format('DD-MM-YYYY')} </TableCell>
 					</TableRow>
 				))}
 		</TableBody>

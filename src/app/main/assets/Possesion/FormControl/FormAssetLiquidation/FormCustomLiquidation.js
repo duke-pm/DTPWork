@@ -121,7 +121,7 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 								<div className="grid grid-cols-1 sm:grid-cols-2 p-4 mb-16 gap-8 ">
 									<div className="flex flex-col">
 										<Field
-											label="Lí do "
+											label="Lý do "
 											autoFocus
 											name="note"
 											row={4}
