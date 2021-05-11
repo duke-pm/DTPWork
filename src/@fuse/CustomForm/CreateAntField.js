@@ -77,4 +77,5 @@ const CreateAntField = AntComponent => ({
 export const AntSelect = CreateAntField(Select);
 export const AntDatePicker = CreateAntField(DatePicker);
 export const AntInput = CreateAntField(Input);
+export const AntInputPassword = CreateAntField(Input.Password);
 export const AntInputNumber = CreateAntField(InputNumber);

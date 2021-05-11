@@ -3,8 +3,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { makeStyles } from '@material-ui/core/styles';
 import { darken } from '@material-ui/core/styles/colorManipulator';
-import { TextFieldFormsy } from '@fuse/core/formsy';
-import Formsy from 'formsy-react';
+import * as Yup from 'yup';
 import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
 import React, { useState, useRef, useEffect } from 'react';
@@ -12,6 +11,8 @@ import { Button, Icon, IconButton, InputAdornment } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { submitLogin } from 'app/auth/store/loginSlice';
 import { showMessage } from 'app/store/fuse/messageSlice';
+import { Formik, Form, Field } from 'formik';
+import { AntInputPassword, AntInput } from '@fuse/CustomForm/CreateAntField';
 
 // import Auth0LoginTab from './tabs/Auth0LoginTab';
 // import FirebaseLoginTab from './tabs/FirebaseLoginTab';
@@ -34,15 +35,17 @@ const useStyles = makeStyles(theme => ({
 		color: theme.palette.primary.contrastText
 	}
 }));
-
+const initialState = {
+	email: '',
+	password: ''
+};
 function Login() {
+	const checkValidateForm = Yup.object().shape({
+		email: Yup.string().required('Không được để trống'),
+		password: Yup.string().required('Mật khẩu được để trống')
+	});
 	const classes = useStyles();
 	const login = useSelector(({ auth }) => auth.login);
-
-	const [isFormValid, setIsFormValid] = useState(false);
-	const [showPassword, setShowPassword] = useState(false);
-
-	const formRef = useRef(null);
 
 	useEffect(() => {
 		if (login.error) {
@@ -50,17 +53,10 @@ function Login() {
 		}
 	});
 
-	function disableButton() {
-		setIsFormValid(false);
-	}
-
-	function enableButton() {
-		setIsFormValid(true);
-	}
 	const dispatch = useDispatch();
-	function handleSubmit(model) {
-		dispatch(submitLogin(model));
-	}
+	// function handleSubmit(model) {
+	// 	dispatch(submitLogin(model));
+	// }
 	return (
 		<div
 			className={clsx(
@@ -80,97 +76,51 @@ function Login() {
 						<CardContent className="flex flex-col items-center justify-center w-full py-96 max-w-320">
 							<FuseAnimate delay={300}>
 								<div className="flex items-center mb-32">
-									<img className="logo-icon w-48" src="assets/images/logos/fuse.svg" alt="logo" />
-									<div className="border-l-1 mr-4 w-1 h-40" />
-									<div>
-										<Typography className="text-24 font-800 logo-text" color="inherit">
-											FUSE
-										</Typography>
-										<Typography
-											className="text-16 tracking-widest -mt-8 font-700"
-											color="textSecondary"
-										>
-											REACT
-										</Typography>
-									</div>
+									<img className="logo-icon w-96" src="assets/images/logo_DTP-01.png" alt="logo" />
 								</div>
 							</FuseAnimate>
 							<div className="w-full">
-								<Formsy
-									onValidSubmit={handleSubmit}
-									onValid={enableButton}
-									onInvalid={disableButton}
-									ref={formRef}
-									className="flex flex-col justify-center w-full"
+								<Formik
+									enableReinitialize
+									validationSchema={checkValidateForm}
+									initialValues={initialState}
+									onSubmit={values => {
+										dispatch(submitLogin(values));
+									}}
 								>
-									<TextFieldFormsy
-										className="mb-16"
-										type="text"
-										name="email"
-										label="Username/Email"
-										validations={{
-											minLength: 4
-										}}
-										validationErrors={{
-											minLength: 'Min character length is 4'
-										}}
-										InputProps={{
-											endAdornment: (
-												<InputAdornment position="end">
-													<Icon className="text-20" color="action">
-														email
-													</Icon>
-												</InputAdornment>
-											)
-										}}
-										variant="outlined"
-										required
-									/>
-
-									<TextFieldFormsy
-										className="mb-16"
-										type="password"
-										name="password"
-										label="Password"
-										validations={{
-											minLength: 4
-										}}
-										validationErrors={{
-											minLength: 'Min character length is 4'
-										}}
-										InputProps={{
-											className: 'pr-2',
-											type: showPassword ? 'text' : 'password',
-											endAdornment: (
-												<InputAdornment position="end">
-													<IconButton onClick={() => setShowPassword(!showPassword)}>
-														<Icon className="text-20" color="action">
-															{showPassword ? 'visibility' : 'visibility_off'}
-														</Icon>
-													</IconButton>
-												</InputAdornment>
-											)
-										}}
-										variant="outlined"
-										required
-									/>
-									{login.error && (
-										<FuseAnimate delay={300}>
-											<p className="text-red"> {login.error} </p>
-										</FuseAnimate>
+									{({ handleSubmit, isSubmitting }) => (
+										<Form>
+											<Field
+												label="Tài khoản "
+												name="email"
+												component={AntInput}
+												type="text"
+												hasFeedback
+											/>
+											<Field
+												name="password"
+												label="Mật khẩu"
+												component={AntInputPassword}
+												type="password"
+												hasFeedback
+											/>
+											{login.error && (
+												<FuseAnimate delay={300}>
+													<p className="text-red"> {login.error} </p>
+												</FuseAnimate>
+											)}
+											<Button
+												type="submit"
+												variant="contained"
+												color="primary"
+												className="w-full mx-auto mt-16"
+												aria-label="LOG IN"
+											>
+												Login
+											</Button>
+										</Form>
 									)}
-									<Button
-										type="submit"
-										variant="contained"
-										color="primary"
-										className="w-full mx-auto mt-16"
-										aria-label="LOG IN"
-										disabled={!isFormValid}
-										value="legacy"
-									>
-										Login
-									</Button>
-								</Formsy>
+								</Formik>
 							</div>
 						</CardContent>
 					</Card>
