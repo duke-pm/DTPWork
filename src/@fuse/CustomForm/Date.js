@@ -13,6 +13,7 @@ export default function DateCustom({
 	withFeedbackLabel = true,
 	customFeedbackLabel,
 	type,
+	readOnly,
 	hasFeedback,
 	submitCount,
 	...props
@@ -24,7 +25,6 @@ export default function DateCustom({
 	const touchedError = hasError && touched;
 	const { value } = field;
 	const handleDateChange = (date, dateString) => {
-		console.log({ date, dateString });
 		form.setFieldValue(field.name, date);
 	};
 	const dateFormat = 'DD-MM-YYYY';
@@ -46,6 +46,7 @@ export default function DateCustom({
 					validateStatus={submittedError || touchedError ? 'error' : 'success'}
 				>
 					<DatePicker
+						className={readOnly ? 'readOnly' : ''}
 						style={{ width: '100%' }}
 						placeholder="Vui lòng chọn ngày"
 						margin="normal"

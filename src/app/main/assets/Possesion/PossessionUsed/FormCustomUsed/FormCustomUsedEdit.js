@@ -54,7 +54,7 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 												<p className="p-6"> Tình trạng </p>
 												<p className="p-6"> Mô tả </p>
 											</div>
-											<div className="flex flex-col">
+											<div className="flex sm:mr-96 mr-auto flex-col" style={{ width: '300px' }}>
 												<p className="p-6 font-extrabold">
 													{' '}
 													{entitiesEdit && entitiesEdit.assetCode}
@@ -85,14 +85,14 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 											<h5 className="font-extrabold">Thông tin nhân viên sử dụng.</h5>
 											<span className="border-b-1 mt-3 ml-6 border-fuchsia w-auto sm:w-3/6 h-10" />
 										</div>
-										<div className="flex-row justify- flex ">
+										<div className="flex-row justify-between flex ">
 											<div className={`${classes.widthFont} flex flex-col`}>
 												<p className="p-6"> Nhân viên </p>
 												<p className="p-6"> Chức vụ </p>
 												<p className="p-6"> Bộ phận </p>
 												<p className="p-6"> Khu vực </p>
 											</div>
-											<div className="flex flex-col sm:mr-86 mr-auto">
+											<div className="flex sm:mr-96 mr-auto flex-col w-full">
 												<p className="p-6 font-extrabold">
 													{entitiesEdit && entitiesEdit.empName}{' '}
 												</p>
@@ -102,7 +102,7 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 												</p>
 												<p className="p-6 font-extrabold">
 													{' '}
-													{entitiesEdit && entitiesEdit.deptName}{' '}
+													{entitiesEdit && entitiesEdit.deptNameManager}{' '}
 												</p>
 												<p className="p-6 font-extrabold">
 													{' '}

@@ -13,8 +13,6 @@ import { ConfirmContext } from '../../ConfirmContext';
 import * as actions from '../../../_redux/confirmAction';
 import { useStyles } from '../StyleCustomAll';
 
-const { RangePicker } = DatePicker;
-
 export default function ActionComponent({ actionLoading }) {
 	const classes = useStyles();
 	const dispatch = useDispatch();
@@ -30,37 +28,76 @@ export default function ActionComponent({ actionLoading }) {
 		setStatus,
 		status,
 		dateEnd,
-		dateStart
+		dateStart,
+		sort
 	} = confirmConext;
 	const handleSearch = e => {
 		e.preventDefault();
 		setPage(0);
-		dispatch(actions.searchConfirms(status, rowPage, page, search, dateStart, dateEnd));
+		dispatch(
+			actions.searchConfirms(false, status, rowPage, page, 1, sort.id, sort.direction, search, dateStart, dateEnd)
+		);
 	};
 	onkeypress = e => {
 		if (e.key === 'Enter') {
 			e.preventDefault();
 			setPage(0);
-			dispatch(actions.searchConfirms(status, rowPage, page, search, dateStart, dateEnd));
+			dispatch(
+				actions.searchConfirms(
+					false,
+					status,
+					rowPage,
+					page,
+					1,
+					sort.id,
+					sort.direction,
+					search,
+					dateStart,
+					dateEnd
+				)
+			);
 		}
 	};
 	const onHandleChange = e => {
 		setSearch(e.target.value);
 		setPage(0);
 		if (e.target.value.length <= 0) {
-			dispatch(actions.searchConfirms(status, rowPage, page, e.target.value, dateStart, dateEnd));
+			dispatch(
+				actions.searchConfirms(
+					false,
+					status,
+					rowPage,
+					page,
+					1,
+					sort.id,
+					sort.direction,
+					e.target.value,
+					dateStart,
+					dateEnd
+				)
+			);
 		}
 	};
-	const handleChangeFilterDate = (date, dateString) => {
+	const handleChangeFilterDateStart = date => {
+		setDateStart(date);
 		setPage(0);
-		dispatch(actions.searchConfirms(status, rowPage, page, search, date && date[0], date && date[1]));
-		setDateEnd(date && date[0]);
-		setDateStart(date && date[1]);
+		dispatch(
+			actions.searchConfirms(false, status, rowPage, page, 1, sort.id, sort.direction, search, date, dateEnd)
+		);
+	};
+	const handleChangeFilterDateEnd = date => {
+		setDateEnd(date);
+		setPage(0);
+		dispatch(
+			actions.searchConfirms(false, status, rowPage, page, 1, sort.id, sort.direction, search, dateStart, date)
+		);
 	};
 	const onHandleChangeStatus = value => {
 		setStatus(value);
 		setPage(0);
-		dispatch(actions.searchConfirms(value, rowPage, page, search, dateStart, dateEnd));
+		dispatch(
+			actions.searchConfirms(false, value, rowPage, page, 1, sort.id, sort.direction, search, dateStart, dateEnd)
+		);
 	};
 	return (
 		<>
@@ -84,18 +121,20 @@ export default function ActionComponent({ actionLoading }) {
 							<SearchIcon />
 						</IconButton>
 					</Paper>
-					<Paper className="ml-16">
-						<RangePicker
-							bordered={false}
-							defaultValue={[moment().startOf('month'), moment().endOf('month')]}
-							ranges={{
-								'Hôm nay': [moment(), moment()],
-								'Tháng này': [moment().startOf('month'), moment().endOf('month')]
-							}}
+					<Paper className="ml-16 flex flex-row w-full sm:w-1/3 justify-around ">
+						<DatePicker
+							onChange={handleChangeFilterDateStart}
 							format="DD/MM/YYYY"
-							onChange={handleChangeFilterDate}
-							style={{ height: '100%' }}
-							placeholder={['Ngày bắt đầu', 'Ngày kết thúc']}
+							defaultValue={moment().startOf('month')}
+							placeholder="Ngày bắt đầu"
+							style={{ width: '100%' }}
+						/>
+						<DatePicker
+							onChange={handleChangeFilterDateEnd}
+							format="DD/MM/YYYY"
+							defaultValue={moment().endOf('month')}
+							placeholder="Ngày kết thúc"
+							style={{ width: '100%' }}
 						/>
 					</Paper>
 					<Paper style={{ width: '220px' }} className="ml-16">

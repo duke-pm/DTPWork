@@ -10,6 +10,7 @@ import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import { AntInput } from '@fuse/CustomForm/CreateAntField';
 import InputTextArea from '@fuse/CustomForm/InputTextArea';
 import RadioAntd from '@fuse/CustomForm/RadioAntd';
+import DateCustom from '@fuse/CustomForm/Date';
 
 export default function FormCustomEdit({
 	handleSubmitForm,
@@ -68,16 +69,16 @@ export default function FormCustomEdit({
 		}
 	];
 
-	const onConfirm = values => {
-		// handleSubmitForm(values, dataSource);
-	};
+	// const onConfirm = values => {
+	// 	// handleSubmitForm(values, dataSource);
+	// };
 	return (
 		<>
 			<Formik
 				enableReinitialize
 				initialValues={initialState}
 				onSubmit={values => {
-					onConfirm(values);
+					handleSubmitForm();
 				}}
 			>
 				{({ handleSubmit, isSubmitting }) => (
@@ -86,7 +87,6 @@ export default function FormCustomEdit({
 							<div className="px-16 sm:px-24">
 								<div className="flex justify-between flex-row">
 									<h5 className="font-extrabold">Thông tin cấp phát tài sản.</h5>
-									<span className="border-b-1 mt-3 ml-6 border-fuchsia w-auto sm:w-10/12 h-10" />
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-4 gap-8 ">
 									<Field
@@ -114,8 +114,9 @@ export default function FormCustomEdit({
 										readOnly
 										label="Ngày yêu cầu (*) "
 										name="dateRequest"
+										format="DD/MM/YYYY"
 										placeholder="Vui lòng chọn ngày yêu cầu"
-										component={AntInput}
+										component={DateCustom}
 										className="mx-4 mb-16"
 									/>
 								</div>
@@ -123,10 +124,9 @@ export default function FormCustomEdit({
 							<div className="px-16 sm:px-24">
 								<div className="flex justify-between flex-row">
 									<h5 className="font-extrabold">Danh sách tài sản yêu cầu.</h5>
-									<span className="border-b-1 mt-3 ml-6 border-fuchsia w-auto sm:w-10/12 h-10" />
 								</div>
 								<Table
-									rowKey="requestID"
+									rowKey="descr"
 									className="time-table-row-select"
 									columns={columns}
 									bordered
@@ -137,7 +137,6 @@ export default function FormCustomEdit({
 							<div className="px-16 sm:px-24 mt-16">
 								<div className="flex justify-between flex-row">
 									<h5 className="font-extrabold">Nội dung.</h5>
-									<span className="border-b-1 mt-3 ml-6 border-fuchsia w-auto sm:w-11/12 h-10" />
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-1 gap-8 ">
 									<Field

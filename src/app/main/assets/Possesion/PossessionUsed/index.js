@@ -10,7 +10,6 @@ import FuseLoading from '@fuse/core/FuseLoading';
 import { Spin } from 'antd';
 import * as actions from '../_redux/possesionActions';
 import FormCustomUsed from './FormCustomUsed';
-import FormControlReport from '../FormControl/FormControlReport';
 import { PossessionContext } from '../PossessionContext';
 import ActionComponent from './Component/ActionFliterComponent';
 import { useStyles } from './StyleCustomAll';
@@ -25,7 +24,6 @@ export default function PossessionUsed(props) {
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;
 	const {
-		handleOpenFormReport,
 		rowPage,
 		setRowPage,
 		page,
@@ -33,20 +31,23 @@ export default function PossessionUsed(props) {
 		search,
 		value,
 		sort,
-		setSort
+		setSort,
+		setFormService,
+		typeSetFormService
 	} = possessionContext;
 	const handleOpenFormRequest = () => setFormRequest(true);
 	const handleClose = () => setOpen(false);
 	useEffect(() => {
 		dispatch(actions.fetchPossesionAll(2));
 	}, [dispatch]);
-	const handleFormOpenReport = (type, items) => {
-		dispatch(actions.setTaskEditPossesionAll(items));
-		handleOpenFormReport(type);
-	};
 	const handleOpenForm = items => {
 		dispatch(actions.setTaskEditPossesionAll(items));
 		setOpen(true);
+	};
+	const handleOpenFromService = items => {
+		typeSetFormService('use');
+		dispatch(actions.setTaskEditPossesionAll(items));
+		setFormService(true);
 	};
 	const handleRowChange = e => {
 		setRowPage(parseInt(e.target.value, 10));
@@ -77,7 +78,6 @@ export default function PossessionUsed(props) {
 	return (
 		<>
 			<FormCustomUsed open={open} handleClose={handleClose} />
-			<FormControlReport />
 			<div className="flex flex-col">
 				<ActionComponent handleOpenForm={handleOpenFormRequest} value={props.value} />
 				<FuseAnimate delay={200} animation="transition.slideUpIn">
@@ -87,9 +87,9 @@ export default function PossessionUsed(props) {
 								<Table className={classes.table} stickyHeader>
 									<TableHeaderUsed createSortHandler={createSortHandler} sort={sort} />
 									<TableBodyUsed
+										handleOpenFromService={handleOpenFromService}
 										entities={entities}
 										handleOpenForm={handleOpenForm}
-										handleFormOpenReport={handleFormOpenReport}
 									/>
 								</Table>
 								{(entities && entities.length === 0) || lastErrors ? (

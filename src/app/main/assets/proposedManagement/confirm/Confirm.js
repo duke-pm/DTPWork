@@ -1,8 +1,8 @@
 import { Tabs, Tab, Box, Typography } from '@material-ui/core';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import FusePageCarded from '@fuse/core/FusePageCarded';
-import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import { ConfirmContext } from './ConfirmContext';
 import ConfirmAll from './ConfirmAll';
 import ConfirmDamaged from './ConfirmDamaged';
@@ -10,7 +10,6 @@ import ConfirmLose from './ConfirmLose';
 import FormAllocation from './FormControlConfirm/Allocation';
 import FormConfirmGobal from './FormControlConfirm/ConfirmCorrupt';
 import FormCustomCorrupt from './FormControlConfirm/FormCustomCorrupt';
-import * as actions from '../_redux/confirmAction';
 
 function a11yProps(index) {
 	return {
@@ -35,11 +34,8 @@ function TabPanel(props) {
 }
 
 function PossesionPage(props) {
-	const dispatch = useDispatch();
 	const confirmContext = useContext(ConfirmContext);
 	const {
-		page,
-		rowPage,
 		value,
 		setValue,
 		formControl,
@@ -58,15 +54,6 @@ function PossesionPage(props) {
 		// setPage(0);
 		// setRowPage(25);
 	};
-	useEffect(() => {
-		switch (value) {
-			case 0:
-				dispatch(actions.fetchDataConfirms(0, rowPage, page + 1));
-				break;
-			default:
-				return false;
-		}
-	}, [page, rowPage, dispatch, value]);
 	const handleCloseForm = () => setFormControl(false);
 	const handleCloseFormAllocation = () => setFormAllocation(false);
 	const hanleCancle = () => setReasonReject(false);

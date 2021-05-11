@@ -23,7 +23,7 @@ export default function ContentForm({ entitiesEdit }) {
 				<div className="flex flex-col">
 					<p className="p-6">Ngày mua </p>
 					<p className="p-6"> Nguyên giá </p>
-					<p className="p-166"> Tình trạng </p>
+					<p className="p-6"> Tình trạng </p>
 				</div>
 				<div className="flex sm:mr-96 mr-auto flex-col">
 					<p className="p-6 font-extrabold">

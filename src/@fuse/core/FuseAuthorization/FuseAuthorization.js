@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { matchRoutes } from 'react-router-config';
 import { withRouter } from 'react-router-dom';
 import { getRoleCookies, getToken } from '../DtpConfig';
+import FuseSplashScreen from '../FuseSplashScreen';
 
 class FuseAuthorization extends Component {
 	constructor(props, context) {
@@ -75,7 +76,9 @@ class FuseAuthorization extends Component {
 
 	render() {
 		// console.info('Fuse Authorization rendered', accessGranted);
-		return this.state.accessGranted ? <>{this.props.children}</> : null;
+		return this.state.accessGranted ? (
+			<React.Suspense fallback={<FuseSplashScreen />}>{this.props.children}</React.Suspense>
+		) : null;
 	}
 }
 

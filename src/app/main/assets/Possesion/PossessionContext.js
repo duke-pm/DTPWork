@@ -4,8 +4,11 @@ export const PossessionContext = createContext();
 
 export default function PossessionContextProvider({ children }) {
 	const [formCycle, setFormCycle] = useState(false);
-	const [formReport, setFormReport] = useState(false);
-	const [typeReport, setTypeReport] = useState('');
+	const [typeReport] = useState('');
+	const [formService, setFormService] = useState(false);
+	const [typeFormService, typeSetFormService] = useState(false);
+	const [liquiAsset, setLiquiAsset] = useState(false);
+	const [typeliquiAsset, setTypeLiquiAsset] = useState('');
 	const [typeCycle, setTypeCycle] = useState('');
 	const [rowPage, setRowPage] = React.useState(25);
 	const [page, setPage] = React.useState(0);
@@ -19,33 +22,51 @@ export default function PossessionContextProvider({ children }) {
 		setFormCycle(true);
 		setTypeCycle(type);
 	};
-	const handleOpenFormReport = type => {
-		setFormReport(true);
-		setTypeReport(type);
-	};
 	const handleCloseFormCycle = () => setFormCycle(false);
-	const handleCloseFormReport = () => setFormReport(false);
 	const valueMemo = useMemo(() => {
 		return {
+			liquiAsset,
+			setLiquiAsset,
 			formCycle,
-			handleOpenFormReport,
 			handleOpenFormCycle,
 			handleCloseFormCycle,
-			handleCloseFormReport,
 			setRowPage,
 			setPage,
 			setValue,
 			setSearch,
 			typeCycle,
 			typeReport,
-			formReport,
 			rowPage,
 			page,
 			value,
 			search,
 			sort,
-			setSort
+			setSort,
+			formService,
+			setFormService,
+			typeliquiAsset,
+			setTypeLiquiAsset,
+			typeFormService,
+			typeSetFormService
 		};
-	}, [formCycle, formReport, page, rowPage, search, typeCycle, typeReport, value, sort, setSort]);
+	}, [
+		formCycle,
+		page,
+		rowPage,
+		search,
+		typeCycle,
+		typeReport,
+		value,
+		sort,
+		setSort,
+		liquiAsset,
+		setLiquiAsset,
+		formService,
+		setFormService,
+		typeliquiAsset,
+		setTypeLiquiAsset,
+		typeFormService,
+		typeSetFormService
+	]);
 	return <PossessionContext.Provider value={valueMemo}>{children}</PossessionContext.Provider>;
 }

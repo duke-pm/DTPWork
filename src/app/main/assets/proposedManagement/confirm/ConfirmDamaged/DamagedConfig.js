@@ -1,56 +1,50 @@
 export const chipColor = {
 	1: 'bg-blue text-white',
-	2: 'bg-green text-white',
-	3: 'bg-orange text-black',
-	4: 'bg-purple text-white',
-	5: 'bg-red-700 text-white',
-	6: 'bg-yellow-900 text-white'
+	2: 'bg-orange text-black',
+	3: 'bg-green text-white',
+	4: 'bg-purple text-white'
 };
 export const chipText = {
-	1: 'Chưa sử dụng',
-	2: 'Đang sử dụng',
-	3: 'Sửa chữa-bảo hành',
-	4: 'Hư hỏng',
-	5: 'Mất ',
-	6: 'Thanh lí'
+	1: 'Chờ phê duyệt',
+	2: 'Đã duyệt',
+	3: 'Hoàn thành',
+	4: 'Từ chối'
 };
-export const rowConfig = [
+export const rowConfirmAllocation = [
 	{
-		id: 'assetId',
+		id: 'EmpCode',
 		align: 'left',
-		label: 'Mã tài sản',
+		label: 'Mã nhân viên',
 		sort: true
 	},
 	{
-		id: 'assetName',
+		id: 'FullName',
 		align: 'left',
-		label: 'Tên tài sản',
+		label: 'Tên nhân viên',
 		sort: true
 	},
 	{
-		id: 'assetGroup',
+		id: 'DeptName',
 		align: 'left',
-		label: 'Nhóm tài sản',
+		label: 'Bộ phận',
 		sort: true
 	},
 	{
-		id: 'purschaseDate',
+		id: 'RegionName',
 		align: 'left',
-		label: 'Ngày mua'
+		label: 'Khu vực',
+		sort: true
 	},
 	{
-		id: 'depart',
+		id: 'RequestDate',
 		align: 'left',
-		label: 'BP Quản lý'
+		label: 'Ngày yêu cầu',
+		sort: true
 	},
 	{
-		id: 'empName',
+		id: 'statusID',
 		align: 'left',
-		label: 'Nhân viên'
-	},
-	{
-		id: 'status',
-		align: 'left',
-		label: 'Trạng thái'
+		label: 'Trạng thái',
+		sort: true
 	}
 ];

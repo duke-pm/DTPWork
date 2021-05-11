@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from '@reduxjs/toolkit';
 import { hideMessage, showMessage } from 'app/store/fuse/messageSlice';
 
+import { getToken, getRoleCookies, refresh_token } from '@fuse/core/DtpConfig';
 import { setUserData, logoutUser } from './store/userSlice';
 
 class Auth extends Component {
@@ -19,11 +20,30 @@ class Auth extends Component {
 			// Comment the lines which you do not use
 			// this.firebaseCheck(),
 			// this.auth0Check(),
-			// this.jwtCheck()
+			this.jwtCheck(),
+			this.jwtCheckToken()
 		]).then(() => {
 			this.setState({ waitAuthCheck: false });
 		});
 	}
+
+	jwtCheckToken = () =>
+		new Promise(resolve => {
+			const token = getToken();
+			const roles = getRoleCookies();
+			const refreshToken = refresh_token();
+			if (!token && !roles && refreshToken) {
+				jwtService.signInWithToken(refreshToken).then(user => {
+					this.props.setUserData(user);
+
+					resolve();
+
+					this.props.showMessage({ message: 'Logged in with JWT' });
+				});
+			}
+			resolve();
+			return Promise.resolve();
+		});
 
 	jwtCheck = () =>
 		new Promise(resolve => {
@@ -53,7 +73,6 @@ class Auth extends Component {
 				if (message) {
 					this.props.showMessage({ message });
 				}
-
 				this.props.logout();
 
 				resolve();

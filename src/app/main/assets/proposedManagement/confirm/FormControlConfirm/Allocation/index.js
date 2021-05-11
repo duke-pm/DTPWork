@@ -1,9 +1,11 @@
 import React from 'react';
 import { Dialog, AppBar, Toolbar, Typography, IconButton, makeStyles } from '@material-ui/core';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 // import FormCustomUsedEdit from './FormCustomUsedEdit';
 import CloseIcon from '@material-ui/icons/Close';
+import { notificationConfig } from '@fuse/core/DtpConfig';
 import FormCustomEdit from './FormCustomEdit';
+import * as actions from '../../../_redux/confirmAction';
 
 const useStyles = makeStyles({
 	scrollPaper: {
@@ -13,6 +15,7 @@ const useStyles = makeStyles({
 
 export default function FormAllocation({ handleClose, open, setReasonReject, setTypeReasonReject }) {
 	const classes = useStyles();
+	const dispatch = useDispatch();
 	const { actionLoading, entitiesEdit, newEntitiesDetail } = useSelector(
 		state => ({
 			entitiesEdit: state.confirm.entitiesEdit,
@@ -25,6 +28,15 @@ export default function FormAllocation({ handleClose, open, setReasonReject, set
 		setReasonReject(true);
 		setTypeReasonReject('allocation');
 	};
+	const handleSubmit = () => {
+		const status = true;
+		dispatch(actions.requestApprove(entitiesEdit, status)).then(data => {
+			if (data && !data.isError) {
+				notificationConfig('success', 'Thành công', 'Xác nhận thành công');
+				handleClose();
+			}
+		});
+	};
 	return (
 		<Dialog
 			fullWidth
@@ -32,7 +44,6 @@ export default function FormAllocation({ handleClose, open, setReasonReject, set
 			maxWidth="lg"
 			classes={{ scrollPaper: classes.scrollPaper }}
 			// fullScreen
-			onClose={handleClose}
 			aria-labelledby="customized-dialog-title"
 			open={open}
 		>
@@ -51,7 +62,7 @@ export default function FormAllocation({ handleClose, open, setReasonReject, set
 				actionLoading={actionLoading}
 				entitiesEdit={entitiesEdit}
 				newEntitiesEdit={newEntitiesDetail}
-				// handleSubmitForm={handleSubmitForm}
+				handleSubmitForm={handleSubmit}
 			/>
 		</Dialog>
 	);

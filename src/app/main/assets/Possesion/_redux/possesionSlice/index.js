@@ -63,20 +63,14 @@ export const possesionSlice = createSlice({
 		},
 		possesionUpdate: (state, action) => {
 			const { dataReq } = action.payload;
-			const { entities } = state;
-			const index = entities.findIndex(items => items.assetID === dataReq.assetID);
-			if (index !== -1) {
-				const newList = [...entities.slice(0, index), dataReq, ...entities.slice(index + 1)];
-				return {
-					...state,
-					entities: newList
-				};
-			}
 			state.error = null;
 			state.actionLoading = false;
-			return {
-				...state
-			};
+			state.entities = state.entities.map(entity => {
+				if (entity.assetID === dataReq.assetID) {
+					return dataReq;
+				}
+				return entity;
+			});
 		},
 		possesionUpdatedUnUsed: (state, action) => {
 			const { id } = action.payload;
@@ -98,29 +92,47 @@ export const possesionSlice = createSlice({
 			state.total_count = total_count - 1;
 			state.actionLoading = false;
 		},
+		repairAssets: (state, action) => {
+			const { id, typeFormService } = action.payload;
+			const { entities } = state;
+			state.entities = entities.filter(item => item.assetID !== id);
+			const { countDamaged, countWarrantyRepair, countUsing } = state.total_items;
+			if (typeFormService === 'use') {
+				state.total_items.countUsing = countUsing - 1;
+			} else {
+				state.total_items.countDamaged = countDamaged - 1;
+			}
+			state.total_items.countWarrantyRepair = countWarrantyRepair + 1;
+			state.actionLoading = false;
+		},
+		resuseAssets: (state, action) => {
+			const { id } = action.payload;
+			const { entities } = state;
+			state.entities = entities.filter(item => item.assetID !== id);
+			const { countNoUseYet, countWarrantyRepair } = state.total_items;
+			state.total_items.countNoUseYet = countNoUseYet + 1;
+			state.total_items.countWarrantyRepair = countWarrantyRepair - 1;
+			state.actionLoading = false;
+		},
+		liquiAssets: (state, action) => {
+			const { id, typeliquiAsset } = action.payload;
+			const { entities } = state;
+			state.entities = entities.filter(item => item.assetID !== id);
+			const { countLiquidation, countWarrantyRepair, countDamaged } = state.total_items;
+			if (typeliquiAsset === 'damage') {
+				state.total_items.countDamaged = countDamaged - 1;
+			} else {
+				state.total_items.countWarrantyRepair = countWarrantyRepair - 1;
+			}
+			state.total_items.countLiquidation = countLiquidation + 1;
+			state.actionLoading = false;
+		},
 		informationsFetch: (state, action) => {
 			const { data } = action.payload;
 			state.listloading = false;
 			state.error = null;
 			state.lastErrors = false;
 			state.entitiesInformation = data.data;
-		},
-		reportFromUser: (state, action) => {
-			const { dataRes } = action.payload;
-			const { entities } = state;
-			const index = entities.findIndex(items => items.assetID === dataRes.assetID);
-			if (index !== -1) {
-				const newList = [...entities.slice(0, index), dataRes, ...entities.slice(index + 1)];
-				return {
-					...state,
-					entities: newList
-				};
-			}
-			state.error = null;
-			state.actionLoading = false;
-			return {
-				...state
-			};
 		}
 	}
 });

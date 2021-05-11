@@ -12,22 +12,12 @@ export const PossesionActionUsed = props => {
 				</ListItemIcon>
 				<ListItemText primary="Thu hồi tài sản" />
 			</MenuItem>
-			{!props.items.isProcessing ? (
-				<>
-					<MenuItem onClick={() => props.handleFormOpenReport('service', items)} role="button">
-						<ListItemIcon className="min-w-40">
-							<Icon>build</Icon>
-						</ListItemIcon>
-						<ListItemText primary="Báo hỏng tài sản" />
-					</MenuItem>
-					<MenuItem onClick={() => props.handleFormOpenReport('lose', items)} role="button">
-						<ListItemIcon className="min-w-40">
-							<Icon>report_problem</Icon>
-						</ListItemIcon>
-						<ListItemText primary="Báo mất tài sản" />
-					</MenuItem>
-				</>
-			) : null}
+			<MenuItem onClick={() => props.handleOpenFromService(items)} role="button">
+				<ListItemIcon className="min-w-40">
+					<Icon>build</Icon>
+				</ListItemIcon>
+				<ListItemText primary="Sửa chữa bảo hành tài sản" />
+			</MenuItem>
 		</div>
 	);
 };

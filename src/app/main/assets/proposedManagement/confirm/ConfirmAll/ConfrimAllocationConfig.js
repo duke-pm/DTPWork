@@ -14,36 +14,39 @@ export const chipText = {
 };
 export const rowConfirmAllocation = [
 	{
-		id: 'empCode',
+		id: 'EmpCode',
 		align: 'left',
 		label: 'Mã nhân viên',
 		sort: true
 	},
 	{
-		id: 'fullName',
+		id: 'FullName',
 		align: 'left',
 		label: 'Tên nhân viên',
 		sort: true
 	},
 	{
-		id: 'deptName',
+		id: 'DeptName',
 		align: 'left',
 		label: 'Bộ phận',
 		sort: true
 	},
 	{
-		id: 'regionName',
+		id: 'RegionName',
 		align: 'left',
-		label: 'Khu vực'
+		label: 'Khu vực',
+		sort: true
 	},
 	{
-		id: 'requestDate',
+		id: 'RequestDate',
 		align: 'left',
-		label: 'Ngày yêu cầu'
+		label: 'Ngày yêu cầu',
+		sort: true
 	},
 	{
-		id: 'status',
+		id: 'statusID',
 		align: 'left',
-		label: 'Trạng thái'
+		label: 'Trạng thái',
+		sort: true
 	}
 ];

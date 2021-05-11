@@ -5,27 +5,29 @@ import moment from 'moment';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { PossesionActionUsed } from './PossessionUsedAction';
 
-export default function TableBodyUsed({ entities, handleOpenForm, handleFormOpenReport }) {
+export default function TableBodyUsed({ entities, handleOpenForm, handleOpenFromService }) {
 	return (
 		<TableBody>
 			{entities &&
 				entities.map(items => (
 					<TableRow key={items.assetID} hover>
 						<TableCell align="left" className="p-4 md:p-12">
-							<Popover
-								overlayStyle={{ zIndex: '19' }}
-								placement="rightTop"
-								content={() => (
-									<PossesionActionUsed
-										handleOpenForm={handleOpenForm}
-										items={items}
-										handleFormOpenReport={handleFormOpenReport}
-									/>
-								)}
-								title="Hành động"
-							>
-								<MoreVertIcon className="cursor-pointer" />
-							</Popover>
+							{!items.isProcessing && (
+								<Popover
+									overlayStyle={{ zIndex: '19' }}
+									placement="rightTop"
+									content={() => (
+										<PossesionActionUsed
+											handleOpenFromService={handleOpenFromService}
+											handleOpenForm={handleOpenForm}
+											items={items}
+										/>
+									)}
+									title="Hành động"
+								>
+									<MoreVertIcon className="cursor-pointer" />
+								</Popover>
+							)}
 						</TableCell>
 						<TableCell align="left"> {items.assetCode} </TableCell>
 						<TableCell align="left">{items.assetName} </TableCell>

@@ -10,7 +10,8 @@ const initialState = {
 	total_count: 0,
 	total_items: null,
 	lastErrors: false,
-	entitiesInformation: null
+	entitiesInformation: null,
+	assetsUser: null
 };
 
 export const callTypes = {
@@ -68,6 +69,38 @@ export const confirmSlice = createSlice({
 			const { requestID } = data;
 			const { entitiesDetail } = state;
 			state.newEntitiesDetail = entitiesDetail.filter(item => item.requestID === requestID);
+		},
+		assetsUsersFetch: (state, action) => {
+			const { data } = action.payload;
+			const newData = data.data.reduce(
+				(arr, curr) => [...arr, { ...curr, label: curr.assetName, value: curr.assetID }],
+				[]
+			);
+			state.listloading = false;
+			state.assetsUser = newData;
+		},
+		reportFromUser: (state, action) => {
+			state.error = null;
+			state.actionLoading = false;
+		},
+		approveUpdate: (state, action) => {
+			const { dataReq } = action.payload;
+			state.error = null;
+			state.actionLoading = false;
+			state.entities = state.entities.map(entity => {
+				if (entity.requestID === dataReq.requestID) {
+					return dataReq;
+				}
+				return entity;
+			});
+		},
+		approveUpdateResolve: (state, action) => {
+			const { requestID } = action.payload;
+			state.error = null;
+			state.actionLoading = false;
+			const { entities } = state;
+			const newEntities = entities.filter(item => item.requestID !== requestID);
+			state.entities = newEntities;
 		}
 	}
 });

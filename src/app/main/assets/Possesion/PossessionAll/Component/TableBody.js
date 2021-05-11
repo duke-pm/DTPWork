@@ -6,20 +6,18 @@ import * as moment from 'moment';
 import PossessionAction from './ActionComponent/PossessionAction';
 import { chipColor, chipText } from '../ConfigPossessionAll';
 
-const TableBodyAssetAll = ({ entities, lastErrors, classes, handleOpenFormEdit }) => {
+const TableBodyAssetAll = ({ entities, lastErrors, classes, HandleOpenHistory }) => {
 	return (
 		<TableBody>
 			{entities &&
 				!lastErrors &&
-				entities.map(items => (
-					<TableRow key={items.assetID} hover className={classes.tableHead}>
+				entities.map((items, index) => (
+					<TableRow key={index} hover className={classes.tableHead}>
 						<TableCell align="center" className="p-4 md:p-12">
 							<Popover
 								overlayStyle={{ zIndex: '19' }}
 								placement="rightTop"
-								content={() => (
-									<PossessionAction items={items} handleOpenFormEdit={handleOpenFormEdit} />
-								)}
+								content={() => <PossessionAction HandleOpenHistory={HandleOpenHistory} items={items} />}
 								title="Hành động"
 							>
 								<MoreVertIcon className="cursor-pointer" />

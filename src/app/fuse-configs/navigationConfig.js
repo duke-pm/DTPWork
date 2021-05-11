@@ -38,6 +38,13 @@ const navigationConfig = [
 						url: '/quan-li-de-xuat/xet-duyet'
 					},
 					{
+						id: 'recomend',
+						title: 'Đề xuất cần xử lí',
+						transalate: 'Đề xuất cần xử lí',
+						type: 'item',
+						url: '/quan-li-de-xuat/de-xuat-can-xu-ly'
+					},
+					{
 						id: 'Report',
 						title: 'Báo hỏng/mất tài sản',
 						transalate: 'Báo hỏng/mất tài sản',
@@ -52,6 +59,46 @@ const navigationConfig = [
 						url: '/quan-li-de-xuat/yeu-cau-cap-phat'
 					}
 				]
+			}
+		]
+	},
+	{
+		id: 'Govern',
+		title: 'Govern',
+		translate: 'Quản trị',
+		type: 'group',
+		children: [
+			{
+				id: 'groupUser',
+				title: 'Nhóm người dùng',
+				transalate: 'Nhóm người dùng',
+				type: 'item',
+				icon: 'group_user',
+				url: '/quan-tri/nhom-nguoi-dung'
+			},
+			{
+				id: 'listUser',
+				title: 'Danh sách người dùng',
+				transalate: 'Danh sách người dùng',
+				type: 'item',
+				icon: 'list',
+				url: '/quan-tri/danh-sach-nguoi-dung'
+			},
+			{
+				id: 'settingNavigation',
+				title: 'Thiết lập menu ',
+				transalate: 'Danh sách người dùng',
+				type: 'item',
+				icon: 'settings',
+				url: '/quan-tri/thiet-lap-menu'
+			},
+			{
+				id: 'roleNavigation',
+				title: 'Phân quyền chức năng',
+				transalate: 'Phân quyền chức năng',
+				type: 'item',
+				icon: 'locks',
+				url: '/quan-tri/phan-quyen-chuc-nang'
 			}
 		]
 	}

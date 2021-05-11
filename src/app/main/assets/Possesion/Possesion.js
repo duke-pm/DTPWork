@@ -12,6 +12,8 @@ import PossessionPay from './PossessionPay';
 import { PossessionContext } from './PossessionContext';
 import FormControlCycle from './FormControl/FormControlCycle';
 import * as actions from './_redux/possesionActions';
+import FormAssetLiquidation from './FormControl/FormAssetLiquidation';
+import FormCustomService from './FormControl/FormCustomRepair';
 
 function a11yProps(index) {
 	return {
@@ -52,6 +54,8 @@ function PossesionPage(props) {
 	}, [dispatch]);
 	return (
 		<>
+			<FormAssetLiquidation />
+			<FormCustomService />
 			<FormControlCycle />
 			<FusePageCarded
 				innerScroll

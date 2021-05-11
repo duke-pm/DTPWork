@@ -8,7 +8,6 @@ import FuseLoading from '@fuse/core/FuseLoading';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import FormCustomUnused from './FormCustomUnused';
-import FormControlReport from '../FormControl/FormControlReport';
 import { PossessionContext } from '../PossessionContext';
 import ActionComponent from './Component/ActionComponent';
 import * as actions from '../_redux/possesionActions';
@@ -72,7 +71,6 @@ function PossessionUnused(props) {
 		<>
 			<FormCustomUnused open={open} handleClose={handleClose} />
 			<PossessionAll rowPage={rowPage} open={editAssets} handleClose={handleClose} />
-			<FormControlReport />
 			<div className="flex flex-col">
 				<ActionComponent value={value} />
 				<FuseAnimate delay={200} animation="transition.slideUpIn">

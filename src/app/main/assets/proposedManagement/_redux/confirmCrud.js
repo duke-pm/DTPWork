@@ -1,29 +1,47 @@
-import axios from 'axios';
+import request from 'app/store/setupAxios';
 
-const baseUrl = process.env.REACT_APP_API_URL;
-
-const url = 'api/ProvideRequest';
-const urlInformation = 'api/MasterData/GetDataForForm';
-const UrlRequestUser = `${baseUrl}/api/ProvideRequest/Create`;
+const url = 'api/RQAsset/GetList';
+const UrlRequestUser = `/api/RQAsset/CreateAllocation`;
+export const urlReport = `/api/RQAsset/CreateHandling`;
+const urlInformation = '/api/MasterData/GetDataForForm';
+const urlAssetsUser = `/api/Assets/GetListByUser`;
+const urlApprove = `/api/RequestApprove/Approve`;
 
 export const listProvideRequest = params => {
-	return axios.get(`${baseUrl}/${url}/GetList`, { params });
+	return request.get(`${url}`, { params });
 };
 
 export const updateTypeProviderRequest = data => {
-	return axios({
+	return request({
 		method: 'POST',
 		url,
 		data
 	});
 };
 export const getInformationCompany = params => {
-	return axios.get(`${baseUrl}/${urlInformation}`, { params });
+	return request.get(`${urlInformation}`, { params });
+};
+export const getAssetsUser = params => {
+	return request.get(`${urlAssetsUser}`, { params });
 };
 export const requestFromUser = data => {
-	return axios({
+	return request({
 		method: 'POST',
 		url: UrlRequestUser,
+		data
+	});
+};
+export const RequestApprove = data => {
+	return request({
+		method: 'POST',
+		url: urlApprove,
+		data
+	});
+};
+export const reportFromUser = data => {
+	return request({
+		method: 'POST',
+		url: urlReport,
 		data
 	});
 };

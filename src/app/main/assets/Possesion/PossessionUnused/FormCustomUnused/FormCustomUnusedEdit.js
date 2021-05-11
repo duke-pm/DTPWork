@@ -108,7 +108,6 @@ export default function FormCustomUnusedEdit({
 				initialValues={intialState}
 				onSubmit={values => {
 					saveAddAsset(values);
-					console.log(values);
 				}}
 			>
 				{({ handleSubmit, isSubmitting }) => (
@@ -161,7 +160,7 @@ export default function FormCustomUnusedEdit({
 										className="mt-8 mb-16"
 									/>
 									<Field
-										label="khu"
+										label="khu vực"
 										autoFocus
 										readOnly
 										hasFeedback
@@ -176,7 +175,7 @@ export default function FormCustomUnusedEdit({
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
 									<div className="flex flex-col">
 										<Field
-											label="Ngày"
+											label="Ngày cấp"
 											defaultValue={intialState.date}
 											name="date"
 											hasFeedback
@@ -186,7 +185,7 @@ export default function FormCustomUnusedEdit({
 											className="mx-4 mb-16"
 										/>
 										<Field
-											label="Lí do phát cấp phát"
+											label="Lí do cấp phát"
 											// value={intialState.note}
 											name="note"
 											row={3}

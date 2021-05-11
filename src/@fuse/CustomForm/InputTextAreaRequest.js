@@ -34,7 +34,15 @@ export default function InputTextAreaRequest({
 	return (
 		<>
 			<FormGroup>
-				<label className="mb-10"> {label} </label>
+				<div className="flex flex-row">
+					<span> {label} </span>
+					{hasFeedback && (
+						<p style={{ marginBottom: '-20px' }} className="text-red ml-8">
+							{' '}
+							(*){' '}
+						</p>
+					)}
+				</div>
 				<FormItem
 					rules={[{ required: true }]}
 					style={{ width: '100%' }}

@@ -51,7 +51,7 @@ export const rowPossesion = [
 	{
 		id: 'EmpName',
 		align: 'left',
-		label: 'Nhân viên quản lý tài sản',
+		label: 'Nhân viên quản lý',
 		sort: true
 	},
 	{
@@ -72,4 +72,9 @@ export const checkValidateFormConfig = Yup.object().shape({
 	category: Yup.string().required('Loại tài sản không được để trống'),
 	group: Yup.string().required('Nhóm tài sản không được để trống'),
 	asset: Yup.string().required('Tài sản không được để trống')
+});
+
+export const checkValidateFormConfigUpdate = Yup.object().shape({
+	assetName: Yup.string().required('Tên tài sản không được để trống'),
+	purchaseDate: Yup.date().required('Ngày mua không được để trống').nullable()
 });
