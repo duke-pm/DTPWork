@@ -69,6 +69,7 @@ export default function FormCustomMenu({ actionLoading }) {
 									<Field
 										label="Đường dẫn"
 										name="url"
+										hasFeedback
 										type="text"
 										component={AntInput}
 										className="mt-8 mb-16"
