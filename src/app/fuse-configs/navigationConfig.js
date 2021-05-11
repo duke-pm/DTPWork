@@ -11,25 +11,47 @@ const navigationConfig = [
 	{
 		id: 'applications',
 		title: 'Applications',
-		translate: 'Quản lý',
+		translate: 'Tài sản',
 		type: 'group',
 		icon: 'apps',
 		children: [
 			{
 				id: 'example-component',
-				title: 'Tài sản',
-				translate: 'Tài sản',
+				title: 'Quản lí tài sản',
+				translate: 'Quản lí tài sản',
 				type: 'item',
 				icon: 'whatshot',
 				url: '/tai-san'
 			},
 			{
 				id: 'confirm',
-				title: 'Xét duyệt',
-				translate: 'Xét duyệt',
-				type: 'item',
+				title: 'Quản lí đề xuất',
+				translate: 'Quản lí đề xuất',
+				type: 'collapse',
 				icon: 'check',
-				url: '/xet-duyet'
+				children: [
+					{
+						id: 'requestUser',
+						title: 'Danh sách đề xuất',
+						transalate: 'Danh sách đề xuất',
+						type: 'item',
+						url: '/quan-li-de-xuat/xet-duyet'
+					},
+					{
+						id: 'Report',
+						title: 'Báo hỏng/mất tài sản',
+						transalate: 'Báo hỏng/mất tài sản',
+						type: 'item',
+						url: '/quan-li-de-xuat/bao-mat-hong-tai-san'
+					},
+					{
+						id: 'RequestAsset',
+						title: 'Yêu cầu cấp phát tài sản',
+						transalate: 'Yêu cầu cấp phát tài sản',
+						type: 'item',
+						url: '/quan-li-de-xuat/yeu-cau-cap-phat'
+					}
+				]
 			}
 		]
 	}

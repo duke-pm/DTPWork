@@ -39,11 +39,18 @@ const CreateAntField = AntComponent => ({
 	const onBlur = () => form.setFieldTouched(field.name, true);
 	return (
 		<FormGroup>
-			<label className="mb-10"> {label} </label>
+			<div className="flex flex-row">
+				<span> {label} </span>
+				{hasFeedback && (
+					<p style={{ marginBottom: '-20px' }} className="text-red ml-8">
+						{' '}
+						(*){' '}
+					</p>
+				)}
+			</div>
 			<FormItem
 				rules={[{ required: true }]}
 				style={{ width: '100%' }}
-				hasFeedback={!!((hasFeedback && submitted) || (hasFeedback && touched))}
 				help={submittedError || touchedError ? hasError : false}
 				validateStatus={submittedError || touchedError ? 'error' : 'success'}
 			>
@@ -52,6 +59,7 @@ const CreateAntField = AntComponent => ({
 					{...field}
 					{...props}
 					showSearch
+					type={type || null}
 					className={readOnly ? 'readOnly' : ''}
 					defaultValue={field.value || ''}
 					// notFoundContent={notFoundContent || null}

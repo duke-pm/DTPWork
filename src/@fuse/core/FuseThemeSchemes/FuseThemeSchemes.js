@@ -3,7 +3,6 @@ import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUserSettings } from 'app/auth/store/userSlice';
 import { setDefaultSettings } from 'app/store/fuse/settingsSlice';
 
 const useStyles = makeStyles(theme => ({
@@ -96,7 +95,7 @@ function FuseThemeSchemes(props) {
 		if (user.role === 'guest') {
 			dispatch(setDefaultSettings(newSettings));
 		} else {
-			dispatch(updateUserSettings(newSettings));
+			// dispatch(updateUserSettings(newSettings));
 		}
 	}
 

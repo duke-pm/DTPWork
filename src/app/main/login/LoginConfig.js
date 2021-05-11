@@ -1,3 +1,4 @@
+import { authRoles } from 'app/auth';
 import Login from './Login';
 
 const LoginConfig = {
@@ -22,7 +23,7 @@ const LoginConfig = {
 			}
 		}
 	},
-	// auth: authRoles.onlyGuest,
+	auth: authRoles.onlyGuest,
 	routes: [
 		{
 			path: '/login',

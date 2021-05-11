@@ -11,13 +11,22 @@ export default function InputCurrency({
 	withFeedbackLabel = true,
 	customFeedbackLabel,
 	placeholder,
+	hasFeedback,
 	type = 'text',
 	...props
 }) {
 	return (
 		<>
 			<FormGroup>
-				{label && <label className="mb-10"> {label}</label>}
+				<div className="flex flex-row">
+					<span> {label} </span>
+					{hasFeedback && (
+						<p style={{ marginBottom: '-20px' }} className="text-red ml-8">
+							{' '}
+							(*){' '}
+						</p>
+					)}
+				</div>
 				<NumberFormat
 					name={name}
 					customInput={Input}

@@ -38,7 +38,6 @@ export default function InputTextAreaLg({
 				<FormItem
 					rules={[{ required: true }]}
 					style={{ width: '100%' }}
-					hasFeedback={!!((hasFeedback && submitted) || (hasFeedback && touched))}
 					help={submittedError || touchedError ? hasError : false}
 					validateStatus={submittedError || touchedError ? 'error' : 'success'}
 				>

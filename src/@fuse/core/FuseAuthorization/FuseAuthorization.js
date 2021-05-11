@@ -1,9 +1,11 @@
+/* eslint-disable no-shadow */
 import FuseUtils from '@fuse/utils';
 import AppContext from 'app/AppContext';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { matchRoutes } from 'react-router-config';
 import { withRouter } from 'react-router-dom';
+import { getRoleCookies, getToken } from '../DtpConfig';
 
 class FuseAuthorization extends Component {
 	constructor(props, context) {
@@ -16,9 +18,7 @@ class FuseAuthorization extends Component {
 	}
 
 	componentDidMount() {
-		const { userRole } = this.props;
-		// check role to login
-		if (!userRole && userRole.length >= 0) {
+		if (!this.state.accessGranted) {
 			this.redirectRoute();
 		}
 	}
@@ -34,18 +34,21 @@ class FuseAuthorization extends Component {
 	}
 
 	static getDerivedStateFromProps(props, state) {
-		const { location, userRole } = props;
+		const { location } = props;
+		const role = getRoleCookies();
 		const { pathname } = location;
 
 		const matched = matchRoutes(state.routes, pathname)[0];
 
 		return {
-			accessGranted: matched ? FuseUtils.hasPermission(matched.route.auth, userRole) : true
+			accessGranted: matched ? FuseUtils.hasPermission(matched.route.auth, role) : true
 		};
 	}
 
 	redirectRoute() {
-		const { location, userRole, history } = this.props;
+		const role = getRoleCookies();
+		const token = getToken();
+		const { location, history } = this.props;
 		const { pathname, state } = location;
 		const redirectUrl = state && state.redirectUrl ? state.redirectUrl : '/';
 
@@ -53,7 +56,7 @@ class FuseAuthorization extends Component {
         User is guest
         Redirect to Login Page
         */
-		if (!userRole || userRole.length === 0) {
+		if (!role || !token) {
 			history.push({
 				pathname: '/login',
 				state: { redirectUrl: pathname }
@@ -78,7 +81,7 @@ class FuseAuthorization extends Component {
 
 function mapStateToProps({ auth }) {
 	return {
-		userRole: auth.user.role
+		userRole: auth.user.userName
 	};
 }
 

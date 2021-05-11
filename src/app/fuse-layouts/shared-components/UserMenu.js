@@ -1,4 +1,3 @@
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -7,14 +6,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { logoutUser } from 'app/auth/store/userSlice';
 
 function UserMenu(props) {
-	const dispatch = useDispatch();
-	const user = useSelector(({ auth }) => auth.user);
-
 	const [userMenu, setUserMenu] = useState(null);
 
 	const userMenuClick = event => {
@@ -30,19 +24,20 @@ function UserMenu(props) {
 			<Button className="min-h-40 min-w-40 px-0 md:px-16 py-0 md:py-6" onClick={userMenuClick}>
 				<div className="hidden md:flex flex-col mx-4 items-end">
 					<Typography component="span" className="font-bold flex">
-						{user.data.displayName}
+						TheLinh
 					</Typography>
 					<Typography className="text-11 capitalize" color="textSecondary">
-						{user.role.toString()}
-						{(!user.role || (Array.isArray(user.role) && user.role.length === 0)) && 'Guest'}
+						{/* {user.userName ? user.userName.toString() : 'ADMIN'}
+						{(!user.userName || (Array.isArray(user.userName) && user.userName.length === 0)) && 'Guest'} */}
+						ADMIN
 					</Typography>
 				</div>
 
-				{user.data.photoURL ? (
+				{/* {user.data.photoURL ? (
 					<Avatar className="md:mx-4" alt="user photo" src={user.data.photoURL} />
 				) : (
 					<Avatar className="md:mx-4">{user.data.displayName[0]}</Avatar>
-				)}
+				)} */}
 			</Button>
 
 			<Popover
@@ -61,42 +56,14 @@ function UserMenu(props) {
 					paper: 'py-8'
 				}}
 			>
-				{!user.role || user.role.length === 0 ? (
-					<>
-						<MenuItem component={Link} to="/login" role="button">
-							<ListItemIcon className="min-w-40">
-								<Icon>exit_to_app</Icon>
-							</ListItemIcon>
-							<ListItemText primary="Đăng xuất" />
-						</MenuItem>
-					</>
-				) : (
-					<>
-						<MenuItem component={Link} to="/pages/profile" onClick={userMenuClose} role="button">
-							<ListItemIcon className="min-w-40">
-								<Icon>account_circle</Icon>
-							</ListItemIcon>
-							<ListItemText primary="My Profile" />
-						</MenuItem>
-						<MenuItem component={Link} to="/apps/mail" onClick={userMenuClose} role="button">
-							<ListItemIcon className="min-w-40">
-								<Icon>mail</Icon>
-							</ListItemIcon>
-							<ListItemText primary="Inbox" />
-						</MenuItem>
-						<MenuItem
-							onClick={() => {
-								dispatch(logoutUser());
-								userMenuClose();
-							}}
-						>
-							<ListItemIcon className="min-w-40">
-								<Icon>exit_to_app</Icon>
-							</ListItemIcon>
-							<ListItemText primary="Logout" />
-						</MenuItem>
-					</>
-				)}
+				<>
+					<MenuItem component={Link} to="/login" role="button">
+						<ListItemIcon className="min-w-40">
+							<Icon>exit_to_app</Icon>
+						</ListItemIcon>
+						<ListItemText primary="Đăng xuất" />
+					</MenuItem>
+				</>
 			</Popover>
 		</>
 	);
