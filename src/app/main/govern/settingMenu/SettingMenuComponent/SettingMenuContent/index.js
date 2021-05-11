@@ -8,7 +8,7 @@ import SettingMenuContentHeader from './SettingMenuContentHeader';
 
 export default function SettingMenuContent() {
 	const { currentState } = useSelector(state => ({ currentState: state.govern.menu }), shallowEqual);
-	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;
+	const { entities, lastErrors } = currentState;
 	return (
 		<>
 			<div className="w-full flex flex-col">
