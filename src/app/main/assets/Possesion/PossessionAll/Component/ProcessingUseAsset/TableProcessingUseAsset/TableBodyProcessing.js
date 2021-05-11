@@ -1,7 +1,7 @@
 import { TableBody, TableCell, TableRow } from '@material-ui/core';
 import React from 'react';
 import * as moment from 'moment';
-import { chipColor, chipText } from '../../../ConfigPossessionAll';
+import { chipColor, chipText } from './TableConfigProcessing';
 
 export default function TableBodyProcessing({ history }) {
 	return (

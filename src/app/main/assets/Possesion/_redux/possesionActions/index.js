@@ -60,7 +60,7 @@ export const searchPossesion = (value, search, limit, page, id, directtion) => d
 		})
 		.catch(err => {
 			dispatch(actions.catchErrors({ callType: callTypes.list }));
-			notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', err);
+			notificationConfig('error', 'Thất bại', 'Đã xảy ra lỗi vui lòng thử lại sau');
 		});
 };
 

@@ -118,7 +118,7 @@ function FormCustomAll({ handleClose, open, rowPage }) {
 						<CloseIcon />
 					</IconButton>
 					<Typography variant="subtitle1" color="inherit">
-						{entitiesEdit && entitiesEdit.assetID ? 'Cập nhật mới tài sản' : 'Tạo mới tài sản'}
+						{entitiesEdit && entitiesEdit.assetID ? 'Cập nhật tài sản' : 'Tạo mới tài sản'}
 					</Typography>
 				</Toolbar>
 			</AppBar>

@@ -2,19 +2,27 @@
 import React from 'react';
 import NumberFormat from 'react-number-format';
 import { FormGroup } from '@material-ui/core';
-import { Input } from 'antd';
+import { Input, Form } from 'antd';
+
+const FormItem = Form.Item;
 
 export default function InputCurrency({
-	field: { name, value }, // { name, value, onChange, onBlur }
-	form: { touched, errors, setFieldValue }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+	field, // { name, value, onChange, onBlur }
+	form, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
 	label,
 	withFeedbackLabel = true,
 	customFeedbackLabel,
 	placeholder,
+	submitCount,
 	hasFeedback,
 	type = 'text',
 	...props
 }) {
+	const touched = form.touched[field.name];
+	const submitted = submitCount > 0;
+	const hasError = form.errors[field.name];
+	const submittedError = hasError && submitted;
+	const touchedError = hasError && touched;
 	return (
 		<>
 			<FormGroup>
@@ -27,15 +35,22 @@ export default function InputCurrency({
 						</p>
 					)}
 				</div>
-				<NumberFormat
-					name={name}
-					customInput={Input}
-					value={value}
-					placeholder={placeholder || ' '}
-					onValueChange={val => setFieldValue(name, val.floatValue)}
-					thousandSeparator
-					prefix="VNĐ "
-				/>
+				<FormItem
+					rules={[{ required: true }]}
+					style={{ width: '100%' }}
+					help={submittedError || touchedError ? hasError : false}
+					validateStatus={submittedError || touchedError ? 'error' : 'success'}
+				>
+					<NumberFormat
+						name={field.name}
+						customInput={Input}
+						value={field.value}
+						placeholder={placeholder || ' '}
+						onValueChange={val => form.setFieldValue(field.name, val.floatValue)}
+						thousandSeparator
+						prefix="VNĐ "
+					/>
+				</FormItem>
 			</FormGroup>
 
 			{/* {withFeedbackLabel && (

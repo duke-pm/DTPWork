@@ -18,7 +18,7 @@ const initial = {
 	price: '',
 	file: ''
 };
-export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairService, actionLoading }) {
+export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairService, actionLoading, handleClose }) {
 	const checkValidateForm = Yup.object().shape({
 		nameService: Yup.string().required('Tên đơn vị sửa chữa,bảo hành không được để trống'),
 		price: Yup.string().required('Chi phí dự kiến không được để trống'),
@@ -103,7 +103,7 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 								<div className="grid grid-cols-1 sm:grid-cols-2 mb-16 gap-8 ">
 									<div className="flex flex-col">
 										<Field
-											label="Lí do sửa chữa,bảo hành"
+											label="Lý do sửa chữa,bảo hành"
 											name="note"
 											row={4}
 											component={InputTextAreaLg}
@@ -139,7 +139,13 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 									Lưu
 								</Button>
 							)}
-							<Button type="button" className="h-26 font-sans" variant="contained" color="primary">
+							<Button
+								onClick={handleClose}
+								type="button"
+								className="h-26 font-sans"
+								variant="contained"
+								color="primary"
+							>
 								Hủy
 							</Button>
 						</DialogActions>

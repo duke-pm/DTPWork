@@ -24,5 +24,10 @@ export const rowPossesion = [
 		id: 'PurchaseDate',
 		align: 'left',
 		label: 'Ngày mua'
+	},
+	{
+		id: 'TransDate',
+		align: 'left',
+		label: 'Ngày thanh lý'
 	}
 ];

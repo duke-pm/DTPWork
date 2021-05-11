@@ -10,7 +10,7 @@ import { Spin } from 'antd';
 import * as Yup from 'yup';
 
 const initial = {
-	date: '',
+	date: moment().format('DD/MM/YYYY'),
 	note: '',
 	file: ''
 };
@@ -121,7 +121,7 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 								<div className="grid grid-cols-1 sm:grid-cols-2 p-4 mb-16 gap-8 ">
 									<div className="flex flex-col">
 										<Field
-											label="Lí do thu hồi"
+											label="Lý do thu hồi"
 											autoFocus
 											name="note"
 											row={4}

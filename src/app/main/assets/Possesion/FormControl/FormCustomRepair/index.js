@@ -46,6 +46,7 @@ export default function FormCustomService() {
 				</Toolbar>
 			</AppBar>
 			<FormCustomRepairEdit
+				handleClose={handleClose}
 				actionLoading={actionLoading}
 				handleSubmitRepairService={handleSubmitRepairService}
 				entitiesEdit={entitiesEdit}
