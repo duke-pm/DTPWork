@@ -11,6 +11,7 @@ import * as actions from '../_redux/possesionActions';
 import TableHeaderPay from './Component/TableHeaderPay';
 import TableBodyPay from './Component/TableBodyPay';
 import { useStyles } from './StyleCustomPay';
+import ActionComponent from './Component/ActionFliterComponent';
 
 export default function PossessionPay(props) {
 	const { value } = props;
@@ -54,7 +55,7 @@ export default function PossessionPay(props) {
 		<>
 			{/* <FormCustomRepair open={open} handleClose={handleClose} /> */}
 			<div className="flex flex-col">
-				{/* <ActionComponent /> */}
+				<ActionComponent value={value} />
 
 				<FuseAnimate delay={200} animation="transition.slideUpIn">
 					<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">

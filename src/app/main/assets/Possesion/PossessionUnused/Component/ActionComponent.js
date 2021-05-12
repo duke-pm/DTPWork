@@ -28,43 +28,34 @@ function ActionComponent(props) {
 	const dispatch = useDispatch();
 	const possesionConext = useContext(PossessionContext);
 	const { search, setSearch, rowPage, page, setPage, sort } = possesionConext;
-	const handleSearch = e => {
-		e.preventDefault();
+	const handleSearch = () => {
 		setPage(0);
 		dispatch(actions.searchPossesion(value, search, rowPage, page, sort.id, sort.direction));
-	};
-	onkeypress = e => {
-		if (e.key === 'Enter') {
-			e.preventDefault();
-			setPage(0);
-			dispatch(actions.searchPossesion(value, search, rowPage, page, sort.id, sort.direction));
-		}
 	};
 	const onHandleChange = e => {
 		setSearch(e.target.value);
 		if (e.target.value.length <= 0) {
 			setPage(0);
-			dispatch(actions.searchPossesion(value, search, rowPage, page, sort.id, sort.direction));
+			dispatch(actions.searchPossesion(value, e.target.value, rowPage, page, sort.id, sort.direction));
 		}
 	};
 	return (
 		<FuseAnimate animation="transition.slideLeftIn" delay={300}>
 			<div className="flex flex-col sm:flex-row justify-between">
-				<Paper component="form" className="w-full sm:w-1/4 flex justify-between">
+				<Paper className="w-full sm:w-1/4 flex justify-between">
 					<InputBase
-						onKeyPress={e => onkeypress(e)}
+						onKeyPress={event => {
+							if (event.key === 'Enter') {
+								handleSearch();
+							}
+						}}
 						onChange={e => onHandleChange(e)}
 						className={classes.input}
 						value={search}
 						placeholder="Tìm kiếm"
 						inputProps={{ 'aria-label': 'search google maps' }}
 					/>
-					<IconButton
-						onClick={e => handleSearch(e)}
-						type="button"
-						className={classes.iconButton}
-						aria-label="search"
-					>
+					<IconButton onClick={handleSearch} type="button" className={classes.iconButton} aria-label="search">
 						<SearchIcon />
 					</IconButton>
 					{/* <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} /> */}

@@ -8,11 +8,12 @@ import Typography from '@material-ui/core/Typography';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { logoutUser } from 'app/auth/store/userSlice';
+import { getDataUserLocalStorage } from '@fuse/core/DtpConfig';
 
 function UserMenu(props) {
 	const dispatch = useDispatch();
 	const [userMenu, setUserMenu] = useState(null);
-
+	const dataUser = getDataUserLocalStorage();
 	const userMenuClick = event => {
 		setUserMenu(event.currentTarget);
 	};
@@ -28,12 +29,12 @@ function UserMenu(props) {
 			<Button className="min-h-40 min-w-40 px-0 md:px-16 py-0 md:py-6" onClick={userMenuClick}>
 				<div className="hidden md:flex flex-col mx-4 items-end">
 					<Typography component="span" className="font-bold flex">
-						TheLinh
+						{dataUser.userName || ''}
 					</Typography>
 					<Typography className="text-11 capitalize" color="textSecondary">
 						{/* {user.userName ? user.userName.toString() : 'ADMIN'}
 						{(!user.userName || (Array.isArray(user.userName) && user.userName.length === 0)) && 'Guest'} */}
-						ADMIN
+						{dataUser.jobTitle || ''}
 					</Typography>
 				</div>
 

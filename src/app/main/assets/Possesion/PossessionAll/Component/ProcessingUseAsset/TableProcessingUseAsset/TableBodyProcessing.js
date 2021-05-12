@@ -20,7 +20,6 @@ export default function TableBodyProcessing({ history }) {
 								{chipText[items.transStatus]}
 							</div>
 						</TableCell>
-						{/* <TableCell align="left">{items && items.empName ? items.empName : null}</TableCell> */}
 					</TableRow>
 				))}
 		</TableBody>

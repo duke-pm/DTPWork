@@ -157,18 +157,22 @@ export default function RequestProviderBody({
 		<>
 			<Formik
 				enableReinitialize
-				validationSchema={validateSchema}
+				// validationSchema={validateSchema}
 				initialValues={initialState}
 				onSubmit={(values, { resetForm }) => {
-					dispatch(actions.requestAssetFromUserAction(values, dataSource)).then(data => {
-						if (data && !data.isError) {
-							resetForm({});
-							setDataSource([]);
-							notificationConfig('success', 'Thành công!', 'Yêu cầu thành công !!');
-						} else {
-							// notificationConfig('warning', 'Thất bại!', 'Yêu cầu thất bại vui lòng thử lại');
-						}
-					});
+					if (dataSource.length === 0) {
+						notificationConfig('warning', 'Chú ý!', 'Vui lòng nhập tài sản cần yêu cầu !!');
+					} else {
+						dispatch(actions.requestAssetFromUserAction(values, dataSource)).then(data => {
+							if (data && !data.isError) {
+								resetForm({});
+								setDataSource([]);
+								notificationConfig('success', 'Thành công!', 'Yêu cầu thành công !!');
+							} else {
+								// notificationConfig('warning', 'Thất bại!', 'Yêu cầu thất bại vui lòng thử lại');
+							}
+						});
+					}
 				}}
 			>
 				{({ handleSubmit, isSubmitting }) => (
@@ -252,6 +256,7 @@ export default function RequestProviderBody({
 										rowKey="id"
 										columns={columns}
 										bordered
+										locale={{ emptyText: 'Vui lòng nhập tài sản cần yêu cầu' }}
 										pagination={false}
 										dataSource={dataSource}
 									/>

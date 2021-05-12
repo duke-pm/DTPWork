@@ -31,32 +31,11 @@ export default function ActionComponent({ actionLoading }) {
 		dateStart,
 		sort
 	} = confirmConext;
-	const handleSearch = e => {
-		e.preventDefault();
+	const handleSearch = () => {
 		setPage(0);
 		dispatch(
 			actions.searchConfirms(false, status, rowPage, page, 1, sort.id, sort.direction, search, dateStart, dateEnd)
 		);
-	};
-	onkeypress = e => {
-		if (e.key === 'Enter') {
-			e.preventDefault();
-			setPage(0);
-			dispatch(
-				actions.searchConfirms(
-					false,
-					status,
-					rowPage,
-					page,
-					1,
-					sort.id,
-					sort.direction,
-					search,
-					dateStart,
-					dateEnd
-				)
-			);
-		}
 	};
 	const onHandleChange = e => {
 		setSearch(e.target.value);
@@ -103,9 +82,13 @@ export default function ActionComponent({ actionLoading }) {
 		<>
 			<FuseAnimate animation="transition.slideLeftIn" delay={300}>
 				<div className="flex flex-col sm:flex-row">
-					<Paper component="form" className="w-full sm:w-1/4 flex justify-between">
+					<Paper className="w-full sm:w-1/4 flex justify-between">
 						<InputBase
-							onKeyPress={e => onkeypress(e)}
+							onKeyPress={event => {
+								if (event.key === 'Enter') {
+									handleSearch();
+								}
+							}}
 							onChange={e => onHandleChange(e)}
 							className={classes.input}
 							value={search}
@@ -113,7 +96,7 @@ export default function ActionComponent({ actionLoading }) {
 							inputProps={{ 'aria-label': 'search google maps' }}
 						/>
 						<IconButton
-							onClick={e => handleSearch(e)}
+							onClick={handleSearch}
 							type="button"
 							className={classes.iconButton}
 							aria-label="search"

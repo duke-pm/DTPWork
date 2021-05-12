@@ -60,11 +60,11 @@ export default function HandlingBody({ handleClose, dataAssets, setDataAssets })
 	return (
 		<Formik
 			enableReinitialize
-			// validationSchema={validateSchema}
+			validationSchema={validateSchema}
 			initialValues={initialstate}
 			onSubmit={(values, { resetForm }) => {
 				dispatch(actions.reportFailurePossesion(values, dataAssets, user)).then(data => {
-					if (!data.isError) {
+					if (data && !data.isError) {
 						notificationConfig('success', 'Thành công', 'Gửi yêu cầu thành công');
 						dispatch(actions.getAssetsUser());
 						setInitialState({

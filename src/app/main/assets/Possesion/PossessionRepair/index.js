@@ -9,7 +9,7 @@ import FuseLoading from '@fuse/core/FuseLoading';
 import { PossessionContext } from '../PossessionContext';
 import ActionComponent from './Component/ActionComponent';
 import * as actions from '../_redux/possesionActions';
-import { useStyles } from '../PossessionAll/StyleCustomAll';
+import { useStyles } from './StyleCustomAll';
 import TableBodyRepair from './Component/TableBodyRepair';
 import TableHeaderRepair from './Component/TableHeaderRepair';
 
@@ -80,7 +80,10 @@ export default function PossessionRepair(props) {
 					<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
 						<TableContainer className={`${classes.TableContainer} flex flex-1`}>
 							<Paper className={classes.rootPaper}>
-								<Table className={classes.table} stickyHeader>
+								<Table
+									className={entities && entities.length === 0 ? classes.tableNodata : classes.table}
+									stickyHeader
+								>
 									<TableHeaderRepair createSortHandler={createSortHandler} sort={sort} />
 									<TableBodyRepair
 										handleOpenFormCycleView={handleOpenFormCycleView}

@@ -6,8 +6,8 @@ import { darken } from '@material-ui/core/styles/colorManipulator';
 import * as Yup from 'yup';
 import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
-import React, { useState, useRef, useEffect } from 'react';
-import { Button, Icon, IconButton, InputAdornment } from '@material-ui/core';
+import React, { useEffect } from 'react';
+import { Button } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { submitLogin } from 'app/auth/store/loginSlice';
 import { showMessage } from 'app/store/fuse/messageSlice';
@@ -54,9 +54,9 @@ function Login() {
 	});
 
 	const dispatch = useDispatch();
-	// function handleSubmit(model) {
-	// 	dispatch(submitLogin(model));
-	// }
+	function handleSubmitForm(values) {
+		dispatch(submitLogin(values));
+	}
 	return (
 		<div
 			className={clsx(
@@ -85,7 +85,7 @@ function Login() {
 									validationSchema={checkValidateForm}
 									initialValues={initialState}
 									onSubmit={values => {
-										dispatch(submitLogin(values));
+										handleSubmitForm(values);
 									}}
 								>
 									{({ handleSubmit, isSubmitting }) => (
@@ -114,7 +114,6 @@ function Login() {
 												variant="contained"
 												color="primary"
 												className="w-full mx-auto mt-16"
-												aria-label="LOG IN"
 											>
 												Login
 											</Button>

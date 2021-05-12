@@ -5,7 +5,7 @@ const useStyles = makeStyles(theme => ({
 		width: '200px'
 	},
 	table: {
-		minWidth: 800
+		minWidth: 2040
 	},
 	cellTabel: {
 		width: 340

@@ -54,7 +54,7 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 												<p className="p-6"> Tình trạng </p>
 												<p className="p-6"> Mô tả </p>
 											</div>
-											<div className="flex sm:mr-96 mr-auto flex-col" style={{ width: '300px' }}>
+											<div className="flex sm:mr-96 mr-auto flex-col" style={{ width: '600px' }}>
 												<p className="p-6 font-extrabold">
 													{' '}
 													{entitiesEdit && entitiesEdit.assetCode}
@@ -92,7 +92,10 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 												<p className="p-6"> Bộ phận </p>
 												<p className="p-6"> Khu vực </p>
 											</div>
-											<div className="flex sm:mr-96 mr-auto flex-col w-full">
+											<div
+												className="flex sm:mr-96 mr-auto flex-col w-full"
+												style={{ width: '300px' }}
+											>
 												<p className="p-6 font-extrabold">
 													{entitiesEdit && entitiesEdit.empName}{' '}
 												</p>
@@ -140,7 +143,7 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 									</div>
 									<Field
 										label="File Đính kèm"
-										style={{ height: '53.5px' }}
+										style={{ height: '48.5px' }}
 										name="file"
 										component={FileCustomVersion2}
 										className="mx-4 mb-16"

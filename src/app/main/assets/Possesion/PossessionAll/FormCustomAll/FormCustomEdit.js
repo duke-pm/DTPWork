@@ -194,7 +194,7 @@ function FormCustomEdit({
 							{!initialValue.assetID ? (
 								<div className="px-16 sm:px-24">
 									<div className="flex justify-between flex-row">
-										<h5 className="font-extrabold">Quy tắc đánh mã tài sản trong lô</h5>
+										<h5 className="font-extrabold">Quy tắc đánh mã tài sản. </h5>
 									</div>
 									<div className="grid grid-cols-1 sm:grid-cols-3 mb:6 gap-8 ">
 										<Field
