@@ -48,7 +48,7 @@ function UserNavbarHeader(props) {
 			classes={{ root: classes.root }}
 			className="user relative flex flex-col items-center justify-center pt-24 pb-64 mb-32 z-0 shadow-0"
 		>
-			<Typography className="username text-16 whitespace-nowrap" color="inherit">
+			<Typography className="username text-11 whitespace-nowrap" color="inherit">
 				{dataUser.fullName || ''}
 			</Typography>
 			<Typography className="email text-13 mt-8 opacity-50 whitespace-nowrap" color="inherit">
