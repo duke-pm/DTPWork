@@ -10,7 +10,7 @@ export default function ActionsAllocation({ handleOpenForm, items }) {
 					<ListItemIcon className="min-w-40">
 						<Icon>checkcircleoutlineicon</Icon>
 					</ListItemIcon>
-					<ListItemText primary="Xác nhận" />
+					<ListItemText primary="Phê duyệt" />
 				</MenuItem>
 			)}
 			{/* <MenuItem onClick={() => handleOpenHistory(items)} role="button">

@@ -9,14 +9,14 @@ export default function LoseActions({ handleOpenForm, items }) {
 					<ListItemIcon className="min-w-40">
 						<Icon>warning</Icon>
 					</ListItemIcon>
-					<ListItemText primary="Báo mất" />
+					<ListItemText primary="Phê duyệt" />
 				</MenuItem>
 			) : (
 				<MenuItem role="button">
 					<ListItemIcon className="min-w-40">
 						<Icon>warning</Icon>
 					</ListItemIcon>
-					<ListItemText primary="Đã báo mất" />
+					<ListItemText primary="Đã phê duyệt" />
 				</MenuItem>
 			)}
 		</>

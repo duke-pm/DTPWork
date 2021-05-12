@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { selectToolbarTheme } from 'app/store/fuse/settingsSlice';
 import UserMenu from 'app/fuse-layouts/shared-components/UserMenu';
 import { Typography } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 import FullScreenToggle from '../../shared-components/FullScreenToggle';
 
 const useStyles = makeStyles(theme => ({
@@ -19,6 +20,8 @@ function ToolbarLayout1(props) {
 	const config = useSelector(({ fuse }) => fuse.settings.current.layout.config);
 	const toolbarTheme = useSelector(selectToolbarTheme);
 	const classes = useStyles(props);
+	const history = useHistory();
+	console.log(history);
 	return (
 		<ThemeProvider theme={toolbarTheme}>
 			<AppBar

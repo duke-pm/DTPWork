@@ -7,6 +7,7 @@ import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
 import * as momemt from 'moment';
 import { notificationConfig } from '@fuse/core/DtpConfig';
 import { Spin } from 'antd';
+import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import * as actions from '../../../_redux/confirmAction';
 
 const initial = {
@@ -46,7 +47,7 @@ export default function FormCustomCorruptEdit({
 									<h5 className="font-extrabold">Thông tin tài sản.</h5>
 								</div>
 								<div className=" grid grid-cols-1 sm:grid-cols-2 gap-8">
-									<div className="flex-row justify-around flex ">
+									<div className="flex-row  flex ">
 										<div className="flex flex-col">
 											<p className="p-2.5	"> Mã sản phẩm </p>
 											<p className="p-2.5	"> Tên sản phẩm </p>
@@ -72,7 +73,10 @@ export default function FormCustomCorruptEdit({
 												{momemt(entitiesEdit.purchaseDate).format('DD/MM/YYYY') || ''}{' '}
 											</p>
 											{/* <p className="p-2.5 font-extrabold"> </p> */}
-											<p className="p-2.5 font-extrabold"> {entitiesEdit.originalPrice || ''} </p>
+											<p className="p-2.5 font-extrabold">
+												{' '}
+												{currencyFormat(entitiesEdit.originalPrice) || ''}{' '}
+											</p>
 											<p className="p-2.5 font-extrabold">
 												{' '}
 												{entitiesEdit.assetStatusName || ''}{' '}
@@ -121,18 +125,18 @@ export default function FormCustomCorruptEdit({
 										type="submit"
 										className="h-26 font-sans"
 										variant="contained"
-										color="secondary"
+										color="primary"
 									>
-										Xác nhận
+										Duyệt
 									</Button>
 									<Button
 										onClick={handleOpenFormReject}
 										autoFocus
 										className="h-26 font-sans"
 										variant="contained"
-										color="primary"
+										color="secondary"
 									>
-										Không xác nhận
+										Không duyệt
 									</Button>
 								</>
 							)}

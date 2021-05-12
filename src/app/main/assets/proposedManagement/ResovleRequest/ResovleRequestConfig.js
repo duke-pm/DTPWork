@@ -8,7 +8,7 @@ const ResovleRequestConfig = {
 	},
 	routes: [
 		{
-			path: '/quan-li-de-xuat/de-xuat-can-xu-ly',
+			path: '/de-xuat-can-xu-ly',
 			component: React.lazy(() => import('./index'))
 		}
 	]

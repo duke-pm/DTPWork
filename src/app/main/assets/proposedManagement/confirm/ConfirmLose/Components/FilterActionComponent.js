@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable import/no-extraneous-dependencies */
-import { IconButton, Paper } from '@material-ui/core';
+import { IconButton, Paper, Typography } from '@material-ui/core';
 import React, { useContext } from 'react';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import InputBase from '@material-ui/core/InputBase';
@@ -9,6 +9,9 @@ import SearchIcon from '@material-ui/icons/Search';
 import { useDispatch } from 'react-redux';
 import { DatePicker, Select } from 'antd';
 import * as moment from 'moment';
+import { Link } from 'react-router-dom';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import { ConfirmContext } from '../../ConfirmContext';
 import * as actions from '../../../_redux/confirmAction';
 import { useStyles } from '../StyleCustomAll';
@@ -80,30 +83,12 @@ export default function ActionComponent({ actionLoading }) {
 	};
 	return (
 		<>
-			<FuseAnimate animation="transition.slideLeftIn" delay={300}>
+			<FuseAnimateGroup
+				enter={{
+					animation: 'transition.slideUpBigIn'
+				}}
+			>
 				<div className="flex flex-col sm:flex-row">
-					<Paper className="w-full sm:w-1/4 flex justify-between">
-						<InputBase
-							onKeyPress={event => {
-								if (event.key === 'Enter') {
-									handleSearch();
-								}
-							}}
-							onChange={e => onHandleChange(e)}
-							className={classes.input}
-							value={search}
-							placeholder="Tìm kiếm"
-							inputProps={{ 'aria-label': 'search google maps' }}
-						/>
-						<IconButton
-							onClick={handleSearch}
-							type="button"
-							className={classes.iconButton}
-							aria-label="search"
-						>
-							<SearchIcon />
-						</IconButton>
-					</Paper>
 					<Paper className="ml-16 flex flex-row w-full sm:w-1/3 justify-around ">
 						<DatePicker
 							onChange={handleChangeFilterDateStart}
@@ -136,7 +121,36 @@ export default function ActionComponent({ actionLoading }) {
 						</Select>
 					</Paper>
 				</div>
-			</FuseAnimate>
+				<div className="flex flex-col sm:flex-row justify-between">
+					<Typography variant="subtitle1" color="inherit" className="mt-16">
+						<AddCircleOutlineIcon color="secondary" />
+						<Link to="/bao-mat-hong-tai-san"> Báo mất tài sản </Link>
+					</Typography>
+					<Paper className="w-full sm:w-1/4 flex justify-between ">
+						<InputBase
+							onKeyPress={event => {
+								if (event.key === 'Enter') {
+									handleSearch();
+								}
+							}}
+							onChange={e => onHandleChange(e)}
+							className={classes.input}
+							value={search}
+							placeholder="Tìm kiếm"
+							inputProps={{ 'aria-label': 'search google maps' }}
+						/>
+						<IconButton
+							onClick={handleSearch}
+							type="button"
+							className={classes.iconButton}
+							aria-label="search"
+						>
+							<SearchIcon />
+						</IconButton>
+					</Paper>
+				</div>
+			</FuseAnimateGroup>
+			{/* </FuseAnimate> */}
 		</>
 	);
 }

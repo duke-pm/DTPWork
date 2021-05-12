@@ -35,9 +35,6 @@ function Logo() {
 			<Typography className="username text-12 whitespace-nowrap mt-8 ml-12" color="inherit">
 				EDUCATION SOLUTIONS VN
 			</Typography>
-			{/* <div className={clsx(classes.reactBadge, 'react-badge flex items-center py-4 px-8 rounded')}>
-				<img className="react-logo" src="assets/logo-dtp.png" alt="react" width="16" />
-			</div> */}
 		</div>
 	);
 }

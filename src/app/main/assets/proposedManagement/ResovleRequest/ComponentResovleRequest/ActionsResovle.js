@@ -10,14 +10,14 @@ export default function ActionsResovle({ handleOpenDialog, items }) {
 					<ListItemIcon className="min-w-40">
 						<Icon>checkcircleoutlineicon</Icon>
 					</ListItemIcon>
-					<ListItemText primary="Xác nhận cấp phát" />
+					<ListItemText primary="Phê duyệt " />
 				</MenuItem>
 			) : items.requestTypeID === 2 ? (
 				<MenuItem onClick={() => handleOpenDialog('damage', items)} role="button">
 					<ListItemIcon className="min-w-40">
 						<Icon>edit</Icon>
 					</ListItemIcon>
-					<ListItemText primary="Xác nhận báo hỏng" />
+					<ListItemText primary="Phê duyệt " />
 				</MenuItem>
 			) : (
 				items.requestTypeID === 3 && (
@@ -25,7 +25,7 @@ export default function ActionsResovle({ handleOpenDialog, items }) {
 						<ListItemIcon className="min-w-40">
 							<Icon>warning</Icon>
 						</ListItemIcon>
-						<ListItemText primary="Xác nhận báo mất" />
+						<ListItemText primary="Phê duyệt" />
 					</MenuItem>
 				)
 			)}

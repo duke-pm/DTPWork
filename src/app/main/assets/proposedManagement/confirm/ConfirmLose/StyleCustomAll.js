@@ -5,7 +5,7 @@ const useStyles = makeStyles(theme => ({
 		height: 44
 	},
 	table: {
-		minWidth: 1540,
+		minWidth: 1340,
 		overflowX: 'auto'
 	},
 	cellTabel: {

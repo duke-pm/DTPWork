@@ -86,33 +86,37 @@ export default function FormCustomEdit({
 						<DialogContent ref={dialogContent} dividers>
 							<div className="px-16 sm:px-24">
 								<div className="flex justify-between flex-row">
-									<h5 className="font-extrabold">Thông tin cấp phát tài sản.</h5>
+									<h5 className="font-extrabold">Thông tin nhân viên.</h5>
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-4 gap-8 ">
 									<Field
 										readOnly
-										label="Nhân viên (*)"
+										label="Nhân viên"
+										hasFeedback
 										name="name"
 										component={AntInput}
 										className="mt-8 mb-16"
 									/>
 									<Field
 										readOnly
-										label="Bộ phận (*)"
+										hasFeedback
+										label="Bộ phận"
 										name="department"
 										component={AntInput}
 										className="mt-8 mb-16"
 									/>
 									<Field
 										readOnly
-										label="Khu vực (*)"
+										hasFeedback
+										label="Khu vực"
 										name="region"
 										component={AntInput}
 										className="mt-8 mb-16"
 									/>
 									<Field
 										readOnly
-										label="Ngày yêu cầu (*) "
+										hasFeedback
+										label="Ngày yêu cầu "
 										name="dateRequest"
 										format="DD/MM/YYYY"
 										placeholder="Vui lòng chọn ngày yêu cầu"
@@ -123,7 +127,7 @@ export default function FormCustomEdit({
 							</div>
 							<div className="px-16 sm:px-24">
 								<div className="flex justify-between flex-row">
-									<h5 className="font-extrabold">Danh sách tài sản yêu cầu.</h5>
+									<h5 className="font-extrabold">Tài sản yêu cầu.</h5>
 								</div>
 								<Table
 									rowKey="descr"
@@ -135,13 +139,11 @@ export default function FormCustomEdit({
 								/>
 							</div>
 							<div className="px-16 sm:px-24 mt-16">
-								<div className="flex justify-between flex-row">
-									<h5 className="font-extrabold">Nội dung.</h5>
-								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-1 gap-8 ">
 									<Field
 										readOnly
-										label="Nơi dùng (*)"
+										label="Nơi dùng"
+										hasFeedback
 										name="locationUse"
 										component={AntInput}
 										className="mt-8"
@@ -150,7 +152,8 @@ export default function FormCustomEdit({
 								<div className="grid grid-cols-1 sm:grid-cols-1 gap-8 ">
 									<Field
 										readOnly
-										label="Lí do (*)"
+										label="Lí do"
+										hasFeedback
 										name="reason"
 										component={InputTextArea}
 										className="mt-8 mb-16"
@@ -161,7 +164,8 @@ export default function FormCustomEdit({
 									<div className="flex flex-col">
 										<Field
 											readOnly
-											label="Loại tài sản (*)"
+											label="Loại tài sản"
+											hasFeedback
 											name="assetsCategory"
 											component={RadioAntd}
 											options={[
@@ -172,7 +176,8 @@ export default function FormCustomEdit({
 										/>
 										<Field
 											readOnly
-											label="Khoản mua sắm này có nằm trong kế hoạch (*)"
+											label="Khoản mua sắm này có nằm trong kế hoạch"
+											hasFeedback
 											name="plan"
 											component={RadioAntd}
 											options={[
@@ -200,7 +205,7 @@ export default function FormCustomEdit({
 							) : (
 								<>
 									<Button variant="contained" type="submit" color="primary">
-										Xác nhận
+										Duyệt
 									</Button>
 									<Button
 										onClick={() => handleOpenReject('Allocation')}
@@ -208,7 +213,7 @@ export default function FormCustomEdit({
 										type="button"
 										color="secondary"
 									>
-										Không xác nhận
+										Không duyệt
 									</Button>
 								</>
 							)}

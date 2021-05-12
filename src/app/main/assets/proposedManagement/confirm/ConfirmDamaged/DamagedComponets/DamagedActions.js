@@ -9,14 +9,14 @@ export default function DamagedActions({ handleOpenForm, items }) {
 					<ListItemIcon className="min-w-40">
 						<Icon>edit</Icon>
 					</ListItemIcon>
-					<ListItemText primary="Báo hỏng tài sản" />
+					<ListItemText primary="Phê duyệt" />
 				</MenuItem>
 			) : (
 				<MenuItem role="button">
 					<ListItemIcon className="min-w-40">
 						<Icon>edit</Icon>
 					</ListItemIcon>
-					<ListItemText primary="Đã xác nhận" />
+					<ListItemText primary="Đã phê duyệt" />
 				</MenuItem>
 			)}
 		</>

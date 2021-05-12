@@ -1,14 +1,16 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable import/no-extraneous-dependencies */
-import { IconButton, Paper } from '@material-ui/core';
+import { IconButton, Paper, Typography } from '@material-ui/core';
 import React, { useContext } from 'react';
-import FuseAnimate from '@fuse/core/FuseAnimate';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { useDispatch } from 'react-redux';
 import { DatePicker, Select } from 'antd';
 import * as moment from 'moment';
+import { Link } from 'react-router-dom';
+import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import { ConfirmContext } from '../../ConfirmContext';
 import * as actions from '../../../_redux/confirmAction';
 import { useStyles } from '../StyleCustomAll';
@@ -80,9 +82,50 @@ export default function ActionComponent({ actionLoading }) {
 	};
 	return (
 		<>
-			<FuseAnimate animation="transition.slideLeftIn" delay={300}>
+			<FuseAnimateGroup
+				enter={{
+					animation: 'transition.slideUpBigIn'
+				}}
+			>
 				<div className="flex flex-col sm:flex-row">
-					<Paper className="w-full sm:w-1/4 flex justify-between">
+					<Paper className="flex flex-row w-full sm:w-1/3 sm:mb-0 mb-9 justify-around ">
+						<DatePicker
+							onChange={handleChangeFilterDateStart}
+							format="DD/MM/YYYY"
+							defaultValue={moment().startOf('month')}
+							placeholder="Ngày bắt đầu"
+							style={{ width: '100%' }}
+						/>
+						<DatePicker
+							onChange={handleChangeFilterDateEnd}
+							format="DD/MM/YYYY"
+							defaultValue={moment().endOf('month')}
+							placeholder="Ngày kết thúc"
+							style={{ width: '100%' }}
+						/>
+					</Paper>
+					<Paper style={{ width: '220px' }} className="ml-16 sm:mb-0 mb-9">
+						<Select
+							loading={!!actionLoading}
+							onChange={onHandleChangeStatus}
+							bordered={false}
+							defaultValue="0"
+							style={{ width: '100%' }}
+						>
+							<Select.Option value="0">Tất cả</Select.Option>
+							<Select.Option value="1">Chờ phê duyệt</Select.Option>
+							<Select.Option value="2">Đã duyệt</Select.Option>
+							<Select.Option value="3">Hoàn thành</Select.Option>
+							<Select.Option value="4">Từ chối</Select.Option>
+						</Select>
+					</Paper>
+				</div>
+				<div className="flex flex-col sm:flex-row justify-between">
+					<Typography variant="subtitle1" color="inherit" className="mt-16">
+						<AddCircleOutlineIcon color="secondary" />
+						<Link to="/yeu-cau-cap-phat"> Tạo yêu cầu cấp phát </Link>
+					</Typography>
+					<Paper className="w-full sm:w-1/4 flex justify-between ">
 						<InputBase
 							onKeyPress={event => {
 								if (event.key === 'Enter') {
@@ -104,39 +147,8 @@ export default function ActionComponent({ actionLoading }) {
 							<SearchIcon />
 						</IconButton>
 					</Paper>
-					<Paper className="ml-16 flex flex-row w-full sm:w-1/3 justify-around ">
-						<DatePicker
-							onChange={handleChangeFilterDateStart}
-							format="DD/MM/YYYY"
-							defaultValue={moment().startOf('month')}
-							placeholder="Ngày bắt đầu"
-							style={{ width: '100%' }}
-						/>
-						<DatePicker
-							onChange={handleChangeFilterDateEnd}
-							format="DD/MM/YYYY"
-							defaultValue={moment().endOf('month')}
-							placeholder="Ngày kết thúc"
-							style={{ width: '100%' }}
-						/>
-					</Paper>
-					<Paper style={{ width: '220px' }} className="ml-16">
-						<Select
-							loading={!!actionLoading}
-							onChange={onHandleChangeStatus}
-							bordered={false}
-							defaultValue="0"
-							style={{ width: '100%' }}
-						>
-							<Select.Option value="0">Tất cả</Select.Option>
-							<Select.Option value="1">Chờ phê duyệt</Select.Option>
-							<Select.Option value="2">Đã duyệt</Select.Option>
-							<Select.Option value="3">Hoàn thành</Select.Option>
-							<Select.Option value="4">Từ chối</Select.Option>
-						</Select>
-					</Paper>
 				</div>
-			</FuseAnimate>
+			</FuseAnimateGroup>
 		</>
 	);
 }

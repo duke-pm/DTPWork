@@ -86,7 +86,7 @@ export default function FormCustomEdit({
 						<DialogContent ref={dialogContent} dividers>
 							<div className="px-16 sm:px-24">
 								<div className="flex justify-between flex-row">
-									<h5 className="font-extrabold">Thông tin cấp phát tài sản.</h5>
+									<h5 className="font-extrabold">Thông tin nhân viên.</h5>
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-4 gap-8 ">
 									<Field
@@ -127,7 +127,7 @@ export default function FormCustomEdit({
 							</div>
 							<div className="px-16 sm:px-24">
 								<div className="flex justify-between flex-row">
-									<h5 className="font-extrabold">Danh sách tài sản yêu cầu.</h5>
+									<h5 className="font-extrabold">Tài sản yêu cầu.</h5>
 								</div>
 								<Table
 									rowKey="descr"
@@ -139,9 +139,6 @@ export default function FormCustomEdit({
 								/>
 							</div>
 							<div className="px-16 sm:px-24 mt-16">
-								<div className="flex justify-between flex-row">
-									<h5 className="font-extrabold">Nội dung.</h5>
-								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-1 gap-8 ">
 									<Field
 										readOnly
@@ -208,7 +205,7 @@ export default function FormCustomEdit({
 							) : (
 								<>
 									<Button variant="contained" type="submit" color="primary">
-										Xác nhận
+										Duyệt
 									</Button>
 									<Button
 										onClick={() => handleOpenReject('Allocation')}
@@ -216,7 +213,7 @@ export default function FormCustomEdit({
 										type="button"
 										color="secondary"
 									>
-										Không xác nhận
+										Không duyệt
 									</Button>
 								</>
 							)}

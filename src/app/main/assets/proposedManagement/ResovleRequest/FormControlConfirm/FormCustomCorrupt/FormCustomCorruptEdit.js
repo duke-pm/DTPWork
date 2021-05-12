@@ -122,18 +122,18 @@ export default function FormCustomCorruptEdit({
 										type="submit"
 										className="h-26 font-sans"
 										variant="contained"
-										color="secondary"
+										color="primary"
 									>
-										Xác nhận
+										Duyệt
 									</Button>
 									<Button
 										onClick={handleOpenFormReject}
 										autoFocus
 										className="h-26 font-sans"
 										variant="contained"
-										color="primary"
+										color="secondary"
 									>
-										Không xác nhận
+										Không duyệt
 									</Button>
 								</>
 							)}

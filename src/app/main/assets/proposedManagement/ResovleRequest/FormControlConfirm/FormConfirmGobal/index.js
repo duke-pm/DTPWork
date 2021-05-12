@@ -98,7 +98,7 @@ export default function FormConfirmGobal() {
 										type="submit"
 										className="h-26 font-sans"
 										variant="contained"
-										color="secondary"
+										color="primary"
 									>
 										Hoàn thành
 									</Button>

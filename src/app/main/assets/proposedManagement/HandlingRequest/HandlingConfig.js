@@ -8,7 +8,7 @@ const HandlingConfig = {
 	},
 	routes: [
 		{
-			path: '/quan-li-de-xuat/bao-mat-hong-tai-san',
+			path: '/bao-mat-hong-tai-san',
 			component: React.lazy(() => import('./index'))
 		}
 	]
