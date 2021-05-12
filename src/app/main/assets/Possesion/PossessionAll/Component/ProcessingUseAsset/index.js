@@ -1,4 +1,4 @@
-import { AppBar, Dialog, IconButton, Toolbar, makeStyles } from '@material-ui/core';
+import { AppBar, Dialog, IconButton, Toolbar, makeStyles, DialogContent } from '@material-ui/core';
 import React from 'react';
 import CloseIcon from '@material-ui/icons/Close';
 import { Typography } from 'antd';
@@ -44,9 +44,9 @@ export default function ProcessingUseAsset({ openHistory, setOpenHistory }) {
 					</Typography>
 				</Toolbar>
 			</AppBar>
-			<div>
+			<DialogContent style={{ height: '65vh' }}>
 				<InformationProceeUseAsset actionLoading={actionLoading} entitiesEdit={entitiesEdit} />
-			</div>
+			</DialogContent>
 		</Dialog>
 	);
 }

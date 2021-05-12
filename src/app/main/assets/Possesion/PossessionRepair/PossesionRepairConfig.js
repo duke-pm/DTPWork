@@ -6,12 +6,6 @@ export const rowPossesion = [
 		sort: true
 	},
 	{
-		id: 'Remark',
-		align: 'left',
-		label: 'Mã tham chiếu',
-		sort: true
-	},
-	{
 		id: 'AssetName',
 		align: 'left',
 		label: 'Tên tài sản',
@@ -39,6 +33,12 @@ export const rowPossesion = [
 		id: 'DeptNameManager',
 		align: 'left',
 		label: 'BP Quản lý',
+		sort: true
+	},
+	{
+		id: 'Remark',
+		align: 'left',
+		label: 'Mã tham chiếu',
 		sort: true
 	}
 ];

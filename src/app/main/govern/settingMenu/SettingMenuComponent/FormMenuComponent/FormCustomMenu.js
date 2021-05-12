@@ -1,4 +1,5 @@
-import { AntInput, AntSelect } from '@fuse/CustomForm/CreateAntField';
+import { AntInput } from '@fuse/CustomForm/CreateAntField';
+import SelectAntd from '@fuse/CustomForm/SelectAntd';
 import RadioAntd from '@fuse/CustomForm/RadioAntd';
 import { Button, DialogContent, DialogActions } from '@material-ui/core';
 import { Spin } from 'antd';
@@ -55,7 +56,7 @@ export default function FormCustomMenu({ actionLoading }) {
 												value: 'item'
 											}
 										]}
-										component={AntSelect}
+										component={SelectAntd}
 										className="mt-8 mb-16"
 									/>
 								</div>
@@ -63,7 +64,7 @@ export default function FormCustomMenu({ actionLoading }) {
 									<Field
 										label="Menu cha"
 										name="menuParent"
-										component={AntSelect}
+										component={SelectAntd}
 										className="mt-8 mb-16"
 									/>
 									<Field

@@ -24,7 +24,6 @@ const TableBodyAssetAll = ({ entities, lastErrors, classes, HandleOpenHistory })
 							</Popover>
 						</TableCell>
 						<TableCell align="left"> {items.assetCode} </TableCell>
-						<TableCell align="left"> {items.remarks} </TableCell>
 						<TableCell align="left">{items.assetName} </TableCell>
 						<TableCell align="left">{items.groupName}</TableCell>
 						<TableCell align="left">{items.groupDetailName}</TableCell>
@@ -37,6 +36,7 @@ const TableBodyAssetAll = ({ entities, lastErrors, classes, HandleOpenHistory })
 								{chipText[items.statusID]}
 							</div>
 						</TableCell>
+						<TableCell align="left"> {items.remarks} </TableCell>
 					</TableRow>
 				))}
 		</TableBody>

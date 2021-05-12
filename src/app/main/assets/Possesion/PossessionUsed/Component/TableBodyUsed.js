@@ -30,7 +30,6 @@ export default function TableBodyUsed({ entities, handleOpenForm, handleOpenFrom
 							)}
 						</TableCell>
 						<TableCell align="left"> {items.assetCode} </TableCell>
-						<TableCell align="left"> {items.remarks} </TableCell>
 						<TableCell align="left">{items.assetName} </TableCell>
 						<TableCell align="left">{items.groupName}</TableCell>
 						<TableCell align="left">{items.groupDetailName}</TableCell>
@@ -51,6 +50,7 @@ export default function TableBodyUsed({ entities, handleOpenForm, handleOpenFrom
 								{items.isProcessing ? items.requestTypeName : 'Đang sử dụng'}
 							</div>
 						</TableCell>
+						<TableCell align="left"> {items.remarks} </TableCell>
 					</TableRow>
 				))}
 		</TableBody>

@@ -120,7 +120,7 @@ function FormCustomEdit({
 									<Field
 										label="Nhà cung cấp"
 										name="suppiler"
-										component={AntSelect}
+										component={SelectAntd}
 										options={suppiler}
 										className="mx-4"
 									/>
@@ -184,7 +184,7 @@ function FormCustomEdit({
 										label="Bộ phận quản lý"
 										name="deptCodeManager"
 										notFoundContent={<Spin size="small" />}
-										component={AntSelect}
+										component={SelectAntd}
 										options={department}
 										className=""
 										hasFeedback
@@ -223,7 +223,7 @@ function FormCustomEdit({
 										<Field
 											label="Nhóm tài sản"
 											name="group"
-											dafaultValue={initialValue.group}
+											defaultValue={initialValue.group}
 											value={groupSelected}
 											readOnly={!!disableGroup}
 											handleChangeState={onChangeGroup}
@@ -235,7 +235,7 @@ function FormCustomEdit({
 										<Field
 											label="Tài sản"
 											name="asset"
-											dafaultValue={initialValue.asset}
+											defaultValue={initialValue.asset}
 											value={assetSelected}
 											readOnly={!!disableAsset}
 											component={SelectAntd}

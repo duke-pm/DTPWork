@@ -55,15 +55,16 @@ export default function SelectAntd({
 						placeholder={placeholder || ''}
 						className={readOnly ? 'readOnly' : ''}
 						optionFilterProp="children"
-						filterOption={
-							(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-							// option.props.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
+						filterOption={(input, option) =>
+							option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
 						}
 						defaultValue={field.value}
 						onChange={handleSelect}
 					>
 						{options.map(p => (
-							<Option value={p.value}>{p.label}</Option>
+							<Option key={p.value} value={p.value}>
+								{p.label}
+							</Option>
 						))}
 					</Select>
 				</FormItem>

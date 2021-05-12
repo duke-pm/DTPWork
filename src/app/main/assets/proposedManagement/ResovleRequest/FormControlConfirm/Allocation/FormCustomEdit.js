@@ -10,6 +10,7 @@ import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import { AntInput } from '@fuse/CustomForm/CreateAntField';
 import InputTextArea from '@fuse/CustomForm/InputTextArea';
 import RadioAntd from '@fuse/CustomForm/RadioAntd';
+import DateCustom from '@fuse/CustomForm/Date';
 
 export default function FormCustomEdit({
 	handleSubmitForm,
@@ -90,31 +91,36 @@ export default function FormCustomEdit({
 								<div className="grid grid-cols-1 sm:grid-cols-4 gap-8 ">
 									<Field
 										readOnly
-										label="Nhân viên (*)"
+										hasFeedback
+										label="Nhân viên"
 										name="name"
 										component={AntInput}
 										className="mt-8 mb-16"
 									/>
 									<Field
 										readOnly
-										label="Bộ phận (*)"
+										hasFeedback
+										label="Bộ phận"
 										name="department"
 										component={AntInput}
 										className="mt-8 mb-16"
 									/>
 									<Field
 										readOnly
-										label="Khu vực (*)"
+										hasFeedback
+										label="Khu vực"
 										name="region"
 										component={AntInput}
 										className="mt-8 mb-16"
 									/>
 									<Field
 										readOnly
-										label="Ngày yêu cầu (*) "
+										hasFeedback
+										label="Ngày yêu cầu"
 										name="dateRequest"
+										format="DD/MM/YYYY"
 										placeholder="Vui lòng chọn ngày yêu cầu"
-										component={AntInput}
+										component={DateCustom}
 										className="mx-4 mb-16"
 									/>
 								</div>
@@ -139,7 +145,8 @@ export default function FormCustomEdit({
 								<div className="grid grid-cols-1 sm:grid-cols-1 gap-8 ">
 									<Field
 										readOnly
-										label="Nơi dùng (*)"
+										hasFeedback
+										label="Nơi dùng"
 										name="locationUse"
 										component={AntInput}
 										className="mt-8"
@@ -148,7 +155,8 @@ export default function FormCustomEdit({
 								<div className="grid grid-cols-1 sm:grid-cols-1 gap-8 ">
 									<Field
 										readOnly
-										label="Lí do (*)"
+										hasFeedback
+										label="Lí do"
 										name="reason"
 										component={InputTextArea}
 										className="mt-8 mb-16"
@@ -159,7 +167,8 @@ export default function FormCustomEdit({
 									<div className="flex flex-col">
 										<Field
 											readOnly
-											label="Loại tài sản (*)"
+											hasFeedback
+											label="Loại tài sản "
 											name="assetsCategory"
 											component={RadioAntd}
 											options={[
@@ -170,7 +179,8 @@ export default function FormCustomEdit({
 										/>
 										<Field
 											readOnly
-											label="Khoản mua sắm này có nằm trong kế hoạch (*)"
+											label="Khoản mua sắm này có nằm trong kế hoạch"
+											hasFeedback
 											name="plan"
 											component={RadioAntd}
 											options={[
