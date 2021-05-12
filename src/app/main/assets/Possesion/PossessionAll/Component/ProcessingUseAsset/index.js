@@ -1,10 +1,9 @@
-import { AppBar, Box, Dialog, IconButton, Tab, Tabs, Toolbar, makeStyles } from '@material-ui/core';
-import React, { useState } from 'react';
+import { AppBar, Dialog, IconButton, Toolbar, makeStyles } from '@material-ui/core';
+import React from 'react';
 import CloseIcon from '@material-ui/icons/Close';
 import { Typography } from 'antd';
 import { useSelector, shallowEqual } from 'react-redux';
 import InformationProceeUseAsset from './InformationProceeUseAsset';
-import TableProcessingUseAsset from './TableProcessingUseAsset';
 
 const useStyles = makeStyles({
 	scrollPaper: {
@@ -12,36 +11,11 @@ const useStyles = makeStyles({
 	}
 });
 
-function a11yProps(index) {
-	return {
-		id: `scrollable-auto-tab-${index}`,
-		'aria-controls': `scrollable-auto-tabpanel-${index}`
-	};
-}
-function TabPanel(props) {
-	const { children, value, index, ...other } = props;
-
-	return (
-		<div
-			role="tabpanel"
-			hidden={value !== index}
-			// id={`scrollable-auto-tabpanel-${index}`}
-			aria-labelledby={`scrollable-auto-tab-${index}`}
-			{...other}
-		>
-			{value === index && <Box p={3}>{children}</Box>}
-		</div>
-	);
-}
-
 export default function ProcessingUseAsset({ openHistory, setOpenHistory }) {
-	const [value, setValue] = useState(0);
-	const handleChange = (event, newValue) => {
-		setValue(newValue);
-	};
-	const { entitiesEdit } = useSelector(
+	const { entitiesEdit, actionLoading } = useSelector(
 		state => ({
-			entitiesEdit: state.possesion.entitiesEdit
+			entitiesEdit: state.possesion.entitiesEdit,
+			actionLoading: state.possesion.actionLoading
 		}),
 		shallowEqual
 	);
@@ -61,27 +35,17 @@ export default function ProcessingUseAsset({ openHistory, setOpenHistory }) {
 					<IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
 						<CloseIcon />
 					</IconButton>
-					<Typography variant="subtitle1" style={{ color: 'white' }} color="inherit">
+					<Typography
+						variant="subtitle1"
+						style={{ color: 'white', fontWeight: '400', fontSize: '1.6rem' }}
+						color="inherit"
+					>
 						Quá trình sử dụng tài sản
 					</Typography>
 				</Toolbar>
 			</AppBar>
-			<Tabs
-				classes={{ root: 'w-full h-64' }}
-				value={value}
-				onChange={handleChange}
-				indicatorColor="primary"
-				textColor="primary"
-				variant="scrollable"
-				scrollButtons="auto"
-				aria-label="scrollable auto tabs example"
-			>
-				<Tab className="font-sans" label={`Thông tin chung `} {...a11yProps(0)} />
-			</Tabs>
 			<div>
-				<TabPanel value={value} index={0}>
-					<InformationProceeUseAsset entitiesEdit={entitiesEdit} />
-				</TabPanel>
+				<InformationProceeUseAsset actionLoading={actionLoading} entitiesEdit={entitiesEdit} />
 			</div>
 		</Dialog>
 	);

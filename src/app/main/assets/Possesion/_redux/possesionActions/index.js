@@ -343,6 +343,7 @@ export const assetReuse = (data, entitiesEdit) => dispatch => {
 		});
 };
 export const getAssetHistory = id => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.actions }));
 	const paramsReq = {
 		ID: id
 	};
@@ -350,9 +351,11 @@ export const getAssetHistory = id => dispatch => {
 		.getAssetHistory(paramsReq)
 		.then(res => {
 			const { data } = res;
+			dispatch(actions.catchErrors({ callType: callTypes.action }));
 			return data;
 		})
 		.catch(err => {
+			dispatch(actions.catchErrors({ callType: callTypes.action }));
 			// dispatch(actions.catchErrors({ callType: callTypes.list }));
 		});
 };

@@ -2,17 +2,19 @@ import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import React, { useEffect, useState } from 'react';
 import * as moment from 'moment';
 import { useDispatch } from 'react-redux';
-import FuseAnimate from '@fuse/core/FuseAnimate';
+import image from '@fuse/assets/group.png';
 import { TableContainer, Paper, Table } from '@material-ui/core';
+import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
+import { Spin } from 'antd';
 import * as actions from '../../../_redux/possesionActions';
 import TableHeaderProcessing from './TableProcessingUseAsset/TableHeaderProcessing';
 import TableBodyProcessing from './TableProcessingUseAsset/TableBodyProcessing';
 import { useStyles } from '../../StyleCustomAll';
 
-export default function InformationProceeUseAsset({ entitiesEdit }) {
+export default function InformationProceeUseAsset({ entitiesEdit, actionLoading }) {
 	const dispatch = useDispatch();
 	const classes = useStyles();
-	const [history, setHistory] = useState(null);
+	const [history, setHistory] = useState([]);
 	useEffect(() => {
 		dispatch(actions.getAssetHistory(entitiesEdit.assetID)).then(data => {
 			setHistory(data.data.listTransHistory);
@@ -56,19 +58,32 @@ export default function InformationProceeUseAsset({ entitiesEdit }) {
 					</div>
 				</div>
 			</div>
-			<div className="flex justify-between flex-row">
+			<div className="flex flex-row">
 				<h5 className="font-extrabold">Quá trình sử dụng.</h5>
+				{actionLoading && <Spin className="mr-18" />}
 			</div>
-			<FuseAnimate animation="transition.slideUpIn" delay={200}>
-				<TableContainer>
-					<Table className={`${classes.table}`} stickyHeader>
-						<Paper>
+			<FuseAnimateGroup
+				enter={{
+					animation: 'transition.expandIn'
+				}}
+			>
+				<Paper>
+					<TableContainer>
+						<Table
+							className={history.length === 0 ? classes.tableHistoryNoData : classes.tableHistroy}
+							stickyHeader
+						>
 							<TableHeaderProcessing />
 							<TableBodyProcessing history={history} />
-						</Paper>
-					</Table>
-				</TableContainer>
-			</FuseAnimate>
+						</Table>
+						{history && history.length === 0 ? (
+							<div className="flex items-center justify-center h-auto">
+								<img className="rounded-full mx-auto" src={image} alt="" width="484" height="512" />
+							</div>
+						) : null}
+					</TableContainer>
+				</Paper>
+			</FuseAnimateGroup>
 		</>
 	);
 }

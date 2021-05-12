@@ -34,32 +34,11 @@ export default function ActionComponent({ actionLoading }) {
 		dateStart,
 		sort
 	} = confirmConext;
-	const handleSearch = e => {
-		e.preventDefault();
+	const handleSearch = () => {
 		setPage(0);
 		dispatch(
 			actions.searchConfirms(true, status, rowPage, page, 0, sort.id, sort.direction, search, dateStart, dateEnd)
 		);
-	};
-	onkeypress = e => {
-		if (e.key === 'Enter') {
-			e.preventDefault();
-			setPage(0);
-			dispatch(
-				actions.searchConfirms(
-					true,
-					status,
-					rowPage,
-					page,
-					0,
-					sort.id,
-					sort.direction,
-					search,
-					dateStart,
-					dateEnd
-				)
-			);
-		}
 	};
 	const onHandleChange = e => {
 		setSearch(e.target.value);
@@ -120,21 +99,20 @@ export default function ActionComponent({ actionLoading }) {
 	};
 	return (
 		<ThemeProvider theme={mainTheme}>
-			<Paper component="form" style={{ height: '33px' }} className="w-full sm:w-1/4 h-31 flex justify-between">
+			<Paper style={{ height: '33px' }} className="w-full sm:w-1/4 h-31 flex justify-between">
 				<InputBase
-					onKeyPress={e => onkeypress(e)}
+					onKeyPress={event => {
+						if (event.key === 'Enter') {
+							handleSearch();
+						}
+					}}
 					onChange={e => onHandleChange(e)}
 					className={classes.input}
 					value={search}
 					placeholder="Tìm kiếm"
 					inputProps={{ 'aria-label': 'search google maps' }}
 				/>
-				<IconButton
-					onClick={e => handleSearch(e)}
-					type="button"
-					className={classes.iconButton}
-					aria-label="search"
-				>
+				<IconButton onClick={handleSearch} type="button" className={classes.iconButton} aria-label="search">
 					<SearchIcon />
 				</IconButton>
 			</Paper>

@@ -2,6 +2,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import { getDataUserLocalStorage } from '@fuse/core/DtpConfig';
 import clsx from 'clsx';
 import React from 'react';
 
@@ -38,6 +39,7 @@ const useStyles = makeStyles(theme => ({
 
 function UserNavbarHeader(props) {
 	const classes = useStyles();
+	const dataUser = getDataUserLocalStorage();
 
 	return (
 		<AppBar
@@ -47,10 +49,10 @@ function UserNavbarHeader(props) {
 			className="user relative flex flex-col items-center justify-center pt-24 pb-64 mb-32 z-0 shadow-0"
 		>
 			<Typography className="username text-16 whitespace-nowrap" color="inherit">
-				IT Department
+				{dataUser.fullName || ''}
 			</Typography>
 			<Typography className="email text-13 mt-8 opacity-50 whitespace-nowrap" color="inherit">
-				linhct@dtp-education.vn
+				{dataUser.jobTitle || ''}
 			</Typography>
 			<Avatar
 				className={clsx(classes.avatar, 'avatar')}
