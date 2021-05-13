@@ -88,8 +88,13 @@ export default function ActionComponent({ actionLoading }) {
 					animation: 'transition.slideUpBigIn'
 				}}
 			>
+				<div className="flex flex-col sm:flex-row justify-between">
+					<Typography variant="subtitle1" color="inherit">
+						Bộ lọc.
+					</Typography>
+				</div>
 				<div className="flex flex-col sm:flex-row">
-					<Paper className="ml-16 flex flex-row w-full sm:w-1/3 justify-around ">
+					<Paper className=" flex flex-row w-full sm:w-1/3 justify-around ">
 						<DatePicker
 							onChange={handleChangeFilterDateStart}
 							defaultValue={moment().startOf('month')}

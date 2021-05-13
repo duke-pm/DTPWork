@@ -9,6 +9,10 @@ export default function ResovleRequestContext({ children }) {
 	const [dateEnd, setDateEnd] = useState('');
 	const [status, setStatus] = useState(0);
 	const [search, setSearch] = useState('');
+	const [timeLine, setTimeLine] = useState({
+		open: false,
+		title: ''
+	});
 	const [diaglogAllocation, setDialogAllocation] = useState(false);
 	const [diaglogCorrupt, setDialogCorrupt] = useState(false);
 	const [typeDialogCorrupt, setTypeDialogCorrupt] = useState(false);
@@ -19,6 +23,8 @@ export default function ResovleRequestContext({ children }) {
 	});
 	const valueMemo = useMemo(() => {
 		return {
+			timeLine,
+			setTimeLine,
 			diaglogAllocation,
 			setDialogAllocation,
 			diaglogCorrupt,
@@ -43,6 +49,8 @@ export default function ResovleRequestContext({ children }) {
 			setSort
 		};
 	}, [
+		timeLine,
+		setTimeLine,
 		page,
 		setPage,
 		rowPage,

@@ -2,7 +2,7 @@ import { ListItemIcon, ListItemText, MenuItem } from '@material-ui/core';
 import React from 'react';
 import Icon from '@material-ui/core/Icon';
 
-export default function ActionsAllocation({ handleOpenForm, items }) {
+export default function ActionsAllocation({ handleOpenForm, items, handleOpenTimeLine }) {
 	return (
 		<>
 			{items.isAllowApproved && (
@@ -13,12 +13,12 @@ export default function ActionsAllocation({ handleOpenForm, items }) {
 					<ListItemText primary="Phê duyệt" />
 				</MenuItem>
 			)}
-			{/* <MenuItem onClick={() => handleOpenHistory(items)} role="button">
+			<MenuItem onClick={() => handleOpenTimeLine(items)} role="button">
 				<ListItemIcon className="min-w-40">
 					<Icon>history</Icon>
 				</ListItemIcon>
-				<ListItemText primary="Xem lịch sử" />
-			</MenuItem> */}
+				<ListItemText primary="Quá trình phê duyệt" />
+			</MenuItem>
 		</>
 	);
 }

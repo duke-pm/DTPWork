@@ -1,0 +1,16 @@
+$success  : #2BC155 !default;
+$primary  : #0B2A97 !default;
+$warning  : #FFBC11 !default;
+$danger   : #F94687 !default;
+$light    : #F4F5F9 !default;
+$dark     : #B1B1B1;
+$info     : #1EA7C5 !default;
+$white   : #fff !default;
+$info-opacity: rgba($info, 0.1);
+
+$primary-light: lighten($primary , 60%);
+$success-light: lighten($success, 47%);
+$warning-light: lighten($warning, 40%);
+$danger-light: lighten($danger, 35%);
+$info-light: lighten($info, 35%);
+$dark-light: lighten($dark, 25%);

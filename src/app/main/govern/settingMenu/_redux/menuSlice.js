@@ -18,7 +18,7 @@ export const menuSlice = createSlice({
 	reducers: {
 		catchErrors: (state, action) => {
 			if (action.payload.callType === callTypes.list) {
-				state.listloading = false;
+				state.actionLoading = false;
 				state.lastErrors = true;
 			} else {
 				state.actionLoading = false;
@@ -27,17 +27,17 @@ export const menuSlice = createSlice({
 		startCall: (state, action) => {
 			state.error = null;
 			if (action.payload.callType === callTypes.list) {
-				state.listloading = true;
+				state.listLoading = true;
 			} else {
 				state.actionLoading = true;
 			}
 		},
 		fetchsListMenuSettings: (state, action) => {
-			const { data } = action.payload;
+			const { dataRes, total_result } = action.payload;
 			state.listLoading = false;
 			state.lastErrors = false;
-			state.entities = data;
-			// state.total_count
+			state.entities = dataRes;
+			state.total_count = total_result;
 		},
 		createdMenuSettings: (state, action) => {
 			const { dataRes } = action.payload;

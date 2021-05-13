@@ -65,6 +65,7 @@ export default function FormCustomMenu({ actionLoading }) {
 										label="Menu cha"
 										name="menuParent"
 										component={SelectAntd}
+										options={[]}
 										className="mt-8 mb-16"
 									/>
 									<Field
@@ -92,7 +93,7 @@ export default function FormCustomMenu({ actionLoading }) {
 										className="mt-8 mb-16"
 									/>
 								</div>
-								<div className="grid grid-cols-1 gap-8">
+								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 									<Field
 										label="Trạng thái"
 										name="status"

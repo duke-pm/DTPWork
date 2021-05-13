@@ -17,6 +17,7 @@ export default function FormCustomCorrupt() {
 	);
 	const handleOpenFormReject = () => setDialogConfirmGobal(true);
 	const handleClose = () => setDialogCorrupt(false);
+	console.log(typeDialogCorrupt);
 	return (
 		<Dialog
 			style={{ zIndex: 20 }}
@@ -31,7 +32,7 @@ export default function FormCustomCorrupt() {
 						<CloseIcon />
 					</IconButton>
 					<Typography variant="subtitle1" color="inherit">
-						{typeDialogCorrupt === 'lose' ? 'Báo mất tài sản' : 'Báo hỏng tài sản'}
+						{typeDialogCorrupt === 'lost' ? 'Báo mất tài sản' : 'Báo hỏng tài sản'}
 					</Typography>
 				</Toolbar>
 			</AppBar>

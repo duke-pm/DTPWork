@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import DamagedActions from './DamagedActions';
 import { chipColor, chipText } from '../DamagedConfig';
 
-export default function TableBodyDamaged({ entities, lastErrors, classes, handleOpenForm }) {
+export default function TableBodyDamaged({ entities, lastErrors, classes, handleOpenForm, handleOpenTimeLine }) {
 	return (
 		<TableBody>
 			{entities &&
@@ -17,13 +17,19 @@ export default function TableBodyDamaged({ entities, lastErrors, classes, handle
 							<Popover
 								overlayStyle={{ zIndex: '19' }}
 								placement="rightTop"
-								content={() => <DamagedActions items={items} handleOpenForm={handleOpenForm} />}
+								content={() => (
+									<DamagedActions
+										handleOpenTimeLine={handleOpenTimeLine}
+										items={items}
+										handleOpenForm={handleOpenForm}
+									/>
+								)}
 								title="Hành động"
 							>
 								<MoreVertIcon className="cursor-pointer" />
 							</Popover>
 						</TableCell>
-						<TableCell align="left"> {items.empCode} </TableCell>
+						<TableCell align="left"> {items.requestID} </TableCell>
 						<TableCell align="left">{items.fullName} </TableCell>
 						<TableCell align="left">{items.deptName}</TableCell>
 						<TableCell align="left">{items.regionName} </TableCell>

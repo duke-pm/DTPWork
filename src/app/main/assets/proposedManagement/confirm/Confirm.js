@@ -10,6 +10,7 @@ import ConfirmLose from './ConfirmLose';
 import FormAllocation from './FormControlConfirm/Allocation';
 import FormConfirmGobal from './FormControlConfirm/ConfirmCorrupt';
 import FormCustomCorrupt from './FormControlConfirm/FormCustomCorrupt';
+import TimeLine from '../TimeLine';
 
 function a11yProps(index) {
 	return {
@@ -45,7 +46,9 @@ function PossesionPage(props) {
 		typeReasonReject,
 		setTypeReasonReject,
 		reasonReject,
-		setReasonReject
+		setReasonReject,
+		timeLine,
+		setTimeLine
 	} = confirmContext;
 	const { currentState } = useSelector(state => ({ currentState: state.confirm }), shallowEqual);
 	const total_Record = currentState && currentState.total_items;
@@ -59,6 +62,7 @@ function PossesionPage(props) {
 	const hanleCancle = () => setReasonReject(false);
 	return (
 		<>
+			<TimeLine setTimeLine={setTimeLine} timeLine={timeLine} />
 			<FormConfirmGobal type={typeReasonReject} open={reasonReject} handleClose={hanleCancle} />
 			<FormAllocation
 				setTypeReasonReject={setTypeReasonReject}

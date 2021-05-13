@@ -6,6 +6,8 @@ const initialState = {
 	entities: null,
 	entitiesDetail: null,
 	newEntitiesDetail: null,
+	entitiesApproval: null,
+	newEntitiesApproval: null,
 	entitiesEdit: undefined,
 	total_count: 0,
 	total_items: null,
@@ -47,6 +49,7 @@ export const confirmSlice = createSlice({
 			state.actionLoading = false;
 			state.entitiesDetail = data.data.listRequestDetail;
 			state.entities = data.data.listRequest;
+			state.entitiesApproval = data.data.listProcessApprove;
 			state.total_items = data.data.header;
 			state.total_count = data.totalRow;
 		},
@@ -101,6 +104,13 @@ export const confirmSlice = createSlice({
 			const { entities } = state;
 			const newEntities = entities.filter(item => item.requestID !== requestID);
 			state.entities = newEntities;
+		},
+		timeLineApproval: (state, action) => {
+			const { id } = action.payload;
+			state.actionLoading = false;
+			const { entitiesApproval } = state;
+			const newTimeLine = entitiesApproval.filter(item => item.requestID === id);
+			state.newEntitiesApproval = newTimeLine;
 		}
 	}
 });

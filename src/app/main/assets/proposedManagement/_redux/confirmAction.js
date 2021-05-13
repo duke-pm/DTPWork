@@ -240,3 +240,9 @@ export const requestApproveResolve = (data, status, values) => dispatch => {
 			dispatch(actions.catchError({ callType: callTypes.action }));
 		});
 };
+
+export const timeLineApproval = item => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.action }));
+	const id = item.requestID;
+	dispatch(actions.timeLineApproval({ id }));
+};

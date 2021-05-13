@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable array-callback-return */
 import AppBar from '@material-ui/core/AppBar';
 import Hidden from '@material-ui/core/Hidden';
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
@@ -9,19 +11,33 @@ import { useSelector } from 'react-redux';
 import { selectToolbarTheme } from 'app/store/fuse/settingsSlice';
 import UserMenu from 'app/fuse-layouts/shared-components/UserMenu';
 import { Typography } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import FullScreenToggle from '../../shared-components/FullScreenToggle';
 
 const useStyles = makeStyles(theme => ({
 	root: {}
 }));
-
+function convertToVietNamese(array) {
+	return array.map(word => {
+		switch (word) {
+			case 'tai-san':
+				return 'Quản lý tài sản';
+			case 'xet-duyet':
+				return 'Danh sách đề xuất';
+			case 'de-xuat-can-xu-ly':
+				return 'Đề xuất cần xử lí';
+			default:
+				break;
+		}
+	});
+}
 function ToolbarLayout1(props) {
 	const config = useSelector(({ fuse }) => fuse.settings.current.layout.config);
 	const toolbarTheme = useSelector(selectToolbarTheme);
 	const classes = useStyles(props);
-	const history = useHistory();
-	console.log(history);
+	const location = useLocation();
+	const pathSplitted = location.pathname.split('/').splice(1);
+	const breadcumb = convertToVietNamese(pathSplitted).join(' > ');
 	return (
 		<ThemeProvider theme={toolbarTheme}>
 			<AppBar
@@ -39,7 +55,7 @@ function ToolbarLayout1(props) {
 
 					<div className="flex  items-center px-16 flex-1">
 						<Typography component="span" className="font-bold flex text-lg	">
-							Quản lý tài sản
+							{breadcumb}
 						</Typography>
 					</div>
 

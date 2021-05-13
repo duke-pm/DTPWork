@@ -5,13 +5,18 @@ import { callTypes, menuSlice } from './menuSlice';
 const { actions } = menuSlice;
 export const fetchsListMenuSettings = params => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.list }));
+	const paramsReq = {
+		PageSize: 10,
+		PageNum: 1
+	};
 	return requestFrom
-		.fetchDataMenuApi(params)
+		.fetchDataMenuApi(paramsReq)
 		.then(res => {
 			const { data } = res;
 			if (!data.isError) {
-				const dataRes = data.listItems;
-				dispatch(actions.fetchsListMenuSettings({ dataRes }));
+				const dataRes = data.data;
+				const total_result = data.totalPage;
+				dispatch(actions.fetchsListMenuSettings({ dataRes, total_result }));
 			}
 		})
 		.catch(error => {});

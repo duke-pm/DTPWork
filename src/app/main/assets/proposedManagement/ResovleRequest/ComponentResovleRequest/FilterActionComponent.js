@@ -100,6 +100,23 @@ export default function ActionComponent({ actionLoading }) {
 	return (
 		<ThemeProvider theme={mainTheme}>
 			<div className="flex flex-row gap-16 w-full items-center justify-between">
+				<Paper style={{ height: '33px' }} className="w-full sm:w-1/4 h-31 flex justify-between">
+					<InputBase
+						onKeyPress={event => {
+							if (event.key === 'Enter') {
+								handleSearch();
+							}
+						}}
+						onChange={e => onHandleChange(e)}
+						className={classes.input}
+						value={search}
+						placeholder="Tìm kiếm"
+						inputProps={{ 'aria-label': 'search google maps' }}
+					/>
+					<IconButton onClick={handleSearch} type="button" className={classes.iconButton} aria-label="search">
+						<SearchIcon />
+					</IconButton>
+				</Paper>
 				<Paper className="w-full sm:w-1/4 flex justify-between">
 					<DatePicker
 						onChange={handleChangeFilterDateStart}
@@ -146,25 +163,8 @@ export default function ActionComponent({ actionLoading }) {
 					</Select>
 				</Paper>
 			</div>
-			<div className="flex sm:flex-row justify-between">
-				<Paper style={{ height: '33px' }} className="w-full sm:w-1/4 h-31 flex justify-between">
-					<InputBase
-						onKeyPress={event => {
-							if (event.key === 'Enter') {
-								handleSearch();
-							}
-						}}
-						onChange={e => onHandleChange(e)}
-						className={classes.input}
-						value={search}
-						placeholder="Tìm kiếm"
-						inputProps={{ 'aria-label': 'search google maps' }}
-					/>
-					<IconButton onClick={handleSearch} type="button" className={classes.iconButton} aria-label="search">
-						<SearchIcon />
-					</IconButton>
-				</Paper>
-			</div>
+			{/* <div className="flex sm:flex-row justify-between"> */}
+			{/* </div> */}
 		</ThemeProvider>
 	);
 }
