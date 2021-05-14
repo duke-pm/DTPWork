@@ -4,6 +4,8 @@ const initialState = {
 	listLoading: false,
 	actionLoading: false,
 	entities: null,
+	entitiesAll: null,
+	entitiesEdit: null,
 	total_count: 0,
 	total_items: null,
 	lastErrors: false
@@ -39,18 +41,29 @@ export const menuSlice = createSlice({
 			state.entities = dataRes;
 			state.total_count = total_result;
 		},
+		fetchsListMenuSettingALl: (state, action) => {
+			const { dataRes } = action.payload;
+			state.listLoading = false;
+			state.lastErrors = false;
+			state.entitiesAll = dataRes;
+		},
+		fetchListMenuSetting: (state, action) => {
+			const { items } = action.payload;
+			state.actionLoading = false;
+			state.entitiesEdit = items;
+		},
 		createdMenuSettings: (state, action) => {
 			const { dataRes } = action.payload;
 			state.actionLoading = false;
 			state.error = null;
-			const newArr = [...dataRes, ...state.entities];
+			const newArr = [dataRes, ...state.entities];
 			state.entities = newArr;
 		},
 		updatedMenuSettings: (state, action) => {
 			const { dataRes } = action.payload;
 			state.actionLoading = false;
 			state.entities = state.entities.map(entity => {
-				if (entity.assetID === dataRes.assetID) {
+				if (entity.menuID === dataRes.menuID) {
 					return dataRes;
 				}
 				return entity;

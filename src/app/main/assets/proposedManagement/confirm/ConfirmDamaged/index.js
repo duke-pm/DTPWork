@@ -83,7 +83,7 @@ export default function ConfirmDamaged(props) {
 		);
 	};
 	useEffect(() => {
-		dispatch(action.fetchDataConfirms(0, rowPage, page, search, dateStart, dateEnd, 2));
+		dispatch(action.fetchDataConfirms(0, 2));
 	}, [dispatch]);
 	const createSortHandler = property => event => {
 		const id = property;

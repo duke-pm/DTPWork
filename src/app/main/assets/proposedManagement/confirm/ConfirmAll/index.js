@@ -50,7 +50,7 @@ export default function ConfrimAllocation(props) {
 		setFormAllocation(true);
 	};
 	useEffect(() => {
-		dispatch(action.fetchDataConfirms(0, rowPage, page, search, dateStart, dateEnd, 1));
+		dispatch(action.fetchDataConfirms(0, 1));
 	}, [dispatch]);
 	const handleRowChange = e => {
 		const rowPageParse = parseInt(e.target.value, 10);

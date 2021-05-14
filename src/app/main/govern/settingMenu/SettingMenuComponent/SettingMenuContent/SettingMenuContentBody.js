@@ -1,11 +1,16 @@
 import { TableBody, TableRow, TableCell } from '@material-ui/core';
-import { Popover } from 'antd';
+import { Popover, Checkbox } from 'antd';
 import React from 'react';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import image from '@fuse/assets/group.png';
-import { chipColorStatus, chipTextStatus, chipText, chipColor } from '../SettingMenuConfig';
+import ActionsMenuSetting from './ActionsMenuSetting';
 
-export default function SettingMenuContentBody({ entities, lastErrors, classes }) {
+export default function SettingMenuContentBody({
+	entities,
+	lastErrors,
+	classes,
+	handleEditMenuSetting,
+	handleDeleteMenuSetting
+}) {
 	return (
 		<>
 			<TableBody>
@@ -14,49 +19,34 @@ export default function SettingMenuContentBody({ entities, lastErrors, classes }
 					entities.map(items => (
 						<TableRow key={items.menuID} hover className={classes.tableHead}>
 							<TableCell align="center" className="p-4 md:p-12">
-								{/* <Popover
+								<Popover
 									overlayStyle={{ zIndex: '19' }}
 									placement="rightTop"
 									content={() => (
-										<ActionsResovle
-											handleOpenTimeLine={handleOpenTimeLine}
+										<ActionsMenuSetting
 											items={items}
-											handleOpenDialog={handleOpenDialog}
+											handleEditMenuSetting={handleEditMenuSetting}
+											handleDeleteMenuSetting={handleDeleteMenuSetting}
 										/>
 									)}
 									title="Hành động"
 								>
 									<MoreVertIcon className="cursor-pointer" />
-								</Popover> */}
+								</Popover>
 							</TableCell>
 							<TableCell align="left">{items.menuName} </TableCell>
 							<TableCell align="left">{items.typeName}</TableCell>
 							<TableCell align="left">{items.url} </TableCell>
 							<TableCell align="left">
-								<div
-									className={`inline text-12 p-4 rounded-full truncate ${chipColor[items.inactive]}`}
-								>
-									{chipText[items.inactive]}
-								</div>
+								<Checkbox checked={items.inactive} />
 							</TableCell>
 							<TableCell align="left">
-								<div
-									className={`inline text-12 p-4 rounded-full truncate ${
-										chipColorStatus[items.isWeb]
-									}`}
-								>
-									{chipTextStatus[items.isWeb]}
-								</div>
+								<Checkbox checked={items.isWeb} />
 							</TableCell>
 							<TableCell align="left">
-								<div
-									className={`inline text-12 p-4 rounded-full truncate ${
-										chipColorStatus[items.isMobile]
-									}`}
-								>
-									{chipTextStatus[items.isMobile]}
-								</div>
+								<Checkbox checked={items.isMobile} />
 							</TableCell>
+							<TableCell align="left">{items.visOrder}</TableCell>
 						</TableRow>
 					))}
 			</TableBody>

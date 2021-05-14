@@ -84,7 +84,7 @@ export default function ConfirmLose(props) {
 		);
 	};
 	useEffect(() => {
-		dispatch(action.fetchDataConfirms(0, rowPage, page, search, dateStart, dateEnd, 3));
+		dispatch(action.fetchDataConfirms(0, 3));
 	}, [dispatch]);
 	const createSortHandler = property => event => {
 		const id = property;

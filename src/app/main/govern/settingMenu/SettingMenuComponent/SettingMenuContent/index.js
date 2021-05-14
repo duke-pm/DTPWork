@@ -13,15 +13,45 @@ import SettingMenuContentBody from './SettingMenuContentBody';
 import { useStyles } from '../../StyleCustomAll';
 import { SettingmenuContext } from '../../SettingMenuContext';
 
-export default function SettingMenuContent() {
+export default function SettingMenuContent({ handleOpenSettingMenu }) {
 	const dispatch = useDispatch();
 	const settingContext = useContext(SettingmenuContext);
-	const { page, rowPage } = settingContext;
+	const { page, rowPage, setPage, sort, setRowPage, setSort } = settingContext;
 	const { currentState } = useSelector(state => ({ currentState: state.govern.menu }), shallowEqual);
 	const { entities, lastErrors, listloading, actionLoading, total_count } = currentState;
 	useEffect(() => {
 		dispatch(actions.fetchsListMenuSettings());
+		dispatch(actions.fetchsListMenuSettingAll());
 	}, [dispatch]);
+	const handleEditMenuSetting = item => {
+		handleOpenSettingMenu();
+		dispatch(actions.setTaskEditMenuSetting(item));
+	};
+	const handleDeleteMenuSetting = item => {
+		console.log(item);
+	};
+	const handleChangePage = (event, newPage) => {
+		setPage(newPage);
+		dispatch(actions.fetchsListMenuSettingParams(rowPage, newPage + 1, sort.direction, sort.id));
+	};
+	const handleRowPage = e => {
+		const rowPageParse = parseInt(e.target.value, 10);
+		setRowPage(rowPageParse);
+		dispatch(actions.fetchsListMenuSettingParams(rowPageParse, page, sort.direction, sort.id));
+	};
+	const createSortHandler = property => event => {
+		const id = property;
+		let direction = 'desc';
+
+		if (sort.id === property && sort.direction === 'desc') {
+			direction = 'asc';
+		}
+		dispatch(actions.fetchsListMenuSettingParams(rowPage, page, direction, id));
+		setSort({
+			direction,
+			id
+		});
+	};
 	const classes = useStyles();
 	if (listloading) {
 		return <FuseLoading />;
@@ -36,8 +66,14 @@ export default function SettingMenuContent() {
 						}}
 					>
 						<Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
-							<SettingMenuContentHeader />
-							<SettingMenuContentBody classes={classes} entities={entities} lastErrors={lastErrors} />
+							<SettingMenuContentHeader createSortHandler={createSortHandler} sort={sort} />
+							<SettingMenuContentBody
+								handleDeleteMenuSetting={handleDeleteMenuSetting}
+								handleEditMenuSetting={handleEditMenuSetting}
+								classes={classes}
+								entities={entities}
+								lastErrors={lastErrors}
+							/>
 						</Table>
 						{entities === null || lastErrors ? (
 							<div className="flex items-center justify-center h-auto">
@@ -51,9 +87,9 @@ export default function SettingMenuContent() {
 						{actionLoading && <Spin />}
 						<Panigation
 							page={page}
-							// handleChangePage={handleChangePage}
+							handleChangePage={handleChangePage}
 							rowPage={rowPage}
-							// handleChangeRowsPerPage={handleRowChange}
+							handleChangeRowsPerPage={handleRowPage}
 							count={total_count}
 						/>
 					</div>

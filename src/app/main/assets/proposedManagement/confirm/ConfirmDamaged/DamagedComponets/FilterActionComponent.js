@@ -3,7 +3,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { IconButton, Paper, Typography } from '@material-ui/core';
 import React, { useContext } from 'react';
-import FuseAnimate from '@fuse/core/FuseAnimate';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';

@@ -4,7 +4,6 @@ import { useSelector, shallowEqual } from 'react-redux';
 import CloseIcon from '@material-ui/icons/Close';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import './TimeLine.scss';
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import TodayIcon from '@material-ui/icons/Today';
 
 const statusClassName = {

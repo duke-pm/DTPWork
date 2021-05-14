@@ -1,5 +1,5 @@
 import FusePageCardedFix from '@fuse/core/FusePageCarded/FusePageCardedFix';
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import TimeLine from '../TimeLine';
 import RequestResovelTable from './ComponentResovleRequest';
 import ActionComponent from './ComponentResovleRequest/FilterActionComponent';

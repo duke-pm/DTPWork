@@ -18,7 +18,7 @@ export const column = [
 		sort: true
 	},
 	{
-		id: 'status',
+		id: 'Inactive',
 		lable: 'Trạng thái',
 		align: 'left',
 		sort: true
@@ -32,6 +32,12 @@ export const column = [
 	{
 		id: 'isMobile',
 		lable: 'Di động',
+		align: 'left',
+		sort: true
+	},
+	{
+		id: 'STT',
+		lable: 'Thứ tự ',
 		align: 'left',
 		sort: true
 	}

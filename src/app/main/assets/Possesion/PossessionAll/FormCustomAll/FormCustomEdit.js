@@ -5,7 +5,7 @@ import DateCustom from '@fuse/CustomForm/Date';
 import InputTextArea from '@fuse/CustomForm/InputTextArea';
 import InputCurrency from '@fuse/CustomForm/InputCurrency';
 import { Spin } from 'antd';
-import { AntInput, AntInputNumber, AntSelect } from '@fuse/CustomForm/CreateAntField';
+import { AntInput, AntInputNumber } from '@fuse/CustomForm/CreateAntField';
 import SelectAntd from '@fuse/CustomForm/SelectAntd';
 import { checkValidateFormConfig, checkValidateFormConfigUpdate } from '../ConfigPossessionAll';
 

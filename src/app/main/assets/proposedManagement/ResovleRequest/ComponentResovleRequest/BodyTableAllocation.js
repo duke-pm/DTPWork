@@ -3,7 +3,6 @@ import { Popover } from 'antd';
 import React from 'react';
 import * as moment from 'moment';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import image from '@fuse/assets/group.png';
 import { chipColor, chipText, chipTextColor, chipTextType } from './ResovleRequestConfig';
 import ActionsResovle from './ActionsResovle';
 

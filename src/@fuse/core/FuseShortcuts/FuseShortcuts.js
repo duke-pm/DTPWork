@@ -79,6 +79,7 @@ function FuseShortcuts(props) {
 		let newShortcuts = [...shortcuts];
 		newShortcuts = newShortcuts.includes(id) ? newShortcuts.filter(_id => id !== _id) : [...newShortcuts, id];
 		// dispatch(updateUserShortcuts(newShortcuts));
+		console.log(newShortcuts);
 	}
 
 	function ShortcutMenuItem({ item, onToggle }) {

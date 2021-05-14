@@ -2,11 +2,11 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable import/no-extraneous-dependencies */
 import { IconButton, Paper } from '@material-ui/core';
-import React, { useContext } from 'react';
+import React from 'react';
 import { ThemeProvider } from '@material-ui/core/styles';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 // import { DatePicker, Select } from 'antd';
 import { selectMainTheme } from 'app/store/fuse/settingsSlice';
 // import * as moment from 'moment';

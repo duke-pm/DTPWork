@@ -3,7 +3,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { IconButton, Paper, Typography } from '@material-ui/core';
 import React, { useContext } from 'react';
-import FuseAnimate from '@fuse/core/FuseAnimate';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import { useDispatch } from 'react-redux';
