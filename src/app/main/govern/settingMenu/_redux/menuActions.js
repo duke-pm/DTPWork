@@ -148,3 +148,18 @@ export const updatedMenuSettings = dataReq => dispatch => {
 			dispatch(actions.catchErrors({ callType: callTypes.action }));
 		});
 };
+
+export const deletedSettingsMenu = data => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.action }));
+	const dataReq = {
+		id: data.id
+	};
+	return requestFrom
+		.deletedMenuSettingsApi(dataReq)
+		.then(res => {
+			console.log(res);
+		})
+		.catch(error => {
+			console.log(error);
+		});
+};

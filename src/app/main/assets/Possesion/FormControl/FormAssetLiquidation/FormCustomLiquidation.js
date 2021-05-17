@@ -115,7 +115,7 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 							</div>
 							<div className="px-16 sm:px-24">
 								<div className="flex flex-row">
-									<h5 className="font-extrabold">Thông tin.</h5>
+									<h5 className="font-extrabold">Thông tin thanh lý.</h5>
 									<span className="border-b-1 mt-3 ml-6 border-fuchsia w-3/6 sm:w-5/6 h-10" />
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 p-4 mb-16 gap-8 ">

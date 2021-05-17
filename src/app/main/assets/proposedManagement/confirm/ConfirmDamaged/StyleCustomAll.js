@@ -4,8 +4,12 @@ const useStyles = makeStyles(theme => ({
 	tableHead: {
 		height: 44
 	},
+	input: {
+		marginLeft: theme.spacing(1),
+		flex: 1
+	},
 	table: {
-		minWidth: 1540,
+		minWidth: 1500,
 		overflowX: 'auto'
 	},
 	cellTabel: {

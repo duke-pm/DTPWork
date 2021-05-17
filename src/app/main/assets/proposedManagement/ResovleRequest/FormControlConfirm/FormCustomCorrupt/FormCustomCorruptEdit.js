@@ -87,7 +87,7 @@ export default function FormCustomCorruptEdit({
 										Thông tin tài sản bị {type === 'lost' ? ' mất' : 'hỏng'}
 									</h5>
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 mb-16 gap-8 ">
+								<div className="grid grid-cols-1 sm:grid-cols-1 mb-16 gap-8 ">
 									<div className="flex flex-col">
 										<Field
 											label="Nội dung"
@@ -96,7 +96,7 @@ export default function FormCustomCorruptEdit({
 											component={InputTextAreaLg}
 											className="mx-4 mb-16"
 											variant="outlined"
-											row={7}
+											row={4}
 										/>
 									</div>
 									{/* <Field

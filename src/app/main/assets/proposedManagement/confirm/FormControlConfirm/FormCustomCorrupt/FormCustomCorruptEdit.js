@@ -8,6 +8,7 @@ import * as momemt from 'moment';
 import { notificationConfig } from '@fuse/core/DtpConfig';
 import { Spin } from 'antd';
 import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
+import InputTextArea from '@fuse/CustomForm/InputTextArea';
 import * as actions from '../../../_redux/confirmAction';
 
 const initial = {
@@ -21,13 +22,23 @@ export default function FormCustomCorruptEdit({
 	actionLoading,
 	type
 }) {
+	let initialState = {
+		reason: '',
+		reasonReject: ''
+	};
+	if (entitiesEdit) {
+		initialState = {
+			reason: entitiesEdit.reason,
+			reasonReject: entitiesEdit.reasonReject
+		};
+	}
 	const dispatch = useDispatch();
 	return (
 		<>
 			<Formik
 				enableReinitialize
 				// validationSchema={checkValidateForm}
-				initialValues={initial}
+				initialValues={initialState}
 				onSubmit={values => {
 					const status = true;
 					dispatch(actions.requestApprove(entitiesEdit, status, values)).then(data => {
@@ -91,31 +102,37 @@ export default function FormCustomCorruptEdit({
 										Thông tin tài sản bị {type === 'lose' ? ' mất' : 'hỏng'}
 									</h5>
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 mb-16 gap-8 ">
-									<div className="flex flex-col">
-										<Field
-											label="Nội dung"
-											autoFocus
-											name="note"
-											component={InputTextAreaLg}
-											className="mx-4 mb-16"
-											variant="outlined"
-											row={7}
-										/>
-									</div>
+								<div
+									className={`grid grid-cols-1 ${
+										entitiesEdit && entitiesEdit.statusID === 4
+											? 'sm:grid-cols-2'
+											: ' sm:grid-cols-1'
+									} gap-8 `}
+								>
 									<Field
-										label="File Đính kèm"
-										autoFocus
-										style={{ height: '35px' }}
-										name="file"
-										component={FileCustomVersion2}
-										className="mx-4 mb-16"
-										variant="outlined"
+										readOnly
+										label="Lí do"
+										hasFeedback
+										name="reason"
+										component={InputTextArea}
+										className="mt-8 mb-16"
+										row={2}
 									/>
+									{entitiesEdit && entitiesEdit.statusID === 4 && (
+										<Field
+											readOnly
+											label="Lí do từ chối "
+											hasFeedback
+											name="reasonReject"
+											component={InputTextArea}
+											className="mt-8 mb-16"
+											row={2}
+										/>
+									)}
 								</div>
 							</div>
 						</DialogContent>
-						<DialogActions>
+						{/* <DialogActions>
 							{actionLoading ? (
 								<Spin size="middle" />
 							) : (
@@ -140,7 +157,7 @@ export default function FormCustomCorruptEdit({
 									</Button>
 								</>
 							)}
-						</DialogActions>
+						</DialogActions> */}
 					</Form>
 				)}
 			</Formik>

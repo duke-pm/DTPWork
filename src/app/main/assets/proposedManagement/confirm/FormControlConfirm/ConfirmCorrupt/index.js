@@ -87,23 +87,6 @@ export default function FormConfirmGobal({ open }) {
 								</div>
 							</div>
 						</DialogContent>
-						<DialogActions>
-							{actionLoading ? (
-								<Spin size="middle" />
-							) : (
-								<>
-									<Button
-										autoFocus
-										type="submit"
-										className="h-26 font-sans"
-										variant="contained"
-										color="secondary"
-									>
-										Hoàn thành
-									</Button>
-								</>
-							)}
-						</DialogActions>
 					</Form>
 				)}
 			</Formik>

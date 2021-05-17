@@ -53,6 +53,7 @@ export default function FormMenuComponent({ openSettingMenu, setOpenSettingMenu 
 				</Toolbar>
 			</AppBar>
 			<FormCustomMenu
+				handleCloseFormMenu={handleCloseFormMenu}
 				entitiesEdit={entitiesEdit}
 				actionLoading={actionLoading}
 				handleSubmitCreatedMenu={handleSubmitCreatedMenu}
