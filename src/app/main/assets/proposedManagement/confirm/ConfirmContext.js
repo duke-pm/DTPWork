@@ -3,7 +3,7 @@ import React, { createContext, useState, useMemo } from 'react';
 export const ConfirmContext = createContext();
 
 export default function ConfirmContextProvider({ children }) {
-	const [value, setValue] = useState(0);
+	const [value, setValue] = useState(1);
 	const [page, setPage] = useState(0);
 	const [rowPage, setRowPage] = React.useState(25);
 	const [formAllocation, setFormAllocation] = useState(false);
