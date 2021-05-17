@@ -58,7 +58,6 @@ const CreateAntField = AntComponent => ({
 					style={{ width: '100%' }}
 					{...field}
 					{...props}
-					showSearch
 					type={type || null}
 					className={readOnly ? 'readOnly' : ''}
 					defaultValue={field.value || ''}

@@ -19,10 +19,10 @@ export default function FormCustomUnused({ handleClose, open }) {
 	const saveAddAsset = values => {
 		dispatch(actions.addPersonalPossesion(values, entitiesEdit.assetID)).then(data => {
 			if (data && !data.isError) {
-				notificationConfig('success', ' Thành công!', 'Thêm nhân viên vào tài sản thành công');
+				notificationConfig('success', ' Thành công!', 'Cấp phát tài sản thành công.');
 				handleClose();
 			} else {
-				notificationConfig('warning', 'Thất bại!', 'Thêm nhân viên vào tài sản thất bại vui lòng thử lại');
+				notificationConfig('warning', 'Thất bại!', 'Cấp phát tài sản thất bại vui lòng thử lại.');
 			}
 		});
 	};

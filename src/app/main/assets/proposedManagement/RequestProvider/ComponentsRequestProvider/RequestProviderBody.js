@@ -1,9 +1,10 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from 'react';
-import { Button } from '@material-ui/core';
+import { Button, Link, Typography } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { Formik, Field, Form } from 'formik';
 import { DeleteOutlined } from '@ant-design/icons';
-import { Table, Input, Popconfirm, Spin } from 'antd';
+import { Table, Input, Tooltip, Spin } from 'antd';
 import NumberFormat from 'react-number-format';
 import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import { AntInput } from '@fuse/CustomForm/CreateAntField';
@@ -13,6 +14,7 @@ import RadioAntd from '@fuse/CustomForm/RadioAntd';
 import { notificationConfig } from '@fuse/core/DtpConfig';
 import InputTextAreaRequest from '@fuse/CustomForm/InputTextAreaRequest';
 import FuseAnimate from '@fuse/core/FuseAnimate';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import * as actions from '../../_redux/confirmAction';
 import { validateSchema } from './ConfigRequestProvider';
 
@@ -128,13 +130,21 @@ export default function RequestProviderBody({
 		},
 		{
 			dataIndex: 'action',
-			title: 'Hành động',
+			// title: (
+			// 	<IconButton aria-label="delete">
+			// 		<AppsIcon />
+			// 	</IconButton>
+			// ),
 			align: 'center',
 			width: '10%',
 			render: (text, record, index) => (
-				<Popconfirm title="Bạn có chắc xóa tài sản không?" onConfirm={() => handleDeleteRow(record.id)}>
-					<DeleteOutlined className="text-xl text-center " style={{ color: 'red' }} />
-				</Popconfirm>
+				<Tooltip placement="bottom" title="Xoá dòng">
+					<DeleteOutlined
+						onClick={() => handleDeleteRow(record.id)}
+						className="text-xl text-center "
+						style={{ color: 'red' }}
+					/>
+				</Tooltip>
 			)
 		}
 	];
@@ -153,11 +163,15 @@ export default function RequestProviderBody({
 		const newArr = dataSource.filter(item => item.id !== id);
 		setDataSource(newArr);
 	};
+	const handleResetForm = resetForm => {
+		setDataSource([]);
+		resetForm();
+	};
 	return (
 		<>
 			<Formik
 				enableReinitialize
-				// validationSchema={validateSchema}
+				validationSchema={validateSchema}
 				initialValues={initialState}
 				onSubmit={(values, { resetForm }) => {
 					if (dataSource.length === 0) {
@@ -175,13 +189,13 @@ export default function RequestProviderBody({
 					}
 				}}
 			>
-				{({ handleSubmit, isSubmitting }) => (
+				{({ handleSubmit, isSubmitting, resetForm }) => (
 					<FuseAnimate animation="transition.slideRightIn" delay={300}>
 						<Form className="flex flex-col w-full items-center justify-between mb-28 mt-28">
 							<div style={{ width: '80%' }} className="shadow-md">
 								<div className="px-16 w-full sm:px-24">
 									<div className="flex justify-between flex-row">
-										<h5 className="font-extrabold">Thông tin cấp phát tài sản.</h5>
+										<h5 className="font-extrabold">Thông tin người yêu cầu.</h5>
 									</div>
 									<div className="grid grid-cols-1 sm:grid-cols-4 gap-8 ">
 										<Field
@@ -232,39 +246,22 @@ export default function RequestProviderBody({
 								</div>
 								<div className="px-16 sm:px-24">
 									<div className="flex justify-between flex-row">
-										<h5 className="font-extrabold">Danh sách tài sản yêu cầu.</h5>
+										<h5 className="font-extrabold">Tài sản yêu cầu.</h5>
 									</div>
-									<Button onClick={handleAdd} className="mb-16" variant="contained" color="primary">
-										{' '}
-										<svg
-											className="h-16 w-16"
-											xmlns="http://www.w3.org/2000/svg"
-											fill="none"
-											viewBox="0 0 24 24"
-											stroke="currentColor"
-										>
-											<path
-												strokeLinecap="round"
-												strokeLinejoin="round"
-												strokeWidth={2}
-												d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-											/>
-										</svg>
-										Thêm tài sản
-									</Button>
+									<Typography variant="subtitle2" color="inherit" className="mb-16">
+										<AddCircleOutlineIcon color="secondary" />
+										<Link onClick={handleAdd}>Thêm tài sản </Link>
+									</Typography>
 									<Table
 										rowKey="id"
 										columns={columns}
 										bordered
-										locale={{ emptyText: 'Vui lòng nhập tài sản cần yêu cầu' }}
+										locale={{ emptyText: 'Vui lòng nhập tài sản yêu cầu' }}
 										pagination={false}
 										dataSource={dataSource}
 									/>
 								</div>
 								<div className="px-16 sm:px-24 mt-16">
-									<div className="flex justify-between flex-row">
-										<h5 className="font-extrabold">Nội dung.</h5>
-									</div>
 									<div className="grid grid-cols-1 sm:grid-cols-2 gap-16 ">
 										<Field
 											label="Nơi dùng"
@@ -276,7 +273,7 @@ export default function RequestProviderBody({
 										/>
 										<div className="flex flex-row justify-around">
 											<Field
-												label="Loại tài sản "
+												label="Loại yêu cầu "
 												hasFeedback
 												name="assetsCategory"
 												component={RadioAntd}
@@ -329,6 +326,7 @@ export default function RequestProviderBody({
 									)}
 									<Button
 										type="button"
+										onClick={() => handleResetForm(resetForm)}
 										className="h-26 font-sans"
 										variant="contained"
 										color="secondary"

@@ -18,9 +18,43 @@ export const column = [
 		sort: true
 	},
 	{
-		id: 'status',
+		id: 'Inactive',
 		lable: 'Trạng thái',
+		align: 'left',
+		sort: true
+	},
+	{
+		id: 'isWeb',
+		lable: 'Web',
+		align: 'left',
+		sort: true
+	},
+	{
+		id: 'isMobile',
+		lable: 'Di động',
+		align: 'left',
+		sort: true
+	},
+	{
+		id: 'STT',
+		lable: 'Thứ tự ',
 		align: 'left',
 		sort: true
 	}
 ];
+export const chipTextStatus = {
+	true: 'Kích hoạt',
+	false: 'Chưa kích hoạt'
+};
+export const chipColorStatus = {
+	true: 'bg-green text-white',
+	false: 'bg-orange text-black'
+};
+export const chipText = {
+	false: 'Kích hoạt',
+	true: 'Chưa kích hoạt'
+};
+export const chipColor = {
+	false: 'bg-green text-white',
+	true: 'bg-orange text-black'
+};

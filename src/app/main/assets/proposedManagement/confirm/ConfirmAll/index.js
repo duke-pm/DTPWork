@@ -30,19 +30,27 @@ export default function ConfrimAllocation(props) {
 		dateStart,
 		dateEnd,
 		sort,
-		setSort
+		setSort,
+		setTimeLine
 	} = AllocationContext;
 	const { currentState } = useSelector(state => ({ currentState: state.confirm }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;
 	const classes = useStyles(props);
 	const handleOpenHistory = () => setHistory(true);
 	const handleCloseHistory = () => setHistory(false);
+	const handleOpenTimeLine = item => {
+		setTimeLine({
+			open: true,
+			title: 'cấp phát'
+		});
+		dispatch(action.timeLineApproval(item));
+	};
 	const handleOpenForm = items => {
 		dispatch(action.fetchDataConfirm(items));
 		setFormAllocation(true);
 	};
 	useEffect(() => {
-		dispatch(action.fetchDataConfirms(0, rowPage, page, search, dateStart, dateEnd, 1));
+		dispatch(action.fetchDataConfirms(0, 1));
 	}, [dispatch]);
 	const handleRowChange = e => {
 		const rowPageParse = parseInt(e.target.value, 10);
@@ -110,6 +118,7 @@ export default function ConfrimAllocation(props) {
 									<BodyTableAllocation
 										classes={classes}
 										entities={entities}
+										handleOpenTimeLine={handleOpenTimeLine}
 										handleOpenHistory={handleOpenHistory}
 										handleOpenForm={handleOpenForm}
 										lastErrors={lastErrors}

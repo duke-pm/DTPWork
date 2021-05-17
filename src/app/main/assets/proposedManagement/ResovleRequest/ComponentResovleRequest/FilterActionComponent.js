@@ -99,68 +99,72 @@ export default function ActionComponent({ actionLoading }) {
 	};
 	return (
 		<ThemeProvider theme={mainTheme}>
-			<Paper style={{ height: '33px' }} className="w-full sm:w-1/4 h-31 flex justify-between">
-				<InputBase
-					onKeyPress={event => {
-						if (event.key === 'Enter') {
-							handleSearch();
-						}
-					}}
-					onChange={e => onHandleChange(e)}
-					className={classes.input}
-					value={search}
-					placeholder="Tìm kiếm"
-					inputProps={{ 'aria-label': 'search google maps' }}
-				/>
-				<IconButton onClick={handleSearch} type="button" className={classes.iconButton} aria-label="search">
-					<SearchIcon />
-				</IconButton>
-			</Paper>
-			<Paper className="w-full sm:w-1/4 flex justify-between">
-				<DatePicker
-					onChange={handleChangeFilterDateStart}
-					defaultValue={moment().startOf('month')}
-					format="DD/MM/YYYY"
-					placeholder="Ngày bắt đầu"
-					style={{ width: '100%' }}
-				/>
-				<DatePicker
-					onChange={handleChangeFilterDateEnd}
-					defaultValue={moment().endOf('month')}
-					format="DD/MM/YYYY"
-					placeholder="Ngày kết thúc"
-					style={{ width: '100%' }}
-				/>
-			</Paper>
-			<Paper className="w-full sm:w-1/5 flex justify-between">
-				<Select
-					loading={!!actionLoading}
-					onChange={onHandleChangeStatus}
-					bordered={false}
-					placeholder="Tìm kiếm theo trạng thái"
-					style={{ width: '100%' }}
-				>
-					<Select.Option value="0">Tất cả</Select.Option>
-					<Select.Option value="1">Chờ phê duyệt</Select.Option>
-					<Select.Option value="2">Đã duyệt</Select.Option>
-					<Select.Option value="3">Hoàn thành</Select.Option>
-					<Select.Option value="4">Từ chối</Select.Option>
-				</Select>
-			</Paper>
-			<Paper className=" sm:w-1/5  flex justify-between">
-				<Select
-					loading={!!actionLoading}
-					placeholder="Tìm kiếm theo loại yêu cầu"
-					onChange={onHandleChangeType}
-					bordered={false}
-					style={{ width: '100%' }}
-				>
-					<Select.Option value="0">Tất cả</Select.Option>
-					<Select.Option value="1">Yêu cầu cấp phát</Select.Option>
-					<Select.Option value="2">Báo hỏng</Select.Option>
-					<Select.Option value="3">Báo mất</Select.Option>
-				</Select>
-			</Paper>
+			<div className="flex flex-row gap-16 w-full items-center justify-between">
+				<Paper style={{ height: '33px' }} className="w-full sm:w-1/4 h-31 flex justify-between">
+					<InputBase
+						onKeyPress={event => {
+							if (event.key === 'Enter') {
+								handleSearch();
+							}
+						}}
+						onChange={e => onHandleChange(e)}
+						className={classes.input}
+						value={search}
+						placeholder="Tìm kiếm"
+						inputProps={{ 'aria-label': 'search google maps' }}
+					/>
+					<IconButton onClick={handleSearch} type="button" className={classes.iconButton} aria-label="search">
+						<SearchIcon />
+					</IconButton>
+				</Paper>
+				<Paper className="w-full sm:w-1/4 flex justify-between">
+					<DatePicker
+						onChange={handleChangeFilterDateStart}
+						defaultValue={moment().startOf('month')}
+						format="DD/MM/YYYY"
+						placeholder="Ngày bắt đầu"
+						style={{ width: '100%' }}
+					/>
+					<DatePicker
+						onChange={handleChangeFilterDateEnd}
+						defaultValue={moment().endOf('month')}
+						format="DD/MM/YYYY"
+						placeholder="Ngày kết thúc"
+						style={{ width: '100%' }}
+					/>
+				</Paper>
+				<Paper className="w-full sm:w-1/5 flex justify-between">
+					<Select
+						loading={!!actionLoading}
+						onChange={onHandleChangeStatus}
+						bordered={false}
+						placeholder="Tìm kiếm theo trạng thái"
+						style={{ width: '100%' }}
+					>
+						<Select.Option value="0">Tất cả</Select.Option>
+						<Select.Option value="1">Chờ phê duyệt</Select.Option>
+						<Select.Option value="2">Đã duyệt</Select.Option>
+						<Select.Option value="3">Hoàn thành</Select.Option>
+						<Select.Option value="4">Từ chối</Select.Option>
+					</Select>
+				</Paper>
+				<Paper className=" sm:w-1/5  flex justify-between">
+					<Select
+						loading={!!actionLoading}
+						placeholder="Tìm kiếm theo loại yêu cầu"
+						onChange={onHandleChangeType}
+						bordered={false}
+						style={{ width: '100%' }}
+					>
+						<Select.Option value="0">Tất cả</Select.Option>
+						<Select.Option value="1">Yêu cầu cấp phát</Select.Option>
+						<Select.Option value="2">Báo hỏng</Select.Option>
+						<Select.Option value="3">Báo mất</Select.Option>
+					</Select>
+				</Paper>
+			</div>
+			{/* <div className="flex sm:flex-row justify-between"> */}
+			{/* </div> */}
 		</ThemeProvider>
 	);
 }

@@ -22,68 +22,70 @@ export default function InformationProceeUseAsset({ entitiesEdit, actionLoading 
 	}, [dispatch, entitiesEdit.assetID]);
 	return (
 		<>
-			<div className="flex justify-between flex-row">
-				<h5 className="font-extrabold">Thông tin tài sản.</h5>
-			</div>
-			<div className=" grid grid-cols-1 sm:grid-cols-2 gap-26">
-				<div className="flex-row flex ">
-					<div className="flex flex-col">
-						<p className="p-6"> Mã tài sản </p>
-						<p className="p-6"> Tên tài sản </p>
-						<p className="p-6"> Nhóm tài sản </p>
-						<p className="p-6"> Mô tả </p>
+			<div className="px-16 sm:px-24">
+				<div className="flex justify-between flex-row">
+					<h5 className="font-extrabold">Thông tin tài sản.</h5>
+				</div>
+				<div className=" grid grid-cols-1 sm:grid-cols-2 gap-26">
+					<div className="flex-row flex ">
+						<div className="flex flex-col">
+							<p className="p-6"> Mã tài sản </p>
+							<p className="p-6"> Tên tài sản </p>
+							<p className="p-6"> Nhóm tài sản </p>
+							<p className="p-6"> Mô tả </p>
+						</div>
+						<div className="flex sm:mr-96 mr-auto flex-col">
+							<p className="p-6 font-extrabold">{entitiesEdit && entitiesEdit.assetCode}</p>
+							<p className="p-6 font-extrabold">{entitiesEdit && entitiesEdit.assetName}</p>
+							<p className="p-6 font-extrabold">{entitiesEdit && entitiesEdit.groupName}</p>
+							<p className="p-6 font-extrabold"> {entitiesEdit && entitiesEdit.descr}</p>
+						</div>
 					</div>
-					<div className="flex sm:mr-96 mr-auto flex-col">
-						<p className="p-6 font-extrabold">{entitiesEdit && entitiesEdit.assetCode}</p>
-						<p className="p-6 font-extrabold">{entitiesEdit && entitiesEdit.assetName}</p>
-						<p className="p-6 font-extrabold">{entitiesEdit && entitiesEdit.groupName}</p>
-						<p className="p-6 font-extrabold"> {entitiesEdit && entitiesEdit.descr}</p>
+					<div className="flex-row flex ">
+						<div className="flex flex-col">
+							<p className="p-6">Ngày mua </p>
+							<p className="p-6"> Nguyên giá </p>
+							<p className="p-6"> Tình trạng </p>
+						</div>
+						<div className="flex sm:mr-96 mr-auto flex-col">
+							<p className="p-6 font-extrabold">
+								{entitiesEdit && moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY')}
+							</p>
+							<p className="p-6 font-extrabold">
+								{' '}
+								{entitiesEdit && currencyFormat(entitiesEdit.originalPrice)}
+							</p>
+							<p className="p-6 font-extrabold"> {entitiesEdit.statusName || ''} </p>
+						</div>
 					</div>
 				</div>
-				<div className="flex-row flex ">
-					<div className="flex flex-col">
-						<p className="p-6">Ngày mua </p>
-						<p className="p-6"> Nguyên giá </p>
-						<p className="p-6"> Tình trạng </p>
-					</div>
-					<div className="flex sm:mr-96 mr-auto flex-col">
-						<p className="p-6 font-extrabold">
-							{entitiesEdit && moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY')}
-						</p>
-						<p className="p-6 font-extrabold">
-							{' '}
-							{entitiesEdit && currencyFormat(entitiesEdit.originalPrice)}
-						</p>
-						<p className="p-6 font-extrabold"> {entitiesEdit.statusName || ''} </p>
-					</div>
+				<div className="flex flex-row">
+					<h5 className="font-extrabold">Quá trình sử dụng.</h5>
+					{actionLoading && <Spin className="mr-18" />}
 				</div>
+				<FuseAnimateGroup
+					enter={{
+						animation: 'transition.expandIn'
+					}}
+				>
+					<Paper>
+						<TableContainer>
+							<Table
+								className={history.length === 0 ? classes.tableHistoryNoData : classes.tableHistroy}
+								stickyHeader
+							>
+								<TableHeaderProcessing />
+								<TableBodyProcessing history={history} />
+							</Table>
+							{history && history.length === 0 ? (
+								<div className="flex items-center justify-center h-auto">
+									<img className="rounded-full mx-auto" src={image} alt="" width="484" height="512" />
+								</div>
+							) : null}
+						</TableContainer>
+					</Paper>
+				</FuseAnimateGroup>
 			</div>
-			<div className="flex flex-row">
-				<h5 className="font-extrabold">Quá trình sử dụng.</h5>
-				{actionLoading && <Spin className="mr-18" />}
-			</div>
-			<FuseAnimateGroup
-				enter={{
-					animation: 'transition.expandIn'
-				}}
-			>
-				<Paper>
-					<TableContainer>
-						<Table
-							className={history.length === 0 ? classes.tableHistoryNoData : classes.tableHistroy}
-							stickyHeader
-						>
-							<TableHeaderProcessing />
-							<TableBodyProcessing history={history} />
-						</Table>
-						{history && history.length === 0 ? (
-							<div className="flex items-center justify-center h-auto">
-								<img className="rounded-full mx-auto" src={image} alt="" width="484" height="512" />
-							</div>
-						) : null}
-					</TableContainer>
-				</Paper>
-			</FuseAnimateGroup>
 		</>
 	);
 }

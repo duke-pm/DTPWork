@@ -1,27 +1,43 @@
-import { AntInput, AntSelect } from '@fuse/CustomForm/CreateAntField';
-import RadioAntd from '@fuse/CustomForm/RadioAntd';
+import { AntInput } from '@fuse/CustomForm/CreateAntField';
+import SelectAntd from '@fuse/CustomForm/SelectAntd';
 import { Button, DialogContent, DialogActions } from '@material-ui/core';
 import { Spin } from 'antd';
 import { Formik, Form, Field } from 'formik';
 import React from 'react';
+import CheckboxAntd from '@fuse/CustomForm/CheckboxAntd';
+import * as Yup from 'yup';
 
 const inititalState = {
+	menuID: '0',
 	menuName: '',
-	menuType: 'group',
-	menuParent: null,
+	levelID: 0,
+	typeID: 1,
+	parentID: null,
 	url: '',
 	icon: '',
-	status: true,
-	orderNO: 0
+	directionIcon: '',
+	mName: '',
+	mIcon: '',
+	inactive: false,
+	isWeb: true,
+	isMobile: true,
+	visOrder: 0
 };
-export default function FormCustomMenu({ actionLoading }) {
+export default function FormCustomMenu({ actionLoading, menuParent, handleSubmitCreatedMenu, entitiesEdit }) {
+	const validationSchema = Yup.object().shape({
+		menuName: Yup.string().required('Menu name is required.'),
+		typeID: Yup.string().required('Type menu is required.'),
+		url: Yup.string().required('Url web is required.').nullable()
+	});
+	const initial = entitiesEdit && entitiesEdit.menuID ? entitiesEdit : inititalState;
 	return (
 		<>
 			<Formik
 				enableReinitialize
-				initialValues={inititalState}
+				validationSchema={validationSchema}
+				initialValues={initial}
 				onSubmit={values => {
-					console.log(values);
+					handleSubmitCreatedMenu(values);
 				}}
 			>
 				{({ handleSubmit, isSubmitting }) => (
@@ -39,31 +55,32 @@ export default function FormCustomMenu({ actionLoading }) {
 									/>
 									<Field
 										label="Loại menu"
-										name="menuType"
+										name="typeID"
 										hasFeedback
 										options={[
 											{
-												label: 'Group',
-												value: 'group'
+												label: 'Collape',
+												value: 2
 											},
 											{
-												label: 'Collape',
-												value: 'collape'
+												label: 'Group',
+												value: 1
 											},
 											{
 												label: 'Item',
-												value: 'item'
+												value: 3
 											}
 										]}
-										component={AntSelect}
+										component={SelectAntd}
 										className="mt-8 mb-16"
 									/>
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 									<Field
-										label="Menu cha"
-										name="menuParent"
-										component={AntSelect}
+										label="Menu ngoài"
+										name="parentID"
+										component={SelectAntd}
+										options={menuParent}
 										className="mt-8 mb-16"
 									/>
 									<Field
@@ -77,35 +94,63 @@ export default function FormCustomMenu({ actionLoading }) {
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 									<Field
-										label="Icon"
+										label="Icon web"
 										name="icon"
 										type="text"
 										component={AntInput}
 										className="mt-8 mb-16"
 									/>
 									<Field
-										label="Số thứ tự"
-										name="orderNO"
+										label="Direction icon web"
+										name="directionIcon"
+										type="text"
+										component={AntInput}
+										className="mt-8 mb-16"
+									/>
+								</div>
+								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+									<Field
+										label="Icon di động"
+										name="mIcon"
+										type="text"
+										component={AntInput}
+										className="mt-8 mb-16"
+									/>
+									<Field
+										label="Tên màn hình di động"
+										name="mName"
+										type="text"
+										component={AntInput}
+										className="mt-8 mb-16"
+									/>
+									<Field
+										label="VisOrder"
+										name="visOrder"
 										type="number"
 										component={AntInput}
 										className="mt-8 mb-16"
 									/>
 								</div>
-								<div className="grid grid-cols-1 gap-8">
+								<div className="grid grid-cols-1 sm:grid-cols-4 gap-8">
 									<Field
 										label="Trạng thái"
-										name="status"
-										options={[
-											{
-												label: 'Hoạt động',
-												value: true
-											},
-											{
-												label: 'Không hoạt động',
-												value: false
-											}
-										]}
-										component={RadioAntd}
+										name="inactive"
+										value={initial.inactive}
+										component={CheckboxAntd}
+										className="mt-8 mb-16"
+									/>
+									<Field
+										value={initial.isWeb}
+										label="Web"
+										name="isWeb"
+										component={CheckboxAntd}
+										className="mt-8 mb-16"
+									/>
+									<Field
+										label="Mobile"
+										value={initial.isMobile}
+										name="isMobile"
+										component={CheckboxAntd}
 										className="mt-8 mb-16"
 									/>
 								</div>
@@ -117,10 +162,10 @@ export default function FormCustomMenu({ actionLoading }) {
 							) : (
 								<>
 									<Button variant="contained" type="submit" color="primary">
-										Tạo mới
+										{initial.menuID !== '0' ? 'Chỉnh sửa' : 'Thêm mới'}
 									</Button>
 									<Button variant="contained" type="button" color="secondary">
-										hủy
+										Huỷ
 									</Button>
 								</>
 							)}

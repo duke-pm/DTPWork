@@ -3,14 +3,18 @@ import React, { createContext, useState, useMemo } from 'react';
 export const ConfirmContext = createContext();
 
 export default function ConfirmContextProvider({ children }) {
-	const [value, setValue] = useState(0);
+	const [value, setValue] = useState(1);
 	const [page, setPage] = useState(0);
 	const [rowPage, setRowPage] = React.useState(25);
 	const [formAllocation, setFormAllocation] = useState(false);
 	const [formControl, setFormControl] = useState(false);
+	const [reasonReject, setReasonReject] = useState(false);
+	const [timeLine, setTimeLine] = useState({
+		open: false,
+		title: ''
+	});
 	const [type, setType] = useState('');
 	const [typeReasonReject, setTypeReasonReject] = useState('');
-	const [reasonReject, setReasonReject] = useState(false);
 	const [dateStart, setDateStart] = useState('');
 	const [dateEnd, setDateEnd] = useState('');
 	const [status, setStatus] = useState(0);
@@ -21,6 +25,8 @@ export default function ConfirmContextProvider({ children }) {
 	});
 	const valueMemo = useMemo(() => {
 		return {
+			timeLine,
+			setTimeLine,
 			search,
 			setSearch,
 			dateEnd,
@@ -49,6 +55,8 @@ export default function ConfirmContextProvider({ children }) {
 			setSort
 		};
 	}, [
+		timeLine,
+		setTimeLine,
 		value,
 		setValue,
 		formControl,

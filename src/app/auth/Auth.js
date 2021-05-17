@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from '@reduxjs/toolkit';
 import { hideMessage, showMessage } from 'app/store/fuse/messageSlice';
 
-import { getToken, getRoleCookies, refresh_token } from '@fuse/core/DtpConfig';
+import { getToken, getRoleCookies, refresh_token, getDataUserLocalStorage } from '@fuse/core/DtpConfig';
 import { setUserData, logoutUser } from './store/userSlice';
 
 class Auth extends Component {
@@ -21,11 +21,19 @@ class Auth extends Component {
 			// this.firebaseCheck(),
 			// this.auth0Check(),
 			this.jwtCheck(),
-			this.jwtCheckToken()
+			this.jwtCheckToken(),
+			this.localStorageCheck()
 		]).then(() => {
 			this.setState({ waitAuthCheck: false });
 		});
 	}
+
+	localStorageCheck = () => {
+		const dataLocal = getDataUserLocalStorage();
+		if (!dataLocal) {
+			this.props.logout();
+		}
+	};
 
 	jwtCheckToken = () =>
 		new Promise(resolve => {
@@ -151,7 +159,11 @@ class Auth extends Component {
 		});
 
 	render() {
-		return this.state.waitAuthCheck ? <FuseSplashScreen /> : <>{this.props.children}</>;
+		return this.state.waitAuthCheck ? (
+			<FuseSplashScreen />
+		) : (
+			<React.Suspense fallback={<FuseSplashScreen />}> {this.props.children}</React.Suspense>
+		);
 	}
 }
 

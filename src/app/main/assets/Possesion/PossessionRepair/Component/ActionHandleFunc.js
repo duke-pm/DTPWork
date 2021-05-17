@@ -13,7 +13,7 @@ export default function ActionHandleFunc({ items, handleOpenFormCycleView, handl
 			</MenuItem>
 			<MenuItem onClick={() => handleOpenFormCycleView(items)} role="button">
 				<ListItemIcon className="min-w-40">
-					<Icon>update</Icon>
+					<Icon>replay</Icon>
 				</ListItemIcon>
 				<ListItemText primary="Đưa vào sử dụng lại" />
 			</MenuItem>

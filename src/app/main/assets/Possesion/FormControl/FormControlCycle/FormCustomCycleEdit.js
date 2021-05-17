@@ -55,7 +55,7 @@ export default function FormCustomCycleEdit({ handleClose, entitiesEdit, handleS
 											<p className="p-6 font-extrabold"> {entitiesEdit.assetCode || ''} </p>
 											<p className="p-6 font-extrabold"> {entitiesEdit.assetName || ''} </p>
 											<p className="p-6 font-extrabold"> {entitiesEdit.groupName || ''} </p>
-											<p className="p-6 font-extrabold"> Mô tả </p>
+											<p className="p-6 font-extrabold"> {entitiesEdit.reasons || ''} </p>
 										</div>
 									</div>
 									<div className="flex-row justify-between  flex ">
@@ -149,7 +149,7 @@ export default function FormCustomCycleEdit({ handleClose, entitiesEdit, handleS
 							{actionLoading ? (
 								<Spin />
 							) : (
-								<Button type="submit" className="h-26 font-sans" variant="contained" color="secondary">
+								<Button type="submit" className="h-26 font-sans" variant="contained" color="primary">
 									Lưu
 								</Button>
 							)}
@@ -159,7 +159,7 @@ export default function FormCustomCycleEdit({ handleClose, entitiesEdit, handleS
 								type="button"
 								className="h-26 font-sans"
 								variant="contained"
-								color="primary"
+								color="secondary"
 							>
 								Hủy
 							</Button>

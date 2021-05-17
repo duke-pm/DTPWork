@@ -12,9 +12,9 @@ export const chipText = {
 };
 export const rowConfirmAllocation = [
 	{
-		id: 'EmpCode',
+		id: 'RequestID',
 		align: 'left',
-		label: 'Mã nhân viên',
+		label: 'Số yêu cầu',
 		sort: true
 	},
 	{

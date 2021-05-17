@@ -6,6 +6,7 @@ import fuse from './fuse';
 import i18n from './i18nSlice';
 import { possesionSlice } from '../main/assets/Possesion/_redux/possesionSlice';
 import memberships from './membership/membershipSlice';
+import { tabsSlice } from './Tabs/sliceTab';
 
 const createReducer = asyncReducers => (state, action) => {
 	const combinedReducer = combineReducers({
@@ -13,6 +14,7 @@ const createReducer = asyncReducers => (state, action) => {
 		fuse,
 		i18n,
 		govern,
+		tabs: tabsSlice.reducer,
 		possesion: possesionSlice.reducer,
 		memberships,
 		confirm: confirmSlice.reducer,

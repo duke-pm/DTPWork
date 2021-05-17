@@ -85,7 +85,6 @@ export default function HandlingBody({ handleClose, dataAssets, setDataAssets })
 					<Form className="flex flex-col w-full items-center justify-between mb-28 mt-28">
 						<div style={{ width: '80%' }} className="shadow-md">
 							<div className="px-16 sm:px-24">
-								<h5 className="font-extrabold">Chọn tài sản cần báo hỏng/mất.</h5>
 								<div className="grid grid-cols-1 sm:grid-cols-2 mb-16 gap-16 ">
 									<Field
 										name="assets"
@@ -96,7 +95,7 @@ export default function HandlingBody({ handleClose, dataAssets, setDataAssets })
 										handleChangeState={handleChangeAssets}
 									/>
 									<Field
-										label="Tài sản cần báo hỏng/mất "
+										label="Loại báo hỏng/mất "
 										name="status"
 										hasFeedback
 										component={RadioAntd}
@@ -115,10 +114,6 @@ export default function HandlingBody({ handleClose, dataAssets, setDataAssets })
 							)}
 
 							<div className="px-16 sm:px-24">
-								<div className="flex flex-row">
-									<h5 className="font-extrabold">Thông tin báo hỏng/mất.</h5>
-								</div>
-
 								<div className="grid grid-cols-1 sm:grid-cols-2 mb-16 gap-8 ">
 									<div className="flex flex-col">
 										<Field

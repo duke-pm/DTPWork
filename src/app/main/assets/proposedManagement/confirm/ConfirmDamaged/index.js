@@ -28,7 +28,8 @@ export default function ConfirmDamaged(props) {
 		dateEnd,
 		setPage,
 		sort,
-		setSort
+		setSort,
+		setTimeLine
 	} = ConfirmContextDamage;
 	const { currentState } = useSelector(state => ({ currentState: state.confirm }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;
@@ -38,6 +39,13 @@ export default function ConfirmDamaged(props) {
 		setFormControl(true);
 		setType('damaged');
 		dispatch(action.fetchDataConfirm(items));
+	};
+	const handleOpenTimeLine = item => {
+		setTimeLine({
+			open: true,
+			title: 'báo hư hỏng'
+		});
+		dispatch(action.timeLineApproval(item));
 	};
 	const handleRowChange = e => {
 		const rowPageParse = parseInt(e.target.value, 10);
@@ -75,7 +83,7 @@ export default function ConfirmDamaged(props) {
 		);
 	};
 	useEffect(() => {
-		dispatch(action.fetchDataConfirms(0, rowPage, page, search, dateStart, dateEnd, 2));
+		dispatch(action.fetchDataConfirms(0, 2));
 	}, [dispatch]);
 	const createSortHandler = property => event => {
 		const id = property;
@@ -104,6 +112,7 @@ export default function ConfirmDamaged(props) {
 								<Table className={`${classes.table}`} stickyHeader>
 									<TableHeaderDamaged createSortHandler={createSortHandler} sort={sort} />
 									<TableBodyDamaged
+										handleOpenTimeLine={handleOpenTimeLine}
 										entities={entities}
 										lastErrors={lastErrors}
 										classes={classes}

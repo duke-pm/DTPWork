@@ -10,13 +10,13 @@ import { Spin } from 'antd';
 import * as Yup from 'yup';
 
 const initial = {
-	date: moment().format('DD/MM/YYYY'),
+	date: moment(),
 	note: '',
 	file: ''
 };
 const useStyles = makeStyles(theme => ({
 	widthFont: {
-		width: '20rem'
+		width: '30rem'
 	}
 }));
 export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionLoading, handleClose }) {
@@ -94,7 +94,7 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 											</div>
 											<div
 												className="flex sm:mr-96 mr-auto flex-col w-full"
-												style={{ width: '300px' }}
+												style={{ width: '600px' }}
 											>
 												<p className="p-6 font-extrabold">
 													{entitiesEdit && entitiesEdit.empName}{' '}
@@ -136,7 +136,6 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 											label="Ngày thu hồi "
 											name="date"
 											hasFeedback
-											format="DD/MM/YYYY"
 											component={DateCustom}
 											className="mx-4 mb-16"
 										/>

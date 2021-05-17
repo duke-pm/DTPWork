@@ -2,7 +2,7 @@ import { Tabs, Tab, Box, Typography } from '@material-ui/core';
 import React, { useContext } from 'react';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import FusePageCarded from '@fuse/core/FusePageCarded';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { ConfirmContext } from './ConfirmContext';
 import ConfirmAll from './ConfirmAll';
 import ConfirmDamaged from './ConfirmDamaged';
@@ -10,6 +10,8 @@ import ConfirmLose from './ConfirmLose';
 import FormAllocation from './FormControlConfirm/Allocation';
 import FormConfirmGobal from './FormControlConfirm/ConfirmCorrupt';
 import FormCustomCorrupt from './FormControlConfirm/FormCustomCorrupt';
+import TimeLine from '../TimeLine';
+import * as actions from '../../../../store/Tabs/actionsTab';
 
 function a11yProps(index) {
 	return {
@@ -36,8 +38,6 @@ function TabPanel(props) {
 function PossesionPage(props) {
 	const confirmContext = useContext(ConfirmContext);
 	const {
-		value,
-		setValue,
 		formControl,
 		setFormControl,
 		formAllocation,
@@ -45,20 +45,29 @@ function PossesionPage(props) {
 		typeReasonReject,
 		setTypeReasonReject,
 		reasonReject,
-		setReasonReject
+		setReasonReject,
+		timeLine,
+		setTimeLine
 	} = confirmContext;
-	const { currentState } = useSelector(state => ({ currentState: state.confirm }), shallowEqual);
+	const dispatch = useDispatch();
+	const { currentState, tabs } = useSelector(
+		state => ({
+			currentState: state.confirm,
+			tabs: state.tabs
+		}),
+		shallowEqual
+	);
+	const { value } = tabs;
 	const total_Record = currentState && currentState.total_items;
 	const handleChange = (event, newValue) => {
-		setValue(newValue);
-		// setPage(0);
-		// setRowPage(25);
+		dispatch(actions.changeTabs(newValue));
 	};
 	const handleCloseForm = () => setFormControl(false);
 	const handleCloseFormAllocation = () => setFormAllocation(false);
 	const hanleCancle = () => setReasonReject(false);
 	return (
 		<>
+			<TimeLine setTimeLine={setTimeLine} timeLine={timeLine} />
 			<FormConfirmGobal type={typeReasonReject} open={reasonReject} handleClose={hanleCancle} />
 			<FormAllocation
 				setTypeReasonReject={setTypeReasonReject}

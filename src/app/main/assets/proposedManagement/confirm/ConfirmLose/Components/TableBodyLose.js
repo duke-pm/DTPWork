@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import { chipColor, chipText } from '../LoseConfig';
 import LoseActions from './LoseActions';
 
-export default function TableBodyLose({ entities, lastErrors, classes, handleOpenForm }) {
+export default function TableBodyLose({ entities, lastErrors, classes, handleOpenForm, handleOpenTimeLine }) {
 	return (
 		<TableBody>
 			{entities &&
@@ -17,13 +17,19 @@ export default function TableBodyLose({ entities, lastErrors, classes, handleOpe
 							<Popover
 								overlayStyle={{ zIndex: '19' }}
 								placement="rightTop"
-								content={() => <LoseActions items={items} handleOpenForm={handleOpenForm} />}
+								content={() => (
+									<LoseActions
+										handleOpenTimeLine={handleOpenTimeLine}
+										items={items}
+										handleOpenForm={handleOpenForm}
+									/>
+								)}
 								title="Hành động"
 							>
 								<MoreVertIcon className="cursor-pointer" />
 							</Popover>
 						</TableCell>
-						<TableCell align="left"> {items.empCode} </TableCell>
+						<TableCell align="left"> {items.requestID} </TableCell>
 						<TableCell align="left">{items.fullName} </TableCell>
 						<TableCell align="left">{items.deptName}</TableCell>
 						<TableCell align="left">{items.regionName} </TableCell>

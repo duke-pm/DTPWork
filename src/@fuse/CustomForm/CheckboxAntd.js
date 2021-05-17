@@ -10,6 +10,7 @@ export default function CheckboxAntd({
 	field, // { name, value, onChange, onBlur }
 	form, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
 	label,
+	value,
 	valueProps,
 	handleChangeState,
 	options,
@@ -23,22 +24,22 @@ export default function CheckboxAntd({
 	const hasError = form.errors[field.name];
 	const submittedError = hasError && submitted;
 	const touchedError = hasError && touched;
-	const onChange = value => {
-		form.setFieldValue(field.name, value);
-		return handleChangeState ? handleChangeState(value) : null;
+	const onChange = e => {
+		form.setFieldValue(field.name, e.target.checked);
+		return handleChangeState ? handleChangeState(e) : null;
 	};
 	return (
 		<>
 			<FormGroup>
-				<label className="mb-10"> {label} </label>
 				<FormItem
+					label={label}
 					style={{ width: '100%' }}
 					rules={[{ required: true }]}
 					hasFeedback={!!((hasFeedback && submitted) || (hasFeedback && touched))}
 					help={submittedError || touchedError ? hasError : false}
 					validateStatus={submittedError || touchedError ? 'error' : hasFeedback && 'success'}
 				>
-					<Checkbox.Group options={options} onChange={onChange} />
+					<Checkbox defaultChecked={value} onChange={onChange} />
 				</FormItem>
 			</FormGroup>
 		</>

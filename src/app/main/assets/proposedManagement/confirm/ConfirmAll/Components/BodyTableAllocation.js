@@ -6,7 +6,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { chipColor, chipText } from '../ConfrimAllocationConfig';
 import ActionsAllocation from './ActionsAllocation';
 
-export default function BodyTableAllocation({ entities, lastErrors, classes, handleOpenForm, handleOpenHistory }) {
+export default function BodyTableAllocation({ entities, lastErrors, classes, handleOpenForm, handleOpenTimeLine }) {
 	return (
 		<TableBody>
 			{entities &&
@@ -19,7 +19,7 @@ export default function BodyTableAllocation({ entities, lastErrors, classes, han
 								placement="rightTop"
 								content={() => (
 									<ActionsAllocation
-										handleOpenHistory={handleOpenHistory}
+										handleOpenTimeLine={handleOpenTimeLine}
 										items={items}
 										handleOpenForm={handleOpenForm}
 									/>
@@ -29,7 +29,7 @@ export default function BodyTableAllocation({ entities, lastErrors, classes, han
 								<MoreVertIcon className="cursor-pointer" />
 							</Popover>
 						</TableCell>
-						<TableCell align="left"> {items.empCode} </TableCell>
+						<TableCell align="left"> {items.requestID} </TableCell>
 						<TableCell align="left">{items.fullName} </TableCell>
 						<TableCell align="left">{items.deptName}</TableCell>
 						<TableCell align="left">{items.regionName} </TableCell>

@@ -74,11 +74,21 @@ function Login() {
 						square
 					>
 						<CardContent className="flex flex-col items-center justify-center w-full py-96 max-w-320">
-							<FuseAnimate delay={300}>
+							<FuseAnimate animation="transition.slideUpIn" delay={400}>
+								<Typography variant="h6" color="inherit" className="font-800 leading-tight">
+									Welcome to the DTP-DUKE
+								</Typography>
+							</FuseAnimate>
+							<FuseAnimate delay={500}>
+								<Typography variant="subtitle1" color="inherit" className="mt-16">
+									Đăng nhập tài khoản.
+								</Typography>
+							</FuseAnimate>
+							{/* <FuseAnimate delay={300}>
 								<div className="flex items-center mb-32">
 									<img className="logo-icon w-96" src="assets/images/logo_DTP-01.png" alt="logo" />
 								</div>
-							</FuseAnimate>
+							</FuseAnimate> */}
 							<div className="w-full">
 								<Formik
 									enableReinitialize
@@ -115,7 +125,7 @@ function Login() {
 												color="primary"
 												className="w-full mx-auto mt-16"
 											>
-												Login
+												Đăng nhập
 											</Button>
 										</Form>
 									)}
@@ -129,16 +139,14 @@ function Login() {
 					>
 						<div className="max-w-320">
 							<FuseAnimate animation="transition.slideUpIn" delay={400}>
-								<Typography variant="h3" color="inherit" className="font-800 leading-tight">
-									Welcome <br />
-									to the <br /> FUSE React!
-								</Typography>
+								<div className="flex items-center mb-32">
+									<img className="logo-icon" src="assets/logo-dtp.png" alt="logo" />
+								</div>
 							</FuseAnimate>
 
 							<FuseAnimate delay={500}>
 								<Typography variant="subtitle1" color="inherit" className="mt-32">
-									Powerful and professional admin template for Web Applications, CRM, CMS, Admin
-									Panels and more.
+									Mẫu quản trị mạnh mẽ cho Ứng dụng web, CRM, CMS, Bảng quản trị và hơn thế nữa.
 								</Typography>
 							</FuseAnimate>
 						</div>

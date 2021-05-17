@@ -4,10 +4,10 @@ const useStyles = makeStyles(theme => ({
 	tableHead: {
 		height: 44
 	},
-	table: {
-		minWidth: 1340,
-		overflowX: 'auto'
-	},
+	// table: {
+	// 	minWidth: 1500,
+	// 	overflowX: 'auto'
+	// },
 	cellTabel: {
 		width: 340
 	},
@@ -16,12 +16,12 @@ const useStyles = makeStyles(theme => ({
 		overflowX: 'auto'
 	},
 	TableContainer: {
-		maxHeight: '600px'
+		maxHeight: '500px'
 	},
 	modal: {
 		display: 'flex',
 		alignItems: 'start',
-		marginTop: 80,
+		// marginTop: 80,
 		justifyContent: 'center'
 	},
 	paper: {
@@ -29,6 +29,17 @@ const useStyles = makeStyles(theme => ({
 		boxShadow: theme.shadows[5],
 		padding: theme.spacing(2, 4, 3),
 		width: 900
+	},
+	input: {
+		marginLeft: theme.spacing(1),
+		flex: 1
+	},
+	iconButton: {
+		padding: 10
+	},
+	divider: {
+		height: 28,
+		margin: 4
 	}
 }));
 export { useStyles };

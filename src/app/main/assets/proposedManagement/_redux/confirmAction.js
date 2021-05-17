@@ -6,24 +6,15 @@ import { callTypes, confirmSlice } from './confirmSlice';
 
 const { actions } = confirmSlice;
 
-export const fetchDataConfirms = (
-	status,
-	limit,
-	page,
-	search,
-	FromDate,
-	ToDate,
-	typeRequest,
-	isResovle
-) => dispatch => {
+export const fetchDataConfirms = (status, typeRequest, isResovle) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.list }));
 	const paramsReq = {
-		Search: search || '',
+		Search: '',
 		StatusID: status || 0,
-		PageSize: limit || 25,
-		PageNum: page || 1,
-		FromDate: FromDate ? moment(FromDate).format('YYYY/MM/DD') : moment().startOf('month').format('YYYY/MM/DD'),
-		ToDate: ToDate ? moment(ToDate).format('YYYY/MM/DD') : moment().endOf('month').format('YYYY/MM/DD'),
+		PageSize: 25,
+		PageNum: 1,
+		FromDate: moment().startOf('month').format('YYYY/MM/DD'),
+		ToDate: moment().endOf('month').format('YYYY/MM/DD'),
 		RequestTypeID: typeRequest,
 		IsResolveRequest: isResovle || false
 	};
@@ -239,4 +230,10 @@ export const requestApproveResolve = (data, status, values) => dispatch => {
 		.catch(err => {
 			dispatch(actions.catchError({ callType: callTypes.action }));
 		});
+};
+
+export const timeLineApproval = item => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.action }));
+	const id = item.requestID;
+	dispatch(actions.timeLineApproval({ id }));
 };

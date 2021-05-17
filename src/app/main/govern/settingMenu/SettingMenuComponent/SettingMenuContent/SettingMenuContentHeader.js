@@ -3,7 +3,7 @@ import React from 'react';
 import AppsIcon from '@material-ui/icons/Apps';
 import { column } from '../SettingMenuConfig';
 
-export default function SettingMenuContentHeader() {
+export default function SettingMenuContentHeader({ sort, createSortHandler }) {
 	return (
 		<TableHead>
 			<TableRow>
@@ -21,9 +21,9 @@ export default function SettingMenuContentHeader() {
 					>
 						{item.sort ? (
 							<TableSortLabel
-							// active={sort.id === row.id}
-							// direction={sort.direction}
-							// onClick={createSortHandler(row.id)}
+								active={sort.id === item.id}
+								direction={sort.direction}
+								onClick={createSortHandler(item.id)}
 							>
 								{item.lable}
 							</TableSortLabel>

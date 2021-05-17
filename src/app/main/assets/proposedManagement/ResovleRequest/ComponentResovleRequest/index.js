@@ -31,13 +31,14 @@ export default function RequestResovelTable(props) {
 		dateStart,
 		dateEnd,
 		sort,
-		setSort
+		setSort,
+		setTimeLine
 	} = ResovleContextHandle;
 	const { currentState } = useSelector(state => ({ currentState: state.confirm }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;
 	const classes = useStyles(props);
 	useEffect(() => {
-		dispatch(action.fetchDataConfirms(0, rowPage, page, search, dateStart, dateEnd, 0, true));
+		dispatch(action.fetchDataConfirms(0, 0, true));
 	}, [dispatch]);
 	const handleRowChange = e => {
 		const rowPageParse = parseInt(e.target.value, 10);
@@ -96,6 +97,13 @@ export default function RequestResovelTable(props) {
 				return false;
 		}
 	};
+	const handleOpenTimeLine = (title, item) => {
+		setTimeLine({
+			open: true,
+			title
+		});
+		dispatch(action.timeLineApproval(item));
+	};
 	if (listloading) {
 		return <FuseLoading />;
 	}
@@ -111,6 +119,7 @@ export default function RequestResovelTable(props) {
 						<Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
 							<HeaderTableResovleRequest createSortHandler={createSortHandler} sort={sort} />
 							<BodyTableResovle
+								handleOpenTimeLine={handleOpenTimeLine}
 								handleOpenDialog={handleOpenDialog}
 								classes={classes}
 								entities={entities}

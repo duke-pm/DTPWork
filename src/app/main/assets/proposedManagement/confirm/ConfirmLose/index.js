@@ -29,7 +29,8 @@ export default function ConfirmLose(props) {
 		dateEnd,
 		setPage,
 		sort,
-		setSort
+		setSort,
+		setTimeLine
 	} = ConfirmContextDamage;
 	const { currentState } = useSelector(state => ({ currentState: state.confirm }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;
@@ -39,6 +40,13 @@ export default function ConfirmLose(props) {
 		dispatch(action.fetchDataConfirm(items));
 		setFormControl(true);
 		setType('lose');
+	};
+	const handleOpenTimeLine = item => {
+		setTimeLine({
+			open: true,
+			title: 'báo mất'
+		});
+		dispatch(action.timeLineApproval(item));
 	};
 	const handleRowChange = e => {
 		const rowPageParse = parseInt(e.target.value, 10);
@@ -76,7 +84,7 @@ export default function ConfirmLose(props) {
 		);
 	};
 	useEffect(() => {
-		dispatch(action.fetchDataConfirms(0, rowPage, page, search, dateStart, dateEnd, 3));
+		dispatch(action.fetchDataConfirms(0, 3));
 	}, [dispatch]);
 	const createSortHandler = property => event => {
 		const id = property;
@@ -105,6 +113,7 @@ export default function ConfirmLose(props) {
 								<Table className={`${classes.table}`} stickyHeader>
 									<TableHeader createSortHandler={createSortHandler} sort={sort} />
 									<TableBodyLose
+										handleOpenTimeLine={handleOpenTimeLine}
 										entities={entities}
 										lastErrors={lastErrors}
 										classes={classes}

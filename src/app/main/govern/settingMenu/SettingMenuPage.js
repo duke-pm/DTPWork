@@ -10,7 +10,7 @@ export default function SettingMenuPage() {
 	const handleCloseFormMenu = () => setOpenSettingMenu(false);
 	return (
 		<>
-			<FormMenuComponent handleCloseFormMenu={handleCloseFormMenu} openSettingMenu={openSettingMenu} />
+			<FormMenuComponent setOpenSettingMenu={setOpenSettingMenu} openSettingMenu={openSettingMenu} />
 			<FusePageCardedFix
 				classes={{
 					content: 'flex',
@@ -23,7 +23,7 @@ export default function SettingMenuPage() {
 						handleOpenSettingMenu={handleOpenSettingMenu}
 					/>
 				}
-				content={<SettingMenuContent />}
+				content={<SettingMenuContent handleOpenSettingMenu={handleOpenSettingMenu} />}
 				innerScroll
 			/>
 		</>
