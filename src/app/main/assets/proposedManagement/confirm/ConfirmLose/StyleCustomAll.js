@@ -24,6 +24,10 @@ const useStyles = makeStyles(theme => ({
 		marginTop: 80,
 		justifyContent: 'center'
 	},
+	input: {
+		marginLeft: theme.spacing(1),
+		flex: 1
+	},
 	paper: {
 		backgroundColor: theme.palette.background.paper,
 		boxShadow: theme.shadows[5],

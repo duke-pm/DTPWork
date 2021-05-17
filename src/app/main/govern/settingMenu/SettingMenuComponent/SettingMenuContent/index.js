@@ -29,6 +29,7 @@ export default function SettingMenuContent({ handleOpenSettingMenu }) {
 	};
 	const handleDeleteMenuSetting = item => {
 		console.log(item);
+		dispatch(actions.deletedSettingsMenu(item));
 	};
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);

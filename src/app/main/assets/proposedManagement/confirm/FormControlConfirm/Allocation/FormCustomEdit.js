@@ -27,6 +27,7 @@ export default function FormCustomEdit({
 		region: '',
 		locationUse: '',
 		reason: '',
+		reasonReject: '',
 		assetsCategory: '',
 		plan: false,
 		supplier: ''
@@ -41,7 +42,8 @@ export default function FormCustomEdit({
 			assetsCategory: entitiesEdit.docType,
 			plan: entitiesEdit.isBudget,
 			supplier: entitiesEdit.supplierName,
-			reason: entitiesEdit.reason
+			reason: entitiesEdit.reason,
+			reasonReject: entitiesEdit.reasonReject
 		};
 	}
 	const columns = [
@@ -149,7 +151,13 @@ export default function FormCustomEdit({
 										className="mt-8"
 									/>
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-1 gap-8 ">
+								<div
+									className={`grid grid-cols-1 ${
+										entitiesEdit && entitiesEdit.statusID === 4
+											? 'sm:grid-cols-2'
+											: ' sm:grid-cols-1'
+									} gap-8 `}
+								>
 									<Field
 										readOnly
 										label="Lí do"
@@ -157,8 +165,19 @@ export default function FormCustomEdit({
 										name="reason"
 										component={InputTextArea}
 										className="mt-8 mb-16"
-										row={3}
+										row={2}
 									/>
+									{entitiesEdit && entitiesEdit.statusID === 4 && (
+										<Field
+											readOnly
+											label="Lí do từ chối "
+											hasFeedback
+											name="reasonReject"
+											component={InputTextArea}
+											className="mt-8 mb-16"
+											row={2}
+										/>
+									)}
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-16 ">
 									<div className="flex flex-col">
@@ -199,7 +218,7 @@ export default function FormCustomEdit({
 								</div>
 							</div>
 						</DialogContent>
-						<DialogActions>
+						{/* <DialogActions>
 							{actionLoading ? (
 								<Spin size="middle" />
 							) : (
@@ -217,7 +236,7 @@ export default function FormCustomEdit({
 									</Button>
 								</>
 							)}
-						</DialogActions>
+						</DialogActions> */}
 					</Form>
 				)}
 			</Formik>

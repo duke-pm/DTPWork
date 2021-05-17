@@ -10,6 +10,7 @@ import RadioAntd from '@fuse/CustomForm/RadioAntd';
 import SelectAntd from '@fuse/CustomForm/SelectAntd';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { getDataUserLocalStorage, notificationConfig } from '@fuse/core/DtpConfig';
+import { useHistory } from 'react-router-dom';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import ContentFormReport from './ContentFormReport';
 import * as actions from '../../_redux/confirmAction';
@@ -24,6 +25,7 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 export default function HandlingBody({ handleClose, dataAssets, setDataAssets }) {
+	const history = useHistory();
 	const [disable, setDisable] = useState(true);
 	const [initialstate, setInitialState] = useState({
 		note: '',
@@ -67,6 +69,7 @@ export default function HandlingBody({ handleClose, dataAssets, setDataAssets })
 					if (data && !data.isError) {
 						notificationConfig('success', 'Thành công', 'Gửi yêu cầu thành công');
 						dispatch(actions.getAssetsUser());
+						history.goBack();
 						setInitialState({
 							note: '',
 							status: 'Damage',
@@ -161,12 +164,12 @@ export default function HandlingBody({ handleClose, dataAssets, setDataAssets })
 								)}
 								<Button
 									type="button"
-									onClick={resetForm}
+									onClick={() => history.goBack()}
 									className="h-26 font-sans"
 									variant="contained"
 									color="secondary"
 								>
-									Đặt lại
+									Quay lại
 								</Button>
 							</div>
 						</div>

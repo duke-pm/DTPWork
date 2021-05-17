@@ -11,6 +11,13 @@ export const createdMenuSettingsApi = data => {
 		data
 	});
 };
+export const deletedMenuSettingsApi = data => {
+	return request({
+		method: 'DELETE',
+		url: `${url}`,
+		data
+	});
+};
 // export const updateMenuSettingsApi = data => {
 // 	return request({
 // 		method: 'POST',

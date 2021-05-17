@@ -64,10 +64,9 @@ export default function TimeLine({ timeLine, setTimeLine }) {
 												</span>
 											) : null}
 											<h4>
-												{item.levelApproval === 2 ? 'Người duyệt' : 'Người tạo'} :{' '}
+												{item.levelApproval > 0 ? 'Người duyệt' : 'Người tạo'} :{' '}
 												{item.personApproveName}{' '}
 											</h4>
-											<h6 className="mb-0">Chức vụ : {item.titleApprove}</h6>
 
 											<h6 className="mb-0">Trạng thái : {item.statusName}</h6>
 											{item.reason && item.reason.length > 0 ? (

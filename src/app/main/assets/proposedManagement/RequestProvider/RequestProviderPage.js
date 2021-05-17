@@ -1,10 +1,12 @@
-import FusePageCardedFix from '@fuse/core/FusePageCarded/FusePageCardedFix';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import * as moment from 'moment';
 import { getDataUserLocalStorage } from '@fuse/core/DtpConfig';
+import FusePageCarded from '@fuse/core/FusePageCarded';
+import FuseAnimate from '@fuse/core/FuseAnimate';
+import { Typography } from '@material-ui/core';
 import RequestProviderBody from './ComponentsRequestProvider/RequestProviderBody';
-import RequestProviderHeader from './ComponentsRequestProvider/RequestProviderHeader';
+// import RequestProviderHeader from './ComponentsRequestProvider/RequestProviderHeader';
 import * as actions from '../_redux/confirmAction';
 
 export default function RequestProviderPage() {
@@ -12,11 +14,11 @@ export default function RequestProviderPage() {
 	const [initialState, setInitialState] = useState({
 		name: dataUser.empCode || '',
 		nameEmp: dataUser.fullName || '',
-		department: null,
+		department: dataUser.deptCode || '',
 		dateRequest: moment(Date.now()),
 		region: '',
 		jobTitle: '',
-		locationUse: '',
+		locationUse: dataUser.deptCode || '',
 		reason: '',
 		assetsCategory: 'N',
 		plan: true,
@@ -36,13 +38,27 @@ export default function RequestProviderPage() {
 		shallowEqual
 	);
 	return (
-		<FusePageCardedFix
+		<FusePageCarded
 			classes={{
-				content: 'flex',
-				contentCard: 'overflow-hidden',
-				header: 'min-h-72 h-72 sm:h-136 sm:min-h-136'
+				header: 'min-h-10 h-10	sm:h-16 sm:min-h-16'
 			}}
-			header={<RequestProviderHeader />}
+			header={
+				<div className="flex flex-1 w-full items-center justify-between">
+					<div className="flex flex-1 flex-col items-center sm:items-start">
+						<FuseAnimate animation="transition.slideRightIn" delay={300}>
+							<Typography
+								className="text-16 sm:text-20 truncate"
+								// component={Link}
+								// role="button"
+								// to="/apps/e-commerce/orders"
+								color="inherit"
+							>
+								{/* {xhtm} */}
+							</Typography>
+						</FuseAnimate>
+					</div>
+				</div>
+			}
 			content={
 				<RequestProviderBody
 					dataSource={dataSource}

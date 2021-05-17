@@ -15,6 +15,7 @@ import { notificationConfig } from '@fuse/core/DtpConfig';
 import InputTextAreaRequest from '@fuse/CustomForm/InputTextAreaRequest';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import { useHistory } from 'react-router-dom';
 import * as actions from '../../_redux/confirmAction';
 import { validateSchema } from './ConfigRequestProvider';
 
@@ -27,13 +28,14 @@ export default function RequestProviderBody({
 	setDataSource
 }) {
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const [optionDept, setOptionsDept] = useState([]);
 	const [optionRegion, setOptionsRegion] = useState([]);
 	const [optionLocation, setOptionsLocation] = useState([]);
 	useEffect(() => {
 		if (entitiesInformation) {
 			const newInformation = entitiesInformation.employees.reduce((arr, curr) =>
-				curr.value === initialState.name ? curr : arr
+				curr.empCode === initialState.name ? curr : arr
 			);
 			const OptionLocation = entitiesInformation.department.reduce(
 				(arr, curr) => [...arr, { label: curr.deptName, value: curr.deptCode }],
@@ -58,18 +60,6 @@ export default function RequestProviderBody({
 			});
 		}
 	}, [entitiesInformation]);
-	const onChangeDepartment = value => {
-		setInitialState({
-			...initialState,
-			department: value
-		});
-	};
-	const onChangeRegion = value => {
-		setInitialState({
-			...initialState,
-			location: value
-		});
-	};
 	const onInputChange = (key, index) => e => {
 		const newData = [...dataSource];
 		newData[index][key] = e.target.value;
@@ -164,8 +154,7 @@ export default function RequestProviderBody({
 		setDataSource(newArr);
 	};
 	const handleResetForm = resetForm => {
-		setDataSource([]);
-		resetForm();
+		history.goBack();
 	};
 	return (
 		<>
@@ -180,6 +169,7 @@ export default function RequestProviderBody({
 						dispatch(actions.requestAssetFromUserAction(values, dataSource)).then(data => {
 							if (data && !data.isError) {
 								resetForm({});
+								history.goBack();
 								setDataSource([]);
 								notificationConfig('success', 'Thành công!', 'Yêu cầu thành công !!');
 							} else {
@@ -214,9 +204,9 @@ export default function RequestProviderBody({
 											hasFeedback
 											name="department"
 											readOnly
-											value={initialState.department}
+											// value={initialState.department}
 											component={SelectAntd}
-											handleChangeState={onChangeDepartment}
+											// handleChangeState={onChangeDepartment}
 											options={optionDept}
 											className="mt-8 mb-16"
 										/>
@@ -227,7 +217,7 @@ export default function RequestProviderBody({
 											hasFeedback
 											value={initialState.region}
 											component={SelectAntd}
-											handleChangeState={onChangeRegion}
+											// handleChangeState={onChangeRegion}
 											options={optionRegion}
 											className="mt-8 mb-16"
 										/>
@@ -249,8 +239,10 @@ export default function RequestProviderBody({
 										<h5 className="font-extrabold">Tài sản yêu cầu.</h5>
 									</div>
 									<Typography variant="subtitle2" color="inherit" className="mb-16">
-										<AddCircleOutlineIcon color="secondary" />
-										<Link onClick={handleAdd}>Thêm tài sản </Link>
+										<AddCircleOutlineIcon style={{ color: '#1890ff' }} />
+										<Link style={{ color: '#1890ff' }} onClick={handleAdd}>
+											Thêm tài sản{' '}
+										</Link>
 									</Typography>
 									<Table
 										rowKey="id"
@@ -331,7 +323,7 @@ export default function RequestProviderBody({
 										variant="contained"
 										color="secondary"
 									>
-										Đặt lại
+										Quay lại
 									</Button>
 								</div>
 							</div>
