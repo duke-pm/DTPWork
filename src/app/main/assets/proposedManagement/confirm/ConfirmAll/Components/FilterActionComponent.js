@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-shadow */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable import/no-extraneous-dependencies */
@@ -9,7 +10,7 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { useDispatch } from 'react-redux';
 import { DatePicker, Select } from 'antd';
 import * as moment from 'moment';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import { ConfirmContext } from '../../ConfirmContext';
 import * as actions from '../../../_redux/confirmAction';
@@ -17,6 +18,7 @@ import { useStyles } from '../StyleCustomAll';
 
 export default function ActionComponent({ actionLoading }) {
 	const classes = useStyles();
+	const history = useHistory();
 	const dispatch = useDispatch();
 	const confirmConext = useContext(ConfirmContext);
 	const {
@@ -80,6 +82,10 @@ export default function ActionComponent({ actionLoading }) {
 			actions.searchConfirms(false, value, rowPage, page, 1, sort.id, sort.direction, search, dateStart, dateEnd)
 		);
 	};
+	const handleChangeRoute = () => {
+		console.log('change');
+		history.push('/yeu-cau-cap-phat');
+	};
 	return (
 		<>
 			<FuseAnimateGroup
@@ -128,7 +134,10 @@ export default function ActionComponent({ actionLoading }) {
 				<div className="flex flex-col sm:flex-row justify-between">
 					<Typography variant="subtitle1" color="inherit" className="mt-16">
 						<AddCircleOutlineIcon color="secondary" />
-						<Link to="/yeu-cau-cap-phat"> Tạo yêu cầu cấp phát </Link>
+						<Link component="button" onClick={handleChangeRoute}>
+							{' '}
+							Tạo yêu cầu cấp phát{' '}
+						</Link>
 					</Typography>
 					<Paper className="w-full sm:w-1/4 flex justify-between ">
 						<InputBase
