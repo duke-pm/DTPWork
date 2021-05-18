@@ -1,19 +1,9 @@
 import React, { useContext } from 'react';
-import {
-	Dialog,
-	AppBar,
-	Toolbar,
-	Typography,
-	DialogContent,
-	DialogActions,
-	Button,
-	IconButton
-} from '@material-ui/core';
+import { Dialog, AppBar, Toolbar, Typography, DialogContent, IconButton } from '@material-ui/core';
 import { Form, Formik, Field } from 'formik';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
 import { notificationConfig } from '@fuse/core/DtpConfig';
-import { Spin } from 'antd';
 import CloseIcon from '@material-ui/icons/Close';
 import * as Yup from 'yup';
 import { ConfirmContext } from '../../ConfirmContext';
@@ -32,7 +22,7 @@ export default function FormConfirmGobal({ open }) {
 	const handleClose = () => {
 		setReasonReject(false);
 	};
-	const { actionLoading, entitiesEdit } = useSelector(
+	const { entitiesEdit } = useSelector(
 		state => ({
 			entitiesEdit: state.confirm.entitiesEdit,
 			actionLoading: state.confirm.actionLoading

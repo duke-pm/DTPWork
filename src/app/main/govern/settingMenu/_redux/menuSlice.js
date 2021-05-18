@@ -69,11 +69,12 @@ export const menuSlice = createSlice({
 				return entity;
 			});
 		},
-		deletedMenuSettings: (state, action) => {
-			const { id } = action.payload;
+		deletedMenuSettingsSlice: (state, action) => {
+			const { dataReq } = action.payload;
 			const { entities } = state;
-			const newEntities = entities.filter(item => item.menuID !== id);
+			const newEntities = entities.filter(item => item.menuID !== dataReq.menuID);
 			state.entities = newEntities;
+			state.actionLoading = false;
 		}
 	}
 });

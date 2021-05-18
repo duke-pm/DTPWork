@@ -34,7 +34,7 @@ export default function FormAllocation() {
 		const status = true;
 		dispatch(actions.requestApproveResolve(entitiesEdit, status)).then(data => {
 			if (data && !data.isError) {
-				notificationConfig('success', 'Thành công', 'Xác nhận thành công');
+				notificationConfig('success', 'Thành công', 'Phê duyệt thành công');
 				setDialogAllocation(false);
 			}
 		});

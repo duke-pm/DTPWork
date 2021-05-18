@@ -32,8 +32,8 @@ export default function FormCustomMenu({
 }) {
 	const validationSchema = Yup.object().shape({
 		menuName: Yup.string().required('Menu name is required.'),
-		typeID: Yup.string().required('Type menu is required.'),
-		url: Yup.string().required('Url web is required.').nullable()
+		typeID: Yup.string().required('Type menu is required.')
+		// url: Yup.string().required('Url web is required.').nullable()
 	});
 	const initial = entitiesEdit && entitiesEdit.menuID ? entitiesEdit : inititalState;
 	return (
@@ -92,7 +92,6 @@ export default function FormCustomMenu({
 									<Field
 										label="Đường dẫn"
 										name="url"
-										hasFeedback
 										type="text"
 										component={AntInput}
 										className="mt-8 mb-16"

@@ -1,6 +1,5 @@
 /* eslint-disable no-shadow */
 import { notificationConfig } from '@fuse/core/DtpConfig';
-import { notification } from 'antd';
 import * as moment from 'moment';
 import * as requestFrom from '../posseionCruds';
 import { callTypes, possesionSlice } from '../possesionSlice';
@@ -20,22 +19,13 @@ export const getInformationCompany = params => dispatch => {
 			if (!data.isError) {
 				dispatch(actions.informationsFetch({ data }));
 			} else {
-				notification.success({
-					message: 'Đã có lỗi xảy ra vui lòng thử lại',
-					description: `${data.errorMessage}`
-				});
+				dispatch(actions.catchErrors({ callType: callTypes.list }));
+				notificationConfig('warning', 'Thất bại', data.errorMessage);
 			}
 		})
 		.catch(err => {
 			dispatch(actions.catchErrors({ callType: callTypes.list }));
 		});
-};
-export const cyclePossesion = data => dispatch => {
-	dispatch(actions.startCall({ callType: callTypes.actions }));
-	return requestFrom
-		.updateDataPossesion(data)
-		.then(() => {})
-		.catch(() => {});
 };
 
 export const searchPossesion = (value, search, limit, page, id, directtion) => dispatch => {
@@ -55,7 +45,8 @@ export const searchPossesion = (value, search, limit, page, id, directtion) => d
 			if (!data.isError) {
 				dispatch(actions.possesionsFetch({ data }));
 			} else {
-				notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', data.errorMessage);
+				notificationConfig('error', 'Thất bại', data.errorMessage);
+				dispatch(actions.catchErrors({ callType: callTypes.list }));
 			}
 		})
 		.catch(err => {
@@ -63,8 +54,6 @@ export const searchPossesion = (value, search, limit, page, id, directtion) => d
 			notificationConfig('error', 'Thất bại', 'Đã xảy ra lỗi vui lòng thử lại sau');
 		});
 };
-
-// export const fetchPersonal = ()=>{}
 
 // =========================== PossesionAll ============================= //
 
@@ -84,12 +73,13 @@ export const fetchPossesionAll = (value, limit, page, search) => dispatch => {
 			if (!data.isError) {
 				dispatch(actions.possesionsFetch({ data }));
 			} else {
-				notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', data.errorMessage);
+				dispatch(actions.catchErrors({ callType: callTypes.list }));
+				notificationConfig('error', 'Thất bại', data.errorMessage);
 			}
 		})
 		.catch(err => {
 			dispatch(actions.catchErrors({ callType: callTypes.list }));
-			notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại');
+			notificationConfig('error', 'Thất bại', 'Đã có lỗi xảy ra vui lòng thử lại');
 		});
 };
 export const fetchPossesionAllPanigate = (value, limit, page, search, id, directtion) => dispatch => {
@@ -109,12 +99,13 @@ export const fetchPossesionAllPanigate = (value, limit, page, search, id, direct
 			if (!data.isError) {
 				dispatch(actions.possesionsFetch({ data }));
 			} else {
-				notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', data.errorMessage);
+				dispatch(actions.catchErrors({ callType: callTypes.list }));
+				notificationConfig('error', 'Thất bại', data.errorMessage);
 			}
 		})
 		.catch(err => {
 			dispatch(actions.catchErrors({ callType: callTypes.list }));
-			notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại');
+			notificationConfig('error', 'Thất bại', 'Đã có lỗi xảy ra vui lòng thử lại');
 		});
 };
 export const setTaskEditPossesionAll = data => dispatch => {
@@ -124,7 +115,6 @@ export const setTaskEditPossesionAll = data => dispatch => {
 
 export const createdPossesionAll = (data, prefix, rowPage) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.actions }));
-	// dispatch(actions.possesionCreated({ data }));
 	const dataReq = {
 		Qty: data.qty,
 		Lang: 'vi',
@@ -150,12 +140,13 @@ export const createdPossesionAll = (data, prefix, rowPage) => dispatch => {
 			if (!data.isError) {
 				const dataReq = data.data;
 				dispatch(actions.possesionCreated({ dataReq, rowPage }));
-			} else {
-				notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', data.errorMessage);
 			}
 			return data;
 		})
-		.catch(() => {});
+		.catch(() => {
+			notificationConfig('error', 'Thất bại', 'Đã có lỗi xảy ra');
+			dispatch(actions.catchErrors({ callType: callTypes.action }));
+		});
 };
 
 export const updatedPossesionAll = data => dispatch => {
@@ -211,13 +202,12 @@ export const addPersonalPossesion = (data, id) => dispatch => {
 			if (!data.isError) {
 				dispatch(actions.possesionUpdatedUnUsed({ id }));
 			} else {
-				notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', data.errorMessage);
+				dispatch(actions.catchErrors({ callType: callTypes.action }));
 			}
 			return data;
 		})
 		.catch(error => {
 			dispatch(actions.catchErrors({ callType: callTypes.action }));
-			// notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', error);
 		});
 };
 
@@ -242,7 +232,7 @@ export const withdrawPossesion = (data, entitiesEdit) => dispatch => {
 				const id = entitiesEdit.assetID;
 				dispatch(actions.updatePossesionWithDraw({ id }));
 			} else {
-				notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', data.errorMessage);
+				dispatch(actions.catchErrors({ callType: callTypes.action }));
 			}
 			return data;
 		})
@@ -356,6 +346,5 @@ export const getAssetHistory = id => dispatch => {
 		})
 		.catch(err => {
 			dispatch(actions.catchErrors({ callType: callTypes.action }));
-			// dispatch(actions.catchErrors({ callType: callTypes.list }));
 		});
 };

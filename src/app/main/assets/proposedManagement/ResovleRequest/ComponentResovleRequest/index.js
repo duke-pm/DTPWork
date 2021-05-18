@@ -7,8 +7,6 @@ import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import FuseLoading from '@fuse/core/FuseLoading';
 import image from '@fuse/assets/group.png';
 import { Spin } from 'antd';
-import FuseScrollbars from '@fuse/core/FuseScrollbars';
-import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import HeaderTableResovleRequest from './HeaderTableResovleRequest';
 import { ResovleContext } from '../ResovleRequestContext';

@@ -3,22 +3,16 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useRef } from 'react';
-import { DialogContent, DialogActions, Button } from '@material-ui/core';
+import { DialogContent } from '@material-ui/core';
 import { Formik, Field, Form } from 'formik';
-import { Table, Spin } from 'antd';
+import { Table } from 'antd';
 import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import { AntInput } from '@fuse/CustomForm/CreateAntField';
 import InputTextArea from '@fuse/CustomForm/InputTextArea';
 import RadioAntd from '@fuse/CustomForm/RadioAntd';
 import DateCustom from '@fuse/CustomForm/Date';
 
-export default function FormCustomEdit({
-	handleSubmitForm,
-	actionLoading,
-	entitiesEdit,
-	handleOpenReject,
-	newEntitiesEdit
-}) {
+export default function FormCustomEdit({ handleSubmitForm, entitiesEdit, newEntitiesEdit }) {
 	const dialogContent = useRef();
 	let initialState = {
 		name: '',

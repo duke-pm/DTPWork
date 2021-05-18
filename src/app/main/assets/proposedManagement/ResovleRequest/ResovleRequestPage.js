@@ -1,11 +1,9 @@
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import FusePageCarded from '@fuse/core/FusePageCarded';
-import FusePageCardedFix from '@fuse/core/FusePageCarded/FusePageCardedFix';
 import { Box, Typography } from '@material-ui/core';
 import React, { useContext } from 'react';
 import TimeLine from '../TimeLine';
 import RequestResovelTable from './ComponentResovleRequest';
-import ActionComponent from './ComponentResovleRequest/FilterActionComponent';
 import FormAllocation from './FormControlConfirm/Allocation';
 import FormConfirmGobal from './FormControlConfirm/FormConfirmGobal';
 import FormCustomCorrupt from './FormControlConfirm/FormCustomCorrupt';

@@ -80,22 +80,13 @@ export default function RequestProviderBody({
 			dataIndex: 'Descr',
 			title: 'Mô tả',
 			width: '40%',
-			render: (text, record, index) => (
-				<Input className="CustomInput" value={text} onChange={onInputChange('Descr', index)} />
-			)
+			render: (text, record, index) => <Input value={text} onChange={onInputChange('Descr', index)} />
 		},
 		{
 			dataIndex: 'Qty',
 			title: 'Số lượng',
 			width: '10%',
-			render: (text, record, index) => (
-				<Input
-					className="CustomInput text-right"
-					type="number"
-					value={text}
-					onChange={onInputChange('Qty', index)}
-				/>
-			)
+			render: (text, record, index) => <Input type="number" value={text} onChange={onInputChange('Qty', index)} />
 		},
 		{
 			dataIndex: 'UnitPrice',
@@ -104,7 +95,6 @@ export default function RequestProviderBody({
 			render: (text, record, index) => (
 				<NumberFormat
 					customInput={Input}
-					className="CustomInput text-right"
 					value={text}
 					onValueChange={onChangeFormatCurr('UnitPrice', index)}
 					thousandSeparator
