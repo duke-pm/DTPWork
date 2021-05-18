@@ -3,7 +3,6 @@
 import React from 'react';
 import { Upload } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
-import 'antd/dist/antd.css';
 import { FormGroup } from '@material-ui/core';
 
 const { Dragger } = Upload;

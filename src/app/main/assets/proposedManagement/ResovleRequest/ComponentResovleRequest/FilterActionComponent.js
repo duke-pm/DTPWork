@@ -12,7 +12,6 @@ import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import { ResovleContext } from '../ResovleRequestContext';
 import * as actions from '../../_redux/confirmAction';
 import { useStyles } from './StyleCustomAll';
-import 'antd/dist/antd.css';
 
 export default function ActionComponent({ actionLoading }) {
 	const classes = useStyles();

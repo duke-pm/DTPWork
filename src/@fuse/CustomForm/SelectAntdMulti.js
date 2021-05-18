@@ -6,7 +6,7 @@ import { Form, Select } from 'antd';
 const FormItem = Form.Item;
 const { Option } = Select;
 
-export default function SelectAntd({
+export default function SelectAntdMulti({
 	field, // { name, value, onChange, onBlur }
 	form, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
 	label,
@@ -51,13 +51,14 @@ export default function SelectAntd({
 						{...field}
 						{...props}
 						showSearch
+						mode="multiple"
 						placeholder={placeholder || ''}
 						className={readOnly ? 'readOnly' : ''}
 						optionFilterProp="children"
 						filterOption={(input, option) =>
 							option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
 						}
-						defaultValue={field.value}
+						maxTagCount={1}
 						onChange={handleSelect}
 					>
 						{options.map(p => (

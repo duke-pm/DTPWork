@@ -1,9 +1,9 @@
 import { IconButton, TableCell, TableHead, TableRow, TableSortLabel } from '@material-ui/core';
 import React from 'react';
 import AppsIcon from '@material-ui/icons/Apps';
-import { column } from './GroupUserConfigComponet';
+import { column } from './ListUserConfigComponet';
 
-export default function GroupUserHeader({ sort, createSortHandler }) {
+export default function ListUserHeader({ sort, createSortHandler }) {
 	return (
 		<TableHead>
 			<TableRow>

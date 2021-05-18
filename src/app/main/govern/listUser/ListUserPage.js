@@ -2,9 +2,9 @@ import FuseAnimate from '@fuse/core/FuseAnimate';
 import FusePageCarded from '@fuse/core/FusePageCarded';
 import { Box, Typography } from '@material-ui/core';
 import React from 'react';
-import GroupUserContent from './GroupUserComponent/GroupUserContent';
+import ListUserContent from './ListUserComponent';
 
-export default function GroupUserPage() {
+export default function ListUserPage() {
 	return (
 		<>
 			<FusePageCarded
@@ -31,7 +31,7 @@ export default function GroupUserPage() {
 				}
 				content={
 					<Box p={3}>
-						<GroupUserContent />
+						<ListUserContent />
 					</Box>
 				}
 			/>
