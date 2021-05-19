@@ -2,17 +2,30 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable import/no-extraneous-dependencies */
 import { Button, IconButton, Paper } from '@material-ui/core';
-import React from 'react';
-import { ThemeProvider } from '@material-ui/core/styles';
+import React, { useContext } from 'react';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
-import { useSelector } from 'react-redux';
-// import { DatePicker, Select } from 'antd';
-import { selectMainTheme } from 'app/store/fuse/settingsSlice';
-// import * as moment from 'moment';
+import { useDispatch } from 'react-redux';
 import FuseAnimate from '@fuse/core/FuseAnimate';
+import * as actions from '../../_reduxGroupUser/groupUserActions';
 
-export default function ActionGroupUser({ actionLoading, handleOpenFormGroupUser }) {
+import { GroupUserContext } from '../../GroupUserContext';
+
+export default function ActionGroupUser({ handleOpenFormGroupUser }) {
+	const dispatch = useDispatch();
+	const groupUserContext = useContext(GroupUserContext);
+	const { setPage, setSearch, search, page, rowPage, sort } = groupUserContext;
+	const handleSearch = () => {
+		setPage(0);
+		dispatch(actions.filterGroupUser(page, rowPage, sort.id, sort.direction, search));
+	};
+	const onHandleChange = e => {
+		setSearch(e.target.value);
+		setPage(0);
+		if (e.target.value.length <= 0) {
+			dispatch(actions.filterGroupUser(page, rowPage, sort.id, sort.direction, e.target.value));
+		}
+	};
 	return (
 		<div>
 			<FuseAnimate animation="transition.slideLeftIn" delay={300}>
@@ -42,14 +55,14 @@ export default function ActionGroupUser({ actionLoading, handleOpenFormGroupUser
 					</Button>
 					<Paper className="w-full sm:w-1/4 flex justify-between">
 						<InputBase
-							// onKeyPress={event => {
-							// 	if (event.key === 'Enter') {
-							// 		handleSearch();
-							// 	}
-							// }}
-							// onChange={e => onHandleChange(e)}
-							// className={classes.input}
-							// value={search}
+							onKeyPress={event => {
+								if (event.key === 'Enter') {
+									handleSearch();
+								}
+							}}
+							onChange={e => onHandleChange(e)}
+							className="ml-16"
+							value={search}
 							placeholder="Tìm kiếm"
 							inputProps={{ 'aria-label': 'search google maps' }}
 						/>

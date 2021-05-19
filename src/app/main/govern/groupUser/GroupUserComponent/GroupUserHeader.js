@@ -21,9 +21,9 @@ export default function GroupUserHeader({ sort, createSortHandler }) {
 					>
 						{item.sort ? (
 							<TableSortLabel
-							// active={sort.id === item.id}
-							// direction={sort.direction}
-							// onClick={createSortHandler(item.id)}
+								active={sort.id === item.id}
+								direction={sort.direction}
+								onClick={createSortHandler(item.id)}
 							>
 								{item.lable}
 							</TableSortLabel>

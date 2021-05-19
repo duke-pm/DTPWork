@@ -2,6 +2,7 @@ import { AppBar, Dialog, IconButton, Toolbar, Typography } from '@material-ui/co
 import React from 'react';
 import CloseIcon from '@material-ui/icons/Close';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { notificationConfig } from '@fuse/core/DtpConfig';
 import FormGroupUserCustom from './FormGroupUserCustom';
 import * as actions from '../../_reduxGroupUser/groupUserActions';
 
@@ -15,10 +16,20 @@ export default function FormGroupUser({ open, handleCloseFormGroupUser }) {
 	const dispatch = useDispatch();
 	const { entitiesEdit, actionLoading } = currentState;
 	const handleSubmitFormGroupUser = values => {
-		if (entitiesEdit && entitiesEdit.id) {
-			dispatch(actions.updatedGroupUser(values));
+		if (entitiesEdit && entitiesEdit.groupID) {
+			dispatch(actions.updatedGroupUser(values)).then(data => {
+				if (data && !data.isError) {
+					notificationConfig('success', 'Thành công', 'Cập nhật nhóm người dùng thành công.');
+					handleCloseFormGroupUser();
+				}
+			});
 		} else {
-			dispatch(actions.updatedGroupUser(values));
+			dispatch(actions.createdGroupUser(values)).then(data => {
+				if (data && !data.isError) {
+					notificationConfig('success', 'Thành công', 'Thêm mới nhóm người dùng thành công.');
+					handleCloseFormGroupUser();
+				}
+			});
 		}
 	};
 	return (
@@ -29,11 +40,13 @@ export default function FormGroupUser({ open, handleCloseFormGroupUser }) {
 						<CloseIcon />
 					</IconButton>
 					<Typography variant="subtitle1" color="inherit">
-						Thêm nhóm người dùng
+						{entitiesEdit && entitiesEdit.groupID ? 'Chỉnh sửa nhóm người dùng' : 'Thêm nhóm người dùng'}
 					</Typography>
 				</Toolbar>
 			</AppBar>
 			<FormGroupUserCustom
+				entitiesEdit={entitiesEdit}
+				actionLoading={actionLoading}
 				handleSubmitFormGroupUser={handleSubmitFormGroupUser}
 				handleCloseFormGroupUser={handleCloseFormGroupUser}
 			/>

@@ -7,15 +7,23 @@ import { Field, Formik, Form } from 'formik';
 import React from 'react';
 import * as Yup from 'yup';
 
-export default function FormGroupUserCustom({ actionLoading, handleCloseFormGroupUser, handleSubmitFormGroupUser }) {
-	const initialState = {
-		nameGroup: '',
+export default function FormGroupUserCustom({
+	actionLoading,
+	handleCloseFormGroupUser,
+	handleSubmitFormGroupUser,
+	entitiesEdit
+}) {
+	const initial = {
+		groupID: '0',
+		groupName: '',
 		description: '',
-		inactive: true
+		inactive: false
 	};
 	const validationSchema = Yup.object().shape({
-		nameGroup: Yup.string().required('Tên nhóm không được để trống !!!')
+		groupName: Yup.string().required('Tên nhóm không được để trống !!!')
 	});
+	const initialState = entitiesEdit && entitiesEdit.groupID ? entitiesEdit : initial;
+	console.log(initialState);
 	return (
 		<>
 			<Formik
@@ -23,7 +31,6 @@ export default function FormGroupUserCustom({ actionLoading, handleCloseFormGrou
 				validationSchema={validationSchema}
 				initialValues={initialState}
 				onSubmit={values => {
-					console.log(values);
 					handleSubmitFormGroupUser(values);
 				}}
 			>
@@ -34,7 +41,7 @@ export default function FormGroupUserCustom({ actionLoading, handleCloseFormGrou
 								<div className="grid grid-cols-1 sm:grid-cols-1 gap-8">
 									<Field
 										label="Tên nhóm"
-										name="nameGroup"
+										name="groupName"
 										type="text"
 										hasFeedback
 										component={AntInput}
@@ -68,8 +75,7 @@ export default function FormGroupUserCustom({ actionLoading, handleCloseFormGrou
 							) : (
 								<>
 									<Button variant="contained" type="submit" color="primary">
-										{/* {initial.menuID !== '0' ? 'Chỉnh sửa' : 'Thêm mới'} */}
-										Thêm mới
+										{initialState.groupID !== '0' ? 'Chỉnh sửa' : 'Thêm mới'}
 									</Button>
 									<Button
 										onClick={handleCloseFormGroupUser}

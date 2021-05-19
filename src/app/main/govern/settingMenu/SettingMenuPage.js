@@ -2,12 +2,18 @@ import FuseAnimate from '@fuse/core/FuseAnimate';
 import FusePageCarded from '@fuse/core/FusePageCarded';
 import { Box, Typography } from '@material-ui/core';
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import FormMenuComponent from './SettingMenuComponent/FormMenuComponent';
 import SettingMenuContent from './SettingMenuComponent/SettingMenuContent';
+import * as actions from './_redux/menuActions';
 
 export default function SettingMenuPage() {
+	const dispatch = useDispatch();
 	const [openSettingMenu, setOpenSettingMenu] = useState(false);
-	const handleOpenSettingMenu = () => setOpenSettingMenu(true);
+	const handleOpenSettingMenu = () => {
+		setOpenSettingMenu(true);
+		dispatch(actions.setTaskEditMenuSetting(null));
+	};
 	return (
 		<>
 			<FormMenuComponent setOpenSettingMenu={setOpenSettingMenu} openSettingMenu={openSettingMenu} />
@@ -35,7 +41,10 @@ export default function SettingMenuPage() {
 				}
 				content={
 					<Box p={3}>
-						<SettingMenuContent handleOpenSettingMenu={handleOpenSettingMenu} />
+						<SettingMenuContent
+							setOpenSettingMenu={setOpenSettingMenu}
+							handleOpenSettingMenu={handleOpenSettingMenu}
+						/>
 					</Box>
 				}
 				innerScroll

@@ -31,10 +31,11 @@ export const groupUserSlice = createSlice({
 			}
 		},
 		fetchsGroupUser: (state, action) => {
-			const { dataRes, total_result } = action.payload;
+			const { dataRes, total_count } = action.payload;
 			state.listLoading = false;
+			state.actionLoading = false;
 			state.entities = dataRes;
-			state.total_count = total_result;
+			state.total_count = total_count;
 		},
 		createdGroupUser: (state, action) => {
 			const { dataRes } = action.payload;
@@ -47,7 +48,7 @@ export const groupUserSlice = createSlice({
 			const { dataRes } = action.payload;
 			state.actionLoading = false;
 			state.entities = state.entities.map(entity => {
-				if (entity.id === dataRes.id) {
+				if (entity.groupID === dataRes.groupID) {
 					return dataRes;
 				}
 				return entity;
@@ -57,6 +58,13 @@ export const groupUserSlice = createSlice({
 			const { value } = action.payload;
 			state.actionLoading = false;
 			state.entitiesEdit = value;
+		},
+		deletedGroupUser: (state, action) => {
+			const { dataReq } = action.payload;
+			state.actionLoading = false;
+			const { entities } = state;
+			const newEnities = entities.filter(item => item.groupID !== dataReq.GroupID);
+			state.entities = newEnities;
 		}
 	}
 });

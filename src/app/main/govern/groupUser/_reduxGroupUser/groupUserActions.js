@@ -5,13 +5,18 @@ import { callTypes, groupUserSlice } from './groupUserSlice';
 const { actions } = groupUserSlice;
 export const fetchsGroupUser = params => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.list }));
+	const paramsRequest = {
+		PageSize: 25,
+		PageNum: 1
+	};
 	return requestFrom
-		.fetchsGroupUser(params)
+		.fetchsGroupUser(paramsRequest)
 		.then(res => {
 			const { data } = res;
 			if (!data.isError) {
 				const dataRes = data.data;
-				dispatch(actions.fetchsGroupUser(dataRes));
+				const total_count = data.totalRow;
+				dispatch(actions.fetchsGroupUser({ dataRes, total_count }));
 			} else {
 				notificationConfig('warning', 'Thất bại', data.errorMessage);
 				dispatch(actions.catchErrors({ callType: callTypes.list }));
@@ -22,11 +27,45 @@ export const fetchsGroupUser = params => dispatch => {
 			notificationConfig('warning', 'Thất bại', 'Server error');
 		});
 };
+export const filterGroupUser = (page, limit, sortColumn, sortDirection, search) => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.action }));
+	const paramsRequest = {
+		PageSize: page || 1,
+		PageNum: limit || 25,
+		SortColumn: sortColumn || '',
+		SortDirection: sortDirection || 'desc',
+		Search: search || ''
+	};
+	return requestFrom
+		.fetchsGroupUser(paramsRequest)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				const dataRes = data.data;
+				const total_count = data.totalRow;
+				dispatch(actions.fetchsGroupUser({ dataRes, total_count }));
+			} else {
+				notificationConfig('warning', 'Thất bại', data.errorMessage);
+				dispatch(actions.catchErrors({ callType: callTypes.action }));
+			}
+		})
+		.catch(error => {
+			dispatch(actions.catchErrors({ callType: callTypes.action }));
+			notificationConfig('warning', 'Thất bại', 'Server error');
+		});
+};
 
 export const createdGroupUser = values => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
+	const dataReq = {
+		GroupID: '0',
+		GroupName: values.groupName,
+		Description: values.description,
+		Inactive: values.inactive,
+		Lang: 'vi'
+	};
 	return requestFrom
-		.createdGroupUser(values)
+		.groupUserModify(dataReq)
 		.then(res => {
 			const { data } = res;
 			if (!data.isError) {
@@ -36,6 +75,7 @@ export const createdGroupUser = values => dispatch => {
 				dispatch(actions.catchErrors({ callType: callTypes.action }));
 				notificationConfig('warning', 'Thất bại', data.errorMessage);
 			}
+			return data;
 		})
 		.catch(err => {
 			dispatch(actions.catchErrors({ callType: callTypes.action }));
@@ -50,20 +90,52 @@ export const setTaskEditGroupUser = value => dispatch => {
 
 export const updatedGroupUser = values => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
+	const dataReq = {
+		GroupID: values.groupID,
+		GroupName: values.groupName,
+		Description: values.description,
+		Inactive: values.inactive,
+		Lang: 'vi'
+	};
 	return requestFrom
-		.updatedGroupUser(values)
+		.groupUserModify(dataReq)
 		.then(res => {
 			const { data } = res;
 			if (!data.isError) {
 				const dataRes = data.data;
-				dispatch(actions.createdGroupUser({ dataRes }));
+				dispatch(actions.updatedGroupUser({ dataRes }));
 			} else {
 				dispatch(actions.catchErrors({ callType: callTypes.action }));
 				notificationConfig('warning', 'Thất bại', data.errorMessage);
 			}
+			return data;
 		})
 		.catch(err => {
 			dispatch(actions.catchErrors({ callType: callTypes.action }));
 			notificationConfig('warning', 'Thất bại', 'Server error');
+		});
+};
+
+export const deletedGroupUser = item => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.action }));
+	const dataReq = {
+		GroupID: item.groupID
+	};
+	return requestFrom
+		.deletedGroupUser(dataReq)
+		.then(res => {
+			// console.log(res);
+			const { data } = res;
+			if (!data.isError) {
+				dispatch(actions.deletedGroupUser({ dataReq }));
+				notificationConfig('success', 'Thành công', 'Xoá nhóm thành công');
+			} else {
+				dispatch(actions.catchErrors({ callType: callTypes.action }));
+				notificationConfig('warning', 'Thất bại', `${data.errorMessage}`);
+			}
+		})
+		.catch(error => {
+			dispatch(actions.catchErrors({ callType: callTypes.action }));
+			notificationConfig('warning', 'Thất bại', `Serrver error`);
 		});
 };

@@ -1,17 +1,17 @@
 import request from 'app/store/setupAxios';
 
+const url = '/api/UserGroup';
+
 export const fetchsGroupUser = params => {
-	return request();
+	return request(`${url}/GetList`, { params });
 };
-export const createdGroupUser = data => {
+export const groupUserModify = data => {
 	return request({
 		method: 'POST',
-		data
+		data,
+		url: `${url}/Modify`
 	});
 };
-export const updatedGroupUser = data => {
-	return request({
-		method: 'POST',
-		data
-	});
+export const deletedGroupUser = params => {
+	return request.get(`${url}/remove`, { params });
 };

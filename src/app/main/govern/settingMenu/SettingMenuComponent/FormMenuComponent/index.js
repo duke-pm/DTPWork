@@ -12,10 +12,7 @@ export default function FormMenuComponent({ openSettingMenu, setOpenSettingMenu 
 	const { entities, actionLoading, entitiesEdit } = currentState;
 	const menuParent =
 		entities && entities.reduce((arr, curr) => [...arr, { value: curr.menuID, label: curr.menuName }], []);
-	const handleCloseFormMenu = () => {
-		setOpenSettingMenu(false);
-		dispatch(actions.setTaskEditMenuSetting(null));
-	};
+	const handleCloseFormMenu = () => setOpenSettingMenu(false);
 	const handleSubmitCreatedMenu = values => {
 		if (entitiesEdit && entitiesEdit.menuID) {
 			dispatch(actions.updatedMenuSettings(values)).then(data => {

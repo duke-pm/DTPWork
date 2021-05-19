@@ -13,7 +13,7 @@ import { useStyles } from '../../StyleCustomAll';
 import { SettingmenuContext } from '../../SettingMenuContext';
 import SettingMenuHeader from '../SettingMenuHeader';
 
-export default function SettingMenuContent({ handleOpenSettingMenu }) {
+export default function SettingMenuContent({ handleOpenSettingMenu, setOpenSettingMenu }) {
 	const dispatch = useDispatch();
 	const settingContext = useContext(SettingmenuContext);
 	const { page, rowPage, setPage, sort, setRowPage, setSort } = settingContext;
@@ -24,7 +24,7 @@ export default function SettingMenuContent({ handleOpenSettingMenu }) {
 		dispatch(actions.fetchsListMenuSettingAll());
 	}, [dispatch]);
 	const handleEditMenuSetting = item => {
-		handleOpenSettingMenu();
+		setOpenSettingMenu(true);
 		dispatch(actions.setTaskEditMenuSetting(item));
 	};
 	const handleDeleteMenuSetting = item => {

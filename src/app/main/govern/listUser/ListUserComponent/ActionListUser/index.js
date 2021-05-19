@@ -3,17 +3,12 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { Button, IconButton, Paper } from '@material-ui/core';
 import React from 'react';
-import { ThemeProvider } from '@material-ui/core/styles';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
-import { useSelector } from 'react-redux';
-// import { DatePicker, Select } from 'antd';
-import { selectMainTheme } from 'app/store/fuse/settingsSlice';
-// import * as moment from 'moment';
 import 'antd/dist/antd.css';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 
-export default function ActionGroupUser({ actionLoading, handleOpenFormGroupUser }) {
+export default function ActionGroupUser({ handleOpenFormGroupUser }) {
 	return (
 		<div>
 			<FuseAnimate animation="transition.slideLeftIn" delay={300}>

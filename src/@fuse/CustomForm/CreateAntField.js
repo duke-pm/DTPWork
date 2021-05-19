@@ -2,6 +2,7 @@
 import React from 'react';
 import { DatePicker, Form, Input, InputNumber, Select } from 'antd';
 import { FormGroup } from '@material-ui/core';
+import 'antd/dist/antd.css';
 
 const FormItem = Form.Item;
 const { Option } = Select;
