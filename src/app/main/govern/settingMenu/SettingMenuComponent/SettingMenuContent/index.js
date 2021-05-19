@@ -75,7 +75,7 @@ export default function SettingMenuContent({ handleOpenSettingMenu, setOpenSetti
 										lastErrors={lastErrors}
 									/>
 								</Table>
-								{(entities && entities.length === 0) || lastErrors ? (
+								{!entities || entities.length === 0 ? (
 									<FuseAnimate delay={300}>
 										<div className="flex items-center justify-center h-auto">
 											<img

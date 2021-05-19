@@ -44,7 +44,7 @@ export default function ActionComponent({ handleOpenForm, value }) {
 	};
 	return (
 		<FuseAnimate animation="transition.slideLeftIn" delay={300}>
-			<div className="flex flex-col sm:flex-row justify-between">
+			<div className="flex flex-col sm:flex-row justify-end">
 				<Paper className="w-full sm:w-1/4 flex justify-between">
 					<InputBase
 						onKeyPress={event => {

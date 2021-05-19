@@ -44,24 +44,6 @@ export default function ActionComponent({ value, handleOpenForm }) {
 		<>
 			<FuseAnimate animation="transition.slideLeftIn" delay={300}>
 				<div className="flex flex-col sm:flex-row justify-between">
-					<Paper className="w-full sm:w-1/4 flex justify-between">
-						<InputBase
-							onKeyPress={event => {
-								if (event.key === 'Enter') {
-									handleSearch();
-								}
-							}}
-							onChange={e => onHandleChange(e)}
-							className={classes.input}
-							value={search}
-							placeholder="Tìm kiếm"
-							inputProps={{ 'aria-label': 'search google maps' }}
-						/>
-						<IconButton onClick={handleSearch} type="button" className={classes.iconButton}>
-							<SearchIcon />
-						</IconButton>
-						{/* <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} /> */}
-					</Paper>
 					<Button
 						onClick={handleOpenForm}
 						className="mt-8 sm:mt-0 max-w-sm md:max-w-lg h-26"
@@ -85,6 +67,24 @@ export default function ActionComponent({ value, handleOpenForm }) {
 						</svg>
 						Thêm mới
 					</Button>{' '}
+					<Paper className="w-full sm:w-1/4 flex justify-between">
+						<InputBase
+							onKeyPress={event => {
+								if (event.key === 'Enter') {
+									handleSearch();
+								}
+							}}
+							onChange={e => onHandleChange(e)}
+							className={classes.input}
+							value={search}
+							placeholder="Tìm kiếm"
+							inputProps={{ 'aria-label': 'search google maps' }}
+						/>
+						<IconButton onClick={handleSearch} type="button" className={classes.iconButton}>
+							<SearchIcon />
+						</IconButton>
+						{/* <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} /> */}
+					</Paper>
 				</div>
 			</FuseAnimate>
 		</>
