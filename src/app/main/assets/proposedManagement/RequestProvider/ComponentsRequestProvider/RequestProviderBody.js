@@ -300,7 +300,7 @@ export default function RequestProviderBody({
 								</div>
 								<div className="px-16 w-full sm:px-24 mb-28 flex justify-end">
 									{actionLoading ? (
-										<Spin size="middle" className="mr-16" />
+										<Spin size="middle" style={{ marginRight: 12 }} />
 									) : (
 										<Button variant="contained" type="submit" className="mr-16" color="primary">
 											Gửi yêu cầu

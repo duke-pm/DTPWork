@@ -1,7 +1,7 @@
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import { Paper, Table, TableContainer } from '@material-ui/core';
 import React, { useState } from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import image from '@fuse/assets/group.png';
 import { useStyles } from '../StyleGroupUser';
 import ListUserContentBody from './ListUserContentBody';
