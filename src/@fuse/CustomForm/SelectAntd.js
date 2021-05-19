@@ -2,7 +2,6 @@
 import React from 'react';
 import { FormGroup } from '@material-ui/core';
 import { Form, Select } from 'antd';
-import 'antd/dist/antd.css';
 
 const FormItem = Form.Item;
 const { Option } = Select;

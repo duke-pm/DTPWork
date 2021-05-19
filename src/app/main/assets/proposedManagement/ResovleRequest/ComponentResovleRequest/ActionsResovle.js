@@ -24,7 +24,7 @@ export default function ActionsResovle({ handleOpenDialog, items, handleOpenTime
 				<>
 					<MenuItem onClick={() => handleOpenDialog('damage', items)} role="button">
 						<ListItemIcon className="min-w-40">
-							<Icon>edit</Icon>
+							<Icon>checkcircleoutlineicon</Icon>
 						</ListItemIcon>
 						<ListItemText primary="Phê duyệt " />
 					</MenuItem>
@@ -40,7 +40,7 @@ export default function ActionsResovle({ handleOpenDialog, items, handleOpenTime
 					<>
 						<MenuItem onClick={() => handleOpenDialog('lost', items)} role="button">
 							<ListItemIcon className="min-w-40">
-								<Icon>warning</Icon>
+								<Icon>checkcircleoutlineicon</Icon>
 							</ListItemIcon>
 							<ListItemText primary="Phê duyệt" />
 						</MenuItem>

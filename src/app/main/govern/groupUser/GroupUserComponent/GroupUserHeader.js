@@ -1,10 +1,38 @@
+import { IconButton, TableCell, TableHead, TableRow, TableSortLabel } from '@material-ui/core';
 import React from 'react';
-import ActionComponent from './FilterActionComponent';
+import AppsIcon from '@material-ui/icons/Apps';
+import { column } from './GroupUserConfigComponet';
 
-export default function GroupUserHeader() {
+export default function GroupUserHeader({ sort, createSortHandler }) {
 	return (
-		<div className="flex flex-row gap-16 w-full items-center justify-between">
-			<ActionComponent />
-		</div>
+		<TableHead>
+			<TableRow>
+				<TableCell className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans" align="left">
+					<IconButton aria-label="delete">
+						<AppsIcon />
+					</IconButton>
+				</TableCell>
+
+				{column.map(item => (
+					<TableCell
+						key={item.id}
+						className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
+						align={item.align}
+					>
+						{item.sort ? (
+							<TableSortLabel
+								active={sort.id === item.id}
+								direction={sort.direction}
+								onClick={createSortHandler(item.id)}
+							>
+								{item.lable}
+							</TableSortLabel>
+						) : (
+							item.lable
+						)}
+					</TableCell>
+				))}
+			</TableRow>
+		</TableHead>
 	);
 }

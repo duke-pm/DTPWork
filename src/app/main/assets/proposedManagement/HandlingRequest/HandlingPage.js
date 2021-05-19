@@ -1,23 +1,15 @@
-import FusePageCardedFix from '@fuse/core/FusePageCarded/FusePageCardedFix';
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import * as moment from 'moment';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import FusePageCarded from '@fuse/core/FusePageCarded';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import { Typography } from '@material-ui/core';
 import HandlingBody from './ComponentHandlingRequest/HandlingBody';
-import HandlingHeader from './ComponentHandlingRequest/HandlingHeader';
 
 export default function HandlingPage() {
-	const inititalState = {
-		note: '',
-		status: 'Damage',
-		date: moment(Date.now()),
-		file: '',
-		assets: ''
-	};
 	const [dataAssets, setDataAssets] = useState();
 	const dispatch = useDispatch();
+	const { currentState } = useSelector(state => ({ currentState: state.tabs }), shallowEqual);
+	const { value } = currentState;
 	return (
 		<FusePageCarded
 			classes={{
@@ -42,12 +34,7 @@ export default function HandlingPage() {
 				</div>
 			}
 			content={
-				<HandlingBody
-					dispatch={dispatch}
-					setDataAssets={setDataAssets}
-					dataAssets={dataAssets}
-					inititalState={inititalState}
-				/>
+				<HandlingBody value={value} dispatch={dispatch} setDataAssets={setDataAssets} dataAssets={dataAssets} />
 			}
 			innerScroll
 		/>

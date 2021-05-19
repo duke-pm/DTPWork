@@ -1,29 +1,52 @@
-import FusePageCardedFix from '@fuse/core/FusePageCarded/FusePageCardedFix';
+import FuseAnimate from '@fuse/core/FuseAnimate';
+import FusePageCarded from '@fuse/core/FusePageCarded';
+import { Box, Typography } from '@material-ui/core';
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import FormMenuComponent from './SettingMenuComponent/FormMenuComponent';
 import SettingMenuContent from './SettingMenuComponent/SettingMenuContent';
-import SettingMenuHeader from './SettingMenuComponent/SettingMenuHeader';
+import * as actions from './_redux/menuActions';
 
 export default function SettingMenuPage() {
+	const dispatch = useDispatch();
 	const [openSettingMenu, setOpenSettingMenu] = useState(false);
-	const handleOpenSettingMenu = () => setOpenSettingMenu(true);
-	const handleCloseFormMenu = () => setOpenSettingMenu(false);
+	const handleOpenSettingMenu = () => {
+		setOpenSettingMenu(true);
+		dispatch(actions.setTaskEditMenuSetting(null));
+	};
 	return (
 		<>
 			<FormMenuComponent setOpenSettingMenu={setOpenSettingMenu} openSettingMenu={openSettingMenu} />
-			<FusePageCardedFix
+			<FusePageCarded
 				classes={{
-					content: 'flex',
-					contentCard: 'overflow-hidden',
-					header: 'min-h-72 h-72 sm:h-136 sm:min-h-136'
+					// content: 'flex',
+					header: 'min-h-10 h-10	sm:h-16 sm:min-h-16'
 				}}
 				header={
-					<SettingMenuHeader
-						handleCloseFormMenu={handleCloseFormMenu}
-						handleOpenSettingMenu={handleOpenSettingMenu}
-					/>
+					<div className="flex flex-1 w-full items-center justify-between">
+						<div className="flex flex-1 flex-col items-center sm:items-start">
+							<FuseAnimate animation="transition.slideRightIn" delay={300}>
+								<Typography
+									className="text-16 sm:text-20 truncate"
+									// component={Link}
+									// role="button"
+									// to="/apps/e-commerce/orders"
+									color="inherit"
+								>
+									{/* {xhtm} */}
+								</Typography>
+							</FuseAnimate>
+						</div>
+					</div>
 				}
-				content={<SettingMenuContent handleOpenSettingMenu={handleOpenSettingMenu} />}
+				content={
+					<Box p={3}>
+						<SettingMenuContent
+							setOpenSettingMenu={setOpenSettingMenu}
+							handleOpenSettingMenu={handleOpenSettingMenu}
+						/>
+					</Box>
+				}
 				innerScroll
 			/>
 		</>

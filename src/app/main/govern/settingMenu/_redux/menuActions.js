@@ -100,6 +100,7 @@ export const createdMenuSettings = dataReq => dispatch => {
 				dispatch(actions.createdMenuSettings({ dataRes }));
 			} else {
 				notificationConfig('warning', 'Thất bại', 'Đã có lỗi xảy ra vui lòng thử lại sau !!!');
+				dispatch(actions.catchErrors({ callType: callTypes.action }));
 			}
 			return data;
 		})
@@ -140,26 +141,37 @@ export const updatedMenuSettings = dataReq => dispatch => {
 				const dataRes = data.data;
 				dispatch(actions.updatedMenuSettings({ dataRes }));
 			} else {
-				notificationConfig('warning', 'Thất bại', 'Đã có lỗi xảy ra vui lòng thử lại sau !!!');
+				notificationConfig('warning', 'Thất bại', `${data.errorMessage}`);
+				dispatch(actions.catchErrors({ callType: callTypes.action }));
 			}
 			return data;
 		})
 		.catch(err => {
 			dispatch(actions.catchErrors({ callType: callTypes.action }));
+			notificationConfig('Destroy', 'Thất bại', 'Server error !!!');
 		});
 };
 
-export const deletedSettingsMenu = data => dispatch => {
+export const deletedSettingsMenu = menu => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const dataReq = {
-		id: data.id
+		menuID: menu.menuID
 	};
 	return requestFrom
 		.deletedMenuSettingsApi(dataReq)
 		.then(res => {
-			console.log(res);
+			// console.log(res);
+			const { data } = res;
+			if (!data.isError) {
+				dispatch(actions.deletedMenuSettingsSlice({ dataReq }));
+				notificationConfig('success', 'Thành công', 'Xoá menu thành công');
+			} else {
+				dispatch(actions.catchErrors({ callType: callTypes.action }));
+				notificationConfig('warning', 'Thất bại', `${data.errorMessage}`);
+			}
 		})
 		.catch(error => {
-			console.log(error);
+			dispatch(actions.catchErrors({ callType: callTypes.action }));
+			notificationConfig('warning', 'Thất bại', `Serrver error`);
 		});
 };

@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import { DatePicker, Form, Input, InputNumber, Select } from 'antd';
-import 'antd/dist/antd.css';
 import { FormGroup } from '@material-ui/core';
+import 'antd/dist/antd.css';
 
 const FormItem = Form.Item;
 const { Option } = Select;

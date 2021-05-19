@@ -4,6 +4,7 @@ export const SettingmenuContext = createContext();
 
 export default function SettingMenuContextProvider({ children }) {
 	const [page, setPage] = useState(0);
+	const [search, setSearch] = useState('');
 	const [rowPage, setRowPage] = useState(25);
 	const [sort, setSort] = useState({
 		direction: 'desc',
@@ -11,6 +12,8 @@ export default function SettingMenuContextProvider({ children }) {
 	});
 	const valueMemo = useMemo(() => {
 		return {
+			search,
+			setSearch,
 			page,
 			setPage,
 			rowPage,
@@ -18,6 +21,6 @@ export default function SettingMenuContextProvider({ children }) {
 			sort,
 			setSort
 		};
-	}, [page, setPage, rowPage, setRowPage, sort, setSort]);
+	}, [page, setPage, rowPage, setRowPage, sort, setSort, search, setSearch]);
 	return <SettingmenuContext.Provider value={valueMemo}>{children}</SettingmenuContext.Provider>;
 }

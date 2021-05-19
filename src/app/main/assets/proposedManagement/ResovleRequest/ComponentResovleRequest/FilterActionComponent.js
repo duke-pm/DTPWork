@@ -3,23 +3,19 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { IconButton, Paper, Typography } from '@material-ui/core';
 import React, { useContext } from 'react';
-import { ThemeProvider } from '@material-ui/core/styles';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { DatePicker, Select } from 'antd';
-import { selectMainTheme } from 'app/store/fuse/settingsSlice';
 import * as moment from 'moment';
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import { ResovleContext } from '../ResovleRequestContext';
 import * as actions from '../../_redux/confirmAction';
 import { useStyles } from './StyleCustomAll';
-import 'antd/dist/antd.css';
 
 export default function ActionComponent({ actionLoading }) {
 	const classes = useStyles();
 	const dispatch = useDispatch();
-	const mainTheme = useSelector(selectMainTheme);
 	const confirmConext = useContext(ResovleContext);
 	const {
 		search,
@@ -29,7 +25,6 @@ export default function ActionComponent({ actionLoading }) {
 		setPage,
 		setDateEnd,
 		setDateStart,
-		setStatus,
 		status,
 		dateEnd,
 		dateStart,
@@ -75,18 +70,11 @@ export default function ActionComponent({ actionLoading }) {
 			actions.searchConfirms(true, status, rowPage, page, 0, sort.id, sort.direction, search, dateStart, date)
 		);
 	};
-	const onHandleChangeStatus = value => {
-		setStatus(value);
-		setPage(0);
-		dispatch(
-			actions.searchConfirms(true, value, rowPage, page, 0, sort.id, sort.direction, search, dateStart, dateEnd)
-		);
-	};
 	const onHandleChangeType = value => {
 		dispatch(
 			actions.searchConfirms(
 				true,
-				value,
+				status,
 				rowPage,
 				page,
 				value,
@@ -107,7 +95,7 @@ export default function ActionComponent({ actionLoading }) {
 			>
 				<div className="flex flex-col sm:flex-row justify-between">
 					<Typography variant="subtitle1" color="inherit">
-						Bộ lọc.
+						Filter.
 					</Typography>
 				</div>
 				<div className="flex flex-col sm:flex-row">

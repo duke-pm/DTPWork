@@ -11,12 +11,8 @@ export const createdMenuSettingsApi = data => {
 		data
 	});
 };
-export const deletedMenuSettingsApi = data => {
-	return request({
-		method: 'DELETE',
-		url: `${url}`,
-		data
-	});
+export const deletedMenuSettingsApi = params => {
+	return request.get(`${url}/remove`, { params });
 };
 // export const updateMenuSettingsApi = data => {
 // 	return request({

@@ -1,27 +1,14 @@
 import React from 'react';
-import { DialogContent, DialogActions, Button } from '@material-ui/core';
+import { DialogContent } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
 import { useDispatch } from 'react-redux';
-import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
-import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
 import * as momemt from 'moment';
 import { notificationConfig } from '@fuse/core/DtpConfig';
-import { Spin } from 'antd';
 import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import InputTextArea from '@fuse/CustomForm/InputTextArea';
 import * as actions from '../../../_redux/confirmAction';
 
-const initial = {
-	note: ''
-};
-export default function FormCustomCorruptEdit({
-	handleOpenFormReject,
-	entitiesEdit,
-	handleClose,
-	setFormControl,
-	actionLoading,
-	type
-}) {
+export default function FormCustomCorruptEdit({ entitiesEdit, handleClose, setFormControl, type }) {
 	let initialState = {
 		reason: '',
 		reasonReject: ''

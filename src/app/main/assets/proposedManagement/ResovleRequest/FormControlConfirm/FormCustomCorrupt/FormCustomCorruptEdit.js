@@ -31,7 +31,7 @@ export default function FormCustomCorruptEdit({
 					const status = true;
 					dispatch(actions.requestApproveResolve(entitiesEdit, status, values)).then(data => {
 						if (!data.isError) {
-							notificationConfig('success', 'Thành công', 'Gửi xác nhận thành công');
+							notificationConfig('success', 'Thành công', 'Phê duyệt thành công');
 							handleClose();
 							setFormControl(false);
 						}
@@ -84,7 +84,7 @@ export default function FormCustomCorruptEdit({
 							<div className="px-16 sm:px-24">
 								<div className="flex justify-between flex-row">
 									<h5 className="font-extrabold">
-										Thông tin tài sản bị {type === 'lost' ? ' mất' : 'hỏng'}
+										Thông tin tài sản bị {type === 'lost' ? ' mất' : 'hỏng'}.
 									</h5>
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-1 mb-16 gap-8 ">

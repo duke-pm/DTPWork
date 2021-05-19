@@ -2,7 +2,6 @@
 import React from 'react';
 import { FormGroup } from '@material-ui/core';
 import { Form, Checkbox } from 'antd';
-import 'antd/dist/antd.css';
 
 const FormItem = Form.Item;
 
