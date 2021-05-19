@@ -2,18 +2,18 @@
 /* eslint-disable no-shadow */
 import React, { useContext, useEffect } from 'react';
 import Panigation from '@fuse/core/FusePanigate';
-import { Table } from '@material-ui/core';
+import { Paper, Table, TableContainer } from '@material-ui/core';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import FuseLoading from '@fuse/core/FuseLoading';
 import image from '@fuse/assets/group.png';
 import { Spin } from 'antd';
-import FuseScrollbars from '@fuse/core/FuseScrollbars';
-import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
+import FuseAnimate from '@fuse/core/FuseAnimate';
 import HeaderTableResovleRequest from './HeaderTableResovleRequest';
 import { ResovleContext } from '../ResovleRequestContext';
 import * as action from '../../_redux/confirmAction';
 import BodyTableResovle from './BodyTableAllocation';
 import { useStyles } from './StyleCustomAll';
+import ActionComponent from './FilterActionComponent';
 
 export default function RequestResovelTable(props) {
 	const dispatch = useDispatch();
@@ -110,42 +110,50 @@ export default function RequestResovelTable(props) {
 	return (
 		<>
 			<div className="w-full flex flex-col">
-				<FuseScrollbars className="flex-grow overflow-x-auto">
-					<FuseAnimateGroup
-						enter={{
-							animation: 'transition.expandIn'
-						}}
-					>
-						<Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
-							<HeaderTableResovleRequest createSortHandler={createSortHandler} sort={sort} />
-							<BodyTableResovle
-								handleOpenTimeLine={handleOpenTimeLine}
-								handleOpenDialog={handleOpenDialog}
-								classes={classes}
-								entities={entities}
-								lastErrors={lastErrors}
-							/>
-						</Table>
-						{(entities && entities.length === 0) || lastErrors ? (
-							<div className="flex items-center justify-center h-auto">
-								<img className="rounded-full mx-auto" src={image} alt="" width="484" height="512" />
+				<ActionComponent />
+				<FuseAnimate animation="transition.slideUpIn" delay={200}>
+					<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
+						<TableContainer className={`${classes.TableContainer} flex flex-1`}>
+							<Paper className={classes.rootPaper}>
+								<Table className={`${classes.table}`} stickyHeader>
+									<HeaderTableResovleRequest createSortHandler={createSortHandler} sort={sort} />
+									<BodyTableResovle
+										handleOpenTimeLine={handleOpenTimeLine}
+										handleOpenDialog={handleOpenDialog}
+										classes={classes}
+										entities={entities}
+										lastErrors={lastErrors}
+									/>
+								</Table>
+								{(entities && entities.length === 0) || lastErrors ? (
+									<FuseAnimate delay={300}>
+										<div className="flex items-center justify-center h-auto">
+											<img
+												className="rounded-full mx-auto"
+												src={image}
+												alt=""
+												width="384"
+												height="512"
+											/>
+										</div>
+									</FuseAnimate>
+								) : null}
+							</Paper>
+						</TableContainer>
+						{entities && entities.length !== 0 && (
+							<div className="flex flex-row items-center justify-end">
+								{actionLoading && <Spin />}
+								<Panigation
+									page={page}
+									handleChangePage={handleChangePage}
+									rowPage={rowPage}
+									handleChangeRowsPerPage={handleRowChange}
+									count={total_count}
+								/>
 							</div>
-						) : null}
-					</FuseAnimateGroup>
-				</FuseScrollbars>
-				{entities && entities.length !== 0 && (
-					<div className="flex flex-row items-center justify-end">
-						{actionLoading && <Spin />}
-						<Panigation
-							page={page}
-							handleChangePage={handleChangePage}
-							rowPage={rowPage}
-							handleChangeRowsPerPage={handleRowChange}
-							count={total_count}
-						/>
+						)}
 					</div>
-				)}
-				{/* </FuseAnimate> */}
+				</FuseAnimate>
 			</div>
 		</>
 	);

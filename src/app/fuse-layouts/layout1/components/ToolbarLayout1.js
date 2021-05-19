@@ -18,6 +18,7 @@ const useStyles = makeStyles(theme => ({
 	root: {}
 }));
 function convertToVietNamese(array) {
+	console.log(array);
 	return array.map(word => {
 		switch (word) {
 			case 'tai-san':
@@ -26,6 +27,18 @@ function convertToVietNamese(array) {
 				return 'Danh sách đề xuất';
 			case 'de-xuat-can-xu-ly':
 				return 'Đề xuất cần xử lí';
+			case 'quan-tri':
+				return 'Quản trị';
+			case 'nhom-nguoi-dung':
+				return 'Nhóm người dùng';
+			case 'danh-sach-nguoi-dung':
+				return 'Danh sách người dùng';
+			case 'thiet-lap-menu':
+				return 'Thiết lập menu';
+			case 'yeu-cau-cap-phat':
+				return 'Yêu cầu cấp phát';
+			case 'bao-mat-hong-tai-san':
+				return 'Báo mất/hỏng tài sản';
 			default:
 				break;
 		}
@@ -37,6 +50,7 @@ function ToolbarLayout1(props) {
 	const classes = useStyles(props);
 	const location = useLocation();
 	const pathSplitted = location.pathname.split('/').splice(1);
+	console.log(pathSplitted);
 	const breadcumb = convertToVietNamese(pathSplitted).join(' > ');
 	return (
 		<ThemeProvider theme={toolbarTheme}>

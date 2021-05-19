@@ -23,11 +23,17 @@ const inititalState = {
 	isMobile: true,
 	visOrder: 0
 };
-export default function FormCustomMenu({ actionLoading, menuParent, handleSubmitCreatedMenu, entitiesEdit }) {
+export default function FormCustomMenu({
+	actionLoading,
+	menuParent,
+	handleSubmitCreatedMenu,
+	entitiesEdit,
+	handleCloseFormMenu
+}) {
 	const validationSchema = Yup.object().shape({
 		menuName: Yup.string().required('Menu name is required.'),
-		typeID: Yup.string().required('Type menu is required.'),
-		url: Yup.string().required('Url web is required.').nullable()
+		typeID: Yup.string().required('Type menu is required.')
+		// url: Yup.string().required('Url web is required.').nullable()
 	});
 	const initial = entitiesEdit && entitiesEdit.menuID ? entitiesEdit : inititalState;
 	return (
@@ -59,12 +65,12 @@ export default function FormCustomMenu({ actionLoading, menuParent, handleSubmit
 										hasFeedback
 										options={[
 											{
-												label: 'Collape',
-												value: 2
-											},
-											{
 												label: 'Group',
 												value: 1
+											},
+											{
+												label: 'Collapse',
+												value: 2
 											},
 											{
 												label: 'Item',
@@ -86,7 +92,6 @@ export default function FormCustomMenu({ actionLoading, menuParent, handleSubmit
 									<Field
 										label="Đường dẫn"
 										name="url"
-										hasFeedback
 										type="text"
 										component={AntInput}
 										className="mt-8 mb-16"
@@ -164,7 +169,12 @@ export default function FormCustomMenu({ actionLoading, menuParent, handleSubmit
 									<Button variant="contained" type="submit" color="primary">
 										{initial.menuID !== '0' ? 'Chỉnh sửa' : 'Thêm mới'}
 									</Button>
-									<Button variant="contained" type="button" color="secondary">
+									<Button
+										onClick={handleCloseFormMenu}
+										variant="contained"
+										type="button"
+										color="secondary"
+									>
 										Huỷ
 									</Button>
 								</>

@@ -95,7 +95,7 @@ export default function ActionComponent({ actionLoading }) {
 			>
 				<div className="flex flex-col sm:flex-row justify-between">
 					<Typography variant="subtitle1" color="inherit">
-						Bộ lọc.
+						Filter.
 					</Typography>
 				</div>
 				<div className="flex flex-col sm:flex-row">
@@ -133,8 +133,8 @@ export default function ActionComponent({ actionLoading }) {
 				</div>
 				<div className="flex flex-col sm:flex-row justify-between">
 					<Typography variant="subtitle1" color="inherit" className="mt-16">
-						<AddCircleOutlineIcon color="secondary" />
-						<Link component="button" onClick={handleChangeRoute}>
+						<AddCircleOutlineIcon style={{ color: '#1890ff' }} />
+						<Link style={{ color: '#1890ff' }} to="/yeu-cau-cap-phat">
 							{' '}
 							Tạo yêu cầu cấp phát{' '}
 						</Link>

@@ -15,6 +15,7 @@ import { notificationConfig } from '@fuse/core/DtpConfig';
 import InputTextAreaRequest from '@fuse/CustomForm/InputTextAreaRequest';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import { useHistory } from 'react-router-dom';
 import * as actions from '../../_redux/confirmAction';
 import { validateSchema } from './ConfigRequestProvider';
 
@@ -27,13 +28,14 @@ export default function RequestProviderBody({
 	setDataSource
 }) {
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const [optionDept, setOptionsDept] = useState([]);
 	const [optionRegion, setOptionsRegion] = useState([]);
 	const [optionLocation, setOptionsLocation] = useState([]);
 	useEffect(() => {
 		if (entitiesInformation) {
 			const newInformation = entitiesInformation.employees.reduce((arr, curr) =>
-				curr.value === initialState.name ? curr : arr
+				curr.empCode === initialState.name ? curr : arr
 			);
 			const OptionLocation = entitiesInformation.department.reduce(
 				(arr, curr) => [...arr, { label: curr.deptName, value: curr.deptCode }],
@@ -58,18 +60,6 @@ export default function RequestProviderBody({
 			});
 		}
 	}, [entitiesInformation]);
-	const onChangeDepartment = value => {
-		setInitialState({
-			...initialState,
-			department: value
-		});
-	};
-	const onChangeRegion = value => {
-		setInitialState({
-			...initialState,
-			location: value
-		});
-	};
 	const onInputChange = (key, index) => e => {
 		const newData = [...dataSource];
 		newData[index][key] = e.target.value;
@@ -90,22 +80,13 @@ export default function RequestProviderBody({
 			dataIndex: 'Descr',
 			title: 'Mô tả',
 			width: '40%',
-			render: (text, record, index) => (
-				<Input className="CustomInput" value={text} onChange={onInputChange('Descr', index)} />
-			)
+			render: (text, record, index) => <Input value={text} onChange={onInputChange('Descr', index)} />
 		},
 		{
 			dataIndex: 'Qty',
 			title: 'Số lượng',
 			width: '10%',
-			render: (text, record, index) => (
-				<Input
-					className="CustomInput text-right"
-					type="number"
-					value={text}
-					onChange={onInputChange('Qty', index)}
-				/>
-			)
+			render: (text, record, index) => <Input type="number" value={text} onChange={onInputChange('Qty', index)} />
 		},
 		{
 			dataIndex: 'UnitPrice',
@@ -114,7 +95,6 @@ export default function RequestProviderBody({
 			render: (text, record, index) => (
 				<NumberFormat
 					customInput={Input}
-					className="CustomInput text-right"
 					value={text}
 					onValueChange={onChangeFormatCurr('UnitPrice', index)}
 					thousandSeparator
@@ -164,8 +144,7 @@ export default function RequestProviderBody({
 		setDataSource(newArr);
 	};
 	const handleResetForm = resetForm => {
-		setDataSource([]);
-		resetForm();
+		history.goBack();
 	};
 	return (
 		<>
@@ -180,6 +159,7 @@ export default function RequestProviderBody({
 						dispatch(actions.requestAssetFromUserAction(values, dataSource)).then(data => {
 							if (data && !data.isError) {
 								resetForm({});
+								history.goBack();
 								setDataSource([]);
 								notificationConfig('success', 'Thành công!', 'Yêu cầu thành công !!');
 							} else {
@@ -214,9 +194,9 @@ export default function RequestProviderBody({
 											hasFeedback
 											name="department"
 											readOnly
-											value={initialState.department}
+											// value={initialState.department}
 											component={SelectAntd}
-											handleChangeState={onChangeDepartment}
+											// handleChangeState={onChangeDepartment}
 											options={optionDept}
 											className="mt-8 mb-16"
 										/>
@@ -227,7 +207,7 @@ export default function RequestProviderBody({
 											hasFeedback
 											value={initialState.region}
 											component={SelectAntd}
-											handleChangeState={onChangeRegion}
+											// handleChangeState={onChangeRegion}
 											options={optionRegion}
 											className="mt-8 mb-16"
 										/>
@@ -249,8 +229,10 @@ export default function RequestProviderBody({
 										<h5 className="font-extrabold">Tài sản yêu cầu.</h5>
 									</div>
 									<Typography variant="subtitle2" color="inherit" className="mb-16">
-										<AddCircleOutlineIcon color="secondary" />
-										<Link onClick={handleAdd}>Thêm tài sản </Link>
+										<AddCircleOutlineIcon style={{ color: '#1890ff' }} />
+										<Link style={{ color: '#1890ff' }} onClick={handleAdd}>
+											Thêm tài sản{' '}
+										</Link>
 									</Typography>
 									<Table
 										rowKey="id"
@@ -318,7 +300,7 @@ export default function RequestProviderBody({
 								</div>
 								<div className="px-16 w-full sm:px-24 mb-28 flex justify-end">
 									{actionLoading ? (
-										<Spin size="middle" className="mr-16" />
+										<Spin size="middle" style={{ marginRight: 12 }} />
 									) : (
 										<Button variant="contained" type="submit" className="mr-16" color="primary">
 											Gửi yêu cầu
@@ -331,7 +313,7 @@ export default function RequestProviderBody({
 										variant="contained"
 										color="secondary"
 									>
-										Đặt lại
+										Quay lại
 									</Button>
 								</div>
 							</div>

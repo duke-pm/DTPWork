@@ -11,6 +11,9 @@ export const createdMenuSettingsApi = data => {
 		data
 	});
 };
+export const deletedMenuSettingsApi = params => {
+	return request.get(`${url}/remove`, { params });
+};
 // export const updateMenuSettingsApi = data => {
 // 	return request({
 // 		method: 'POST',

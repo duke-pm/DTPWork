@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import DateCustom from '@fuse/CustomForm/Date';
 import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
 import InputTextAreaRequest from '@fuse/CustomForm/InputTextAreaRequest';
@@ -10,6 +11,7 @@ import RadioAntd from '@fuse/CustomForm/RadioAntd';
 import SelectAntd from '@fuse/CustomForm/SelectAntd';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { getDataUserLocalStorage, notificationConfig } from '@fuse/core/DtpConfig';
+import { useHistory } from 'react-router-dom';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import ContentFormReport from './ContentFormReport';
 import * as actions from '../../_redux/confirmAction';
@@ -23,11 +25,12 @@ const useStyles = makeStyles(theme => ({
 		width: '60%'
 	}
 }));
-export default function HandlingBody({ handleClose, dataAssets, setDataAssets }) {
+export default function HandlingBody({ dataAssets, setDataAssets, value }) {
+	const history = useHistory();
 	const [disable, setDisable] = useState(true);
 	const [initialstate, setInitialState] = useState({
 		note: '',
-		status: 'Damage',
+		status: value === 1 ? 'Damage' : 'Lost',
 		date: moment(Date.now()),
 		file: '',
 		assets: ''
@@ -67,6 +70,7 @@ export default function HandlingBody({ handleClose, dataAssets, setDataAssets })
 					if (data && !data.isError) {
 						notificationConfig('success', 'Thành công', 'Gửi yêu cầu thành công');
 						dispatch(actions.getAssetsUser());
+						history.goBack();
 						setInitialState({
 							note: '',
 							status: 'Damage',
@@ -95,8 +99,9 @@ export default function HandlingBody({ handleClose, dataAssets, setDataAssets })
 										handleChangeState={handleChangeAssets}
 									/>
 									<Field
-										label="Loại báo hỏng/mất "
+										label="Loại yêu cầu"
 										name="status"
+										readOnly
 										hasFeedback
 										component={RadioAntd}
 										options={[
@@ -117,7 +122,7 @@ export default function HandlingBody({ handleClose, dataAssets, setDataAssets })
 								<div className="grid grid-cols-1 sm:grid-cols-2 mb-16 gap-8 ">
 									<div className="flex flex-col">
 										<Field
-											label="Lí do báo hỏng/mất"
+											label={`Lí do báo ${value === 1 ? 'hỏng' : 'mất'}`}
 											name="note"
 											row={4}
 											component={InputTextAreaRequest}
@@ -126,7 +131,7 @@ export default function HandlingBody({ handleClose, dataAssets, setDataAssets })
 											hasFeedback
 										/>
 										<Field
-											label="Ngày báo hỏng/mất"
+											label={`Ngày báo ${value === 1 ? 'hỏng' : 'mất'}`}
 											autoFocus
 											name="date"
 											hasFeedback
@@ -161,12 +166,12 @@ export default function HandlingBody({ handleClose, dataAssets, setDataAssets })
 								)}
 								<Button
 									type="button"
-									onClick={resetForm}
+									onClick={() => history.goBack()}
 									className="h-26 font-sans"
 									variant="contained"
 									color="secondary"
 								>
-									Đặt lại
+									Quay lại
 								</Button>
 							</div>
 						</div>
