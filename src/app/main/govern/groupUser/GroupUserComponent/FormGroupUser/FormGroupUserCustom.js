@@ -23,7 +23,6 @@ export default function FormGroupUserCustom({
 		groupName: Yup.string().required('Tên nhóm không được để trống !!!')
 	});
 	const initialState = entitiesEdit && entitiesEdit.groupID ? entitiesEdit : initial;
-	console.log(initialState);
 	return (
 		<>
 			<Formik

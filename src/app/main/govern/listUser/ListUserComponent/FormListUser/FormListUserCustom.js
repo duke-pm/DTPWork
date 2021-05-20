@@ -1,16 +1,28 @@
 import CheckboxAntd from '@fuse/CustomForm/CheckboxAntd';
 import { AntInput, AntInputNumber } from '@fuse/CustomForm/CreateAntField';
-import InputTextArea from '@fuse/CustomForm/InputTextArea';
 import SelectAntd from '@fuse/CustomForm/SelectAntd';
 import SelectAntdMulti from '@fuse/CustomForm/SelectAntdMulti';
 import { Button, DialogActions, DialogContent } from '@material-ui/core';
 import { Spin } from 'antd';
 import { Field, Formik, Form } from 'formik';
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as Yup from 'yup';
 
-export default function FormListUserCustom({ actionLoading, handleCloseFormGroupUser, handleSubmitFormGroupUser }) {
-	const initialState = {
+export default function FormListUserCustom({
+	actionLoading,
+	handleCloseFormGroupUser,
+	handleSubmitFormListUser,
+	arrCompany,
+	arrSales,
+	arrManag,
+	arrSap,
+	arrRegion,
+	groupUser,
+	arrBizLine,
+	entitiesEdit
+}) {
+	let initialState = {
+		userID: '0',
 		userName: '',
 		lastMiddleName: '',
 		salesEmployee: '',
@@ -22,11 +34,33 @@ export default function FormListUserCustom({ actionLoading, handleCloseFormGroup
 		company: [],
 		region: [],
 		bizLine: [],
+		empSAP: '',
 		inactive: false,
+		ischangePasswrod: false
 	};
+	if (entitiesEdit && entitiesEdit.userID) {
+		initialState = {
+			userID: entitiesEdit && entitiesEdit.userID,
+			userName: entitiesEdit && entitiesEdit.userName,
+			lastMiddleName: entitiesEdit && entitiesEdit.lastName,
+			salesEmployee: entitiesEdit && entitiesEdit.slpCode === -1 ? '' : entitiesEdit.slpCode,
+			firstName: entitiesEdit && entitiesEdit.firstName,
+			cellPhone: entitiesEdit && entitiesEdit.cellPhone,
+			email: entitiesEdit && entitiesEdit.email,
+			userGroup: entitiesEdit && entitiesEdit.groupID,
+			LineManager: entitiesEdit && entitiesEdit.lineManager === -1 ? '' : entitiesEdit.lineManager,
+			company: entitiesEdit && entitiesEdit.legal ? entitiesEdit.legal.split(',').map(Number) : [],
+			region: entitiesEdit && entitiesEdit.region ? entitiesEdit.region.split(',').map(Number) : [],
+			bizLine: entitiesEdit && entitiesEdit.bizLine ? entitiesEdit.bizLine.split(',').map(Number) : [],
+			empSAP: entitiesEdit && entitiesEdit.empCode,
+			inactive: entitiesEdit && entitiesEdit.inactive,
+			ischangePasswrod: entitiesEdit && entitiesEdit.isChange
+		};
+	}
 	const validationSchema = Yup.object().shape({
 		nameGroup: Yup.string().required('Tên nhóm không được để trống !!!')
 	});
+
 	return (
 		<>
 			<Formik
@@ -34,8 +68,7 @@ export default function FormListUserCustom({ actionLoading, handleCloseFormGroup
 				// validationSchema={validationSchema}
 				initialValues={initialState}
 				onSubmit={values => {
-					console.log(values);
-					// handleSubmitFormGroupUser(values);
+					handleSubmitFormListUser(values);
 				}}
 			>
 				{({ handleSubmit, isSubmitting }) => (
@@ -49,14 +82,15 @@ export default function FormListUserCustom({ actionLoading, handleCloseFormGroup
 										type="text"
 										hasFeedback
 										component={AntInput}
+										// handleOnChangeBlur={handleOnChange}
 										className="mt-8 mb-16"
 									/>
 									<Field
-										label="Nhân viên sales"
-										name="salesEmployee"
+										label="Email"
+										name="email"
+										type="text"
 										hasFeedback
-										component={SelectAntd}
-										options={[]}
+										component={AntInput}
 										className="mt-8 mb-16"
 									/>
 								</div>
@@ -65,6 +99,7 @@ export default function FormListUserCustom({ actionLoading, handleCloseFormGroup
 										label="Họ & Tên Đệm"
 										name="lastMiddleName"
 										type="text"
+										hasFeedback
 										component={AntInput}
 										className="mt-8 mb-16"
 									/>
@@ -72,6 +107,7 @@ export default function FormListUserCustom({ actionLoading, handleCloseFormGroup
 										label="Tên"
 										name="firstName"
 										type="text"
+										hasFeedback
 										component={AntInput}
 										className="mt-8 mb-16"
 									/>
@@ -80,15 +116,15 @@ export default function FormListUserCustom({ actionLoading, handleCloseFormGroup
 									<Field
 										label="Số điện thoại"
 										name="cellPhone"
-										type="number"
+										// type="number"
 										component={AntInputNumber}
 										className="mt-8 mb-16"
 									/>
 									<Field
-										label="Email"
-										name="email"
-										type="text"
-										component={AntInput}
+										label="Nhân viên sales"
+										name="salesEmployee"
+										component={SelectAntd || []}
+										options={arrSales}
 										className="mt-8 mb-16"
 									/>
 								</div>
@@ -96,35 +132,51 @@ export default function FormListUserCustom({ actionLoading, handleCloseFormGroup
 									<Field
 										label="Nhóm người dùng"
 										name="userGroup"
-										options={[]}
-										component={SelectAntd}
+										hasFeedback
+										options={groupUser}
+										component={SelectAntd || []}
 										className="mt-8 mb-16"
 									/>
 									<Field
 										label="Quản lý"
 										name="LineManager"
-										options={[]}
-										component={SelectAntd}
+										options={arrManag}
+										component={SelectAntd || []}
+										className="mt-8 mb-16"
+									/>
+								</div>
+								<div className="grid grid-cols-1 1 sm:grid-cols-1 gap-8">
+									<Field
+										label="Công ty"
+										name="company"
+										hasFeedback
+										options={arrCompany}
+										component={SelectAntdMulti || []}
+										className="mt-8 mb-16"
+									/>
+									<Field
+										label="Khu vực"
+										hasFeedback
+										name="region"
+										options={arrRegion}
+										component={SelectAntdMulti || []}
 										className="mt-8 mb-16"
 									/>
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 									<Field
-										label="Công ty"
-										name="company"
-										options={[
-											{label:"DTP Education",value:"1"},
-											{label:"DTP Cambodia",value:"2"},
-											{label:"DTP Laos",value:"3"},
-										]}
-										component={SelectAntdMulti}
+										label="Nhân viên SAP"
+										name="empSAP"
+										options={arrSap}
+										component={SelectAntd || []}
 										className="mt-8 mb-16"
 									/>
 									<Field
-										label="Khu vực"
-										name="region"
-										options={[]}
-										component={SelectAntdMulti}
+										label="Biz line"
+										hasFeedback
+										name="bizLine"
+										options={arrBizLine}
+										component={SelectAntdMulti || []}
 										className="mt-8 mb-16"
 									/>
 								</div>
@@ -135,14 +187,13 @@ export default function FormListUserCustom({ actionLoading, handleCloseFormGroup
 										type="text"
 										value={initialState.inactive}
 										component={CheckboxAntd}
-										className="mt-8 mb-16"
+										// className="mt-8"
 									/>
 									<Field
-										label="Biz line"
-										name="bizLine"
-										options={[]}
-										component={SelectAntdMulti}
-										className="mt-8 mb-16"
+										label="Is change password"
+										name="ischangePasswrod"
+										value={initialState.ischangePasswrod}
+										component={CheckboxAntd}
 									/>
 								</div>
 							</div>
@@ -153,8 +204,7 @@ export default function FormListUserCustom({ actionLoading, handleCloseFormGroup
 							) : (
 								<>
 									<Button variant="contained" type="submit" color="primary">
-										{/* {initial.menuID !== '0' ? 'Chỉnh sửa' : 'Thêm mới'} */}
-										Thêm mới
+										{initialState.userID !== '0' ? 'Chỉnh sửa' : 'Thêm mới'}
 									</Button>
 									<Button
 										onClick={handleCloseFormGroupUser}

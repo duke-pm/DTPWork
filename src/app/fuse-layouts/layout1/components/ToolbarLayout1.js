@@ -26,7 +26,7 @@ function convertToVietNamese(array) {
 			case 'xet-duyet':
 				return 'Danh sách đề xuất';
 			case 'de-xuat-can-xu-ly':
-				return 'Đề xuất cần xử lí';
+				return 'Đề xuất cần xử lý';
 			case 'quan-tri':
 				return 'Quản trị';
 			case 'nhom-nguoi-dung':
@@ -50,7 +50,6 @@ function ToolbarLayout1(props) {
 	const classes = useStyles(props);
 	const location = useLocation();
 	const pathSplitted = location.pathname.split('/').splice(1);
-	console.log(pathSplitted);
 	const breadcumb = convertToVietNamese(pathSplitted).join(' > ');
 	return (
 		<ThemeProvider theme={toolbarTheme}>

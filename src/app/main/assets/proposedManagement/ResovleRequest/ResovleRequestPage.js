@@ -40,6 +40,13 @@ export default function ResovleRequestPage() {
 						</div>
 					</div>
 				}
+				contentToolbar={
+					<div className="flex  items-center px-16 flex-1">
+						<Typography component="span" className="font-bold flex text-sm	">
+							Đề xuất cần xử lý
+						</Typography>
+					</div>
+				}
 				content={
 					<Box p={3}>
 						<RequestResovelTable />

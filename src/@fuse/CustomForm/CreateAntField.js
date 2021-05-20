@@ -16,6 +16,7 @@ const CreateAntField = AntComponent => ({
 	submitCount,
 	placeholder,
 	handleInputChange,
+	handleOnChangeBlur,
 	disabled,
 	type,
 	readOnly,
@@ -36,7 +37,10 @@ const CreateAntField = AntComponent => ({
 		form.setFieldValue(field.name, value);
 		return handleChangeState ? handleChangeState(value) : null;
 	};
-	const onBlur = () => form.setFieldTouched(field.name, true);
+	const onBlur = e => {
+		form.setFieldTouched(field.name, e.target.value);
+		return handleOnChangeBlur && handleOnChangeBlur(e.target.value);
+	};
 	return (
 		<FormGroup>
 			<div className="flex flex-row">

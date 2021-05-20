@@ -4,10 +4,10 @@ const useStyles = makeStyles(theme => ({
 	tableHead: {
 		height: 44
 	},
-	// table: {
-	// 	minWidth: 1500,
-	// 	overflowX: 'auto'
-	// },
+	table: {
+		minWidth: 1300,
+		overflowX: 'auto'
+	},
 	cellTabel: {
 		width: 340
 	},
@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
 		overflowX: 'auto'
 	},
 	TableContainer: {
-		maxHeight: '500px'
+		maxHeight: '450px'
 	},
 	modal: {
 		display: 'flex',

@@ -87,7 +87,7 @@ export default function HandlingBody({ dataAssets, setDataAssets, value }) {
 			{({ handleSubmit, isSubmitting, resetForm }) => (
 				<FuseAnimate animation="transition.slideRightIn" delay={300}>
 					<Form className="flex flex-col w-full items-center justify-between mb-28 mt-28">
-						<div style={{ width: '80%' }} className="shadow-md">
+						<div style={{ width: '90%' }}>
 							<div className="px-16 sm:px-24">
 								<div className="grid grid-cols-1 sm:grid-cols-2 mb-16 gap-16 ">
 									<Field

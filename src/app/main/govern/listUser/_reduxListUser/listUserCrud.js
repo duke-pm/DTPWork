@@ -1,17 +1,16 @@
 import request from 'app/store/setupAxios';
 
+const url = '/api/User';
 export const fetchsListUser = params => {
-	return request();
+	return request(`${url}/GetList`, { params });
+};
+export const deletedListUser = params => {
+	return request(`${url}/remove`, { params });
 };
 export const createdListUser = data => {
 	return request({
 		method: 'POST',
-		data
-	});
-};
-export const updatedListUser = data => {
-	return request({
-		method: 'POST',
-		data
+		data,
+		url: `${url}/Modify`
 	});
 };

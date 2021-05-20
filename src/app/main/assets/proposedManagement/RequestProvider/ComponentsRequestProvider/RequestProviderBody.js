@@ -172,7 +172,7 @@ export default function RequestProviderBody({
 				{({ handleSubmit, isSubmitting, resetForm }) => (
 					<FuseAnimate animation="transition.slideRightIn" delay={300}>
 						<Form className="flex flex-col w-full items-center justify-between mb-28 mt-28">
-							<div style={{ width: '80%' }} className="shadow-md">
+							<div style={{ width: '90%' }} className="sm">
 								<div className="px-16 w-full sm:px-24">
 									<div className="flex justify-between flex-row">
 										<h5 className="font-extrabold">Thông tin người yêu cầu.</h5>

@@ -30,8 +30,8 @@ export const fetchsGroupUser = params => dispatch => {
 export const filterGroupUser = (page, limit, sortColumn, sortDirection, search) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const paramsRequest = {
-		PageSize: page || 1,
-		PageNum: limit || 25,
+		PageNum: page || 1,
+		PageSize: limit || 25,
 		SortColumn: sortColumn || '',
 		SortDirection: sortDirection || 'desc',
 		Search: search || ''

@@ -1,10 +1,20 @@
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import FusePageCarded from '@fuse/core/FusePageCarded';
 import { Box, Typography } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import ListUserContent from './ListUserComponent';
+import * as actionsInfor from '../../assets/Possesion/_redux/possesionActions';
+import * as actionsGroupUser from '../groupUser/_reduxGroupUser/groupUserActions';
+import * as actions from './_reduxListUser/listUserActions';
 
 export default function ListUserPage() {
+	const dispatch = useDispatch();
+	const params = 'Region, Employee, Company,  Users, Sales, BizLines, UserGroups';
+	useEffect(() => {
+		dispatch(actionsInfor.getInformationCompany(params));
+		dispatch(actions.fetchsListUser());
+	}, [dispatch]);
 	return (
 		<>
 			<FusePageCarded
@@ -27,6 +37,13 @@ export default function ListUserPage() {
 								</Typography>
 							</FuseAnimate>
 						</div>
+					</div>
+				}
+				contentToolbar={
+					<div className="flex  items-center px-16 flex-1">
+						<Typography component="span" className="font-bold flex text-sm	">
+							Danh sách người dùng
+						</Typography>
 					</div>
 				}
 				content={

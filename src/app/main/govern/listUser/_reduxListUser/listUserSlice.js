@@ -33,6 +33,7 @@ export const listUserSlice = createSlice({
 		fetchsListUser: (state, action) => {
 			const { dataRes, total_result } = action.payload;
 			state.listLoading = false;
+			state.actionLoading = false;
 			state.entities = dataRes;
 			state.total_count = total_result;
 		},
@@ -47,7 +48,7 @@ export const listUserSlice = createSlice({
 			const { dataRes } = action.payload;
 			state.actionLoading = false;
 			state.entities = state.entities.map(entity => {
-				if (entity.id === dataRes.id) {
+				if (entity.userID === dataRes.userID) {
 					return dataRes;
 				}
 				return entity;
@@ -57,6 +58,13 @@ export const listUserSlice = createSlice({
 			const { value } = action.payload;
 			state.actionLoading = false;
 			state.entitiesEdit = value;
+		},
+		deletedListUser: (state, action) => {
+			const { dataReq } = action.payload;
+			const { entities } = state;
+			state.actionLoading = false;
+			const newEntities = entities.filter(item => item.userID !== dataReq.UserID);
+			state.entities = newEntities;
 		}
 	}
 });

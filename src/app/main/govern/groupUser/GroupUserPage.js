@@ -30,6 +30,13 @@ export default function GroupUserPage() {
 						</div>
 					</div>
 				}
+				contentToolbar={
+					<div className="flex  items-center px-16 flex-1">
+						<Typography component="span" className="font-bold flex text-sm	">
+							Nhóm người dùng
+						</Typography>
+					</div>
+				}
 				content={
 					<Box p={3}>
 						<GroupUserContent />

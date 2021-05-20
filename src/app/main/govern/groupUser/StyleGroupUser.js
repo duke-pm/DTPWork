@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
 		overflowX: 'auto'
 	},
 	TableContainer: {
-		maxHeight: '450px'
+		maxHeight: '400px'
 	},
 	modal: {
 		display: 'flex',

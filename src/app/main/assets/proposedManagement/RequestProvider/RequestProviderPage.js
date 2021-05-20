@@ -59,6 +59,13 @@ export default function RequestProviderPage() {
 					</div>
 				</div>
 			}
+			contentToolbar={
+				<div className="flex  items-center px-16 flex-1">
+					<Typography component="span" className="font-bold flex text-sm	">
+						Yêu cầu cấp phát
+					</Typography>
+				</div>
+			}
 			content={
 				<RequestProviderBody
 					dataSource={dataSource}

@@ -6,8 +6,6 @@ import { selectNavigation } from 'app/store/fuse/navigationSlice';
 
 function Navigation(props) {
 	const navigation = useSelector(selectNavigation);
-	// get menu
-	console.log(navigation);
 	return (
 		<FuseNavigation
 			className={clsx('navigation', props.className)}

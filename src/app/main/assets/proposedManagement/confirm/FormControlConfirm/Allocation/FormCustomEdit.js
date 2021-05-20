@@ -155,7 +155,6 @@ export default function FormCustomEdit({ handleSubmitForm, entitiesEdit, newEnti
 									<Field
 										readOnly
 										label="Lí do"
-										hasFeedback
 										name="reason"
 										component={InputTextArea}
 										className="mt-8 mb-16"
@@ -165,7 +164,6 @@ export default function FormCustomEdit({ handleSubmitForm, entitiesEdit, newEnti
 										<Field
 											readOnly
 											label="Lí do từ chối "
-											hasFeedback
 											name="reasonReject"
 											component={InputTextArea}
 											className="mt-8 mb-16"

@@ -6,14 +6,20 @@ export const column = [
 		sort: true
 	},
 	{
-		id: 'UserName',
-		lable: 'Tên',
+		id: 'Username',
+		lable: 'Tài khoản',
 		align: 'left',
 		sort: true
 	},
 	{
-		id: 'FullName',
-		lable: 'Họ và Tên',
+		id: 'LastName',
+		lable: 'Họ và Tên đệm',
+		align: 'left',
+		sort: true
+	},
+	{
+		id: 'FirstName',
+		lable: 'Tên',
 		align: 'left',
 		sort: true
 	},

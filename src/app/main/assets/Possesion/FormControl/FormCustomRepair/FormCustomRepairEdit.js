@@ -42,7 +42,7 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 									<h5 className="font-extrabold">Thông tin tài sản.</h5>
 									<span className="border-b-1 mt-3 ml-6 border-fuchsia w-3/6 sm:w-5/6 h-10" />
 								</div>
-								<div className=" grid grid-cols-1 sm:grid-cols-2 sm:gap-48 gap-16">
+								<div className=" grid grid-cols-1 sm:grid-cols-2 ">
 									<div className="flex-row justify-between flex ">
 										<div className="flex flex-col">
 											<p className="p-6"> Mã sản phẩm </p>
@@ -57,7 +57,7 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 											<p className="p-6 font-extrabold"> {entitiesEdit.reasons || ''} </p>
 										</div>
 									</div>
-									<div className="flex-row justify-between flex ">
+									<div className="flex-row justify-between flex">
 										<div className="flex flex-col">
 											<p className="p-6">Ngày mua </p>
 											<p className="p-6"> Nguyên giá </p>
