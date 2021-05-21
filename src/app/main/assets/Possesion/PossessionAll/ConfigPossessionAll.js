@@ -14,7 +14,7 @@ export const chipText = {
 	3: 'Sửa chữa-bảo hành',
 	4: 'Hư hỏng',
 	5: 'Mất ',
-	6: 'Thanh lí'
+	6: 'Thanh lý'
 };
 
 export const rowPossesion = [
@@ -57,7 +57,7 @@ export const rowPossesion = [
 	{
 		id: 'EmpName',
 		align: 'left',
-		label: 'Nhân viên quản lý',
+		label: 'NV Quản lý',
 		sort: true
 	},
 	{

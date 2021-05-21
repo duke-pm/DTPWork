@@ -43,7 +43,7 @@ export default function FormConfirm({ handleClose, open, type }) {
 										</div>
 									) : (
 										<Field
-											label="Lí do không xác nhận"
+											label="Lý do không xác nhận"
 											autoFocus
 											name="note"
 											component={InputTextAreaLg}
