@@ -15,7 +15,7 @@ html {
     background-color: #121212;
 }
 .MuiTableCell-root{
-    padding: 9px !important;
+    padding: 9px;
 }
 /* label {
  font-size: 14px;
@@ -112,9 +112,9 @@ form label {
 {
 	pointer-events: none;
 }
-.ant-table-tbody > tr > td{    
+/* .ant-table-tbody > tr > td{    
     padding: 5px 18px !important;
-}
+} */
 @keyframes autofill {
     0%,100% {
         background: transparent;

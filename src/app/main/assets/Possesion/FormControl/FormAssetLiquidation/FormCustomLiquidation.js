@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import { makeStyles } from '@material-ui/core/styles';
 import { Spin } from 'antd';
 import * as Yup from 'yup';
+import { validateField } from '@fuse/core/DtpConfig';
 
 const initial = {
 	date: moment(Date.now()),
@@ -21,7 +22,7 @@ const useStyles = makeStyles(theme => ({
 }));
 export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, actionLoading, handleClose }) {
 	const checkValidateForm = Yup.object().shape({
-		date: Yup.string().required('Ngày thu hồi không được để trống')
+		date: Yup.string().required(`${validateField}`)
 	});
 	const classes = useStyles();
 	return (
@@ -43,7 +44,6 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 									<div className="flex-col flex ">
 										<div className="flex flex-row">
 											<h5 className="font-extrabold">Thông tin tài sản.</h5>
-											<span className="border-b-1 mt-3 ml-6 border-fuchsia w-auto  sm:w-4/6 h-10" />
 										</div>
 										<div className="flex-row justify-between flex ">
 											<div className={`${classes.widthFont} flex flex-col`}>
@@ -83,7 +83,6 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 									<div className="flex-col flex ">
 										<div className="flex flex-row">
 											<h5 className="font-extrabold">Thông tin nhân viên sử dụng.</h5>
-											<span className="border-b-1 mt-3 ml-6 border-fuchsia w-auto sm:w-3/6 h-10" />
 										</div>
 										<div className="flex-row justify-between flex ">
 											<div className={`${classes.widthFont} flex flex-col`}>
@@ -116,7 +115,6 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 							<div className="px-16 sm:px-24">
 								<div className="flex flex-row">
 									<h5 className="font-extrabold">Thông tin thanh lý.</h5>
-									<span className="border-b-1 mt-3 ml-6 border-fuchsia w-3/6 sm:w-5/6 h-10" />
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 p-4 mb-16 gap-8 ">
 									<div className="flex flex-col">

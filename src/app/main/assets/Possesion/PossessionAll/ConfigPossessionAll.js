@@ -1,3 +1,4 @@
+import { validateField } from '@fuse/core/DtpConfig';
 import * as Yup from 'yup';
 
 export const chipColor = {
@@ -14,7 +15,7 @@ export const chipText = {
 	3: 'Sửa chữa-bảo hành',
 	4: 'Hư hỏng',
 	5: 'Mất ',
-	6: 'Thanh lí'
+	6: 'Thanh lý'
 };
 
 export const rowPossesion = [
@@ -81,18 +82,17 @@ export const rowPossesion = [
 ];
 
 export const checkValidateFormConfig = Yup.object().shape({
-	assetName: Yup.string().required('Tên tài sản không được để trống'),
-	purchaseDate: Yup.date().required('Ngày mua không được để trống').nullable(),
-	qty: Yup.number()
-		.typeError('Số lượng phải là dạng số và không được để trống. ')
-		.required('Số lượng không được để trống'),
-	company: Yup.string().required('Công ty không được để trống'),
-	category: Yup.string().required('Loại tài sản không được để trống'),
-	group: Yup.string().required('Nhóm tài sản không được để trống'),
-	asset: Yup.string().required('Tài sản không được để trống')
+	assetName: Yup.string().required(`${validateField}`),
+	purchaseDate: Yup.date().required(`${validateField}`).nullable(),
+	qty: Yup.number().typeError(`${validateField}`).required(`${validateField}`),
+	company: Yup.string().required(`${validateField}`),
+	category: Yup.string().required(`${validateField}`),
+	group: Yup.string().required(`${validateField}`),
+	asset: Yup.string().required(`${validateField}`),
+	deptCodeManager: Yup.string().required(`${validateField}`)
 });
 
 export const checkValidateFormConfigUpdate = Yup.object().shape({
-	assetName: Yup.string().required('Tên tài sản không được để trống'),
-	purchaseDate: Yup.date().required('Ngày mua không được để trống').nullable()
+	assetName: Yup.string().required(`${validateField}`),
+	purchaseDate: Yup.date().required(`${validateField}`).nullable()
 });

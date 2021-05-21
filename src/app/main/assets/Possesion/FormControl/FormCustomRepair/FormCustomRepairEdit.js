@@ -10,6 +10,7 @@ import * as moment from 'moment';
 import * as Yup from 'yup';
 import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import { Spin } from 'antd';
+import { validateField } from '@fuse/core/DtpConfig';
 
 const initial = {
 	date: moment(Date.now()),
@@ -20,9 +21,9 @@ const initial = {
 };
 export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairService, actionLoading, handleClose }) {
 	const checkValidateForm = Yup.object().shape({
-		nameService: Yup.string().required('Tên đơn vị sửa chữa,bảo hành không được để trống'),
-		price: Yup.string().required('Chi phí dự kiến không được để trống'),
-		date: Yup.date().required('Ngày sửa chữa bảo hành không được để trống')
+		nameService: Yup.string().required(`${validateField}`),
+		price: Yup.string().required(`${validateField}`),
+		date: Yup.date().required(`${validateField}`)
 	});
 	return (
 		<>
@@ -40,30 +41,29 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 							<div className="px-16 sm:px-24">
 								<div className="flex justify-between flex-row">
 									<h5 className="font-extrabold">Thông tin tài sản.</h5>
-									<span className="border-b-1 mt-3 ml-6 border-fuchsia w-3/6 sm:w-5/6 h-10" />
 								</div>
 								<div className=" grid grid-cols-1 sm:grid-cols-2 ">
-									<div className="flex-row justify-between flex ">
-										<div className="flex flex-col">
+									<div className="flex-row flex ">
+										<div className="flex flex-col" style={{ width: '40rem' }}>
 											<p className="p-6"> Mã sản phẩm </p>
 											<p className="p-6"> Tên sản phẩm </p>
 											<p className="p-6"> Nhóm sản phẩm </p>
 											<p className="p-6"> Mô tả </p>
 										</div>
-										<div className="flex flex-col sm:mr-96 mr-auto">
+										<div className="flex flex-col sm:mr-96 mr-auto" style={{ width: '600px' }}>
 											<p className="p-6 font-extrabold"> {entitiesEdit.assetCode || ''} </p>
 											<p className="p-6 font-extrabold"> {entitiesEdit.assetName || ''} </p>
 											<p className="p-6 font-extrabold"> {entitiesEdit.groupName || ''} </p>
 											<p className="p-6 font-extrabold"> {entitiesEdit.reasons || ''} </p>
 										</div>
 									</div>
-									<div className="flex-row justify-between flex">
-										<div className="flex flex-col">
+									<div className="flex-row flex">
+										<div className="flex flex-col" style={{ width: '27rem' }}>
 											<p className="p-6">Ngày mua </p>
 											<p className="p-6"> Nguyên giá </p>
 											<p className="p-6"> Tình trạng </p>
 										</div>
-										<div className="flex flex-col sm:mr-96 mr-auto">
+										<div className="flex flex-col sm:mr-96 mr-auto" style={{ width: '600px' }}>
 											<p className="p-6 font-extrabold">
 												{' '}
 												{moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY') || ''}{' '}
@@ -79,7 +79,6 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 							<div className="px-16 sm:px-24">
 								<div className="flex justify-between flex-row">
 									<h5 className="font-extrabold">Thông tin sửa chữa bảo hành.</h5>
-									<span className="border-b-1 mt-3 ml-2 border-fuchsia w-auto sm:w-9/12 h-10" />
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 mb-16 gap-8 ">
 									<Field

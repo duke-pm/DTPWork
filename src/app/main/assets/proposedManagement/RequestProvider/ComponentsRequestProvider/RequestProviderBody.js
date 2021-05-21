@@ -280,7 +280,7 @@ export default function RequestProviderBody({
 									</div>
 									<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
 										<Field
-											label="Lí do"
+											label="Lý do"
 											hasFeedback
 											name="reason"
 											// value={initialState.reason || ''}

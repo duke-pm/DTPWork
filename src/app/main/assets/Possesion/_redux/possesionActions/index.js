@@ -348,3 +348,34 @@ export const getAssetHistory = id => dispatch => {
 			dispatch(actions.catchErrors({ callType: callTypes.action }));
 		});
 };
+
+export const addNewsSupplier = values => dispatch => {
+	dispatch(actions.catchErrors({ callType: callTypes.action }));
+	const dataReq = {
+		SupplierID: 0,
+		SupplierName: values.nameSupplier,
+		Address: values.address,
+		Email: values.email,
+		Phone: values.phone,
+		CnctName: values.contact,
+		CnctPhone: values.phoneContact,
+		Inactive: values.inactive
+	};
+	console.log(dataReq);
+	return requestFrom
+		.addNewsSupplier(dataReq)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				const dataRes = data.data;
+				console.log(dataRes);
+				dispatch(actions.addNewsSupplierSlice({ dataRes }));
+			} else {
+				notificationConfig('warning', 'Thất bại', data.errorMessage);
+			}
+			return data;
+		})
+		.catch(err => {
+			notificationConfig('warning', 'Thất bại', 'Đã có lỗi xảy ra ');
+		});
+};

@@ -1,3 +1,4 @@
+import { validateField } from '@fuse/core/DtpConfig';
 import CheckboxAntd from '@fuse/CustomForm/CheckboxAntd';
 import { AntInput, AntInputNumber } from '@fuse/CustomForm/CreateAntField';
 import SelectAntd from '@fuse/CustomForm/SelectAntd';
@@ -5,7 +6,7 @@ import SelectAntdMulti from '@fuse/CustomForm/SelectAntdMulti';
 import { Button, DialogActions, DialogContent } from '@material-ui/core';
 import { Spin } from 'antd';
 import { Field, Formik, Form } from 'formik';
-import React, { useEffect } from 'react';
+import React from 'react';
 import * as Yup from 'yup';
 
 export default function FormListUserCustom({
@@ -58,14 +59,21 @@ export default function FormListUserCustom({
 		};
 	}
 	const validationSchema = Yup.object().shape({
-		nameGroup: Yup.string().required('Tên nhóm không được để trống !!!')
+		userName: Yup.string().required(`${validateField}`),
+		email: Yup.string().required(`${validateField}`),
+		lastMiddleName: Yup.string().required(`${validateField}`),
+		firstName: Yup.string().required(`${validateField}`),
+		userGroup: Yup.string().required(`${validateField}`),
+		company: Yup.array().min(1, `${validateField}`),
+		region: Yup.array().min(1, `${validateField}`),
+		bizLine: Yup.array().min(1, `${validateField}`)
 	});
 
 	return (
 		<>
 			<Formik
 				enableReinitialize
-				// validationSchema={validationSchema}
+				validationSchema={validationSchema}
 				initialValues={initialState}
 				onSubmit={values => {
 					handleSubmitFormListUser(values);
@@ -154,6 +162,8 @@ export default function FormListUserCustom({
 										component={SelectAntdMulti || []}
 										className="mt-8 mb-16"
 									/>
+								</div>
+								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 									<Field
 										label="Khu vực"
 										hasFeedback
@@ -162,8 +172,6 @@ export default function FormListUserCustom({
 										component={SelectAntdMulti || []}
 										className="mt-8 mb-16"
 									/>
-								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 									<Field
 										label="Nhân viên SAP"
 										name="empSAP"
@@ -171,6 +179,25 @@ export default function FormListUserCustom({
 										component={SelectAntd || []}
 										className="mt-8 mb-16"
 									/>
+								</div>
+								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+									<div className="flex flex-col">
+										<Field
+											label="Is change password"
+											name="ischangePasswrod"
+											value={initialState.ischangePasswrod}
+											component={CheckboxAntd}
+										/>
+										<Field
+											label="Inactive"
+											name="inactive"
+											type="text"
+											value={initialState.inactive}
+											component={CheckboxAntd}
+											// className="mt-8"
+										/>
+									</div>
+
 									<Field
 										label="Biz line"
 										hasFeedback
@@ -178,22 +205,6 @@ export default function FormListUserCustom({
 										options={arrBizLine}
 										component={SelectAntdMulti || []}
 										className="mt-8 mb-16"
-									/>
-								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-									<Field
-										label="Inactive"
-										name="inactive"
-										type="text"
-										value={initialState.inactive}
-										component={CheckboxAntd}
-										// className="mt-8"
-									/>
-									<Field
-										label="Is change password"
-										name="ischangePasswrod"
-										value={initialState.ischangePasswrod}
-										component={CheckboxAntd}
 									/>
 								</div>
 							</div>

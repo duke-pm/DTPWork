@@ -5,9 +5,11 @@ import DateCustom from '@fuse/CustomForm/Date';
 import InputTextArea from '@fuse/CustomForm/InputTextArea';
 import InputCurrency from '@fuse/CustomForm/InputCurrency';
 import { Spin } from 'antd';
-import { AntInput, AntInputNumber } from '@fuse/CustomForm/CreateAntField';
+import { AntInput } from '@fuse/CustomForm/CreateAntField';
 import SelectAntd from '@fuse/CustomForm/SelectAntd';
+import SelectAntdCustom from '@fuse/CustomForm/SelectAntdCustom';
 import { checkValidateFormConfig, checkValidateFormConfigUpdate } from '../ConfigPossessionAll';
+import FormSupplier from './FormSupplier';
 
 function FormCustomEdit({
 	saveAsset,
@@ -24,6 +26,7 @@ function FormCustomEdit({
 	const [disableCateogry, setDisableCategory] = React.useState(true);
 	const [disableGroup, setDisableGroup] = React.useState(true);
 	const [disableAsset, setDisableAsset] = React.useState(true);
+	const [formSupplier, setFormSupplier] = React.useState(false);
 	const [arrGroup, setArrayGroup] = React.useState([]);
 	const [arrAsset, setArrAsset] = React.useState([]);
 	const [companyParse, setcompanyParse] = React.useState(null);
@@ -77,8 +80,14 @@ function FormCustomEdit({
 		setCode(arrAssetDetail.code);
 		setPrefix(companyParse.shortName.concat('.', arrAssetDetail.code));
 	};
+	const handleOpenFormSupplier = value => setFormSupplier(value);
+	const handleCloseFormSupplier = value => {
+		setFormSupplier(false);
+		console.log(value);
+	};
 	return (
 		<>
+			<FormSupplier handleCloseFormSupplier={handleCloseFormSupplier} open={formSupplier} />
 			<Formik
 				enableReinitialize
 				validationSchema={initialValue.assetID ? checkValidateFormConfigUpdate : checkValidateFormConfig}
@@ -100,9 +109,10 @@ function FormCustomEdit({
 											label="Số lượng"
 											autoFocus
 											name="qty"
+											type="number"
 											placeholder="Vui lòng nhập số lượng tài sản cần tạo"
 											hasFeedback
-											component={AntInputNumber}
+											component={AntInput}
 											// className="mx-4"
 										/>
 									</div>
@@ -120,7 +130,8 @@ function FormCustomEdit({
 									<Field
 										label="Nhà cung cấp"
 										name="suppiler"
-										component={SelectAntd}
+										component={SelectAntdCustom}
+										handleOpenSelectCustom={handleOpenFormSupplier}
 										options={suppiler}
 										className="mx-4"
 									/>

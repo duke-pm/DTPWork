@@ -43,7 +43,7 @@ export const rowPossesion = [
 	{
 		id: 'EmpName',
 		align: 'left',
-		label: 'Nhân viên quản lí',
+		label: 'Nhân viên quản lý',
 		sort: true
 	},
 	{

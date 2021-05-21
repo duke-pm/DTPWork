@@ -1,3 +1,4 @@
+import { validateField } from '@fuse/core/DtpConfig';
 import CheckboxAntd from '@fuse/CustomForm/CheckboxAntd';
 import { AntInput } from '@fuse/CustomForm/CreateAntField';
 import InputTextArea from '@fuse/CustomForm/InputTextArea';
@@ -20,7 +21,7 @@ export default function FormGroupUserCustom({
 		inactive: false
 	};
 	const validationSchema = Yup.object().shape({
-		groupName: Yup.string().required('Tên nhóm không được để trống !!!')
+		groupName: Yup.string().required(`${validateField}`)
 	});
 	const initialState = entitiesEdit && entitiesEdit.groupID ? entitiesEdit : initial;
 	return (

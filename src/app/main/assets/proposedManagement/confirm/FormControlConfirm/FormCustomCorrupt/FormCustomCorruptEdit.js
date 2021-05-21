@@ -98,7 +98,7 @@ export default function FormCustomCorruptEdit({ entitiesEdit, handleClose, setFo
 								>
 									<Field
 										readOnly
-										label="Lí do"
+										label="Lý do"
 										hasFeedback
 										name="reason"
 										component={InputTextArea}
@@ -108,7 +108,7 @@ export default function FormCustomCorruptEdit({ entitiesEdit, handleClose, setFo
 									{entitiesEdit && entitiesEdit.statusID === 4 && (
 										<Field
 											readOnly
-											label="Lí do từ chối "
+											label="Lý do từ chối "
 											hasFeedback
 											name="reasonReject"
 											component={InputTextArea}

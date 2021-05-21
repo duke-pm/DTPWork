@@ -7,6 +7,7 @@ const urlRule = '/api/Assets/GetList';
 const urlInformation = '/api/MasterData/GetDataForForm';
 const UrlType = `/api/AssetTrans/ProcessAsset`;
 const UrlHistory = `/api/Assets/GetHistoryByID`;
+const urlSupplier = `/api/Supplier/Modify`;
 export const fetchDataPossesion = params => {
 	return request.get(`${urlRule}`, { params });
 };
@@ -46,4 +47,11 @@ export const getInformationCompany = params => {
 };
 export const getAssetHistory = params => {
 	return request.get(`${UrlHistory}`, { params });
+};
+export const addNewsSupplier = data => {
+	return request({
+		method: 'POST',
+		url: urlSupplier,
+		data
+	});
 };

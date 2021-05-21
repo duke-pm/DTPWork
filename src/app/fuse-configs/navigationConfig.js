@@ -24,8 +24,8 @@ const navigationConfig = [
 				children: [
 					{
 						id: 'example-component',
-						title: 'Quản lí tài sản',
-						translate: 'Quản lí tài sản',
+						title: 'Quản lý tài sản',
+						translate: 'Quản lý tài sản',
 						type: 'item',
 						icon: 'arrow_right',
 						url: '/tai-san'
@@ -40,8 +40,8 @@ const navigationConfig = [
 					},
 					{
 						id: 'recomend',
-						title: 'Đề xuất cần xử lí',
-						transalate: 'Đề xuất cần xử lí',
+						title: 'Đề xuất cần xử lý',
+						transalate: 'Đề xuất cần xử lý',
 						type: 'item',
 						icon: 'arrow_right',
 						url: '/de-xuat-can-xu-ly'

@@ -3,11 +3,11 @@ import FusePageCarded from '@fuse/core/FusePageCarded';
 import { Box, Typography } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import ListUserContent from './ListUserComponent';
 import * as actionsInfor from '../../assets/Possesion/_redux/possesionActions';
+import ListRoleSettingContent from './ListRoleSettingComponent';
 import * as actions from './_reduxListUser/listUserActions';
 
-export default function ListUserPage() {
+export default function ListRoleSettingPage() {
 	const dispatch = useDispatch();
 	const params = 'Region, Employee, Company,  Users, Sales, BizLines, UserGroups';
 	useEffect(() => {
@@ -41,13 +41,13 @@ export default function ListUserPage() {
 				contentToolbar={
 					<div className="flex  items-center px-16 flex-1">
 						<Typography component="span" className="font-bold flex text-sm	">
-							Danh sách người dùng
+							Phân quyền chức năng
 						</Typography>
 					</div>
 				}
 				content={
 					<Box p={3}>
-						<ListUserContent />
+						<ListRoleSettingContent />
 					</Box>
 				}
 			/>

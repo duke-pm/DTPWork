@@ -13,6 +13,7 @@ import { submitLogin } from 'app/auth/store/loginSlice';
 import { showMessage } from 'app/store/fuse/messageSlice';
 import { Formik, Form, Field } from 'formik';
 import { AntInputPassword, AntInput } from '@fuse/CustomForm/CreateAntField';
+import { validateField } from '@fuse/core/DtpConfig';
 
 // import Auth0LoginTab from './tabs/Auth0LoginTab';
 // import FirebaseLoginTab from './tabs/FirebaseLoginTab';
@@ -41,8 +42,8 @@ const initialState = {
 };
 function Login() {
 	const checkValidateForm = Yup.object().shape({
-		email: Yup.string().required('Không được để trống'),
-		password: Yup.string().required('Mật khẩu được để trống')
+		email: Yup.string().required(`${validateField}`),
+		password: Yup.string().required(`${validateField}`)
 	});
 	const classes = useStyles();
 	const login = useSelector(({ auth }) => auth.login);

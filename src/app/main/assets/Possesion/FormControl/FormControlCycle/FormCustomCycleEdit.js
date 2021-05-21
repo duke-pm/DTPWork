@@ -10,6 +10,7 @@ import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import * as Yup from 'yup';
 import * as moment from 'moment';
 import { Spin } from 'antd';
+import { validateField } from '@fuse/core/DtpConfig';
 
 const initial = {
 	date: moment(Date.now()),
@@ -21,10 +22,10 @@ const initial = {
 };
 export default function FormCustomCycleEdit({ handleClose, entitiesEdit, handleSubmitCycle, actionLoading }) {
 	const validationSchema = Yup.object().shape({
-		dateEnd: Yup.string().required('Ngày kết thúc sửa chữa, bảo hành không được để trống'),
-		date: Yup.string().required('Ngày đưa vào sử dụng lại không được để trống'),
-		nameService: Yup.string().required('Tên sửa chữa, bảo hành không được để trống'),
-		price: Yup.string().required('Chi phí thực tế không được để trống')
+		dateEnd: Yup.string().required(`${validateField}`),
+		date: Yup.string().required(`${validateField}`),
+		nameService: Yup.string().required(`${validateField}`),
+		price: Yup.string().required(`${validateField}`)
 	});
 	return (
 		<>
