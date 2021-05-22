@@ -5,8 +5,13 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import * as moment from 'moment';
 import { UnorderedListOutlined } from '@ant-design/icons';
 import { chipColor, chipText } from '../ConfigPossessionAll';
-
+// import {} from '@'
 const TableBodyAssetAll = ({ entities, lastErrors, classes, HandleOpenHistory, listloading }) => {
+	const dataMemo = React.useMemo(() => {
+		return {
+			entities
+		};
+	}, [entities]);
 	const rowPossesion = [
 		{
 			title: 'Mã tài sản',
@@ -118,6 +123,14 @@ const TableBodyAssetAll = ({ entities, lastErrors, classes, HandleOpenHistory, l
 			)
 		}
 	];
-	return <Table scroll={{ y: 440 }} pagination={false} columns={rowPossesion} dataSource={entities} />;
+	return (
+		<Table
+			className="virtual-table"
+			scroll={{ y: 440 }}
+			pagination={false}
+			columns={rowPossesion}
+			dataSource={dataMemo.entities}
+		/>
+	);
 };
 export default TableBodyAssetAll;

@@ -118,6 +118,14 @@ function TableBodyUnUsed({ handleOpenForm, handleOpenFormEdit, entities, lastErr
 			)
 		}
 	];
-	return <Table scroll={{ y: 440 }} pagination={false} columns={rowPossesion} dataSource={entities} />;
+	return (
+		<Table
+			className="virtual-table"
+			scroll={{ y: 440 }}
+			pagination={false}
+			columns={rowPossesion}
+			dataSource={entities}
+		/>
+	);
 }
 export default TableBodyUnUsed;

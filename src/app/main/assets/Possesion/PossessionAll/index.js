@@ -75,15 +75,12 @@ function PossessionAllPage(props) {
 					<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
 						<TableContainer className="flex flex-1">
 							<Paper className={classes.rootPaper}>
-								{/* <Table className={`${classes.table}`} stickyHeader>
-									<TableHeader createSortHandler={createSortHandler} sort={sort} /> */}
 								<TableBodyAssetAll
 									HandleOpenHistory={HandleOpenHistory}
 									entities={entities}
 									lastErrors={lastErrors}
 									classes={classes}
 								/>
-								{/* </Table> */}
 								{(entities && entities.length === 0) || lastErrors ? (
 									<FuseAnimate delay={300}>
 										<div className="flex items-center justify-center h-auto">
@@ -117,4 +114,4 @@ function PossessionAllPage(props) {
 		</>
 	);
 }
-export default React.memo(PossessionAllPage);
+export default PossessionAllPage;

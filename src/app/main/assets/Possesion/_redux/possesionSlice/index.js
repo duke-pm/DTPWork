@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialPossesionState = {
 	listloading: false,
 	actionLoading: false,
-	entities: null,
+	entities: [],
 	entitiesEdit: undefined,
 	entitiesInformation: null,
 	total_count: 0,
