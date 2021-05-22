@@ -45,14 +45,14 @@ export default function FormCustomCycleEdit({ handleClose, entitiesEdit, handleS
 									<h5 className="font-extrabold">Thông tin tài sản.</h5>
 								</div>
 								<div className=" grid grid-cols-1 sm:grid-cols-2 gap-48">
-									<div className="flex-row justify-between flex ">
-										<div className="flex flex-col">
+									<div className="flex-row flex ">
+										<div className="flex flex-col" style={{ width: '40rem' }}>
 											<p className="p-6"> Mã sản phẩm </p>
 											<p className="p-6"> Tên sản phẩm </p>
 											<p className="p-6"> Nhóm sản phẩm </p>
 											<p className="p-6"> Mô tả </p>
 										</div>
-										<div className="flex flex-col sm:mr-98 mr-auto">
+										<div className="flex flex-col sm:mr-98 mr-auto" style={{ width: '600px' }}>
 											<p className="p-6 font-extrabold"> {entitiesEdit.assetCode || ''} </p>
 											<p className="p-6 font-extrabold"> {entitiesEdit.assetName || ''} </p>
 											<p className="p-6 font-extrabold"> {entitiesEdit.groupName || ''} </p>
@@ -60,12 +60,12 @@ export default function FormCustomCycleEdit({ handleClose, entitiesEdit, handleS
 										</div>
 									</div>
 									<div className="flex-row justify-between  flex ">
-										<div className="flex flex-col">
+										<div className="flex flex-col" style={{ width: '27rem' }}>
 											<p className="p-6">Ngày mua </p>
 											<p className="p-6"> Nguyên giá </p>
 											<p className="p-6"> Tình trạng </p>
 										</div>
-										<div className="flex flex-col sm:mr-98 mr-auto">
+										<div className="flex flex-col sm:mr-98 mr-auto" style={{ width: '600px' }}>
 											<p className="p-6 font-extrabold">
 												{' '}
 												{moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY') || ''}{' '}
