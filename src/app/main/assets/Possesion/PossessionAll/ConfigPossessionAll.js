@@ -2,12 +2,12 @@ import { validateField } from '@fuse/core/DtpConfig';
 import * as Yup from 'yup';
 
 export const chipColor = {
-	1: 'bg-blue text-white',
-	2: 'bg-green text-white',
-	3: 'bg-orange text-black',
-	4: 'bg-purple text-white',
-	5: 'bg-red-700 text-white',
-	6: 'bg-yellow-900 text-white'
+	1: '#2db7f5',
+	2: '#87d068',
+	3: 'orange',
+	4: 'purple',
+	5: 'red',
+	6: 'gold'
 };
 export const chipText = {
 	1: 'Chưa sử dụng',

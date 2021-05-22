@@ -3,8 +3,8 @@ export const chipText = {
 	5: 'Mất'
 };
 export const chipColor = {
-	4: 'bg-purple text-white',
-	5: 'bg-red-700 text-white'
+	4: 'purple',
+	5: 'red'
 };
 export const rowPossesion = [
 	{

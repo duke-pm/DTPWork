@@ -9,7 +9,6 @@ import image from '@fuse/assets/group.png';
 import FormCustomCorrupt from './FormCorrupt';
 import { PossessionContext } from '../PossessionContext';
 import * as actions from '../_redux/possesionActions';
-import TableHeaderCorrupt from './Component/TableHeaderCorrupt';
 import TableBodyCorrupt from './Component/TableBodyCorrupt';
 import { useStyles } from '../PossessionAll/StyleCustomAll';
 import ActionComponent from './Component/ActionComponentFilter';
@@ -86,16 +85,13 @@ export default function PossessionCorrupt(props) {
 					<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
 						<TableContainer className={`${classes.TableContainer} flex flex-1`}>
 							<Paper className={classes.rootPaper}>
-								<Table className={classes.table} stickyHeader>
-									<TableHeaderCorrupt createSortHandler={createSortHandler} sort={sort} />
-									<TableBodyCorrupt
-										entities={entities}
-										lastErrors={lastErrors}
-										classes={classes}
-										handleOpenFormService={handleOpenFormService}
-										handleOpenFormLiquiAsset={handleOpenFormLiquiAsset}
-									/>
-								</Table>
+								<TableBodyCorrupt
+									entities={entities}
+									lastErrors={lastErrors}
+									classes={classes}
+									handleOpenFormService={handleOpenFormService}
+									handleOpenFormLiquiAsset={handleOpenFormLiquiAsset}
+								/>
 								{(entities && entities.length === 0) || lastErrors ? (
 									<FuseAnimate delay={300}>
 										<div className="flex items-center justify-center h-auto">

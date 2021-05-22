@@ -64,7 +64,9 @@ export const fetchPossesionAll = (value, limit, page, search) => dispatch => {
 		StatusID: value,
 		PageSize: limit || 25,
 		PageNum: page || 1,
-		Search: search || ''
+		Search: search || '',
+		SortColumn: '',
+		SortDirection: 'desc'
 	};
 	return requestFrom
 		.fetchDataPossesion(paramsReq)

@@ -11,7 +11,6 @@ import ActionComponent from './Component/ActionComponent';
 import * as actions from '../_redux/possesionActions';
 import { useStyles } from './StyleCustomAll';
 import TableBodyRepair from './Component/TableBodyRepair';
-import TableHeaderRepair from './Component/TableHeaderRepair';
 
 // import FormCustomUsed from './FormCustomUsed';
 
@@ -80,19 +79,13 @@ export default function PossessionRepair(props) {
 					<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
 						<TableContainer className={`${classes.TableContainer} flex flex-1`}>
 							<Paper className={classes.rootPaper}>
-								<Table
-									className={entities && entities.length === 0 ? classes.tableNodata : classes.table}
-									stickyHeader
-								>
-									<TableHeaderRepair createSortHandler={createSortHandler} sort={sort} />
-									<TableBodyRepair
-										handleOpenFormCycleView={handleOpenFormCycleView}
-										handleOpenFormLiquiAsset={handleOpenFormLiquiAsset}
-										entities={entities}
-										lastErrors={lastErrors}
-										classes={classes}
-									/>
-								</Table>
+								<TableBodyRepair
+									handleOpenFormCycleView={handleOpenFormCycleView}
+									handleOpenFormLiquiAsset={handleOpenFormLiquiAsset}
+									entities={entities}
+									lastErrors={lastErrors}
+									classes={classes}
+								/>
 								{(entities && entities.length === 0) || lastErrors ? (
 									<FuseAnimate delay={300}>
 										<div className="flex items-center justify-center h-auto">

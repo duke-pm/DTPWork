@@ -11,7 +11,6 @@ import PossessionAll from './FormCustomAll';
 import ActionComponent from './Component/ActionComponent/ActionFilterComponent';
 import * as actions from '../_redux/possesionActions';
 import { PossessionContext } from '../PossessionContext';
-import TableHeader from './Component/TableHeader';
 import TableBodyAssetAll from './Component/TableBody';
 import { useStyles } from './StyleCustomAll';
 import ProcessingUseAsset from './Component/ProcessingUseAsset';
@@ -74,17 +73,17 @@ function PossessionAllPage(props) {
 				<ActionComponent value={value} handleOpenForm={handleOpenForm} />
 				<FuseAnimate animation="transition.slideUpIn" delay={200}>
 					<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
-						<TableContainer className={`${classes.TableContainer} flex flex-1`}>
+						<TableContainer className="flex flex-1">
 							<Paper className={classes.rootPaper}>
-								<Table className={`${classes.table}`} stickyHeader>
-									<TableHeader createSortHandler={createSortHandler} sort={sort} />
-									<TableBodyAssetAll
-										HandleOpenHistory={HandleOpenHistory}
-										entities={entities}
-										lastErrors={lastErrors}
-										classes={classes}
-									/>
-								</Table>
+								{/* <Table className={`${classes.table}`} stickyHeader>
+									<TableHeader createSortHandler={createSortHandler} sort={sort} /> */}
+								<TableBodyAssetAll
+									HandleOpenHistory={HandleOpenHistory}
+									entities={entities}
+									lastErrors={lastErrors}
+									classes={classes}
+								/>
+								{/* </Table> */}
 								{(entities && entities.length === 0) || lastErrors ? (
 									<FuseAnimate delay={300}>
 										<div className="flex items-center justify-center h-auto">
@@ -100,7 +99,7 @@ function PossessionAllPage(props) {
 								) : null}
 							</Paper>
 						</TableContainer>
-						{/* {entities && entities.length !== 0 && (
+						{entities && entities.length !== 0 && (
 							<div className="flex flex-row items-center justify-end">
 								{actionLoading && <Spin />}
 								<Panigation
@@ -111,7 +110,7 @@ function PossessionAllPage(props) {
 									count={total_count}
 								/>
 							</div>
-						)} */}
+						)}
 					</div>
 				</FuseAnimate>
 			</div>

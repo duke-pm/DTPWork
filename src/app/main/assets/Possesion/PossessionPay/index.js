@@ -8,7 +8,6 @@ import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import FuseLoading from '@fuse/core/FuseLoading';
 import { PossessionContext } from '../PossessionContext';
 import * as actions from '../_redux/possesionActions';
-import TableHeaderPay from './Component/TableHeaderPay';
 import TableBodyPay from './Component/TableBodyPay';
 import { useStyles } from './StyleCustomPay';
 import ActionComponent from './Component/ActionFliterComponent';
@@ -61,10 +60,7 @@ export default function PossessionPay(props) {
 					<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
 						<TableContainer className="flex flex-1">
 							<Paper className={classes.rootPaper}>
-								<Table className={classes.table} stickyHeader>
-									<TableHeaderPay createSortHandler={createSortHandler} sort={sort} />
-									<TableBodyPay entities={entities} />
-								</Table>
+								<TableBodyPay entities={entities} />
 								{(entities && entities.length === 0) || lastErrors ? (
 									<FuseAnimate delay={300}>
 										<div className="flex items-center justify-center h-auto">

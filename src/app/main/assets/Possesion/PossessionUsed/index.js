@@ -13,7 +13,6 @@ import FormCustomUsed from './FormCustomUsed';
 import { PossessionContext } from '../PossessionContext';
 import ActionComponent from './Component/ActionFliterComponent';
 import { useStyles } from './StyleCustomAll';
-import TableHeaderUsed from './Component/TableHeaderUsed';
 import TableBodyUsed from './Component/TableBodyUsed';
 
 export default function PossessionUsed(props) {
@@ -84,14 +83,11 @@ export default function PossessionUsed(props) {
 					<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
 						<TableContainer className={`${classes.TableContainer} flex flex-1`}>
 							<Paper className={classes.rootPaper}>
-								<Table className={classes.table} stickyHeader>
-									<TableHeaderUsed createSortHandler={createSortHandler} sort={sort} />
-									<TableBodyUsed
-										handleOpenFromService={handleOpenFromService}
-										entities={entities}
-										handleOpenForm={handleOpenForm}
-									/>
-								</Table>
+								<TableBodyUsed
+									handleOpenFromService={handleOpenFromService}
+									entities={entities}
+									handleOpenForm={handleOpenForm}
+								/>
 								{(entities && entities.length === 0) || lastErrors ? (
 									<FuseAnimate delay={300}>
 										<div className="flex items-center justify-center h-auto">

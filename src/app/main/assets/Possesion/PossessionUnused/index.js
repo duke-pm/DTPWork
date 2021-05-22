@@ -12,7 +12,6 @@ import { PossessionContext } from '../PossessionContext';
 import ActionComponent from './Component/ActionComponent';
 import * as actions from '../_redux/possesionActions';
 import PossessionAll from '../PossessionAll/FormCustomAll';
-import TableHeaderUnUsed from './Component/TableHeaderUnUsed';
 import { useStyles } from './StyleCustomAll';
 import TableBodyUnUsed from './Component/TableBodyUnUsed';
 
@@ -77,15 +76,12 @@ function PossessionUnused(props) {
 					<div className="flex flex-col mt-16 min-h-full  sm:border-1 sm:rounded-4 overflow-hidden">
 						<TableContainer className={`${classes.TableContainer} flex flex-1`}>
 							<Paper className={classes.rootPaper}>
-								<Table className={classes.table} stickyHeader>
-									<TableHeaderUnUsed createSortHandler={createSortHandler} sort={sort} />
-									<TableBodyUnUsed
-										handleOpenForm={handleOpenForm}
-										handleOpenFormEdit={handleOpenFormEdit}
-										entities={entities}
-										lastErrors={lastErrors}
-									/>
-								</Table>
+								<TableBodyUnUsed
+									handleOpenForm={handleOpenForm}
+									handleOpenFormEdit={handleOpenFormEdit}
+									entities={entities}
+									lastErrors={lastErrors}
+								/>
 								{(entities && entities.length === 0) || lastErrors ? (
 									<FuseAnimate delay={300}>
 										<div className="flex items-center justify-center h-auto">
