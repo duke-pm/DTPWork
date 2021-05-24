@@ -83,7 +83,6 @@ function FormCustomEdit({
 	const handleOpenFormSupplier = value => setFormSupplier(value);
 	const handleCloseFormSupplier = value => {
 		setFormSupplier(false);
-		console.log(value);
 	};
 	return (
 		<>

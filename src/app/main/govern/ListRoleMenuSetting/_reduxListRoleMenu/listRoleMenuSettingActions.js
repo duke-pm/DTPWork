@@ -1,8 +1,8 @@
 import { notificationConfig } from '@fuse/core/DtpConfig';
-import * as requestFrom from './listUserCrud';
-import { callTypes, listUserSlice } from './listUserSlice';
+import * as requestFrom from './listRoleMenuSettingCrud';
+import { callTypes, listRoleSlice } from './listRoleMenuSlice';
 
-const { actions } = listUserSlice;
+const { actions } = listRoleSlice;
 export const fetchsListUser = params => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.list }));
 	const paramsReq = {

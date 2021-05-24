@@ -15,7 +15,7 @@ export default function PossessionContextProvider({ children }) {
 	const [value, setValue] = React.useState(0);
 	const [search, setSearch] = React.useState('');
 	const [sort, setSort] = React.useState({
-		direction: 'asc',
+		direction: 'desc',
 		id: null
 	});
 	const handleOpenFormCycle = type => {

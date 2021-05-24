@@ -5,7 +5,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import * as actionsInfor from '../../assets/Possesion/_redux/possesionActions';
 import ListRoleSettingContent from './ListRoleSettingComponent';
-import * as actions from './_reduxListUser/listUserActions';
+import * as actions from './_reduxListRoleMenu/listRoleMenuSettingActions';
 
 export default function ListRoleSettingPage() {
 	const dispatch = useDispatch();

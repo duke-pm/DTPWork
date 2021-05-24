@@ -4,10 +4,10 @@ const useStyles = makeStyles(theme => ({
 	tableHead: {
 		height: 44
 	},
-	// table: {
-	// 	minWidth: 1500,
-	// 	overflowX: 'auto'
-	// },
+	table: {
+		minWidth: 1500,
+		overflowX: 'auto'
+	},
 	cellTabel: {
 		width: 340
 	},

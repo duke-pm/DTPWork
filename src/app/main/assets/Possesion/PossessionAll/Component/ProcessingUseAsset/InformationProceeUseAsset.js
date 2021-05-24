@@ -29,9 +29,9 @@ export default function InformationProceeUseAsset({ entitiesEdit, actionLoading 
 				<div className=" grid grid-cols-1 sm:grid-cols-2 gap-48">
 					<div className="flex-row flex ">
 						<div className="flex flex-col" style={{ width: '30rem' }}>
-							<p className="p-6"> Mã sản phẩm </p>
-							<p className="p-6"> Tên sản phẩm </p>
-							<p className="p-6"> Nhóm sản phẩm </p>
+							<p className="p-6"> Mã tài sản </p>
+							<p className="p-6"> Tên tài sản </p>
+							<p className="p-6"> Nhóm tài sản </p>
 							<p className="p-6"> Mô tả </p>
 						</div>
 						<div className="flex sm:mr-96 mr-auto flex-col" style={{ width: '600px' }}>

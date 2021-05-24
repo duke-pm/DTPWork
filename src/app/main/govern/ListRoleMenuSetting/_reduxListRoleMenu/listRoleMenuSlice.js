@@ -11,8 +11,8 @@ export const callTypes = {
 	list: 'list',
 	action: 'actions'
 };
-export const listUserSlice = createSlice({
-	name: 'listUser',
+export const listRoleSlice = createSlice({
+	name: 'listRole',
 	initialState,
 	reducers: {
 		catchErrors: (state, action) => {

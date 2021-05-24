@@ -58,7 +58,7 @@ export default function FormConfirmGobal() {
 						<CloseIcon />
 					</IconButton>
 					<Typography variant="subtitle1" color="inherit">
-						Lý do không xác nhận.
+						Lý do không duyệt.
 					</Typography>
 				</Toolbar>
 			</AppBar>
@@ -76,7 +76,7 @@ export default function FormConfirmGobal() {
 							<div className="px-16 sm:px-24">
 								<div className="grid grid-cols-1 mb-16 gap-8 ">
 									<Field
-										label="Lý do không xác nhận"
+										label="Lý do không duyệt"
 										autoFocus
 										hasFeedback
 										name="note"

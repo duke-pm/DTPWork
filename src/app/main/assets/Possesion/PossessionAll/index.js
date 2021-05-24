@@ -100,7 +100,7 @@ function PossessionAllPage(props) {
 								) : null}
 							</Paper>
 						</TableContainer>
-						{/* {entities && entities.length !== 0 && (
+						{entities && entities.length !== 0 && (
 							<div className="flex flex-row items-center justify-end">
 								{actionLoading && <Spin />}
 								<Panigation
@@ -111,7 +111,7 @@ function PossessionAllPage(props) {
 									count={total_count}
 								/>
 							</div>
-						)} */}
+						)}
 					</div>
 				</FuseAnimate>
 			</div>

@@ -6,9 +6,9 @@ import { Spin } from 'antd';
 import Panigation from '@fuse/core/FusePanigate';
 import { useStyles } from '../StyleGroupUser';
 import ListRoleSettingBody from './ListRoleSettingBody';
-// import ActionListUser from './ActionListUser';
+import ActionListRoleSetting from './ActionListRoleSetting';
 import { ListRoleMenuSettingContext } from '../ListRoleMenuSettingContext';
-import * as actions from '../_reduxListUser/listUserActions';
+import * as actions from '../_reduxListRoleMenu/listRoleMenuSettingActions';
 
 export default function ListRoleSettingContent() {
 	const classes = useStyles();
@@ -44,32 +44,12 @@ export default function ListRoleSettingContent() {
 	};
 	return (
 		<div className="w-full flex flex-col">
+			<ActionListRoleSetting />
 			<FuseAnimate animation="transition.slideUpIn" delay={200}>
 				<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
 					<TableContainer className={`${classes.TableContainer} flex flex-1`}>
 						<Paper className={classes.rootPaper}>
-							{/* <Table className={`${classes.table}`} stickyHeader aria-label="collapsible table">
-								<ListRoleSettingHeader createSortHandler={createSortHandler} sort={sort} />
-								<TableBody>
-									{entities &&
-										entities.map(items => ( */}
 							<ListRoleSettingBody classes={classes} entities={entities} />
-							{/* ))} */}
-							{/* </TableBody> */}
-							{/* </Table> */}
-							{/* {!entities || entities.length === 0 ? (
-								<FuseAnimate delay={300}>
-									<div className="flex items-center justify-center h-auto">
-										<img
-											className="rounded-full mx-auto"
-											src={image}
-											alt=""
-											width="384"
-											height="512"
-										/>
-									</div>
-								</FuseAnimate>
-							) : null} */}
 						</Paper>
 					</TableContainer>
 					{entities && entities.length !== 0 && (

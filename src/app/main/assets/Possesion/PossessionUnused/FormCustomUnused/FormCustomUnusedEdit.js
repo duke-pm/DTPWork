@@ -135,7 +135,6 @@ export default function FormCustomUnusedEdit({
 									/>
 									<Field
 										label="Vị trí công việc"
-										autoFocus
 										readOnly
 										type="text"
 										// value={intialState.position}
@@ -159,7 +158,6 @@ export default function FormCustomUnusedEdit({
 									/>
 									<Field
 										label="Khu vực"
-										autoFocus
 										readOnly
 										hasFeedback
 										name="location"

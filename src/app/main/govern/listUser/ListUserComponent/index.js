@@ -20,7 +20,7 @@ export default function ListUserContent() {
 	const { page, rowPage, setPage, sort, setRowPage, setSort } = useListUserContext;
 	const [formListUser, setFormListUser] = useState(false);
 	const { currentState } = useSelector(state => ({ currentState: state.govern.listUser }), shallowEqual);
-	const { entities, listLoading, actionLoading, total_count } = currentState;
+	const { entities, actionLoading, total_count } = currentState;
 	const handleOpenFormGroupUser = () => {
 		setFormListUser(true);
 		dispatch(actions.setTaskEditListUser(null));

@@ -15,7 +15,7 @@ export default function FormListUser({ open, handleCloseFormGroupUser }) {
 		shallowEqual
 	);
 	const dispatch = useDispatch();
-	const { entitiesEdit, actionLoading, entities } = currentState;
+	const { entitiesEdit, actionLoading } = currentState;
 	const handleSubmitFormListUser = values => {
 		if (entitiesEdit && entitiesEdit.userID) {
 			dispatch(actions.updatedListUser(values)).then(data => {

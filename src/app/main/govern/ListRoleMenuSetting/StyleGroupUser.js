@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
 		paddingTop: 0
 	},
 	tableHead: {
-		height: 44
+		backgroundColor: 'red'
 	},
 	// table: {
 	// 	minWidth: 1300,

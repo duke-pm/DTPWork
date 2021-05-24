@@ -6,14 +6,14 @@ import { darken } from '@material-ui/core/styles/colorManipulator';
 import * as Yup from 'yup';
 import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { submitLogin } from 'app/auth/store/loginSlice';
-import { showMessage } from 'app/store/fuse/messageSlice';
 import { Formik, Form, Field } from 'formik';
 import { AntInputPassword, AntInput } from '@fuse/CustomForm/CreateAntField';
 import { validateField } from '@fuse/core/DtpConfig';
+import { Spin } from 'antd';
 
 // import Auth0LoginTab from './tabs/Auth0LoginTab';
 // import FirebaseLoginTab from './tabs/FirebaseLoginTab';
@@ -41,22 +41,23 @@ const initialState = {
 	password: ''
 };
 function Login() {
+	const [confirmLoading, setConfirmLoading] = useState(false);
 	const checkValidateForm = Yup.object().shape({
 		email: Yup.string().required(`${validateField}`),
 		password: Yup.string().required(`${validateField}`)
 	});
 	const classes = useStyles();
 	const login = useSelector(({ auth }) => auth.login);
-
-	useEffect(() => {
-		if (login.error) {
-			dispatch(showMessage({ message: 'Tài khoản và mật khẩu không đúng' }));
-		}
-	});
-
 	const dispatch = useDispatch();
 	function handleSubmitForm(values) {
-		dispatch(submitLogin(values));
+		setConfirmLoading(true);
+		dispatch(submitLogin(values)).then(user => {
+			if (user && user.access_token) {
+				setConfirmLoading(false);
+			} else {
+				setConfirmLoading(false);
+			}
+		});
 	}
 	return (
 		<div
@@ -120,14 +121,18 @@ function Login() {
 													<p className="text-red"> {login.error} </p>
 												</FuseAnimate>
 											)}
-											<Button
-												type="submit"
-												variant="contained"
-												color="primary"
-												className="w-full mx-auto mt-16"
-											>
-												Đăng nhập
-											</Button>
+											{confirmLoading ? (
+												<Spin className="w-full mx-auto" />
+											) : (
+												<Button
+													type="submit"
+													variant="contained"
+													color="primary"
+													className="w-full mx-auto mt-16"
+												>
+													Đăng nhập
+												</Button>
+											)}
 										</Form>
 									)}
 								</Formik>

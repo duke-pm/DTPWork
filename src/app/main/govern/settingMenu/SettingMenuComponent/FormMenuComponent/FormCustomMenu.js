@@ -49,7 +49,7 @@ export default function FormCustomMenu({
 			>
 				{({ handleSubmit, isSubmitting }) => (
 					<Form>
-						<DialogContent>
+						<DialogContent dividers>
 							<div className="px-16 sm:px-24">
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 									<Field

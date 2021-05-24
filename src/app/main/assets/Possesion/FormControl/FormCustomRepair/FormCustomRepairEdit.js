@@ -45,9 +45,9 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 								<div className=" grid grid-cols-1 sm:grid-cols-2 ">
 									<div className="flex-row flex ">
 										<div className="flex flex-col" style={{ width: '40rem' }}>
-											<p className="p-6"> Mã sản phẩm </p>
-											<p className="p-6"> Tên sản phẩm </p>
-											<p className="p-6"> Nhóm sản phẩm </p>
+											<p className="p-6"> Mã tài sản </p>
+											<p className="p-6"> Tên tài sản </p>
+											<p className="p-6"> Nhóm tài sản </p>
 											<p className="p-6"> Mô tả </p>
 										</div>
 										<div className="flex flex-col sm:mr-96 mr-auto" style={{ width: '600px' }}>

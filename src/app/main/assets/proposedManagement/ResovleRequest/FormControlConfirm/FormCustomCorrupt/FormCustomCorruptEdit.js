@@ -47,16 +47,16 @@ export default function FormCustomCorruptEdit({
 								</div>
 								<div className=" grid grid-cols-1 sm:grid-cols-2">
 									<div className="flex-row flex ">
-										<div className="flex flex-col" style={{ width: '30rem' }}>
-											<p className="p-6"> Mã sản phẩm </p>
-											<p className="p-6"> Tên sản phẩm </p>
-											<p className="p-6"> Nhóm sản phẩm </p>
+										<div className="flex flex-col" style={{ width: '27rem' }}>
+											<p className="p-6"> Mã tài sản </p>
+											<p className="p-6"> Tên tài sản </p>
+											<p className="p-6"> Nhóm tài sản </p>
 											<p className="p-6">Quy cách tài sản</p>
 										</div>
 										<div className="flex mr-auto sm:mr-98 flex-col" style={{ width: '600px' }}>
 											<p className="p-6 font-extrabold"> {entitiesEdit.assetID || ''} </p>
 											<p className="p-6 font-extrabold"> {entitiesEdit.assetName || ''} </p>
-											<p className="p-6 font-extrabold"> Nhóm sản phẩm </p>
+											<p className="p-6 font-extrabold"> Nhóm tài sản </p>
 											<p className="font-extrabold p-6"> </p>
 										</div>
 									</div>

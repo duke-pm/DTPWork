@@ -1,6 +1,6 @@
 import { validateField } from '@fuse/core/DtpConfig';
 import CheckboxAntd from '@fuse/CustomForm/CheckboxAntd';
-import { AntInput, AntInputNumber } from '@fuse/CustomForm/CreateAntField';
+import { AntInput } from '@fuse/CustomForm/CreateAntField';
 import SelectAntd from '@fuse/CustomForm/SelectAntd';
 import SelectAntdMulti from '@fuse/CustomForm/SelectAntdMulti';
 import { Button, DialogActions, DialogContent } from '@material-ui/core';
@@ -81,7 +81,7 @@ export default function FormListUserCustom({
 			>
 				{({ handleSubmit, isSubmitting }) => (
 					<Form>
-						<DialogContent>
+						<DialogContent dividers>
 							<div className="px-16 sm:px-24">
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 									<Field
@@ -124,8 +124,8 @@ export default function FormListUserCustom({
 									<Field
 										label="Số điện thoại"
 										name="cellPhone"
-										// type="number"
-										component={AntInputNumber}
+										type="number"
+										component={AntInput}
 										className="mt-8 mb-16"
 									/>
 									<Field

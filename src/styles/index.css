@@ -112,9 +112,12 @@ form label {
 {
 	pointer-events: none;
 }
-/* .ant-table-tbody > tr > td{    
-    padding: 5px 18px !important;
-} */
+thead[class*="ant-table-thead"] th{
+    background-color: #f0f7f7 !important;
+  }
+.ant-table-tbody > tr > td{    
+    padding: 8px 18px !important;
+}
 @keyframes autofill {
     0%,100% {
         background: transparent;
