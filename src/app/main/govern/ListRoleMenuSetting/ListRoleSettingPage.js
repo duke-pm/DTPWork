@@ -9,10 +9,10 @@ import * as actions from './_reduxListRoleMenu/listRoleMenuSettingActions';
 
 export default function ListRoleSettingPage() {
 	const dispatch = useDispatch();
-	const params = 'Region, Employee, Company,  Users, Sales, BizLines, UserGroups';
+	const params = 'UserGroups,Users';
 	useEffect(() => {
 		dispatch(actionsInfor.getInformationCompany(params));
-		dispatch(actions.fetchsListUser());
+		dispatch(actions.fetchsListRoleSettings());
 	}, [dispatch]);
 	return (
 		<>

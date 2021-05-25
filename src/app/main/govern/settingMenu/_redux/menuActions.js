@@ -23,7 +23,7 @@ export const fetchsListMenuSettings = params => dispatch => {
 		})
 		.catch(error => {
 			dispatch(actions.catchErrors({ callType: callTypes.list }));
-			notificationConfig('danger', 'Thất bại', 'Đã có lỗi xảy ra');
+			notificationConfig('warning', 'Thất bại', 'Đã có lỗi xảy ra');
 		});
 };
 export const fetchsListMenuSettingAll = params => dispatch => {
@@ -45,7 +45,7 @@ export const fetchsListMenuSettingAll = params => dispatch => {
 		})
 		.catch(error => {
 			dispatch(actions.catchErrors({ callType: callTypes.list }));
-			notificationConfig('danger', 'Thất bại', 'Đã có lỗi xảy ra');
+			notificationConfig('destroy', 'Thất bại', 'Đã có lỗi xảy ra');
 		});
 };
 export const fetchsListMenuSettingParams = (limit, page, direction, id, search) => dispatch => {

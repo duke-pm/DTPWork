@@ -3,20 +3,20 @@ import * as requestFrom from './listRoleMenuSettingCrud';
 import { callTypes, listRoleSlice } from './listRoleMenuSlice';
 
 const { actions } = listRoleSlice;
-export const fetchsListUser = params => dispatch => {
+export const fetchsListRoleSettings = params => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.list }));
 	const paramsReq = {
-		PageSize: 25,
-		PageNum: 1
+		GroupID: 1,
+		UserID: 0,
+		IsWebOrMobile: 0
 	};
 	return requestFrom
-		.fetchsListUser(paramsReq)
+		.fetchsListRoleSetting(paramsReq)
 		.then(res => {
 			const { data } = res;
 			if (!data.isError) {
-				const dataRes = data.data;
-				const total_result = data.totalRow;
-				dispatch(actions.fetchsListUser({ dataRes, total_result }));
+				const dataRes = data.data.lstPermissionItem;
+				dispatch(actions.fetchsListRoleMenu({ dataRes }));
 			} else {
 				notificationConfig('warning', 'Thất bại', data.errorMessage);
 				dispatch(actions.catchErrors({ callType: callTypes.list }));
@@ -27,26 +27,25 @@ export const fetchsListUser = params => dispatch => {
 			notificationConfig('warning', 'Thất bại', 'Server error');
 		});
 };
-export const fetchsListFilter = (page, limit, sortColumn, sortDirection, search) => dispatch => {
+
+export const fetchsListFilterRole = (userGroup, userID) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
+	console.log({ userGroup, userID });
 	const paramsReq = {
-		PageSize: limit || 25,
-		PageNum: page || 1,
-		SortColumn: sortColumn || null,
-		SortDirection: sortDirection || 'desc',
-		Search: search || ''
+		GroupID: userGroup || 1,
+		UserID: userID || 0,
+		IsWebOrMobile: 0
 	};
 	return requestFrom
-		.fetchsListUser(paramsReq)
+		.fetchsListRoleSetting(paramsReq)
 		.then(res => {
 			const { data } = res;
 			if (!data.isError) {
-				const dataRes = data.data;
-				const total_result = data.totalRow;
-				dispatch(actions.fetchsListUser({ dataRes, total_result }));
+				const dataRes = data.data.lstPermissionItem;
+				dispatch(actions.fetchsListRoleMenu({ dataRes }));
 			} else {
 				notificationConfig('warning', 'Thất bại', data.errorMessage);
-				dispatch(actions.catchErrors({ callType: callTypes.action }));
+				dispatch(actions.catchErrors({ callType: callTypes.list }));
 			}
 		})
 		.catch(error => {
@@ -160,3 +159,8 @@ export const deletedListUser = item => dispatch => {
 			notificationConfig('warning', 'Thất bại', `Serrver error`);
 		});
 };
+
+// export const updatedAccessRole = item => dispatch => {
+// 	dispatch(actions.startCall({ callType: callTypes.action }));
+
+// };

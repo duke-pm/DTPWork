@@ -66,7 +66,8 @@ class JwtService extends FuseUtils.EventEmitter {
 	signInWithEmailAndPassword = (email, password) => {
 		const data = {
 			Username: email,
-			Password: password
+			Password: password,
+			TypeLogin: 1
 		};
 		return new Promise((resolve, reject) => {
 			axios({
@@ -77,12 +78,12 @@ class JwtService extends FuseUtils.EventEmitter {
 				.then(response => {
 					if (response.data.data) {
 						this.setCookie(
-							response.data.data.access_token,
-							response.data.data.userName,
-							response.data.data.refresh_token,
-							response.data.data.expires_in
+							response.data.data.tokenInfo.access_token,
+							response.data.data.tokenInfo.userName,
+							response.data.data.tokenInfo.refresh_token,
+							response.data.data.tokenInfo.expires_in
 						);
-						this.setSession(response.data.data);
+						this.setSession(response.data.data.tokenInfo);
 						resolve(response.data.data);
 					} else {
 						notificationConfig('warning', 'Thất bại', 'Vui lòng nhập đúng tài khoản và mật khẩu');
@@ -109,13 +110,13 @@ class JwtService extends FuseUtils.EventEmitter {
 				.then(response => {
 					if (response.data.data) {
 						this.setCookie(
-							response.data.data.access_token,
-							response.data.data.userName,
-							response.data.data.refresh_token,
-							response.data.data.expires_in
+							response.data.data.tokenInfo.access_token,
+							response.data.data.tokenInfo.userName,
+							response.data.data.tokenInfo.refresh_token,
+							response.data.data.tokenInfo.expires_in
 						);
-						this.setSession(response.data.data);
-						resolve(response.data.data);
+						this.setSession(response.data.data.tokenInfo);
+						resolve(response.data.data.tokenInfo);
 					} else {
 						reject(response.data.error);
 					}

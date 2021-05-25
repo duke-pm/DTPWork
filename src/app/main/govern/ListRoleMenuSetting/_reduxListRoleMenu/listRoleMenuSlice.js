@@ -30,12 +30,11 @@ export const listRoleSlice = createSlice({
 				state.actionLoading = true;
 			}
 		},
-		fetchsListUser: (state, action) => {
-			const { dataRes, total_result } = action.payload;
+		fetchsListRoleMenu: (state, action) => {
+			const { dataRes } = action.payload;
 			state.listLoading = false;
 			state.actionLoading = false;
 			state.entities = dataRes;
-			state.total_count = total_result;
 		},
 		createdListUser: (state, action) => {
 			const { dataRes } = action.payload;
@@ -66,5 +65,9 @@ export const listRoleSlice = createSlice({
 			const newEntities = entities.filter(item => item.userID !== dataReq.UserID);
 			state.entities = newEntities;
 		}
+		// updatedAccessRole: (state, action) => {
+		// 	const { item } = action.payload;
+		// 	¸¸¸¸
+		// }
 	}
 });
