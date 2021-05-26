@@ -6,7 +6,7 @@ const { actions } = listRoleSlice;
 export const fetchsListRoleSettings = params => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.list }));
 	const paramsReq = {
-		GroupID: 1,
+		GroupID: 0,
 		UserID: 0,
 		IsWebOrMobile: 0
 	};

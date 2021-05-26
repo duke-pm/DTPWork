@@ -17,13 +17,13 @@ import FuseNavItem, { registerComponent } from './FuseNavItem';
 /*
 Register Fuse Navigation Components
  */
-registerComponent('vertical-group', FuseNavVerticalGroup);
-registerComponent('vertical-collapse', FuseNavVerticalCollapse);
-registerComponent('vertical-item', FuseNavVerticalItem);
+registerComponent('vertical-Group', FuseNavVerticalGroup);
+registerComponent('vertical-Collapse', FuseNavVerticalCollapse);
+registerComponent('vertical-Item', FuseNavVerticalItem);
 registerComponent('vertical-link', FuseNavVerticalLink);
-registerComponent('horizontal-group', FuseNavHorizontalGroup);
-registerComponent('horizontal-collapse', FuseNavHorizontalCollapse);
-registerComponent('horizontal-item', FuseNavHorizontalItem);
+registerComponent('horizontal-Group', FuseNavHorizontalGroup);
+registerComponent('horizontal-Collapse', FuseNavHorizontalCollapse);
+registerComponent('horizontal-Item', FuseNavHorizontalItem);
 registerComponent('horizontal-link', FuseNavHorizontalLink);
 registerComponent('vertical-divider', () => <Divider className="my-16" />);
 registerComponent('horizontal-divider', () => <Divider className="my-16" />);
@@ -111,7 +111,7 @@ function FuseNavigation(props) {
 			)}
 		>
 			{navigation.map(_item => (
-				<FuseNavItem key={_item.id} type={`vertical-${_item.type}`} item={_item} nestedLevel={0} />
+				<FuseNavItem key={_item.menuID} type={`vertical-${_item.typeName}`} item={_item} nestedLevel={0} />
 			))}
 		</List>
 	);
@@ -129,8 +129,8 @@ function FuseNavigation(props) {
 		>
 			{navigation.map(_item => (
 				<FuseNavItem
-					key={_item.id}
-					type={`horizontal-${_item.type}`}
+					key={_item.menuID}
+					type={`horizontal-${_item.typeName}`}
 					item={_item}
 					nestedLevel={0}
 					dense={dense}

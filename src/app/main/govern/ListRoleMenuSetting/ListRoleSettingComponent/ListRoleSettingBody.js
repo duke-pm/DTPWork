@@ -2,6 +2,7 @@
 import { Table, Checkbox } from 'antd';
 import React, { useState, useEffect } from 'react';
 import image from '@fuse/assets/group.png';
+import { findIndexMultiple } from '@fuse/core/DtpConfig';
 import __ from 'lodash';
 
 export default function ListRoleSettingBody({ entities, classes, handleEditListUser, handleDeleteListUser }) {
@@ -18,16 +19,13 @@ export default function ListRoleSettingBody({ entities, classes, handleEditListU
 	const onSelectedRowKeysChange = selectedRowKey => {
 		setSelectedRowKeys(selectedRowKey);
 	};
-	const selectRow = (name, record, indexCon) => e => {
+	const selectRow = (name, record, indexChild) => e => {
 		const dataParent = __.cloneDeep(newData);
-		const findIndex = dataParent.findIndex(item => item.menuID === record.parentID);
-		const itemChange = __.find(dataParent, item => item.menuID === record.parentID);
-		const arrMap = itemChange.lstPermissionItem.map((item, index) =>
-			index === indexCon ? { ...item, [name]: e.target.checked } : { ...item }
-		);
-		itemChange.lstPermissionItem = arrMap;
-		dataParent.splice(findIndex, 1, itemChange);
-		console.log(dataParent);
+		const newDataParse = {
+			[name]: e.target.checked
+		};
+		const abc = findIndexMultiple(record.menuID, newDataParse, dataParent);
+		console.log(abc);
 	};
 	const column = [
 		{

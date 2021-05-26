@@ -13,7 +13,7 @@ const inititalState = {
 	menuName: '',
 	levelID: 0,
 	typeID: 1,
-	parentID: null,
+	parentID: 0,
 	url: '',
 	icon: '',
 	directionIcon: '',

@@ -83,7 +83,7 @@ class JwtService extends FuseUtils.EventEmitter {
 							response.data.data.tokenInfo.refresh_token,
 							response.data.data.tokenInfo.expires_in
 						);
-						this.setSession(response.data.data.tokenInfo);
+						this.setSession(response.data.data.tokenInfo, response.data.data.lstMenu);
 						resolve(response.data.data);
 					} else {
 						notificationConfig('warning', 'Thất bại', 'Vui lòng nhập đúng tài khoản và mật khẩu');
@@ -115,7 +115,7 @@ class JwtService extends FuseUtils.EventEmitter {
 							response.data.data.tokenInfo.refresh_token,
 							response.data.data.tokenInfo.expires_in
 						);
-						this.setSession(response.data.data.tokenInfo);
+						this.setSession(response.data.data.tokenInfo, response.data.data.lstMenu);
 						resolve(response.data.data.tokenInfo);
 					} else {
 						reject(response.data.error);
@@ -128,11 +128,13 @@ class JwtService extends FuseUtils.EventEmitter {
 		});
 	};
 
-	setSession = data => {
+	setSession = (data, lstMenu) => {
 		if (data) {
 			localStorage.setItem('data_user', JSON.stringify(data));
+			localStorage.setItem('listMenu', JSON.stringify(lstMenu));
 		} else {
 			localStorage.removeItem('data_user');
+			localStorage.removeItem('listMenu');
 		}
 	};
 

@@ -51,15 +51,15 @@ function FuseNavVerticalGroup(props) {
 				to={item.url}
 				role="button"
 			>
-				<span className="list-subheader-text uppercase text-12">{item.title}</span>
+				<span className="list-subheader-text uppercase text-12">{item.menuName}</span>
 			</ListSubheader>
 
-			{item.children && (
+			{item.lstPermissionItem && (
 				<>
-					{item.children.map(_item => (
+					{item.lstPermissionItem.map(_item => (
 						<FuseNavItem
-							key={_item.id}
-							type={`vertical-${_item.type}`}
+							key={_item.menuID}
+							type={`vertical-${_item.typeName}`}
 							item={_item}
 							nestedLevel={nestedLevel}
 						/>
@@ -72,9 +72,9 @@ function FuseNavVerticalGroup(props) {
 
 FuseNavVerticalGroup.propTypes = {
 	item: PropTypes.shape({
-		id: PropTypes.string.isRequired,
-		title: PropTypes.string,
-		children: PropTypes.array
+		menuID: PropTypes.number.isRequired,
+		menuName: PropTypes.string,
+		lstPermissionItem: PropTypes.array
 	})
 };
 
