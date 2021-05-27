@@ -108,12 +108,8 @@ function FormCustomEdit({
 											label="Số lượng"
 											autoFocus
 											name="qty"
-<<<<<<< HEAD
-											placeholder="Nhập số lượng tài sản cần tạo"
-=======
 											type="number"
 											placeholder="Vui lòng nhập số lượng tài sản cần tạo"
->>>>>>> 80bd8e6b2caf84031c1596fbe3233191097527b1
 											hasFeedback
 											component={AntInput}
 											// className="mx-4"

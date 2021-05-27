@@ -65,11 +65,7 @@ export default function FormConfirmGobal({ open }) {
 							<div className="px-16 sm:px-24">
 								<div className="grid grid-cols-1 mb-16 gap-8 ">
 									<Field
-<<<<<<< HEAD
-										label="Lý do không xác nhận"
-=======
 										label="Lý do không duyệt"
->>>>>>> 80bd8e6b2caf84031c1596fbe3233191097527b1
 										autoFocus
 										hasFeedback
 										name="note"
