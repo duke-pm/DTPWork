@@ -5,7 +5,7 @@ function FuseSplashScreen() {
 		<div id="fuse-splash-screen">
 			<div className="center">
 				<div className="logo">
-					<img width="128" src="assets/images/logo_DTP-01.png" alt="logo" />
+					<img width="128" src="assets/logo-dtp.png" alt="logo" />
 				</div>
 				<div className="spinner-wrapper">
 					<div className="spinner">
