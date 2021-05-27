@@ -168,11 +168,7 @@ class Auth extends Component {
 		});
 
 	render() {
-		return this.state.waitAuthCheck ? (
-			<FuseSplashScreen />
-		) : (
-			<React.Suspense fallback={<FuseSplashScreen />}> {this.props.children}</React.Suspense>
-		);
+		return this.state.waitAuthCheck ? null : this.props.children;
 	}
 }
 

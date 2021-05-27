@@ -43,17 +43,61 @@ export const getDataListMenu = () => {
 
 export const validateField = 'Nội dung bắt buộc không được để trống.';
 export function findIndexMultiple(id, newData, arr) {
-	arr.every((d, i) => {
-		console.log(d);
+	arr.forEach((d, i) => {
 		if (d.menuID === id) {
 			Object.keys(newData).forEach(key => {
 				arr[i][key] = newData[key];
-				console.log(arr[i]);
 			});
-			return true;
+			console.log(arr[i]);
+			// return true;
+
+			if (!arr[i].isWrite && !arr[i].isRead) {
+				arr[i].isAccess = false;
+			} else {
+				arr[i].isAccess = true;
+			}
 		}
 		if (d.lstPermissionItem.length) {
 			findIndexMultiple(id, newData, d.lstPermissionItem);
 		}
 	});
+	return arr;
+}
+
+export function findIndexMultipleAsset(id, newData, arr, itemChange) {
+	arr.forEach((d, i) => {
+		if (d.menuID === id) {
+			Object.keys(newData).forEach(key => {
+				arr[i][key] = newData[key];
+				if (arr[i].lstPermissionItem.length) {
+					const newArr = arr[i].lstPermissionItem.map(item =>
+						arr[i].isAccess
+							? { ...item, isAccess: true, isWrite: true, isRead: true }
+							: { ...item, isAccess: false, isWrite: false, isRead: false }
+					);
+					arr[i].lstPermissionItem = newArr;
+				}
+			});
+			if (!arr[i].isAccess) {
+				arr[i].isWrite = false;
+				arr[i].isRead = false;
+				if (itemChange && itemChange.menuID === arr[i].parentID) {
+					console.log('change ');
+				}
+			} else {
+				arr[i].isWrite = true;
+				arr[i].isRead = true;
+				console.log(itemChange);
+				console.log(arr[i]);
+				if (itemChange && itemChange.menuID === arr[i].parentID) {
+					console.log(arr);
+					console.log('change ');
+				}
+			}
+		}
+		if (d.lstPermissionItem.length) {
+			findIndexMultipleAsset(id, newData, d.lstPermissionItem, itemChange);
+		}
+	});
+	return arr;
 }
