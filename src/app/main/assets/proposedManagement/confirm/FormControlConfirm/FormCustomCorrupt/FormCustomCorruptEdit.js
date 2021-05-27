@@ -47,15 +47,15 @@ export default function FormCustomCorruptEdit({ entitiesEdit, handleClose, setFo
 								<div className=" grid grid-cols-1 sm:grid-cols-2 gap-8">
 									<div className="flex-row  flex ">
 										<div className="flex flex-col">
-											<p className="p-2.5	"> Mã sản phẩm </p>
-											<p className="p-2.5	"> Tên sản phẩm </p>
-											<p className="p-2.5	"> Nhóm sản phẩm </p>
+											<p className="p-2.5	"> Mã tài sản </p>
+											<p className="p-2.5	"> Tên tài sản </p>
+											<p className="p-2.5	"> Nhóm tài sản </p>
 											<p className="p-2.5	">Quy cách tài sản</p>
 										</div>
 										<div className="flex flex-col">
 											<p className="p-2.5 font-extrabold"> {entitiesEdit.assetID || ''} </p>
 											<p className="p-2.5 font-extrabold"> {entitiesEdit.assetName || ''} </p>
-											<p className="p-2.5 font-extrabold"> Nhóm sản phẩm </p>
+											<p className="p-2.5 font-extrabold"> Nhóm tài sản </p>
 											<p className="font-extrabold p-2.5"> </p>
 										</div>
 									</div>
@@ -98,7 +98,7 @@ export default function FormCustomCorruptEdit({ entitiesEdit, handleClose, setFo
 								>
 									<Field
 										readOnly
-										label="Lí do"
+										label="Lý do"
 										hasFeedback
 										name="reason"
 										component={InputTextArea}
@@ -108,7 +108,7 @@ export default function FormCustomCorruptEdit({ entitiesEdit, handleClose, setFo
 									{entitiesEdit && entitiesEdit.statusID === 4 && (
 										<Field
 											readOnly
-											label="Lí do từ chối "
+											label="Lý do từ chối "
 											hasFeedback
 											name="reasonReject"
 											component={InputTextArea}

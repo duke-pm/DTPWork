@@ -1,13 +1,22 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
+	tabrow: {
+		'& > *': {
+			borderBottom: 'unset'
+		}
+	},
+	tableRowExpand: {
+		paddingBottom: 0,
+		paddingTop: 0
+	},
 	tableHead: {
-		height: 44
+		backgroundColor: 'red'
 	},
-	table: {
-		minWidth: 1500,
-		overflowX: 'auto'
-	},
+	// table: {
+	// 	minWidth: 1300,
+	// 	overflowX: 'auto'
+	// },
 	cellTabel: {
 		width: 340
 	},
@@ -16,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 		overflowX: 'auto'
 	},
 	TableContainer: {
-		maxHeight: '500px'
+		maxHeight: '450px'
 	},
 	modal: {
 		display: 'flex',

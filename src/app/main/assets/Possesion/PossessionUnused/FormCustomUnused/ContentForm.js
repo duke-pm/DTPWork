@@ -5,22 +5,22 @@ import * as moment from 'moment';
 export default function ContentForm({ entitiesEdit }) {
 	return (
 		<div className=" grid grid-cols-1 sm:grid-cols-2 gap-48">
-			<div className="flex-row justify-between flex ">
-				<div className="flex flex-col">
+			<div className="flex-row  flex ">
+				<div className="flex flex-col" style={{ width: '40rem' }}>
 					<p className="p-6"> Mã tài sản </p>
 					<p className="p-6"> Tên tài sản </p>
 					<p className="p-6"> Nhóm tài sản </p>
 					<p className="p-6"> Mô tả </p>
 				</div>
-				<div className="flex sm:mr-96 mr-auto flex-col">
+				<div className="flex sm:mr-96 mr-auto  flex-col" style={{ width: '600px' }}>
 					<p className="p-6 font-extrabold">{entitiesEdit && entitiesEdit.assetCode}</p>
 					<p className="p-6 font-extrabold">{entitiesEdit && entitiesEdit.assetName}</p>
 					<p className="p-6 font-extrabold">{entitiesEdit && entitiesEdit.groupName}</p>
 					<p className="p-6 font-extrabold"> {entitiesEdit && entitiesEdit.descr}</p>
 				</div>
 			</div>
-			<div className="flex-row justify-between flex ">
-				<div className="flex flex-col">
+			<div className="flex-row flex ">
+				<div className="flex flex-col" style={{ width: '11rem' }}>
 					<p className="p-6">Ngày mua </p>
 					<p className="p-6"> Nguyên giá </p>
 					<p className="p-6"> Tình trạng </p>

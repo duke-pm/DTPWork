@@ -1,35 +1,22 @@
 import FuseAnimate from '@fuse/core/FuseAnimate';
-import { Paper, Table, TableContainer } from '@material-ui/core';
-import React, { useState, useContext } from 'react';
+import { Paper, TableContainer } from '@material-ui/core';
+import React, { useContext } from 'react';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import image from '@fuse/assets/group.png';
 import { Spin } from 'antd';
 import Panigation from '@fuse/core/FusePanigate';
 import { useStyles } from '../StyleGroupUser';
-import ListUserContentBody from './ListUserContentBody';
-import ListUserHeader from './ListUserHeader';
-import FormListUser from './FormListUser';
-import ActionListUser from './ActionListUser';
-import { ListUserContext } from '../ListUserContext';
-import * as actions from '../_reduxListUser/listUserActions';
+import ListRoleSettingBody from './ListRoleSettingBody';
+import ActionListRoleSetting from './ActionListRoleSetting';
+import { ListRoleMenuSettingContext } from '../ListRoleMenuSettingContext';
+import * as actions from '../_reduxListRoleMenu/listRoleMenuSettingActions';
 
-export default function ListUserContent() {
+export default function ListRoleSettingContent() {
 	const classes = useStyles();
 	const dispatch = useDispatch();
-	const useListUserContext = useContext(ListUserContext);
-	const { page, rowPage, setPage, sort, setRowPage, setSort } = useListUserContext;
-	const [formListUser, setFormListUser] = useState(false);
+	const useListRoleSettingContext = useContext(ListRoleMenuSettingContext);
+	const { page, rowPage, setPage, sort, setRowPage, setSort } = useListRoleSettingContext;
 	const { currentState } = useSelector(state => ({ currentState: state.govern.listUser }), shallowEqual);
 	const { entities, actionLoading, total_count } = currentState;
-	const handleOpenFormGroupUser = () => {
-		setFormListUser(true);
-		dispatch(actions.setTaskEditListUser(null));
-	};
-	const handleCloseFormGroupUser = () => setFormListUser(false);
-	const handleEditListUser = item => {
-		setFormListUser(true);
-		dispatch(actions.setTaskEditListUser(item));
-	};
 	const handleDeleteListUser = item => {
 		dispatch(actions.deletedListUser(item));
 	};
@@ -57,34 +44,12 @@ export default function ListUserContent() {
 	};
 	return (
 		<div className="w-full flex flex-col">
-			<FormListUser handleCloseFormGroupUser={handleCloseFormGroupUser} open={formListUser} />
-			<ActionListUser handleOpenFormGroupUser={handleOpenFormGroupUser} />
+			<ActionListRoleSetting />
 			<FuseAnimate animation="transition.slideUpIn" delay={200}>
 				<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
 					<TableContainer className={`${classes.TableContainer} flex flex-1`}>
 						<Paper className={classes.rootPaper}>
-							<Table className={`${classes.table}`} stickyHeader>
-								<ListUserHeader createSortHandler={createSortHandler} sort={sort} />
-								<ListUserContentBody
-									handleDeleteListUser={handleDeleteListUser}
-									handleEditListUser={handleEditListUser}
-									classes={classes}
-									entities={entities}
-								/>
-							</Table>
-							{!entities || entities.length === 0 ? (
-								<FuseAnimate delay={300}>
-									<div className="flex items-center justify-center h-auto">
-										<img
-											className="rounded-full mx-auto"
-											src={image}
-											alt=""
-											width="384"
-											height="512"
-										/>
-									</div>
-								</FuseAnimate>
-							) : null}
+							<ListRoleSettingBody classes={classes} entities={entities} />
 						</Paper>
 					</TableContainer>
 					{entities && entities.length !== 0 && (

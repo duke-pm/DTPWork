@@ -1,12 +1,16 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
-import { FormGroup } from '@material-ui/core';
+import { Divider, FormGroup } from '@material-ui/core';
 import { Form, Select } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 
 const FormItem = Form.Item;
 const { Option } = Select;
 
-export default function SelectAntd({
+export default function SelectAntdCustom({
 	field, // { name, value, onChange, onBlur }
 	form, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
 	label,
@@ -17,6 +21,7 @@ export default function SelectAntd({
 	hasFeedback,
 	notFoundContent,
 	readOnly,
+	handleOpenSelectCustom,
 	submitCount,
 	...props
 }) {
@@ -28,6 +33,9 @@ export default function SelectAntd({
 	const handleSelect = value => {
 		form.setFieldValue(field.name, value);
 		return handleChangeState ? handleChangeState(value) : null;
+	};
+	const handleClick = () => {
+		return handleOpenSelectCustom && handleOpenSelectCustom(true);
 	};
 	return (
 		<>
@@ -52,6 +60,20 @@ export default function SelectAntd({
 						{...props}
 						showSearch
 						allowClear
+						dropdownRender={menu => (
+							<div>
+								{menu}
+								<Divider style={{ margin: '4px 0' }} />
+								<div style={{ display: 'flex', flexWrap: 'nowrap', padding: 8 }}>
+									<a
+										style={{ flex: 'none', padding: '8px', display: 'block', cursor: 'pointer' }}
+										onClick={handleClick}
+									>
+										<PlusOutlined /> Thêm mới
+									</a>
+								</div>
+							</div>
+						)}
 						placeholder={placeholder || ''}
 						className={readOnly ? 'readOnly' : ''}
 						optionFilterProp="children"

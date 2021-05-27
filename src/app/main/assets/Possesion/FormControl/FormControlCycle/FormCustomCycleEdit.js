@@ -10,6 +10,7 @@ import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import * as Yup from 'yup';
 import * as moment from 'moment';
 import { Spin } from 'antd';
+import { validateField } from '@fuse/core/DtpConfig';
 
 const initial = {
 	date: moment(Date.now()),
@@ -21,10 +22,10 @@ const initial = {
 };
 export default function FormCustomCycleEdit({ handleClose, entitiesEdit, handleSubmitCycle, actionLoading }) {
 	const validationSchema = Yup.object().shape({
-		dateEnd: Yup.string().required('Ngày kết thúc sửa chữa, bảo hành không được để trống'),
-		date: Yup.string().required('Ngày đưa vào sử dụng lại không được để trống'),
-		nameService: Yup.string().required('Tên sửa chữa, bảo hành không được để trống'),
-		price: Yup.string().required('Chi phí thực tế không được để trống')
+		dateEnd: Yup.string().required(`${validateField}`),
+		date: Yup.string().required(`${validateField}`),
+		nameService: Yup.string().required(`${validateField}`),
+		price: Yup.string().required(`${validateField}`)
 	});
 	return (
 		<>
@@ -44,14 +45,14 @@ export default function FormCustomCycleEdit({ handleClose, entitiesEdit, handleS
 									<h5 className="font-extrabold">Thông tin tài sản.</h5>
 								</div>
 								<div className=" grid grid-cols-1 sm:grid-cols-2 gap-48">
-									<div className="flex-row justify-between flex ">
-										<div className="flex flex-col">
-											<p className="p-6"> Mã sản phẩm </p>
-											<p className="p-6"> Tên sản phẩm </p>
-											<p className="p-6"> Nhóm sản phẩm </p>
+									<div className="flex-row flex ">
+										<div className="flex flex-col" style={{ width: '27rem' }}>
+											<p className="p-6"> Mã tài sản </p>
+											<p className="p-6"> Tên tài sản </p>
+											<p className="p-6"> Nhóm tài sản </p>
 											<p className="p-6"> Mô tả </p>
 										</div>
-										<div className="flex flex-col sm:mr-98 mr-auto">
+										<div className="flex flex-col sm:mr-98 mr-auto" style={{ width: '600px' }}>
 											<p className="p-6 font-extrabold"> {entitiesEdit.assetCode || ''} </p>
 											<p className="p-6 font-extrabold"> {entitiesEdit.assetName || ''} </p>
 											<p className="p-6 font-extrabold"> {entitiesEdit.groupName || ''} </p>
@@ -59,12 +60,12 @@ export default function FormCustomCycleEdit({ handleClose, entitiesEdit, handleS
 										</div>
 									</div>
 									<div className="flex-row justify-between  flex ">
-										<div className="flex flex-col">
+										<div className="flex flex-col" style={{ width: '27rem' }}>
 											<p className="p-6">Ngày mua </p>
 											<p className="p-6"> Nguyên giá </p>
 											<p className="p-6"> Tình trạng </p>
 										</div>
-										<div className="flex flex-col sm:mr-98 mr-auto">
+										<div className="flex flex-col sm:mr-98 mr-auto" style={{ width: '600px' }}>
 											<p className="p-6 font-extrabold">
 												{' '}
 												{moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY') || ''}{' '}

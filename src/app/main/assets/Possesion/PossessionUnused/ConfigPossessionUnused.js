@@ -1,3 +1,4 @@
+import { validateField } from '@fuse/core/DtpConfig';
 import * as Yup from 'yup';
 
 export const rowPossesion = [
@@ -51,7 +52,7 @@ export const rowPossesion = [
 	}
 ];
 export const checkValidateForm = Yup.object().shape({
-	customer: Yup.string().required('Nhân viên không được để trống'),
-	department: Yup.string().required('Bộ phận không được để trống').nullable(),
-	location: Yup.string().required('Khu vực không được để trống')
+	customer: Yup.string().required(`${validateField}`),
+	department: Yup.string().required(`${validateField}`).nullable(),
+	location: Yup.string().required(`${validateField}`)
 });

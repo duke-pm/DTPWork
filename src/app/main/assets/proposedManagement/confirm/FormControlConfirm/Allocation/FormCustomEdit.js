@@ -154,7 +154,7 @@ export default function FormCustomEdit({ handleSubmitForm, entitiesEdit, newEnti
 								>
 									<Field
 										readOnly
-										label="Lí do"
+										label="Lý do"
 										name="reason"
 										component={InputTextArea}
 										className="mt-8 mb-16"
@@ -163,7 +163,7 @@ export default function FormCustomEdit({ handleSubmitForm, entitiesEdit, newEnti
 									{entitiesEdit && entitiesEdit.statusID === 4 && (
 										<Field
 											readOnly
-											label="Lí do từ chối "
+											label="Lý do từ chối "
 											name="reasonReject"
 											component={InputTextArea}
 											className="mt-8 mb-16"

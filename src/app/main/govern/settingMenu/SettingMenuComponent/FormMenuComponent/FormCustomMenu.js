@@ -6,6 +6,7 @@ import { Formik, Form, Field } from 'formik';
 import React from 'react';
 import CheckboxAntd from '@fuse/CustomForm/CheckboxAntd';
 import * as Yup from 'yup';
+import { validateField } from '@fuse/core/DtpConfig';
 
 const inititalState = {
 	menuID: '0',
@@ -31,8 +32,8 @@ export default function FormCustomMenu({
 	handleCloseFormMenu
 }) {
 	const validationSchema = Yup.object().shape({
-		menuName: Yup.string().required('Menu name is required.'),
-		typeID: Yup.string().required('Type menu is required.')
+		menuName: Yup.string().required(`${validateField}`),
+		typeID: Yup.string().required(`${validateField}`)
 		// url: Yup.string().required('Url web is required.').nullable()
 	});
 	const initial = entitiesEdit && entitiesEdit.menuID ? entitiesEdit : inititalState;
@@ -48,7 +49,7 @@ export default function FormCustomMenu({
 			>
 				{({ handleSubmit, isSubmitting }) => (
 					<Form>
-						<DialogContent>
+						<DialogContent dividers>
 							<div className="px-16 sm:px-24">
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 									<Field

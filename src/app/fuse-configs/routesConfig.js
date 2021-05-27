@@ -10,6 +10,7 @@ import ResovleRequestConfig from 'app/main/assets/proposedManagement/ResovleRequ
 import GroupUserConfig from 'app/main/govern/groupUser/GroupUserConfig';
 import SettingMenuConfig from 'app/main/govern/settingMenu/SettingMenuConfig';
 import ListUserConfig from 'app/main/govern/listUser/listUserConfig';
+import listRoleSettingConfig from 'app/main/govern/ListRoleMenuSetting/listRoleSettingConfig';
 
 const routeConfigs = [
 	PossesionConfig,
@@ -20,7 +21,8 @@ const routeConfigs = [
 	ResovleRequestConfig,
 	GroupUserConfig,
 	SettingMenuConfig,
-	ListUserConfig
+	ListUserConfig,
+	listRoleSettingConfig
 ];
 
 const routes = [

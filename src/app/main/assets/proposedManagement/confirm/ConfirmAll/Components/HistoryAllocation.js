@@ -31,7 +31,7 @@ export default function HistoryAllocation({ handleCloseHistory, open }) {
 								<p>Người gửi:Châu Thế Linh</p>
 							</div>
 							<div>
-								<p>Lí do:Cấp máy mới</p>
+								<p>Lý do:Cấp máy mới</p>
 							</div>
 							<div>
 								<p>Trạng thái:Đã duyệt</p>

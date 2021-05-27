@@ -32,3 +32,5 @@ export const getDataUserLocalStorage = () => {
 	const data = JSON.parse(localStorage.getItem('data_user')) || null;
 	return data;
 };
+
+export const validateField = 'Nội dung bắt buộc không được để trống.';

@@ -122,7 +122,7 @@ export default function HandlingBody({ dataAssets, setDataAssets, value }) {
 								<div className="grid grid-cols-1 sm:grid-cols-2 mb-16 gap-8 ">
 									<div className="flex flex-col">
 										<Field
-											label={`Lí do báo ${value === 1 ? 'hỏng' : 'mất'}`}
+											label={`Lý do báo ${value === 1 ? 'hỏng' : 'mất'}`}
 											name="note"
 											row={4}
 											component={InputTextAreaRequest}

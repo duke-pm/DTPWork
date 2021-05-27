@@ -153,7 +153,7 @@ export default function FormCustomEdit({
 									<Field
 										readOnly
 										hasFeedback
-										label="Lí do"
+										label="Lý do"
 										name="reason"
 										component={InputTextArea}
 										className="mt-8 mb-16"

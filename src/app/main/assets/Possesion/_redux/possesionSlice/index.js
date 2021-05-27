@@ -133,6 +133,14 @@ export const possesionSlice = createSlice({
 			state.error = null;
 			state.lastErrors = false;
 			state.entitiesInformation = data.data;
+		},
+		addNewsSupplierSlice: (state, action) => {
+			const { dataRes } = action.payload;
+			state.actionLoading = false;
+			const { entitiesInformation } = state;
+			const { supplier } = entitiesInformation;
+			const newSupplier = [dataRes, ...supplier];
+			state.entitiesInformation.supplier = newSupplier;
 		}
 	}
 });

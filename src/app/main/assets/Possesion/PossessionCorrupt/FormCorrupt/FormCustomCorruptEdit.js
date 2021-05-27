@@ -43,15 +43,15 @@ export default function FormCustomCorruptEdit() {
 								<div className=" grid grid-cols-1 sm:grid-cols-2 gap-8">
 									<div className="flex-row justify-around flex ">
 										<div className="flex flex-col">
-											<p className="p-2.5	"> Mã sản phẩm </p>
-											<p className="p-2.5	"> Tên sản phẩm </p>
-											<p className="p-2.5	"> Nhóm sản phẩm </p>
+											<p className="p-2.5	"> Mã tài sản </p>
+											<p className="p-2.5	"> Tên tài sản </p>
+											<p className="p-2.5	"> Nhóm tài sản </p>
 											<p className="p-2.5	">Quy cách tài sản</p>
 										</div>
 										<div className="flex flex-col">
-											<p className="p-2.5 font-extrabold"> Mã sản phẩm </p>
-											<p className="p-2.5 font-extrabold"> Tên sản phẩm </p>
-											<p className="p-2.5 font-extrabold"> Nhóm sản phẩm </p>
+											<p className="p-2.5 font-extrabold"> Mã tài sản </p>
+											<p className="p-2.5 font-extrabold"> Tên tài sản </p>
+											<p className="p-2.5 font-extrabold"> Nhóm tài sản </p>
 											<p className="font-extrabold p-2.5"> Màn hình LG 21.5' 22MP48HQ LED IPS</p>
 										</div>
 									</div>

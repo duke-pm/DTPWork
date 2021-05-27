@@ -12,7 +12,7 @@ import {
 import { Form, Formik, Field } from 'formik';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
-import { notificationConfig } from '@fuse/core/DtpConfig';
+import { notificationConfig, validateField } from '@fuse/core/DtpConfig';
 import { Spin } from 'antd';
 import CloseIcon from '@material-ui/icons/Close';
 import * as Yup from 'yup';
@@ -24,7 +24,7 @@ const initial = {
 };
 export default function FormConfirmGobal() {
 	const checkValidate = Yup.object().shape({
-		note: Yup.string().required('Lí do không được để trống')
+		note: Yup.string().required(`${validateField}`)
 	});
 	const dispatch = useDispatch();
 	const ConfirmGobalContext = useContext(ResovleContext);
@@ -58,7 +58,7 @@ export default function FormConfirmGobal() {
 						<CloseIcon />
 					</IconButton>
 					<Typography variant="subtitle1" color="inherit">
-						Lí do không xác nhận.
+						Lý do không duyệt.
 					</Typography>
 				</Toolbar>
 			</AppBar>
@@ -76,7 +76,7 @@ export default function FormConfirmGobal() {
 							<div className="px-16 sm:px-24">
 								<div className="grid grid-cols-1 mb-16 gap-8 ">
 									<Field
-										label="Lí do không xác nhận"
+										label="Lý do không duyệt"
 										autoFocus
 										hasFeedback
 										name="note"

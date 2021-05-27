@@ -116,14 +116,12 @@ export default function FormCustomUnusedEdit({
 							<div className="px-16 sm:px-24">
 								<div className="flex justify-between flex-row">
 									<h5 className="font-extrabold">Thông tin tài sản.</h5>
-									<span className="border-b-1 mt-3 ml-6 border-fuchsia w-auto sm:w-5/6 h-10" />
 								</div>
 								<ContentForm entitiesEdit={entitiesEdit} />
 							</div>
 							<div className="px-16 sm:px-24">
 								<div className="flex justify-between flex-row">
 									<h5 className="font-extrabold">Thông tin cấp phát tài sản.</h5>
-									<span className="border-b-1 mt-3 ml-6 border-fuchsia w-auto sm:w-9/12 h-10" />
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
 									<Field
@@ -137,7 +135,6 @@ export default function FormCustomUnusedEdit({
 									/>
 									<Field
 										label="Vị trí công việc"
-										autoFocus
 										readOnly
 										type="text"
 										// value={intialState.position}
@@ -161,7 +158,6 @@ export default function FormCustomUnusedEdit({
 									/>
 									<Field
 										label="Khu vực"
-										autoFocus
 										readOnly
 										hasFeedback
 										name="location"

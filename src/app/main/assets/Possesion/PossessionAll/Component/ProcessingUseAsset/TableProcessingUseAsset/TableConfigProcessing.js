@@ -34,11 +34,6 @@ export const columnsConfig = [
 		label: 'Trạng thái',
 		sort: true
 	}
-	// {
-	// 	id: 'file',
-	// 	label: 'File đính kèm',
-	// 	sort: true
-	// }
 ];
 
 export const chipColor = {

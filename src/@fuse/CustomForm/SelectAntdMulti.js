@@ -51,6 +51,7 @@ export default function SelectAntdMulti({
 						{...field}
 						{...props}
 						showSearch
+						allowClear
 						mode="multiple"
 						placeholder={placeholder || ''}
 						className={readOnly ? 'readOnly' : ''}

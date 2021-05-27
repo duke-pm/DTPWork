@@ -70,7 +70,7 @@ export default function TimeLine({ timeLine, setTimeLine }) {
 
 											<h6 className="mb-0">Trạng thái : {item.statusName}</h6>
 											{item.reason && item.reason.length > 0 ? (
-												<h6 className="mb-0">Lí do : {item.reason}</h6>
+												<h6 className="mb-0">Lý do : {item.reason}</h6>
 											) : null}
 										</div>
 									</li>
