@@ -1,12 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import jwtService from 'app/services/jwtService';
 import { setUserData } from './userSlice';
+import { fetchsListRoleSettings } from '../../main/govern/ListRoleMenuSetting/_reduxListRoleMenu/listRoleMenuSettingActions';
 
 export const submitLogin = ({ email, password }) => async dispatch => {
 	return jwtService
 		.signInWithEmailAndPassword(email, password)
 		.then(user => {
 			dispatch(setUserData(user));
+			dispatch(fetchsListRoleSettings());
 			return user;
 		})
 		.catch(error => {

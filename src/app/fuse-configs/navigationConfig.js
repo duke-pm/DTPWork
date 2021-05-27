@@ -90,6 +90,13 @@ const navigationConfig = [
 				]
 			}
 		]
+	},
+	{
+		id: 'projectManege',
+		title: 'Project',
+		translate: 'Project',
+		type: 'group',
+		icon: 'apps'
 	}
 ];
 

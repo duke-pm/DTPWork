@@ -104,7 +104,7 @@ function FuseNavVerticalCollapse(props) {
 					</Icon>
 				)}
 
-				<ListItemText className="list-item-text" primary={item.title} classes={{ primary: 'text-14' }} />
+				<ListItemText className="list-item-text" primary={item.menuName} classes={{ primary: 'text-14' }} />
 
 				{item.badge && <FuseNavBadge className="mx-4" badge={item.badge} />}
 
@@ -119,12 +119,12 @@ function FuseNavVerticalCollapse(props) {
 				</IconButton>
 			</ListItem>
 
-			{item.children && (
+			{item.lstPermissionItem && (
 				<Collapse in={open} className="collapse-children">
-					{item.children.map(_item => (
+					{item.lstPermissionItem.map(_item => (
 						<FuseNavItem
-							key={_item.id}
-							type={`vertical-${_item.type}`}
+							key={_item.menuID}
+							type={`vertical-${_item.typeName}`}
 							item={_item}
 							nestedLevel={nestedLevel + 1}
 						/>
@@ -137,10 +137,10 @@ function FuseNavVerticalCollapse(props) {
 
 FuseNavVerticalCollapse.propTypes = {
 	item: PropTypes.shape({
-		id: PropTypes.string.isRequired,
-		title: PropTypes.string,
+		menuID: PropTypes.number.isRequired,
+		menuName: PropTypes.string,
 		icon: PropTypes.string,
-		children: PropTypes.array
+		lstPermissionItem: PropTypes.array
 	})
 };
 FuseNavVerticalCollapse.defaultProps = {};

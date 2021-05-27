@@ -1,8 +1,8 @@
 import request from 'app/store/setupAxios';
 
-const url = '/api/User';
-export const fetchsListUser = params => {
-	return request(`${url}/GetList`, { params });
+const url = 'api/Permission/GetList';
+export const fetchsListRoleSetting = params => {
+	return request(`${url}`, { params });
 };
 export const deletedListUser = params => {
 	return request(`${url}/remove`, { params });

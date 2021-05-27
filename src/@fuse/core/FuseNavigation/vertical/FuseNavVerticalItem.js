@@ -77,7 +77,7 @@ function FuseNavVerticalItem(props) {
 
 			<ListItemText
 				className="list-item-text"
-				primary={item.title}
+				primary={item.menuName}
 				classes={{ primary: 'text-14 list-item-text-primary' }}
 			/>
 
@@ -88,7 +88,7 @@ function FuseNavVerticalItem(props) {
 
 FuseNavVerticalItem.propTypes = {
 	item: PropTypes.shape({
-		id: PropTypes.string.isRequired,
+		menuID: PropTypes.number.isRequired,
 		title: PropTypes.string,
 		icon: PropTypes.string,
 		url: PropTypes.string

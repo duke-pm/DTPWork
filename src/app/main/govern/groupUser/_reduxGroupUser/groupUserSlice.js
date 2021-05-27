@@ -17,7 +17,8 @@ export const groupUserSlice = createSlice({
 	reducers: {
 		catchErrors: (state, action) => {
 			if (action.payload.callType === callTypes.list) {
-				state.actionLoading = false;
+				state.listLoading = false;
+				state.lastErrors = true;
 			} else {
 				state.actionLoading = false;
 			}

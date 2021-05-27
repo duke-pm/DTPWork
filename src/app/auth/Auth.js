@@ -7,7 +7,14 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from '@reduxjs/toolkit';
 import { hideMessage, showMessage } from 'app/store/fuse/messageSlice';
 
-import { getToken, getRoleCookies, refresh_token, getDataUserLocalStorage } from '@fuse/core/DtpConfig';
+import {
+	getToken,
+	getRoleCookies,
+	refresh_token,
+	getDataUserLocalStorage,
+	getDataListMenu
+} from '@fuse/core/DtpConfig';
+import { fetchsListRoleSettings } from '../main/govern/ListRoleMenuSetting/_reduxListRoleMenu/listRoleMenuSettingActions';
 import { setUserData, logoutUser } from './store/userSlice';
 
 class Auth extends Component {
@@ -22,7 +29,8 @@ class Auth extends Component {
 			// this.auth0Check(),
 			this.jwtCheck(),
 			this.jwtCheckToken(),
-			this.localStorageCheck()
+			this.localStorageCheck(),
+			this.props.fetchsListRoleSettings()
 		]).then(() => {
 			this.setState({ waitAuthCheck: false });
 		});
@@ -30,7 +38,8 @@ class Auth extends Component {
 
 	localStorageCheck = () => {
 		const dataLocal = getDataUserLocalStorage();
-		if (!dataLocal) {
+		const dataMenu = getDataListMenu();
+		if (!dataLocal || !dataMenu) {
 			this.props.logout();
 		}
 	};
@@ -172,6 +181,7 @@ function mapDispatchToProps(dispatch) {
 		{
 			logout: logoutUser,
 			setUserData,
+			fetchsListRoleSettings,
 			showMessage,
 			hideMessage
 		},

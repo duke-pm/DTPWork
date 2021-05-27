@@ -1,105 +1,63 @@
 /* eslint-disable no-shadow */
 import { Table, Checkbox } from 'antd';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import image from '@fuse/assets/group.png';
+import { findIndexMultiple } from '@fuse/core/DtpConfig';
+import __ from 'lodash';
 
-const fakeData = [
-	{
-		key: 1,
-		name: 'Tài sản',
-		age: 60,
-		address: 'New York No. 1 Lake Park',
-		parentID: 3,
-		children: [
-			{
-				key: 11,
-				name: 'John Brown',
-				age: 42,
-				parentID: 0,
-				address: 'New York No. 2 Lake Park'
-			},
-			{
-				key: 12,
-				name: 'John Brown jr.',
-				age: 30,
-				parentID: 3,
-				address: 'New York No. 3 Lake Park',
-				children: [
-					{
-						key: 121,
-						name: 'Jimmy Brown',
-						age: 16,
-						parentID: 0,
-						address: 'New York No. 3 Lake Park'
-					}
-				]
-			},
-			{
-				key: 13,
-				name: 'Jim Green sr.',
-				age: 72,
-				parentID: 0,
-				address: 'London No. 1 Lake Park'
-			}
-		]
-	},
-	{
-		key: 2,
-		name: 'Joe Black',
-		age: 32,
-		address: 'Sidney No. 1 Lake Park'
-	}
-];
-
-export default function ListRoleSettingBody({ items, classes, handleEditListUser, handleDeleteListUser }) {
-	const column = [
-		{
-			title: 'Name',
-			dataIndex: 'name'
-		},
-		{
-			title: 'Age',
-			dataIndex: 'age',
-			width: '12%'
-		},
-		{
-			title: 'Address',
-			dataIndex: 'address',
-			width: '30%'
-		},
-		{
-			title: 'Read',
-			dataIndex: 'read',
-			render: (text, record, index) => <>{record.parentID === 0 && <Checkbox />}</>
-		},
-		{
-			title: 'write',
-			dataIndex: 'write',
-			render: (text, record, index) => <>{record.parentID === 0 && <Checkbox />}</>
-		}
-	];
+export default function ListRoleSettingBody({ entities, classes, handleEditListUser, handleDeleteListUser }) {
 	const [checkStrictly, setCheckStrictly] = useState(false);
-	const [selectedRowKeys, setSelectedRowKeys] = useState(
-		fakeData.filter(item => item.age === 60).map(item => item.key)
-	);
+	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+	const [newData, setNewData] = useState([]);
+	useEffect(() => {
+		const newEntis = entities && entities.filter(item => item.isAccess).map(item => item.menuID);
+		if (newEntis && newEntis.length > 0) {
+			setSelectedRowKeys(newEntis);
+		}
+		setNewData(entities);
+	}, [entities]);
 	const onSelectedRowKeysChange = selectedRowKey => {
 		setSelectedRowKeys(selectedRowKey);
 	};
-	const selectRow = record => {
-		const selectedRowKey = [...selectedRowKeys];
-		if (selectedRowKey.indexOf(record.key) >= 0) {
-			selectedRowKey.splice(selectedRowKey.indexOf(record.key), 1);
-		} else {
-			selectedRowKey.push(record.key);
-		}
-		setSelectedRowKeys(selectedRowKey);
+	const selectRow = (name, record, indexChild) => e => {
+		const dataParent = __.cloneDeep(newData);
+		const newDataParse = {
+			[name]: e.target.checked
+		};
+		const abc = findIndexMultiple(record.menuID, newDataParse, dataParent);
+		console.log(abc);
 	};
+	const column = [
+		{
+			title: 'Menu name',
+			dataIndex: 'menuName'
+		},
+		{
+			title: 'Read',
+			dataIndex: 'isRead',
+			render: (text, record, index) => (
+				<>
+					{record.countChild === 0 && (
+						<Checkbox defaultChecked={record.isRead} onChange={selectRow('isRead', record, index)} />
+					)}
+				</>
+			)
+		},
+		{
+			title: 'write',
+			dataIndex: 'isWrite',
+			render: (text, record, index) => (
+				<>
+					{record.countChild === 0 && (
+						<Checkbox defaultChecked={record.isWrite} onChange={selectRow('isWrite', record, index)} />
+					)}
+				</>
+			)
+		}
+	];
 	const rowSelection = {
 		selectedRowKeys,
 		onChange: onSelectedRowKeysChange,
-		// onSelect: (record, selected, selectedRows) => {
-		// 	console.log({ record, selected, selectedRows });
-		// },
 		onSelectAll: (selected, selectedRows, changeRows) => {
 			console.log(selected, selectedRows, changeRows);
 		}
@@ -114,8 +72,10 @@ export default function ListRoleSettingBody({ items, classes, handleEditListUser
 				}
 				pagination={false}
 				columns={column}
+				rowKey="menuID"
+				childrenColumnName="lstPermissionItem"
 				rowSelection={{ ...rowSelection, checkStrictly }}
-				dataSource={fakeData}
+				dataSource={entities}
 			/>
 		</>
 	);

@@ -18,7 +18,6 @@ const useStyles = makeStyles(theme => ({
 	root: {}
 }));
 function convertToVietNamese(array) {
-	console.log(array);
 	return array.map(word => {
 		switch (word) {
 			case 'tai-san':
