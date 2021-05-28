@@ -40,22 +40,6 @@ export const listRoleSlice = createSlice({
 			const { dataRes } = action.payload;
 			state.actionLoading = false;
 			state.entities = dataRes;
-		},
-		fetchListUser: (state, action) => {
-			const { value } = action.payload;
-			state.actionLoading = false;
-			state.entitiesEdit = value;
-		},
-		deletedListUser: (state, action) => {
-			const { dataReq } = action.payload;
-			const { entities } = state;
-			state.actionLoading = false;
-			const newEntities = entities.filter(item => item.userID !== dataReq.UserID);
-			state.entities = newEntities;
 		}
-		// updatedAccessRole: (state, action) => {
-		// 	const { item } = action.payload;
-		// 	¸¸¸¸
-		// }
 	}
 });

@@ -32,7 +32,7 @@ export const fetchsListFilterRole = (userGroup, userID) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	console.log({ userGroup, userID });
 	const paramsReq = {
-		GroupID: userGroup || 1,
+		GroupID: userGroup || 0,
 		UserID: userID || 0,
 		IsWebOrMobile: 0
 	};
@@ -79,32 +79,3 @@ export const updatedRoleUser = (values, userID, groupID) => dispatch => {
 			notificationConfig('warning', 'Thất bại', 'Server error');
 		});
 };
-
-export const deletedListUser = item => dispatch => {
-	dispatch(actions.startCall({ callType: callTypes.action }));
-	const dataReq = {
-		UserID: item.userID
-	};
-	return requestFrom
-		.deletedListUser(dataReq)
-		.then(res => {
-			// console.log(res);
-			const { data } = res;
-			if (!data.isError) {
-				dispatch(actions.deletedListUser({ dataReq }));
-				notificationConfig('success', 'Thành công', 'Xoá người dùng thành công');
-			} else {
-				dispatch(actions.catchErrors({ callType: callTypes.action }));
-				notificationConfig('warning', 'Thất bại', `${data.errorMessage}`);
-			}
-		})
-		.catch(error => {
-			dispatch(actions.catchErrors({ callType: callTypes.action }));
-			notificationConfig('warning', 'Thất bại', `Serrver error`);
-		});
-};
-
-// export const updatedAccessRole = item => dispatch => {
-// 	dispatch(actions.startCall({ callType: callTypes.action }));
-
-// };
