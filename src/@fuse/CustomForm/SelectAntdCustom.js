@@ -3,9 +3,9 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
-import { Divider, FormGroup } from '@material-ui/core';
+import { Divider, FormGroup, Link, Typography } from '@material-ui/core';
 import { Form, Select } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -65,12 +65,12 @@ export default function SelectAntdCustom({
 								{menu}
 								<Divider style={{ margin: '4px 0' }} />
 								<div style={{ display: 'flex', flexWrap: 'nowrap', padding: 8 }}>
-									<a
-										style={{ flex: 'none', padding: '8px', display: 'block', cursor: 'pointer' }}
-										onClick={handleClick}
-									>
-										<PlusOutlined /> Thêm mới
-									</a>
+									<Typography variant="subtitle2" color="inherit" className="mb-16">
+										<AddCircleOutlineIcon style={{ color: '#1890ff' }} />
+										<Link style={{ color: '#1890ff' }} className="mt-8 ml-6" onClick={handleClick}>
+											Thêm nhà cung cấp{' '}
+										</Link>
+									</Typography>
 								</div>
 							</div>
 						)}

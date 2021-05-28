@@ -58,7 +58,6 @@ function FuseNavVerticalItem(props) {
 	if (!hasPermission) {
 		return null;
 	}
-
 	return (
 		<ListItem
 			button
@@ -78,7 +77,7 @@ function FuseNavVerticalItem(props) {
 			<ListItemText
 				className="list-item-text"
 				primary={item.menuName}
-				classes={{ primary: 'text-14 list-item-text-primary' }}
+				classes={{ primary: 'text-15 list-item-text-primary' }}
 			/>
 
 			{item.badge && <FuseNavBadge badge={item.badge} />}

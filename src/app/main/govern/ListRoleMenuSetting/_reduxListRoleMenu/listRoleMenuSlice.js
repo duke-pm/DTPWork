@@ -36,22 +36,10 @@ export const listRoleSlice = createSlice({
 			state.actionLoading = false;
 			state.entities = dataRes;
 		},
-		createdListUser: (state, action) => {
+		updatedRoleSetting: (state, action) => {
 			const { dataRes } = action.payload;
 			state.actionLoading = false;
-			const { entities } = state;
-			const newEntities = [dataRes, ...entities];
-			state.entities = newEntities;
-		},
-		updatedListUser: (state, action) => {
-			const { dataRes } = action.payload;
-			state.actionLoading = false;
-			state.entities = state.entities.map(entity => {
-				if (entity.userID === dataRes.userID) {
-					return dataRes;
-				}
-				return entity;
-			});
+			state.entities = dataRes;
 		},
 		fetchListUser: (state, action) => {
 			const { value } = action.payload;

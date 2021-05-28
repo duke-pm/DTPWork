@@ -2,20 +2,30 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable import/no-extraneous-dependencies */
 import { Button, IconButton, Paper, Typography } from '@material-ui/core';
-import React, { useState } from 'react';
+import React from 'react';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import 'antd/dist/antd.css';
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
-import { Select, Spin } from 'antd';
+import { Select } from 'antd';
 import { useDispatch } from 'react-redux';
+import FilterListIcon from '@material-ui/icons/FilterList';
+import UpdateIcon from '@material-ui/icons/Update';
 import * as action from '../../_reduxListRoleMenu/listRoleMenuSettingActions';
 
-export default function ActionListRoleSetting({ actionLoading, currentInfo }) {
-	const [groupUser, setGroupUser] = useState(null);
+export default function ActionListRoleSetting({
+	actionLoading,
+	currentInfo,
+	setUserID,
+	setUserOption,
+	userID,
+	UserOption,
+	classes,
+	groupUser,
+	setGroupUser,
+	handleUpdatedRole
+}) {
 	const dispatch = useDispatch();
-	const [userID, setUserID] = useState(null);
-	const [UserOption, setUserOption] = useState([]);
 	const userGroup =
 		currentInfo &&
 		currentInfo.userGroup.reduce((arr, curr) => [...arr, { label: curr.groupName, value: curr.groupID }], []);
@@ -35,7 +45,6 @@ export default function ActionListRoleSetting({ actionLoading, currentInfo }) {
 		setUserID(value);
 	};
 	const handleFiler = () => {
-		console.log({ groupUser, userID });
 		dispatch(action.fetchsListFilterRole(groupUser, userID));
 	};
 	return (
@@ -92,10 +101,46 @@ export default function ActionListRoleSetting({ actionLoading, currentInfo }) {
 						type="button"
 						color="primary"
 						className="ml-16 sm:mb-0 mb-9"
+						startIcon={<FilterListIcon />}
 					>
 						{' '}
 						Filter{' '}
 					</Button>
+					<Button
+						onClick={handleUpdatedRole}
+						className="mt-8 sm:mt-0 ml-16 max-w-sm md:max-w-lg h-26"
+						variant="contained"
+						color="primary"
+						startIcon={<UpdateIcon />}
+					>
+						Cập nhật
+					</Button>{' '}
+				</div>
+				<div>
+					<div className="flex flex-col sm:flex-row justify-end mt-16">
+						<Paper className="w-full sm:w-1/4 flex justify-between ">
+							<InputBase
+								// onKeyPress={event => {
+								// 	if (event.key === 'Enter') {
+								// 		handleSearch();
+								// 	}
+								// }}
+								// onChange={e => onHandleChange(e)}
+								className={classes.input}
+								// value={search}
+								placeholder="Tìm kiếm"
+								inputProps={{ 'aria-label': 'search google maps' }}
+							/>
+							<IconButton
+								// onClick={handleSearch}
+								type="button"
+								className={classes.iconButton}
+								aria-label="search"
+							>
+								<SearchIcon />
+							</IconButton>
+						</Paper>
+					</div>
 				</div>
 			</FuseAnimateGroup>
 		</div>

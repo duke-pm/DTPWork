@@ -17,7 +17,7 @@ const inititalState = {
 	phoneContact: '',
 	inactive: false
 };
-export default function FormCustomSupplier({ actionLoading, handleSaveFormSupplier }) {
+export default function FormCustomSupplier({ actionLoading, handleSaveFormSupplier, handleCloseFormSupplier }) {
 	const validateForm = Yup.object().shape({
 		nameSupplier: Yup.string().required(`${validateField}`),
 		address: Yup.string().required(`${validateField}`),
@@ -37,7 +37,7 @@ export default function FormCustomSupplier({ actionLoading, handleSaveFormSuppli
 					<Form>
 						<DialogContent dividers>
 							<div className="px-16 sm:px-24">
-								<div className="grid grid-cols-1 sm:grid-cols-2 p-4 mb-16 gap-8 ">
+								<div className="grid grid-cols-1  p-4 gap-8 ">
 									<Field
 										label="Tên NCC"
 										type="text"
@@ -45,9 +45,8 @@ export default function FormCustomSupplier({ actionLoading, handleSaveFormSuppli
 										component={AntInput}
 										hasFeedback
 									/>
-									<Field label="Email" name="email" type="text" component={AntInput} />
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 p-4 mb-16 gap-8 ">
+								<div className="grid grid-cols-1 p-4 gap-8 ">
 									<Field
 										label="Địa chỉ"
 										type="text"
@@ -55,6 +54,9 @@ export default function FormCustomSupplier({ actionLoading, handleSaveFormSuppli
 										component={AntInput}
 										hasFeedback
 									/>
+								</div>
+								<div className="grid grid-cols-1 sm:grid-cols-2 p-4 gap-8 ">
+									<Field label="Email" name="email" type="text" component={AntInput} />
 									<Field
 										label="Người liên hệ"
 										type="text"
@@ -63,7 +65,7 @@ export default function FormCustomSupplier({ actionLoading, handleSaveFormSuppli
 										hasFeedback
 									/>{' '}
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 p-4 mb-16 gap-8 ">
+								<div className="grid grid-cols-1 sm:grid-cols-2 p-4 gap-8 ">
 									<Field label="Điện thoại" name="phone" component={AntInput} type="number" />
 									<Field
 										label="ĐT người liên hệ"
@@ -72,7 +74,7 @@ export default function FormCustomSupplier({ actionLoading, handleSaveFormSuppli
 										component={AntInput}
 									/>{' '}
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 p-4 mb-16 gap-8 ">
+								<div className="grid grid-cols-1 sm:grid-cols-2 p-4 gap-8 ">
 									<Field label="Inactive" name="inactive" component={CheckboxAntd} />
 								</div>
 							</div>
@@ -87,7 +89,7 @@ export default function FormCustomSupplier({ actionLoading, handleSaveFormSuppli
 							)}
 							<Button
 								type="button"
-								// onClick={handleClose}
+								onClick={handleCloseFormSupplier}
 								className="h-26 font-sans"
 								variant="contained"
 								color="secondary"

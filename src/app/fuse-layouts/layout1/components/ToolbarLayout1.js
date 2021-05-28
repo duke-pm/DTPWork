@@ -12,37 +12,12 @@ import { selectToolbarTheme } from 'app/store/fuse/settingsSlice';
 import UserMenu from 'app/fuse-layouts/shared-components/UserMenu';
 import { Typography } from '@material-ui/core';
 import { useLocation } from 'react-router-dom';
+import { convertToVietNamese } from '@fuse/core/DtpConfig/Breadscrums';
 import FullScreenToggle from '../../shared-components/FullScreenToggle';
 
 const useStyles = makeStyles(theme => ({
 	root: {}
 }));
-function convertToVietNamese(array) {
-	return array.map(word => {
-		switch (word) {
-			case 'tai-san':
-				return 'Quản lý tài sản';
-			case 'xet-duyet':
-				return 'Danh sách đề xuất';
-			case 'de-xuat-can-xu-ly':
-				return 'Đề xuất cần xử lý';
-			case 'quan-tri':
-				return 'Quản trị';
-			case 'nhom-nguoi-dung':
-				return 'Nhóm người dùng';
-			case 'danh-sach-nguoi-dung':
-				return 'Danh sách người dùng';
-			case 'thiet-lap-menu':
-				return 'Thiết lập menu';
-			case 'yeu-cau-cap-phat':
-				return 'Yêu cầu cấp phát';
-			case 'bao-mat-hong-tai-san':
-				return 'Báo mất/hỏng tài sản';
-			default:
-				break;
-		}
-	});
-}
 function ToolbarLayout1(props) {
 	const config = useSelector(({ fuse }) => fuse.settings.current.layout.config);
 	const toolbarTheme = useSelector(selectToolbarTheme);

@@ -28,7 +28,10 @@ export default function FormSupplier({ open, handleCloseFormSupplier }) {
 					</Typography>
 				</Toolbar>
 			</AppBar>
-			<FormCustomSupplier handleSaveFormSupplier={handleSaveFormSupplier} />
+			<FormCustomSupplier
+				handleCloseFormSupplier={handleCloseFormSupplier}
+				handleSaveFormSupplier={handleSaveFormSupplier}
+			/>
 		</Dialog>
 	);
 }
