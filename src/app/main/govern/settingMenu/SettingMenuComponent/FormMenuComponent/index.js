@@ -17,7 +17,7 @@ export default function FormMenuComponent({ openSettingMenu, setOpenSettingMenu 
 		if (entitiesEdit && entitiesEdit.menuID) {
 			dispatch(actions.updatedMenuSettings(values)).then(data => {
 				if (data && !data.isError) {
-					notificationConfig('success', 'Thành công', 'Cập nhật menu mới thành công');
+					notificationConfig('success', 'Thành công', 'Cập nhật menu thành công');
 					handleCloseFormMenu();
 				}
 			});

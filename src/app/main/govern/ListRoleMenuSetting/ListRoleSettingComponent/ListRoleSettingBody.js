@@ -5,17 +5,16 @@ import image from '@fuse/assets/group.png';
 import __ from 'lodash';
 import { findIndexMultiple, findIndexMultipleAsset } from '@fuse/core/DtpConfig';
 
-export default function ListRoleSettingBody({ entities, classes, handleEditListUser, handleDeleteListUser }) {
+export default function ListRoleSettingBody({ entities, newData, setNewData, actionLoading }) {
 	// const [checkStrictly, setCheckStrictly] = useState(false);
 	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-	const [newData, setNewData] = useState([]);
 	useEffect(() => {
-		// const newEntis = entities && entities.filter(item => item.isAccess).map(item => item.menuID);
-		// if (newEntis && newEntis.length > 0) {
-		// 	setSelectedRowKeys(newEntis);
-		// }
+		const newEntis = entities && entities.map(item => item.menuID);
+		if (newEntis && newEntis.length > 0) {
+			setSelectedRowKeys(newEntis);
+		}
 		setNewData(entities);
-	}, [entities]);
+	}, [entities, setNewData]);
 	const onSelectedRowKeysChange = selectedRowKey => {
 		setSelectedRowKeys(selectedRowKey);
 	};
@@ -70,23 +69,14 @@ export default function ListRoleSettingBody({ entities, classes, handleEditListU
 	};
 	const selectRowAccess = (name, record) => e => {
 		const dataParent = __.cloneDeep(newData);
-		const findParent = __.cloneDeep(newData.map(item => item.lstPermissionItem)[0]);
-		const itemChange = __.find(findParent, item => item.menuID === record.parentID);
 		const { checked } = e.target;
 		const newDataParse = {
 			[name]: checked
 		};
-		const dataChange = findIndexMultipleAsset(record.menuID, newDataParse, dataParent, itemChange);
+		const dataChange = findIndexMultipleAsset(record.menuID, newDataParse, dataParent);
 		setNewData(dataChange);
 	};
-	console.log(newData);
-	const rowSelection = {
-		selectedRowKeys,
-		onChange: onSelectedRowKeysChange,
-		onSelectAll: (selected, selectedRows, changeRows) => {
-			console.log(selected, selectedRows, changeRows);
-		}
-	};
+
 	return (
 		<>
 			<Table
@@ -97,7 +87,10 @@ export default function ListRoleSettingBody({ entities, classes, handleEditListU
 				}
 				pagination={false}
 				columns={column}
+				loading={actionLoading}
 				rowKey="menuID"
+				onExpandedRowsChange={onSelectedRowKeysChange}
+				expandedRowKeys={selectedRowKeys}
 				childrenColumnName="lstPermissionItem"
 				// rowSelection={{ ...rowSelection, checkStrictly }}
 				dataSource={newData}

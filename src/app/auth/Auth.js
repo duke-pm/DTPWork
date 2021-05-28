@@ -1,8 +1,7 @@
-import FuseSplashScreen from '@fuse/core/FuseSplashScreen';
 import auth0Service from 'app/services/auth0Service';
 import firebaseService from 'app/services/firebaseService';
 import jwtService from 'app/services/jwtService';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from '@reduxjs/toolkit';
 import { hideMessage, showMessage } from 'app/store/fuse/messageSlice';
@@ -14,7 +13,6 @@ import {
 	getDataUserLocalStorage,
 	getDataListMenu
 } from '@fuse/core/DtpConfig';
-import { fetchsListRoleSettings } from '../main/govern/ListRoleMenuSetting/_reduxListRoleMenu/listRoleMenuSettingActions';
 import { setUserData, logoutUser } from './store/userSlice';
 
 class Auth extends Component {
@@ -29,8 +27,7 @@ class Auth extends Component {
 			// this.auth0Check(),
 			this.jwtCheck(),
 			this.jwtCheckToken(),
-			this.localStorageCheck(),
-			this.props.fetchsListRoleSettings()
+			this.localStorageCheck()
 		]).then(() => {
 			this.setState({ waitAuthCheck: false });
 		});
@@ -177,7 +174,6 @@ function mapDispatchToProps(dispatch) {
 		{
 			logout: logoutUser,
 			setUserData,
-			fetchsListRoleSettings,
 			showMessage,
 			hideMessage
 		},

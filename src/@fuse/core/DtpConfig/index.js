@@ -87,10 +87,7 @@ export function findIndexMultipleAsset(id, newData, arr, itemChange) {
 			} else {
 				arr[i].isWrite = true;
 				arr[i].isRead = true;
-				console.log(itemChange);
-				console.log(arr[i]);
 				if (itemChange && itemChange.menuID === arr[i].parentID) {
-					console.log(arr);
 					console.log('change ');
 				}
 			}
