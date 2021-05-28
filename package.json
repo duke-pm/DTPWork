@@ -2,6 +2,7 @@
     "name": "fuse-react-app",
     "version": "5.3.1",
     "private": true,
+    "homepage": "localhost/login",
     "dependencies": {
         "@ant-design/icons": "^4.6.2",
         "@babel/core": "^7.14.3",

@@ -141,7 +141,7 @@ function FormCustomEdit({
 										name="descr"
 										component={InputTextArea}
 										row={2}
-										placeholder="Vui lòng điền nội dung"
+										placeholder="Mô tả quy cách, thông số tài sản"
 										className="mx-4"
 									/>
 								</div>
@@ -178,7 +178,7 @@ function FormCustomEdit({
 										label="Nguyên giá "
 										name="originalPrice"
 										type="number"
-										placeholder="Vui lòng điền nguyên giá"
+										placeholder="Nguyên giá tài sản"
 										component={InputCurrency}
 										className="mx-4"
 									/>
