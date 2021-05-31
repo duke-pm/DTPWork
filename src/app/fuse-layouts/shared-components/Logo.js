@@ -2,6 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
 import React from 'react';
+import dtpLogo from '@fuse/assets/favicon.ico';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -31,7 +32,7 @@ function Logo() {
 
 	return (
 		<div className={clsx(classes.root, 'flex items-center')}>
-			<img className="logo-icon" src="favicon.ico" alt="logo" />
+			<img className="logo-icon" src={dtpLogo} alt="logo" />
 			<Typography className="username text-12 whitespace-nowrap mt-8 ml-12" color="inherit">
 				EDUCATION SOLUTIONS VN
 			</Typography>

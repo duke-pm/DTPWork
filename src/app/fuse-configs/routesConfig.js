@@ -11,6 +11,7 @@ import GroupUserConfig from 'app/main/govern/groupUser/GroupUserConfig';
 import SettingMenuConfig from 'app/main/govern/settingMenu/SettingMenuConfig';
 import ListUserConfig from 'app/main/govern/listUser/listUserConfig';
 import listRoleSettingConfig from 'app/main/govern/ListRoleMenuSetting/listRoleSettingConfig';
+import ProjectConfig from 'app/main/project/ProjectConfig';
 
 const routeConfigs = [
 	PossesionConfig,
@@ -22,7 +23,8 @@ const routeConfigs = [
 	GroupUserConfig,
 	SettingMenuConfig,
 	ListUserConfig,
-	listRoleSettingConfig
+	listRoleSettingConfig,
+	ProjectConfig
 ];
 
 const routes = [

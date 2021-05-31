@@ -2,7 +2,6 @@
     "name": "fuse-react-app",
     "version": "5.3.1",
     "private": true,
-    "homepage": "localhost/login",
     "dependencies": {
         "@ant-design/icons": "^4.6.2",
         "@babel/core": "^7.14.3",
@@ -21,6 +20,7 @@
         "@testing-library/jest-dom": "^5.11.8",
         "@testing-library/react": "^11.2.2",
         "@testing-library/user-event": "^12.6.0",
+        "@tinymce/tinymce-react": "^3.12.6",
         "@unicef/material-ui-currency-textfield": "^0.8.6",
         "antd": "^4.15.0",
         "auth0-lock": "11.27.2",

@@ -3,6 +3,7 @@ import Avatar from '@material-ui/core/Avatar';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { getDataUserLocalStorage } from '@fuse/core/DtpConfig';
+import Profile from '@fuse/assets/profile.jpg';
 import clsx from 'clsx';
 import React from 'react';
 
@@ -54,11 +55,7 @@ function UserNavbarHeader(props) {
 			<Typography className="email text-13 mt-8 opacity-50 whitespace-nowrap" color="inherit">
 				{dataUser.jobTitle || ''}
 			</Typography>
-			<Avatar
-				className={clsx(classes.avatar, 'avatar')}
-				alt="user photo"
-				src="assets/images/avatars/profile.jpg"
-			/>
+			<Avatar className={clsx(classes.avatar, 'avatar')} alt="user photo" src={Profile} />
 		</AppBar>
 	);
 }

@@ -14,6 +14,7 @@ import { Formik, Form, Field } from 'formik';
 import { AntInputPassword, AntInput } from '@fuse/CustomForm/CreateAntField';
 import { validateField } from '@fuse/core/DtpConfig';
 import { Spin } from 'antd';
+import dtpLogo from '../../../@fuse/assets/logo-dtp.png';
 
 // import Auth0LoginTab from './tabs/Auth0LoginTab';
 // import FirebaseLoginTab from './tabs/FirebaseLoginTab';
@@ -146,7 +147,7 @@ function Login() {
 						<div className="max-w-320">
 							<FuseAnimate animation="transition.slideUpIn" delay={400}>
 								<div className="flex items-center mb-32">
-									<img className="logo-icon" src="assets/logo-dtp.png" alt="logo" />
+									<img className="logo-icon" src={dtpLogo} alt="logo" />
 								</div>
 							</FuseAnimate>
 
