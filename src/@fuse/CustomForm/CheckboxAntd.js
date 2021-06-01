@@ -12,6 +12,7 @@ export default function CheckboxAntd({
 	value,
 	valueProps,
 	handleChangeState,
+	readOnly,
 	options,
 	hasFeedback,
 	notFoundContent,
@@ -38,7 +39,7 @@ export default function CheckboxAntd({
 					help={submittedError || touchedError ? hasError : false}
 					validateStatus={submittedError || touchedError ? 'error' : hasFeedback && 'success'}
 				>
-					<Checkbox defaultChecked={value} onChange={onChange} />
+					<Checkbox className={readOnly ? 'readOnly' : ''} defaultChecked={value} onChange={onChange} />
 				</FormItem>
 			</FormGroup>
 		</>

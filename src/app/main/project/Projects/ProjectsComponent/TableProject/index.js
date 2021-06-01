@@ -113,7 +113,7 @@ function TableProject(props) {
 			title: 'Public',
 			dataIndex: 'public',
 			key: 'public',
-			width: '5%'
+			width: '8%'
 		},
 		{
 			title: 'Created on',

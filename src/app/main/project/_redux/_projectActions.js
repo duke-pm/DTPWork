@@ -139,3 +139,23 @@ export const deletedProject = item => dispatch => {
 			notificationConfig('warning', 'Warning', `Serrver error`);
 		});
 };
+
+export const fetchOwner = () => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.action }));
+	return requestFrom
+		.getOwner()
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				const dataRes = data.data;
+			} else {
+				notificationConfig('warning', 'Warning', data.errorMessage);
+				dispatch(actions.catchErrors({ callType: callTypes.action }));
+			}
+			return data;
+		})
+		.catch(() => {});
+};
+export const fetchAllProject = () => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.action }));
+};

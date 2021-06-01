@@ -1,6 +1,7 @@
 import request from 'app/store/setupAxios';
 
 const url = '/api';
+const fetchOwner = '/api';
 export const fetchsProject = params => {
 	return request(`${url}`, { params });
 };
@@ -13,4 +14,7 @@ export const projectModify = data => {
 };
 export const deleteProject = params => {
 	return request.get(`${url}`, { params });
+};
+export const getOwner = () => {
+	return request.get(`${fetchOwner}`);
 };

@@ -12,7 +12,7 @@ const data = [
 	{
 		key: 1,
 		type: 'Task',
-		subject: 'Organize open source conference',
+		subject: 'Organize open source...',
 		grade: '',
 		component: '',
 		status: <Badge size="default" status="success" style={{ color: '#52c41a' }} text="Scheduled" />,
@@ -24,7 +24,7 @@ const data = [
 			{
 				key: 2,
 				type: 'Task',
-				subject: 'Organize open source conference',
+				subject: 'Organize open source...',
 				grade: '',
 				component: '',
 				status: <Badge size="default" status="success" style={{ color: '#52c41a' }} text="Scheduled" />,
@@ -38,7 +38,7 @@ const data = [
 	{
 		key: 3,
 		type: 'Task',
-		subject: 'Organize open source conference',
+		subject: 'Organize open source...',
 		grade: '',
 		component: '',
 		status: <Badge size="default" status="success" style={{ color: '#52c41a' }} text="Scheduled" />,
@@ -55,7 +55,7 @@ function TableProject(props) {
 			title: <UnorderedListOutlined />,
 			align: 'center',
 			key: 'operation',
-			width: '8%',
+			width: 150,
 			render: (_, item) => (
 				<>
 					<Popover
@@ -88,49 +88,49 @@ function TableProject(props) {
 			title: 'Type',
 			dataIndex: 'type',
 			key: 'type',
-			width: '12%'
+			width: 150
 		},
 		{
 			title: 'Subject',
 			dataIndex: 'subject',
 			key: 'subject',
-			width: '20%'
+			width: 200
 		},
 		{
 			title: 'Grade',
 			dataIndex: 'grade',
 			key: 'grade',
-			width: '6%'
+			width: 150
 		},
 		{
 			title: 'Component',
 			dataIndex: 'component',
 			key: 'component',
-			width: '18%'
+			width: 150
 		},
 		{
 			title: 'Status',
 			dataIndex: 'status',
 			key: 'status',
-			width: '12%'
+			width: 150
 		},
 		{
 			title: 'Start Date',
 			dataIndex: 'startDate',
 			key: 'startDate',
-			width: '5%'
+			width: 150
 		},
 		{
 			title: 'FinishDate',
 			dataIndex: 'finishDate',
 			key: 'finishDate',
-			width: '5%'
+			width: 150
 		},
 		{
 			title: 'Assignee',
 			dataIndex: 'assignee',
 			key: 'assignee',
-			width: '20%',
+			width: 150,
 			render: (_, item) => (
 				<div className="flex flex-row">
 					{' '}
@@ -143,7 +143,13 @@ function TableProject(props) {
 	return (
 		<>
 			{' '}
-			<Table scroll={{ x: 1300 }} pagination={false} columns={columns} dataSource={data} />{' '}
+			<Table
+				className="virtual-table"
+				scroll={{ x: 'max-content' }}
+				pagination={false}
+				columns={columns}
+				dataSource={data}
+			/>{' '}
 		</>
 	);
 }

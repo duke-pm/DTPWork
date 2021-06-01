@@ -1,11 +1,17 @@
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import FusePageCarded from '@fuse/core/FusePageCarded';
 import { Box, Typography } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import ProjectComponent from './ProjectsComponent';
 import FormProject from './ProjectsComponent/FormProject';
+import * as actions from '../_redux/_projectActions';
 
 export default function ProjectPage() {
+	// const dispatch = useDispatch();
+	// useEffect(() => {
+	// dispatch(actions.fetchOwner()).then((data)=>)
+	// }, []);
 	return (
 		<>
 			<FormProject />

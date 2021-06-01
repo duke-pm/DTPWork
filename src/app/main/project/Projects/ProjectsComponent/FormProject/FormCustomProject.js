@@ -15,10 +15,10 @@ export default function FormCustomProject({ actionLoading, handleCloseFormProjec
 		subProject: null,
 		owner: null,
 		public: false,
-		description: ''
+		description: '',
+		status: false
 	};
 	const initialState = entitiesEdit && entitiesEdit.key ? entitiesEdit : initial;
-	console.log(initialState);
 	return (
 		<>
 			<Formik
@@ -70,6 +70,16 @@ export default function FormCustomProject({ actionLoading, handleCloseFormProjec
 										label="Public"
 										hasFeedback
 										name="public"
+										component={CheckboxAntd}
+										className="mx-4"
+									/>
+								</div>
+								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
+									<Field
+										label="Status"
+										hasFeedback
+										readOnly
+										name="status"
 										component={CheckboxAntd}
 										className="mx-4"
 									/>
