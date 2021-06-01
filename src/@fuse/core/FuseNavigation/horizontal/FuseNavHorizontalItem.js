@@ -53,7 +53,7 @@ function FuseNavHorizontalItem(props) {
 			to={item.url}
 			activeClassName="active"
 			className={clsx('list-item', classes.root)}
-			exact={item.exact}
+			exact
 		>
 			{item.icon && (
 				<Icon className="list-item-icon text-16 flex-shrink-0" color="action">

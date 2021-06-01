@@ -1,6 +1,7 @@
 import { AppBar, Dialog, IconButton, Toolbar, Typography } from '@material-ui/core';
 import React, { useContext } from 'react';
 import CloseIcon from '@material-ui/icons/Close';
+import { useSelector, shallowEqual } from 'react-redux';
 import FormCustomProject from './FormCustomProject';
 import { ProjectContext } from '../../ProjectContext';
 
@@ -8,6 +9,14 @@ export default function FormProject() {
 	const projectContext = useContext(ProjectContext);
 	const { formProject, setFormProject } = projectContext;
 	const handleCloseFormProject = () => setFormProject(false);
+	const { currentState } = useSelector(
+		state => ({
+			currentState: state.project
+		}),
+		shallowEqual
+	);
+	const { entitiesEdit } = currentState;
+	console.log(entitiesEdit);
 	return (
 		<Dialog
 			fullWidth
@@ -26,7 +35,7 @@ export default function FormProject() {
 					</Typography>
 				</Toolbar>
 			</AppBar>
-			<FormCustomProject handleCloseFormProject={handleCloseFormProject} />
+			<FormCustomProject entitiesEdit={entitiesEdit} handleCloseFormProject={handleCloseFormProject} />
 		</Dialog>
 	);
 }

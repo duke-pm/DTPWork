@@ -65,6 +65,7 @@ export default function InputTinyCustom({
             bullist numlist outdent indent | help'
 						}}
 						onChange={handleEditorChange}
+						value={field.value}
 					/>
 				</FormItem>
 			</FormGroup>

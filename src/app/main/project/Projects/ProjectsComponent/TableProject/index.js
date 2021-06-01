@@ -4,7 +4,10 @@ import { MinusCircleTwoTone, PlusCircleTwoTone, UnorderedListOutlined, UpOutline
 import { MenuItem, ListItemIcon, Icon, ListItemText } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import { withRouter } from 'react-router';
+import { useDispatch } from 'react-redux';
 import { ProjectContext } from '../../ProjectContext';
+import * as actions from '../../../_redux/_projectActions';
 
 const data = [
 	{
@@ -37,12 +40,16 @@ const data = [
 		createdOn: '31/05/2021'
 	}
 ];
-export default function TableProject() {
+function TableProject(props) {
+	const dispatch = useDispatch();
 	const projectContext = useContext(ProjectContext);
 	const { setFormProject } = projectContext;
 	const handleOpenFormProject = item => {
 		setFormProject(true);
-		console.log(item);
+		dispatch(actions.setTaskEditProject(item));
+	};
+	const handleClick = () => {
+		props.history.push(`/quan-ly-du-an/12`);
 	};
 	const columns = [
 		{
@@ -57,7 +64,7 @@ export default function TableProject() {
 						placement="rightTop"
 						content={() => (
 							<>
-								<MenuItem role="button">
+								<MenuItem onClick={handleClick} role="button">
 									<ListItemIcon className="min-w-40">
 										<Icon>visibility</Icon>
 									</ListItemIcon>
@@ -122,3 +129,5 @@ export default function TableProject() {
 		</>
 	);
 }
+
+export default withRouter(TableProject);

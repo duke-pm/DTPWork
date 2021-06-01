@@ -66,7 +66,7 @@ function FuseNavVerticalItem(props) {
 			activeClassName="active"
 			className={clsx(classes.item, 'list-item')}
 			onClick={ev => mdDown && dispatch(navbarCloseMobile())}
-			exact={item.exact}
+			exact
 		>
 			{item.icon && (
 				<Icon className="list-item-icon text-16 flex-shrink-0" color="action">

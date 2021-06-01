@@ -2,8 +2,8 @@ import FuseAnimate from '@fuse/core/FuseAnimate';
 import FusePageCarded from '@fuse/core/FusePageCarded';
 import { Box, Typography } from '@material-ui/core';
 import React from 'react';
-import ProjectComponent from './ProjectComponent';
-import FormProject from './ProjectComponent/FormProject';
+import ProjectComponent from './ProjectsComponent';
+import FormProject from './ProjectsComponent/FormProject';
 
 export default function ProjectPage() {
 	return (

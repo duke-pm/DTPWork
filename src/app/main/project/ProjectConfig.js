@@ -8,8 +8,12 @@ const ProjectConfig = {
 	},
 	routes: [
 		{
+			path: '/quan-ly-du-an/:detail',
+			component: React.lazy(() => import('./Project/index'))
+		},
+		{
 			path: '/quan-ly-du-an',
-			component: React.lazy(() => import('./index'))
+			component: React.lazy(() => import('./Projects/index'))
 		}
 	]
 };

@@ -21,7 +21,8 @@ export default function FormCustomSupplier({ actionLoading, handleSaveFormSuppli
 	const validateForm = Yup.object().shape({
 		nameSupplier: Yup.string().required(`${validateField}`),
 		address: Yup.string().required(`${validateField}`),
-		contact: Yup.string().required(`${validateField}`)
+		contact: Yup.string().required(`${validateField}`),
+		email: Yup.string().email('Vui lòng nhập đúng định dạng')
 	});
 	return (
 		<>
@@ -39,7 +40,7 @@ export default function FormCustomSupplier({ actionLoading, handleSaveFormSuppli
 							<div className="px-16 sm:px-24">
 								<div className="grid grid-cols-1  p-4 gap-8 ">
 									<Field
-										label="Tên NCC"
+										label="Tên nhà cung cấp"
 										type="text"
 										name="nameSupplier"
 										component={AntInput}
@@ -56,7 +57,10 @@ export default function FormCustomSupplier({ actionLoading, handleSaveFormSuppli
 									/>
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 p-4 gap-8 ">
-									<Field label="Email" name="email" type="text" component={AntInput} />
+									<Field label="Email" name="email" type="email" component={AntInput} />
+									<Field label="Điện thoại" name="phone" component={AntInput} type="number" />
+								</div>
+								<div className="grid grid-cols-1 sm:grid-cols-2 p-4 gap-8 ">
 									<Field
 										label="Người liên hệ"
 										type="text"
@@ -64,8 +68,6 @@ export default function FormCustomSupplier({ actionLoading, handleSaveFormSuppli
 										component={AntInput}
 										hasFeedback
 									/>{' '}
-								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 p-4 gap-8 ">
 									<Field label="Điện thoại" name="phone" component={AntInput} type="number" />
 									<Field
 										label="ĐT người liên hệ"

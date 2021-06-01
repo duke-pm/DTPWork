@@ -8,14 +8,17 @@ import { Field, Formik } from 'formik';
 import React from 'react';
 import { Spin } from 'antd';
 
-export default function FormCustomProject({ actionLoading, handleCloseFormProject }) {
-	const initialState = {
-		nameProject: '',
+export default function FormCustomProject({ actionLoading, handleCloseFormProject, entitiesEdit }) {
+	const initial = {
+		name: '',
 		sector: null,
 		subProject: null,
+		owner: null,
 		public: false,
 		description: ''
 	};
+	const initialState = entitiesEdit && entitiesEdit.key ? entitiesEdit : initial;
+	console.log(initialState);
 	return (
 		<>
 			<Formik
@@ -34,13 +37,12 @@ export default function FormCustomProject({ actionLoading, handleCloseFormProjec
 										label="Name project"
 										hasFeedback
 										type="text"
-										name="nameProject"
+										name="name"
 										component={AntInput}
 										className="mx-4"
 									/>
 									<Field
 										label="Sector"
-										hasFeedback
 										name="sector"
 										component={SelectAntd}
 										options={[]}
@@ -50,8 +52,14 @@ export default function FormCustomProject({ actionLoading, handleCloseFormProjec
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
 									<Field
 										label="SubProject of"
-										hasFeedback
 										name="subProject"
+										component={SelectAntd}
+										options={[]}
+										className="mx-4"
+									/>
+									<Field
+										label="Owner"
+										name="owner"
 										component={SelectAntd}
 										options={[]}
 										className="mx-4"
