@@ -5,6 +5,7 @@ const inititalState = {
 	actionLoading: false,
 	entities: [],
 	entitiesEdit: null,
+	entitiesAll: [],
 	total_count: 0,
 	total_item: null,
 	lastErrors: false
@@ -34,10 +35,17 @@ export const projectSlice = createSlice({
 			}
 		},
 		projectsFetch: (state, action) => {
-			const { data } = action.payload;
+			const { dataRes, total_count } = action.payload;
 			state.listLoading = false;
-			state.entities = data.data;
-			state.total_count = data.totalRow;
+			state.actionLoading = false;
+			state.entities = dataRes;
+			state.total_count = total_count;
+		},
+		projectsFetchAll: (state, action) => {
+			const { dataRes } = action.payload;
+			state.listLoading = false;
+			state.actionLoading = false;
+			state.entitiesAll = dataRes;
 		},
 		projectFetch: (state, action) => {
 			const { value } = action.payload;
@@ -48,15 +56,16 @@ export const projectSlice = createSlice({
 			const { dataRes } = action.payload;
 			state.actionLoading = false;
 			const { entities } = state;
-			const newEntities = [dataRes, ...entities];
+			const newEntities = [...dataRes, ...entities];
 			state.entities = newEntities;
 		},
 		updatedProject: (state, action) => {
 			const { dataRes } = action.payload;
+			const newDataRes = dataRes[0];
 			state.actionLoading = false;
 			state.entities = state.entities.map(entity => {
-				if (entity.groupID === dataRes.groupID) {
-					return dataRes;
+				if (entity.prjID === newDataRes.prjID) {
+					return newDataRes;
 				}
 				return entity;
 			});

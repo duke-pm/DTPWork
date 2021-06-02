@@ -1,31 +1,57 @@
 import { AntInput } from '@fuse/CustomForm/CreateAntField';
 import SelectAntd from '@fuse/CustomForm/SelectAntd';
 import CheckboxAntd from '@fuse/CustomForm/CheckboxAntd';
-import InputTinyCustom from '@fuse/CustomForm/InputTinyCustom';
 import { Button, DialogActions, DialogContent } from '@material-ui/core';
-import Form from 'antd/lib/form/Form';
-import { Field, Formik } from 'formik';
+import { Field, Formik, Form } from 'formik';
 import React from 'react';
 import { Spin } from 'antd';
+import InputTextArea from '@fuse/CustomForm/InputTextArea';
+import * as Yup from 'yup';
+import { validateField } from '@fuse/core/DtpConfig';
 
-export default function FormCustomProject({ actionLoading, handleCloseFormProject, entitiesEdit }) {
-	const initial = {
-		name: '',
-		sector: null,
-		subProject: null,
+export default function FormCustomProject({
+	actionLoading,
+	handleCloseFormProject,
+	entitiesEdit,
+	owner,
+	sectorArr,
+	ArrProjectStatus,
+	projectSub,
+	handleSubmitForm
+}) {
+	let initial = {
+		prjID: '0',
+		prjName: '',
+		sectorID: null,
+		prjParentID: null,
 		owner: null,
-		public: false,
-		description: '',
-		status: false
+		isPublic: true,
+		descr: '',
+		statusID: 1
 	};
-	const initialState = entitiesEdit && entitiesEdit.key ? entitiesEdit : initial;
+	if (entitiesEdit && entitiesEdit.prjID) {
+		initial = {
+			prjID: entitiesEdit && entitiesEdit.prjID,
+			prjName: entitiesEdit && entitiesEdit.prjName,
+			sectorID: entitiesEdit && entitiesEdit.sectorID === 0 ? null : entitiesEdit.sectorID,
+			prjParentID: entitiesEdit && entitiesEdit.prjParentID === 0 ? null : entitiesEdit.prjParentID,
+			owner: entitiesEdit && entitiesEdit.owner === 0 ? null : entitiesEdit.owner,
+			isPublic: entitiesEdit && entitiesEdit.isPublic,
+			descr: entitiesEdit && entitiesEdit.descr,
+			statusID: entitiesEdit && entitiesEdit.statusID
+		};
+	}
+	const validateSchema = Yup.object().shape({
+		prjName: Yup.string().required(`${validateField}`)
+	});
 	return (
 		<>
 			<Formik
 				enableReinitialize
-				initialValues={initialState}
+				validationSchema={validateSchema}
+				initialValues={initial}
 				onSubmit={values => {
-					console.log(values);
+					handleSubmitForm(values);
 				}}
 			>
 				{({ handleSubmit, isSubmitting }) => (
@@ -37,31 +63,41 @@ export default function FormCustomProject({ actionLoading, handleCloseFormProjec
 										label="Name project"
 										hasFeedback
 										type="text"
-										name="name"
+										name="prjName"
 										component={AntInput}
 										className="mx-4"
 									/>
 									<Field
 										label="Sector"
-										name="sector"
+										name="sectorID"
 										component={SelectAntd}
-										options={[]}
+										options={sectorArr}
 										className="mx-4"
 									/>
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
 									<Field
 										label="SubProject of"
-										name="subProject"
+										name="prjParentID"
 										component={SelectAntd}
-										options={[]}
+										options={projectSub}
 										className="mx-4"
 									/>
 									<Field
 										label="Owner"
 										name="owner"
 										component={SelectAntd}
-										options={[]}
+										options={owner}
+										className="mx-4"
+									/>
+								</div>
+								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
+									<Field
+										label="Status"
+										readOnly
+										name="statusID"
+										options={ArrProjectStatus}
+										component={SelectAntd}
 										className="mx-4"
 									/>
 								</div>
@@ -69,17 +105,8 @@ export default function FormCustomProject({ actionLoading, handleCloseFormProjec
 									<Field
 										label="Public"
 										hasFeedback
-										name="public"
-										component={CheckboxAntd}
-										className="mx-4"
-									/>
-								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
-									<Field
-										label="Status"
-										hasFeedback
-										readOnly
-										name="status"
+										name="isPublic"
+										value={initial.isPublic}
 										component={CheckboxAntd}
 										className="mx-4"
 									/>
@@ -87,9 +114,9 @@ export default function FormCustomProject({ actionLoading, handleCloseFormProjec
 								<div className="grid grid-cols-1 gap-8 ">
 									<Field
 										label="Description"
-										hasFeedback
-										name="description"
-										component={InputTinyCustom}
+										name="descr"
+										row={4}
+										component={InputTextArea}
 										className="mx-4"
 									/>
 								</div>
@@ -100,7 +127,7 @@ export default function FormCustomProject({ actionLoading, handleCloseFormProjec
 								<Spin />
 							) : (
 								<Button type="submit" className="h-26 font-sans" variant="contained" color="primary">
-									Create
+									{initial && initial.prjID !== '0' ? 'Updated' : 'Created'}
 								</Button>
 							)}
 

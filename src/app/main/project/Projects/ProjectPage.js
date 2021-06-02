@@ -1,20 +1,65 @@
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import FusePageCarded from '@fuse/core/FusePageCarded';
 import { Box, Typography } from '@material-ui/core';
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import ProjectComponent from './ProjectsComponent';
 import FormProject from './ProjectsComponent/FormProject';
 import * as actions from '../_redux/_projectActions';
+import { getInformationCompany } from '../../assets/Possesion/_redux/possesionActions/index';
 
 export default function ProjectPage() {
-	// const dispatch = useDispatch();
-	// useEffect(() => {
-	// dispatch(actions.fetchOwner()).then((data)=>)
-	// }, []);
+	const { currentState, projectAll } = useSelector(
+		state => ({ currentState: state.possesion.entitiesInformation, projectAll: state.project.entitiesAll }),
+		shallowEqual
+	);
+	const [owner, setOwner] = useState([]);
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(actions.fetchsProject());
+	}, [dispatch]);
+	useEffect(() => {
+		dispatch(actions.fetchOwner()).then(data => {
+			if (data && !data.isError) {
+				const ownerArr = data.data.reduce(
+					(arr, curr) => [...arr, { label: curr.empName, value: curr.empID }],
+					[]
+				);
+				setOwner(ownerArr);
+			} else {
+				setOwner([]);
+			}
+		});
+	}, [dispatch]);
+	useEffect(() => {
+		dispatch(actions.fetchAllProject());
+	}, [dispatch]);
+	useEffect(() => {
+		const params = 'PrjStatus,PrjSector';
+		dispatch(getInformationCompany(params));
+	}, [dispatch]);
+	const sectorArr =
+		currentState &&
+		currentState.projectSector.reduce(
+			(arr, curr) => [...arr, { label: curr.sectorName, value: curr.sectorID }],
+			[]
+		);
+	const ArrProjectStatus =
+		currentState &&
+		currentState.projectStatus.reduce(
+			(arr, curr) => [...arr, { label: curr.statusName, value: curr.statusID }],
+			[]
+		);
+	const projectSub =
+		projectAll && projectAll.reduce((arr, curr) => [...arr, { label: curr.prjName, value: curr.prjID }], []);
 	return (
 		<>
-			<FormProject />
+			<FormProject
+				projectSub={projectSub}
+				sectorArr={sectorArr}
+				ArrProjectStatus={ArrProjectStatus}
+				owner={owner}
+			/>
 			<FusePageCarded
 				innerScroll
 				classes={{
@@ -25,13 +70,7 @@ export default function ProjectPage() {
 					<div className="flex flex-1 w-full items-center justify-between">
 						<div className="flex flex-1 flex-col items-center sm:items-start">
 							<FuseAnimate animation="transition.slideRightIn" delay={300}>
-								<Typography
-									className="text-16 sm:text-20 truncate"
-									// component={Link}
-									// role="button"
-									// to="/apps/e-commerce/orders"
-									color="inherit"
-								>
+								<Typography className="text-16 sm:text-20 truncate" color="inherit">
 									{/* {xhtm} */}
 								</Typography>
 							</FuseAnimate>

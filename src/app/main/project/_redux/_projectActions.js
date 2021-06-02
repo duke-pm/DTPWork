@@ -6,8 +6,7 @@ const { actions } = projectSlice;
 export const fetchsProject = () => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.list }));
 	const paramsReq = {
-		PageSize: 25,
-		PageNum: 1
+		Lang: 'vi'
 	};
 	return requestFrom
 		.fetchsProject(paramsReq)
@@ -19,21 +18,17 @@ export const fetchsProject = () => dispatch => {
 				dispatch(actions.projectsFetch({ dataRes, total_count }));
 			} else {
 				notificationConfig('warning', 'Warning', data.errorMessage);
-				dispatch(actions.catchErrors({ callType: callTypes.list }));
+				dispatch(actions.catchErros({ callType: callTypes.list }));
 			}
 		})
 		.catch(error => {
-			dispatch(actions.catchErrors({ callType: callTypes.list }));
+			dispatch(actions.catchErros({ callType: callTypes.list }));
 			notificationConfig('warning', 'Warning', 'Server error');
 		});
 };
-export const fetchsProjectFilter = (page, limit, sortColumn, sortDirection, search) => dispatch => {
+export const fetchsProjectFilter = search => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const paramsReq = {
-		PageNum: page || 1,
-		PageSize: limit || 25,
-		SortColumn: sortColumn || '',
-		SortDirection: sortDirection || 'desc',
 		Search: search || ''
 	};
 	return requestFrom
@@ -46,23 +41,24 @@ export const fetchsProjectFilter = (page, limit, sortColumn, sortDirection, sear
 				dispatch(actions.projectsFetch({ dataRes, total_count }));
 			} else {
 				notificationConfig('warning', 'Warning', data.errorMessage);
-				dispatch(actions.catchErrors({ callType: callTypes.action }));
+				dispatch(actions.catchErros({ callType: callTypes.action }));
 			}
 		})
 		.catch(error => {
-			dispatch(actions.catchErrors({ callType: callTypes.list }));
-			dispatch(actions.catchErrors({ callType: callTypes.action }));
+			dispatch(actions.catchErros({ callType: callTypes.action }));
 		});
 };
 
 export const createdProject = values => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const dataReq = {
-		nameProject: values.nameProject,
-		sector: values.sector,
-		subProject: values.subProject,
-		public: values.public,
-		owner: values.owner,
+		PrjID: values.prjID,
+		PrjName: values.prjName,
+		SectorID: values.sectorID || 0,
+		PrjParentID: values.PrjParentID || 0,
+		Descr: values.descr,
+		IsPublic: values.isPublic,
+		Owner: values.owner || 0,
 		Lang: 'vi'
 	};
 	return requestFrom
@@ -72,14 +68,15 @@ export const createdProject = values => dispatch => {
 			if (!data.isError) {
 				const dataRes = data.data;
 				dispatch(actions.createdProject({ dataRes }));
+				dispatch(fetchAllProject());
 			} else {
-				dispatch(actions.catchErrors({ callType: callTypes.action }));
+				dispatch(actions.catchErros({ callType: callTypes.action }));
 				notificationConfig('warning', 'Warning', data.errorMessage);
 			}
 			return data;
 		})
 		.catch(err => {
-			dispatch(actions.catchErrors({ callType: callTypes.action }));
+			dispatch(actions.catchErros({ callType: callTypes.action }));
 			notificationConfig('warning', 'Warning', 'Server error');
 		});
 };
@@ -91,11 +88,13 @@ export const setTaskEditProject = value => dispatch => {
 export const updatedProject = values => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const dataReq = {
-		nameProject: values.nameProject,
-		sector: values.sector,
-		subProject: values.subProject,
-		public: values.public,
-		owner: values.owner,
+		PrjID: values.prjID,
+		PrjName: values.prjName,
+		SectorID: values.sectorID || 0,
+		PrjParentID: values.PrjParentID || 0,
+		Descr: values.descr,
+		IsPublic: values.isPublic,
+		Owner: values.owner || 0,
 		Lang: 'vi'
 	};
 	return requestFrom
@@ -104,15 +103,17 @@ export const updatedProject = values => dispatch => {
 			const { data } = res;
 			if (!data.isError) {
 				const dataRes = data.data;
-				dispatch(actions.updatedProject({ dataRes }));
+				dispatch(fetchsProjectFilter());
+				dispatch(fetchAllProject());
+				// dispatch(actions.updatedProject({ dataRes }));
 			} else {
-				dispatch(actions.catchErrors({ callType: callTypes.action }));
+				dispatch(actions.catchErros({ callType: callTypes.action }));
 				notificationConfig('warning', 'Warning', data.errorMessage);
 			}
 			return data;
 		})
 		.catch(err => {
-			dispatch(actions.catchErrors({ callType: callTypes.action }));
+			dispatch(actions.catchErros({ callType: callTypes.action }));
 			notificationConfig('warning', 'Warning', 'Server error');
 		});
 };
@@ -130,12 +131,12 @@ export const deletedProject = item => dispatch => {
 				dispatch(actions.deletedProject({ dataReq }));
 				notificationConfig('success', 'Success', 'Delete project success!!!');
 			} else {
-				dispatch(actions.catchErrors({ callType: callTypes.action }));
+				dispatch(actions.catchErros({ callType: callTypes.action }));
 				notificationConfig('warning', 'Warning', `${data.errorMessage}`);
 			}
 		})
 		.catch(error => {
-			dispatch(actions.catchErrors({ callType: callTypes.action }));
+			dispatch(actions.catchErros({ callType: callTypes.action }));
 			notificationConfig('warning', 'Warning', `Serrver error`);
 		});
 };
@@ -150,7 +151,7 @@ export const fetchOwner = () => dispatch => {
 				const dataRes = data.data;
 			} else {
 				notificationConfig('warning', 'Warning', data.errorMessage);
-				dispatch(actions.catchErrors({ callType: callTypes.action }));
+				dispatch(actions.catchErros({ callType: callTypes.action }));
 			}
 			return data;
 		})
@@ -158,4 +159,18 @@ export const fetchOwner = () => dispatch => {
 };
 export const fetchAllProject = () => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
+	return requestFrom
+		.getProjectSub()
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				const dataRes = data.data;
+				dispatch(actions.projectsFetchAll({ dataRes }));
+			} else {
+				notificationConfig('warning', 'Warning', data.errorMessage);
+				dispatch(actions.catchErros({ callType: callTypes.action }));
+			}
+			return data;
+		})
+		.catch(() => {});
 };

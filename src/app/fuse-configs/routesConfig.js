@@ -28,7 +28,7 @@ const routeConfigs = [
 ];
 
 const routes = [
-	...FuseUtils.generateRoutesFromConfigs(routeConfigs, ['admin', 'nganhk', 'ducpt', 'huyenndh', 'vyttt']),
+	...FuseUtils.generateRoutesFromConfigs(routeConfigs, ['admin', 'nganhk', 'ducpt', 'huyenndh', 'vyttt', 'phucvd']),
 	{
 		path: '/',
 		exact: true,
