@@ -87,11 +87,12 @@ export const setTaskEditProject = value => dispatch => {
 
 export const updatedProject = values => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
+	console.log(values);
 	const dataReq = {
 		PrjID: values.prjID,
 		PrjName: values.prjName,
 		SectorID: values.sectorID || 0,
-		PrjParentID: values.PrjParentID || 0,
+		PrjParentID: values.prjParentID || 0,
 		Descr: values.descr,
 		IsPublic: values.isPublic,
 		Owner: values.owner || 0,
