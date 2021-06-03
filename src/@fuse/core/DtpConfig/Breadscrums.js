@@ -23,6 +23,8 @@ export function convertToVietNamese(array) {
 				return 'Báo mất/hỏng tài sản';
 			case 'phan-quyen-chuc-nang':
 				return 'Phân quyền chức năng';
+			case 'quan-ly-du-an':
+				return 'Quản lý dự án';
 			default:
 				break;
 		}

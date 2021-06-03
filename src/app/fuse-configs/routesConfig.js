@@ -28,9 +28,10 @@ const routeConfigs = [
 ];
 
 const routes = [
-	...FuseUtils.generateRoutesFromConfigs(routeConfigs, ['admin', 'nganhk', 'ducpt', 'huyenndh', 'vyttt']),
+	...FuseUtils.generateRoutesFromConfigs(routeConfigs),
 	{
 		path: '/',
+		exact: true,
 		component: () => <Redirect to="/tai-san" />
 	}
 	// {
