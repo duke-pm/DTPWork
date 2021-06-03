@@ -175,3 +175,23 @@ export const fetchAllProject = () => dispatch => {
 		})
 		.catch(() => {});
 };
+
+export const fetchProjectDetail = params => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.list }));
+	return requestFrom
+		.fetchsProject(params)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				const dataRes = data.data;
+				dispatch(actions.fetchProjectDetail({ dataRes }));
+			} else {
+				notificationConfig('warning', 'Warning', data.errorMessage);
+				dispatch(actions.catchErros({ callType: callTypes.list }));
+			}
+		})
+		.catch(() => {
+			dispatch(actions.catchErros({ callType: callTypes.list }));
+			notificationConfig('warning', 'Warning', 'Server error');
+		});
+};
