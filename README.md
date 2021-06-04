@@ -42,3 +42,9 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## Handle client side routes with IIS on Page refresh React App
+Create new Application Pool with type .NET CLR Version is: No Managed Code
+Create new Web site with Application Pool just create above
+Install URL Rewrite (Ref: https://inthetechpit.com/2019/06/13/handle-client-side-routes-with-iis-on-page-refresh-react-app/)
+Create a file web.config
