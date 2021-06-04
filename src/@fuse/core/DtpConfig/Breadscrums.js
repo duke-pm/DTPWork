@@ -3,6 +3,8 @@
 export function convertToVietNamese(array) {
 	return array.map(word => {
 		switch (word) {
+			case 'trang-chu':
+				return 'Trang chủ';
 			case 'tai-san':
 				return 'Quản lý tài sản';
 			case 'xet-duyet':

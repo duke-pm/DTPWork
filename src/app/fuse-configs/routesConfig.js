@@ -12,6 +12,8 @@ import SettingMenuConfig from 'app/main/govern/settingMenu/SettingMenuConfig';
 import ListUserConfig from 'app/main/govern/listUser/listUserConfig';
 import listRoleSettingConfig from 'app/main/govern/ListRoleMenuSetting/listRoleSettingConfig';
 import ProjectConfig from 'app/main/project/ProjectConfig';
+import HomeConfig from 'app/main/Home/HomeConfig';
+import Error404PageConfig from 'app/main/error/404/Error404PageConfig';
 
 const routeConfigs = [
 	PossesionConfig,
@@ -24,7 +26,9 @@ const routeConfigs = [
 	SettingMenuConfig,
 	ListUserConfig,
 	listRoleSettingConfig,
-	ProjectConfig
+	ProjectConfig,
+	Error404PageConfig,
+	HomeConfig
 ];
 
 const routes = [
@@ -32,12 +36,11 @@ const routes = [
 	{
 		path: '/',
 		exact: true,
-		component: () => <Redirect to="/tai-san" />
+		component: () => <Redirect to="/trang-chu" />
+	},
+	{
+		component: () => <Redirect to="/error-404" />
 	}
-	// {
-	// 	path: '/xet-duyet',
-	// 	component: () => <Redirect to="/xet-duyet" />
-	// }
 ];
 
 export default routes;
