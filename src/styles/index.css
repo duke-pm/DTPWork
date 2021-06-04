@@ -123,7 +123,6 @@ thead[class*="ant-table-thead"] th{
         background: transparent;
     }
 }
-
 input:-webkit-autofill {
     animation-delay: 1s;
     animation-name: autofill!important;

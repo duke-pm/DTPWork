@@ -1,11 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Badge, Checkbox, Table, Popover, Tooltip } from 'antd';
 import React, { useContext } from 'react';
-import { UnorderedListOutlined } from '@ant-design/icons';
+import { MinusSquareOutlined, PlusSquareOutlined } from '@ant-design/icons';
 import { MenuItem, ListItemIcon, Icon, ListItemText, Link } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { withRouter } from 'react-router';
 import { useDispatch } from 'react-redux';
+import AppsIcon from '@material-ui/icons/Apps';
 import { ProjectContext } from '../../ProjectContext';
 import * as actions from '../../../_redux/_projectActions';
 import { badgeStatus, badgeText } from '../ConfigTableProject';
@@ -19,15 +20,14 @@ function TableProject(props) {
 		setFormProject(true);
 		dispatch(actions.setTaskEditProject(item));
 	};
-	const handleClick = () => {
-		props.history.push(`/quan-ly-du-an/12`);
-	};
-	const handleDetail = () => {
-		props.history.push(`/quan-ly-du-an/12`);
+	const handleDetail = item => {
+		if (item.countChild === 0) {
+			props.history.push(`/quan-ly-du-an/12`);
+		}
 	};
 	const columns = [
 		{
-			title: <UnorderedListOutlined />,
+			title: <AppsIcon />,
 			align: 'center',
 			key: 'operation',
 			width: '8%',
@@ -44,6 +44,12 @@ function TableProject(props) {
 									</ListItemIcon>
 									<ListItemText primary="Edit" />
 								</MenuItem>
+								<MenuItem onClick={() => handleDetail(item)} role="button">
+									<ListItemIcon className="min-w-40">
+										<Icon>visibility</Icon>
+									</ListItemIcon>
+									<ListItemText primary="Detail" />
+								</MenuItem>
 							</>
 						)}
 						title="Action"
@@ -57,15 +63,15 @@ function TableProject(props) {
 			title: 'Name',
 			dataIndex: 'prjName',
 			key: 'prjName',
-			width: '13%',
+			width: '20%',
 			ellipsis: {
 				showTitle: false
 			},
-			render: prjName => (
-				<Tooltip placement="topLeft" title={prjName}>
-					<Link onClick={handleDetail} component="button">
+			render: (_, item) => (
+				<Tooltip placement="topLeft" title={item.prjName}>
+					<Link style={{ marginLeft: '10px' }} onClick={() => handleDetail(item)} component="button">
 						{' '}
-						{prjName}{' '}
+						{item.prjName}{' '}
 					</Link>
 				</Tooltip>
 			)
@@ -113,15 +119,31 @@ function TableProject(props) {
 			width: '12%'
 		}
 	];
+
 	return (
 		<>
 			{' '}
 			<Table
 				rowKey="prjID"
+				expandable={{
+					expandRowByClick: true,
+					expandIconAsCell: false,
+					expandIconColumnIndex: 1,
+					expandIcon: ({ expanded, onExpand, record, expandable }) =>
+						expandable.length === 0 ? null : expanded ? (
+							<MinusSquareOutlined
+								style={{ marginRight: '8px !important' }}
+								onClick={e => onExpand(record, e)}
+							/>
+						) : (
+							<PlusSquareOutlined onClick={e => onExpand(record, e)} />
+						)
+				}}
 				childrenColumnName="lstProjectItem"
 				pagination={false}
-				scroll={{ x: 1540, y: 540 }}
+				scroll={{ x: 1540, y: 440 }}
 				columns={columns}
+				style={{ cursor: 'pointer' }}
 				dataSource={entities}
 			/>{' '}
 		</>

@@ -2,6 +2,7 @@ import { Badge, Checkbox, Table, Popover, Avatar } from 'antd';
 import React, { useContext } from 'react';
 import { MinusCircleTwoTone, PlusCircleTwoTone, UnorderedListOutlined, UpOutlined } from '@ant-design/icons';
 import { MenuItem, ListItemIcon, Icon, ListItemText } from '@material-ui/core';
+import AppsIcon from '@material-ui/icons/Apps';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { withRouter } from 'react-router';
@@ -52,10 +53,10 @@ function TableProject(props) {
 	const dispatch = useDispatch();
 	const columns = [
 		{
-			title: <UnorderedListOutlined />,
+			title: <AppsIcon />,
 			align: 'center',
 			key: 'operation',
-			width: 150,
+			width: '18%',
 			render: (_, item) => (
 				<>
 					<Popover
@@ -88,13 +89,13 @@ function TableProject(props) {
 			title: 'Type',
 			dataIndex: 'type',
 			key: 'type',
-			width: 150
+			width: '18%'
 		},
 		{
 			title: 'Subject',
 			dataIndex: 'subject',
 			key: 'subject',
-			width: 200
+			width: '20%'
 		},
 		{
 			title: 'Grade',
@@ -106,31 +107,31 @@ function TableProject(props) {
 			title: 'Component',
 			dataIndex: 'component',
 			key: 'component',
-			width: 150
+			width: '18%'
 		},
 		{
 			title: 'Status',
 			dataIndex: 'status',
 			key: 'status',
-			width: 150
+			width: '18%'
 		},
 		{
 			title: 'Start Date',
 			dataIndex: 'startDate',
 			key: 'startDate',
-			width: 150
+			width: '18%'
 		},
 		{
 			title: 'FinishDate',
 			dataIndex: 'finishDate',
 			key: 'finishDate',
-			width: 150
+			width: '18%'
 		},
 		{
 			title: 'Assignee',
 			dataIndex: 'assignee',
 			key: 'assignee',
-			width: 150,
+			width: '18%',
 			render: (_, item) => (
 				<div className="flex flex-row">
 					{' '}
@@ -145,7 +146,12 @@ function TableProject(props) {
 			{' '}
 			<Table
 				className="virtual-table"
-				scroll={{ x: 'max-content' }}
+				expandable={{
+					expandRowByClick: true,
+					expandIconAsCell: false,
+					expandIconColumnIndex: 1
+				}}
+				scroll={{ x: 1540, y: 440 }}
 				pagination={false}
 				columns={columns}
 				dataSource={data}

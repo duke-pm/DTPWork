@@ -6,6 +6,7 @@ const inititalState = {
 	entities: [],
 	entitiesEdit: null,
 	entitiesAll: [],
+	entitiesDetail: [],
 	total_count: 0,
 	total_item: null,
 	lastErrors: false
@@ -76,6 +77,12 @@ export const projectSlice = createSlice({
 			const { entities } = state;
 			const newEnities = entities.filter(item => item.groupID !== dataReq.GroupID);
 			state.entities = newEnities;
+		},
+		fetchProjectDetail: (state, action) => {
+			const { dataRes } = action.payload;
+			state.listLoading = false;
+			state.actionLoading = false;
+			state.entitiesDetail = dataRes;
 		}
 	}
 });
