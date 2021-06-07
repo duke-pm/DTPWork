@@ -41,7 +41,7 @@ export default function ActionHeaderProject({ classes }) {
 							color="primary"
 							startIcon={<AddIcon />}
 						>
-							Project
+							Create
 						</Button>{' '}
 						<Paper className="w-full sm:w-1/4 flex justify-between ">
 							<InputBase

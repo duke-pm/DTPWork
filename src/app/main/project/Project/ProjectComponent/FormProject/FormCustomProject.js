@@ -71,7 +71,7 @@ export default function FormCustomProject({ actionLoading, handleCloseFormProjec
 									<Field
 										label="Assignee"
 										name="assign"
-										component={SelectAntdMulti}
+										component={SelectAntd}
 										options={[]}
 										className="mx-4"
 									/>

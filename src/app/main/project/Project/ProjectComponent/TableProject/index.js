@@ -66,12 +66,6 @@ function TableProject(props) {
 							<>
 								<MenuItem role="button">
 									<ListItemIcon className="min-w-40">
-										<Icon>visibility</Icon>
-									</ListItemIcon>
-									<ListItemText primary="Project detail" />
-								</MenuItem>
-								<MenuItem role="button">
-									<ListItemIcon className="min-w-40">
 										<Icon>edit</Icon>
 									</ListItemIcon>
 									<ListItemText primary="Edit" />
