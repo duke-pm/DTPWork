@@ -99,7 +99,7 @@ function FuseNavVerticalCollapse(props) {
 				role="button"
 			>
 				{item.icon && (
-					<Icon color="action" className="list-item-icon text-16 flex-shrink-0">
+					<Icon color="action" className="list-item-icon text-14 flex-shrink-0">
 						{item.icon}
 					</Icon>
 				)}
@@ -113,7 +113,7 @@ function FuseNavVerticalCollapse(props) {
 					className="w-40 h-40 -mx-12 p-0 focus:bg-transparent hover:bg-transparent"
 					onClick={ev => ev.preventDefault()}
 				>
-					<Icon className="text-16 arrow-icon" color="inherit">
+					<Icon className="text-14 arrow-icon" color="inherit">
 						{open ? 'expand_less' : 'expand_more'}
 					</Icon>
 				</IconButton>

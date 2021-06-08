@@ -52,7 +52,7 @@ export const fetchsProjectFilter = search => dispatch => {
 export const createdProject = values => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const dataReq = {
-		PrjID: values.prjID,
+		PrjID: '0',
 		PrjName: values.prjName,
 		SectorID: values.sectorID || 0,
 		PrjParentID: values.PrjParentID || 0,
@@ -87,7 +87,6 @@ export const setTaskEditProject = value => dispatch => {
 
 export const updatedProject = values => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
-	console.log(values);
 	const dataReq = {
 		PrjID: values.prjID,
 		PrjName: values.prjName,
@@ -103,7 +102,7 @@ export const updatedProject = values => dispatch => {
 		.then(res => {
 			const { data } = res;
 			if (!data.isError) {
-				const dataRes = data.data;
+				// const dataRes = data.data;
 				dispatch(fetchsProjectFilter());
 				dispatch(fetchAllProject());
 				// dispatch(actions.updatedProject({ dataRes }));
@@ -149,7 +148,7 @@ export const fetchOwner = () => dispatch => {
 		.then(res => {
 			const { data } = res;
 			if (!data.isError) {
-				const dataRes = data.data;
+				// const dataRes = data.data;
 			} else {
 				notificationConfig('warning', 'Warning', data.errorMessage);
 				dispatch(actions.catchErros({ callType: callTypes.action }));

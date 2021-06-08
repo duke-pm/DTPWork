@@ -127,7 +127,7 @@ export default function FormCustomProject({
 								<Spin />
 							) : (
 								<Button type="submit" className="h-26 font-sans" variant="contained" color="primary">
-									{initial && initial.prjID !== '0' ? 'Updated' : 'Created'}
+									{initial && initial.prjID !== '0' ? 'Save' : 'Created'}
 								</Button>
 							)}
 

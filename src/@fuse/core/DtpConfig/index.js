@@ -13,6 +13,10 @@ export const notificationConfig = (type, mess, descr) => {
 	});
 };
 
+export const sliceString = string => {
+	return string.slice(0, 1);
+};
+
 export const getToken = () => {
 	return Cookies.get('token') || null;
 };

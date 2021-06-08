@@ -1,6 +1,5 @@
 import React from 'react';
 import i18next from 'i18next';
-import { Redirect } from 'react-router';
 import en from './i18n/en';
 import tr from './i18n/tr';
 import ar from './i18n/ar';
