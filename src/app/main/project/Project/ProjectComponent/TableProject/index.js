@@ -62,7 +62,7 @@ function TableProject(props) {
 			title: <AppsIcon />,
 			align: 'center',
 			key: 'operation',
-			width: '14%',
+			width: '2%',
 			render: (_, item) => (
 				<>
 					<Popover
@@ -100,6 +100,12 @@ function TableProject(props) {
 									</ListItemIcon>
 									<ListItemText primary="Create new child" />
 								</MenuItem>
+								<MenuItem role="button">
+									<ListItemIcon className="min-w-40">
+										<Icon>build</Icon>
+									</ListItemIcon>
+									<ListItemText primary="Updated status" />
+								</MenuItem>
 							</>
 						)}
 						title="Action"
@@ -110,10 +116,10 @@ function TableProject(props) {
 			)
 		},
 		{
-			title: 'SUBJECT',
+			title: 'Subject',
 			dataIndex: 'subject',
 			key: 'subject',
-			width: '30%',
+			width: '10%',
 			render: (_, item) => (
 				<Link style={{ marginLeft: '10px', textDecoration: 'none' }} component="button">
 					{' '}
@@ -122,25 +128,25 @@ function TableProject(props) {
 			)
 		},
 		{
-			title: 'TYPE',
+			title: 'Type',
 			dataIndex: 'type',
 			key: 'type',
-			width: '10%',
+			width: '5%',
 			render: (_, item) => (
 				<p style={{ color: '#108ee9', textTransform: 'uppercase', fontWeight: 'bold' }}> {item.type} </p>
 			)
 		},
 		{
-			title: 'STATUS',
+			title: 'Status',
 			dataIndex: 'status',
 			key: 'status',
-			width: '10%'
+			width: '5%'
 		},
 		{
-			title: 'ASSIGNEE',
+			title: 'Assigne',
 			dataIndex: 'assignee',
 			key: 'assignee',
-			width: '10%',
+			width: '5%',
 			render: (_, item) => (
 				<div className="flex flex-row">
 					{' '}
@@ -150,10 +156,10 @@ function TableProject(props) {
 			)
 		},
 		{
-			title: 'PRIORITY',
+			title: 'Priority',
 			dataIndex: 'priority',
 			key: 'priority',
-			width: '10%'
+			width: '5%'
 		}
 	];
 	return (
@@ -176,7 +182,7 @@ function TableProject(props) {
 							/>
 						)
 				}}
-				scroll={{ x: 1540, y: 440 }}
+				scroll={{ x: 1040, y: 440 }}
 				pagination={false}
 				columns={columns}
 				dataSource={data}

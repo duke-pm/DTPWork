@@ -61,13 +61,7 @@ export default function FormCustomSupplier({ actionLoading, handleSaveFormSuppli
 									<Field label="Điện thoại" name="phone" component={AntInput} type="number" />
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 p-4 gap-8 ">
-									<Field
-										label="Người liên hệ"
-										type="text"
-										name="contact"
-										component={AntInput}
-										hasFeedback
-									/>{' '}
+									<Field label="Người liên hệ" type="text" name="contact" component={AntInput} />{' '}
 									<Field
 										label="ĐT người liên hệ"
 										name="phoneContact"

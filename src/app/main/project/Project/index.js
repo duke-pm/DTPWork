@@ -39,7 +39,7 @@ export default function Project() {
 				contentToolbar={
 					<div className="flex  items-center px-16 flex-1">
 						<Typography component="span" className="font-bold flex text-sm	">
-							Project 3 - Xây dụng module quản lí tài sản
+							Project plan of Project 3 - Xây dụng module quản lí tài sản
 						</Typography>
 					</div>
 				}

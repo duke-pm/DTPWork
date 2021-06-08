@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Badge, Checkbox, Table, Popover, Avatar } from 'antd';
 import React, { useContext } from 'react';
-import { DownOutlined, UpOutlined, UserOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretUpOutlined, DownOutlined, UpOutlined, UserOutlined } from '@ant-design/icons';
 import { MenuItem, ListItemIcon, Icon, ListItemText, Link } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { withRouter } from 'react-router';
@@ -32,7 +32,7 @@ function TableProject(props) {
 			title: <AppsIcon />,
 			align: 'center',
 			key: 'operation',
-			width: '8%',
+			width: '4%',
 			render: (_, item) => (
 				<>
 					<Popover
@@ -70,7 +70,7 @@ function TableProject(props) {
 			)
 		},
 		{
-			title: 'NAME',
+			title: 'Name Project',
 			dataIndex: 'prjName',
 			key: 'prjName',
 			width: '27%',
@@ -85,13 +85,13 @@ function TableProject(props) {
 			)
 		},
 		{
-			title: 'SECTOR',
+			title: 'Sector',
 			dataIndex: 'sectorName',
 			key: 'sectorName',
 			width: '10%'
 		},
 		{
-			title: 'DESCRIPTION',
+			title: 'Description',
 			dataIndex: 'descr',
 			key: 'descr',
 			width: '18%',
@@ -108,7 +108,7 @@ function TableProject(props) {
 		// 	render: (_, item) => <Progress percent={60} strokeColor={badgeStatus[item.statusID]} status="active" />
 		// },
 		{
-			title: 'STATUS',
+			title: 'Status',
 			dataIndex: 'status',
 			key: 'status',
 			width: '12%',
@@ -122,21 +122,21 @@ function TableProject(props) {
 			)
 		},
 		{
-			title: 'PUBLIC',
+			title: 'Public',
 			dataIndex: 'public',
 			key: 'public',
 			width: '8%',
 			render: (_, item) => <Checkbox checked={item.isPublic} />
 		},
 		{
-			title: 'CREATED ON',
+			title: 'Created on',
 			dataIndex: 'crtdDate',
 			key: 'crtdDate',
 			width: '12%',
 			render: (_, item) => <p> {moment(item.crtdDate).format('DD/MM/YYYY')} </p>
 		},
 		{
-			title: 'OWNER',
+			title: 'Project Owner',
 			dataIndex: 'assignee',
 			key: 'assignee',
 			width: '18%',
@@ -161,9 +161,9 @@ function TableProject(props) {
 					expandIconColumnIndex: 1,
 					expandIcon: ({ expanded, onExpand, record, expandable }) =>
 						expandable.length === 0 ? null : expanded ? (
-							<DownOutlined style={{ marginRight: '8px !important', fontSize: '8pt' }} />
+							<CaretDownOutlined style={{ marginRight: '8px !important', fontSize: '10pt' }} />
 						) : (
-							<UpOutlined style={{ marginRight: '8px !important', fontSize: '8pt' }} />
+							<CaretUpOutlined style={{ marginRight: '8px !important', fontSize: '10pt' }} />
 						)
 				}}
 				childrenColumnName="lstProjectItem"

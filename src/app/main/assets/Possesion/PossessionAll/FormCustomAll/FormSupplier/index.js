@@ -24,7 +24,7 @@ export default function FormSupplier({ open, handleCloseFormSupplier }) {
 						<CloseIcon />
 					</IconButton>
 					<Typography variant="subtitle1" color="inherit">
-						Tạo mới nhà cung chấp
+						Tạo mới nhà cung cấp
 					</Typography>
 				</Toolbar>
 			</AppBar>
