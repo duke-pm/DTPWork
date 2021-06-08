@@ -10,7 +10,7 @@ import * as actions from '../../../_redux/_projectActions';
 export default function FormProject({ owner, sectorArr, ArrProjectStatus, projectSub }) {
 	const dispatch = useDispatch();
 	const projectContext = useContext(ProjectContext);
-	const { formProject, setFormProject } = projectContext;
+	const { formProject, setFormProject, title } = projectContext;
 	const handleCloseFormProject = () => setFormProject(false);
 	const { currentState } = useSelector(
 		state => ({
@@ -21,12 +21,21 @@ export default function FormProject({ owner, sectorArr, ArrProjectStatus, projec
 	const { entitiesEdit, actionLoading } = currentState;
 	const handleSubmitForm = values => {
 		if (entitiesEdit && entitiesEdit.prjID) {
-			dispatch(actions.updatedProject(values)).then(data => {
-				if (data && !data.isError) {
-					notificationConfig('success', 'Success', 'Updated project success');
-					handleCloseFormProject();
-				}
-			});
+			if (title === 'Settings') {
+				dispatch(actions.updatedProject(values)).then(data => {
+					if (data && !data.isError) {
+						notificationConfig('success', 'Success', 'Updated project success');
+						handleCloseFormProject();
+					}
+				});
+			} else {
+				dispatch(actions.createdProject(values)).then(data => {
+					if (data && !data.isError) {
+						notificationConfig('success', 'Success', 'Clone project success');
+						handleCloseFormProject();
+					}
+				});
+			}
 		} else {
 			dispatch(actions.createdProject(values)).then(data => {
 				if (data && !data.isError) {
@@ -50,11 +59,12 @@ export default function FormProject({ owner, sectorArr, ArrProjectStatus, projec
 						<CloseIcon />
 					</IconButton>
 					<Typography variant="subtitle1" color="inherit">
-						New Project
+						{entitiesEdit && entitiesEdit.prjID ? title : 'Created'} project
 					</Typography>
 				</Toolbar>
 			</AppBar>
 			<FormCustomProject
+				title={title}
 				actionLoading={actionLoading}
 				handleSubmitForm={handleSubmitForm}
 				projectSub={projectSub}

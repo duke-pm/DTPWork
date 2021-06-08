@@ -1,11 +1,11 @@
 export const badgeStatus = {
-	1: 'blue',
-	2: 'purple',
-	3: 'orange',
-	4: 'yellow',
-	5: 'red',
-	6: 'green',
-	7: 'pink'
+	1: '#1890ff',
+	2: '#560bad',
+	3: '#e85d04',
+	4: '#faad14',
+	5: '#d9d9d9',
+	6: '#52c41a',
+	7: '#ff4d4f'
 };
 export const badgeText = {
 	1: 'New',

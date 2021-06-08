@@ -1,5 +1,5 @@
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
-import { Button, IconButton, InputBase, Paper, Typography } from '@material-ui/core';
+import { Button, IconButton, InputBase, Paper } from '@material-ui/core';
 import React, { useContext } from 'react';
 import AddIcon from '@material-ui/icons/Add';
 import SearchIcon from '@material-ui/icons/Search';
@@ -41,7 +41,7 @@ export default function ActionHeaderProject({ classes }) {
 							color="primary"
 							startIcon={<AddIcon />}
 						>
-							Create
+							Created
 						</Button>{' '}
 						<Paper className="w-full sm:w-1/4 flex justify-between ">
 							<InputBase

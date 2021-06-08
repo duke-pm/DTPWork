@@ -80,7 +80,7 @@ export default function ProjectPage() {
 				contentToolbar={
 					<div className="flex  items-center px-16 flex-1">
 						<Typography component="span" className="font-bold flex text-sm	">
-							Project
+							PROJECTS
 						</Typography>
 					</div>
 				}

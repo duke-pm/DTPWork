@@ -68,7 +68,6 @@ export default function FormCustomSupplier({ actionLoading, handleSaveFormSuppli
 										component={AntInput}
 										hasFeedback
 									/>{' '}
-									<Field label="Điện thoại" name="phone" component={AntInput} type="number" />
 									<Field
 										label="ĐT người liên hệ"
 										name="phoneContact"
