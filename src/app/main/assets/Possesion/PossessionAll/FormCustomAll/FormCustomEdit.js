@@ -140,7 +140,7 @@ function FormCustomEdit({
 										label="Quy cách tài sản/Thông số"
 										name="descr"
 										component={InputTextArea}
-										row={2}
+										row={6}
 										placeholder="Mô tả quy cách, thông số tài sản"
 										className="mx-4"
 									/>
