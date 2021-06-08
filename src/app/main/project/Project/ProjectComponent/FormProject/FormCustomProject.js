@@ -41,7 +41,7 @@ export default function FormCustomProject({ actionLoading, handleCloseFormProjec
 					<Form>
 						<DialogContent>
 							<div className="px-16 sm:px-24">
-								<div className="grid grid-cols-1 mb-8 gap-8 ">
+								<div className="grid grid-cols-1 gap-8 ">
 									<Field
 										label="Description"
 										name="descr"

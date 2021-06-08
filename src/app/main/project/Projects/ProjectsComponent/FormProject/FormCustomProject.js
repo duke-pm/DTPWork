@@ -42,7 +42,8 @@ export default function FormCustomProject({
 		};
 	}
 	const validateSchema = Yup.object().shape({
-		prjName: Yup.string().required(`${validateField}`)
+		prjName: Yup.string().required(`${validateField}`),
+		owner: Yup.string().required(`${validateField}`).nullable()
 	});
 	return (
 		<>
@@ -58,46 +59,48 @@ export default function FormCustomProject({
 					<Form>
 						<DialogContent>
 							<div className="px-16 sm:px-24">
-								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
+								<div className="grid grid-cols-1 gap-8 ">
 									<Field
-										label="Name project"
+										label="Project name"
 										hasFeedback
 										type="text"
 										name="prjName"
 										component={AntInput}
 										className="mx-4"
 									/>
+								</div>
+								<div className="grid grid-cols-1 gap-8 ">
 									<Field
-										label="Sector"
-										name="sectorID"
-										component={SelectAntd}
-										options={sectorArr}
+										label="SubProject of"
+										name="prjParentID"
+										component={SelectAntd || []}
+										options={projectSub}
+										className="mx-4"
+									/>
+								</div>
+								<div className="grid grid-cols-1 gap-8 mb-16 ">
+									<Field
+										label="Description"
+										name="descr"
+										row={4}
+										component={InputTextArea}
 										className="mx-4"
 									/>
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
 									<Field
-										label="SubProject of"
-										name="prjParentID"
-										component={SelectAntd}
-										options={projectSub}
+										label="Sector"
+										name="sectorID"
+										component={SelectAntd || []}
+										options={sectorArr}
 										className="mx-4"
 									/>
 									<Field
 										label="Owner"
 										name="owner"
-										component={SelectAntd}
+										component={SelectAntd || []}
 										options={owner}
-										className="mx-4"
-									/>
-								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
-									<Field
-										label="Status"
-										readOnly
-										name="statusID"
-										options={ArrProjectStatus}
-										component={SelectAntd}
+										hasFeedback
 										className="mx-4"
 									/>
 								</div>
@@ -110,13 +113,12 @@ export default function FormCustomProject({
 										component={CheckboxAntd}
 										className="mx-4"
 									/>
-								</div>
-								<div className="grid grid-cols-1 gap-8 ">
 									<Field
-										label="Description"
-										name="descr"
-										row={4}
-										component={InputTextArea}
+										label="Status"
+										readOnly
+										name="statusID"
+										options={ArrProjectStatus}
+										component={SelectAntd || []}
 										className="mx-4"
 									/>
 								</div>
@@ -127,7 +129,7 @@ export default function FormCustomProject({
 								<Spin />
 							) : (
 								<Button type="submit" className="h-26 font-sans" variant="contained" color="primary">
-									{initial && initial.prjID !== '0' ? 'Save' : 'Created'}
+									{initial && initial.prjID !== '0' ? 'Save' : 'Save'}
 								</Button>
 							)}
 
@@ -138,7 +140,7 @@ export default function FormCustomProject({
 								variant="contained"
 								color="secondary"
 							>
-								Cancle
+								Cancel
 							</Button>
 						</DialogActions>
 					</Form>
