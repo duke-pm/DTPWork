@@ -10,7 +10,7 @@ export default function ActionsListUserBody({ handleEditListUser, handleDeleteLi
 				<ListItemIcon className="min-w-40">
 					<Icon>edit</Icon>
 				</ListItemIcon>
-				<ListItemText primary="Chỉnh sửa người dùng" />
+				<ListItemText primary="Cập nhật người dùng" />
 			</MenuItem>
 			<Popconfirm placement="right" title="Xác nhận xoá người dùng" onConfirm={() => handleDeleteListUser(items)}>
 				<MenuItem role="button">

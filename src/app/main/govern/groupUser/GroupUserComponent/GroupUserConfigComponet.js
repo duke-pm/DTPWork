@@ -1,7 +1,7 @@
 export const column = [
 	{
 		id: 'GroupID',
-		lable: 'Tên nhóm',
+		lable: 'Mã nhóm',
 		align: 'left',
 		sort: true
 	},
