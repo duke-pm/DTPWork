@@ -71,7 +71,7 @@ export default function FormCustomProject({
 								</div>
 								<div className="grid grid-cols-1 gap-8 ">
 									<Field
-										label="SubProject of"
+										label="Subproject of"
 										name="prjParentID"
 										component={SelectAntd || []}
 										options={projectSub}
