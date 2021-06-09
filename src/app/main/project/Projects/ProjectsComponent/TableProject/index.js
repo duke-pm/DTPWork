@@ -70,7 +70,7 @@ function TableProject(props) {
 			)
 		},
 		{
-			title: 'Name Project',
+			title: 'Project Name',
 			dataIndex: 'prjName',
 			key: 'prjName',
 			width: '27%',
