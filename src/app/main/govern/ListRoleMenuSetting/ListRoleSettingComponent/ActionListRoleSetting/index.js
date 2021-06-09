@@ -56,7 +56,7 @@ export default function ActionListRoleSetting({
 			>
 				<div className="flex flex-col sm:flex-row justify-between">
 					<Typography variant="subtitle1" color="inherit">
-						Filter.
+						Filter
 					</Typography>
 				</div>
 				<div className="flex flex-col sm:flex-row">

@@ -75,7 +75,7 @@ export default function FormGroupUserCustom({
 							) : (
 								<>
 									<Button variant="contained" type="submit" color="primary">
-										{initialState.groupID !== '0' ? 'Chỉnh sửa' : 'Thêm mới'}
+										{initialState.groupID !== '0' ? 'Cập nhật' : 'Tạo mới'}
 									</Button>
 									<Button
 										onClick={handleCloseFormGroupUser}

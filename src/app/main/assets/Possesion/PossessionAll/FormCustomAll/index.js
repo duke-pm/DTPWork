@@ -25,6 +25,8 @@ const initial = {
 	descr: '',
 	DepreciationPeriod: '',
 
+	inactive: false,
+
 	company: '',
 	category: '',
 	group: '',

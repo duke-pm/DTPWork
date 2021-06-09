@@ -85,7 +85,7 @@ export default function FormListUserCustom({
 							<div className="px-16 sm:px-24">
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 									<Field
-										label="Tài khoản"
+										label="Tên đăng nhập"
 										name="userName"
 										type="text"
 										hasFeedback
@@ -94,17 +94,16 @@ export default function FormListUserCustom({
 										className="mt-8 mb-16"
 									/>
 									<Field
-										label="Email"
-										name="email"
-										type="text"
-										hasFeedback
-										component={AntInput}
+										label="Nhân viên Sales"
+										name="salesEmployee"
+										component={SelectAntd || []}
+										options={arrSales}
 										className="mt-8 mb-16"
 									/>
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 									<Field
-										label="Họ & Tên Đệm"
+										label="Họ & tên đệm"
 										name="lastMiddleName"
 										type="text"
 										hasFeedback
@@ -122,17 +121,18 @@ export default function FormListUserCustom({
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 									<Field
-										label="Số điện thoại"
+										label="Điện thoại"
 										name="cellPhone"
 										type="number"
 										component={AntInput}
 										className="mt-8 mb-16"
 									/>
 									<Field
-										label="Nhân viên sales"
-										name="salesEmployee"
-										component={SelectAntd || []}
-										options={arrSales}
+										label="Email"
+										name="email"
+										type="text"
+										hasFeedback
+										component={AntInput}
 										className="mt-8 mb-16"
 									/>
 								</div>
@@ -146,7 +146,7 @@ export default function FormListUserCustom({
 										className="mt-8 mb-16"
 									/>
 									<Field
-										label="Quản lý"
+										label="Quản lý trực tiếp"
 										name="LineManager"
 										options={arrManag}
 										component={SelectAntd || []}
@@ -165,6 +165,14 @@ export default function FormListUserCustom({
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 									<Field
+										label="Biz Line"
+										hasFeedback
+										name="bizLine"
+										options={arrBizLine}
+										component={SelectAntdMulti || []}
+										className="mt-8 mb-16"
+									/>
+									<Field
 										label="Khu vực"
 										hasFeedback
 										name="region"
@@ -172,38 +180,31 @@ export default function FormListUserCustom({
 										component={SelectAntdMulti || []}
 										className="mt-8 mb-16"
 									/>
+								</div>
+								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 									<Field
-										label="Nhân viên HR"
+										label="Mã nhân viên"
 										name="empSAP"
 										options={arrSap}
 										component={SelectAntd || []}
 										className="mt-8 mb-16"
 									/>
-								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-									<div className="flex flex-col">
-										<Field
-											label="Is change password"
-											name="ischangePasswrod"
-											value={initialState.ischangePasswrod}
-											component={CheckboxAntd}
-										/>
-										<Field
-											label="Inactive"
-											name="inactive"
-											type="text"
-											value={initialState.inactive}
-											component={CheckboxAntd}
-											// className="mt-8"
-										/>
-									</div>
-
 									<Field
-										label="Biz line"
-										hasFeedback
-										name="bizLine"
-										options={arrBizLine}
-										component={SelectAntdMulti || []}
+										label="Inactive"
+										name="inactive"
+										type="text"
+										value={initialState.inactive}
+										component={CheckboxAntd}
+										className="mt-16"
+										top="20px"
+									/>
+								</div>
+								<div className="grid grid-cols-1 1 sm:grid-cols-1 gap-8">
+									<Field
+										label="Người dùng phải thay đổi mật khẩu ở lần đăng nhập tiếp theo"
+										name="ischangePasswrod"
+										value={initialState.ischangePasswrod}
+										component={CheckboxAntd}
 										className="mt-8 mb-16"
 									/>
 								</div>
@@ -215,7 +216,7 @@ export default function FormListUserCustom({
 							) : (
 								<>
 									<Button variant="contained" type="submit" color="primary">
-										{initialState.userID !== '0' ? 'Chỉnh sửa' : 'Thêm mới'}
+										{initialState.userID !== '0' ? 'Cập nhật' : 'Tạo mới'}
 									</Button>
 									<Button
 										onClick={handleCloseFormGroupUser}

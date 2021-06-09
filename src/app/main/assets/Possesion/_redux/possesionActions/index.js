@@ -133,7 +133,8 @@ export const createdPossesionAll = (data, prefix, rowPage) => dispatch => {
 		AssetTypeID: data.category,
 		AssetGroupID: data.group,
 		PreAssetCode: prefix,
-		AssetGroupDetailID: data.asset
+		AssetGroupDetailID: data.asset,
+		Inactive: false
 	};
 	return requestFrom
 		.createdDataPossesion(dataReq)
@@ -164,7 +165,8 @@ export const updatedPossesionAll = data => dispatch => {
 		DepreciationPeriod: data.depreciationPeriod,
 		OriginalPrice: data.originalPrice,
 		DeptCode: data.deptCodeManager,
-		Descr: data.descr
+		Descr: data.descr,
+		Inactive: data.inactive
 	};
 	return requestFrom
 		.updateDataPossesion(dataReq)

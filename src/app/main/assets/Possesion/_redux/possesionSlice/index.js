@@ -65,12 +65,18 @@ export const possesionSlice = createSlice({
 			const { dataReq } = action.payload;
 			state.error = null;
 			state.actionLoading = false;
-			state.entities = state.entities.map(entity => {
-				if (entity.assetID === dataReq.assetID) {
-					return dataReq;
-				}
-				return entity;
-			});
+			const { entities } = state;
+			if (dataReq.inactive) {
+				const newData = entities.filter(item => item.assetID !== dataReq.assetID);
+				state.entities = newData;
+			} else {
+				state.entities = state.entities.map(entity => {
+					if (entity.assetID === dataReq.assetID) {
+						return dataReq;
+					}
+					return entity;
+				});
+			}
 		},
 		possesionUpdatedUnUsed: (state, action) => {
 			const { id } = action.payload;

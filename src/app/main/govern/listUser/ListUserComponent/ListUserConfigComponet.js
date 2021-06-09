@@ -7,7 +7,7 @@ export const column = [
 	},
 	{
 		id: 'Username',
-		lable: 'Tài khoản',
+		lable: 'Tên đăng nhập',
 		align: 'left',
 		sort: true
 	},
@@ -31,7 +31,7 @@ export const column = [
 	},
 	{
 		id: 'Inactive',
-		lable: 'Trạng thái',
+		lable: 'Inactive',
 		align: 'left',
 		sort: true
 	}

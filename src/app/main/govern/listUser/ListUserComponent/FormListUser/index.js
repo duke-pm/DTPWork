@@ -72,7 +72,7 @@ export default function FormListUser({ open, handleCloseFormGroupUser }) {
 						<CloseIcon />
 					</IconButton>
 					<Typography variant="subtitle1" color="inherit">
-						{entitiesEdit && entitiesEdit.userID ? 'Chỉnh sửa người dùng' : 'Thêm mới người dùng'}
+						{entitiesEdit && entitiesEdit.userID ? 'Cập nhật người dùng' : 'Tạo mới người dùng'}
 					</Typography>
 				</Toolbar>
 			</AppBar>

@@ -15,6 +15,7 @@ export default function CheckboxAntd({
 	readOnly,
 	options,
 	hasFeedback,
+	top,
 	notFoundContent,
 	submitCount,
 	...props
@@ -33,7 +34,7 @@ export default function CheckboxAntd({
 			<FormGroup>
 				<FormItem
 					label={label}
-					style={{ width: '100%' }}
+					style={{ width: '100%', marginTop: top || '0px' }}
 					rules={[{ required: true }]}
 					hasFeedback={!!((hasFeedback && submitted) || (hasFeedback && touched))}
 					help={submittedError || touchedError ? hasError : false}

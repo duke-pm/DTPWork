@@ -1,7 +1,7 @@
 export const column = [
 	{
 		id: 'GroupID',
-		lable: 'Tên nhóm',
+		lable: 'Mã nhóm',
 		align: 'left',
 		sort: true
 	},
@@ -19,7 +19,7 @@ export const column = [
 	},
 	{
 		id: 'Inactive',
-		lable: 'Trạng thái',
+		lable: 'Inactive',
 		align: 'left',
 		sort: true
 	}

@@ -95,7 +95,7 @@ export default function ActionComponent({ actionLoading }) {
 			>
 				<div className="flex flex-col sm:flex-row justify-between">
 					<Typography variant="subtitle1" color="inherit">
-						Filter.
+						Filter
 					</Typography>
 				</div>
 				<div className="flex flex-col sm:flex-row">

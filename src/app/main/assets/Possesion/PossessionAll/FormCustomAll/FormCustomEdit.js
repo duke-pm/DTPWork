@@ -8,6 +8,7 @@ import { Spin } from 'antd';
 import { AntInput } from '@fuse/CustomForm/CreateAntField';
 import SelectAntd from '@fuse/CustomForm/SelectAntd';
 import SelectAntdCustom from '@fuse/CustomForm/SelectAntdCustom';
+import CheckboxAntd from '@fuse/CustomForm/CheckboxAntd';
 import { checkValidateFormConfig, checkValidateFormConfigUpdate } from '../ConfigPossessionAll';
 import FormSupplier from './FormSupplier';
 
@@ -200,6 +201,18 @@ function FormCustomEdit({
 										hasFeedback
 									/>
 								</div>
+								{initialValue.assetID && (
+									<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+										<Field
+											label="Không dùng"
+											name="inactive"
+											type="text"
+											value={initialValue.inactive}
+											component={CheckboxAntd}
+											className="mt-16"
+										/>
+									</div>
+								)}
 							</div>
 							{!initialValue.assetID ? (
 								<div className="px-16 sm:px-24">

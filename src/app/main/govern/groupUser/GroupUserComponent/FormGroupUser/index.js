@@ -40,7 +40,7 @@ export default function FormGroupUser({ open, handleCloseFormGroupUser }) {
 						<CloseIcon />
 					</IconButton>
 					<Typography variant="subtitle1" color="inherit">
-						{entitiesEdit && entitiesEdit.groupID ? 'Chỉnh sửa nhóm người dùng' : 'Thêm nhóm người dùng'}
+						{entitiesEdit && entitiesEdit.groupID ? 'Cập nhật nhóm người dùng' : 'Tạo mới nhóm người dùng'}
 					</Typography>
 				</Toolbar>
 			</AppBar>
