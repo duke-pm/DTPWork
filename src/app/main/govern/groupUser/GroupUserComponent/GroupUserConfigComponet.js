@@ -19,7 +19,7 @@ export const column = [
 	},
 	{
 		id: 'Inactive',
-		lable: 'Trạng thái',
+		lable: 'Inactive',
 		align: 'left',
 		sort: true
 	}
