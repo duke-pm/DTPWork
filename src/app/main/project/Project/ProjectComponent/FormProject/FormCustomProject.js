@@ -28,7 +28,7 @@ let initial = {
 	taskType: '',
 	prjID: ''
 };
-export default function FormCustomProject({
+export default function FormCustomProjectTask({
 	actionLoading,
 	handleCloseFormProject,
 	handleSubmitForm,

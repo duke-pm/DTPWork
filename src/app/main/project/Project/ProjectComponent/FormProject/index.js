@@ -3,9 +3,9 @@ import React, { useContext } from 'react';
 import CloseIcon from '@material-ui/icons/Close';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { notificationConfig } from '@fuse/core/DtpConfig';
-import FormCustomProject from './FormCustomProject';
 import { ProjectContext } from '../../ProjectContext';
 import * as actions from '../../../_redux/_projectActions';
+import FormCustomProjectTask from './FormCustomProject';
 
 export default function FormProject({
 	owner,
@@ -66,7 +66,7 @@ export default function FormProject({
 					</Typography>
 				</Toolbar>
 			</AppBar>
-			<FormCustomProject
+			<FormCustomProjectTask
 				entitiesEdit={entitiesEdit}
 				owner={owner}
 				gradeGolbal={gradeGolbal}
