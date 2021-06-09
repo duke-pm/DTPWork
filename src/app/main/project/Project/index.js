@@ -13,8 +13,12 @@ import ProjectContextProvider from './ProjectContext';
 import { fetchProjectDetail, fetchOwner, fetchAllSubTask } from '../_redux/_projectActions';
 
 export default function Project() {
-	const { currentState, projectAll } = useSelector(
-		state => ({ currentState: state.possesion.entitiesInformation, projectAll: state.project.entitiesAll }),
+	const { currentState, projectAll, project } = useSelector(
+		state => ({
+			currentState: state.possesion.entitiesInformation,
+			projectAll: state.project.entitiesAll,
+			project: state.project.entitiesDetail
+		}),
 		shallowEqual
 	);
 	const params = useParams();
@@ -114,7 +118,7 @@ export default function Project() {
 				contentToolbar={
 					<div className="flex  items-center px-16 flex-1">
 						<Typography component="span" className="font-bold flex text-sm	">
-							Project plan of Project 3 - Xây dụng module quản lí tài sản
+							Project plan of {project.projectName}
 						</Typography>
 					</div>
 				}

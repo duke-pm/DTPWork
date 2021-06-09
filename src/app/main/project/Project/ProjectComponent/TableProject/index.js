@@ -176,7 +176,7 @@ function TableProject(props) {
 				scroll={{ x: 1050, y: 440 }}
 				pagination={false}
 				columns={columns}
-				dataSource={entitiesDetail}
+				dataSource={entitiesDetail.listTask}
 			/>{' '}
 		</>
 	);

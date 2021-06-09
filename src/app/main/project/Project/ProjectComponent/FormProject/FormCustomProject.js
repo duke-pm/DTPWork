@@ -1,7 +1,5 @@
 import { AntInput } from '@fuse/CustomForm/CreateAntField';
 import SelectAntd from '@fuse/CustomForm/SelectAntd';
-import CheckboxAntd from '@fuse/CustomForm/CheckboxAntd';
-import SelectAntdMulti from '@fuse/CustomForm/SelectAntdMulti';
 import DateCustom from '@fuse/CustomForm/Date';
 import { Button, DialogActions, DialogContent } from '@material-ui/core';
 import { Field, Formik, Form } from 'formik';
@@ -10,9 +8,26 @@ import { Spin } from 'antd';
 import InputTextArea from '@fuse/CustomForm/InputTextArea';
 import * as Yup from 'yup';
 import { validateField } from '@fuse/core/DtpConfig';
-import DateRanger from '@fuse/CustomForm/DateRanger';
 import * as moment from 'moment';
 
+let initial = {
+	TaskID: '',
+	descr: '',
+	taskName: '',
+	startDate: moment(),
+	endDate: moment(),
+	grade: null,
+	author: '',
+	owner: null,
+	component: null,
+	originPublisher: '',
+	ownership: '',
+	project: null,
+	priority: null,
+	status: 1,
+	taskType: '',
+	prjID: ''
+};
 export default function FormCustomProject({
 	actionLoading,
 	handleCloseFormProject,
@@ -25,24 +40,6 @@ export default function FormCustomProject({
 	taskSub,
 	entitiesEdit
 }) {
-	let initial = {
-		TaskID: '',
-		descr: '',
-		taskName: '',
-		startDate: moment(),
-		endDate: moment(),
-		grade: null,
-		author: '',
-		owner: null,
-		component: null,
-		originPublisher: '',
-		ownership: '',
-		project: null,
-		priority: null,
-		status: 1,
-		taskType: '',
-		prjID:''
-	};
 	if (entitiesEdit && entitiesEdit.taskID) {
 		initial = {
 			taskID: entitiesEdit && entitiesEdit.taskID,
