@@ -2,6 +2,7 @@ import { AntInput } from '@fuse/CustomForm/CreateAntField';
 import SelectAntd from '@fuse/CustomForm/SelectAntd';
 import CheckboxAntd from '@fuse/CustomForm/CheckboxAntd';
 import SelectAntdMulti from '@fuse/CustomForm/SelectAntdMulti';
+import DateCustom from '@fuse/CustomForm/Date';
 import { Button, DialogActions, DialogContent } from '@material-ui/core';
 import { Field, Formik, Form } from 'formik';
 import React from 'react';
@@ -10,22 +11,62 @@ import InputTextArea from '@fuse/CustomForm/InputTextArea';
 import * as Yup from 'yup';
 import { validateField } from '@fuse/core/DtpConfig';
 import DateRanger from '@fuse/CustomForm/DateRanger';
+import * as moment from 'moment';
 
-export default function FormCustomProject({ actionLoading, handleCloseFormProject, handleSubmitForm }) {
-	const initial = {
+export default function FormCustomProject({
+	actionLoading,
+	handleCloseFormProject,
+	handleSubmitForm,
+	owner,
+	gradeGolbal,
+	ArrProjectStatus,
+	ArrTaskPri,
+	ArrTaskComponent,
+	taskSub,
+	entitiesEdit
+}) {
+	let initial = {
+		TaskID: '',
 		descr: '',
-		grade: '',
+		taskName: '',
+		startDate: moment(),
+		endDate: moment(),
+		grade: null,
 		author: '',
-		assign: [],
+		owner: null,
 		component: null,
 		originPublisher: '',
-		ownership: 0,
-		date: [],
+		ownership: '',
 		project: null,
-		priority: null
+		priority: null,
+		status: 1,
+		taskType: '',
+		prjID:''
 	};
+	if (entitiesEdit && entitiesEdit.taskID) {
+		initial = {
+			taskID: entitiesEdit && entitiesEdit.taskID,
+			taskType: entitiesEdit && entitiesEdit.taskTypeID,
+			prjID: entitiesEdit && entitiesEdit.prjID,
+			descr: entitiesEdit && entitiesEdit.descr,
+			taskName: entitiesEdit && entitiesEdit.taskName,
+			startDate: entitiesEdit && entitiesEdit.startDate,
+			endDate: entitiesEdit && entitiesEdit.endDate,
+			grade: entitiesEdit && entitiesEdit.grade === 0 ? null : entitiesEdit.grade,
+			author: entitiesEdit && entitiesEdit.author,
+			owner: entitiesEdit && entitiesEdit.owner,
+			component: entitiesEdit && entitiesEdit.component === 0 ? null : entitiesEdit.component,
+			originPublisher: entitiesEdit && entitiesEdit.originPublisher,
+			ownership: entitiesEdit && entitiesEdit.ownershipDTP,
+			priority: entitiesEdit && entitiesEdit.priority,
+			project: entitiesEdit && entitiesEdit.parentID === 0 ? null : entitiesEdit.parentID,
+			status: entitiesEdit && entitiesEdit.statusID
+		};
+	}
 	const validateSchema = Yup.object().shape({
-		prjName: Yup.string().required(`${validateField}`)
+		taskName: Yup.string().required(`${validateField}`),
+		owner: Yup.string().required(`${validateField}`).nullable(),
+		priority: Yup.string().required(`${validateField}`).nullable()
 	});
 	return (
 		<>
@@ -50,13 +91,22 @@ export default function FormCustomProject({ actionLoading, handleCloseFormProjec
 										className="mx-4"
 									/>
 								</div>
+								<div className="grid grid-cols-1 gap-8 ">
+									<Field
+										label="Task name"
+										name="taskName"
+										type="text"
+										hasFeedback
+										component={AntInput}
+										className="mx-4"
+									/>
+								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
 									<Field
 										label="Grade"
-										hasFeedback
-										type="text"
 										name="grade"
-										component={AntInput}
+										options={gradeGolbal}
+										component={SelectAntd}
 										className="mx-4"
 									/>
 									<Field
@@ -69,17 +119,18 @@ export default function FormCustomProject({ actionLoading, handleCloseFormProjec
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
 									<Field
-										label="Assignee"
-										name="assign"
+										label="Owner"
+										name="owner"
+										hasFeedback
 										component={SelectAntd}
-										options={[]}
+										options={owner}
 										className="mx-4"
 									/>
 									<Field
 										label="Component"
 										name="component"
 										component={SelectAntd}
-										options={[]}
+										options={ArrTaskComponent}
 										className="mx-4"
 									/>
 								</div>
@@ -94,27 +145,43 @@ export default function FormCustomProject({ actionLoading, handleCloseFormProjec
 									<Field
 										label="Ownership DTP"
 										component={AntInput}
-										type="number"
+										type="text"
 										name="ownership"
 										className="mx-4"
 									/>
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
-									<Field label="Date" name="date" component={DateRanger} className="mx-4" />
+								<div className="grid grid-cols-1 sm:grid-cols-1 gap-8 ">
 									<Field
 										label="Project"
 										name="project"
 										component={SelectAntd}
-										options={[]}
+										options={taskSub}
 										className="mx-4"
 									/>
+								</div>
+								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
+									<Field
+										label="Start Date"
+										name="startDate"
+										component={DateCustom}
+										className="mx-4"
+									/>
+									<Field label="End Date" name="endDate" component={DateCustom} className="mx-4" />
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
 									<Field
 										label="Priority"
 										name="priority"
+										hasFeedback
 										component={SelectAntd}
-										options={[]}
+										options={ArrTaskPri}
+										className="mx-4"
+									/>
+									<Field
+										label="Status"
+										name="status"
+										component={SelectAntd}
+										options={ArrProjectStatus}
 										className="mx-4"
 									/>
 								</div>
@@ -125,7 +192,7 @@ export default function FormCustomProject({ actionLoading, handleCloseFormProjec
 								<Spin />
 							) : (
 								<Button type="submit" className="h-26 font-sans" variant="contained" color="primary">
-									Created
+									Save
 								</Button>
 							)}
 

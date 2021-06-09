@@ -173,7 +173,7 @@ export default function FormListUserCustom({
 										className="mt-8 mb-16"
 									/>
 									<Field
-										label="Nhân viên SAP"
+										label="Nhân viên HR"
 										name="empSAP"
 										options={arrSap}
 										component={SelectAntd || []}

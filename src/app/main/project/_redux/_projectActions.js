@@ -1,8 +1,14 @@
 import { notificationConfig } from '@fuse/core/DtpConfig';
+import * as moment from 'moment';
 import * as requestFrom from './_projectCrud';
 import { projectSlice, callTypes } from './_projectSlice';
 
 const { actions } = projectSlice;
+const TaskType = {
+	Phase: 1,
+	Task: 2,
+	Miltestone: 3
+};
 export const fetchsProject = () => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.list }));
 	const paramsReq = {
@@ -174,11 +180,34 @@ export const fetchAllProject = () => dispatch => {
 		})
 		.catch(() => {});
 };
+export const fetchAllSubTask = params => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.action }));
+	const paramsReq = {
+		PrjID: params
+	};
+	return requestFrom
+		.getTaskSub(paramsReq)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				const dataRes = data.data;
+				dispatch(actions.projectsFetchAll({ dataRes }));
+			} else {
+				notificationConfig('warning', 'Warning', data.errorMessage);
+				dispatch(actions.catchErros({ callType: callTypes.action }));
+			}
+			return data;
+		})
+		.catch(() => {});
+};
 
 export const fetchProjectDetail = params => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.list }));
+	const paramsReq = {
+		PrjID: params
+	};
 	return requestFrom
-		.fetchsProject(params)
+		.fetchProjectDetail(paramsReq)
 		.then(res => {
 			const { data } = res;
 			if (!data.isError) {
@@ -191,6 +220,111 @@ export const fetchProjectDetail = params => dispatch => {
 		})
 		.catch(() => {
 			dispatch(actions.catchErros({ callType: callTypes.list }));
+			notificationConfig('warning', 'Warning', 'Server error');
+		});
+};
+export const fetchProjectDetailFilter = params => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.action }));
+	const paramsReq = {
+		PrjID: params
+	};
+	return requestFrom
+		.fetchProjectDetail(paramsReq)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				const dataRes = data.data;
+				dispatch(actions.fetchProjectDetail({ dataRes }));
+			} else {
+				notificationConfig('warning', 'Warning', data.errorMessage);
+				dispatch(actions.catchErros({ callType: callTypes.action }));
+			}
+		})
+		.catch(() => {
+			dispatch(actions.catchErros({ callType: callTypes.action }));
+			notificationConfig('warning', 'Warning', 'Server error');
+		});
+};
+
+export const createdTask = (values, prjID, taskType) => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.action }));
+	const dataReq = {
+		TaskID: 0,
+		TaskName: values.taskName,
+		TaskTypeID: TaskType[taskType],
+		PrjID: prjID,
+		ParentID: values.project || 0,
+		Descr: values.descr,
+		StartDate: moment(values.startDate).format('YYYY-MM-DD'),
+		EndDate: moment(values.endDate).format('YYYY-MM-DD'),
+		Owner: values.owner,
+		Priority: values.priority,
+		StatusID: values.status,
+		Grade: values.grade || 0,
+		Author: values.author,
+		Component: values.component || 0,
+		OriginPublisher: values.originPublisher,
+		OwnershipDTP: values.ownership,
+		Lang: 'Vi'
+	};
+	return requestFrom
+		.taskModify(dataReq)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				// const dataRes = data.data;
+				dispatch(fetchProjectDetailFilter(prjID));
+				dispatch(fetchAllSubTask(prjID));
+				// dispatch(actions.updatedProject({ dataRes }));
+			} else {
+				dispatch(actions.catchErros({ callType: callTypes.action }));
+				notificationConfig('warning', 'Warning', data.errorMessage);
+			}
+			return data;
+		})
+		.catch(err => {
+			dispatch(actions.catchErros({ callType: callTypes.action }));
+			notificationConfig('warning', 'Warning', 'Server error');
+		});
+};
+export const updatedTask = values => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.action }));
+	const dataReq = {
+		TaskID: values.taskID,
+		TaskName: values.taskName,
+		TaskTypeID: values.taskType,
+		PrjID: values.prjID,
+		ParentID: values.project || 0,
+		Descr: values.descr,
+		StartDate: moment(values.startDate).format('YYYY-MM-DD'),
+		EndDate: moment(values.endDate).format('YYYY-MM-DD'),
+		Owner: values.owner,
+		Priority: values.priority,
+		StatusID: values.status,
+		Grade: values.grade || 0,
+		Author: values.author,
+		Component: values.component || 0,
+		OriginPublisher: values.originPublisher,
+		OwnershipDTP: values.ownership,
+		Lang: 'Vi'
+	};
+	return requestFrom
+		.taskModify(dataReq)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				// const dataRes = data.data;
+				dispatch(fetchProjectDetailFilter(values.prjID));
+				dispatch(fetchAllSubTask(values.prjID));
+				// dispatch(actions.updatedProject({ dataRes }));
+			} else {
+				dispatch(actions.catchErros({ callType: callTypes.action }));
+				notificationConfig('warning', 'Warning', data.errorMessage);
+			}
+			return data;
+		})
+		.catch(err => {
+			dispatch(actions.catchErros({ callType: callTypes.action }));
 			notificationConfig('warning', 'Warning', 'Server error');
 		});
 };

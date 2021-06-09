@@ -1,18 +1,93 @@
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import FusePageCarded from '@fuse/core/FusePageCarded';
 import { Box, Typography } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { getInformationCompany } from 'app/main/assets/Possesion/_redux/possesionActions';
 import { useStyles } from '../Projects/styleProject';
 import ProjectComponent from './ProjectComponent';
 import ActionHeaderProject from './ProjectComponent/ActionProjectComponent/ActionHeaderProject';
 import FormProject from './ProjectComponent/FormProject';
 import ProjectContextProvider from './ProjectContext';
+import { fetchProjectDetail, fetchOwner, fetchAllSubTask } from '../_redux/_projectActions';
 
 export default function Project() {
-	const classes = useStyles();
+	const { currentState, projectAll } = useSelector(
+		state => ({ currentState: state.possesion.entitiesInformation, projectAll: state.project.entitiesAll }),
+		shallowEqual
+	);
+	const params = useParams();
+	const dispatch = useDispatch();
+	const [owner, setOwner] = useState([]);
+	useEffect(() => {
+		dispatch(fetchProjectDetail(params.detail));
+	}, [params.detail]);
+	useEffect(() => {
+		const paramsMasterData = 'PrjStatus,PrjComponent,PrjPriority';
+		dispatch(getInformationCompany(paramsMasterData));
+	}, [dispatch]);
+	useEffect(() => {
+		dispatch(fetchOwner()).then(data => {
+			if (data && !data.isError) {
+				const ownerArr = data.data.reduce(
+					(arr, curr) => [...arr, { label: curr.empName, value: curr.empID }],
+					[]
+				);
+				setOwner(ownerArr);
+			} else {
+				setOwner([]);
+			}
+		});
+	}, [dispatch]);
+	useEffect(() => {
+		dispatch(fetchAllSubTask(params.detail));
+	}, [dispatch, params.detail]);
+	const ArrProjectStatus =
+		currentState &&
+		currentState.projectStatus.reduce(
+			(arr, curr) => [...arr, { label: curr.statusName, value: curr.statusID }],
+			[]
+		);
+	const ArrTaskPri =
+		currentState &&
+		currentState.projectPriority.reduce(
+			(arr, curr) => [...arr, { label: curr.priorityName, value: curr.priority }],
+			[]
+		);
+	const ArrTaskComponent =
+		currentState &&
+		currentState.projectComponent.reduce(
+			(arr, curr) => [...arr, { label: curr.componentName, value: curr.componentID }],
+			[]
+		);
+	const taskSub =
+		projectAll && projectAll.reduce((arr, curr) => [...arr, { label: curr.taskName, value: curr.taskID }], []);
+	const gradeGolbal = [
+		{ label: ' Lớp 1', value: 1 },
+		{ label: 'Lớp 2', value: 2 },
+		{ label: 'Lớp 3', value: 3 },
+		{ label: 'Lớp 4', value: 4 },
+		{ label: 'Lớp 5', value: 5 },
+		{ label: 'Lớp 6', value: 6 },
+		{ label: 'Lớp 7', value: 7 },
+		{ label: 'Lớp 8', value: 8 },
+		{ label: 'Lớp 9', value: 9 },
+		{ label: 'Lớp 10', value: 10 },
+		{ label: 'Lớp 11', value: 11 },
+		{ label: 'Lớp 12', value: 12 }
+	];
 	return (
 		<ProjectContextProvider>
-			<FormProject />
+			<FormProject
+				owner={owner}
+				gradeGolbal={gradeGolbal}
+				taskSub={taskSub}
+				ArrTaskComponent={ArrTaskComponent}
+				ArrProjectStatus={ArrProjectStatus}
+				ArrTaskPri={ArrTaskPri}
+				params={params}
+			/>
 			<FusePageCarded
 				innerScroll
 				classes={{

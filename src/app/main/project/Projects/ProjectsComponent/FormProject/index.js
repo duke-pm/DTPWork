@@ -59,7 +59,11 @@ export default function FormProject({ owner, sectorArr, ArrProjectStatus, projec
 						<CloseIcon />
 					</IconButton>
 					<Typography variant="subtitle1" color="inherit">
-						{entitiesEdit && entitiesEdit.prjID ? title : 'New'} project
+						{entitiesEdit && entitiesEdit.prjID
+							? title === 'Settings'
+								? 'Project information'
+								: 'New project'
+							: 'New project'}
 					</Typography>
 				</Toolbar>
 			</AppBar>

@@ -7,11 +7,23 @@ import FormCustomProject from './FormCustomProject';
 import { ProjectContext } from '../../ProjectContext';
 import * as actions from '../../../_redux/_projectActions';
 
-export default function FormProject({ owner, sectorArr, ArrProjectStatus, projectSub }) {
+export default function FormProject({
+	owner,
+	gradeGolbal,
+	ArrProjectStatus,
+	ArrTaskPri,
+	ArrTaskComponent,
+	taskSub,
+	params
+}) {
 	const dispatch = useDispatch();
 	const projectContext = useContext(ProjectContext);
 	const { formProject, setFormProject } = projectContext;
-	const handleCloseFormProject = () => setFormProject(false);
+	const handleCloseFormProject = () =>
+		setFormProject({
+			open: false,
+			title: ''
+		});
 	const { currentState } = useSelector(
 		state => ({
 			currentState: state.project
@@ -20,17 +32,17 @@ export default function FormProject({ owner, sectorArr, ArrProjectStatus, projec
 	);
 	const { entitiesEdit, actionLoading } = currentState;
 	const handleSubmitForm = values => {
-		if (entitiesEdit && entitiesEdit.prjID) {
-			dispatch(actions.updatedProject(values)).then(data => {
+		if (entitiesEdit && entitiesEdit.taskID) {
+			dispatch(actions.updatedTask(values)).then(data => {
 				if (data && !data.isError) {
-					notificationConfig('success', 'Success', 'Updated project success');
+					notificationConfig('success', 'Success', 'Updated task success');
 					handleCloseFormProject();
 				}
 			});
 		} else {
-			dispatch(actions.createdProject(values)).then(data => {
+			dispatch(actions.createdTask(values, params.detail, formProject.title)).then(data => {
 				if (data && !data.isError) {
-					notificationConfig('success', 'Success', 'Created project success');
+					notificationConfig('success', 'Success', 'Created task success');
 					handleCloseFormProject();
 				}
 			});
@@ -55,6 +67,13 @@ export default function FormProject({ owner, sectorArr, ArrProjectStatus, projec
 				</Toolbar>
 			</AppBar>
 			<FormCustomProject
+				entitiesEdit={entitiesEdit}
+				owner={owner}
+				gradeGolbal={gradeGolbal}
+				taskSub={taskSub}
+				ArrTaskComponent={ArrTaskComponent}
+				ArrProjectStatus={ArrProjectStatus}
+				ArrTaskPri={ArrTaskPri}
 				actionLoading={actionLoading}
 				handleSubmitForm={handleSubmitForm}
 				handleCloseFormProject={handleCloseFormProject}

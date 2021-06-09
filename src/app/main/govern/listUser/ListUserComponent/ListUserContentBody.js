@@ -36,8 +36,7 @@ export default function ListUserContentBody({
 							</TableCell>
 							<TableCell align="left">{items.userID} </TableCell>
 							<TableCell align="left">{items.userName} </TableCell>
-							<TableCell align="left">{items.lastName}</TableCell>
-							<TableCell align="left">{items.firstName} </TableCell>
+							<TableCell align="left"> {items.fullName}</TableCell>
 							<TableCell align="left">{items.email} </TableCell>
 							<TableCell align="left">{items.groupName} </TableCell>
 							<TableCell align="left">

@@ -1,62 +1,30 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Badge, Checkbox, Table, Popover, Avatar } from 'antd';
 import React, { useContext } from 'react';
-import { DownOutlined, UpOutlined, UserOutlined } from '@ant-design/icons';
-import { MenuItem, ListItemIcon, Icon, ListItemText, Link } from '@material-ui/core';
+import { CaretDownOutlined, CaretUpOutlined, DownOutlined, UpOutlined, UserOutlined } from '@ant-design/icons';
+import { MenuItem, ListItemIcon, Icon, ListItemText, Link, Typography } from '@material-ui/core';
 import AppsIcon from '@material-ui/icons/Apps';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { withRouter } from 'react-router';
 import { useDispatch } from 'react-redux';
 import * as actions from '../../../_redux/_projectActions';
+import { ProjectContext } from '../../ProjectContext';
+import { badgeStatus, typeColor, priorityColor } from './ConfigTableProject';
 
-const data = [
-	{
-		key: 1,
-		type: 'Task',
-		subject: 'Organize open source...',
-		grade: '',
-		component: '',
-		status: <Badge size="lg" status="success" style={{ color: '#52c41a' }} text="Scheduled" />,
-		priority: <Badge size="default" color="#1890ff" status="success" style={{ color: '#1890ff' }} text="Normarl" />,
-		createdOn: '31/05/2021',
-		startDate: '31/05/2021',
-		finishDate: '31/05/2021',
-		assignee: '31/05/2021',
-		children: [
-			{
-				key: 2,
-				type: 'Task',
-				subject: 'Organize open source...',
-				grade: '',
-				component: '',
-				status: <Badge size="default" status="success" style={{ color: '#52c41a' }} text="Scheduled" />,
-				priority: <Badge color="#1890ff" status="success" style={{ color: '#1890ff' }} text="Normarl" />,
-				createdOn: '31/05/2021',
-				startDate: '31/05/2021',
-				finishDate: '31/05/2021',
-				assignee: '31/05/2021',
-				children: []
-			}
-		]
-	},
-	{
-		key: 3,
-		type: 'Task',
-		subject: 'Organize open source...',
-		grade: '',
-		component: '',
-		status: <Badge size="default" status="success" style={{ color: '#52c41a' }} text="Scheduled" />,
-		priority: <Badge color="#1890ff" status="success" style={{ color: '#1890ff' }} text="Normarl" />,
-		createdOn: '31/05/2021',
-		startDate: '31/05/2021',
-		finishDate: '31/05/2021',
-		assignee: '31/05/2021',
-		children: []
-	}
-];
 function TableProject(props) {
 	const dispatch = useDispatch();
+	const { entitiesDetail } = props;
+	const projectContext = useContext(ProjectContext);
+	const { setVisible, visible, setFormProject } = projectContext;
+	const handleOpenVisible = () => setVisible(true);
+	const handleEditForm = (item, type) => {
+		setFormProject({
+			open: true,
+			title: type
+		});
+		dispatch(actions.setTaskEditProject(item));
+	};
 	const columns = [
 		{
 			title: <AppsIcon />,
@@ -66,15 +34,21 @@ function TableProject(props) {
 			render: (_, item) => (
 				<>
 					<Popover
-						overlayStyle={{ zIndex: '19' }}
+						overlayStyle={{ zIndex: '8', display: visible && 'none' }}
 						placement="rightTop"
 						content={() => (
 							<>
-								<MenuItem role="button">
+								<MenuItem onClick={handleOpenVisible} role="button">
 									<ListItemIcon className="min-w-40">
 										<Icon> visibility </Icon>
 									</ListItemIcon>
 									<ListItemText primary="Open details view" />
+								</MenuItem>
+								<MenuItem onClick={() => handleEditForm(item, 'Setting task')} role="button">
+									<ListItemIcon className="min-w-40">
+										<Icon> settings </Icon>
+									</ListItemIcon>
+									<ListItemText primary="Task settings" />
 								</MenuItem>
 								<MenuItem role="button">
 									<ListItemIcon className="min-w-40">
@@ -119,12 +93,12 @@ function TableProject(props) {
 			title: 'Subject',
 			dataIndex: 'subject',
 			key: 'subject',
-			width: '10%',
+			width: '18%',
 			render: (_, item) => (
-				<Link style={{ marginLeft: '10px', textDecoration: 'none' }} component="button">
+				<Typography style={{ marginLeft: '20px', cursor: 'default' }} component="button">
 					{' '}
-					{item.subject}{' '}
-				</Link>
+					{item.taskName}{' '}
+				</Typography>
 			)
 		},
 		{
@@ -133,25 +107,36 @@ function TableProject(props) {
 			key: 'type',
 			width: '5%',
 			render: (_, item) => (
-				<p style={{ color: '#108ee9', textTransform: 'uppercase', fontWeight: 'bold' }}> {item.type} </p>
+				<p style={{ color: typeColor[item.typeName], textTransform: 'uppercase', fontWeight: 'bold' }}>
+					{' '}
+					{item.typeName}{' '}
+				</p>
 			)
 		},
 		{
 			title: 'Status',
 			dataIndex: 'status',
 			key: 'status',
-			width: '5%'
+			width: '5%',
+			render: (_, item) => (
+				<Badge
+					size="default"
+					style={{ color: badgeStatus[item.statusID] }}
+					color={badgeStatus[item.statusID]}
+					text={item.statusName}
+				/>
+			)
 		},
 		{
 			title: 'Assigne',
 			dataIndex: 'assignee',
 			key: 'assignee',
-			width: '5%',
+			width: '8%',
 			render: (_, item) => (
 				<div className="flex flex-row">
 					{' '}
 					<Avatar size={25} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
-					<p className="ml-8"> Duc Phung</p>{' '}
+					<p className="ml-8">{item.ownerName}</p>{' '}
 				</div>
 			)
 		},
@@ -159,14 +144,23 @@ function TableProject(props) {
 			title: 'Priority',
 			dataIndex: 'priority',
 			key: 'priority',
-			width: '5%'
+			width: '5%',
+			render: (_, item) => (
+				<Badge
+					size="default"
+					style={{ color: priorityColor[item.priority] }}
+					color={priorityColor[item.priority]}
+					text={item.priorityName}
+				/>
+			)
 		}
 	];
 	return (
 		<>
 			{' '}
 			<Table
-				rowKey="key"
+				rowKey="taskID"
+				childrenColumnName="lstTaskItem"
 				className="virtual-table"
 				expandable={{
 					expandRowByClick: true,
@@ -174,18 +168,15 @@ function TableProject(props) {
 					expandIconColumnIndex: 1,
 					expandIcon: ({ expanded, onExpand, record, expandable }) =>
 						expandable.length === 0 ? null : expanded ? (
-							<DownOutlined style={{ marginRight: '8px !important', fontSize: '8pt' }} />
+							<CaretDownOutlined style={{ marginRight: '8px !important', fontSize: '10pt' }} />
 						) : (
-							<UpOutlined
-								onClick={e => onExpand(record, e)}
-								style={{ marginRight: '8px !important', fontSize: '8pt' }}
-							/>
+							<CaretUpOutlined style={{ marginRight: '8px !important', fontSize: '10pt' }} />
 						)
 				}}
-				scroll={{ x: 1040, y: 440 }}
+				scroll={{ x: 1050, y: 440 }}
 				pagination={false}
 				columns={columns}
-				dataSource={data}
+				dataSource={entitiesDetail}
 			/>{' '}
 		</>
 	);

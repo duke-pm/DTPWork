@@ -69,9 +69,9 @@ export default function FormCustomSupplier({ actionLoading, handleSaveFormSuppli
 										component={AntInput}
 									/>{' '}
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 p-4 gap-8 ">
+								{/* <div className="grid grid-cols-1 sm:grid-cols-2 p-4 gap-8 ">
 									<Field label="Inactive" name="inactive" component={CheckboxAntd} />
-								</div>
+								</div> */}
 							</div>
 						</DialogContent>
 						<DialogActions>

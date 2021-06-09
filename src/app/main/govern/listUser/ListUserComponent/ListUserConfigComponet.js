@@ -13,13 +13,7 @@ export const column = [
 	},
 	{
 		id: 'LastName',
-		lable: 'Họ và Tên đệm',
-		align: 'left',
-		sort: true
-	},
-	{
-		id: 'FirstName',
-		lable: 'Tên',
+		lable: 'Họ và Tên',
 		align: 'left',
 		sort: true
 	},

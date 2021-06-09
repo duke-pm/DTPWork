@@ -24,7 +24,7 @@ function ToolbarLayout1(props) {
 	const classes = useStyles(props);
 	const location = useLocation();
 	const pathSplitted = location.pathname.split('/').splice(1);
-	const breadcumb = convertToVietNamese(pathSplitted);
+	const breadcumb = convertToVietNamese(pathSplitted)[0];
 	return (
 		<ThemeProvider theme={toolbarTheme}>
 			<AppBar

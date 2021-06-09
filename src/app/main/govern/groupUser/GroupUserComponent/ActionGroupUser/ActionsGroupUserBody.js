@@ -12,14 +12,14 @@ export default function ActionsGroupUserBody({ handleEditGroupUser, handleEditGr
 				</ListItemIcon>
 				<ListItemText primary="Chỉnh sửa nhóm người dùng" />
 			</MenuItem>
-			<Popconfirm placement="right" title="Xác nhận xoá nhóm" onConfirm={() => handleEditGroupUserDelete(items)}>
+			{/* <Popconfirm placement="right" title="Xác nhận xoá nhóm" onConfirm={() => handleEditGroupUserDelete(items)}>
 				<MenuItem role="button">
 					<ListItemIcon className="min-w-40">
 						<Icon>delete_outline_icone</Icon>
 					</ListItemIcon>
 					<ListItemText primary="Xoá nhóm" />
 				</MenuItem>
-			</Popconfirm>
+			</Popconfirm> */}
 		</>
 	);
 }

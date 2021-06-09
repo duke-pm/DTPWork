@@ -12,14 +12,14 @@ export default function ActionsListUserBody({ handleEditListUser, handleDeleteLi
 				</ListItemIcon>
 				<ListItemText primary="Chỉnh sửa người dùng" />
 			</MenuItem>
-			<Popconfirm placement="right" title="Xác nhận xoá người dùng" onConfirm={() => handleDeleteListUser(items)}>
+			{/* <Popconfirm placement="right" title="Xác nhận xoá người dùng" onConfirm={() => handleDeleteListUser(items)}>
 				<MenuItem role="button">
 					<ListItemIcon className="min-w-40">
 						<Icon>delete_outline_icone</Icon>
 					</ListItemIcon>
 					<ListItemText primary="Xoá người dùng" />
 				</MenuItem>
-			</Popconfirm>
+			</Popconfirm> */}
 		</>
 	);
 }

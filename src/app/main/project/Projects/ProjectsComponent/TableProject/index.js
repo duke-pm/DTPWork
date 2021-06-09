@@ -2,7 +2,7 @@
 import { Badge, Checkbox, Table, Popover, Avatar } from 'antd';
 import React, { useContext } from 'react';
 import { CaretDownOutlined, CaretUpOutlined, DownOutlined, UpOutlined, UserOutlined } from '@ant-design/icons';
-import { MenuItem, ListItemIcon, Icon, ListItemText, Link } from '@material-ui/core';
+import { MenuItem, ListItemIcon, Icon, ListItemText, Typography } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { withRouter } from 'react-router';
 import { useDispatch } from 'react-redux';
@@ -24,7 +24,7 @@ function TableProject(props) {
 	};
 	const handleDetail = item => {
 		if (item.countChild === 0) {
-			props.history.push(`/quan-ly-du-an/12`);
+			props.history.push(`/quan-ly-du-an/${item.prjID}`);
 		}
 	};
 	const columns = [
@@ -78,10 +78,10 @@ function TableProject(props) {
 				showTitle: false
 			},
 			render: (_, item) => (
-				<Link style={{ marginLeft: '10px', textDecoration: 'none' }} component="button">
+				<Typography style={{ marginLeft: '20px', cursor: 'default' }} component="button">
 					{' '}
 					{item.prjName}{' '}
-				</Link>
+				</Typography>
 			)
 		},
 		{
@@ -170,7 +170,6 @@ function TableProject(props) {
 				pagination={false}
 				scroll={{ x: 1540, y: 440 }}
 				columns={columns}
-				style={{ cursor: 'pointer' }}
 				dataSource={entities}
 			/>{' '}
 		</>
