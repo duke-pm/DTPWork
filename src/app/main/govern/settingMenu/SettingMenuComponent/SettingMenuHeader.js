@@ -57,7 +57,7 @@ export default function SettingMenuHeader({ handleOpenSettingMenu }) {
 								}
 							}}
 							onChange={e => onHandleChange(e)}
-							className="ml-16"
+							className="ml-8"
 							value={search}
 							placeholder="Tìm kiếm"
 							inputProps={{ 'aria-label': 'search google maps' }}

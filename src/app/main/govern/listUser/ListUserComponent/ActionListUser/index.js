@@ -45,7 +45,8 @@ export default function ActionGroupUser({ handleOpenFormGroupUser }) {
 							// }}
 							// onChange={e => onHandleChange(e)}
 							// className={classes.input}
-							// value={search}
+							// value={search}\
+							className="ml-8"
 							placeholder="Tìm kiếm"
 							inputProps={{ 'aria-label': 'search google maps' }}
 						/>
