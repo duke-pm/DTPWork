@@ -48,7 +48,6 @@ export default function FormProjectDrawer({
 			});
 		}
 	};
-	console.log(entitiesEdit);
 	return (
 		<div className="site-drawer-render-in-current-wrapper">
 			<Drawer

@@ -83,9 +83,7 @@ export default function DrawerComponent() {
 								<Badge
 									offset={[14]}
 									count={
-										entitiesView && entitiesView.relationShip
-											? entitiesView.relationShip.length
-											: null
+										entitiesView && entitiesView.activities ? entitiesView.activities.length : null
 									}
 									className="site-badge-count-4"
 								>

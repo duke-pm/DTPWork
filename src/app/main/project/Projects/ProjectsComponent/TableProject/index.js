@@ -168,7 +168,7 @@ function TableProject(props) {
 				}}
 				childrenColumnName="lstProjectItem"
 				pagination={false}
-				scroll={{ x: 1540, y: 440 }}
+				scroll={{ x: 1540, y: 410 }}
 				columns={columns}
 				dataSource={entities}
 			/>{' '}

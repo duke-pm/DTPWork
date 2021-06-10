@@ -1,10 +1,11 @@
 import { Button, Divider } from '@material-ui/core';
 import { Avatar, Input, Empty } from 'antd';
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import { sliceString } from '@fuse/core/DtpConfig';
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
+import FuseScrollbars from '@fuse/core/FuseScrollbars';
 import { addTaskActivity } from '../../../../_redux/_projectActions';
 
 const { TextArea } = Input;
@@ -13,12 +14,22 @@ export default function DrawerActivity() {
 	const dispatch = useDispatch();
 	const { currentState } = useSelector(state => ({ currentState: state.project }), shallowEqual);
 	const { entitiesView } = currentState;
+	const chatRef = useRef(null);
 	const [comment, setComment] = useState('');
 	const clearCommnent = () => setComment('');
 	const submitComment = () => {
 		dispatch(addTaskActivity(entitiesView.detail.taskID, comment));
 		setComment('');
 	};
+	useEffect(() => {
+		if (entitiesView.activities) {
+			scrollToBottom();
+		}
+	}, [entitiesView.activities]);
+	function scrollToBottom() {
+		chatRef.current.scrollTop = chatRef.current.scrollHeight;
+		console.log(chatRef.current.scrollTop);
+	}
 	return (
 		<div className="flex flex-col">
 			<div className="flex flex-row justify-between mt-16">
@@ -26,8 +37,8 @@ export default function DrawerActivity() {
 				<p> Show activities with comments only </p>
 			</div>
 			<Divider />
-			<PerfectScrollbar style={{ height: '250px', position: 'relative' }}>
-				<div className="flex flex-col mt-16 w-full" style={{ position: 'absolute' }}>
+			<div style={{ height: '250px' }}>
+				<FuseScrollbars ref={chatRef} className="flex-col overflow-y-auto max-h-256 ">
 					<FuseAnimateGroup
 						enter={{
 							animation: 'transition.slideUpBigIn'
@@ -61,17 +72,17 @@ export default function DrawerActivity() {
 										</div>
 										<div className="font-medium flex-none"> #{item.rowNum}</div>
 									</div>
-									<blodivckquote className="mt-8">
+									<div className="mt-8">
 										<p className="text-sm font-light">{item.comments}</p>
-									</blodivckquote>
+									</div>
 								</div>
 							))}
 					</FuseAnimateGroup>
 					{entitiesView && entitiesView.activities.length === 0 ? (
 						<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
 					) : null}
-				</div>
-			</PerfectScrollbar>
+				</FuseScrollbars>
+			</div>
 			<Divider />
 			<div className="flex flex-row justify-between mt-16">
 				<TextArea value={comment} onChange={e => setComment(e.target.value)} placeholder="Comment" rows={3} />

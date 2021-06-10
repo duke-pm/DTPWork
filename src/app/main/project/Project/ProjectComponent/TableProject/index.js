@@ -222,7 +222,7 @@ function TableProject(props) {
 							<CaretUpOutlined style={{ marginRight: '8px !important', fontSize: '10pt' }} />
 						)
 				}}
-				scroll={{ x: 1090, y: 440 }}
+				scroll={{ x: 1090, y: 410 }}
 				pagination={false}
 				columns={columns}
 				dataSource={entitiesDetail.listTask}
