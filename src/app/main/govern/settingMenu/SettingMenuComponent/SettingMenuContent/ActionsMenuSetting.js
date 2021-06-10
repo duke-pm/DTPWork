@@ -10,7 +10,7 @@ export default function ActionsMenuSetting({ handleEditMenuSetting, handleDelete
 				<ListItemIcon className="min-w-40">
 					<Icon>edit</Icon>
 				</ListItemIcon>
-				<ListItemText primary="Chỉnh sửa menu" />
+				<ListItemText primary="Cập nhật menu" />
 			</MenuItem>
 			<Popconfirm placement="right" title="Xác nhận xoá menu" onConfirm={() => handleDeleteMenuSetting(items)}>
 				<MenuItem role="button">
