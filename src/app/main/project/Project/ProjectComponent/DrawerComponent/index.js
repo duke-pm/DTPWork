@@ -6,8 +6,8 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { CloseOutlined } from '@material-ui/icons';
 import { ProjectContext } from '../../ProjectContext';
 import DrawerActivity from './DrawerActivity';
-import DrawerRelations from './DrawerRelations';
 import DrawerWatchers from './DrawerWatchers';
+import DrawerOverView from './DrawerOverView';
 
 function a11yProps(index) {
 	return {
@@ -40,7 +40,6 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 export default function DrawerComponent() {
-	const dispatch = useDispatch();
 	const { currentState } = useSelector(state => ({ currentState: state.project }), shallowEqual);
 	const { entitiesView } = currentState;
 	const projectContext = useContext(ProjectContext);
@@ -77,7 +76,7 @@ export default function DrawerComponent() {
 						scrollButtons="auto"
 						aria-label="scrollable auto tabs example"
 					>
-						<Tab className="font-sans" label="ACTIVITY" {...a11yProps(0)} />
+						<Tab className="font-sans" label="Overview" {...a11yProps(0)} />
 						<Tab
 							className="font-sans"
 							label={
@@ -91,10 +90,10 @@ export default function DrawerComponent() {
 									className="site-badge-count-4"
 								>
 									{' '}
-									Relation{' '}
+									Activity{' '}
 								</Badge>
 							}
-							{...a11yProps(0)}
+							{...a11yProps(1)}
 						/>
 						<Tab
 							className="font-sans"
@@ -108,16 +107,16 @@ export default function DrawerComponent() {
 									Watchers{' '}
 								</Badge>
 							}
-							{...a11yProps(0)}
+							{...a11yProps(2)}
 						/>{' '}
 					</Tabs>
 				</div>
 				<div>
 					<TabPanel value={tab} index={0}>
-						<DrawerActivity />
+						<DrawerOverView closeVisible={closeVisible} />
 					</TabPanel>
 					<TabPanel value={tab} index={1}>
-						<DrawerRelations />
+						<DrawerActivity />
 					</TabPanel>
 					<TabPanel value={tab} index={2}>
 						<DrawerWatchers />

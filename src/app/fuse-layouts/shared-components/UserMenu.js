@@ -9,10 +9,12 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { logoutUser } from 'app/auth/store/userSlice';
 import { getDataUserLocalStorage } from '@fuse/core/DtpConfig';
+import ChangePassword from './ChangePassword';
 
 function UserMenu(props) {
 	const dispatch = useDispatch();
 	const [userMenu, setUserMenu] = useState(null);
+	const [formChange, setFormChange] = useState(false);
 	const dataUser = getDataUserLocalStorage();
 	const userMenuClick = event => {
 		setUserMenu(event.currentTarget);
@@ -21,11 +23,13 @@ function UserMenu(props) {
 	const userMenuClose = () => {
 		setUserMenu(null);
 	};
+	const handleOpenForm = () => setFormChange(true);
 	const handlelogoutUser = () => {
 		dispatch(logoutUser());
 	};
 	return (
 		<>
+			<ChangePassword formChange={formChange} setFormChange={setFormChange} />
 			<Button className="min-h-40 min-w-40 px-0 md:px-16 py-0 md:py-6" onClick={userMenuClick}>
 				<div className="hidden md:flex flex-col mx-4 items-end">
 					<Typography component="span" className="font-bold flex">
@@ -51,7 +55,7 @@ function UserMenu(props) {
 				onClose={userMenuClose}
 				anchorOrigin={{
 					vertical: 'bottom',
-					horizontal: 'center'
+					horizontal: 'center',
 				}}
 				transformOrigin={{
 					vertical: 'top',
@@ -67,6 +71,12 @@ function UserMenu(props) {
 							<Icon>exit_to_app</Icon>
 						</ListItemIcon>
 						<ListItemText primary="Đăng xuất" />
+					</MenuItem>
+					<MenuItem onClick={handleOpenForm} role="button">
+						<ListItemIcon className="min-w-40">
+							<Icon>cached</Icon>
+						</ListItemIcon>
+						<ListItemText primary="Đổi mật khẩu" />
 					</MenuItem>
 				</>
 			</Popover>

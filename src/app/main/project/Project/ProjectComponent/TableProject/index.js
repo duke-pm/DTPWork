@@ -52,7 +52,7 @@ function TableProject(props) {
 									<ListItemIcon className="min-w-40">
 										<Icon> visibility </Icon>
 									</ListItemIcon>
-									<ListItemText primary="Open details view" />
+									<ListItemText primary="Open detail view" />
 								</MenuItem>
 								<MenuItem onClick={() => handleEditForm(item, 'Setting task')} role="button">
 									<ListItemIcon className="min-w-40">
@@ -125,7 +125,7 @@ function TableProject(props) {
 			title: 'Status',
 			dataIndex: 'status',
 			key: 'status',
-			width: '8%',
+			width: '10%',
 			render: (_, item) => (
 				<Dropdown
 					disabled={!item.isUpdated}
@@ -157,12 +157,22 @@ function TableProject(props) {
 					placement="bottomLeft"
 					arrow
 				>
-					<Badge
+					<div className="flex flex-row">
+						{' '}
+						<Badge
+							size="default"
+							style={{ color: badgeStatus[item.statusID], cursor: 'pointer' }}
+							color={badgeStatus[item.statusID]}
+							text={item.statusName}
+						/>
+						<CaretDownOutlined style={{ cursor: 'pointer', marginLeft: '10px' }} />
+					</div>
+					{/* <Badge
 						size="default"
 						style={{ color: badgeStatus[item.statusID], cursor: 'pointer' }}
 						color={badgeStatus[item.statusID]}
 						text={item.statusName}
-					/>
+					/> */}
 				</Dropdown>
 			)
 		},
@@ -183,7 +193,7 @@ function TableProject(props) {
 			title: 'Priority',
 			dataIndex: 'priority',
 			key: 'priority',
-			width: '5%',
+			width: '7%',
 			render: (_, item) => (
 				<Badge
 					size="default"

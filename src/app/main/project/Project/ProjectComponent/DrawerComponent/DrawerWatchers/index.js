@@ -4,6 +4,9 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { sliceString } from '@fuse/core/DtpConfig';
 import { Button } from '@material-ui/core';
 import { addTaskWatcher } from 'app/main/project/_redux/_projectActions';
+import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
+import FuseAnimate from '@fuse/core/FuseAnimate';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 export default function DrawerWatchers() {
 	const dispatch = useDispatch();
@@ -56,30 +59,38 @@ export default function DrawerWatchers() {
 	return (
 		<div>
 			<div className="flex flex-col ml-8">
-				<div className="text-sm font-medium text-black head-example "> View </div>
-				<div className="w-full flex-none text-sm font-normal text-gray-500">
-					List of users viewing my tasks{' '}
-				</div>
-				<Button
-					onClick={handleTraffic}
-					type="submit"
-					style={{ width: '14rem' }}
-					className="h-26 font-sans mt-8"
-					variant="contained"
-					color="primary"
+				<FuseAnimateGroup
+					enter={{
+						animation: 'transition.slideUpBigIn'
+					}}
 				>
-					Seen task
-				</Button>
+					<div className="text-sm font-medium text-black head-example "> View </div>
+					<div className="w-full flex-none text-sm font-normal text-gray-500">
+						List of users viewing my tasks{' '}
+					</div>
+					<Button
+						onClick={handleTraffic}
+						type="submit"
+						style={{ width: '10rem' }}
+						className="h-26 font-sans mt-8"
+						variant="contained"
+						color="primary"
+					>
+						<VisibilityIcon />
+					</Button>
+				</FuseAnimateGroup>
 			</div>
 			<div className="mt-16">
-				<Table
-					rowKey="rowNum"
-					className="virtual-table"
-					scroll={{ y: 290 }}
-					pagination={false}
-					columns={columns}
-					dataSource={entitiesView && entitiesView.watcher}
-				/>
+				<FuseAnimate animation="transition.slideUpBigIn" delay={300}>
+					<Table
+						rowKey="rowNum"
+						className="virtual-table"
+						scroll={{ y: 290 }}
+						pagination={false}
+						columns={columns}
+						dataSource={entitiesView && entitiesView.watcher}
+					/>
+				</FuseAnimate>
 			</div>
 		</div>
 	);

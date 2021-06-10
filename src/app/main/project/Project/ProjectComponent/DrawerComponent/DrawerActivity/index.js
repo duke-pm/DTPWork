@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import { sliceString } from '@fuse/core/DtpConfig';
+import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import { addTaskActivity } from '../../../../_redux/_projectActions';
 
 const { TextArea } = Input;
@@ -27,39 +28,45 @@ export default function DrawerActivity() {
 			<Divider />
 			<PerfectScrollbar style={{ height: '250px', position: 'relative' }}>
 				<div className="flex flex-col mt-16 w-full" style={{ position: 'absolute' }}>
-					{entitiesView &&
-						entitiesView.activities.map(item => (
-							<div key={item.lineNum} className="flex flex-col">
-								<div className="flex flex-row justify-between">
-									<div className="flex flex-row">
-										<Avatar
-											style={{
-												backgroundColor: '#87d068',
-												verticalAlign: 'middle',
-												marginTop: 5
-											}}
-											size="large"
-										>
-											<p className="uppercase"> {sliceString(item.userName)}</p>
-										</Avatar>
-										<div className="flex flex-col ml-8">
-											<div className="w-full flex-none text-sm font-medium text-black ">
-												{' '}
-												{item.fullName}{' '}
-											</div>
-											<div className="w-full flex-none text-sm font-normal text-gray-500">
-												{' '}
-												{item.timeUpdate}{' '}
+					<FuseAnimateGroup
+						enter={{
+							animation: 'transition.slideUpBigIn'
+						}}
+					>
+						{entitiesView &&
+							entitiesView.activities.map(item => (
+								<div key={item.lineNum} className="flex flex-col">
+									<div className="flex flex-row justify-between">
+										<div className="flex flex-row">
+											<Avatar
+												style={{
+													backgroundColor: '#87d068',
+													verticalAlign: 'middle',
+													marginTop: 5
+												}}
+												size="large"
+											>
+												<p className="uppercase"> {sliceString(item.userName)}</p>
+											</Avatar>
+											<div className="flex flex-col ml-8">
+												<div className="w-full flex-none text-sm font-medium text-black ">
+													{' '}
+													{item.fullName}{' '}
+												</div>
+												<div className="w-full flex-none text-sm font-normal text-gray-500">
+													{' '}
+													{item.timeUpdate}{' '}
+												</div>
 											</div>
 										</div>
+										<div className="font-medium flex-none"> #{item.rowNum}</div>
 									</div>
-									<div className="font-medium flex-none"> #{item.rowNum}</div>
+									<blodivckquote className="mt-8">
+										<p className="text-sm font-light">{item.comments}</p>
+									</blodivckquote>
 								</div>
-								<blodivckquote className="mt-8">
-									<p className="text-sm font-light">{item.comments}</p>
-								</blodivckquote>
-							</div>
-						))}
+							))}
+					</FuseAnimateGroup>
 					{entitiesView && entitiesView.activities.length === 0 ? (
 						<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
 					) : null}
