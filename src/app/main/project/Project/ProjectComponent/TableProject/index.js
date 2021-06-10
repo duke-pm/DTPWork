@@ -101,7 +101,7 @@ function TableProject(props) {
 			title: 'Subject',
 			dataIndex: 'subject',
 			key: 'subject',
-			width: '20%',
+			width: '24%',
 			render: (_, item) => (
 				<Typography style={{ marginLeft: '20px', cursor: 'default' }} component="button">
 					{' '}
@@ -125,7 +125,7 @@ function TableProject(props) {
 			title: 'Status',
 			dataIndex: 'status',
 			key: 'status',
-			width: '10%',
+			width: '12%',
 			render: (_, item) => (
 				<Dropdown
 					disabled={!item.isUpdated}
@@ -180,7 +180,7 @@ function TableProject(props) {
 			title: 'Assigne',
 			dataIndex: 'assignee',
 			key: 'assignee',
-			width: '10%',
+			width: '12%',
 			render: (_, item) => (
 				<div className="flex flex-row">
 					{' '}
@@ -222,7 +222,7 @@ function TableProject(props) {
 							<CaretUpOutlined style={{ marginRight: '8px !important', fontSize: '10pt' }} />
 						)
 				}}
-				scroll={{ x: 1070, y: 440 }}
+				scroll={{ x: 1090, y: 440 }}
 				pagination={false}
 				columns={columns}
 				dataSource={entitiesDetail.listTask}
