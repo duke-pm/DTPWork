@@ -417,12 +417,11 @@ export const addTaskActivity = (id, comment) => dispatch => {
 			notificationConfig('warning', 'Warning', 'Server error');
 		});
 };
-export const addTaskWatcher = (id, userID) => dispatch => {
+export const addTaskWatcher = id => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const dataReq = {
 		LineNum: 0,
 		TaskID: id,
-		UserID: userID,
 		Lang: 'vi'
 	};
 	return requestFrom
@@ -431,7 +430,7 @@ export const addTaskWatcher = (id, userID) => dispatch => {
 			const { data } = res;
 			if (!data.isError) {
 				const dataRes = data.data;
-				console.log(dataRes);
+				dispatch(actions.addTaskWatcher({ dataRes }));
 			} else {
 				dispatch(actions.catchErros({ callType: callTypes.action }));
 				notificationConfig('warning', 'Warning', data.errorMessage);

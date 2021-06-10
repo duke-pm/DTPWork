@@ -68,8 +68,9 @@ export const possesionSlice = createSlice({
 			const { entities } = state;
 			if (dataReq.inactive) {
 				const newData = entities.filter(item => item.assetID !== dataReq.assetID);
-				const { countNoUseYet } = state.total_items;
+				const { countNoUseYet, countAll } = state.total_items;
 				state.total_items.countNoUseYet = countNoUseYet - 1;
+				state.total_items.countAll = countAll - 1;
 				state.entities = newData;
 			} else {
 				state.entities = state.entities.map(entity => {

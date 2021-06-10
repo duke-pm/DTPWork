@@ -46,25 +46,29 @@ export default function Project() {
 		dispatch(fetchAllSubTask(params.detail));
 	}, [dispatch, params.detail]);
 	const ArrProjectStatus =
-		currentState &&
-		currentState.projectStatus.reduce(
-			(arr, curr) => [...arr, { label: curr.statusName, value: curr.statusID }],
-			[]
-		);
+		currentState && currentState.projectStatus
+			? currentState.projectStatus.reduce(
+					(arr, curr) => [...arr, { label: curr.statusName, value: curr.statusID }],
+					[]
+			  )
+			: [];
 	const ArrTaskPri =
-		currentState &&
-		currentState.projectPriority.reduce(
-			(arr, curr) => [...arr, { label: curr.priorityName, value: curr.priority }],
-			[]
-		);
+		currentState && currentState.projectPriority
+			? currentState.projectPriority.reduce(
+					(arr, curr) => [...arr, { label: curr.priorityName, value: curr.priority }],
+					[]
+			  )
+			: [];
 	const ArrTaskComponent =
-		currentState &&
-		currentState.projectComponent.reduce(
-			(arr, curr) => [...arr, { label: curr.componentName, value: curr.componentID }],
-			[]
-		);
-	const taskSub =
-		projectAll && projectAll.reduce((arr, curr) => [...arr, { label: curr.taskName, value: curr.taskID }], []);
+		currentState && currentState.projectComponent
+			? currentState.projectComponent.reduce(
+					(arr, curr) => [...arr, { label: curr.componentName, value: curr.componentID }],
+					[]
+			  )
+			: [];
+	const taskSub = projectAll
+		? projectAll.reduce((arr, curr) => [...arr, { label: curr.taskName, value: curr.taskID }], [])
+		: [];
 	const gradeGolbal = [
 		{ label: ' Lớp 1', value: 1 },
 		{ label: 'Lớp 2', value: 2 },
@@ -81,15 +85,6 @@ export default function Project() {
 	];
 	return (
 		<ProjectContextProvider>
-			<FormProject
-				owner={owner}
-				gradeGolbal={gradeGolbal}
-				taskSub={taskSub}
-				ArrTaskComponent={ArrTaskComponent}
-				ArrProjectStatus={ArrProjectStatus}
-				ArrTaskPri={ArrTaskPri}
-				params={params}
-			/>
 			<FusePageCarded
 				innerScroll
 				classes={{
@@ -122,7 +117,15 @@ export default function Project() {
 				}
 				content={
 					<Box p={3}>
-						<ProjectComponent />
+						<ProjectComponent
+							owner={owner}
+							gradeGolbal={gradeGolbal}
+							taskSub={taskSub}
+							ArrTaskComponent={ArrTaskComponent}
+							ArrProjectStatus={ArrProjectStatus}
+							ArrTaskPri={ArrTaskPri}
+							params={params}
+						/>
 					</Box>
 				}
 			/>

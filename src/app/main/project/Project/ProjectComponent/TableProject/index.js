@@ -16,7 +16,7 @@ function TableProject(props) {
 	const dispatch = useDispatch();
 	const { entitiesDetail } = props;
 	const projectContext = useContext(ProjectContext);
-	const { setVisible, visible, setFormProject } = projectContext;
+	const { setVisible, visible, setFormProject, formProject } = projectContext;
 	const handleOpenVisible = item => {
 		setVisible(true);
 		dispatch(actions.getTaskViewDetail(item.taskID));
@@ -44,7 +44,7 @@ function TableProject(props) {
 			render: (_, item) => (
 				<>
 					<Popover
-						overlayStyle={{ zIndex: '8', display: visible && 'none' }}
+						overlayStyle={{ zIndex: '8', display: visible || formProject.open ? 'none' : '' }}
 						placement="rightTop"
 						content={() => (
 							<>

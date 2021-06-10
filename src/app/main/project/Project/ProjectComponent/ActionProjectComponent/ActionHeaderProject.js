@@ -10,13 +10,13 @@ import { setTaskEditProject, fetchsProjectFilter } from '../../../_redux/_projec
 export default function ActionHeaderProject({ classes }) {
 	const dispatch = useDispatch();
 	const projectContext = useContext(ProjectContext);
-	const { setFormProject, search, setSearch } = projectContext;
+	const { setFormProject, search, setSearch, formProject } = projectContext;
 	const handleOpenFormProject = title => {
 		setFormProject({
 			open: true,
 			title
 		});
-		dispatch(setTaskEditProject());
+		dispatch(setTaskEditProject(null));
 	};
 	const handleSearch = () => {
 		dispatch(fetchsProjectFilter(search));
@@ -38,7 +38,7 @@ export default function ActionHeaderProject({ classes }) {
 				<div>
 					<div className="flex flex-col sm:flex-row justify-between ">
 						<Popover
-							overlayStyle={{ zIndex: '19' }}
+							overlayStyle={{ zIndex: '19', display: formProject.open ? 'none' : '' }}
 							placement="rightTop"
 							content={() => (
 								<>

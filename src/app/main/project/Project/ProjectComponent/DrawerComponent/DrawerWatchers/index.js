@@ -1,11 +1,17 @@
 import React from 'react';
 import { Avatar, Table } from 'antd';
-import { shallowEqual, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { sliceString } from '@fuse/core/DtpConfig';
+import { Button } from '@material-ui/core';
+import { addTaskWatcher } from 'app/main/project/_redux/_projectActions';
 
 export default function DrawerWatchers() {
+	const dispatch = useDispatch();
 	const { currentState } = useSelector(state => ({ currentState: state.project }), shallowEqual);
 	const { entitiesView } = currentState;
+	const handleTraffic = () => {
+		dispatch(addTaskWatcher(entitiesView.detail.taskID));
+	};
 	const columns = [
 		{
 			title: '',
@@ -54,12 +60,22 @@ export default function DrawerWatchers() {
 				<div className="w-full flex-none text-sm font-normal text-gray-500">
 					List of users viewing my tasks{' '}
 				</div>
+				<Button
+					onClick={handleTraffic}
+					type="submit"
+					style={{ width: '14rem' }}
+					className="h-26 font-sans mt-8"
+					variant="contained"
+					color="primary"
+				>
+					Seen task
+				</Button>
 			</div>
 			<div className="mt-16">
 				<Table
 					rowKey="rowNum"
 					className="virtual-table"
-					scroll={{ y: 440 }}
+					scroll={{ y: 290 }}
 					pagination={false}
 					columns={columns}
 					dataSource={entitiesView && entitiesView.watcher}

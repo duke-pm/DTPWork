@@ -97,6 +97,13 @@ export const projectSlice = createSlice({
 			const { activities } = state.entitiesView;
 			const newData = [...activities, dataRes];
 			state.entitiesView.activities = newData;
+		},
+		addTaskWatcher: (state, action) => {
+			const { dataRes } = action.payload;
+			state.actionLoading = false;
+			const { watcher } = state.entitiesView;
+			const newData = [dataRes, ...watcher];
+			state.entitiesView.watcher = newData;
 		}
 	}
 });

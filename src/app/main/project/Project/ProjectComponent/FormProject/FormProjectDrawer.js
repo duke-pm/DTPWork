@@ -59,6 +59,25 @@ export default function FormCustomProjectTask({
 			project: entitiesEdit && entitiesEdit.parentID === 0 ? null : entitiesEdit.parentID,
 			status: entitiesEdit && entitiesEdit.statusID
 		};
+	} else {
+		initial = {
+			TaskID: '',
+			descr: '',
+			taskName: '',
+			startDate: moment(),
+			endDate: moment(),
+			grade: null,
+			author: '',
+			owner: null,
+			component: null,
+			originPublisher: '',
+			ownership: '',
+			project: null,
+			priority: null,
+			status: 1,
+			taskType: '',
+			prjID: ''
+		};
 	}
 	const validateSchema = Yup.object().shape({
 		taskName: Yup.string().required(`${validateField}`),
@@ -187,14 +206,18 @@ export default function FormCustomProjectTask({
 						<DialogActions>
 							{actionLoading ? (
 								<Spin />
-							) : (
+							) : entitiesEdit && entitiesEdit.taskID ? (
 								<Button
-									disabled={!(entitiesEdit && entitiesEdit.isModified)}
+									disabled={!entitiesEdit.isModified}
 									type="submit"
 									className="h-26 font-sans"
 									variant="contained"
 									color="primary"
 								>
+									Save
+								</Button>
+							) : (
+								<Button type="submit" className="h-26 font-sans" variant="contained" color="primary">
 									Save
 								</Button>
 							)}

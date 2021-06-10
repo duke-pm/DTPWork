@@ -8,7 +8,6 @@ import { ProjectContext } from '../../ProjectContext';
 import DrawerActivity from './DrawerActivity';
 import DrawerRelations from './DrawerRelations';
 import DrawerWatchers from './DrawerWatchers';
-import { addTaskWatcher } from '../../../_redux/_projectActions';
 
 function a11yProps(index) {
 	return {
@@ -52,12 +51,8 @@ export default function DrawerComponent() {
 	};
 	const [tab, setTabs] = useState(0);
 	const classes = useStyles();
-	const dataUser = getDataUserLocalStorage();
 	const handleChange = (event, newValue) => {
 		setTabs(newValue);
-		if (newValue === 2) {
-			dispatch(addTaskWatcher(entitiesView.detail.taskID, dataUser.userID));
-		}
 	};
 	return (
 		<div className="site-drawer-render-in-current-wrapper">
