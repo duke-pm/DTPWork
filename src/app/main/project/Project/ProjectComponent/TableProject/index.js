@@ -52,7 +52,7 @@ function TableProject(props) {
 									<ListItemIcon className="min-w-40">
 										<Icon> visibility </Icon>
 									</ListItemIcon>
-									<ListItemText primary="Open detail view" />
+									<ListItemText primary="Overview" />
 								</MenuItem>
 								<MenuItem onClick={() => handleEditForm(item, 'Setting task')} role="button">
 									<ListItemIcon className="min-w-40">
