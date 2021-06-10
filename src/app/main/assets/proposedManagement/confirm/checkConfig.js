@@ -8,7 +8,7 @@ const CheckConfig = {
 	},
 	routes: [
 		{
-			path: '/xet-duyet',
+			path: '/tai-san/danh-sach-de-xuat',
 			component: React.lazy(() => import('./index'))
 		}
 	]

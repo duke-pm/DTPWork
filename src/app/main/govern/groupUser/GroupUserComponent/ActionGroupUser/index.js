@@ -66,9 +66,7 @@ export default function ActionGroupUser({ handleOpenFormGroupUser }) {
 							placeholder="Tìm kiếm"
 							inputProps={{ 'aria-label': 'search google maps' }}
 						/>
-						<IconButton
-						// onClick={handleSearch} type="button" className={classes.iconButton}
-						>
+						<IconButton onClick={handleSearch} type="button">
 							<SearchIcon />
 						</IconButton>
 						{/* <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} /> */}

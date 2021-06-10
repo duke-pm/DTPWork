@@ -40,13 +40,18 @@ function TabPanel(props) {
 function PossesionPage(props) {
 	const dispatch = useDispatch();
 	const possessionContext = useContext(PossessionContext);
-	const { value, setValue, setPage, setRowPage } = possessionContext;
+	const { value, setValue, setPage, setRowPage, setSort, setSearch } = possessionContext;
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
 	const total_Record = currentState && currentState.total_items;
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 		setPage(0);
 		setRowPage(25);
+		setSort({
+			direction: 'desc',
+			id: null
+		});
+		setSearch('');
 	};
 	const params = 'Region,Department,Employee,Supplier,Company,AssetType,AssetGroup,AssetGroupDetail';
 	useEffect(() => {

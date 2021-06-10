@@ -1,7 +1,6 @@
 import { ListItemIcon, ListItemText, MenuItem } from '@material-ui/core';
 import React from 'react';
 import Icon from '@material-ui/core/Icon';
-import { Popconfirm } from 'antd';
 
 export default function ActionsListUserBody({ handleEditListUser, handleDeleteListUser, items }) {
 	return (

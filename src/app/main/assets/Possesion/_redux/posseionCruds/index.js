@@ -41,7 +41,6 @@ export const requestAsset = data => {
 		data
 	});
 };
-
 export const getInformationCompany = params => {
 	return request.get(`${urlInformation}`, { params });
 };

@@ -5,9 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getInformationCompany } from 'app/main/assets/Possesion/_redux/possesionActions';
-import { useStyles } from '../Projects/styleProject';
 import ProjectComponent from './ProjectComponent';
-import ActionHeaderProject from './ProjectComponent/ActionProjectComponent/ActionHeaderProject';
 import FormProject from './ProjectComponent/FormProject';
 import ProjectContextProvider from './ProjectContext';
 import { fetchProjectDetail, fetchOwner, fetchAllSubTask } from '../_redux/_projectActions';
@@ -26,7 +24,7 @@ export default function Project() {
 	const [owner, setOwner] = useState([]);
 	useEffect(() => {
 		dispatch(fetchProjectDetail(params.detail));
-	}, [params.detail]);
+	}, [params.detail, dispatch]);
 	useEffect(() => {
 		const paramsMasterData = 'PrjStatus,PrjComponent,PrjPriority';
 		dispatch(getInformationCompany(paramsMasterData));

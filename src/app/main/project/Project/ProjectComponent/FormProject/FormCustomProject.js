@@ -188,7 +188,13 @@ export default function FormCustomProjectTask({
 							{actionLoading ? (
 								<Spin />
 							) : (
-								<Button type="submit" className="h-26 font-sans" variant="contained" color="primary">
+								<Button
+									disabled={!(entitiesEdit && entitiesEdit.isModified)}
+									type="submit"
+									className="h-26 font-sans"
+									variant="contained"
+									color="primary"
+								>
 									Save
 								</Button>
 							)}

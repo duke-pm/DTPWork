@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Badge, Checkbox, Table, Popover, Avatar } from 'antd';
 import React, { useContext } from 'react';
-import { CaretDownOutlined, CaretUpOutlined, DownOutlined, UpOutlined, UserOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
 import { MenuItem, ListItemIcon, Icon, ListItemText, Typography } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { withRouter } from 'react-router';

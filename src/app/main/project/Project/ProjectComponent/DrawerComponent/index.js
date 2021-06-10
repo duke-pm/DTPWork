@@ -1,10 +1,14 @@
 import { Badge, Drawer } from 'antd';
 import React, { useContext, useState } from 'react';
-import { Tabs, Tab, Box, Typography, makeStyles } from '@material-ui/core';
+import { Tabs, Tab, Box, makeStyles } from '@material-ui/core';
+import { getDataUserLocalStorage } from '@fuse/core/DtpConfig';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { CloseOutlined } from '@material-ui/icons';
 import { ProjectContext } from '../../ProjectContext';
 import DrawerActivity from './DrawerActivity';
 import DrawerRelations from './DrawerRelations';
 import DrawerWatchers from './DrawerWatchers';
+import { addTaskWatcher } from '../../../_redux/_projectActions';
 
 function a11yProps(index) {
 	return {
@@ -37,18 +41,31 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 export default function DrawerComponent() {
+	const dispatch = useDispatch();
+	const { currentState } = useSelector(state => ({ currentState: state.project }), shallowEqual);
+	const { entitiesView } = currentState;
 	const projectContext = useContext(ProjectContext);
 	const { visible, setVisible } = projectContext;
-	const closeVisible = () => setVisible(false);
+	const closeVisible = () => {
+		setVisible(false);
+		setTabs(0);
+	};
 	const [tab, setTabs] = useState(0);
 	const classes = useStyles();
-	const handleChange = (event, newValue) => setTabs(newValue);
+	const dataUser = getDataUserLocalStorage();
+	const handleChange = (event, newValue) => {
+		setTabs(newValue);
+		if (newValue === 2) {
+			dispatch(addTaskWatcher(entitiesView.detail.taskID, dataUser.userID));
+		}
+	};
 	return (
 		<div className="site-drawer-render-in-current-wrapper">
 			<Drawer
 				width={580}
 				placement="right"
-				closable={false}
+				closeIcon={<CloseOutlined />}
+				closable
 				onClose={closeVisible}
 				visible={visible}
 				getContainer={false}
@@ -69,7 +86,15 @@ export default function DrawerComponent() {
 						<Tab
 							className="font-sans"
 							label={
-								<Badge offset={[14]} count="4" className="site-badge-count-4">
+								<Badge
+									offset={[14]}
+									count={
+										entitiesView && entitiesView.relationShip
+											? entitiesView.relationShip.length
+											: null
+									}
+									className="site-badge-count-4"
+								>
 									{' '}
 									Relation{' '}
 								</Badge>
@@ -79,7 +104,11 @@ export default function DrawerComponent() {
 						<Tab
 							className="font-sans"
 							label={
-								<Badge offset={[14]} count="4" className="site-badge-count-4">
+								<Badge
+									offset={[14]}
+									count={entitiesView && entitiesView.watcher ? entitiesView.watcher.length : null}
+									className="site-badge-count-4"
+								>
 									{' '}
 									Watchers{' '}
 								</Badge>

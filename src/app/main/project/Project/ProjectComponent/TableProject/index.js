@@ -1,13 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Badge, Checkbox, Table, Popover, Avatar } from 'antd';
+import { Badge, Dropdown, Table, Popover, Avatar, Menu } from 'antd';
 import React, { useContext } from 'react';
-import { CaretDownOutlined, CaretUpOutlined, DownOutlined, UpOutlined, UserOutlined } from '@ant-design/icons';
-import { MenuItem, ListItemIcon, Icon, ListItemText, Link, Typography } from '@material-ui/core';
+import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
+import { MenuItem, ListItemIcon, Icon, ListItemText, Typography } from '@material-ui/core';
 import AppsIcon from '@material-ui/icons/Apps';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import VisibilityIcon from '@material-ui/icons/Visibility';
 import { withRouter } from 'react-router';
 import { useDispatch } from 'react-redux';
+import { notificationConfig } from '@fuse/core/DtpConfig';
 import * as actions from '../../../_redux/_projectActions';
 import { ProjectContext } from '../../ProjectContext';
 import { badgeStatus, typeColor, priorityColor } from './ConfigTableProject';
@@ -17,13 +17,23 @@ function TableProject(props) {
 	const { entitiesDetail } = props;
 	const projectContext = useContext(ProjectContext);
 	const { setVisible, visible, setFormProject } = projectContext;
-	const handleOpenVisible = () => setVisible(true);
+	const handleOpenVisible = item => {
+		setVisible(true);
+		dispatch(actions.getTaskViewDetail(item.taskID));
+	};
 	const handleEditForm = (item, type) => {
 		setFormProject({
 			open: true,
 			title: type
 		});
 		dispatch(actions.setTaskEditProject(item));
+	};
+	const updatedStatus = (item, status) => {
+		dispatch(actions.updatedTaskStatus(item, status)).then(data => {
+			if (data && !data.isError) {
+				notificationConfig('success', 'Success', 'Updated status success');
+			}
+		});
 	};
 	const columns = [
 		{
@@ -38,7 +48,7 @@ function TableProject(props) {
 						placement="rightTop"
 						content={() => (
 							<>
-								<MenuItem onClick={handleOpenVisible} role="button">
+								<MenuItem onClick={() => handleOpenVisible(item)} role="button">
 									<ListItemIcon className="min-w-40">
 										<Icon> visibility </Icon>
 									</ListItemIcon>
@@ -50,36 +60,34 @@ function TableProject(props) {
 									</ListItemIcon>
 									<ListItemText primary="Task settings" />
 								</MenuItem>
-								<MenuItem role="button">
-									<ListItemIcon className="min-w-40">
-										<Icon>redo</Icon>
-									</ListItemIcon>
-									<ListItemText primary="Change project" />
-								</MenuItem>
-								<MenuItem role="button">
-									<ListItemIcon className="min-w-40">
-										<Icon>file_copy</Icon>
-									</ListItemIcon>
-									<ListItemText primary="Copy" />
-								</MenuItem>
-								<MenuItem role="button">
-									<ListItemIcon className="min-w-40">
-										<Icon>delete</Icon>
-									</ListItemIcon>
-									<ListItemText primary="Delete" />
-								</MenuItem>
-								<MenuItem role="button">
-									<ListItemIcon className="min-w-40">
-										<Icon>event_note</Icon>
-									</ListItemIcon>
-									<ListItemText primary="Create new child" />
-								</MenuItem>
-								<MenuItem role="button">
-									<ListItemIcon className="min-w-40">
-										<Icon>build</Icon>
-									</ListItemIcon>
-									<ListItemText primary="Updated status" />
-								</MenuItem>
+								{item.isModified && (
+									<>
+										<MenuItem role="button">
+											<ListItemIcon className="min-w-40">
+												<Icon>redo</Icon>
+											</ListItemIcon>
+											<ListItemText primary="Change project" />
+										</MenuItem>
+										<MenuItem role="button">
+											<ListItemIcon className="min-w-40">
+												<Icon>file_copy</Icon>
+											</ListItemIcon>
+											<ListItemText primary="Copy" />
+										</MenuItem>
+										<MenuItem role="button">
+											<ListItemIcon className="min-w-40">
+												<Icon>delete</Icon>
+											</ListItemIcon>
+											<ListItemText primary="Delete" />
+										</MenuItem>
+										<MenuItem role="button">
+											<ListItemIcon className="min-w-40">
+												<Icon>event_note</Icon>
+											</ListItemIcon>
+											<ListItemText primary="Create new child" />
+										</MenuItem>{' '}
+									</>
+								)}
 							</>
 						)}
 						title="Action"
@@ -93,7 +101,7 @@ function TableProject(props) {
 			title: 'Subject',
 			dataIndex: 'subject',
 			key: 'subject',
-			width: '18%',
+			width: '20%',
 			render: (_, item) => (
 				<Typography style={{ marginLeft: '20px', cursor: 'default' }} component="button">
 					{' '}
@@ -105,7 +113,7 @@ function TableProject(props) {
 			title: 'Type',
 			dataIndex: 'type',
 			key: 'type',
-			width: '5%',
+			width: '7%',
 			render: (_, item) => (
 				<p style={{ color: typeColor[item.typeName], textTransform: 'uppercase', fontWeight: 'bold' }}>
 					{' '}
@@ -117,21 +125,52 @@ function TableProject(props) {
 			title: 'Status',
 			dataIndex: 'status',
 			key: 'status',
-			width: '5%',
+			width: '8%',
 			render: (_, item) => (
-				<Badge
-					size="default"
-					style={{ color: badgeStatus[item.statusID] }}
-					color={badgeStatus[item.statusID]}
-					text={item.statusName}
-				/>
+				<Dropdown
+					disabled={!item.isUpdated}
+					overlay={
+						<Menu>
+							<Menu.Item onClick={() => updatedStatus(item, 1)} style={{ color: '#1890ff' }}>
+								New
+							</Menu.Item>
+							<Menu.Item onClick={() => updatedStatus(item, 2)} style={{ color: '#560bad' }}>
+								To be scheduled
+							</Menu.Item>
+							<Menu.Item onClick={() => updatedStatus(item, 3)} style={{ color: '#e85d04' }}>
+								Scheduled
+							</Menu.Item>
+							<Menu.Item onClick={() => updatedStatus(item, 4)} style={{ color: '#faad14' }}>
+								In progress
+							</Menu.Item>
+							<Menu.Item onClick={() => updatedStatus(item, 5)} style={{ color: '#d9d9d9' }}>
+								Closed
+							</Menu.Item>
+							<Menu.Item onClick={() => updatedStatus(item, 6)} style={{ color: '#52c41a' }}>
+								On hold
+							</Menu.Item>
+							<Menu.Item onClick={() => updatedStatus(item, 7)} style={{ color: '#ff4d4f' }}>
+								Rejected
+							</Menu.Item>
+						</Menu>
+					}
+					placement="bottomLeft"
+					arrow
+				>
+					<Badge
+						size="default"
+						style={{ color: badgeStatus[item.statusID], cursor: 'pointer' }}
+						color={badgeStatus[item.statusID]}
+						text={item.statusName}
+					/>
+				</Dropdown>
 			)
 		},
 		{
 			title: 'Assigne',
 			dataIndex: 'assignee',
 			key: 'assignee',
-			width: '8%',
+			width: '10%',
 			render: (_, item) => (
 				<div className="flex flex-row">
 					{' '}
@@ -173,7 +212,7 @@ function TableProject(props) {
 							<CaretUpOutlined style={{ marginRight: '8px !important', fontSize: '10pt' }} />
 						)
 				}}
-				scroll={{ x: 1050, y: 440 }}
+				scroll={{ x: 1070, y: 440 }}
 				pagination={false}
 				columns={columns}
 				dataSource={entitiesDetail.listTask}

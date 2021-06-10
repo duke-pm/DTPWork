@@ -128,7 +128,7 @@ export default function ActionComponent({ actionLoading }) {
 				<div className="flex flex-col sm:flex-row justify-between">
 					<Typography variant="subtitle1" color="inherit" className="mt-16">
 						<AddCircleOutlineIcon style={{ color: '#1890ff' }} />
-						<Link style={{ color: '#1890ff' }} to="/bao-mat-hong-tai-san">
+						<Link style={{ color: '#1890ff' }} to="/tai-san/bao-mat-hong-tai-san">
 							{' '}
 							Báo hỏng tài sản{' '}
 						</Link>

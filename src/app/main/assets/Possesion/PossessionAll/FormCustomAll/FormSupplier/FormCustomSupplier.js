@@ -1,4 +1,3 @@
-import CheckboxAntd from '@fuse/CustomForm/CheckboxAntd';
 import { AntInput } from '@fuse/CustomForm/CreateAntField';
 import { Button, DialogActions, DialogContent } from '@material-ui/core';
 import { Spin } from 'antd';

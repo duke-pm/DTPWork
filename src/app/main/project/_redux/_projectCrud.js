@@ -21,6 +21,23 @@ export const taskModify = data => {
 		url: `${urlDetail}/Modify`
 	});
 };
+export const addTaskActivity = data => {
+	return request({
+		method: 'POST',
+		url: '/api/TaskActivity/Modify',
+		data
+	});
+};
+export const addTaskWatch = data => {
+	return request({
+		method: 'POST',
+		url: '/api/TaskWatcher/Modify',
+		data
+	});
+};
+export const getTaskViewDetail = params => {
+	return request(`${urlDetail}/GetByID`, { params });
+};
 export const fetchProjectDetail = params => {
 	return request(`${urlDetail}/GetList`, { params });
 };

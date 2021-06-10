@@ -1,5 +1,5 @@
 import FuseAnimate from '@fuse/core/FuseAnimate';
-import { Drawer } from 'antd';
+import FuseLoading from '@fuse/core/FuseLoading';
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { useStyles } from '../../Projects/styleProject';
@@ -11,6 +11,9 @@ export default function ProjectComponent() {
 	const classes = useStyles();
 	const { currentState } = useSelector(state => ({ currentState: state.project }), shallowEqual);
 	const { entitiesDetail, listLoading } = currentState;
+	if (listLoading) {
+		return <FuseLoading />;
+	}
 	return (
 		<div className="w-full flex flex-col ">
 			<DrawerComponent />

@@ -16,7 +16,7 @@ const PossesionConfig = {
 	},
 	routes: [
 		{
-			path: '/tai-san',
+			path: '/tai-san/quan-ly-tai-san',
 			exact: true,
 			component: React.lazy(() => import('./index'))
 		}

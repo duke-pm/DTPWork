@@ -328,3 +328,117 @@ export const updatedTask = values => dispatch => {
 			notificationConfig('warning', 'Warning', 'Server error');
 		});
 };
+export const updatedTaskStatus = (values, status) => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.action }));
+	const dataReq = {
+		TaskID: values.taskID,
+		TaskName: values.taskName,
+		TaskTypeID: values.taskTypeID,
+		PrjID: values.prjID,
+		ParentID: values.project || 0,
+		Descr: values.descr,
+		StartDate: moment(values.startDate).format('YYYY-MM-DD'),
+		EndDate: moment(values.endDate).format('YYYY-MM-DD'),
+		Owner: values.owner,
+		Priority: values.priority,
+		StatusID: status,
+		Grade: values.grade || 0,
+		Author: values.author,
+		Component: values.component || 0,
+		OriginPublisher: values.originPublisher,
+		OwnershipDTP: values.ownership,
+		Lang: 'Vi'
+	};
+	return requestFrom
+		.taskModify(dataReq)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				// const dataRes = data.data;
+				dispatch(fetchProjectDetailFilter(values.prjID));
+				dispatch(fetchAllSubTask(values.prjID));
+				// dispatch(actions.updatedProject({ dataRes }));
+			} else {
+				dispatch(actions.catchErros({ callType: callTypes.action }));
+				notificationConfig('warning', 'Warning', data.errorMessage);
+			}
+			return data;
+		})
+		.catch(err => {
+			dispatch(actions.catchErros({ callType: callTypes.action }));
+			notificationConfig('warning', 'Warning', 'Server error');
+		});
+};
+
+export const getTaskViewDetail = params => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.action }));
+	const paramsReq = {
+		taskID: params
+	};
+	return requestFrom
+		.getTaskViewDetail(paramsReq)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				const dataRes = data.data;
+				dispatch(actions.fetchTaskView({ dataRes }));
+			} else {
+				dispatch(actions.catchErros({ callType: callTypes.action }));
+				notificationConfig('warning', 'Warning', data.errorMessage);
+			}
+		})
+		.catch(err => {
+			dispatch(actions.catchErros({ callType: callTypes.action }));
+			notificationConfig('warning', 'Warning', 'Server error');
+		});
+};
+export const addTaskActivity = (id, comment) => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.action }));
+	const dataReq = {
+		taskID: id,
+		LineNum: '0',
+		Comments: comment,
+		Lang: 'vi'
+	};
+	return requestFrom
+		.addTaskActivity(dataReq)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				const dataRes = data.data;
+				dispatch(actions.addTaskActivity({ dataRes }));
+			} else {
+				dispatch(actions.catchErros({ callType: callTypes.action }));
+				notificationConfig('warning', 'Warning', data.errorMessage);
+			}
+		})
+		.catch(err => {
+			dispatch(actions.catchErros({ callType: callTypes.action }));
+			notificationConfig('warning', 'Warning', 'Server error');
+		});
+};
+export const addTaskWatcher = (id, userID) => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.action }));
+	const dataReq = {
+		LineNum: 0,
+		TaskID: id,
+		UserID: userID,
+		Lang: 'vi'
+	};
+	return requestFrom
+		.addTaskWatch(dataReq)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				const dataRes = data.data;
+				console.log(dataRes);
+			} else {
+				dispatch(actions.catchErros({ callType: callTypes.action }));
+				notificationConfig('warning', 'Warning', data.errorMessage);
+			}
+		})
+		.catch(err => {
+			dispatch(actions.catchErros({ callType: callTypes.action }));
+			notificationConfig('warning', 'Warning', 'Server error');
+		});
+};

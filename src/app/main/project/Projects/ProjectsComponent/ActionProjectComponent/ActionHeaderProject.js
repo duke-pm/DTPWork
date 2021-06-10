@@ -1,7 +1,6 @@
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import { Button, IconButton, InputBase, Paper } from '@material-ui/core';
 import React, { useContext } from 'react';
-import AddIcon from '@material-ui/icons/Add';
 import SearchIcon from '@material-ui/icons/Search';
 import { useDispatch } from 'react-redux';
 import { ProjectContext } from '../../ProjectContext';

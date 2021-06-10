@@ -1,12 +1,51 @@
 import React from 'react';
-import { Badge, Select } from 'antd';
+import { Avatar, Table } from 'antd';
+import { shallowEqual, useSelector } from 'react-redux';
+import { sliceString } from '@fuse/core/DtpConfig';
 
-const { Option } = Select;
 export default function DrawerWatchers() {
-	const data = [
-		{ label: 'LinhCt', value: '1' },
-		{ label: 'Anonymus', value: '2' },
-		{ label: 'Cristiarona', value: '3' }
+	const { currentState } = useSelector(state => ({ currentState: state.project }), shallowEqual);
+	const { entitiesView } = currentState;
+	const columns = [
+		{
+			title: '',
+			dataIndex: 'userName',
+			key: 'userName',
+			width: '1%',
+			render: (_, item) => (
+				<div className="flex flex-row">
+					{' '}
+					<Avatar
+						style={{
+							backgroundColor: '#87d068',
+							verticalAlign: 'middle',
+							marginTop: 5
+						}}
+						size="large"
+					>
+						<p className="uppercase"> {sliceString(item.userName)}</p>
+					</Avatar>{' '}
+				</div>
+			)
+		},
+		{
+			title: 'User Name',
+			dataIndex: 'userName',
+			key: 'userName',
+			width: '2%'
+		},
+		{
+			title: 'Full name',
+			dataIndex: 'fullName',
+			key: 'fullName',
+			width: '2%'
+		},
+		{
+			title: 'Date view',
+			dataIndex: 'timeUpdate',
+			key: 'timeUpdate',
+			width: '2%'
+		}
 	];
 	return (
 		<div>
@@ -17,20 +56,14 @@ export default function DrawerWatchers() {
 				</div>
 			</div>
 			<div className="mt-16">
-				<Select
-					value={['1', '2', '3']}
-					style={{ width: '100%' }}
-					showSearch
-					// allowClear
-					mode="multiple"
-					maxTagCount={4}
-				>
-					{data.map(p => (
-						<Option key={p.value} value={p.value}>
-							{p.label}
-						</Option>
-					))}
-				</Select>
+				<Table
+					rowKey="rowNum"
+					className="virtual-table"
+					scroll={{ y: 440 }}
+					pagination={false}
+					columns={columns}
+					dataSource={entitiesView && entitiesView.watcher}
+				/>
 			</div>
 		</div>
 	);

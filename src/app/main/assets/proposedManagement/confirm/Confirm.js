@@ -47,7 +47,11 @@ function PossesionPage(props) {
 		reasonReject,
 		setReasonReject,
 		timeLine,
-		setTimeLine
+		setTimeLine,
+		setPage,
+		setRowPage,
+		setSearch,
+		setSort
 	} = confirmContext;
 	const dispatch = useDispatch();
 	const { currentState, tabs } = useSelector(
@@ -61,6 +65,13 @@ function PossesionPage(props) {
 	const total_Record = currentState && currentState.total_items;
 	const handleChange = (event, newValue) => {
 		dispatch(actions.changeTabs(newValue));
+		setPage(0);
+		setRowPage(25);
+		setSort({
+			direction: 'desc',
+			id: null
+		});
+		setSearch('');
 	};
 	const handleCloseForm = () => setFormControl(false);
 	const handleCloseFormAllocation = () => setFormAllocation(false);

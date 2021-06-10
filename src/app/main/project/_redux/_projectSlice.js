@@ -7,6 +7,7 @@ const inititalState = {
 	entitiesEdit: null,
 	entitiesAll: [],
 	entitiesDetail: [],
+	entitiesView: null,
 	total_count: 0,
 	total_item: null,
 	lastErrors: false
@@ -83,6 +84,19 @@ export const projectSlice = createSlice({
 			state.listLoading = false;
 			state.actionLoading = false;
 			state.entitiesDetail = dataRes;
+		},
+		fetchTaskView: (state, action) => {
+			const { dataRes } = action.payload;
+			state.listLoading = false;
+			state.actionLoading = false;
+			state.entitiesView = dataRes;
+		},
+		addTaskActivity: (state, action) => {
+			const { dataRes } = action.payload;
+			state.actionLoading = false;
+			const { activities } = state.entitiesView;
+			const newData = [...activities, dataRes];
+			state.entitiesView.activities = newData;
 		}
 	}
 });

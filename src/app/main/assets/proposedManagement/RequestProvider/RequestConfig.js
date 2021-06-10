@@ -16,7 +16,7 @@ const RequestConfig = {
 	},
 	routes: [
 		{
-			path: '/yeu-cau-cap-phat',
+			path: '/tai-san/yeu-cau-cap-phat',
 			component: React.lazy(() => import('./index'))
 		}
 	]

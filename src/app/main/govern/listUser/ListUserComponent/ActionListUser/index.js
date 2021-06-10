@@ -2,13 +2,31 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable import/no-extraneous-dependencies */
 import { Button, IconButton, Paper } from '@material-ui/core';
-import React from 'react';
+import React, { useContext } from 'react';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import 'antd/dist/antd.css';
 import FuseAnimate from '@fuse/core/FuseAnimate';
+import { useDispatch } from 'react-redux';
+import { ListUserContext } from '../../ListUserContext';
+import { fetchsListFilter } from '../../_reduxListUser/listUserActions';
 
 export default function ActionGroupUser({ handleOpenFormGroupUser }) {
+	const listUserContext = useContext(ListUserContext);
+	const dispatch = useDispatch();
+
+	const { setPage, setSearch, search, page, rowPage, sort } = listUserContext;
+	const handleSearch = () => {
+		setPage(0);
+		dispatch(fetchsListFilter(page, rowPage, sort.id, sort.direction, search));
+	};
+	const onHandleChange = e => {
+		setSearch(e.target.value);
+		setPage(0);
+		if (e.target.value.length <= 0) {
+			dispatch(fetchsListFilter(page, rowPage, sort.id, sort.direction, e.target.value));
+		}
+	};
 	return (
 		<div>
 			<FuseAnimate animation="transition.slideLeftIn" delay={300}>
@@ -38,20 +56,18 @@ export default function ActionGroupUser({ handleOpenFormGroupUser }) {
 					</Button>
 					<Paper className="w-full sm:w-1/4 flex justify-between">
 						<InputBase
-							// onKeyPress={event => {
-							// 	if (event.key === 'Enter') {
-							// 		handleSearch();
-							// 	}
-							// }}
-							// onChange={e => onHandleChange(e)}
-							// className={classes.input}
-							// value={search}
+							onKeyPress={event => {
+								if (event.key === 'Enter') {
+									handleSearch();
+								}
+							}}
+							onChange={e => onHandleChange(e)}
+							className="ml-16"
+							value={search}
 							placeholder="Tìm kiếm"
 							inputProps={{ 'aria-label': 'search google maps' }}
 						/>
-						<IconButton
-						// onClick={handleSearch} type="button" className={classes.iconButton}
-						>
+						<IconButton onClick={handleSearch} type="button">
 							<SearchIcon />
 						</IconButton>
 						{/* <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} /> */}
