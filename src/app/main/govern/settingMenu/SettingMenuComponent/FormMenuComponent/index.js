@@ -45,7 +45,7 @@ export default function FormMenuComponent({ openSettingMenu, setOpenSettingMenu 
 						<CloseIcon />
 					</IconButton>
 					<Typography variant="subtitle1" color="inherit">
-						{entitiesEdit && entitiesEdit.menuID ? 'Chỉnh sửa menu' : 'Thêm menu mới'}
+						{entitiesEdit && entitiesEdit.menuID ? 'Cập nhật menu' : 'Tạo menu'}
 					</Typography>
 				</Toolbar>
 			</AppBar>

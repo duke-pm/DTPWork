@@ -53,7 +53,7 @@ export default function FormCustomMenu({
 							<div className="px-16 sm:px-24">
 								<div className={`grid grid-cols-1 ${!entitiesEdit && 'sm:grid-cols-2'} gap-8`}>
 									<Field
-										label="Tên menu"
+										label="Menu Name"
 										name="menuName"
 										type="text"
 										hasFeedback
@@ -62,7 +62,7 @@ export default function FormCustomMenu({
 									/>
 									{!entitiesEdit && (
 										<Field
-											label="Loại menu"
+											label="Menu Type"
 											name="typeID"
 											hasFeedback
 											options={[
@@ -86,14 +86,14 @@ export default function FormCustomMenu({
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 									<Field
-										label="Menu ngoài"
+										label="Menu Parent"
 										name="parentID"
 										component={SelectAntd}
 										options={menuParent}
 										className="mt-8 mb-16"
 									/>
 									<Field
-										label="Đường dẫn"
+										label="Web Url/ Action"
 										name="url"
 										type="text"
 										component={AntInput}
@@ -102,14 +102,14 @@ export default function FormCustomMenu({
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 									<Field
-										label="Icon web"
+										label="Web icon"
 										name="icon"
 										type="text"
 										component={AntInput}
 										className="mt-8 mb-16"
 									/>
 									<Field
-										label="Direction icon web"
+										label="Direction Web icon"
 										name="directionIcon"
 										type="text"
 										component={AntInput}
@@ -118,48 +118,51 @@ export default function FormCustomMenu({
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 									<Field
-										label="Icon di động"
+										label="Mobile icon"
 										name="mIcon"
 										type="text"
 										component={AntInput}
 										className="mt-8 mb-16"
 									/>
 									<Field
-										label="Tên màn hình di động"
+										label="Mobile Url/ Action"
 										name="mName"
 										type="text"
 										component={AntInput}
 										className="mt-8 mb-16"
-									/>
+									/>									
+								</div>
+								<div className="grid grid-cols-1 sm:grid-cols-4 gap-8">
 									<Field
-										label="VisOrder"
+										label="Order"
 										name="visOrder"
 										type="number"
 										component={AntInput}
 										className="mt-8 mb-16"
-									/>
-								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-4 gap-8">
-									<Field
-										label="Trạng thái"
-										name="inactive"
-										value={initial.inactive}
-										component={CheckboxAntd}
-										className="mt-8 mb-16"
-									/>
+									/>											
 									<Field
 										value={initial.isWeb}
-										label="Web"
+										label="For Web"
 										name="isWeb"
 										component={CheckboxAntd}
 										className="mt-8 mb-16"
+										top="20px"
 									/>
 									<Field
-										label="Mobile"
+										label="For Mobile"
 										value={initial.isMobile}
 										name="isMobile"
 										component={CheckboxAntd}
 										className="mt-8 mb-16"
+										top="20px"
+									/>
+									<Field
+										label="Inactive"
+										name="inactive"
+										value={initial.inactive}
+										component={CheckboxAntd}
+										className="mt-8 mb-16"
+										top="20px"
 									/>
 								</div>
 							</div>
@@ -170,7 +173,7 @@ export default function FormCustomMenu({
 							) : (
 								<>
 									<Button variant="contained" type="submit" color="primary">
-										{initial.menuID !== '0' ? 'Chỉnh sửa' : 'Thêm mới'}
+										{initial.menuID !== '0' ? 'Cập nhật' : 'Tạo mới'}
 									</Button>
 									<Button
 										onClick={handleCloseFormMenu}

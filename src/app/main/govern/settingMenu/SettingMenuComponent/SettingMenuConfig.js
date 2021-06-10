@@ -1,43 +1,43 @@
 export const column = [
 	{
 		id: 'menuName',
-		lable: 'Tên menu',
+		lable: 'Menu Name',
 		align: 'left',
 		sort: true
 	},
 	{
 		id: 'MenuType',
-		lable: 'Loại menu',
+		lable: 'Menu Type',
 		align: 'left',
 		sort: true
 	},
 	{
 		id: 'url',
-		lable: 'Đường dẫn',
+		lable: 'Url/ Action',
 		align: 'left',
 		sort: true
 	},
 	{
 		id: 'Inactive',
-		lable: 'Trạng thái',
+		lable: 'Inactive',
 		align: 'left',
 		sort: true
 	},
 	{
 		id: 'isWeb',
-		lable: 'Web',
+		lable: 'For Web',
 		align: 'left',
 		sort: true
 	},
 	{
 		id: 'isMobile',
-		lable: 'Di động',
+		lable: 'For Mobile',
 		align: 'left',
 		sort: true
 	},
 	{
 		id: 'STT',
-		lable: 'Thứ tự ',
+		lable: 'Order',
 		align: 'left',
 		sort: true
 	}
