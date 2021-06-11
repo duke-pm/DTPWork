@@ -6,12 +6,12 @@ import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import FuseLoading from '@fuse/core/FuseLoading';
 import image from '@fuse/assets/group.png';
+import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import FormCustomCorrupt from './FormCorrupt';
 import { PossessionContext } from '../PossessionContext';
 import * as actions from '../_redux/possesionActions';
 import TableHeaderCorrupt from './Component/TableHeaderCorrupt';
 import TableBodyCorrupt from './Component/TableBodyCorrupt';
-import { useStyles } from '../PossessionAll/StyleCustomAll';
 import ActionComponent from './Component/ActionComponentFilter';
 
 export default function PossessionCorrupt(props) {
@@ -73,7 +73,7 @@ export default function PossessionCorrupt(props) {
 	useEffect(() => {
 		dispatch(actions.fetchPossesionAll(4));
 	}, [dispatch]);
-	const classes = useStyles(props);
+	const classes = DtpCustomStyles(props);
 	if (listloading) {
 		return <FuseLoading />;
 	}

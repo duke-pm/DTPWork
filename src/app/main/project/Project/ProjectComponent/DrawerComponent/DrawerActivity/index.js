@@ -1,7 +1,7 @@
 import { Button, Divider } from '@material-ui/core';
 import { Avatar, Input, Empty } from 'antd';
 import React, { useState, useRef, useEffect } from 'react';
-import PerfectScrollbar from 'react-perfect-scrollbar';
+import * as moment from 'moment';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import { sliceString } from '@fuse/core/DtpConfig';
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
@@ -28,16 +28,17 @@ export default function DrawerActivity() {
 	}, [entitiesView.activities]);
 	function scrollToBottom() {
 		chatRef.current.scrollTop = chatRef.current.scrollHeight;
-		console.log(chatRef.current.scrollTop);
 	}
 	return (
 		<div className="flex flex-col">
 			<div className="flex flex-row justify-between mt-16">
-				<p className="text-base font-normal"> June 8, 2021 </p>
-				<p> Show activities with comments only </p>
+				<p className="text-base font-normal">
+					{' '}
+					Updated at {moment(entitiesView && entitiesView.detail.lUpdDate).format('DD/MM/YYYY')}{' '}
+				</p>
 			</div>
 			<Divider />
-			<div style={{ height: '250px' }}>
+			<div style={{ height: '260px' }}>
 				<FuseScrollbars ref={chatRef} className="flex-col overflow-y-auto max-h-256 ">
 					<FuseAnimateGroup
 						enter={{

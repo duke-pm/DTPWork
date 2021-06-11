@@ -3,13 +3,8 @@ import React from 'react';
 import CloseIcon from '@material-ui/icons/Close';
 import { Typography } from 'antd';
 import { useSelector, shallowEqual } from 'react-redux';
+import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import InformationProceeUseAsset from './InformationProceeUseAsset';
-
-const useStyles = makeStyles({
-	scrollPaper: {
-		alignItems: 'baseline' // default center
-	}
-});
 
 export default function ProcessingUseAsset({ openHistory, setOpenHistory }) {
 	const { entitiesEdit, actionLoading } = useSelector(
@@ -19,7 +14,7 @@ export default function ProcessingUseAsset({ openHistory, setOpenHistory }) {
 		}),
 		shallowEqual
 	);
-	const classes = useStyles();
+	const classes = DtpCustomStyles();
 	const handleClose = () => setOpenHistory(false);
 	return (
 		<Dialog

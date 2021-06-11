@@ -23,7 +23,7 @@ function UserMenu(props) {
 	const userMenuClose = () => {
 		setUserMenu(null);
 	};
-	const handleOpenForm = () => setFormChange(true);
+	// const handleOpenForm = () => setFormChange(true);
 	const handlelogoutUser = () => {
 		dispatch(logoutUser());
 	};
@@ -55,7 +55,7 @@ function UserMenu(props) {
 				onClose={userMenuClose}
 				anchorOrigin={{
 					vertical: 'bottom',
-					horizontal: 'center',
+					horizontal: 'center'
 				}}
 				transformOrigin={{
 					vertical: 'top',
@@ -72,12 +72,12 @@ function UserMenu(props) {
 						</ListItemIcon>
 						<ListItemText primary="Đăng xuất" />
 					</MenuItem>
-					<MenuItem onClick={handleOpenForm} role="button">
+					{/* <MenuItem onClick={handleOpenForm} role="button">
 						<ListItemIcon className="min-w-40">
 							<Icon>cached</Icon>
 						</ListItemIcon>
 						<ListItemText primary="Đổi mật khẩu" />
-					</MenuItem>
+					</MenuItem> */}
 				</>
 			</Popover>
 		</>

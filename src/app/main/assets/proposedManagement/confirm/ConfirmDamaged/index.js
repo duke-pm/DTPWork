@@ -7,10 +7,10 @@ import FuseLoading from '@fuse/core/FuseLoading';
 import Panigation from '@fuse/core/FusePanigate';
 import { Spin } from 'antd';
 import image from '@fuse/assets/group.png';
+import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import { ConfirmContext } from '../ConfirmContext';
 import TableBodyDamaged from './DamagedComponets/TableBodyDamaged';
 import TableHeaderDamaged from './DamagedComponets/TableHeaderDamaged';
-import { useStyles } from './StyleCustomAll';
 import * as action from '../../_redux/confirmAction';
 import ActionComponent from './DamagedComponets/FilterActionComponent';
 
@@ -33,7 +33,7 @@ export default function ConfirmDamaged(props) {
 	} = ConfirmContextDamage;
 	const { currentState } = useSelector(state => ({ currentState: state.confirm }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;
-	const classes = useStyles(props);
+	const classes = DtpCustomStyles(props);
 	const dispatch = useDispatch();
 	const handleOpenFormEdit = items => {
 		setFormControl(true);

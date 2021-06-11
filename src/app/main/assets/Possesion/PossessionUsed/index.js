@@ -8,18 +8,18 @@ import FuseAnimate from '@fuse/core/FuseAnimate';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import FuseLoading from '@fuse/core/FuseLoading';
 import { Spin } from 'antd';
+import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import * as actions from '../_redux/possesionActions';
 import FormCustomUsed from './FormCustomUsed';
 import { PossessionContext } from '../PossessionContext';
 import ActionComponent from './Component/ActionFliterComponent';
-import { useStyles } from './StyleCustomAll';
 import TableHeaderUsed from './Component/TableHeaderUsed';
 import TableBodyUsed from './Component/TableBodyUsed';
 
 export default function PossessionUsed(props) {
 	const dispatch = useDispatch();
 	const [open, setOpen] = React.useState(false);
-	const classes = useStyles(props);
+	const classes = DtpCustomStyles(props);
 	const possessionContext = useContext(PossessionContext);
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;

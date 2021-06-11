@@ -125,7 +125,7 @@ function TableProject(props) {
 			title: 'Status',
 			dataIndex: 'status',
 			key: 'status',
-			width: '12%',
+			width: '11%',
 			render: (_, item) => (
 				<Dropdown
 					disabled={!item.isUpdated}

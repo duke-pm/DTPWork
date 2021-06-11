@@ -11,12 +11,12 @@ import * as moment from 'moment';
 import { Link } from 'react-router-dom';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
+import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import { ConfirmContext } from '../../ConfirmContext';
 import * as actions from '../../../_redux/confirmAction';
-import { useStyles } from '../StyleCustomAll';
 
 export default function ActionComponent({ actionLoading }) {
-	const classes = useStyles();
+	const classes = DtpCustomStyles();
 	const dispatch = useDispatch();
 	const confirmConext = useContext(ConfirmContext);
 	const {

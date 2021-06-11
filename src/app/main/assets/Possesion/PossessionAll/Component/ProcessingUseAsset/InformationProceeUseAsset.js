@@ -6,14 +6,14 @@ import image from '@fuse/assets/group.png';
 import { TableContainer, Paper, Table } from '@material-ui/core';
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import { Spin } from 'antd';
+import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import * as actions from '../../../_redux/possesionActions';
 import TableHeaderProcessing from './TableProcessingUseAsset/TableHeaderProcessing';
 import TableBodyProcessing from './TableProcessingUseAsset/TableBodyProcessing';
-import { useStyles } from '../../StyleCustomAll';
 
 export default function InformationProceeUseAsset({ entitiesEdit, actionLoading }) {
 	const dispatch = useDispatch();
-	const classes = useStyles();
+	const classes = DtpCustomStyles();
 	const [history, setHistory] = useState([]);
 	useEffect(() => {
 		dispatch(actions.getAssetHistory(entitiesEdit.assetID)).then(data => {

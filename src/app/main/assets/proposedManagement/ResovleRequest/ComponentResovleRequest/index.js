@@ -8,11 +8,11 @@ import FuseLoading from '@fuse/core/FuseLoading';
 import image from '@fuse/assets/group.png';
 import { Spin } from 'antd';
 import FuseAnimate from '@fuse/core/FuseAnimate';
+import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import HeaderTableResovleRequest from './HeaderTableResovleRequest';
 import { ResovleContext } from '../ResovleRequestContext';
 import * as action from '../../_redux/confirmAction';
 import BodyTableResovle from './BodyTableAllocation';
-import { useStyles } from './StyleCustomAll';
 import ActionComponent from './FilterActionComponent';
 
 export default function RequestResovelTable(props) {
@@ -36,7 +36,7 @@ export default function RequestResovelTable(props) {
 	} = ResovleContextHandle;
 	const { currentState } = useSelector(state => ({ currentState: state.confirm }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;
-	const classes = useStyles(props);
+	const classes = DtpCustomStyles(props);
 	useEffect(() => {
 		dispatch(action.fetchDataConfirms(0, 0, true));
 	}, [dispatch]);

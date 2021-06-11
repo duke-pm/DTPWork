@@ -6,10 +6,10 @@ import FuseLoading from '@fuse/core/FuseLoading';
 import Panigation from '@fuse/core/FusePanigate';
 import { Spin } from 'antd';
 import FuseAnimate from '@fuse/core/FuseAnimate';
+import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import SettingMenuContentHeader from './SettingMenuContentHeader';
 import * as actions from '../../_redux/menuActions';
 import SettingMenuContentBody from './SettingMenuContentBody';
-import { useStyles } from '../../StyleCustomAll';
 import { SettingmenuContext } from '../../SettingMenuContext';
 import SettingMenuHeader from '../SettingMenuHeader';
 
@@ -53,7 +53,7 @@ export default function SettingMenuContent({ handleOpenSettingMenu, setOpenSetti
 			id
 		});
 	};
-	const classes = useStyles();
+	const classes = DtpCustomStyles();
 	if (listLoading) {
 		return <FuseLoading />;
 	}

@@ -7,13 +7,13 @@ import image from '@fuse/assets/group.png';
 import FuseLoading from '@fuse/core/FuseLoading';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import FormCustomUnused from './FormCustomUnused';
 import { PossessionContext } from '../PossessionContext';
 import ActionComponent from './Component/ActionComponent';
 import * as actions from '../_redux/possesionActions';
 import PossessionAll from '../PossessionAll/FormCustomAll';
 import TableHeaderUnUsed from './Component/TableHeaderUnUsed';
-import { useStyles } from './StyleCustomAll';
 import TableBodyUnUsed from './Component/TableBodyUnUsed';
 
 function PossessionUnused(props) {
@@ -25,7 +25,7 @@ function PossessionUnused(props) {
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;
 	const { rowPage, setRowPage, page, setPage, search, sort, setSort } = possessionContext;
-	const classes = useStyles(props);
+	const classes = DtpCustomStyles(props);
 	useEffect(() => {
 		dispatch(actions.fetchPossesionAll(1));
 	}, [dispatch]);

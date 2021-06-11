@@ -6,10 +6,10 @@ import image from '@fuse/assets/group.png';
 import Panigation from '@fuse/core/FusePanigate';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import FuseLoading from '@fuse/core/FuseLoading';
+import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import { PossessionContext } from '../PossessionContext';
 import ActionComponent from './Component/ActionComponent';
 import * as actions from '../_redux/possesionActions';
-import { useStyles } from './StyleCustomAll';
 import TableBodyRepair from './Component/TableBodyRepair';
 import TableHeaderRepair from './Component/TableHeaderRepair';
 
@@ -68,7 +68,7 @@ export default function PossessionRepair(props) {
 	useEffect(() => {
 		dispatch(actions.fetchPossesionAll(3));
 	}, [dispatch]);
-	const classes = useStyles(props);
+	const classes = DtpCustomStyles(props);
 	if (listloading) {
 		return <FuseLoading />;
 	}

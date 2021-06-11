@@ -9,12 +9,12 @@ import { useDispatch } from 'react-redux';
 import { DatePicker, Select } from 'antd';
 import * as moment from 'moment';
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
+import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import { ResovleContext } from '../ResovleRequestContext';
 import * as actions from '../../_redux/confirmAction';
-import { useStyles } from './StyleCustomAll';
 
 export default function ActionComponent({ actionLoading }) {
-	const classes = useStyles();
+	const classes = DtpCustomStyles();
 	const dispatch = useDispatch();
 	const confirmConext = useContext(ResovleContext);
 	const {

@@ -7,19 +7,19 @@ import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import FuseLoading from '@fuse/core/FuseLoading';
 import image from '@fuse/assets/group.png';
 import { Spin } from 'antd';
+import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import PossessionAll from './FormCustomAll';
 import ActionComponent from './Component/ActionComponent/ActionFilterComponent';
 import * as actions from '../_redux/possesionActions';
 import { PossessionContext } from '../PossessionContext';
 import TableHeader from './Component/TableHeader';
 import TableBodyAssetAll from './Component/TableBody';
-import { useStyles } from './StyleCustomAll';
 import ProcessingUseAsset from './Component/ProcessingUseAsset';
 
 function PossessionAllPage(props) {
 	const { value } = props;
 	const dispatch = useDispatch();
-	const classes = useStyles(props);
+	const classes = DtpCustomStyles(props);
 	const possesionContext = useContext(PossessionContext);
 	const { rowPage, setRowPage, page, setPage, search, sort, setSort } = possesionContext;
 	const [open, setOpen] = useState(false);

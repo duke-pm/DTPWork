@@ -8,11 +8,11 @@ import Panigation from '@fuse/core/FusePanigate';
 import { Spin } from 'antd';
 import image from '@fuse/assets/group.png';
 import { ConfirmContext } from '../ConfirmContext';
-import { useStyles } from './StyleCustomAll';
 import * as action from '../../_redux/confirmAction';
 import TableBodyLose from './Components/TableBodyLose';
 import TableHeader from './Components/TableHeader';
 import ActionComponent from './Components/FilterActionComponent';
+import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 // import ActionComponent from './DamagedComponets/FilterActionComponent';
 
 export default function ConfirmLose(props) {
@@ -34,7 +34,7 @@ export default function ConfirmLose(props) {
 	} = ConfirmContextDamage;
 	const { currentState } = useSelector(state => ({ currentState: state.confirm }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;
-	const classes = useStyles(props);
+	const classes = DtpCustomStyles(props);
 	const dispatch = useDispatch();
 	const handleOpenFormEdit = items => {
 		dispatch(action.fetchDataConfirm(items));

@@ -5,17 +5,18 @@ import React, { useEffect, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getInformationCompany } from 'app/main/assets/Possesion/_redux/possesionActions';
+import { Spin } from 'antd';
 import ProjectComponent from './ProjectComponent';
-import FormProject from './ProjectComponent/FormProject';
 import ProjectContextProvider from './ProjectContext';
 import { fetchProjectDetail, fetchOwner, fetchAllSubTask } from '../_redux/_projectActions';
 
 export default function Project() {
-	const { currentState, projectAll, project } = useSelector(
+	const { currentState, projectAll, project, listLoading } = useSelector(
 		state => ({
 			currentState: state.possesion.entitiesInformation,
 			projectAll: state.project.entitiesAll,
-			project: state.project.entitiesDetail
+			project: state.project.entitiesDetail,
+			listLoading: state.project.listLoading
 		}),
 		shallowEqual
 	);
@@ -111,7 +112,8 @@ export default function Project() {
 				contentToolbar={
 					<div className="flex  items-center px-16 flex-1">
 						<Typography component="span" className="font-bold flex text-sm	">
-							Project plan of {project.projectName}
+							Project plan of{' '}
+							{listLoading ? <Spin style={{ marginLeft: '20px' }} /> : project.projectName}
 						</Typography>
 					</div>
 				}

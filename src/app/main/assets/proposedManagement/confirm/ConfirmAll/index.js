@@ -7,12 +7,12 @@ import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import FuseLoading from '@fuse/core/FuseLoading';
 import image from '@fuse/assets/group.png';
 import { Spin } from 'antd';
+import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import HeaderTableAllocation from './Components/HeaderTableAllocation';
 import BodyTableAllocation from './Components/BodyTableAllocation';
 import { ConfirmContext } from '../ConfirmContext';
 import ActionComponent from './Components/FilterActionComponent';
 import * as action from '../../_redux/confirmAction';
-import { useStyles } from './StyleCustomAll';
 import HistoryAllocation from './Components/HistoryAllocation';
 
 export default function ConfrimAllocation(props) {
@@ -35,7 +35,7 @@ export default function ConfrimAllocation(props) {
 	} = AllocationContext;
 	const { currentState } = useSelector(state => ({ currentState: state.confirm }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;
-	const classes = useStyles(props);
+	const classes = DtpCustomStyles(props);
 	const handleOpenHistory = () => setHistory(true);
 	const handleCloseHistory = () => setHistory(false);
 	const handleOpenTimeLine = item => {
