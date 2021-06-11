@@ -177,7 +177,7 @@ function TableProject(props) {
 			)
 		},
 		{
-			title: 'Assigne',
+			title: 'Assign',
 			dataIndex: 'assignee',
 			key: 'assignee',
 			width: '12%',

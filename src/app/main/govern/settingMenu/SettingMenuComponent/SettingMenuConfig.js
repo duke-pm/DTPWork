@@ -3,8 +3,8 @@ export const column = [
 		id: 'menuName',
 		lable: 'Menu Name',
 		align: 'left',
-		sort: true,
-		width: 100
+		sort: true
+		// width: 0
 	},
 	{
 		id: 'MenuType',
@@ -18,7 +18,7 @@ export const column = [
 		lable: 'Url/ Action',
 		align: 'left',
 		sort: true
-		// width: 100
+		// width: 80
 	},
 	{
 		id: 'Inactive',
