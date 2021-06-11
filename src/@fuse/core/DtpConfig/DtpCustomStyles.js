@@ -19,6 +19,25 @@ const DtpCustomStyles = makeStyles(theme => ({
 		minWidth: 2040,
 		overflowX: 'auto'
 	},
+	tablePay: {
+		minWidth: 1400,
+		overflowX: 'auto'
+	},
+	tableGoverListUser: {
+		minWidth: 1000,
+		overflowX: 'auto'
+	},
+	tableGoverSetting: {
+		minWidth: 1000,
+		overflowX: 'auto'
+	},
+	tableGoverGroup: {
+		minWidth: 1000,
+		overflowX: 'auto'
+	},
+	tableGoverListUserCell: {
+		width: 120
+	},
 	tableHistroy: {
 		minWidth: 1504,
 		overflowX: 'auto'
@@ -42,6 +61,12 @@ const DtpCustomStyles = makeStyles(theme => ({
 		alignItems: 'start',
 		marginTop: 80,
 		justifyContent: 'center'
+	},
+	widthFont: {
+		width: '13rem'
+	},
+	widthContent: {
+		width: '60%'
 	},
 	paper: {
 		backgroundColor: theme.palette.background.paper,

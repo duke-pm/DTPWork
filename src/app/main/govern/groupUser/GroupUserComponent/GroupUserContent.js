@@ -6,7 +6,7 @@ import image from '@fuse/assets/group.png';
 import { Spin } from 'antd';
 import Panigation from '@fuse/core/FusePanigate';
 import FuseLoading from '@fuse/core/FuseLoading';
-import { useStyles } from '../StyleGroupUser';
+import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import GroupUserContentBody from './GroupUserContentBody';
 import GroupUserHeader from './GroupUserHeader';
 import FormGroupUser from './FormGroupUser';
@@ -15,7 +15,7 @@ import * as actions from '../_reduxGroupUser/groupUserActions';
 import { GroupUserContext } from '../GroupUserContext';
 
 export default function GroupUserContent() {
-	const classes = useStyles();
+	const classes = DtpCustomStyles();
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(actions.fetchsGroupUser());
@@ -70,7 +70,7 @@ export default function GroupUserContent() {
 				<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
 					<TableContainer className={`${classes.TableContainer} flex flex-1`}>
 						<Paper className={classes.rootPaper}>
-							<Table className={`${classes.table}`} stickyHeader>
+							<Table className={`${classes.tableGoverGroup}`} stickyHeader>
 								<GroupUserHeader createSortHandler={createSortHandler} sort={sort} />
 								<GroupUserContentBody
 									handleEditGroupUserDelete={handleEditGroupUserDelete}

@@ -7,12 +7,12 @@ import FuseLoading from '@fuse/core/FuseLoading';
 import Panigation from '@fuse/core/FusePanigate';
 import { Spin } from 'antd';
 import image from '@fuse/assets/group.png';
+import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import { ConfirmContext } from '../ConfirmContext';
 import * as action from '../../_redux/confirmAction';
 import TableBodyLose from './Components/TableBodyLose';
 import TableHeader from './Components/TableHeader';
 import ActionComponent from './Components/FilterActionComponent';
-import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 // import ActionComponent from './DamagedComponets/FilterActionComponent';
 
 export default function ConfirmLose(props) {
@@ -110,7 +110,7 @@ export default function ConfirmLose(props) {
 					<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
 						<TableContainer className={`${classes.TableContainer} flex flex-1`}>
 							<Paper className={classes.rootPaper}>
-								<Table className={`${classes.table}`} stickyHeader>
+								<Table className={`${classes.tableGoverGroup}`} stickyHeader>
 									<TableHeader createSortHandler={createSortHandler} sort={sort} />
 									<TableBodyLose
 										handleOpenTimeLine={handleOpenTimeLine}

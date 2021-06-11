@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import FuseAnimate from '@fuse/core/FuseAnimate';
-import { Divider, Link } from '@material-ui/core';
-import { Table, Badge, Dropdown, Menu, Button } from 'antd';
+import { Divider } from '@material-ui/core';
+import { Dropdown, Menu, Badge } from 'antd';
 import React from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import * as moment from 'moment';

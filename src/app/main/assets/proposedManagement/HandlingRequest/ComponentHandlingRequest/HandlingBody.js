@@ -13,18 +13,11 @@ import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { getDataUserLocalStorage, notificationConfig } from '@fuse/core/DtpConfig';
 import { useHistory } from 'react-router-dom';
 import FuseAnimate from '@fuse/core/FuseAnimate';
+import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import ContentFormReport from './ContentFormReport';
 import * as actions from '../../_redux/confirmAction';
 import { validateSchema } from './HandlingRequestConfig';
 
-const useStyles = makeStyles(theme => ({
-	widthFont: {
-		width: '13rem'
-	},
-	widthContent: {
-		width: '60%'
-	}
-}));
 export default function HandlingBody({ dataAssets, setDataAssets, value }) {
 	const history = useHistory();
 	const [disable, setDisable] = useState(true);
@@ -50,7 +43,7 @@ export default function HandlingBody({ dataAssets, setDataAssets, value }) {
 		}),
 		shallowEqual
 	);
-	const classes = useStyles();
+	const classes = DtpCustomStyles();
 	const handleChangeAssets = value => {
 		setInitialState({
 			...initialstate,

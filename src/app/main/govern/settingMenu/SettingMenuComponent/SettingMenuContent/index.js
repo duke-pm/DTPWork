@@ -65,7 +65,7 @@ export default function SettingMenuContent({ handleOpenSettingMenu, setOpenSetti
 					<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
 						<TableContainer className={`${classes.TableContainer} flex flex-1`}>
 							<Paper className={classes.rootPaper}>
-								<Table className={`${classes.table}`} stickyHeader>
+								<Table className={`${classes.tableGoverSetting}`} stickyHeader>
 									<SettingMenuContentHeader createSortHandler={createSortHandler} sort={sort} />
 									<SettingMenuContentBody
 										handleDeleteMenuSetting={handleDeleteMenuSetting}

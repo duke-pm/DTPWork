@@ -16,7 +16,8 @@ export const rowsConfig = [
 		id: 'RequestID',
 		align: 'left',
 		label: 'Số yêu cầu',
-		sort: true
+		sort: true,
+		width: 20
 	},
 	{
 		id: 'FullName',
@@ -40,12 +41,14 @@ export const rowsConfig = [
 		id: 'RequestDate',
 		align: 'left',
 		label: 'Ngày yêu cầu',
-		sort: true
+		sort: true,
+		width: 60
 	},
 	{
 		id: 'statusID',
 		align: 'left',
 		label: 'Trạng thái',
-		sort: true
+		sort: true,
+		width: 20
 	}
 ];

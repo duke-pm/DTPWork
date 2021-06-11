@@ -1,8 +1,7 @@
 import { Badge, Drawer } from 'antd';
 import React, { useContext, useState } from 'react';
 import { Tabs, Tab, Box, makeStyles } from '@material-ui/core';
-import { getDataUserLocalStorage } from '@fuse/core/DtpConfig';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 import { CloseOutlined } from '@material-ui/icons';
 import { ProjectContext } from '../../ProjectContext';
 import DrawerActivity from './DrawerActivity';

@@ -51,7 +51,7 @@ export default function FormCustomMenu({
 					<Form>
 						<DialogContent dividers>
 							<div className="px-16 sm:px-24">
-								<div className={`grid grid-cols-1 ${!entitiesEdit && 'sm:grid-cols-2'} gap-8`}>
+								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 									<Field
 										label="Menu Name"
 										name="menuName"
@@ -60,29 +60,29 @@ export default function FormCustomMenu({
 										component={AntInput}
 										className="mt-8 mb-16"
 									/>
-									{!entitiesEdit && (
-										<Field
-											label="Menu Type"
-											name="typeID"
-											hasFeedback
-											options={[
-												{
-													label: 'Group',
-													value: 1
-												},
-												{
-													label: 'Collapse',
-													value: 2
-												},
-												{
-													label: 'Item',
-													value: 3
-												}
-											]}
-											component={SelectAntd}
-											className="mt-8 mb-16"
-										/>
-									)}
+									{/* {!entitiesEdit && ( */}
+									<Field
+										label="Menu Type"
+										name="typeID"
+										hasFeedback
+										options={[
+											{
+												label: 'Group',
+												value: 1
+											},
+											{
+												label: 'Collapse',
+												value: 2
+											},
+											{
+												label: 'Item',
+												value: 3
+											}
+										]}
+										component={SelectAntd}
+										className="mt-8 mb-16"
+									/>
+									{/* )} */}
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 									<Field
@@ -130,7 +130,7 @@ export default function FormCustomMenu({
 										type="text"
 										component={AntInput}
 										className="mt-8 mb-16"
-									/>									
+									/>
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-4 gap-8">
 									<Field
@@ -139,7 +139,7 @@ export default function FormCustomMenu({
 										type="number"
 										component={AntInput}
 										className="mt-8 mb-16"
-									/>											
+									/>
 									<Field
 										value={initial.isWeb}
 										label="For Web"

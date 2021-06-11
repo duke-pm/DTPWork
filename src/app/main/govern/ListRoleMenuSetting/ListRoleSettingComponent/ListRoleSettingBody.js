@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import image from '@fuse/assets/group.png';
 import __ from 'lodash';
 import { findIndexMultiple, findIndexMultipleAsset } from '@fuse/core/DtpConfig';
+import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 
 export default function ListRoleSettingBody({ entities, newData, setNewData, actionLoading }) {
 	// const [checkStrictly, setCheckStrictly] = useState(false);
@@ -92,6 +93,22 @@ export default function ListRoleSettingBody({ entities, newData, setNewData, act
 				onExpandedRowsChange={onSelectedRowKeysChange}
 				expandedRowKeys={selectedRowKeys}
 				childrenColumnName="lstPermissionItem"
+				expandable={{
+					expandRowByClick: false,
+					expandIconAsCell: false,
+					expandIcon: ({ expanded, onExpand, record, expandable }) =>
+						expandable.length === 0 ? null : expanded ? (
+							<CaretDownOutlined
+								onClick={e => onExpand(record, e)}
+								style={{ marginRight: '8px !important', fontSize: '10pt' }}
+							/>
+						) : (
+							<CaretUpOutlined
+								onClick={e => onExpand(record, e)}
+								style={{ marginRight: '8px !important', fontSize: '10pt' }}
+							/>
+						)
+				}}
 				// rowSelection={{ ...rowSelection, checkStrictly }}
 				dataSource={newData}
 			/>

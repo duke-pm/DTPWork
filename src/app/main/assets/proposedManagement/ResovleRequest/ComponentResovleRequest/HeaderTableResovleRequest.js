@@ -7,7 +7,11 @@ export default function HeaderTableResovleRequest({ sort, createSortHandler }) {
 	return (
 		<TableHead>
 			<TableRow>
-				<TableCell className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans" align="left">
+				<TableCell
+					style={{ width: 20 }}
+					className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans"
+					align="left"
+				>
 					<IconButton aria-label="delete">
 						<AppsIcon />
 					</IconButton>
@@ -17,6 +21,7 @@ export default function HeaderTableResovleRequest({ sort, createSortHandler }) {
 						key={row.id}
 						className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
 						align={row.align}
+						style={{ width: row.width }}
 					>
 						{row.sort ? (
 							<TableSortLabel
