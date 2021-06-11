@@ -212,14 +212,20 @@ function TableProject(props) {
 				childrenColumnName="lstTaskItem"
 				className="virtual-table"
 				expandable={{
-					expandRowByClick: true,
+					expandRowByClick: false,
 					expandIconAsCell: false,
 					expandIconColumnIndex: 1,
 					expandIcon: ({ expanded, onExpand, record, expandable }) =>
 						expandable.length === 0 ? null : expanded ? (
-							<CaretDownOutlined style={{ marginRight: '8px !important', fontSize: '10pt' }} />
+							<CaretDownOutlined
+								onClick={e => onExpand(record, e)}
+								style={{ marginRight: '8px !important', fontSize: '10pt' }}
+							/>
 						) : (
-							<CaretUpOutlined style={{ marginRight: '8px !important', fontSize: '10pt' }} />
+							<CaretUpOutlined
+								onClick={e => onExpand(record, e)}
+								style={{ marginRight: '8px !important', fontSize: '10pt' }}
+							/>
 						)
 				}}
 				scroll={{ x: 1090, y: 410 }}

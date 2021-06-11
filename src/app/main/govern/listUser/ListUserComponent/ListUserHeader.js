@@ -7,7 +7,11 @@ export default function ListUserHeader({ sort, createSortHandler }) {
 	return (
 		<TableHead>
 			<TableRow>
-				<TableCell className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans" align="left">
+				<TableCell
+					style={{ width: 20 }}
+					className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans"
+					align="left"
+				>
 					<IconButton aria-label="delete">
 						<AppsIcon />
 					</IconButton>
@@ -18,6 +22,7 @@ export default function ListUserHeader({ sort, createSortHandler }) {
 						key={item.id}
 						className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
 						align={item.align}
+						style={{ width: item.width }}
 					>
 						{item.sort ? (
 							<TableSortLabel

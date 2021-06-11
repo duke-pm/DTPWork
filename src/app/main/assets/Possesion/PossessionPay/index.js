@@ -6,11 +6,11 @@ import image from '@fuse/assets/group.png';
 import Panigation from '@fuse/core/FusePanigate';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import FuseLoading from '@fuse/core/FuseLoading';
+import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import { PossessionContext } from '../PossessionContext';
 import * as actions from '../_redux/possesionActions';
 import TableHeaderPay from './Component/TableHeaderPay';
 import TableBodyPay from './Component/TableBodyPay';
-import { useStyles } from './StyleCustomPay';
 import ActionComponent from './Component/ActionFliterComponent';
 
 export default function PossessionPay(props) {
@@ -47,7 +47,7 @@ export default function PossessionPay(props) {
 			id
 		});
 	};
-	const classes = useStyles(props);
+	const classes = DtpCustomStyles(props);
 	if (listloading) {
 		return <FuseLoading />;
 	}
@@ -61,7 +61,7 @@ export default function PossessionPay(props) {
 					<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
 						<TableContainer className="flex flex-1">
 							<Paper className={classes.rootPaper}>
-								<Table className={classes.table} stickyHeader>
+								<Table className={classes.tablePay} stickyHeader>
 									<TableHeaderPay createSortHandler={createSortHandler} sort={sort} />
 									<TableBodyPay entities={entities} />
 								</Table>

@@ -5,7 +5,7 @@ import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import image from '@fuse/assets/group.png';
 import { Spin } from 'antd';
 import Panigation from '@fuse/core/FusePanigate';
-import { useStyles } from '../StyleGroupUser';
+import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import ListUserContentBody from './ListUserContentBody';
 import ListUserHeader from './ListUserHeader';
 import FormListUser from './FormListUser';
@@ -14,7 +14,7 @@ import { ListUserContext } from '../ListUserContext';
 import * as actions from '../_reduxListUser/listUserActions';
 
 export default function ListUserContent() {
-	const classes = useStyles();
+	const classes = DtpCustomStyles();
 	const dispatch = useDispatch();
 	const useListUserContext = useContext(ListUserContext);
 	const { page, rowPage, setPage, sort, setRowPage, setSort } = useListUserContext;
@@ -63,7 +63,7 @@ export default function ListUserContent() {
 				<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
 					<TableContainer className={`${classes.TableContainer} flex flex-1`}>
 						<Paper className={classes.rootPaper}>
-							<Table className={`${classes.table}`} stickyHeader>
+							<Table className={`${classes.tableGoverListUser}`} stickyHeader>
 								<ListUserHeader createSortHandler={createSortHandler} sort={sort} />
 								<ListUserContentBody
 									handleDeleteListUser={handleDeleteListUser}

@@ -5,13 +5,13 @@ import React, { useState } from 'react';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { notificationConfig } from '@fuse/core/DtpConfig';
 import FuseLoading from '@fuse/core/FuseLoading';
-import { useStyles } from '../StyleGroupUser';
+import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import ListRoleSettingBody from './ListRoleSettingBody';
 import ActionListRoleSetting from './ActionListRoleSetting';
 import * as actions from '../_reduxListRoleMenu/listRoleMenuSettingActions';
 
 export default function ListRoleSettingContent() {
-	const classes = useStyles();
+	const classes = DtpCustomStyles();
 	const dispatch = useDispatch();
 	const [userID, setUserID] = useState(null);
 	const [UserOption, setUserOption] = useState([]);
