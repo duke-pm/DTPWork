@@ -21,11 +21,11 @@ export default function ListRoleSettingBody({ entities, newData, setNewData, act
 	};
 	const column = [
 		{
-			title: 'Menu name',
+			title: 'Menu Name',
 			dataIndex: 'menuName'
 		},
 		{
-			title: 'Access',
+			title: 'Full',
 			dataIndex: 'isAccess',
 			render: (text, record, index) => (
 				<>
@@ -47,7 +47,7 @@ export default function ListRoleSettingBody({ entities, newData, setNewData, act
 			)
 		},
 		{
-			title: 'write',
+			title: 'Write',
 			dataIndex: 'isWrite',
 			render: (text, record, index) => (
 				<>

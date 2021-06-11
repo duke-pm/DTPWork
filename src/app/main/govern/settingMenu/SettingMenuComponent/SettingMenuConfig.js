@@ -4,7 +4,7 @@ export const column = [
 		lable: 'Menu Name',
 		align: 'left',
 		sort: true,
-		width: 100
+		//width: 100
 	},
 	{
 		id: 'MenuType',
