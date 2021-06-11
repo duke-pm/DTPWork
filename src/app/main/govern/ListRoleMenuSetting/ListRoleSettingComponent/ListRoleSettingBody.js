@@ -5,6 +5,7 @@ import image from '@fuse/assets/group.png';
 import __ from 'lodash';
 import { findIndexMultiple, findIndexMultipleAsset } from '@fuse/core/DtpConfig';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
+import { Typography } from '@material-ui/core';
 
 export default function ListRoleSettingBody({ entities, newData, setNewData, actionLoading }) {
 	// const [checkStrictly, setCheckStrictly] = useState(false);
@@ -21,8 +22,19 @@ export default function ListRoleSettingBody({ entities, newData, setNewData, act
 	};
 	const column = [
 		{
+<<<<<<< HEAD
 			title: 'Menu Name',
 			dataIndex: 'menuName'
+=======
+			title: 'Menu name',
+			dataIndex: 'menuName',
+			render: (_, item) => (
+				<Typography style={{ marginLeft: '20px', cursor: 'default' }} component="button">
+					{' '}
+					{item.menuName}{' '}
+				</Typography>
+			)
+>>>>>>> 4d728583974c0d0fbd3656a84fa2c94fda307c93
 		},
 		{
 			title: 'Full',
@@ -86,8 +98,10 @@ export default function ListRoleSettingBody({ entities, newData, setNewData, act
 						<img className="rounded-full mx-auto" src={image} alt="" width="384" height="512" />
 					</div>
 				}
+				className="virtual-table"
 				pagination={false}
 				columns={column}
+				scroll={{ y: 410 }}
 				loading={actionLoading}
 				rowKey="menuID"
 				onExpandedRowsChange={onSelectedRowKeysChange}
@@ -96,6 +110,7 @@ export default function ListRoleSettingBody({ entities, newData, setNewData, act
 				expandable={{
 					expandRowByClick: false,
 					expandIconAsCell: false,
+					expandIconColumnIndex: 0,
 					expandIcon: ({ expanded, onExpand, record, expandable }) =>
 						expandable.length === 0 ? null : expanded ? (
 							<CaretDownOutlined
