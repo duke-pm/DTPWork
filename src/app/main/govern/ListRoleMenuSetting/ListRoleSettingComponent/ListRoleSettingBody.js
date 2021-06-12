@@ -22,7 +22,7 @@ export default function ListRoleSettingBody({ entities, newData, setNewData, act
 	};
 	const column = [
 		{
-			title: 'Menu name',
+			title: 'Menu Name',
 			dataIndex: 'menuName',
 			render: (_, item) => (
 				<Typography style={{ marginLeft: '20px', cursor: 'default' }} component="button">
@@ -32,7 +32,7 @@ export default function ListRoleSettingBody({ entities, newData, setNewData, act
 			)
 		},
 		{
-			title: 'Full',
+			title: 'Access',
 			dataIndex: 'isAccess',
 			render: (text, record, index) => (
 				<>
