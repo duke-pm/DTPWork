@@ -3,13 +3,8 @@ export const column = [
 		id: 'menuName',
 		lable: 'Menu Name',
 		align: 'left',
-<<<<<<< HEAD
-		sort: true,
-		//width: 100
-=======
 		sort: true
 		// width: 0
->>>>>>> 4d728583974c0d0fbd3656a84fa2c94fda307c93
 	},
 	{
 		id: 'MenuType',

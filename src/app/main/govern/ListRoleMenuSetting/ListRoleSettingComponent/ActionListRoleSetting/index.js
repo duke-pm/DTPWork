@@ -60,7 +60,7 @@ export default function ActionListRoleSetting({
 					</Typography>
 				</div>
 				<div className="flex flex-col sm:flex-row">
-					<Paper style={{ width: '220px' }} className="ml-16 sm:mb-0 mb-9">
+					<Paper style={{ width: '220px' }} className="sm:mb-0 mb-9">
 						<Select
 							allowClear
 							loading={!!actionLoading}
