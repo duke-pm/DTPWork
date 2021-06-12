@@ -350,7 +350,7 @@ export const updatedTaskStatus = (values, status) => dispatch => {
 		Lang: 'Vi'
 	};
 	return requestFrom
-		.taskModify(dataReq)
+		.getTaskViewDetail(dataReq)
 		.then(res => {
 			const { data } = res;
 			if (!data.isError) {

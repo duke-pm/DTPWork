@@ -117,7 +117,7 @@ export default function ActionListRoleSetting({
 					</Button>{' '}
 				</div>
 				<div>
-					<div className="flex flex-col sm:flex-row justify-end mt-16">
+					{/* <div className="flex flex-col sm:flex-row justify-end mt-16">
 						<Paper className="w-full sm:w-1/4 flex justify-between ">
 							<InputBase
 								// onKeyPress={event => {
@@ -140,7 +140,7 @@ export default function ActionListRoleSetting({
 								<SearchIcon />
 							</IconButton>
 						</Paper>
-					</div>
+					</div> */}
 				</div>
 			</FuseAnimateGroup>
 		</div>

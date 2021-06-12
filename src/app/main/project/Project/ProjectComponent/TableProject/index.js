@@ -157,7 +157,7 @@ function TableProject(props) {
 					placement="bottomLeft"
 					arrow
 				>
-					<div className="flex flex-row">
+					<div className="flex flex-row justify-between">
 						{' '}
 						<Badge
 							size="default"
