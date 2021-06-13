@@ -17,6 +17,7 @@ export default function SelectAntd({
 	hasFeedback,
 	notFoundContent,
 	readOnly,
+	position,
 	submitCount,
 	...props
 }) {
@@ -31,8 +32,8 @@ export default function SelectAntd({
 	};
 	return (
 		<>
-			<FormGroup>
-				<div className="flex flex-row">
+			<div className={`${position && 'flex flex-row  justify-between'}`}>
+				<div className={`flex flex-row ${position && 'mt-8'}`}>
 					<span> {label} </span>
 					{hasFeedback && (
 						<p style={{ marginBottom: '-20px' }} className="text-red ml-8">
@@ -42,7 +43,7 @@ export default function SelectAntd({
 					)}
 				</div>
 				<FormItem
-					style={{ width: '100%' }}
+					style={{ width: position && '80%' }}
 					rules={[{ required: true }]}
 					help={submittedError || touchedError ? hasError : false}
 					validateStatus={submittedError || touchedError ? 'error' : hasFeedback && 'success'}
@@ -68,7 +69,7 @@ export default function SelectAntd({
 						))}
 					</Select>
 				</FormItem>
-			</FormGroup>
+			</div>
 		</>
 	);
 }

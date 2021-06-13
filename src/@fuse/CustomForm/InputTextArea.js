@@ -25,7 +25,7 @@ export default function InputTextArea({
 	return (
 		<>
 			<FormGroup>
-				<label className="mb-10"> {label} </label>
+				<label> {label} </label>
 				<TextArea
 					placeholder={placeholder || ''}
 					rows={row}

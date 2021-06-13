@@ -14,6 +14,7 @@ export default function DateCustom({
 	customFeedbackLabel,
 	type,
 	readOnly,
+	position,
 	hasFeedback,
 	submitCount,
 	...props
@@ -30,8 +31,8 @@ export default function DateCustom({
 	const dateFormat = 'DD-MM-YYYY';
 	return (
 		<>
-			<FormGroup>
-				<div className="flex flex-row">
+			<div className={`${position && 'flex flex-row '}`}>
+				<div className={`flex flex-row ${position && 'mt-8'}`}>
 					<span> {label} </span>
 					{hasFeedback && (
 						<p style={{ marginBottom: '-20px' }} className="text-red ml-8">
@@ -41,6 +42,7 @@ export default function DateCustom({
 					)}
 				</div>
 				<FormItem
+					style={{ marginLeft: position && '60px' }}
 					rules={[{ required: true }]}
 					help={submittedError || touchedError ? hasError : false}
 					validateStatus={submittedError || touchedError ? 'error' : 'success'}
@@ -55,7 +57,7 @@ export default function DateCustom({
 						onChange={handleDateChange}
 					/>
 				</FormItem>
-			</FormGroup>
+			</div>
 		</>
 	);
 }

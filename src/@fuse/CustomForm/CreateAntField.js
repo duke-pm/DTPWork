@@ -18,6 +18,7 @@ const CreateAntField = AntComponent => ({
 	handleInputChange,
 	handleOnChangeBlur,
 	disabled,
+	position,
 	type,
 	readOnly,
 	notFoundContent,
@@ -42,8 +43,8 @@ const CreateAntField = AntComponent => ({
 		return handleOnChangeBlur && handleOnChangeBlur(e.target.value);
 	};
 	return (
-		<FormGroup>
-			<div className="flex flex-row">
+		<div className={`${position && 'flex flex-row  justify-between'}`}>
+			<div className={`flex flex-row ${position && 'mt-8'}`}>
 				<span> {label} </span>
 				{hasFeedback && (
 					<p style={{ marginBottom: '-20px' }} className="text-red ml-8">
@@ -54,7 +55,7 @@ const CreateAntField = AntComponent => ({
 			</div>
 			<FormItem
 				rules={[{ required: true }]}
-				style={{ width: '100%' }}
+				style={{ width: position && '80%' }}
 				help={submittedError || touchedError ? hasError : false}
 				validateStatus={submittedError || touchedError ? 'error' : 'success'}
 			>
@@ -73,7 +74,7 @@ const CreateAntField = AntComponent => ({
 					{selectOptions && selectOptions.map(name => <Option key={name}>{name}</Option>)}
 				</AntComponent>
 			</FormItem>
-		</FormGroup>
+		</div>
 	);
 };
 

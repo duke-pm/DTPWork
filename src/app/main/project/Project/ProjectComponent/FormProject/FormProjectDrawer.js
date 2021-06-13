@@ -98,15 +98,6 @@ export default function FormCustomProjectTask({
 					<Form>
 						<DialogContent>
 							<div className="px-16 sm:px-24">
-								<div className="grid grid-cols-1 gap-8 mb-16 ">
-									<Field
-										label="Description"
-										name="descr"
-										row={4}
-										component={InputTextArea}
-										className="mx-4"
-									/>
-								</div>
 								<div className="grid grid-cols-1 gap-8 ">
 									<Field
 										label="Task name"
@@ -117,52 +108,12 @@ export default function FormCustomProjectTask({
 										className="mx-4"
 									/>
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
+								<div className="grid grid-cols-1 gap-8 mb-16 ">
 									<Field
-										label="Grade"
-										name="grade"
-										options={gradeGolbal}
-										component={SelectAntd}
-										className="mx-4"
-									/>
-									<Field
-										label="Author"
-										name="author"
-										component={AntInput}
-										type="text"
-										className="mx-4"
-									/>
-								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
-									<Field
-										label="Owner"
-										name="owner"
-										hasFeedback
-										component={SelectAntd}
-										options={owner}
-										className="mx-4"
-									/>
-									<Field
-										label="Component"
-										name="component"
-										component={SelectAntd}
-										options={ArrTaskComponent}
-										className="mx-4"
-									/>
-								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
-									<Field
-										label="Origin publisher"
-										component={AntInput}
-										type="text"
-										name="originPublisher"
-										className="mx-4"
-									/>
-									<Field
-										label="Ownership DTP"
-										component={AntInput}
-										type="text"
-										name="ownership"
+										label="Description"
+										name="descr"
+										row={4}
+										component={InputTextArea}
 										className="mx-4"
 									/>
 								</div>
@@ -175,27 +126,105 @@ export default function FormCustomProjectTask({
 										className="mx-4"
 									/>
 								</div>
+								<div className="flex justify-between flex-row">
+									<h5 className="font-extrabold">PEOPLE AND TIME</h5>
+								</div>
+								<div className="grid grid-cols-1 gap-8 ">
+									<Field
+										label="Owner"
+										name="owner"
+										hasFeedback
+										component={SelectAntd}
+										options={owner}
+										className="mx-4"
+										position="right"
+									/>
+								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
 									<Field
 										label="Start Date"
 										name="startDate"
 										component={DateCustom}
 										className="mx-4"
+										position="right"
 									/>
-									<Field label="End Date" name="endDate" component={DateCustom} className="mx-4" />
+									<Field
+										label="End Date"
+										position="right"
+										name="endDate"
+										component={DateCustom}
+										className="mx-4"
+									/>
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
+								<div className="flex justify-between flex-row">
+									<h5 className="font-extrabold">DETAIL</h5>
+								</div>
+								<div className="grid grid-cols-1 gap-8 ">
+									<Field
+										label="Grade"
+										name="grade"
+										options={gradeGolbal}
+										component={SelectAntd}
+										position="right"
+										className="mx-4"
+									/>
+								</div>
+								<div className="grid grid-cols-1 gap-8 ">
+									<Field
+										label="Component"
+										name="component"
+										component={SelectAntd}
+										options={ArrTaskComponent}
+										className="mx-4"
+										position="right"
+									/>
+								</div>
+								<div className="grid grid-cols-1 gap-8 ">
+									<Field
+										label="Author"
+										name="author"
+										component={AntInput}
+										type="text"
+										position="right"
+										className="mx-4"
+									/>
+								</div>
+								<div className="grid grid-cols-1 gap-8 ">
+									<Field
+										label="Origin publisher"
+										component={AntInput}
+										type="text"
+										name="originPublisher"
+										position="right"
+										className="mx-4"
+									/>
+								</div>
+								<div className="grid grid-cols-1 gap-8 ">
+									<Field
+										label="Ownership DTP"
+										component={AntInput}
+										type="text"
+										name="ownership"
+										position="right"
+										className="mx-4"
+									/>
+								</div>
+								<div className="grid grid-cols-1 gap-8 ">
 									<Field
 										label="Priority"
 										name="priority"
 										hasFeedback
 										component={SelectAntd}
 										options={ArrTaskPri}
+										position="right"
 										className="mx-4"
 									/>
+								</div>
+								<div className="grid grid-cols-1 gap-8">
 									<Field
 										label="Status"
 										name="status"
+										position="right"
 										component={SelectAntd}
 										options={ArrProjectStatus}
 										className="mx-4"
