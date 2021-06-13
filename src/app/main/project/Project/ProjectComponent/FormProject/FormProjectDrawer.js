@@ -140,7 +140,7 @@ export default function FormCustomProjectTask({
 										position="right"
 									/>
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
+								<div className="flex flex-row justify-between gap-8 ">
 									<Field
 										label="Start Date"
 										name="startDate"
