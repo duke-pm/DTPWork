@@ -118,6 +118,9 @@ thead[class*="ant-table-thead"] th{
 .ant-table-tbody > tr > td{    
     padding: 8px 18px !important;
 }
+.ant-drawer-body {
+    padding: 10px 20px !important;
+}
 @keyframes autofill {
     0%,100% {
         background: transparent;

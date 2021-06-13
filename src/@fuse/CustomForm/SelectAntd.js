@@ -14,6 +14,7 @@ export default function SelectAntd({
 	handleChangeState,
 	options,
 	placeholder,
+	width,
 	hasFeedback,
 	notFoundContent,
 	readOnly,
@@ -43,7 +44,7 @@ export default function SelectAntd({
 					)}
 				</div>
 				<FormItem
-					style={{ width: position && '80%' }}
+					style={{ width: position ? width || '80%' : '100%' }}
 					rules={[{ required: true }]}
 					help={submittedError || touchedError ? hasError : false}
 					validateStatus={submittedError || touchedError ? 'error' : hasFeedback && 'success'}

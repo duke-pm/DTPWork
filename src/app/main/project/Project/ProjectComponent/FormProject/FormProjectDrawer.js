@@ -1,7 +1,7 @@
 import { AntInput } from '@fuse/CustomForm/CreateAntField';
 import SelectAntd from '@fuse/CustomForm/SelectAntd';
 import DateCustom from '@fuse/CustomForm/Date';
-import { Button, DialogActions, DialogContent } from '@material-ui/core';
+import { Divider, Button, DialogActions, DialogContent } from '@material-ui/core';
 import { Field, Formik, Form } from 'formik';
 import React from 'react';
 import { Spin } from 'antd';
@@ -9,6 +9,8 @@ import InputTextArea from '@fuse/CustomForm/InputTextArea';
 import * as Yup from 'yup';
 import { validateField } from '@fuse/core/DtpConfig';
 import * as moment from 'moment';
+import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
+import FileCustomVersion2Eng from '@fuse/CustomForm/FileCustomVersion2Eng';
 
 let initial = {
 	TaskID: '',
@@ -26,7 +28,8 @@ let initial = {
 	priority: null,
 	status: 1,
 	taskType: '',
-	prjID: ''
+	prjID: '',
+	file: ''
 };
 export default function FormCustomProjectTask({
 	actionLoading,
@@ -96,130 +99,135 @@ export default function FormCustomProjectTask({
 			>
 				{({ handleSubmit, isSubmitting }) => (
 					<Form>
-						<DialogContent>
-							<div className="px-16 sm:px-24">
-								<div className="grid grid-cols-1 gap-8 ">
-									<Field
-										label="Task name"
-										name="taskName"
-										type="text"
-										hasFeedback
-										component={AntInput}
-										className="mx-4"
-									/>
-								</div>
-								<div className="grid grid-cols-1 gap-8 mb-16 ">
-									<Field
-										label="Description"
-										name="descr"
-										row={4}
-										component={InputTextArea}
-										className="mx-4"
-									/>
-								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-1 gap-8 ">
-									<Field
-										label="Project"
-										name="project"
-										component={SelectAntd}
-										options={taskSub}
-										className="mx-4"
-									/>
-								</div>
-								<div className="flex justify-between flex-row">
-									<h5 className="font-extrabold">PEOPLE AND TIME</h5>
-								</div>
-								<div className="grid grid-cols-1 gap-8 ">
-									<Field
-										label="Owner"
-										name="owner"
-										hasFeedback
-										component={SelectAntd}
-										options={owner}
-										className="mx-4"
-										position="right"
-									/>
-								</div>
-								<div className="flex flex-row justify-between gap-8 ">
-									<Field
-										label="Start Date"
-										name="startDate"
-										component={DateCustom}
-										className="mx-4"
-										position="right"
-									/>
-									<Field
-										label="End Date"
-										position="right"
-										name="endDate"
-										component={DateCustom}
-										className="mx-4"
-									/>
-								</div>
-								<div className="flex justify-between flex-row">
-									<h5 className="font-extrabold">DETAIL</h5>
-								</div>
-								<div className="grid grid-cols-1 gap-8 ">
-									<Field
-										label="Grade"
-										name="grade"
-										options={gradeGolbal}
-										component={SelectAntd}
-										position="right"
-										className="mx-4"
-									/>
-								</div>
-								<div className="grid grid-cols-1 gap-8 ">
-									<Field
-										label="Component"
-										name="component"
-										component={SelectAntd}
-										options={ArrTaskComponent}
-										className="mx-4"
-										position="right"
-									/>
-								</div>
-								<div className="grid grid-cols-1 gap-8 ">
-									<Field
-										label="Author"
-										name="author"
-										component={AntInput}
-										type="text"
-										position="right"
-										className="mx-4"
-									/>
-								</div>
-								<div className="grid grid-cols-1 gap-8 ">
-									<Field
-										label="Origin publisher"
-										component={AntInput}
-										type="text"
-										name="originPublisher"
-										position="right"
-										className="mx-4"
-									/>
-								</div>
-								<div className="grid grid-cols-1 gap-8 ">
-									<Field
-										label="Ownership DTP"
-										component={AntInput}
-										type="text"
-										name="ownership"
-										position="right"
-										className="mx-4"
-									/>
-								</div>
-								<div className="grid grid-cols-1 gap-8 ">
-									<Field
-										label="Priority"
-										name="priority"
-										hasFeedback
-										component={SelectAntd}
-										options={ArrTaskPri}
-										position="right"
-										className="mx-4"
-									/>
-								</div>
+						<div className="px-16 sm:px-24">
+							<div className="grid grid-cols-1 gap-8 ">
+								<Field
+									label="Task name"
+									name="taskName"
+									type="text"
+									hasFeedback
+									component={AntInput}
+									className="mx-4"
+								/>
+							</div>
+							<div className="grid grid-cols-1 gap-8 mb-16 ">
+								<Field
+									label="Description"
+									name="descr"
+									row={4}
+									component={InputTextArea}
+									className="mx-4"
+								/>
+							</div>
+							<div className="grid grid-cols-1 sm:grid-cols-1 gap-8 ">
+								<Field
+									label="Subtask of"
+									name="project"
+									width="100%"
+									component={SelectAntd}
+									options={taskSub}
+									className="mx-4"
+								/>
+							</div>
+							<div className="flex justify-between flex-row">
+								<h5 className="font-extrabold">PEOPLE AND TIME</h5>
+							</div>
+							<Divider className="mb-16" />
+							<div className="grid grid-cols-1 gap-8 ">
+								<Field
+									label="Owner"
+									name="owner"
+									hasFeedback
+									component={SelectAntd}
+									options={owner}
+									className="mx-4"
+									position="right"
+								/>
+							</div>
+							<div className="grid grid-cols-1 sm:grid-cols-2 gap-16 ">
+								<Field
+									label="Start Date"
+									name="startDate"
+									width="60%"
+									component={DateCustom}
+									className="mx-4"
+									position="right"
+								/>
+								<Field
+									label="End Date"
+									width="60%"
+									position="right"
+									name="endDate"
+									component={DateCustom}
+									className="mx-4"
+								/>
+							</div>
+							<div className="flex justify-between flex-row">
+								<h5 className="font-extrabold">DETAIL</h5>
+							</div>
+							<Divider className="mb-16" />
+							<div className="grid grid-cols-1 sm:grid-cols-2 gap-16 ">
+								<Field
+									label="Grade"
+									name="grade"
+									width="60%"
+									options={gradeGolbal}
+									component={SelectAntd}
+									position="right"
+									className="mx-4"
+								/>
+								<Field
+									label="Component"
+									width="60%"
+									name="component"
+									component={SelectAntd}
+									options={ArrTaskComponent}
+									className="mx-4"
+									position="right"
+								/>
+							</div>
+							<div className="grid grid-cols-1 gap-8 ">
+								<Field
+									label="Author"
+									name="author"
+									component={AntInput}
+									type="text"
+									position="right"
+									className="mx-4"
+								/>
+							</div>
+							<div className="grid grid-cols-1 gap-8 ">
+								<Field
+									label="Origin publisher"
+									component={AntInput}
+									type="text"
+									name="originPublisher"
+									position="right"
+									className="mx-4"
+								/>
+							</div>
+							<div className="grid grid-cols-1 gap-8 ">
+								<Field
+									label="Ownership DTP"
+									component={AntInput}
+									type="text"
+									name="ownership"
+									position="right"
+									className="mx-4"
+								/>
+							</div>
+							<div className="grid grid-cols-1 gap-8 ">
+								<Field
+									label="Priority"
+									name="priority"
+									hasFeedback
+									component={SelectAntd}
+									options={ArrTaskPri}
+									position="right"
+									className="mx-4"
+								/>
+							</div>
+							{entitiesEdit && entitiesEdit.taskID && (
 								<div className="grid grid-cols-1 gap-8">
 									<Field
 										label="Status"
@@ -230,8 +238,24 @@ export default function FormCustomProjectTask({
 										className="mx-4"
 									/>
 								</div>
+							)}
+							<div className="flex justify-between flex-row">
+								<h5 className="font-extrabold">FILES</h5>
 							</div>
-						</DialogContent>
+							<Divider className="mb-16" />
+							<div className="grid grid-cols-1 gap-8 ">
+								<Field
+									label=""
+									autoFocus
+									style={{ height: '25px' }}
+									name="file"
+									component={FileCustomVersion2Eng}
+									className="mx-4 mb-16"
+									variant="outlined"
+								/>
+							</div>
+							<Divider className="mb-16 mt-16" />
+						</div>
 						<DialogActions>
 							{actionLoading ? (
 								<Spin />

@@ -53,12 +53,13 @@ export default function FormProjectDrawer({
 			<Drawer
 				width={780}
 				placement="right"
-				title={entitiesEdit && entitiesEdit.taskID ? formProject.title : `Created ${formProject.title}`}
+				title={entitiesEdit && entitiesEdit.taskID ? formProject.title : `New ${formProject.title}`}
 				closeIcon={<CloseOutlined />}
 				closable
 				onClose={handleCloseFormProject}
 				visible={formProject.open}
 				getContainer={false}
+				contentWrapperStyle={{ padding: '0 !important' }}
 				style={{ position: 'absolute', display: !formProject.open && 'none' }}
 			>
 				<FormCustomProjectTask
