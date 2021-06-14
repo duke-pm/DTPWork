@@ -19,7 +19,7 @@ export default function ProjectComponent({
 }) {
 	const classes = useStyles();
 	const { currentState } = useSelector(state => ({ currentState: state.project }), shallowEqual);
-	const { entitiesDetail, listLoading } = currentState;
+	const { entitiesDetail, listLoading, actionLoading } = currentState;
 	if (listLoading) {
 		return <FuseLoading />;
 	}
@@ -38,7 +38,7 @@ export default function ProjectComponent({
 			<ActionHeaderProject entitiesDetail={entitiesDetail} classes={classes} />
 			<FuseAnimate animation="transition.slideUpIn" delay={200}>
 				<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
-					<TableProject entitiesDetail={entitiesDetail} />
+					<TableProject actionLoading={actionLoading} entitiesDetail={entitiesDetail} />
 				</div>
 			</FuseAnimate>
 		</div>

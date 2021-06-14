@@ -44,7 +44,14 @@ export const getDataListMenu = () => {
 	const data = JSON.parse(localStorage.getItem('listMenu')) || null;
 	return data;
 };
-
+export const checkFile = url => {
+	const file = url.split('.').pop();
+	return file;
+};
+export const nameFile = url => {
+	const file = url.split('_').pop();
+	return file;
+};
 export const validateField = 'Nội dung bắt buộc không được để trống.';
 export function findIndexMultiple(id, newData, arr) {
 	arr.forEach((d, i) => {

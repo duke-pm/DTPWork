@@ -248,27 +248,27 @@ export const fetchProjectDetailFilter = params => dispatch => {
 
 export const createdTask = (values, prjID, taskType) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
-	const dataReq = {
-		TaskID: 0,
-		TaskName: values.taskName,
-		TaskTypeID: TaskType[taskType],
-		PrjID: prjID,
-		ParentID: values.project || 0,
-		Descr: values.descr,
-		StartDate: moment(values.startDate).format('YYYY-MM-DD'),
-		EndDate: moment(values.endDate).format('YYYY-MM-DD'),
-		Owner: values.owner,
-		Priority: values.priority,
-		StatusID: values.status,
-		Grade: values.grade || 0,
-		Author: values.author,
-		Component: values.component || 0,
-		OriginPublisher: values.originPublisher,
-		OwnershipDTP: values.ownership,
-		Lang: 'Vi'
-	};
+	const formData = new FormData();
+	formData.append('TaskID', 0);
+	formData.append('TaskName', values.taskName);
+	formData.append('TaskTypeID', TaskType[taskType]);
+	formData.append('PrjID', prjID);
+	formData.append('ParentID', values.project || 0);
+	formData.append('Descr', values.descr);
+	formData.append('StartDate', moment(values.startDate).format('YYYY-MM-DD'));
+	formData.append('EndDate', moment(values.endDate).format('YYYY-MM-DD'));
+	formData.append('Owner', values.owner);
+	formData.append('Priority', values.priority);
+	formData.append('StatusID', values.status);
+	formData.append('Grade', values.grade || 0);
+	formData.append('Author', values.author);
+	formData.append('Component', values.component || 0);
+	formData.append('OriginPublisher', values.originPublisher);
+	formData.append('OwnershipDTP', values.ownership);
+	formData.append('AttachFiles', values.file || '');
+	formData.append('Lang', 'vi');
 	return requestFrom
-		.taskModify(dataReq)
+		.taskModify(formData)
 		.then(res => {
 			const { data } = res;
 			if (!data.isError) {
@@ -289,27 +289,29 @@ export const createdTask = (values, prjID, taskType) => dispatch => {
 };
 export const updatedTask = values => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
-	const dataReq = {
-		TaskID: values.taskID,
-		TaskName: values.taskName,
-		TaskTypeID: values.taskType,
-		PrjID: values.prjID,
-		ParentID: values.project || 0,
-		Descr: values.descr,
-		StartDate: moment(values.startDate).format('YYYY-MM-DD'),
-		EndDate: moment(values.endDate).format('YYYY-MM-DD'),
-		Owner: values.owner,
-		Priority: values.priority,
-		StatusID: values.status,
-		Grade: values.grade || 0,
-		Author: values.author,
-		Component: values.component || 0,
-		OriginPublisher: values.originPublisher,
-		OwnershipDTP: values.ownership,
-		Lang: 'Vi'
-	};
+	const formData = new FormData();
+	formData.append('TaskID', values.taskID);
+	formData.append('TaskName', values.taskName);
+	formData.append('TaskTypeID', values.taskType);
+	formData.append('PrjID', values.prjID);
+	formData.append('ParentID', values.project || 0);
+	formData.append('Descr', values.descr);
+	formData.append('StartDate', moment(values.startDate).format('YYYY-MM-DD'));
+	formData.append('EndDate', moment(values.endDate).format('YYYY-MM-DD'));
+	formData.append('Owner', values.owner);
+	formData.append('Priority', values.priority);
+	formData.append('StatusID', values.status);
+	formData.append('Grade', values.grade || 0);
+	formData.append('Author', values.author);
+	formData.append('Component', values.component || 0);
+	formData.append('OriginPublisher', values.originPublisher);
+	formData.append('OwnershipDTP', values.ownership);
+	if (values.file) {
+		formData.append('AttachFiles', values.file);
+	}
+	formData.append('Lang', 'vi');
 	return requestFrom
-		.taskModify(dataReq)
+		.taskModify(formData)
 		.then(res => {
 			const { data } = res;
 			if (!data.isError) {
@@ -332,25 +334,11 @@ export const updatedTaskStatus = (values, status) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const dataReq = {
 		TaskID: values.taskID,
-		TaskName: values.taskName,
-		TaskTypeID: values.taskTypeID,
-		PrjID: values.prjID,
-		ParentID: values.project || 0,
-		Descr: values.descr,
-		StartDate: moment(values.startDate).format('YYYY-MM-DD'),
-		EndDate: moment(values.endDate).format('YYYY-MM-DD'),
-		Owner: values.owner,
-		Priority: values.priority,
 		StatusID: status,
-		Grade: values.grade || 0,
-		Author: values.author,
-		Component: values.component || 0,
-		OriginPublisher: values.originPublisher,
-		OwnershipDTP: values.ownership,
 		Lang: 'Vi'
 	};
 	return requestFrom
-		.getTaskViewDetail(dataReq)
+		.updateStatusTask(dataReq)
 		.then(res => {
 			const { data } = res;
 			if (!data.isError) {

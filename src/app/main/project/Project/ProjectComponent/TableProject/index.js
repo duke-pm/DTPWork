@@ -14,7 +14,7 @@ import { badgeStatus, typeColor, priorityColor } from './ConfigTableProject';
 
 function TableProject(props) {
 	const dispatch = useDispatch();
-	const { entitiesDetail } = props;
+	const { entitiesDetail, actionLoading } = props;
 	const projectContext = useContext(ProjectContext);
 	const { setVisible, visible, setFormProject, formProject } = projectContext;
 	const handleOpenVisible = item => {
@@ -128,7 +128,7 @@ function TableProject(props) {
 			width: '11%',
 			render: (_, item) => (
 				<Dropdown
-					disabled={!item.isUpdated}
+					disabled={!item.isUpdated || actionLoading}
 					overlay={
 						<Menu>
 							<Menu.Item onClick={() => updatedStatus(item, 1)} style={{ color: '#1890ff' }}>

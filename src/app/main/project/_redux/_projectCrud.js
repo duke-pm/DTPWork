@@ -35,6 +35,9 @@ export const addTaskWatch = data => {
 		data
 	});
 };
+export const updateStatusTask = params => {
+	return request(`${urlDetail}/UpdateStatus`, { params });
+};
 export const getTaskViewDetail = params => {
 	return request(`${urlDetail}/GetByID`, { params });
 };

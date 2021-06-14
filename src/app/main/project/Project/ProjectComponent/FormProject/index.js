@@ -1,12 +1,33 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { notificationConfig } from '@fuse/core/DtpConfig';
 import { Drawer } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
+import * as moment from 'moment';
 import { ProjectContext } from '../../ProjectContext';
 import * as actions from '../../../_redux/_projectActions';
 import FormCustomProjectTask from './FormProjectDrawer';
 
+let initial = {
+	TaskID: '',
+	descr: '',
+	taskName: '',
+	startDate: moment(),
+	endDate: moment(),
+	grade: null,
+	author: '',
+	owner: null,
+	component: null,
+	originPublisher: '',
+	ownership: '',
+	project: null,
+	priority: null,
+	status: 1,
+	taskType: '',
+	prjID: '',
+	file: '',
+	fileEdit: ''
+};
 export default function FormProjectDrawer({
 	owner,
 	gradeGolbal,
@@ -17,13 +38,38 @@ export default function FormProjectDrawer({
 	params
 }) {
 	const dispatch = useDispatch();
+	const [fileCheck, setFileCheck] = useState(true);
+	const [listFile, setListFile] = useState(null);
 	const projectContext = useContext(ProjectContext);
 	const { formProject, setFormProject } = projectContext;
-	const handleCloseFormProject = () =>
+	const handleCloseFormProject = () => {
 		setFormProject({
 			open: false,
 			title: ''
 		});
+		initial = {
+			TaskID: '',
+			descr: '',
+			taskName: '',
+			startDate: moment(),
+			endDate: moment(),
+			grade: null,
+			author: '',
+			owner: null,
+			component: null,
+			originPublisher: '',
+			ownership: '',
+			project: null,
+			priority: null,
+			status: 1,
+			taskType: '',
+			prjID: '',
+			file: '',
+			fileEdit: ''
+		};
+		setListFile(null);
+		setFileCheck(true);
+	};
 	const { currentState } = useSelector(
 		state => ({
 			currentState: state.project
@@ -48,6 +94,25 @@ export default function FormProjectDrawer({
 			});
 		}
 	};
+	const initialEdit = {
+		taskID: entitiesEdit && entitiesEdit.taskID,
+		taskType: entitiesEdit && entitiesEdit.taskTypeID,
+		prjID: entitiesEdit && entitiesEdit.prjID,
+		descr: entitiesEdit && entitiesEdit.descr,
+		taskName: entitiesEdit && entitiesEdit.taskName,
+		startDate: entitiesEdit && entitiesEdit.startDate,
+		endDate: entitiesEdit && entitiesEdit.endDate,
+		grade: entitiesEdit ? (entitiesEdit.grade === 0 ? null : entitiesEdit.grade) : null,
+		author: entitiesEdit && entitiesEdit.author,
+		owner: entitiesEdit && entitiesEdit.owner,
+		component: entitiesEdit ? (entitiesEdit.component === 0 ? null : entitiesEdit.component) : null,
+		originPublisher: entitiesEdit && entitiesEdit.originPublisher,
+		ownership: entitiesEdit && entitiesEdit.ownershipDTP,
+		priority: entitiesEdit && entitiesEdit.priority,
+		project: entitiesEdit ? (entitiesEdit.parentID === 0 ? null : entitiesEdit.parentID) : null,
+		status: entitiesEdit && entitiesEdit.statusID,
+		fileEdit: entitiesEdit && entitiesEdit.attachFiles
+	};
 	return (
 		<div className="site-drawer-render-in-current-wrapper">
 			<Drawer
@@ -63,8 +128,13 @@ export default function FormProjectDrawer({
 				style={{ position: 'absolute', display: !formProject.open && 'none' }}
 			>
 				<FormCustomProjectTask
-					entitiesEdit={entitiesEdit}
+					inititalValues={entitiesEdit && entitiesEdit.taskID ? initialEdit : initial}
 					owner={owner}
+					listFile={listFile}
+					setListFile={setListFile}
+					entitiesEdit={entitiesEdit}
+					fileCheck={fileCheck}
+					setFileCheck={setFileCheck}
 					gradeGolbal={gradeGolbal}
 					taskSub={taskSub}
 					ArrTaskComponent={ArrTaskComponent}

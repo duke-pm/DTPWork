@@ -58,17 +58,13 @@ export default function ListRoleSettingContent() {
 			/>
 			<FuseAnimate animation="transition.slideUpIn" delay={200}>
 				<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
-					<TableContainer className={`${classes.TableContainer} flex flex-1`}>
-						<Paper className={classes.rootPaper}>
-							<ListRoleSettingBody
-								actionLoading={actionLoading}
-								newData={newData}
-								setNewData={setNewData}
-								classes={classes}
-								entities={entities}
-							/>
-						</Paper>
-					</TableContainer>
+					<ListRoleSettingBody
+						actionLoading={actionLoading}
+						newData={newData}
+						setNewData={setNewData}
+						classes={classes}
+						entities={entities}
+					/>
 				</div>
 			</FuseAnimate>
 		</div>

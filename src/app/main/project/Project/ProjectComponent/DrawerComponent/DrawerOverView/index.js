@@ -1,15 +1,22 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import FuseAnimate from '@fuse/core/FuseAnimate';
-import { Divider } from '@material-ui/core';
-import { Dropdown, Menu, Badge } from 'antd';
+import { Button, Divider } from '@material-ui/core';
+import { Dropdown, Menu, Badge, Avatar } from 'antd';
 import React from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import * as moment from 'moment';
-import { CaretDownOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, FileExcelOutlined, FileImageOutlined, FileWordOutlined } from '@ant-design/icons';
 import { updatedTaskStatus } from 'app/main/project/_redux/_projectActions';
-import { notificationConfig } from '@fuse/core/DtpConfig';
+import { checkFile, nameFile, notificationConfig } from '@fuse/core/DtpConfig';
 import { badgeStatus, priorityColor } from '../../TableProject/ConfigTableProject';
 
+const file = {
+	docx: <FileWordOutlined />,
+	xlsx: <FileExcelOutlined />,
+	png: <FileImageOutlined />,
+	jpg: <FileImageOutlined />,
+	jpge: <FileImageOutlined />
+};
 export default function DrawerOverView({ closeVisible }) {
 	const dispatch = useDispatch();
 	const { currentState } = useSelector(state => ({ currentState: state.project }), shallowEqual);
@@ -119,6 +126,33 @@ export default function DrawerOverView({ closeVisible }) {
 						<div className="text-base font-normal text-gray-500 ml-56 ">
 							{moment(entitiesView && entitiesView.detail.endDate).format('DD/MM/YYYY')}{' '}
 						</div>
+					</div>
+				</div>
+				<Divider />
+				<div className="flex flex-col mt-16">
+					<p className="text-xl font-medium">FILES</p>
+					<div className="flex flex-row justify-between">
+						{entitiesView && entitiesView.detail.attachFiles && (
+							<div className="flex flex-row">
+								<Avatar
+									shape="square"
+									size={54}
+									style={{ backgroundColor: '#87d068' }}
+									icon={
+										entitiesView && file[checkFile(entitiesView && entitiesView.detail.attachFiles)]
+									}
+								/>
+								<Button
+									style={{ backgroundColor: 'none', marginLeft: '10px' }}
+									href={`${process.env.REACT_APP_API_URL}/${
+										entitiesView && entitiesView.detail.attachFiles
+									}`}
+								>
+									{' '}
+									{entitiesView && nameFile(entitiesView && entitiesView.detail.attachFiles)}
+								</Button>
+							</div>
+						)}
 					</div>
 				</div>
 			</div>

@@ -34,7 +34,7 @@ export default function FileCustomVersion2Eng({
 					</p>
 				)}
 			</div>
-			<Dragger {...field} {...props} onChange={handleChangeFile}>
+			<Dragger onChange={handleChangeFile}>
 				<p className="ant-upload-drag-icon">
 					<InboxOutlined />
 				</p>

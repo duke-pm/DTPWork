@@ -1,35 +1,23 @@
 import { AntInput } from '@fuse/CustomForm/CreateAntField';
 import SelectAntd from '@fuse/CustomForm/SelectAntd';
 import DateCustom from '@fuse/CustomForm/Date';
-import { Divider, Button, DialogActions, DialogContent } from '@material-ui/core';
+import { Divider, Button, DialogActions, IconButton } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
 import { Field, Formik, Form } from 'formik';
-import React from 'react';
-import { Spin } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Avatar, Spin } from 'antd';
 import InputTextArea from '@fuse/CustomForm/InputTextArea';
 import * as Yup from 'yup';
-import { validateField } from '@fuse/core/DtpConfig';
-import * as moment from 'moment';
-import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
+import { validateField, checkFile, nameFile } from '@fuse/core/DtpConfig';
 import FileCustomVersion2Eng from '@fuse/CustomForm/FileCustomVersion2Eng';
+import { FileExcelOutlined, FileImageOutlined, FileWordOutlined } from '@ant-design/icons';
 
-let initial = {
-	TaskID: '',
-	descr: '',
-	taskName: '',
-	startDate: moment(),
-	endDate: moment(),
-	grade: null,
-	author: '',
-	owner: null,
-	component: null,
-	originPublisher: '',
-	ownership: '',
-	project: null,
-	priority: null,
-	status: 1,
-	taskType: '',
-	prjID: '',
-	file: ''
+const file = {
+	docx: <FileWordOutlined />,
+	xlsx: <FileExcelOutlined />,
+	png: <FileImageOutlined />,
+	jpg: <FileImageOutlined />,
+	jpge: <FileImageOutlined />
 };
 export default function FormCustomProjectTask({
 	actionLoading,
@@ -41,58 +29,29 @@ export default function FormCustomProjectTask({
 	ArrTaskPri,
 	ArrTaskComponent,
 	taskSub,
-	entitiesEdit
+	fileCheck,
+	setFileCheck,
+	inititalValues,
+	entitiesEdit,
+	setListFile,
+	listFile
 }) {
-	if (entitiesEdit && entitiesEdit.taskID) {
-		initial = {
-			taskID: entitiesEdit && entitiesEdit.taskID,
-			taskType: entitiesEdit && entitiesEdit.taskTypeID,
-			prjID: entitiesEdit && entitiesEdit.prjID,
-			descr: entitiesEdit && entitiesEdit.descr,
-			taskName: entitiesEdit && entitiesEdit.taskName,
-			startDate: entitiesEdit && entitiesEdit.startDate,
-			endDate: entitiesEdit && entitiesEdit.endDate,
-			grade: entitiesEdit && entitiesEdit.grade === 0 ? null : entitiesEdit.grade,
-			author: entitiesEdit && entitiesEdit.author,
-			owner: entitiesEdit && entitiesEdit.owner,
-			component: entitiesEdit && entitiesEdit.component === 0 ? null : entitiesEdit.component,
-			originPublisher: entitiesEdit && entitiesEdit.originPublisher,
-			ownership: entitiesEdit && entitiesEdit.ownershipDTP,
-			priority: entitiesEdit && entitiesEdit.priority,
-			project: entitiesEdit && entitiesEdit.parentID === 0 ? null : entitiesEdit.parentID,
-			status: entitiesEdit && entitiesEdit.statusID
-		};
-	} else {
-		initial = {
-			TaskID: '',
-			descr: '',
-			taskName: '',
-			startDate: moment(),
-			endDate: moment(),
-			grade: null,
-			author: '',
-			owner: null,
-			component: null,
-			originPublisher: '',
-			ownership: '',
-			project: null,
-			priority: null,
-			status: 1,
-			taskType: '',
-			prjID: ''
-		};
-	}
+	const handleClearFile = () => setFileCheck(false);
+	const handleClearListFile = () => setListFile(null);
 	const validateSchema = Yup.object().shape({
 		taskName: Yup.string().required(`${validateField}`),
 		owner: Yup.string().required(`${validateField}`).nullable(),
 		priority: Yup.string().required(`${validateField}`).nullable()
 	});
+	const handleChangeFile = value => {
+		setListFile(value.name);
+	};
 	return (
 		<>
 			<Formik
 				enableReinitialize
 				validationSchema={validateSchema}
-				initialValues={initial}
+				initialValues={inititalValues}
 				onSubmit={values => {
 					handleSubmitForm(values);
 				}}
@@ -105,6 +64,7 @@ export default function FormCustomProjectTask({
 									label="Task name"
 									name="taskName"
 									type="text"
+									autoFocus
 									hasFeedback
 									component={AntInput}
 									className="mx-4"
@@ -244,15 +204,76 @@ export default function FormCustomProjectTask({
 							</div>
 							<Divider className="mb-16" />
 							<div className="grid grid-cols-1 gap-8 ">
-								<Field
-									label=""
-									autoFocus
-									style={{ height: '25px' }}
-									name="file"
-									component={FileCustomVersion2Eng}
-									className="mx-4 mb-16"
-									variant="outlined"
-								/>
+								{entitiesEdit && entitiesEdit.attachFiles.length > 0 && fileCheck ? (
+									<div className="flex flex-row justify-between">
+										<div className="flex flex-row">
+											<Avatar
+												shape="square"
+												size={54}
+												style={{ backgroundColor: '#87d068' }}
+												icon={
+													entitiesEdit.attachFiles &&
+													file[checkFile(entitiesEdit.attachFiles)]
+												}
+											/>
+											<Button
+												style={{ backgroundColor: 'none', marginLeft: '10px' }}
+												href={`${process.env.REACT_APP_API_URL}/${entitiesEdit.attachFiles}`}
+											>
+												{' '}
+												{nameFile(entitiesEdit.attachFiles)}
+											</Button>
+										</div>
+										<div>
+											{' '}
+											<IconButton
+												edge="start"
+												color="inherit"
+												onClick={handleClearFile}
+												aria-label="close"
+											>
+												<CloseIcon />
+											</IconButton>{' '}
+										</div>
+									</div>
+								) : listFile && listFile.length ? (
+									<div className="flex flex-row justify-between">
+										<div className="flex flex-row">
+											<Avatar
+												shape="square"
+												size={54}
+												style={{ backgroundColor: '#87d068' }}
+												icon={listFile && file[checkFile(listFile)]}
+											/>
+											<Button style={{ backgroundColor: 'none', marginLeft: '10px' }}>
+												{' '}
+												{nameFile(listFile)}
+											</Button>
+										</div>
+										<div>
+											{' '}
+											<IconButton
+												edge="start"
+												color="inherit"
+												onClick={handleClearListFile}
+												aria-label="close"
+											>
+												<CloseIcon />
+											</IconButton>{' '}
+										</div>
+									</div>
+								) : (
+									<Field
+										label=""
+										autoFocus
+										handleChangeImage={handleChangeFile}
+										style={{ height: '25px' }}
+										name="file"
+										component={FileCustomVersion2Eng}
+										className="mx-4 mb-16"
+										variant="outlined"
+									/>
+								)}
 							</div>
 							<Divider className="mb-16 mt-16" />
 						</div>

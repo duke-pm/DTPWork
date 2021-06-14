@@ -54,7 +54,7 @@ const DtpCustomStyles = makeStyles(theme => ({
 		overflowX: 'auto'
 	},
 	TableContainer: {
-		maxHeight: '420px'
+		maxHeight: '410px'
 	},
 	modal: {
 		display: 'flex',
