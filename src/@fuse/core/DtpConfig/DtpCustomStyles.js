@@ -61,6 +61,14 @@ const DtpCustomStyles = makeStyles(theme => ({
 			maxHeight: '660px'
 		}
 	},
+	TableAntd: {
+		[theme.breakpoints.up('lg')]: {
+			maxHeight: '410'
+		},
+		[theme.breakpoints.up('xl')]: {
+			maxHeight: '660'
+		}
+	},
 	modal: {
 		display: 'flex',
 		alignItems: 'start',

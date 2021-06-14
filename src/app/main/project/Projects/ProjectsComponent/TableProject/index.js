@@ -8,13 +8,17 @@ import { withRouter } from 'react-router';
 import { useDispatch } from 'react-redux';
 import AppsIcon from '@material-ui/icons/Apps';
 import * as moment from 'moment';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { ProjectContext } from '../../ProjectContext';
 import * as actions from '../../../_redux/_projectActions';
 import { badgeStatus, badgeText } from '../ConfigTableProject';
 
 function TableProject(props) {
+	const theme = useTheme();
+	const matches = useMediaQuery(theme.breakpoints.up('xl'));
 	const dispatch = useDispatch();
-	const { entities } = props;
+	const { entities, classes } = props;
 	const projectContext = useContext(ProjectContext);
 	const { setFormProject, setTitle } = projectContext;
 	const handleOpenFormProject = (item, type) => {
@@ -174,7 +178,7 @@ function TableProject(props) {
 				}}
 				childrenColumnName="lstProjectItem"
 				pagination={false}
-				scroll={{ x: 1540, y: 410 }}
+				scroll={{ x: 1540, y: matches ? 650 : 410 }}
 				columns={columns}
 				dataSource={entities}
 			/>{' '}

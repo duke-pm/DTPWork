@@ -8,12 +8,16 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { withRouter } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { notificationConfig } from '@fuse/core/DtpConfig';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import * as actions from '../../../_redux/_projectActions';
 import { ProjectContext } from '../../ProjectContext';
 import { badgeStatus, typeColor, priorityColor } from './ConfigTableProject';
 
 function TableProject(props) {
 	const dispatch = useDispatch();
+	const theme = useTheme();
+	const matches = useMediaQuery(theme.breakpoints.up('xl'));
 	const { entitiesDetail, actionLoading } = props;
 	const projectContext = useContext(ProjectContext);
 	const { setVisible, visible, setFormProject, formProject } = projectContext;
@@ -228,7 +232,7 @@ function TableProject(props) {
 							/>
 						)
 				}}
-				scroll={{ x: 1090, y: 410 }}
+				scroll={{ x: 1090, y: matches ? 650 : 410 }}
 				pagination={false}
 				columns={columns}
 				dataSource={entitiesDetail.listTask}
