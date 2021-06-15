@@ -37,8 +37,9 @@ export default function ProjectComponent({
 			/>
 			<ActionHeaderProject entitiesDetail={entitiesDetail} classes={classes} />
 			<FuseAnimate animation="transition.slideUpIn" delay={200}>
-				<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
+				<div className="grid grid-cols-1 sm:grid-cols-2 mt-16 shadow-md  sm:border-1 sm:rounded-4 ">
 					<TableProject actionLoading={actionLoading} entitiesDetail={entitiesDetail} />
+					<div style={{ minheight: '600px' }}> Sơ đồ gantt </div>
 				</div>
 			</FuseAnimate>
 		</div>
