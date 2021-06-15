@@ -55,7 +55,7 @@ const DtpCustomStyles = makeStyles(theme => ({
 	},
 	TableContainer: {
 		[theme.breakpoints.up('lg')]: {
-			maxHeight: '410px'
+			maxHeight: '460px'
 		},
 		[theme.breakpoints.up('xl')]: {
 			maxHeight: '580px'

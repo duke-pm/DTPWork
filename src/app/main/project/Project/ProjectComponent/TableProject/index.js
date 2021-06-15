@@ -232,7 +232,7 @@ function TableProject(props) {
 							/>
 						)
 				}}
-				scroll={{ x: 1090, y: matches ? 580 : 410 }}
+				scroll={{ x: 1090, y: matches ? 580 : 460 }}
 				pagination={false}
 				columns={columns}
 				dataSource={entitiesDetail.listTask}

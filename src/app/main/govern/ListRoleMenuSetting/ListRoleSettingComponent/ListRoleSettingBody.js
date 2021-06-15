@@ -99,7 +99,7 @@ export default function ListRoleSettingBody({ entities, newData, setNewData, act
 				className="virtual-table"
 				pagination={false}
 				columns={column}
-				scroll={{ y: matches ? 580 : 410 }}
+				scroll={{ y: matches ? 580 : 460 }}
 				loading={actionLoading}
 				rowKey="menuID"
 				onExpandedRowsChange={onSelectedRowKeysChange}
