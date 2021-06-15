@@ -58,7 +58,7 @@ export default function FormCustomProjectTask({
 			>
 				{({ handleSubmit, isSubmitting }) => (
 					<Form>
-						<div className="px-16 sm:px-24">
+						<div className=" mt-8 px-16 sm:px-24">
 							<div className="grid grid-cols-1 gap-8 ">
 								<Field
 									label="Task name"
@@ -128,6 +128,17 @@ export default function FormCustomProjectTask({
 							<Divider className="mb-16" />
 							<div className="grid grid-cols-1 sm:grid-cols-2 gap-16 ">
 								<Field
+									label="Percentage"
+									name="percentage"
+									width="60%"
+									type="number"
+									component={AntInput}
+									position="right"
+									className="mx-4"
+								/>
+							</div>
+							<div className="grid grid-cols-1 sm:grid-cols-2 gap-16 ">
+								<Field
 									label="Grade"
 									name="grade"
 									width="60%"
@@ -187,7 +198,7 @@ export default function FormCustomProjectTask({
 									className="mx-4"
 								/>
 							</div>
-							{entitiesEdit && entitiesEdit.taskID && (
+							{entitiesEdit && entitiesEdit.taskID && entitiesEdit.typeName === 'TASK' && (
 								<div className="grid grid-cols-1 gap-8">
 									<Field
 										label="Status"
@@ -204,7 +215,10 @@ export default function FormCustomProjectTask({
 							</div>
 							<Divider className="mb-16" />
 							<div className="grid grid-cols-1 gap-8 ">
-								{entitiesEdit && entitiesEdit.attachFiles.length > 0 && fileCheck ? (
+								{entitiesEdit &&
+								entitiesEdit.attachFiles &&
+								entitiesEdit.attachFiles.length > 0 &&
+								fileCheck ? (
 									<div className="flex flex-row justify-between">
 										<div className="flex flex-row">
 											<Avatar

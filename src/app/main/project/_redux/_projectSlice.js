@@ -7,6 +7,7 @@ const inititalState = {
 	entitiesEdit: null,
 	entitiesAll: [],
 	entitiesDetail: [],
+	entitiesGantt: [],
 	entitiesView: null,
 	total_count: 0,
 	total_item: null,
@@ -84,6 +85,12 @@ export const projectSlice = createSlice({
 			state.listLoading = false;
 			state.actionLoading = false;
 			state.entitiesDetail = dataRes;
+		},
+		fetchTaskDetailAll: (state, action) => {
+			const { newData } = action.payload;
+			state.listLoading = false;
+			state.actionLoading = false;
+			state.entitiesGantt = newData;
 		},
 		fetchTaskView: (state, action) => {
 			const { dataRes } = action.payload;

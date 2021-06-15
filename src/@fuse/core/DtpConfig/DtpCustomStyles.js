@@ -54,20 +54,29 @@ const DtpCustomStyles = makeStyles(theme => ({
 		overflowX: 'auto'
 	},
 	TableContainer: {
+		// [theme.breakpoints.up('lg')]: {
+		// 	maxHeight: '460px'
+		// },
+		// [theme.breakpoints.up('xl')]: {
+		// 	maxHeight: '580px'
+		// }
+	},
+	Acitivity: {
 		[theme.breakpoints.up('lg')]: {
-			maxHeight: '460px'
+			height: '400px'
 		},
 		[theme.breakpoints.up('xl')]: {
-			maxHeight: '580px'
+			height: '640px'
 		}
 	},
-	TableAntd: {
-		[theme.breakpoints.up('lg')]: {
-			maxHeight: '410'
-		},
-		[theme.breakpoints.up('xl')]: {
-			maxHeight: '580'
-		}
+	containerGrantt: {
+		position: 'relative',
+		marginTop: 16
+	},
+	gantt: {
+		position: 'absolute',
+		width: '100%',
+		height: 'auto'
 	},
 	modal: {
 		display: 'flex',
@@ -80,6 +89,9 @@ const DtpCustomStyles = makeStyles(theme => ({
 	},
 	widthContent: {
 		width: '60%'
+	},
+	DrawerFormInput: {
+		width: '700px'
 	},
 	paper: {
 		backgroundColor: theme.palette.background.paper,

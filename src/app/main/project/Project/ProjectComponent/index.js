@@ -1,8 +1,9 @@
+import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import FuseLoading from '@fuse/core/FuseLoading';
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
-import { useStyles } from '../../Projects/styleProject';
+import { FrappeGantt } from 'frappe-gantt-react';
 import ActionHeaderProject from './ActionProjectComponent/ActionHeaderProject';
 import DrawerComponent from './DrawerComponent';
 import FormProjectDrawer from './FormProject';
@@ -17,9 +18,9 @@ export default function ProjectComponent({
 	taskSub,
 	params
 }) {
-	const classes = useStyles();
+	const classes = DtpCustomStyles();
 	const { currentState } = useSelector(state => ({ currentState: state.project }), shallowEqual);
-	const { entitiesDetail, listLoading, actionLoading } = currentState;
+	const { entitiesDetail, listLoading, actionLoading, entitiesGantt } = currentState;
 	if (listLoading) {
 		return <FuseLoading />;
 	}
@@ -34,12 +35,24 @@ export default function ProjectComponent({
 				ArrProjectStatus={ArrProjectStatus}
 				ArrTaskPri={ArrTaskPri}
 				params={params}
+				classes={classes}
 			/>
 			<ActionHeaderProject entitiesDetail={entitiesDetail} classes={classes} />
 			<FuseAnimate animation="transition.slideUpIn" delay={200}>
-				<div className="grid grid-cols-1 sm:grid-cols-2 mt-16 shadow-md  sm:border-1 sm:rounded-4 ">
-					<TableProject actionLoading={actionLoading} entitiesDetail={entitiesDetail} />
-					<div style={{ minheight: '600px' }}> Sơ đồ gantt </div>
+				<div className={`grid ${entitiesGantt.length > 0 ? 'grid-cols-2' : 'grid-cols-1'}  gap-8`}>
+					<div className="flex flex-col gap-8 mt-16 shadow-md  sm:border-1 sm:rounded-4 ">
+						<TableProject actionLoading={actionLoading} entitiesDetail={entitiesDetail} />
+					</div>
+					<div className={classes.containerGrantt}>
+						<div style={{ display: entitiesGantt.length === 0 && 'none' }}>
+							{entitiesGantt.length > 0 && (
+								<FrappeGantt
+									tasks={entitiesGantt}
+									onProgressChange={(task, progress) => console.log(task, progress)}
+								/>
+							)}
+						</div>
+					</div>
 				</div>
 			</FuseAnimate>
 		</div>

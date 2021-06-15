@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Badge, Dropdown, Table, Popover, Avatar, Menu } from 'antd';
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
 import { MenuItem, ListItemIcon, Icon, ListItemText, Typography } from '@material-ui/core';
 import AppsIcon from '@material-ui/icons/Apps';
@@ -19,7 +19,17 @@ function TableProject(props) {
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.up('xl'));
 	const { entitiesDetail, actionLoading } = props;
+	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 	const projectContext = useContext(ProjectContext);
+	useEffect(() => {
+		const newEntis = entitiesDetail && entitiesDetail.listTask && entitiesDetail.listTask.map(item => item.taskID);
+		if (newEntis && newEntis.length > 0) {
+			setSelectedRowKeys(newEntis);
+		}
+	}, [entitiesDetail.listTask]);
+	const onSelectedRowKeysChange = selectedRowKey => {
+		setSelectedRowKeys(selectedRowKey);
+	};
 	const { setVisible, visible, setFormProject, formProject } = projectContext;
 	const handleOpenVisible = item => {
 		setVisible(true);
@@ -215,6 +225,8 @@ function TableProject(props) {
 				rowKey="taskID"
 				childrenColumnName="lstTaskItem"
 				className="virtual-table"
+				onExpandedRowsChange={onSelectedRowKeysChange}
+				expandedRowKeys={selectedRowKeys}
 				expandable={{
 					expandRowByClick: false,
 					expandIconAsCell: false,
@@ -232,7 +244,10 @@ function TableProject(props) {
 							/>
 						)
 				}}
-				scroll={{ x: 1090, y: matches ? 580 : 460 }}
+				scroll={{
+					x: entitiesDetail.listTask && entitiesDetail.listTask.length > 0 ? (matches ? 1200 : 1300) : null,
+					y: null
+				}}
 				pagination={false}
 				columns={columns}
 				dataSource={entitiesDetail.listTask}

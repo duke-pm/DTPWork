@@ -26,6 +26,9 @@ function TableProject(props) {
 		setTitle(type);
 		dispatch(actions.setTaskEditProject(item));
 	};
+	const handleDelteProject = item => {
+		dispatch(actions.deleteProject(item.prjID));
+	};
 	const handleDetail = item => {
 		if (item.countChild === 0) {
 			props.history.push(`/quan-ly-du-an/${item.prjID}`);
@@ -62,6 +65,14 @@ function TableProject(props) {
 											<Icon>visibility</Icon>
 										</ListItemIcon>
 										<ListItemText primary="Open detail view" />
+									</MenuItem>
+								)}
+								{item.countChild === 0 && (
+									<MenuItem onClick={() => handleDelteProject(item)} role="button">
+										<ListItemIcon className="min-w-40">
+											<Icon>delete</Icon>
+										</ListItemIcon>
+										<ListItemText primary="Delete project" />
 									</MenuItem>
 								)}
 							</>
@@ -178,7 +189,7 @@ function TableProject(props) {
 				}}
 				childrenColumnName="lstProjectItem"
 				pagination={false}
-				scroll={{ x: 1540, y: matches ? 580 : 460 }}
+				scroll={{ x: 1540 }}
 				columns={columns}
 				dataSource={entities}
 			/>{' '}

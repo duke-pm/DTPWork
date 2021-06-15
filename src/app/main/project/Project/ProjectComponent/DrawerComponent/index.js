@@ -1,8 +1,8 @@
-import { Badge, Drawer } from 'antd';
+import { Badge } from 'antd';
 import React, { useContext, useState } from 'react';
-import { Tabs, Tab, Box, makeStyles } from '@material-ui/core';
+import { Tabs, Tab, Box, makeStyles, Drawer, AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
 import { shallowEqual, useSelector } from 'react-redux';
-import { CloseOutlined } from '@material-ui/icons';
+import CloseIcon from '@material-ui/icons/Close';
 import { ProjectContext } from '../../ProjectContext';
 import DrawerActivity from './DrawerActivity';
 import DrawerWatchers from './DrawerWatchers';
@@ -25,7 +25,7 @@ function TabPanel(props) {
 			aria-labelledby={`scrollable-auto-tab-${index}`}
 			{...other}
 		>
-			{value === index && <Box p={1}>{children}</Box>}
+			{value === index && <Box p={3}>{children}</Box>}
 		</div>
 	);
 }
@@ -36,6 +36,9 @@ const useStyles = makeStyles(theme => ({
 		display: 'flex',
 		alignItems: 'center',
 		borderBottom: `1px solid ${theme.palette.divider}`
+	},
+	DrawerFormInput: {
+		width: '660px'
 	}
 }));
 export default function DrawerComponent() {
@@ -53,73 +56,72 @@ export default function DrawerComponent() {
 		setTabs(newValue);
 	};
 	return (
-		<div className="site-drawer-render-in-current-wrapper">
-			<Drawer
-				width={580}
-				placement="right"
-				closeIcon={<CloseOutlined />}
-				closable
-				onClose={closeVisible}
-				visible={visible}
-				getContainer={false}
-				style={{ position: 'absolute', display: !visible && 'none' }}
-			>
-				<div className={classes.toolbar}>
-					<Tabs
-						classes={{ root: 'w-full h-64' }}
-						value={tab}
-						onChange={handleChange}
-						indicatorColor="primary"
-						textColor="primary"
-						variant="scrollable"
-						scrollButtons="auto"
-						aria-label="scrollable auto tabs example"
-					>
-						<Tab className="font-sans" label="Overview" {...a11yProps(0)} />
-						<Tab
-							className="font-sans"
-							label={
-								<Badge
-									offset={[14]}
-									count={
-										entitiesView && entitiesView.activities ? entitiesView.activities.length : null
-									}
-									className="site-badge-count-4"
-								>
-									{' '}
-									Activity{' '}
-								</Badge>
-							}
-							{...a11yProps(1)}
-						/>
-						<Tab
-							className="font-sans"
-							label={
-								<Badge
-									offset={[14]}
-									count={entitiesView && entitiesView.watcher ? entitiesView.watcher.length : null}
-									className="site-badge-count-4"
-								>
-									{' '}
-									Watchers{' '}
-								</Badge>
-							}
-							{...a11yProps(2)}
-						/>{' '}
-					</Tabs>
-				</div>
-				<div>
-					<TabPanel value={tab} index={0}>
-						<DrawerOverView closeVisible={closeVisible} />
-					</TabPanel>
-					<TabPanel value={tab} index={1}>
-						<DrawerActivity />
-					</TabPanel>
-					<TabPanel value={tab} index={2}>
-						<DrawerWatchers />
-					</TabPanel>
-				</div>
-			</Drawer>
-		</div>
+		// <div className="site-drawer-render-in-current-wrapper">
+		<Drawer anchor="right" onClose={closeVisible} open={visible} classes={{ paper: classes.DrawerFormInput }}>
+			<AppBar position="static" className="shadow-md">
+				<Toolbar className="flex w-full">
+					<IconButton edge="start" color="inherit" onClick={closeVisible} aria-label="close">
+						<CloseIcon />
+					</IconButton>
+					<Typography variant="subtitle1" color="inherit">
+						Overview
+					</Typography>
+				</Toolbar>
+			</AppBar>
+			<div className={classes.toolbar}>
+				<Tabs
+					classes={{ root: 'w-full h-64' }}
+					value={tab}
+					onChange={handleChange}
+					indicatorColor="primary"
+					textColor="primary"
+					variant="scrollable"
+					scrollButtons="auto"
+					aria-label="scrollable auto tabs example"
+				>
+					<Tab className="font-sans" label="Overview" {...a11yProps(0)} />
+					<Tab
+						className="font-sans"
+						label={
+							<Badge
+								offset={[14]}
+								count={entitiesView && entitiesView.activities ? entitiesView.activities.length : null}
+								className="site-badge-count-4"
+							>
+								{' '}
+								Activity{' '}
+							</Badge>
+						}
+						{...a11yProps(1)}
+					/>
+					<Tab
+						className="font-sans"
+						label={
+							<Badge
+								offset={[14]}
+								count={entitiesView && entitiesView.watcher ? entitiesView.watcher.length : null}
+								className="site-badge-count-4"
+							>
+								{' '}
+								Watchers{' '}
+							</Badge>
+						}
+						{...a11yProps(2)}
+					/>{' '}
+				</Tabs>
+			</div>
+			<div>
+				<TabPanel value={tab} index={0}>
+					<DrawerOverView closeVisible={closeVisible} />
+				</TabPanel>
+				<TabPanel value={tab} index={1}>
+					<DrawerActivity />
+				</TabPanel>
+				<TabPanel value={tab} index={2}>
+					<DrawerWatchers />
+				</TabPanel>
+			</div>
+		</Drawer>
+		// </div>
 	);
 }
