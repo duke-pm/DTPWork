@@ -17,6 +17,7 @@ export default function ListRoleSettingPage() {
 	return (
 		<>
 			<FusePageCarded
+				innerScroll
 				classes={{
 					// content: 'flex',
 					header: 'min-h-10 h-10	sm:h-16 sm:min-h-16'
