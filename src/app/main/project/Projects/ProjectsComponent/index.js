@@ -8,7 +8,7 @@ import TableProject from './TableProject';
 
 export default function ProjectComponent() {
 	const { currentState } = useSelector(state => ({ currentState: state.project }), shallowEqual);
-	const { entities, listLoading } = currentState;
+	const { entities, listLoading, actionLoading } = currentState;
 	const classes = DtpCustomStyles();
 	if (listLoading) {
 		return <FuseLoading />;
@@ -18,7 +18,7 @@ export default function ProjectComponent() {
 			<ActionHeaderProject classes={classes} />
 			<FuseAnimate animation="transition.slideUpIn" delay={200}>
 				<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
-					<TableProject classes={classes} entities={entities} />
+					<TableProject actionLoading={actionLoading} classes={classes} entities={entities} />
 				</div>
 			</FuseAnimate>
 		</div>

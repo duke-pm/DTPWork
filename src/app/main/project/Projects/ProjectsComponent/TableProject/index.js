@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Badge, Checkbox, Table, Popover, Avatar } from 'antd';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
 import { MenuItem, ListItemIcon, Icon, ListItemText, Typography } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -13,12 +13,16 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { ProjectContext } from '../../ProjectContext';
 import * as actions from '../../../_redux/_projectActions';
 import { badgeStatus, badgeText } from '../ConfigTableProject';
+import DeleteProjectAction from '../ActionProjectComponent/DeleteProjectAction';
 
 function TableProject(props) {
 	const theme = useTheme();
-	const matches = useMediaQuery(theme.breakpoints.up('xl'));
 	const dispatch = useDispatch();
 	const { entities, classes } = props;
+	const [itemDelete, setItemDelete] = useState({
+		item: null,
+		open: false
+	});
 	const projectContext = useContext(ProjectContext);
 	const { setFormProject, setTitle } = projectContext;
 	const handleOpenFormProject = (item, type) => {
@@ -26,14 +30,21 @@ function TableProject(props) {
 		setTitle(type);
 		dispatch(actions.setTaskEditProject(item));
 	};
-	const handleDelteProject = item => {
-		dispatch(actions.deleteProject(item.prjID));
-	};
 	const handleDetail = item => {
 		if (item.countChild === 0) {
 			props.history.push(`/quan-ly-du-an/${item.prjID}`);
 		}
 	};
+	const handlDeleteItem = item =>
+		setItemDelete({
+			open: true,
+			item
+		});
+	const handleCloseDelete = () =>
+		setItemDelete({
+			open: false,
+			item: null
+		});
 	const columns = [
 		{
 			title: <AppsIcon />,
@@ -68,7 +79,7 @@ function TableProject(props) {
 									</MenuItem>
 								)}
 								{item.countChild === 0 && (
-									<MenuItem onClick={() => handleDelteProject(item)} role="button">
+									<MenuItem onClick={() => handlDeleteItem(item)} role="button">
 										<ListItemIcon className="min-w-40">
 											<Icon>delete</Icon>
 										</ListItemIcon>
@@ -167,7 +178,11 @@ function TableProject(props) {
 
 	return (
 		<>
-			{' '}
+			<DeleteProjectAction
+				actionLoading={props.actionLoading}
+				handleCloseDelete={handleCloseDelete}
+				itemDelete={itemDelete}
+			/>{' '}
 			<Table
 				rowKey="prjID"
 				expandable={{
