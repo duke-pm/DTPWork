@@ -43,7 +43,7 @@ export default function FormConfirmGobal() {
 		const status = false;
 		dispatch(actions.requestApproveResolve(entitiesEdit, status, values)).then(data => {
 			if (!data.isError) {
-				notificationConfig('success', 'Thành công', 'Xác nhận không phê duyệt thành công');
+				notificationConfig('success', 'Thành công', 'Xác nhận không phê duyệt');
 				handleClose();
 				setDialogAllocation(false);
 				setDialogCorrupt(false);

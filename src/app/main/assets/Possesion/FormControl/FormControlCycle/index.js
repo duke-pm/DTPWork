@@ -21,7 +21,7 @@ export default function FormControlCycle() {
 	const handleSubmitCycle = values => {
 		dispatch(actions.assetReuse(values, entitiesEdit)).then(data => {
 			if (data && !data.isError) {
-				notificationConfig('success', 'Thành công', 'Đưa vào sử dụng lại thành công');
+				notificationConfig('success', 'Thành công', 'Tài sản được đưa vào để tái sử dụng.');
 				handleCloseFormCycle();
 			}
 		});
