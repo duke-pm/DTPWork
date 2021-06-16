@@ -76,13 +76,13 @@ function TableProject(props) {
 								</MenuItem>
 								{item.isModified && (
 									<>
-										<MenuItem role="button">
+										{/* <MenuItem role="button">
 											<ListItemIcon className="min-w-40">
 												<Icon>redo</Icon>
 											</ListItemIcon>
 											<ListItemText primary="Change project" />
-										</MenuItem>
-										<MenuItem role="button">
+										</MenuItem> */}
+										<MenuItem onClick={() => handleEditForm(item, 'New task')} role="button">
 											<ListItemIcon className="min-w-40">
 												<Icon>file_copy</Icon>
 											</ListItemIcon>
@@ -94,12 +94,12 @@ function TableProject(props) {
 											</ListItemIcon>
 											<ListItemText primary="Delete" />
 										</MenuItem>
-										<MenuItem role="button">
+										{/* <MenuItem role="button">
 											<ListItemIcon className="min-w-40">
 												<Icon>event_note</Icon>
 											</ListItemIcon>
 											<ListItemText primary="Create new child" />
-										</MenuItem>{' '}
+										</MenuItem>{' '} */}
 									</>
 								)}
 							</>

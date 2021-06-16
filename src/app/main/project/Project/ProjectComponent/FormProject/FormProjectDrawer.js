@@ -34,7 +34,8 @@ export default function FormCustomProjectTask({
 	inititalValues,
 	entitiesEdit,
 	setListFile,
-	listFile
+	listFile,
+	formProject
 }) {
 	const handleClearFile = () => setFileCheck(false);
 	const handleClearListFile = () => setListFile(null);
@@ -198,18 +199,21 @@ export default function FormCustomProjectTask({
 									className="mx-4"
 								/>
 							</div>
-							{entitiesEdit && entitiesEdit.taskID && entitiesEdit.typeName === 'TASK' && (
-								<div className="grid grid-cols-1 gap-8">
-									<Field
-										label="Status"
-										name="status"
-										position="right"
-										component={SelectAntd}
-										options={ArrProjectStatus}
-										className="mx-4"
-									/>
-								</div>
-							)}
+							{entitiesEdit &&
+								entitiesEdit.taskID &&
+								entitiesEdit.typeName === 'TASK' &&
+								formProject.title !== 'New task' && (
+									<div className="grid grid-cols-1 gap-8">
+										<Field
+											label="Status"
+											name="status"
+											position="right"
+											component={SelectAntd}
+											options={ArrProjectStatus}
+											className="mx-4"
+										/>
+									</div>
+								)}
 							<div className="flex justify-between flex-row">
 								<h5 className="font-extrabold">FILES</h5>
 							</div>

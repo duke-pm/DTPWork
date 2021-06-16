@@ -84,12 +84,26 @@ export default function FormProjectDrawer({
 	const { entitiesEdit, actionLoading } = currentState;
 	const handleSubmitForm = values => {
 		if (entitiesEdit && entitiesEdit.taskID) {
-			dispatch(actions.updatedTask(values)).then(data => {
-				if (data && !data.isError) {
-					notificationConfig('success', 'Success', 'Updated task success');
-					handleCloseFormProject();
-				}
-			});
+			if (formProject.title === 'Setting task') {
+				dispatch(actions.updatedTask(values)).then(data => {
+					if (data && !data.isError) {
+						notificationConfig('success', 'Success', 'Updated task success');
+						handleCloseFormProject();
+					}
+				});
+			} else {
+				const TaskType = {
+					1: 'Phase',
+					2: 'Task',
+					3: 'Miltestone'
+				};
+				dispatch(actions.createdTask(values, params.detail, TaskType[values.taskType])).then(data => {
+					if (data && !data.isError) {
+						notificationConfig('success', 'Success', 'Created task success');
+						handleCloseFormProject();
+					}
+				});
+			}
 		} else {
 			dispatch(actions.createdTask(values, params.detail, formProject.title)).then(data => {
 				if (data && !data.isError) {
@@ -153,6 +167,7 @@ export default function FormProjectDrawer({
 				ArrProjectStatus={ArrProjectStatus}
 				ArrTaskPri={ArrTaskPri}
 				actionLoading={actionLoading}
+				formProject={formProject}
 				handleSubmitForm={handleSubmitForm}
 				handleCloseFormProject={handleCloseFormProject}
 			/>

@@ -9,6 +9,7 @@ export default function ProjectContextProvider({ children }) {
 	});
 	const [visible, setVisible] = useState(false);
 	const [search, setSearch] = useState('');
+	const [gantt, setGantt] = useState(true);
 	const valueMemo = useMemo(() => {
 		return {
 			formProject,
@@ -16,8 +17,10 @@ export default function ProjectContextProvider({ children }) {
 			search,
 			setSearch,
 			visible,
-			setVisible
+			setVisible,
+			gantt,
+			setGantt
 		};
-	}, [formProject, setFormProject, search, setSearch, visible, setVisible]);
+	}, [formProject, setFormProject, search, setSearch, visible, setVisible, gantt, setGantt]);
 	return <ProjectContext.Provider value={valueMemo}>{children}</ProjectContext.Provider>;
 }

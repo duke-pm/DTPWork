@@ -13,7 +13,7 @@ const initial = {
 	qty: 1,
 	assetGroup: '',
 	specification: '',
-	suppiler: '',
+	suppiler: null,
 	purchaseDate: moment(Date.now()),
 	warrantyPeriod: '',
 	effectiveDate: moment(Date.now()),
@@ -117,7 +117,7 @@ function FormCustomAll({ handleClose, open, rowPage }) {
 		newIntialState = {
 			assetID: entitiesEdit && entitiesEdit.assetID,
 			assetName: entitiesEdit && entitiesEdit.assetName,
-			suppiler: entitiesEdit && entitiesEdit.suppiler && entitiesEdit.suppiler === 0 ? '' : entitiesEdit.suppiler,
+			suppiler: entitiesEdit && entitiesEdit.suppiler === 0 ? null : entitiesEdit.suppiler,
 			descr: entitiesEdit && entitiesEdit.descr,
 			purchaseDate: entitiesEdit && entitiesEdit.purchaseDate,
 			effectiveDate: entitiesEdit && entitiesEdit.effectiveDate,

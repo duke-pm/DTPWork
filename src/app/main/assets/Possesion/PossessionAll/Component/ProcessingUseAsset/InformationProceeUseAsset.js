@@ -20,7 +20,6 @@ export default function InformationProceeUseAsset({ entitiesEdit, actionLoading 
 			setHistory(data.data.listTransHistory);
 		});
 	}, [dispatch, entitiesEdit.assetID]);
-	console.log(history);
 	return (
 		<>
 			<div className="px-16 sm:px-24">
