@@ -22,7 +22,7 @@ export default function FormAssetLiquidation() {
 	const saveWithDraw = values => {
 		dispatch(action.liquidationAsset(values, entitiesEdit, typeliquiAsset)).then(data => {
 			if (data && !data.isError) {
-				notificationConfig('success', 'Thành công!', 'Thanh lý tài sản thành công');
+				notificationConfig('success', 'Thành công!', 'Tài sản đã được thanh lý');
 				setLiquiAsset(false);
 			}
 		});

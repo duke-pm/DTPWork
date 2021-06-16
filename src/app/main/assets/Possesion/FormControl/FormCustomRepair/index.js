@@ -22,7 +22,7 @@ export default function FormCustomService() {
 	const handleSubmitRepairService = values => {
 		dispatch(actions.repairPossesion(values, entitiesEdit, typeFormService)).then(data => {
 			if (data && !data.isError) {
-				notificationConfig('success', 'Thành công', 'Sửa chữa bảo hành thành công');
+				notificationConfig('success', 'Thành công', 'Tài sản đã được ghi nhận sửa chữa bảo hành');
 				handleClose();
 			}
 		});

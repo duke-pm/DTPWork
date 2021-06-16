@@ -29,7 +29,7 @@ export default function ListRoleSettingContent() {
 		if (groupUser) {
 			dispatch(actions.updatedRoleUser(newData, userID, groupUser)).then(data => {
 				if (data && !data.isError) {
-					notificationConfig('success', 'Thành công', 'Cập nhật quyền thành công.');
+					notificationConfig('success', 'Thành công', 'Cập nhật thành công.');
 				} else {
 					dispatch(actions.fetchsListFilterRole(groupUser, userID));
 				}
