@@ -91,7 +91,11 @@ const DtpCustomStyles = makeStyles(theme => ({
 		width: '60%'
 	},
 	DrawerFormInput: {
-		width: '700px'
+		width: '700px',
+		zIndex: 20
+	},
+	Drawer: {
+		zIndex: '150 !important'
 	},
 	paper: {
 		backgroundColor: theme.palette.background.paper,

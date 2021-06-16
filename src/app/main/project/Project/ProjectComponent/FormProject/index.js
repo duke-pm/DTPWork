@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { notificationConfig } from '@fuse/core/DtpConfig';
 import * as moment from 'moment';
-import { Drawer, AppBar, IconButton, Toolbar, Typography } from '@material-ui/core';
+import { Drawer, AppBar, IconButton, Toolbar, Typography, SwipeableDrawer } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { ProjectContext } from '../../ProjectContext';
 import * as actions from '../../../_redux/_projectActions';
@@ -122,6 +122,7 @@ export default function FormProjectDrawer({
 	};
 	return (
 		<Drawer
+			className={classes.Drawer}
 			anchor="right"
 			title={entitiesEdit && entitiesEdit.taskID ? formProject.title : `New ${formProject.title}`}
 			onClose={handleCloseFormProject}
