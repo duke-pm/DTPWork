@@ -62,7 +62,7 @@ export default function FormCustomProject({
 							<div className="px-16 sm:px-24">
 								<div className="grid grid-cols-1 gap-8 ">
 									<Field
-										label="Project name"
+										label="Project Name"
 										hasFeedback
 										type="text"
 										name="prjName"
@@ -113,6 +113,7 @@ export default function FormCustomProject({
 										value={initial.isPublic}
 										component={CheckboxAntd}
 										className="mx-4"
+										top="20px"
 									/>
 									{/* {title === 'Settings' && (
 										<Field
