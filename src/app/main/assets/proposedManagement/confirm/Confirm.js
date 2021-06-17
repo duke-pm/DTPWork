@@ -88,6 +88,7 @@ function PossesionPage(props) {
 			/>
 			<FormCustomCorrupt open={formControl} handleClose={handleCloseForm} />
 			<FusePageCarded
+				innerScroll
 				classes={{
 					// content: 'flex',
 					header: 'min-h-10 h-10	sm:h-16 sm:min-h-16'

@@ -42,7 +42,9 @@ export const chipColor = {
 	3: 'bg-orange text-black',
 	4: 'bg-purple text-white',
 	5: 'bg-red-700 text-white',
-	6: 'bg-yellow-900 text-white'
+	6: 'bg-yellow-900 text-white',
+	7: 'bg-yellow-500 text-black',
+	8: 'bg-blue-800 text-white'
 };
 export const chipText = {
 	1: 'Chưa sử dụng',
@@ -50,5 +52,6 @@ export const chipText = {
 	3: 'Sửa chữa-bảo hành',
 	4: 'Báo hư hỏng',
 	5: 'Báo mất ',
-	6: 'Thanh lý'
+	6: 'Thanh lý',
+	7: 'Thu hồi'
 };

@@ -9,14 +9,12 @@ import { useDispatch } from 'react-redux';
 import AppsIcon from '@material-ui/icons/Apps';
 import * as moment from 'moment';
 import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { ProjectContext } from '../../ProjectContext';
 import * as actions from '../../../_redux/_projectActions';
 import { badgeStatus, badgeText } from '../ConfigTableProject';
 
 function TableProject(props) {
 	const theme = useTheme();
-	const matches = useMediaQuery(theme.breakpoints.up('xl'));
 	const dispatch = useDispatch();
 	const { entities, classes } = props;
 	const projectContext = useContext(ProjectContext);
@@ -25,6 +23,9 @@ function TableProject(props) {
 		setFormProject(true);
 		setTitle(type);
 		dispatch(actions.setTaskEditProject(item));
+	};
+	const handleDelteProject = item => {
+		dispatch(actions.deleteProject(item.prjID));
 	};
 	const handleDetail = item => {
 		if (item.countChild === 0) {
@@ -62,6 +63,14 @@ function TableProject(props) {
 											<Icon>visibility</Icon>
 										</ListItemIcon>
 										<ListItemText primary="Open detail view" />
+									</MenuItem>
+								)}
+								{item.countChild === 0 && (
+									<MenuItem onClick={() => handleDelteProject(item)} role="button">
+										<ListItemIcon className="min-w-40">
+											<Icon>delete</Icon>
+										</ListItemIcon>
+										<ListItemText primary="Delete project" />
 									</MenuItem>
 								)}
 							</>
@@ -156,7 +165,6 @@ function TableProject(props) {
 
 	return (
 		<>
-			{' '}
 			<Table
 				rowKey="prjID"
 				expandable={{
@@ -165,12 +173,12 @@ function TableProject(props) {
 					expandIconColumnIndex: 1,
 					expandIcon: ({ expanded, onExpand, record, expandable }) =>
 						expandable.length === 0 ? null : expanded ? (
-							<CaretDownOutlined
+							<CaretUpOutlined
 								onClick={e => onExpand(record, e)}
 								style={{ marginRight: '8px !important', fontSize: '10pt' }}
 							/>
 						) : (
-							<CaretUpOutlined
+							<CaretDownOutlined
 								onClick={e => onExpand(record, e)}
 								style={{ marginRight: '8px !important', fontSize: '10pt' }}
 							/>
@@ -178,7 +186,7 @@ function TableProject(props) {
 				}}
 				childrenColumnName="lstProjectItem"
 				pagination={false}
-				scroll={{ x: 1540, y: matches ? 580 : 460 }}
+				scroll={{ x: 1540 }}
 				columns={columns}
 				dataSource={entities}
 			/>{' '}

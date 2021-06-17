@@ -6,6 +6,9 @@ const fetchOwner = '/api/User/GetListByUserLogin';
 export const fetchsProject = params => {
 	return request(`${url}/GetList`, { params });
 };
+export const deleteProject = params => {
+	return request(`${url}/Delete`, { params });
+};
 
 export const projectModify = data => {
 	return request({
@@ -36,16 +39,18 @@ export const addTaskWatch = data => {
 	});
 };
 export const updateStatusTask = params => {
-	return request(`${urlDetail}/UpdateStatus`, { params });
+	// return request(`${urlDetail}/UpdateTaskInfo`, { params });
+	return request({
+		method: 'PUT',
+		url: `${urlDetail}/UpdateTaskInfo`,
+		data: params
+	});
 };
 export const getTaskViewDetail = params => {
 	return request(`${urlDetail}/GetByID`, { params });
 };
 export const fetchProjectDetail = params => {
 	return request(`${urlDetail}/GetList`, { params });
-};
-export const deleteProject = params => {
-	return request.get(`${url}`, { params });
 };
 export const getOwner = () => {
 	return request.get(`${fetchOwner}`);
@@ -55,4 +60,7 @@ export const getProjectSub = () => {
 };
 export const getTaskSub = params => {
 	return request.get(`${urlDetail}/GetListForSub`, { params });
+};
+export const getTaskDetailAll = params => {
+	return request.get(`${urlDetail}/GetListAll`, { params });
 };

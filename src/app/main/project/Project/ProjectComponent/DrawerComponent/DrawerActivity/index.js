@@ -6,6 +6,7 @@ import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import { sliceString } from '@fuse/core/DtpConfig';
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import FuseScrollbars from '@fuse/core/FuseScrollbars';
+import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import { addTaskActivity } from '../../../../_redux/_projectActions';
 
 const { TextArea } = Input;
@@ -16,11 +17,11 @@ export default function DrawerActivity() {
 	const { entitiesView } = currentState;
 	const chatRef = useRef(null);
 	const [comment, setComment] = useState('');
-	const clearCommnent = () => setComment('');
 	const submitComment = () => {
 		dispatch(addTaskActivity(entitiesView.detail.taskID, comment));
 		setComment('');
 	};
+	const classes = DtpCustomStyles();
 	useEffect(() => {
 		if (entitiesView.activities) {
 			scrollToBottom();
@@ -38,8 +39,8 @@ export default function DrawerActivity() {
 				</p>
 			</div>
 			<Divider />
-			<div style={{ height: '260px' }}>
-				<FuseScrollbars ref={chatRef} className="flex-col overflow-y-auto max-h-256 ">
+			<div style={{ height: classes.Acitivity }}>
+				<FuseScrollbars ref={chatRef} className="flex-col overflow-y-auto xl:max-h-512 max-h-320">
 					<FuseAnimateGroup
 						enter={{
 							animation: 'transition.slideUpBigIn'
@@ -91,9 +92,6 @@ export default function DrawerActivity() {
 			<div className="flex flex-row justify-end mt-8">
 				<Button onClick={submitComment} variant="contained" className="mr-8" color="primary">
 					Save
-				</Button>{' '}
-				<Button onClick={clearCommnent} variant="contained" color="secondary">
-					Cancel
 				</Button>{' '}
 			</div>
 		</div>

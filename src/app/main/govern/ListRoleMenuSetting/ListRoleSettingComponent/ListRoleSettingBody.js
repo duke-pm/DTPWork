@@ -6,12 +6,12 @@ import __ from 'lodash';
 import { findIndexMultiple, findIndexMultipleAsset } from '@fuse/core/DtpConfig';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 import { Typography } from '@material-ui/core';
-import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+// import { useTheme } from '@material-ui/core/styles';
+// import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 export default function ListRoleSettingBody({ entities, newData, setNewData, actionLoading }) {
-	const theme = useTheme();
-	const matches = useMediaQuery(theme.breakpoints.up('xl'));
+	// const theme = useTheme();
+	// const matches = useMediaQuery(theme.breakpoints.up('xl'));
 	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 	useEffect(() => {
 		const newEntis = entities && entities.map(item => item.menuID);
@@ -99,7 +99,7 @@ export default function ListRoleSettingBody({ entities, newData, setNewData, act
 				className="virtual-table"
 				pagination={false}
 				columns={column}
-				scroll={{ y: matches ? 580 : 460 }}
+				// scroll={{ y: matches ? 580 : 460 }}
 				loading={actionLoading}
 				rowKey="menuID"
 				onExpandedRowsChange={onSelectedRowKeysChange}
@@ -111,12 +111,12 @@ export default function ListRoleSettingBody({ entities, newData, setNewData, act
 					expandIconColumnIndex: 0,
 					expandIcon: ({ expanded, onExpand, record, expandable }) =>
 						expandable.length === 0 ? null : expanded ? (
-							<CaretDownOutlined
+							<CaretUpOutlined
 								onClick={e => onExpand(record, e)}
 								style={{ marginRight: '8px !important', fontSize: '10pt' }}
 							/>
 						) : (
-							<CaretUpOutlined
+							<CaretDownOutlined
 								onClick={e => onExpand(record, e)}
 								style={{ marginRight: '8px !important', fontSize: '10pt' }}
 							/>

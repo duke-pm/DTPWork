@@ -72,7 +72,10 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 													{entitiesEdit &&
 														moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY')}{' '}
 												</p>
-												<p className="p-6 font-extrabold"> Tình trạng </p>
+												<p className="p-6 font-extrabold">
+													{' '}
+													{entitiesEdit && entitiesEdit.statusName}{' '}
+												</p>
 												<p className="p-6 font-extrabold">
 													{' '}
 													{entitiesEdit && entitiesEdit.descr}{' '}

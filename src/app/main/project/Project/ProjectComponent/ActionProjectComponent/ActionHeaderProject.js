@@ -4,13 +4,14 @@ import React, { useContext } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import { useDispatch } from 'react-redux';
 import { Popover } from 'antd';
+import AppsIcon from '@material-ui/icons/Apps';
 import { ProjectContext } from '../../ProjectContext';
 import { setTaskEditProject, fetchsProjectFilter } from '../../../_redux/_projectActions';
 
 export default function ActionHeaderProject({ classes }) {
 	const dispatch = useDispatch();
 	const projectContext = useContext(ProjectContext);
-	const { setFormProject, search, setSearch, formProject } = projectContext;
+	const { setFormProject, search, setSearch, formProject, setGantt } = projectContext;
 	const handleOpenFormProject = title => {
 		setFormProject({
 			open: true,
@@ -28,6 +29,7 @@ export default function ActionHeaderProject({ classes }) {
 			dispatch(fetchsProjectFilter(e.target.value));
 		}
 	};
+	const handleOpenGant = () => setGantt(true);
 	return (
 		<div>
 			<FuseAnimateGroup
@@ -37,46 +39,68 @@ export default function ActionHeaderProject({ classes }) {
 			>
 				<div>
 					<div className="flex flex-col sm:flex-row justify-between ">
-						<Popover
-							overlayStyle={{ zIndex: '19', display: formProject.open ? 'none' : '' }}
-							placement="rightTop"
-							content={() => (
-								<>
-									<MenuItem onClick={() => handleOpenFormProject('Task')} role="button">
-										<ListItemText style={{ color: '#108ee9' }} primary="TASK" />
-									</MenuItem>
-									<MenuItem onClick={() => handleOpenFormProject('Miltestone')} role="button">
-										<ListItemText style={{ color: '#87d068' }} primary="MILESTONE" />
-									</MenuItem>
-									<MenuItem onClick={() => handleOpenFormProject('Phase')} role="button">
-										<ListItemText style={{ color: '#f50' }} primary="PHASE" />
-									</MenuItem>
-								</>
-							)}
-							// title="Action"
-						>
-							<Button
-								className="mt-8 sm:mt-0 max-w-sm md:max-w-lg h-26"
-								variant="contained"
-								color="primary"
+						<div className="flex flex-row">
+							<Popover
+								overlayStyle={{ zIndex: '19', display: formProject.open ? 'none' : '' }}
+								placement="bottom"
+								content={() => (
+									<>
+										<MenuItem onClick={handleOpenGant} role="button">
+											<ListItemText primary="Gantt Chart" />
+										</MenuItem>
+									</>
+								)}
+								// title="Action"
 							>
-								<svg
-									className="h-16 w-16"
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
+								<Button
+									className="mt-8 sm:mt-0 max-w-sm md:max-w-lg h-26"
+									variant="contained"
+									color="primary"
 								>
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth={2}
-										d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-									/>
-								</svg>
-								Create
-							</Button>{' '}
-						</Popover>
+									<AppsIcon />
+								</Button>{' '}
+							</Popover>
+							<Popover
+								overlayStyle={{ zIndex: '19', display: formProject.open ? 'none' : '' }}
+								placement="rightTop"
+								content={() => (
+									<>
+										<MenuItem onClick={() => handleOpenFormProject('Task')} role="button">
+											<ListItemText style={{ color: '#108ee9' }} primary="TASK" />
+										</MenuItem>
+										<MenuItem onClick={() => handleOpenFormProject('Miltestone')} role="button">
+											<ListItemText style={{ color: '#87d068' }} primary="MILESTONE" />
+										</MenuItem>
+										<MenuItem onClick={() => handleOpenFormProject('Phase')} role="button">
+											<ListItemText style={{ color: '#f50' }} primary="PHASE" />
+										</MenuItem>
+									</>
+								)}
+								// title="Action"
+							>
+								<Button
+									className="mt-8 ml-16 sm:mt-0 max-w-sm md:max-w-lg h-26"
+									variant="contained"
+									color="primary"
+								>
+									<svg
+										className="h-16 w-16"
+										xmlns="http://www.w3.org/2000/svg"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+									>
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											strokeWidth={2}
+											d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+										/>
+									</svg>
+									Create
+								</Button>{' '}
+							</Popover>
+						</div>
 						<Paper className="w-full sm:w-1/4 flex justify-between ">
 							<InputBase
 								onKeyPress={event => {

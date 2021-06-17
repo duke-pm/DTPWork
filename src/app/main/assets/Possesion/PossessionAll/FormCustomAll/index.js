@@ -13,7 +13,7 @@ const initial = {
 	qty: 1,
 	assetGroup: '',
 	specification: '',
-	suppiler: '',
+	suppiler: null,
 	purchaseDate: moment(Date.now()),
 	warrantyPeriod: '',
 	effectiveDate: moment(Date.now()),
@@ -112,6 +112,22 @@ function FormCustomAll({ handleClose, open, rowPage }) {
 			});
 		}
 	};
+	let newIntialState;
+	if (entitiesEdit) {
+		newIntialState = {
+			assetID: entitiesEdit && entitiesEdit.assetID,
+			assetName: entitiesEdit && entitiesEdit.assetName,
+			suppiler: entitiesEdit && entitiesEdit.suppiler === 0 ? null : entitiesEdit.suppiler,
+			descr: entitiesEdit && entitiesEdit.descr,
+			purchaseDate: entitiesEdit && entitiesEdit.purchaseDate,
+			effectiveDate: entitiesEdit && entitiesEdit.effectiveDate,
+			depreciationPeriod: entitiesEdit && entitiesEdit.depreciationPeriod,
+			warrantyPeriod: entitiesEdit && entitiesEdit.warrantyPeriod,
+			originalPrice: entitiesEdit && entitiesEdit.originalPrice,
+			deptCodeManager: entitiesEdit && entitiesEdit.deptCodeManager,
+			inactive: entitiesEdit && entitiesEdit.inactive
+		};
+	}
 	return (
 		<Dialog style={{ zIndex: 20 }} fullWidth maxWidth="md" aria-labelledby="customized-dialog-title" open={open}>
 			<AppBar position="static" className="shadow-md">
@@ -133,7 +149,7 @@ function FormCustomAll({ handleClose, open, rowPage }) {
 				suppiler={suppiler}
 				actionLoading={actionLoading}
 				saveAsset={saveAsset}
-				initialValue={entitiesEdit && entitiesEdit.assetID ? entitiesEdit : initial}
+				initialValue={entitiesEdit && entitiesEdit.assetID ? newIntialState : initial}
 				handleClose={handleClose}
 			/>
 		</Dialog>

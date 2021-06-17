@@ -14,6 +14,7 @@ const CreateAntField = AntComponent => ({
 	label,
 	selectOptions,
 	submitCount,
+	width,
 	placeholder,
 	handleInputChange,
 	handleOnChangeBlur,
@@ -55,7 +56,7 @@ const CreateAntField = AntComponent => ({
 			</div>
 			<FormItem
 				rules={[{ required: true }]}
-				style={{ width: position && '80%' }}
+				style={{ width: position ? width || '80%' : '100%' }}
 				help={submittedError || touchedError ? hasError : false}
 				validateStatus={submittedError || touchedError ? 'error' : 'success'}
 			>

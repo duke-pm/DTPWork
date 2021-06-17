@@ -15,7 +15,7 @@ export const fetchsListMenuSettings = params => dispatch => {
 			const { data } = res;
 			if (!data.isError) {
 				const dataRes = data.data;
-				const total_result = data.totalPage;
+				const total_result = data.totalRow;
 				dispatch(actions.fetchsListMenuSettings({ dataRes, total_result }));
 			} else {
 				dispatch(actions.catchErrors({ callType: callTypes.list }));
@@ -37,7 +37,7 @@ export const fetchsListMenuSettingAll = params => dispatch => {
 			const { data } = res;
 			if (!data.isError) {
 				const dataRes = data.data;
-				const total_result = data.totalPage;
+				const total_result = data.totalRow;
 				dispatch(actions.fetchsListMenuSettingALl({ dataRes, total_result }));
 			} else {
 				// dispatch(actions.catchErrors({ callType: callTypes.list }));
@@ -63,7 +63,7 @@ export const fetchsListMenuSettingParams = (limit, page, direction, id, search) 
 			const { data } = res;
 			if (!data.isError) {
 				const dataRes = data.data;
-				const total_result = data.totalPage;
+				const total_result = data.totalRow;
 				dispatch(actions.fetchsListMenuSettings({ dataRes, total_result }));
 				dispatch(actions.catchErrors({ callType: callTypes.action }));
 			}

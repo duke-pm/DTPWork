@@ -27,7 +27,7 @@ export const fetchsGroupUser = params => dispatch => {
 			notificationConfig('warning', 'Thất bại', 'Server error');
 		});
 };
-export const filterGroupUser = (page, limit, sortColumn, sortDirection, search) => dispatch => {
+export const filterGroupUser = (limit, page, sortColumn, sortDirection, search) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const paramsRequest = {
 		PageNum: page || 1,

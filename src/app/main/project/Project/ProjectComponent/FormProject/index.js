@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { notificationConfig } from '@fuse/core/DtpConfig';
-import { Drawer } from 'antd';
-import { CloseOutlined } from '@ant-design/icons';
 import * as moment from 'moment';
+import { Drawer, AppBar, IconButton, Toolbar, Typography, SwipeableDrawer } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
 import { ProjectContext } from '../../ProjectContext';
 import * as actions from '../../../_redux/_projectActions';
 import FormCustomProjectTask from './FormProjectDrawer';
@@ -26,7 +26,9 @@ let initial = {
 	taskType: '',
 	prjID: '',
 	file: '',
-	fileEdit: ''
+	fileEdit: '',
+	percentage: '',
+	version: ''
 };
 export default function FormProjectDrawer({
 	owner,
@@ -35,7 +37,8 @@ export default function FormProjectDrawer({
 	ArrTaskPri,
 	ArrTaskComponent,
 	taskSub,
-	params
+	params,
+	classes
 }) {
 	const dispatch = useDispatch();
 	const [fileCheck, setFileCheck] = useState(true);
@@ -65,7 +68,9 @@ export default function FormProjectDrawer({
 			taskType: '',
 			prjID: '',
 			file: '',
-			fileEdit: ''
+			fileEdit: '',
+			percentage: '',
+			version: ''
 		};
 		setListFile(null);
 		setFileCheck(true);
@@ -79,12 +84,26 @@ export default function FormProjectDrawer({
 	const { entitiesEdit, actionLoading } = currentState;
 	const handleSubmitForm = values => {
 		if (entitiesEdit && entitiesEdit.taskID) {
-			dispatch(actions.updatedTask(values)).then(data => {
-				if (data && !data.isError) {
-					notificationConfig('success', 'Success', 'Updated task success');
-					handleCloseFormProject();
-				}
-			});
+			if (formProject.title === 'Setting task') {
+				dispatch(actions.updatedTask(values)).then(data => {
+					if (data && !data.isError) {
+						notificationConfig('success', 'Success', 'Updated task success');
+						handleCloseFormProject();
+					}
+				});
+			} else {
+				const TaskType = {
+					1: 'Phase',
+					2: 'Task',
+					3: 'Miltestone'
+				};
+				dispatch(actions.createdTask(values, params.detail, TaskType[values.taskType])).then(data => {
+					if (data && !data.isError) {
+						notificationConfig('success', 'Success', 'Created task success');
+						handleCloseFormProject();
+					}
+				});
+			}
 		} else {
 			dispatch(actions.createdTask(values, params.detail, formProject.title)).then(data => {
 				if (data && !data.isError) {
@@ -111,40 +130,47 @@ export default function FormProjectDrawer({
 		priority: entitiesEdit && entitiesEdit.priority,
 		project: entitiesEdit ? (entitiesEdit.parentID === 0 ? null : entitiesEdit.parentID) : null,
 		status: entitiesEdit && entitiesEdit.statusID,
-		fileEdit: entitiesEdit && entitiesEdit.attachFiles
+		fileEdit: entitiesEdit && entitiesEdit.attachFiles,
+		percentage: entitiesEdit && entitiesEdit.percentage,
+		version: entitiesEdit && entitiesEdit.version
 	};
 	return (
-		<div className="site-drawer-render-in-current-wrapper">
-			<Drawer
-				width={780}
-				placement="right"
-				title={entitiesEdit && entitiesEdit.taskID ? formProject.title : `New ${formProject.title}`}
-				closeIcon={<CloseOutlined />}
-				closable
-				onClose={handleCloseFormProject}
-				visible={formProject.open}
-				getContainer={false}
-				contentWrapperStyle={{ padding: '0 !important' }}
-				style={{ position: 'absolute', display: !formProject.open && 'none' }}
-			>
-				<FormCustomProjectTask
-					inititalValues={entitiesEdit && entitiesEdit.taskID ? initialEdit : initial}
-					owner={owner}
-					listFile={listFile}
-					setListFile={setListFile}
-					entitiesEdit={entitiesEdit}
-					fileCheck={fileCheck}
-					setFileCheck={setFileCheck}
-					gradeGolbal={gradeGolbal}
-					taskSub={taskSub}
-					ArrTaskComponent={ArrTaskComponent}
-					ArrProjectStatus={ArrProjectStatus}
-					ArrTaskPri={ArrTaskPri}
-					actionLoading={actionLoading}
-					handleSubmitForm={handleSubmitForm}
-					handleCloseFormProject={handleCloseFormProject}
-				/>
-			</Drawer>
-		</div>
+		<Drawer
+			className={classes.Drawer}
+			anchor="right"
+			title={entitiesEdit && entitiesEdit.taskID ? formProject.title : `New ${formProject.title}`}
+			onClose={handleCloseFormProject}
+			open={formProject.open}
+			classes={{ paper: classes.DrawerFormInput }}
+		>
+			<AppBar position="static" className="shadow-md">
+				<Toolbar className="flex w-full">
+					<IconButton edge="start" color="inherit" onClick={handleCloseFormProject} aria-label="close">
+						<CloseIcon />
+					</IconButton>
+					<Typography variant="subtitle1" color="inherit">
+						{entitiesEdit && entitiesEdit.taskID ? formProject.title : `New ${formProject.title}`}
+					</Typography>
+				</Toolbar>
+			</AppBar>
+			<FormCustomProjectTask
+				inititalValues={entitiesEdit && entitiesEdit.taskID ? initialEdit : initial}
+				owner={owner}
+				listFile={listFile}
+				setListFile={setListFile}
+				entitiesEdit={entitiesEdit}
+				fileCheck={fileCheck}
+				setFileCheck={setFileCheck}
+				gradeGolbal={gradeGolbal}
+				taskSub={taskSub}
+				ArrTaskComponent={ArrTaskComponent}
+				ArrProjectStatus={ArrProjectStatus}
+				ArrTaskPri={ArrTaskPri}
+				actionLoading={actionLoading}
+				formProject={formProject}
+				handleSubmitForm={handleSubmitForm}
+				handleCloseFormProject={handleCloseFormProject}
+			/>
+		</Drawer>
 	);
 }

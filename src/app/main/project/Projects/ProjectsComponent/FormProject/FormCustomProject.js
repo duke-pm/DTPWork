@@ -1,7 +1,7 @@
 import { AntInput } from '@fuse/CustomForm/CreateAntField';
 import SelectAntd from '@fuse/CustomForm/SelectAntd';
 import CheckboxAntd from '@fuse/CustomForm/CheckboxAntd';
-import { Button, DialogActions, DialogContent } from '@material-ui/core';
+import { Button, DialogActions, DialogContent, Divider } from '@material-ui/core';
 import { Field, Formik, Form } from 'formik';
 import React from 'react';
 import { Spin } from 'antd';
@@ -17,7 +17,8 @@ export default function FormCustomProject({
 	sectorArr,
 	ArrProjectStatus,
 	projectSub,
-	handleSubmitForm
+	handleSubmitForm,
+	title
 }) {
 	let initial = {
 		prjID: '0',
@@ -114,17 +115,20 @@ export default function FormCustomProject({
 										className="mx-4"
 										top="20px"
 									/>
-									<Field
-										label="Status"
-										readOnly
-										name="statusID"
-										options={ArrProjectStatus}
-										component={SelectAntd || []}
-										className="mx-4"
-									/>
+									{/* {title === 'Settings' && (
+										<Field
+											label="Status"
+											readOnly
+											name="statusID"
+											options={ArrProjectStatus}
+											component={SelectAntd || []}
+											className="mx-4"
+										/>
+									)} */}
 								</div>
 							</div>
 						</DialogContent>
+						<Divider />
 						<DialogActions>
 							{actionLoading ? (
 								<Spin />

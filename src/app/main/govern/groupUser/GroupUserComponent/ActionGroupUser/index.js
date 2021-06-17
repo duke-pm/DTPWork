@@ -17,13 +17,13 @@ export default function ActionGroupUser({ handleOpenFormGroupUser }) {
 	const { setPage, setSearch, search, page, rowPage, sort } = groupUserContext;
 	const handleSearch = () => {
 		setPage(0);
-		dispatch(actions.filterGroupUser(page, rowPage, sort.id, sort.direction, search));
+		dispatch(actions.filterGroupUser(rowPage, page, sort.id, sort.direction, search));
 	};
 	const onHandleChange = e => {
 		setSearch(e.target.value);
 		setPage(0);
 		if (e.target.value.length <= 0) {
-			dispatch(actions.filterGroupUser(page, rowPage, sort.id, sort.direction, e.target.value));
+			dispatch(actions.filterGroupUser(rowPage, page, sort.id, sort.direction, e.target.value));
 		}
 	};
 	return (

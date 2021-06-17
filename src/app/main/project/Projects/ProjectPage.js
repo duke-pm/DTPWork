@@ -86,7 +86,7 @@ export default function ProjectPage() {
 				}
 				content={
 					<Box p={3}>
-						<ProjectComponent />
+						<ProjectComponent sectorArr={sectorArr} ArrProjectStatus={ArrProjectStatus} owner={owner} />
 					</Box>
 				}
 			/>

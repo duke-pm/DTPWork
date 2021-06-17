@@ -17,7 +17,7 @@ export default function TableBodyProcessing({ history }) {
 						<TableCell align="left">{items.regionName}</TableCell>
 						<TableCell align="left">
 							<div className={`inline text-12 p-4 rounded-full truncate ${chipColor[items.transStatus]}`}>
-								{chipText[items.transStatus]}
+								{items.statusName}
 							</div>
 						</TableCell>
 					</TableRow>

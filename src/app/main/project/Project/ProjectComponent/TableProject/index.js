@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Badge, Dropdown, Table, Popover, Avatar, Menu } from 'antd';
-import React, { useContext } from 'react';
+import { Badge, Dropdown, Table, Popover, Avatar, Menu, Progress } from 'antd';
+import React, { useContext, useState, useEffect } from 'react';
 import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
 import { MenuItem, ListItemIcon, Icon, ListItemText, Typography } from '@material-ui/core';
 import AppsIcon from '@material-ui/icons/Apps';
@@ -19,7 +19,17 @@ function TableProject(props) {
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.up('xl'));
 	const { entitiesDetail, actionLoading } = props;
+	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 	const projectContext = useContext(ProjectContext);
+	useEffect(() => {
+		const newEntis = entitiesDetail && entitiesDetail.listTask && entitiesDetail.listTask.map(item => item.taskID);
+		if (newEntis && newEntis.length > 0) {
+			setSelectedRowKeys(newEntis);
+		}
+	}, [entitiesDetail.listTask]);
+	const onSelectedRowKeysChange = selectedRowKey => {
+		setSelectedRowKeys(selectedRowKey);
+	};
 	const { setVisible, visible, setFormProject, formProject } = projectContext;
 	const handleOpenVisible = item => {
 		setVisible(true);
@@ -66,13 +76,13 @@ function TableProject(props) {
 								</MenuItem>
 								{item.isModified && (
 									<>
-										<MenuItem role="button">
+										{/* <MenuItem role="button">
 											<ListItemIcon className="min-w-40">
 												<Icon>redo</Icon>
 											</ListItemIcon>
 											<ListItemText primary="Change project" />
-										</MenuItem>
-										<MenuItem role="button">
+										</MenuItem> */}
+										<MenuItem onClick={() => handleEditForm(item, 'New task')} role="button">
 											<ListItemIcon className="min-w-40">
 												<Icon>file_copy</Icon>
 											</ListItemIcon>
@@ -84,12 +94,12 @@ function TableProject(props) {
 											</ListItemIcon>
 											<ListItemText primary="Delete" />
 										</MenuItem>
-										<MenuItem role="button">
+										{/* <MenuItem role="button">
 											<ListItemIcon className="min-w-40">
 												<Icon>event_note</Icon>
 											</ListItemIcon>
 											<ListItemText primary="Create new child" />
-										</MenuItem>{' '}
+										</MenuItem>{' '} */}
 									</>
 								)}
 							</>
@@ -105,7 +115,7 @@ function TableProject(props) {
 			title: 'Subject',
 			dataIndex: 'subject',
 			key: 'subject',
-			width: '24%',
+			width: '27%',
 			render: (_, item) => (
 				<Typography style={{ marginLeft: '20px', cursor: 'default' }} component="button">
 					{' '}
@@ -129,7 +139,7 @@ function TableProject(props) {
 			title: 'Status',
 			dataIndex: 'status',
 			key: 'status',
-			width: '11%',
+			width: '13%',
 			render: (_, item) => (
 				<Dropdown
 					disabled={!item.isUpdated || actionLoading}
@@ -181,10 +191,19 @@ function TableProject(props) {
 			)
 		},
 		{
+			title: 'Processing',
+			dataIndex: 'status',
+			key: 'status',
+			width: '15%',
+			render: (_, item) => (
+				<Progress percent={item.percentage} strokeColor={typeColor[item.typeName]} status="active" />
+			)
+		},
+		{
 			title: 'Assign',
 			dataIndex: 'assignee',
 			key: 'assignee',
-			width: '12%',
+			width: '15%',
 			render: (_, item) => (
 				<div className="flex flex-row">
 					{' '}
@@ -215,24 +234,29 @@ function TableProject(props) {
 				rowKey="taskID"
 				childrenColumnName="lstTaskItem"
 				className="virtual-table"
+				onExpandedRowsChange={onSelectedRowKeysChange}
+				expandedRowKeys={selectedRowKeys}
 				expandable={{
 					expandRowByClick: false,
 					expandIconAsCell: false,
 					expandIconColumnIndex: 1,
 					expandIcon: ({ expanded, onExpand, record, expandable }) =>
 						expandable.length === 0 ? null : expanded ? (
-							<CaretDownOutlined
+							<CaretUpOutlined
 								onClick={e => onExpand(record, e)}
 								style={{ marginRight: '8px !important', fontSize: '10pt' }}
 							/>
 						) : (
-							<CaretUpOutlined
+							<CaretDownOutlined
 								onClick={e => onExpand(record, e)}
 								style={{ marginRight: '8px !important', fontSize: '10pt' }}
 							/>
 						)
 				}}
-				scroll={{ x: 1090, y: matches ? 580 : 460 }}
+				scroll={{
+					x: entitiesDetail.listTask && entitiesDetail.listTask.length > 0 ? (matches ? 1300 : 1400) : null,
+					y: null
+				}}
 				pagination={false}
 				columns={columns}
 				dataSource={entitiesDetail.listTask}

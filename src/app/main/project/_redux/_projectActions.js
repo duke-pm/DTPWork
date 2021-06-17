@@ -123,6 +123,31 @@ export const updatedProject = values => dispatch => {
 			notificationConfig('warning', 'Warning', 'Server error');
 		});
 };
+export const deleteProject = values => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.action }));
+	const dataReq = {
+		PrjID: values
+	};
+	return requestFrom
+		.deleteProject(dataReq)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				// const dataRes = data.data;
+				dispatch(fetchsProjectFilter());
+				dispatch(fetchAllProject());
+				notificationConfig('success', 'Success', 'Delete project success');
+			} else {
+				dispatch(actions.catchErros({ callType: callTypes.action }));
+				notificationConfig('warning', 'Warning', data.errorMessage);
+			}
+			return data;
+		})
+		.catch(err => {
+			dispatch(actions.catchErros({ callType: callTypes.action }));
+			notificationConfig('warning', 'Warning', 'Server error');
+		});
+};
 export const deletedProject = item => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const dataReq = {
@@ -267,6 +292,8 @@ export const createdTask = (values, prjID, taskType) => dispatch => {
 	formData.append('OwnershipDTP', values.ownership);
 	formData.append('AttachFiles', values.file || '');
 	formData.append('Lang', 'vi');
+	formData.append('Percentage', values.percentage);
+	formData.append('Version', values.version);
 	return requestFrom
 		.taskModify(formData)
 		.then(res => {
@@ -275,6 +302,7 @@ export const createdTask = (values, prjID, taskType) => dispatch => {
 				// const dataRes = data.data;
 				dispatch(fetchProjectDetailFilter(prjID));
 				dispatch(fetchAllSubTask(prjID));
+				dispatch(getTaskDetailAll(prjID));
 				// dispatch(actions.updatedProject({ dataRes }));
 			} else {
 				dispatch(actions.catchErros({ callType: callTypes.action }));
@@ -310,6 +338,8 @@ export const updatedTask = values => dispatch => {
 		formData.append('AttachFiles', values.file);
 	}
 	formData.append('Lang', 'vi');
+	formData.append('Percentage', values.percentage);
+	formData.append('Version', values.version);
 	return requestFrom
 		.taskModify(formData)
 		.then(res => {
@@ -318,6 +348,7 @@ export const updatedTask = values => dispatch => {
 				// const dataRes = data.data;
 				dispatch(fetchProjectDetailFilter(values.prjID));
 				dispatch(fetchAllSubTask(values.prjID));
+				dispatch(getTaskDetailAll(values.prjID));
 				// dispatch(actions.updatedProject({ dataRes }));
 			} else {
 				dispatch(actions.catchErros({ callType: callTypes.action }));
@@ -330,11 +361,13 @@ export const updatedTask = values => dispatch => {
 			notificationConfig('warning', 'Warning', 'Server error');
 		});
 };
-export const updatedTaskStatus = (values, status) => dispatch => {
+export const updatedTaskStatus = (values, status, percent) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const dataReq = {
 		TaskID: values.taskID,
 		StatusID: status,
+		Percentage: percent || values.percentage,
+		// Version: values.version,
 		Lang: 'Vi'
 	};
 	return requestFrom
@@ -380,6 +413,45 @@ export const getTaskViewDetail = params => dispatch => {
 			notificationConfig('warning', 'Warning', 'Server error');
 		});
 };
+export const getTaskDetailAll = params => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.action }));
+	const paramsReq = {
+		PrjID: params,
+		Lang: 'vi',
+		Search: ''
+	};
+	return requestFrom
+		.getTaskDetailAll(paramsReq)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				const dataRes = data.data.listTask;
+				const newData = dataRes.reduce(
+					(arr, curr) => [
+						...arr,
+						{
+							id: JSON.stringify(curr.taskID),
+							name: curr.taskName,
+							start: moment(curr.startDate).format('YYYY-MM-DD'),
+							end: moment(curr.endDate).format('YYYY-MM-DD'),
+							progress: curr.percentage,
+							dependencies: curr.parentID === 0 ? '' : JSON.stringify(curr.parentID),
+							custom_class: curr.typeName
+						}
+					],
+					[]
+				);
+				dispatch(actions.fetchTaskDetailAll({ newData }));
+			} else {
+				dispatch(actions.catchErros({ callType: callTypes.action }));
+				notificationConfig('warning', 'Warning', data.errorMessage);
+			}
+		})
+		.catch(err => {
+			dispatch(actions.catchErros({ callType: callTypes.action }));
+			notificationConfig('warning', 'Warning', 'Server error');
+		});
+};
 export const addTaskActivity = (id, comment) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const dataReq = {
@@ -410,7 +482,7 @@ export const addTaskWatcher = id => dispatch => {
 	const dataReq = {
 		LineNum: 0,
 		TaskID: id,
-		Lang: 'vi'
+		Lang: 'en'
 	};
 	return requestFrom
 		.addTaskWatch(dataReq)
