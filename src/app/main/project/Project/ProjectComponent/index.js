@@ -45,31 +45,35 @@ export default function ProjectComponent({
 			/>
 			<ActionHeaderProject entitiesDetail={entitiesDetail} classes={classes} />
 			<FuseAnimate animation="transition.slideUpIn" delay={200}>
-				<div className={`grid ${gantt && entitiesGantt.length > 0 ? 'grid-cols-2' : 'grid-cols-1'}  gap-8`}>
-					<div className="flex flex-col gap-8 mt-16 shadow-md  sm:border-1 sm:rounded-4 ">
-						<TableProject actionLoading={actionLoading} entitiesDetail={entitiesDetail} />
-					</div>
-					<div className={classes.containerGrantt}>
-						{gantt && entitiesGantt.length > 0 && (
-							<IconButton
-								onClick={handleCloseGantt}
-								edge="start"
-								color="inherit"
-								className="float-right"
-								aria-label="close"
-							>
-								<CloseIcon />
-							</IconButton>
-						)}
-						<div style={{ display: !gantt || entitiesGantt.length === 0 ? 'none' : 'block' }}>
-							{entitiesGantt.length > 0 && (
-								<FrappeGantt
-									tasks={entitiesGantt}
-									onProgressChange={(task, progress) => console.log(task, progress)}
-								/>
-							)}
+				<div className={`'grid-cols-1'}  gap-8`}>
+					{!gantt ? (
+						<div className="flex flex-col gap-8 mt-16 shadow-md  sm:border-1 sm:rounded-4 ">
+							<TableProject actionLoading={actionLoading} entitiesDetail={entitiesDetail} />
 						</div>
-					</div>
+					) : (
+						<div className={classes.containerGrantt}>
+							{gantt && entitiesGantt.length > 0 && (
+								<IconButton
+									onClick={handleCloseGantt}
+									edge="start"
+									color="inherit"
+									className="float-right"
+									aria-label="close"
+								>
+									<CloseIcon />
+								</IconButton>
+							)}
+							<div style={{ display: !gantt || entitiesGantt.length === 0 ? 'none' : 'block' }}>
+								{entitiesGantt.length > 0 && (
+									<FrappeGantt
+										tasks={entitiesGantt}
+										onDateChange={(task, start, end) => console.log(task, start, end)}
+										onProgressChange={(task, progress) => console.log(task, progress)}
+									/>
+								)}
+							</div>
+						</div>
+					)}
 				</div>
 			</FuseAnimate>
 		</div>

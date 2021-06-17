@@ -26,7 +26,7 @@ export default function InformationProceeUseAsset({ entitiesEdit, actionLoading 
 				<div className="flex justify-between flex-row">
 					<h5 className="font-extrabold">Thông tin tài sản.</h5>
 				</div>
-				<div className=" grid grid-cols-1 sm:grid-cols-2 gap-48">
+				<div className=" grid grid-cols-1 sm:grid-cols-2 gap-72">
 					<div className="flex-row flex ">
 						<div className="flex flex-col" style={{ width: '30rem' }}>
 							<p className="p-6"> Mã tài sản </p>

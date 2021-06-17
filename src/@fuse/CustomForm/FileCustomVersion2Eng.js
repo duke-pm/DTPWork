@@ -14,6 +14,7 @@ export default function FileCustomVersion2Eng({
 	withFeedbackLabel = true,
 	customFeedbackLabel,
 	type,
+	readOnly,
 	handleChangeImage,
 	style,
 	hasFeedback,
@@ -34,7 +35,7 @@ export default function FileCustomVersion2Eng({
 					</p>
 				)}
 			</div>
-			<Dragger onChange={handleChangeFile}>
+			<Dragger className={readOnly ? 'readOnly' : ''} onChange={handleChangeFile}>
 				<p className="ant-upload-drag-icon">
 					<InboxOutlined />
 				</p>

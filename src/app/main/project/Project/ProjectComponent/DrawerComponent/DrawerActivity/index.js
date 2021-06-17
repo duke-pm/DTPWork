@@ -17,7 +17,6 @@ export default function DrawerActivity() {
 	const { entitiesView } = currentState;
 	const chatRef = useRef(null);
 	const [comment, setComment] = useState('');
-	const clearCommnent = () => setComment('');
 	const submitComment = () => {
 		dispatch(addTaskActivity(entitiesView.detail.taskID, comment));
 		setComment('');
@@ -93,9 +92,6 @@ export default function DrawerActivity() {
 			<div className="flex flex-row justify-end mt-8">
 				<Button onClick={submitComment} variant="contained" className="mr-8" color="primary">
 					Save
-				</Button>{' '}
-				<Button onClick={clearCommnent} variant="contained" color="secondary">
-					Cancel
 				</Button>{' '}
 			</div>
 		</div>

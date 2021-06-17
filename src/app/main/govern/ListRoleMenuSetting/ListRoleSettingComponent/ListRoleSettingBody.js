@@ -111,12 +111,12 @@ export default function ListRoleSettingBody({ entities, newData, setNewData, act
 					expandIconColumnIndex: 0,
 					expandIcon: ({ expanded, onExpand, record, expandable }) =>
 						expandable.length === 0 ? null : expanded ? (
-							<CaretDownOutlined
+							<CaretUpOutlined
 								onClick={e => onExpand(record, e)}
 								style={{ marginRight: '8px !important', fontSize: '10pt' }}
 							/>
 						) : (
-							<CaretUpOutlined
+							<CaretDownOutlined
 								onClick={e => onExpand(record, e)}
 								style={{ marginRight: '8px !important', fontSize: '10pt' }}
 							/>

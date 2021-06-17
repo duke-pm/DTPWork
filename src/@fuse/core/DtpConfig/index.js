@@ -12,7 +12,7 @@ export const notificationConfig = (type, mess, descr) => {
 		description: descr
 	});
 };
-
+export const URL = `http://api.dtp-education.com`;
 export const sliceString = string => {
 	return string.slice(0, 1);
 };

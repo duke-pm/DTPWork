@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Badge, Dropdown, Table, Popover, Avatar, Menu } from 'antd';
+import { Badge, Dropdown, Table, Popover, Avatar, Menu, Progress } from 'antd';
 import React, { useContext, useState, useEffect } from 'react';
 import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
 import { MenuItem, ListItemIcon, Icon, ListItemText, Typography } from '@material-ui/core';
@@ -115,7 +115,7 @@ function TableProject(props) {
 			title: 'Subject',
 			dataIndex: 'subject',
 			key: 'subject',
-			width: '24%',
+			width: '27%',
 			render: (_, item) => (
 				<Typography style={{ marginLeft: '20px', cursor: 'default' }} component="button">
 					{' '}
@@ -139,7 +139,7 @@ function TableProject(props) {
 			title: 'Status',
 			dataIndex: 'status',
 			key: 'status',
-			width: '11%',
+			width: '13%',
 			render: (_, item) => (
 				<Dropdown
 					disabled={!item.isUpdated || actionLoading}
@@ -191,10 +191,19 @@ function TableProject(props) {
 			)
 		},
 		{
+			title: 'Processing',
+			dataIndex: 'status',
+			key: 'status',
+			width: '15%',
+			render: (_, item) => (
+				<Progress percent={item.percentage} strokeColor={typeColor[item.typeName]} status="active" />
+			)
+		},
+		{
 			title: 'Assign',
 			dataIndex: 'assignee',
 			key: 'assignee',
-			width: '12%',
+			width: '15%',
 			render: (_, item) => (
 				<div className="flex flex-row">
 					{' '}
@@ -233,19 +242,19 @@ function TableProject(props) {
 					expandIconColumnIndex: 1,
 					expandIcon: ({ expanded, onExpand, record, expandable }) =>
 						expandable.length === 0 ? null : expanded ? (
-							<CaretDownOutlined
+							<CaretUpOutlined
 								onClick={e => onExpand(record, e)}
 								style={{ marginRight: '8px !important', fontSize: '10pt' }}
 							/>
 						) : (
-							<CaretUpOutlined
+							<CaretDownOutlined
 								onClick={e => onExpand(record, e)}
 								style={{ marginRight: '8px !important', fontSize: '10pt' }}
 							/>
 						)
 				}}
 				scroll={{
-					x: entitiesDetail.listTask && entitiesDetail.listTask.length > 0 ? (matches ? 1200 : 1300) : null,
+					x: entitiesDetail.listTask && entitiesDetail.listTask.length > 0 ? (matches ? 1300 : 1400) : null,
 					y: null
 				}}
 				pagination={false}

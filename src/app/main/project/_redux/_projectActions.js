@@ -361,12 +361,12 @@ export const updatedTask = values => dispatch => {
 			notificationConfig('warning', 'Warning', 'Server error');
 		});
 };
-export const updatedTaskStatus = (values, status) => dispatch => {
+export const updatedTaskStatus = (values, status, percent) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const dataReq = {
 		TaskID: values.taskID,
 		StatusID: status,
-		Percentage: values.percentage,
+		Percentage: percent || values.percentage,
 		// Version: values.version,
 		Lang: 'Vi'
 	};
@@ -482,7 +482,7 @@ export const addTaskWatcher = id => dispatch => {
 	const dataReq = {
 		LineNum: 0,
 		TaskID: id,
-		Lang: 'vi'
+		Lang: 'en'
 	};
 	return requestFrom
 		.addTaskWatch(dataReq)

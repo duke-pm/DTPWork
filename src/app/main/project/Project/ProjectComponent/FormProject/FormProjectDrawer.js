@@ -65,7 +65,7 @@ export default function FormCustomProjectTask({
 									label="Task name"
 									name="taskName"
 									type="text"
-									autoFocus
+									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									hasFeedback
 									component={AntInput}
 									className="mx-4"
@@ -76,6 +76,7 @@ export default function FormCustomProjectTask({
 									label="Description"
 									name="descr"
 									row={4}
+									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									component={InputTextArea}
 									className="mx-4"
 								/>
@@ -85,6 +86,7 @@ export default function FormCustomProjectTask({
 									label="Subtask of"
 									name="project"
 									width="100%"
+									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									component={SelectAntd}
 									options={taskSub}
 									className="mx-4"
@@ -98,6 +100,7 @@ export default function FormCustomProjectTask({
 								<Field
 									label="Owner"
 									name="owner"
+									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									hasFeedback
 									component={SelectAntd}
 									options={owner}
@@ -110,6 +113,7 @@ export default function FormCustomProjectTask({
 									label="Start Date"
 									name="startDate"
 									width="60%"
+									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									component={DateCustom}
 									className="mx-4"
 									position="right"
@@ -119,6 +123,7 @@ export default function FormCustomProjectTask({
 									width="60%"
 									position="right"
 									name="endDate"
+									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									component={DateCustom}
 									className="mx-4"
 								/>
@@ -127,22 +132,29 @@ export default function FormCustomProjectTask({
 								<h5 className="font-extrabold">DETAIL</h5>
 							</div>
 							<Divider className="mb-16" />
-							<div className="grid grid-cols-1 sm:grid-cols-2 gap-16 ">
-								<Field
-									label="Percentage"
-									name="percentage"
-									width="60%"
-									type="number"
-									component={AntInput}
-									position="right"
-									className="mx-4"
-								/>
-							</div>
+							{entitiesEdit &&
+								entitiesEdit.taskID &&
+								entitiesEdit.typeName === 'TASK' &&
+								formProject.title !== 'New task' && (
+									<div className="grid grid-cols-1 sm:grid-cols-2 gap-16 ">
+										<Field
+											label="Percentage"
+											name="percentage"
+											width="60%"
+											readOnly={entitiesEdit && !entitiesEdit.isModified}
+											type="number"
+											component={AntInput}
+											position="right"
+											className="mx-4"
+										/>
+									</div>
+								)}
 							<div className="grid grid-cols-1 sm:grid-cols-2 gap-16 ">
 								<Field
 									label="Grade"
 									name="grade"
 									width="60%"
+									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									options={gradeGolbal}
 									component={SelectAntd}
 									position="right"
@@ -151,6 +163,7 @@ export default function FormCustomProjectTask({
 								<Field
 									label="Component"
 									width="60%"
+									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									name="component"
 									component={SelectAntd}
 									options={ArrTaskComponent}
@@ -164,6 +177,7 @@ export default function FormCustomProjectTask({
 									name="author"
 									component={AntInput}
 									type="text"
+									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									position="right"
 									className="mx-4"
 								/>
@@ -175,6 +189,7 @@ export default function FormCustomProjectTask({
 									type="text"
 									name="originPublisher"
 									position="right"
+									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									className="mx-4"
 								/>
 							</div>
@@ -183,6 +198,7 @@ export default function FormCustomProjectTask({
 									label="Ownership DTP"
 									component={AntInput}
 									type="text"
+									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									name="ownership"
 									position="right"
 									className="mx-4"
@@ -192,6 +208,7 @@ export default function FormCustomProjectTask({
 								<Field
 									label="Priority"
 									name="priority"
+									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									hasFeedback
 									component={SelectAntd}
 									options={ArrTaskPri}
@@ -207,6 +224,7 @@ export default function FormCustomProjectTask({
 										<Field
 											label="Status"
 											name="status"
+											readOnly={entitiesEdit && !entitiesEdit.isModified}
 											position="right"
 											component={SelectAntd}
 											options={ArrProjectStatus}
@@ -283,7 +301,7 @@ export default function FormCustomProjectTask({
 								) : (
 									<Field
 										label=""
-										autoFocus
+										readOnly={entitiesEdit && !entitiesEdit.isModified}
 										handleChangeImage={handleChangeFile}
 										style={{ height: '25px' }}
 										name="file"

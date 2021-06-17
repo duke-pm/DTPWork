@@ -9,7 +9,7 @@ export default function ProjectContextProvider({ children }) {
 	});
 	const [visible, setVisible] = useState(false);
 	const [search, setSearch] = useState('');
-	const [gantt, setGantt] = useState(true);
+	const [gantt, setGantt] = useState(false);
 	const valueMemo = useMemo(() => {
 		return {
 			formProject,

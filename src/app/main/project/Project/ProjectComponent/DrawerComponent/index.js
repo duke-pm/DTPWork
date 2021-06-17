@@ -39,6 +39,9 @@ const useStyles = makeStyles(theme => ({
 	},
 	DrawerFormInput: {
 		width: '660px'
+	},
+	Drawer: {
+		zIndex: '150 !important'
 	}
 }));
 export default function DrawerComponent() {
@@ -57,7 +60,13 @@ export default function DrawerComponent() {
 	};
 	return (
 		// <div className="site-drawer-render-in-current-wrapper">
-		<Drawer anchor="right" onClose={closeVisible} open={visible} classes={{ paper: classes.DrawerFormInput }}>
+		<Drawer
+			anchor="right"
+			onClose={closeVisible}
+			open={visible}
+			className={classes.Drawer}
+			classes={{ paper: classes.DrawerFormInput }}
+		>
 			<AppBar position="static" className="shadow-md">
 				<Toolbar className="flex w-full">
 					<IconButton edge="start" color="inherit" onClick={closeVisible} aria-label="close">
