@@ -85,7 +85,7 @@ export default function DrawerWatchers() {
 					<Table
 						rowKey="rowNum"
 						className="virtual-table"
-						scroll={{ y: 290 }}
+						// scroll={{ y: 290 }}
 						pagination={false}
 						columns={columns}
 						dataSource={entitiesView && entitiesView.watcher}

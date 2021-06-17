@@ -9,12 +9,14 @@ import { useDispatch } from 'react-redux';
 import AppsIcon from '@material-ui/icons/Apps';
 import * as moment from 'moment';
 import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { ProjectContext } from '../../ProjectContext';
 import * as actions from '../../../_redux/_projectActions';
 import { badgeStatus, badgeText } from '../ConfigTableProject';
 
 function TableProject(props) {
 	const theme = useTheme();
+	const matches = useMediaQuery(theme.breakpoints.up('xl'));
 	const dispatch = useDispatch();
 	const { entities, classes } = props;
 	const projectContext = useContext(ProjectContext);
@@ -186,7 +188,7 @@ function TableProject(props) {
 				}}
 				childrenColumnName="lstProjectItem"
 				pagination={false}
-				scroll={{ x: 1540 }}
+				scroll={{ x: matches ? 1520 : 1540 }}
 				columns={columns}
 				dataSource={entities}
 			/>{' '}

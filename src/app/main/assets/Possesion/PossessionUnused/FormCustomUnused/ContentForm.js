@@ -12,7 +12,7 @@ export default function ContentForm({ entitiesEdit }) {
 					<p className="p-6"> Nhóm tài sản </p>
 					<p className="p-6"> Mô tả </p>
 				</div>
-				<div className="flex sm:mr-96 mr-auto  flex-col" style={{ width: '600px' }}>
+				<div className="flex sm:mr-96 mr-auto  flex-col" style={{ width: '650px' }}>
 					<p className="p-6 font-extrabold">{entitiesEdit && entitiesEdit.assetCode}</p>
 					<p className="p-6 font-extrabold">{entitiesEdit && entitiesEdit.assetName}</p>
 					<p className="p-6 font-extrabold">{entitiesEdit && entitiesEdit.groupName}</p>

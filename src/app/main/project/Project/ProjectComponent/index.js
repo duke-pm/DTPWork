@@ -26,6 +26,9 @@ export default function ProjectComponent({
 	const { gantt, setGantt } = projectContext;
 	const { currentState } = useSelector(state => ({ currentState: state.project }), shallowEqual);
 	const { entitiesDetail, listLoading, actionLoading, entitiesGantt } = currentState;
+	const handleCustomPopUp = task => {
+		console.log(task);
+	};
 	const handleCloseGantt = () => setGantt(false);
 	if (listLoading) {
 		return <FuseLoading />;

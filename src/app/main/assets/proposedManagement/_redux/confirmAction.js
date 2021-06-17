@@ -31,44 +31,34 @@ export const fetchDataConfirms = (status, typeRequest, isResovle) => dispatch =>
 			notificationConfig('warning', 'Thất bại', 'Đã có lỗi xảy ra  vui lòng thử lại sau');
 		});
 };
-export const searchConfirms = (
-	typeResovle,
-	value,
-	limit,
-	page,
-	typeID,
-	id,
-	direction,
-	search,
-	FromDate,
-	ToDate
-) => dispatch => {
-	dispatch(actions.startCall({ callType: callTypes.action }));
-	const paramsReq = {
-		Search: search || '',
-		StatusID: value || 0,
-		PageSize: limit || 25,
-		PageNum: page || 1,
-		FromDate: FromDate ? moment(FromDate).format('YYYY/MM/DD') : null,
-		ToDate: ToDate ? moment(ToDate).format('YYYY/MM/DD') : null,
-		RequestTypeID: typeID,
-		SortColumn: id || null,
-		SortDirection: direction || null,
-		IsResolveRequest: typeResovle || false
+export const searchConfirms =
+	(typeResovle, value, limit, page, typeID, id, direction, search, FromDate, ToDate) => dispatch => {
+		dispatch(actions.startCall({ callType: callTypes.action }));
+		const paramsReq = {
+			Search: search || '',
+			StatusID: value || 0,
+			PageSize: limit || 25,
+			PageNum: page || 1,
+			FromDate: FromDate ? moment(FromDate).format('YYYY/MM/DD') : null,
+			ToDate: ToDate ? moment(ToDate).format('YYYY/MM/DD') : null,
+			RequestTypeID: typeID,
+			SortColumn: id || null,
+			SortDirection: direction || null,
+			IsResolveRequest: typeResovle || false
+		};
+		return requestFrom
+			.listProvideRequest(paramsReq)
+			.then(res => {
+				const { data } = res;
+				if (!data.isError) {
+					dispatch(actions.confirmsFetch({ data }));
+				}
+			})
+			.catch(err => {
+				dispatch(actions.catchError({ callType: callTypes.list }));
+				notificationConfig('warning', 'Thất bại', 'Đã có lỗi xảy ra  vui lòng thử lại sau');
+			});
 	};
-	return requestFrom
-		.listProvideRequest(paramsReq)
-		.then(res => {
-			const { data } = res;
-			if (!data.isError) {
-				dispatch(actions.confirmsFetch({ data }));
-			}
-		})
-		.catch(err => {
-			dispatch(actions.catchError({ callType: callTypes.list }));
-			notificationConfig('warning', 'Thất bại', 'Đã có lỗi xảy ra  vui lòng thử lại sau');
-		});
-};
 
 export const fetchDataConfirm = data => dispatch => {
 	dispatch(actions.startCall({ callTypes: callTypes.list }));

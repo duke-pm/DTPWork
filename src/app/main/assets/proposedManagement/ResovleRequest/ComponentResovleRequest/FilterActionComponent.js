@@ -17,19 +17,8 @@ export default function ActionComponent({ actionLoading }) {
 	const classes = DtpCustomStyles();
 	const dispatch = useDispatch();
 	const confirmConext = useContext(ResovleContext);
-	const {
-		search,
-		setSearch,
-		rowPage,
-		page,
-		setPage,
-		setDateEnd,
-		setDateStart,
-		status,
-		dateEnd,
-		dateStart,
-		sort
-	} = confirmConext;
+	const { search, setSearch, rowPage, page, setPage, setDateEnd, setDateStart, status, dateEnd, dateStart, sort } =
+		confirmConext;
 	const handleSearch = () => {
 		setPage(0);
 		dispatch(

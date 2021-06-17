@@ -5,7 +5,15 @@
 import { notification } from 'antd';
 import Cookies from 'js-cookie';
 // notification
-
+export const badgeStatusGobal = {
+	1: '#1890ff',
+	2: '#560bad',
+	3: '#e85d04',
+	4: '#faad14',
+	5: '#d9d9d9',
+	6: '#52c41a',
+	7: '#ff4d4f'
+};
 export const notificationConfig = (type, mess, descr) => {
 	notification[type]({
 		message: mess,

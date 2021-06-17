@@ -1,12 +1,13 @@
 import React, { createContext, useState, useMemo } from 'react';
+import * as moment from 'moment';
 
 export const ResovleContext = createContext();
 
 export default function ResovleRequestContext({ children }) {
 	const [page, setPage] = useState(0);
 	const [rowPage, setRowPage] = React.useState(25);
-	const [dateStart, setDateStart] = useState('');
-	const [dateEnd, setDateEnd] = useState('');
+	const [dateStart, setDateStart] = useState(moment().startOf('month').format('YYYY/MM/DD'));
+	const [dateEnd, setDateEnd] = useState(moment().endOf('month').format('YYYY/MM/DD'));
 	const [status, setStatus] = useState(0);
 	const [search, setSearch] = useState('');
 	const [timeLine, setTimeLine] = useState({

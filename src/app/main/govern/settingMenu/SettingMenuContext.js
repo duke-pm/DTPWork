@@ -7,7 +7,7 @@ export default function SettingMenuContextProvider({ children }) {
 	const [search, setSearch] = useState('');
 	const [rowPage, setRowPage] = useState(25);
 	const [sort, setSort] = useState({
-		direction: 'desc',
+		direction: 'asc',
 		id: null
 	});
 	const valueMemo = useMemo(() => {

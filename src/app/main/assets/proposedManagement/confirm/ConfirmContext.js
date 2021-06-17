@@ -1,4 +1,5 @@
 import React, { createContext, useState, useMemo } from 'react';
+import * as moment from 'moment';
 
 export const ConfirmContext = createContext();
 
@@ -15,8 +16,8 @@ export default function ConfirmContextProvider({ children }) {
 	});
 	const [type, setType] = useState('');
 	const [typeReasonReject, setTypeReasonReject] = useState('');
-	const [dateStart, setDateStart] = useState('');
-	const [dateEnd, setDateEnd] = useState('');
+	const [dateStart, setDateStart] = useState(moment().startOf('month').format('YYYY/MM/DD'));
+	const [dateEnd, setDateEnd] = useState(moment().endOf('month').format('YYYY/MM/DD'));
 	const [status, setStatus] = useState(0);
 	const [search, setSearch] = useState('');
 	const [sort, setSort] = useState({

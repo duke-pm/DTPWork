@@ -11,6 +11,7 @@ import * as Yup from 'yup';
 import { validateField, checkFile, nameFile } from '@fuse/core/DtpConfig';
 import FileCustomVersion2Eng from '@fuse/CustomForm/FileCustomVersion2Eng';
 import { FileExcelOutlined, FileImageOutlined, FileWordOutlined } from '@ant-design/icons';
+import SelectAntdCustomStatus from '@fuse/CustomForm/SelectAntdCustomStatus';
 
 const file = {
 	docx: <FileWordOutlined />,
@@ -226,7 +227,7 @@ export default function FormCustomProjectTask({
 											name="status"
 											readOnly={entitiesEdit && !entitiesEdit.isModified}
 											position="right"
-											component={SelectAntd}
+											component={SelectAntdCustomStatus}
 											options={ArrProjectStatus}
 											className="mx-4"
 										/>

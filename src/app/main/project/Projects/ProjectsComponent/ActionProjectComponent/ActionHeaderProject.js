@@ -86,8 +86,14 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 					<Paper style={{ width: '180px' }} className="ml-16 sm:mb-0 mb-9">
 						<Select
 							placeholder="Owner"
+							showSearch
+							allowClear
 							onChange={onHandleChangeOwner}
 							bordered={false}
+							optionFilterProp="children"
+							filterOption={(input, option) =>
+								option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+							}
 							style={{ width: '100%' }}
 						>
 							{owner &&
@@ -100,6 +106,7 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 					</Paper>
 					<Paper style={{ width: '180px' }} className="ml-16 sm:mb-0 mb-9">
 						<Select
+							allowClear
 							placeholder="Status"
 							onChange={onHandleChangeStatus}
 							bordered={false}
@@ -115,6 +122,7 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 					</Paper>
 					<Paper style={{ width: '180px' }} className="ml-16 sm:mb-0 mb-9">
 						<Select
+							allowClear
 							placeholder="Sector"
 							onChange={onHandleChangeSector}
 							bordered={false}
