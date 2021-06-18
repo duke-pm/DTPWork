@@ -248,7 +248,7 @@ function TableProject(props) {
 			title: 'Priority',
 			dataIndex: 'priority',
 			key: 'priority',
-			width: '7%',
+			width: '10%',
 			render: (_, item) => (
 				<Badge
 					size="default"
@@ -286,7 +286,7 @@ function TableProject(props) {
 						)
 				}}
 				scroll={{
-					x: entitiesDetail.listTask && entitiesDetail.listTask.length > 0 ? (matches ? 1300 : 1400) : null,
+					x: entitiesDetail.listTask && entitiesDetail.listTask.length > 0 ? (matches ? 1400 : 1500) : null,
 					y: null
 				}}
 				pagination={false}
