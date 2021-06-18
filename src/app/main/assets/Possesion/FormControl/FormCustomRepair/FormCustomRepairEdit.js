@@ -54,7 +54,7 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 											<p className="p-6 font-extrabold"> {entitiesEdit.assetCode || ''} </p>
 											<p className="p-6 font-extrabold"> {entitiesEdit.assetName || ''} </p>
 											<p className="p-6 font-extrabold"> {entitiesEdit.groupName || ''} </p>
-											<p className="p-6 font-extrabold"> {entitiesEdit.reasons || ''} </p>
+											<p className="p-6 font-extrabold"> {entitiesEdit && entitiesEdit.descr} </p>
 										</div>
 									</div>
 									<div className="flex-row flex">

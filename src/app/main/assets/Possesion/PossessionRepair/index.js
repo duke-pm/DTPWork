@@ -2,11 +2,11 @@
 import React, { useContext, useEffect } from 'react';
 import { Paper, Table, TableContainer } from '@material-ui/core';
 import FuseAnimate from '@fuse/core/FuseAnimate';
-import image from '@fuse/assets/group.png';
 import Panigation from '@fuse/core/FusePanigate';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import FuseLoading from '@fuse/core/FuseLoading';
 import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
+import { Empty } from 'antd';
 import { PossessionContext } from '../PossessionContext';
 import ActionComponent from './Component/ActionComponent';
 import * as actions from '../_redux/possesionActions';
@@ -95,15 +95,7 @@ export default function PossessionRepair(props) {
 								</Table>
 								{(entities && entities.length === 0) || lastErrors ? (
 									<FuseAnimate delay={300}>
-										<div className="flex items-center justify-center h-auto">
-											<img
-												className="rounded-full mx-auto"
-												src={image}
-												alt=""
-												width="384"
-												height="512"
-											/>
-										</div>
+										<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
 									</FuseAnimate>
 								) : null}
 							</Paper>

@@ -1,6 +1,5 @@
 /* eslint-disable no-shadow */
 import FuseAnimate from '@fuse/core/FuseAnimate';
-import { Paper, TableContainer } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { notificationConfig } from '@fuse/core/DtpConfig';

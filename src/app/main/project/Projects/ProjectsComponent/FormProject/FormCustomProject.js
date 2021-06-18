@@ -14,8 +14,8 @@ export default function FormCustomProject({
 	handleCloseFormProject,
 	entitiesEdit,
 	owner,
-	sectorArr,
-	ArrProjectStatus,
+	// sectorArr,
+	// ArrProjectStatus,
 	projectSub,
 	handleSubmitForm,
 	title
@@ -23,7 +23,6 @@ export default function FormCustomProject({
 	let initial = {
 		prjID: '0',
 		prjName: '',
-		sectorID: null,
 		prjParentID: null,
 		owner: null,
 		isPublic: true,
@@ -34,7 +33,7 @@ export default function FormCustomProject({
 		initial = {
 			prjID: entitiesEdit && entitiesEdit.prjID,
 			prjName: entitiesEdit && entitiesEdit.prjName,
-			sectorID: entitiesEdit && entitiesEdit.sectorID === 0 ? null : entitiesEdit.sectorID,
+			// sectorID: entitiesEdit && entitiesEdit.sectorID === 0 ? null : entitiesEdit.sectorID,
 			prjParentID: entitiesEdit && entitiesEdit.prjParentID === 0 ? null : entitiesEdit.prjParentID,
 			owner: entitiesEdit && entitiesEdit.owner === 0 ? null : entitiesEdit.owner,
 			isPublic: entitiesEdit && entitiesEdit.isPublic,
@@ -89,13 +88,13 @@ export default function FormCustomProject({
 									/>
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
-									<Field
+									{/* <Field
 										label="Sector"
 										name="sectorID"
 										component={SelectAntd || []}
 										options={sectorArr}
 										className="mx-4"
-									/>
+									/> */}
 									<Field
 										label="Owner"
 										name="owner"
@@ -104,8 +103,6 @@ export default function FormCustomProject({
 										hasFeedback
 										className="mx-4"
 									/>
-								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
 									<Field
 										label="Public"
 										hasFeedback
@@ -115,16 +112,6 @@ export default function FormCustomProject({
 										className="mx-4"
 										top="20px"
 									/>
-									{/* {title === 'Settings' && (
-										<Field
-											label="Status"
-											readOnly
-											name="statusID"
-											options={ArrProjectStatus}
-											component={SelectAntd || []}
-											className="mx-4"
-										/>
-									)} */}
 								</div>
 							</div>
 						</DialogContent>

@@ -4,7 +4,7 @@ import DateCustom from '@fuse/CustomForm/Date';
 import { Divider, Button, DialogActions, IconButton } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { Field, Formik, Form } from 'formik';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Avatar, Spin } from 'antd';
 import InputTextArea from '@fuse/CustomForm/InputTextArea';
 import * as Yup from 'yup';
@@ -36,7 +36,8 @@ export default function FormCustomProjectTask({
 	entitiesEdit,
 	setListFile,
 	listFile,
-	formProject
+	formProject,
+	sectorArr
 }) {
 	const handleClearFile = () => setFileCheck(false);
 	const handleClearListFile = () => setListFile(null);
@@ -150,6 +151,18 @@ export default function FormCustomProjectTask({
 										/>
 									</div>
 								)}
+							<div className="grid grid-cols-1 sm:grid-cols-2 gap-16 ">
+								<Field
+									label="Sector"
+									name="sectorID"
+									width="60%"
+									readOnly={entitiesEdit && !entitiesEdit.isModified}
+									position="right"
+									component={SelectAntd || []}
+									options={sectorArr}
+									className="mx-4"
+								/>
+							</div>
 							<div className="grid grid-cols-1 sm:grid-cols-2 gap-16 ">
 								<Field
 									label="Grade"

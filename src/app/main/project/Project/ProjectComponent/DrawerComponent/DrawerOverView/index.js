@@ -2,14 +2,16 @@
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import { Button, Divider } from '@material-ui/core';
 import { Dropdown, Menu, Badge, Avatar, Slider } from 'antd';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import * as moment from 'moment';
 import { CaretDownOutlined, FileExcelOutlined, FileImageOutlined, FileWordOutlined } from '@ant-design/icons';
-import { updatedTaskStatus, addTaskWatcher } from 'app/main/project/_redux/_projectActions';
+import { updatedTaskStatus, addTaskWatcher, fetchProjectDetailFilter } from 'app/main/project/_redux/_projectActions';
 import { checkFile, nameFile, notificationConfig, URL } from '@fuse/core/DtpConfig';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import { useParams } from 'react-router';
 import { badgeStatus, priorityColor } from '../../TableProject/ConfigTableProject';
+import { ProjectContext } from '../../../ProjectContext';
 
 function formatter(value) {
 	return `${value}%`;
@@ -23,9 +25,12 @@ const file = {
 };
 export default function DrawerOverView({ closeVisible }) {
 	const dispatch = useDispatch();
+	const params = useParams();
 	const [process, setProcess] = useState(0);
 	const { currentState } = useSelector(state => ({ currentState: state.project }), shallowEqual);
 	const { entitiesView } = currentState;
+	const projectContext = useContext(ProjectContext);
+	const { rowPage, page, ownerFilter, status, dateStart, sector, search } = projectContext;
 	useEffect(() => {
 		if (entitiesView) {
 			setProcess(entitiesView.detail.percentage);
@@ -36,6 +41,18 @@ export default function DrawerOverView({ closeVisible }) {
 			if (data && !data.isError) {
 				closeVisible();
 				notificationConfig('success', 'Success', 'Updated status success');
+				dispatch(
+					fetchProjectDetailFilter(
+						params.detail,
+						rowPage,
+						page,
+						ownerFilter,
+						status,
+						dateStart,
+						sector,
+						search
+					)
+				);
 			}
 		});
 	};
@@ -44,6 +61,18 @@ export default function DrawerOverView({ closeVisible }) {
 		dispatch(updatedTaskStatus(entitiesView.detail, entitiesView.detail.statusID, value)).then(data => {
 			if (data && !data.isError) {
 				notificationConfig('success', 'Success', 'Updated processing success');
+				dispatch(
+					fetchProjectDetailFilter(
+						params.detail,
+						rowPage,
+						page,
+						ownerFilter,
+						status,
+						dateStart,
+						sector,
+						search
+					)
+				);
 			}
 		});
 	};

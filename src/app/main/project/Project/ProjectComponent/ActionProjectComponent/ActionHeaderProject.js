@@ -1,17 +1,36 @@
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
-import { Button, IconButton, InputBase, ListItemText, MenuItem, Paper } from '@material-ui/core';
+import { Button, IconButton, InputBase, ListItemText, MenuItem, Paper, Typography } from '@material-ui/core';
 import React, { useContext } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import { useDispatch } from 'react-redux';
-import { Popover } from 'antd';
+import { DatePicker, Popover, Select } from 'antd';
 import AppsIcon from '@material-ui/icons/Apps';
+import * as moment from 'moment';
+import FilterListIcon from '@material-ui/icons/FilterList';
 import { ProjectContext } from '../../ProjectContext';
-import { setTaskEditProject, fetchsProjectFilter } from '../../../_redux/_projectActions';
+import { setTaskEditProject, fetchProjectDetailFilter } from '../../../_redux/_projectActions';
+import { badgeStatus } from '../TableProject/ConfigTableProject';
 
-export default function ActionHeaderProject({ classes }) {
+export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStatus, owner, params }) {
 	const dispatch = useDispatch();
 	const projectContext = useContext(ProjectContext);
-	const { setFormProject, search, setSearch, formProject, setGantt } = projectContext;
+	const {
+		setFormProject,
+		search,
+		setSearch,
+		formProject,
+		setGantt,
+		setDateStart,
+		setOwnerFilter,
+		setSector,
+		sector,
+		setStatus,
+		rowPage,
+		page,
+		status,
+		ownerFilter,
+		dateStart
+	} = projectContext;
 	const handleOpenFormProject = title => {
 		setFormProject({
 			open: true,
@@ -20,16 +39,50 @@ export default function ActionHeaderProject({ classes }) {
 		dispatch(setTaskEditProject(null));
 	};
 	const handleSearch = () => {
-		dispatch(fetchsProjectFilter(search));
+		dispatch(
+			fetchProjectDetailFilter(params.detail, rowPage, page, ownerFilter, status, dateStart, sector, search)
+		);
 	};
 	const onHandleChange = e => {
 		setSearch(e.target.value);
 
 		if (e.target.value.length <= 0) {
-			dispatch(fetchsProjectFilter(e.target.value));
+			dispatch(
+				fetchProjectDetailFilter(
+					params.detail,
+					rowPage,
+					page,
+					ownerFilter,
+					status,
+					dateStart,
+					sector,
+					e.target.value
+				)
+			);
 		}
 	};
 	const handleOpenGant = () => setGantt(true);
+	const handleChangeFilterDateStart = (date, dateString) => setDateStart(dateString);
+	const onHandleChangeOwner = value => {
+		if (value.length > 0) {
+			setOwnerFilter(value.toString());
+		} else {
+			setOwnerFilter(value);
+		}
+	};
+	const onHandleChangeSector = value => setSector(value);
+	const onHandleChangeStatus = value => {
+		if (value.length > 0) {
+			setStatus(value.toString());
+		} else {
+			setStatus(value);
+		}
+	};
+	const handleFilter = () => {
+		dispatch(
+			fetchProjectDetailFilter(params.detail, rowPage, page, ownerFilter, status, dateStart, sector, search)
+		);
+	};
 	return (
 		<div>
 			<FuseAnimateGroup
@@ -37,6 +90,91 @@ export default function ActionHeaderProject({ classes }) {
 					animation: 'transition.slideUpBigIn'
 				}}
 			>
+				<div className="flex flex-col sm:flex-row justify-between">
+					<Typography variant="subtitle1" color="inherit">
+						Filter
+					</Typography>
+				</div>
+				<div className="flex flex-col sm:flex-row mb-16">
+					<Paper style={{ width: '180px' }} className="w-full sm:w-1/4 flex justify-between">
+						<DatePicker
+							onChange={handleChangeFilterDateStart}
+							defaultValue={moment()}
+							picker="year"
+							format="YYYY"
+							placeholder="Year start"
+							style={{ width: '100%' }}
+						/>
+					</Paper>
+					<Paper style={{ width: '180px' }} className="ml-16 sm:mb-0 mb-9">
+						<Select
+							allowClear
+							placeholder="Sector"
+							onChange={onHandleChangeSector}
+							bordered={false}
+							style={{ width: '100%' }}
+						>
+							{sectorArr &&
+								sectorArr.map(item => (
+									<Select.Option value={item.value} key={item.value}>
+										<p> {item.label} </p>
+									</Select.Option>
+								))}
+						</Select>
+					</Paper>
+					<Paper style={{ width: '260px' }} className="ml-16 sm:mb-0 mb-9">
+						<Select
+							placeholder="Owner"
+							showSearch
+							mode="multiple"
+							allowClear
+							maxTagCount={1}
+							onChange={onHandleChangeOwner}
+							bordered={false}
+							optionFilterProp="children"
+							filterOption={(input, option) =>
+								option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+							}
+							style={{ width: '100%' }}
+						>
+							{owner &&
+								owner.map(item => (
+									<Select.Option value={item.value} key={item.value}>
+										{item.label}
+									</Select.Option>
+								))}
+						</Select>
+					</Paper>
+					<Paper style={{ width: '250px' }} className="ml-16 sm:mb-0 mb-9">
+						<Select
+							allowClear
+							placeholder="Status"
+							mode="multiple"
+							maxTagCount={1}
+							onChange={onHandleChangeStatus}
+							bordered={false}
+							style={{ width: '100%' }}
+						>
+							{ArrProjectStatus &&
+								ArrProjectStatus.map(item => (
+									<Select.Option value={item.value} key={item.value}>
+										<p style={{ color: badgeStatus[item.value] }}> {item.label} </p>
+									</Select.Option>
+								))}
+						</Select>
+					</Paper>
+					<Button
+						onClick={handleFilter}
+						variant="contained"
+						type="button"
+						color="primary"
+						className="ml-16 sm:mb-0 mb-9"
+						startIcon={<FilterListIcon />}
+					>
+						{' '}
+						Filter{' '}
+					</Button>
+				</div>
 				<div>
 					<div className="flex flex-col sm:flex-row justify-between ">
 						<div className="flex flex-row">

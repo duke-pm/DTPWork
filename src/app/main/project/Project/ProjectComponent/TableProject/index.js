@@ -30,7 +30,19 @@ function TableProject(props) {
 	const onSelectedRowKeysChange = selectedRowKey => {
 		setSelectedRowKeys(selectedRowKey);
 	};
-	const { setVisible, visible, setFormProject, formProject } = projectContext;
+	const {
+		setVisible,
+		visible,
+		setFormProject,
+		formProject,
+		rowPage,
+		page,
+		ownerFilter,
+		status,
+		dateStart,
+		sector,
+		search
+	} = projectContext;
 	const handleOpenVisible = item => {
 		setVisible(true);
 		dispatch(actions.getTaskViewDetail(item.taskID));
@@ -42,10 +54,40 @@ function TableProject(props) {
 		});
 		dispatch(actions.setTaskEditProject(item));
 	};
-	const updatedStatus = (item, status) => {
-		dispatch(actions.updatedTaskStatus(item, status)).then(data => {
+	const updatedStatus = (item, statusTask) => {
+		dispatch(actions.updatedTaskStatus(item, statusTask)).then(data => {
 			if (data && !data.isError) {
 				notificationConfig('success', 'Success', 'Updated status success');
+				dispatch(
+					actions.fetchProjectDetailFilter(
+						item.prjID,
+						rowPage,
+						page,
+						ownerFilter,
+						status,
+						dateStart,
+						sector,
+						search
+					)
+				);
+			}
+		});
+	};
+	const deleteTask = item => {
+		dispatch(actions.deleteTask(item)).then(data => {
+			if (data && !data.isError) {
+				dispatch(
+					actions.fetchProjectDetailFilter(
+						item.prjID,
+						rowPage,
+						page,
+						ownerFilter,
+						status,
+						dateStart,
+						sector,
+						search
+					)
+				);
 			}
 		});
 	};
@@ -83,7 +125,7 @@ function TableProject(props) {
 											<ListItemText primary="Copy" />
 										</MenuItem>
 										{item.taskTypeID === 2 && item.countChild === 0 && (
-											<MenuItem role="button">
+											<MenuItem onClick={() => deleteTask(item)} role="button">
 												<ListItemIcon className="min-w-40">
 													<Icon>delete</Icon>
 												</ListItemIcon>
@@ -171,12 +213,6 @@ function TableProject(props) {
 						/>
 						<CaretDownOutlined style={{ cursor: 'pointer', marginLeft: '10px' }} />
 					</div>
-					{/* <Badge
-						size="default"
-						style={{ color: badgeStatus[item.statusID], cursor: 'pointer' }}
-						color={badgeStatus[item.statusID]}
-						text={item.statusName}
-					/> */}
 				</Dropdown>
 			)
 		},
@@ -188,6 +224,12 @@ function TableProject(props) {
 			render: (_, item) => (
 				<Progress percent={item.percentage} strokeColor={typeColor[item.typeName]} status="active" />
 			)
+		},
+		{
+			title: 'Sector',
+			dataIndex: 'sectorName',
+			key: 'sectorName',
+			width: '10%'
 		},
 		{
 			title: 'Assign',

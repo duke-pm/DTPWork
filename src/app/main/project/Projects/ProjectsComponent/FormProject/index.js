@@ -10,7 +10,8 @@ import * as actions from '../../../_redux/_projectActions';
 export default function FormProject({ owner, sectorArr, ArrProjectStatus, projectSub }) {
 	const dispatch = useDispatch();
 	const projectContext = useContext(ProjectContext);
-	const { formProject, setFormProject, title } = projectContext;
+	const { formProject, setFormProject, title, rowPage, page, status, ownerFilter, dateStart, search } =
+		projectContext;
 	const handleCloseFormProject = () => setFormProject(false);
 	const { currentState } = useSelector(
 		state => ({
@@ -26,6 +27,7 @@ export default function FormProject({ owner, sectorArr, ArrProjectStatus, projec
 					if (data && !data.isError) {
 						notificationConfig('success', 'Success', 'Updated project success');
 						handleCloseFormProject();
+						dispatch(actions.fetchsProjectFilter(rowPage, page, status, ownerFilter, dateStart, search));
 					}
 				});
 			} else {

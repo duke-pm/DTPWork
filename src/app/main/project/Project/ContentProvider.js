@@ -7,7 +7,7 @@ import { getInformationCompany } from 'app/main/assets/Possesion/_redux/possesio
 import { Spin } from 'antd';
 import FusePageCardedTask from '@fuse/core/FusePageCarded/FusePageCardedTask';
 import ProjectComponent from './ProjectComponent';
-import ProjectContextProvider, { ProjectContext } from './ProjectContext';
+import { ProjectContext } from './ProjectContext';
 import { fetchProjectDetail, fetchOwner, fetchAllSubTask, getTaskDetailAll } from '../_redux/_projectActions';
 
 export default function ContentProvider() {
@@ -32,7 +32,7 @@ export default function ContentProvider() {
 		dispatch(fetchProjectDetail(params.detail));
 	}, [params.detail, dispatch]);
 	useEffect(() => {
-		const paramsMasterData = 'PrjStatus,PrjComponent,PrjPriority';
+		const paramsMasterData = 'PrjStatus,PrjComponent,PrjPriority,PrjSector';
 		dispatch(getInformationCompany(paramsMasterData));
 	}, [dispatch]);
 	useEffect(() => {
@@ -89,6 +89,12 @@ export default function ContentProvider() {
 		{ label: 'Lớp 11', value: 11 },
 		{ label: 'Lớp 12', value: 12 }
 	];
+	const sectorArr =
+		currentState &&
+		currentState.projectSector.reduce(
+			(arr, curr) => [...arr, { label: curr.sectorName, value: curr.sectorID }],
+			[]
+		);
 	return (
 		<FusePageCardedTask
 			innerScroll
@@ -131,6 +137,7 @@ export default function ContentProvider() {
 						ArrProjectStatus={ArrProjectStatus}
 						ArrTaskPri={ArrTaskPri}
 						params={params}
+						sectorArr={sectorArr}
 					/>
 				</Box>
 			}

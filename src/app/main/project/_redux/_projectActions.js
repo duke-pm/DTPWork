@@ -12,7 +12,13 @@ const TaskType = {
 export const fetchsProject = () => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.list }));
 	const paramsReq = {
-		Lang: 'vi'
+		Lang: 'vi',
+		pageSize: 25,
+		pageNum: 1,
+		StatusID: null,
+		OwnerID: null,
+		Year: null,
+		Search: null
 	};
 	return requestFrom
 		.fetchsProject(paramsReq)
@@ -32,10 +38,16 @@ export const fetchsProject = () => dispatch => {
 			notificationConfig('warning', 'Warning', 'Server error');
 		});
 };
-export const fetchsProjectFilter = search => dispatch => {
+export const fetchsProjectFilter = (limit, page, status, owner, year, search) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const paramsReq = {
-		Search: search || ''
+		Lang: 'vi',
+		pageSize: limit || 25,
+		pageNum: page || 1,
+		StatusID: status || null,
+		OwnerID: owner || null,
+		Year: year || null,
+		Search: search || null
 	};
 	return requestFrom
 		.fetchsProject(paramsReq)
@@ -60,7 +72,6 @@ export const createdProject = values => dispatch => {
 	const dataReq = {
 		PrjID: '0',
 		PrjName: values.prjName,
-		SectorID: values.sectorID || 0,
 		PrjParentID: values.PrjParentID || 0,
 		Descr: values.descr,
 		IsPublic: values.isPublic,
@@ -96,7 +107,6 @@ export const updatedProject = values => dispatch => {
 	const dataReq = {
 		PrjID: values.prjID,
 		PrjName: values.prjName,
-		SectorID: values.sectorID || 0,
 		PrjParentID: values.prjParentID || 0,
 		Descr: values.descr,
 		IsPublic: values.isPublic,
@@ -108,10 +118,7 @@ export const updatedProject = values => dispatch => {
 		.then(res => {
 			const { data } = res;
 			if (!data.isError) {
-				// const dataRes = data.data;
-				dispatch(fetchsProjectFilter());
 				dispatch(fetchAllProject());
-				// dispatch(actions.updatedProject({ dataRes }));
 			} else {
 				dispatch(actions.catchErros({ callType: callTypes.action }));
 				notificationConfig('warning', 'Warning', data.errorMessage);
@@ -134,7 +141,6 @@ export const deleteProject = values => dispatch => {
 			const { data } = res;
 			if (!data.isError) {
 				// const dataRes = data.data;
-				dispatch(fetchsProjectFilter());
 				dispatch(fetchAllProject());
 				notificationConfig('success', 'Success', 'Delete project success');
 			} else {
@@ -148,30 +154,6 @@ export const deleteProject = values => dispatch => {
 			notificationConfig('warning', 'Warning', 'Server error');
 		});
 };
-export const deletedProject = item => dispatch => {
-	dispatch(actions.startCall({ callType: callTypes.action }));
-	const dataReq = {
-		GroupID: item.groupID
-	};
-	return requestFrom
-		.deleteProject(dataReq)
-		.then(res => {
-			// console.log(res);
-			const { data } = res;
-			if (!data.isError) {
-				dispatch(actions.deletedProject({ dataReq }));
-				notificationConfig('success', 'Success', 'Delete project success!!!');
-			} else {
-				dispatch(actions.catchErros({ callType: callTypes.action }));
-				notificationConfig('warning', 'Warning', `${data.errorMessage}`);
-			}
-		})
-		.catch(error => {
-			dispatch(actions.catchErros({ callType: callTypes.action }));
-			notificationConfig('warning', 'Warning', `Serrver error`);
-		});
-};
-
 export const fetchOwner = () => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	return requestFrom
@@ -229,7 +211,14 @@ export const fetchAllSubTask = params => dispatch => {
 export const fetchProjectDetail = params => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.list }));
 	const paramsReq = {
-		PrjID: params
+		PrjID: params,
+		OwnerID: null,
+		pageSize: 25,
+		pageNum: 1,
+		statusID: null,
+		Year: null,
+		Search: null,
+		Lang: 'vi'
 	};
 	return requestFrom
 		.fetchProjectDetail(paramsReq)
@@ -237,7 +226,8 @@ export const fetchProjectDetail = params => dispatch => {
 			const { data } = res;
 			if (!data.isError) {
 				const dataRes = data.data;
-				dispatch(actions.fetchProjectDetail({ dataRes }));
+				const total_count = data.totalRow;
+				dispatch(actions.fetchProjectDetail({ dataRes, total_count }));
 			} else {
 				notificationConfig('warning', 'Warning', data.errorMessage);
 				dispatch(actions.catchErros({ callType: callTypes.list }));
@@ -248,28 +238,38 @@ export const fetchProjectDetail = params => dispatch => {
 			notificationConfig('warning', 'Warning', 'Server error');
 		});
 };
-export const fetchProjectDetailFilter = params => dispatch => {
-	dispatch(actions.startCall({ callType: callTypes.action }));
-	const paramsReq = {
-		PrjID: params
-	};
-	return requestFrom
-		.fetchProjectDetail(paramsReq)
-		.then(res => {
-			const { data } = res;
-			if (!data.isError) {
-				const dataRes = data.data;
-				dispatch(actions.fetchProjectDetail({ dataRes }));
-			} else {
-				notificationConfig('warning', 'Warning', data.errorMessage);
+export const fetchProjectDetailFilter =
+	(params, pageSize, pageNum, owner, status, year, sector, search) => dispatch => {
+		dispatch(actions.startCall({ callType: callTypes.action }));
+		const paramsReq = {
+			PrjID: params,
+			OwnerID: owner || null,
+			pageSize: pageSize || 25,
+			pageNum: pageNum || 1,
+			statusID: status || null,
+			Year: year || null,
+			Search: search || null,
+			Lang: 'vi',
+			sector: sector || null
+		};
+		return requestFrom
+			.fetchProjectDetail(paramsReq)
+			.then(res => {
+				const { data } = res;
+				if (!data.isError) {
+					const dataRes = data.data;
+					const total_count = data.totalRow;
+					dispatch(actions.fetchProjectDetail({ dataRes, total_count }));
+				} else {
+					notificationConfig('warning', 'Warning', data.errorMessage);
+					dispatch(actions.catchErros({ callType: callTypes.action }));
+				}
+			})
+			.catch(() => {
 				dispatch(actions.catchErros({ callType: callTypes.action }));
-			}
-		})
-		.catch(() => {
-			dispatch(actions.catchErros({ callType: callTypes.action }));
-			notificationConfig('warning', 'Warning', 'Server error');
-		});
-};
+				notificationConfig('warning', 'Warning', 'Server error');
+			});
+	};
 
 export const createdTask = (values, prjID, taskType) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
@@ -285,6 +285,7 @@ export const createdTask = (values, prjID, taskType) => dispatch => {
 	formData.append('Owner', values.owner);
 	formData.append('Priority', values.priority);
 	formData.append('StatusID', values.status);
+	formData.append('SectorID', values.sectorID || 0);
 	formData.append('Grade', values.grade || 0);
 	formData.append('Author', values.author);
 	formData.append('Component', values.component || 0);
@@ -299,11 +300,9 @@ export const createdTask = (values, prjID, taskType) => dispatch => {
 		.then(res => {
 			const { data } = res;
 			if (!data.isError) {
-				// const dataRes = data.data;
 				dispatch(fetchProjectDetailFilter(prjID));
 				dispatch(fetchAllSubTask(prjID));
 				dispatch(getTaskDetailAll(prjID));
-				// dispatch(actions.updatedProject({ dataRes }));
 			} else {
 				dispatch(actions.catchErros({ callType: callTypes.action }));
 				notificationConfig('warning', 'Warning', data.errorMessage);
@@ -316,6 +315,7 @@ export const createdTask = (values, prjID, taskType) => dispatch => {
 		});
 };
 export const updatedTask = values => dispatch => {
+	console.log(values);
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const formData = new FormData();
 	formData.append('TaskID', values.taskID);
@@ -326,6 +326,7 @@ export const updatedTask = values => dispatch => {
 	formData.append('Descr', values.descr);
 	formData.append('StartDate', moment(values.startDate).format('YYYY-MM-DD'));
 	formData.append('EndDate', moment(values.endDate).format('YYYY-MM-DD'));
+	formData.append('SectorID', values.sectorID || 0);
 	formData.append('Owner', values.owner);
 	formData.append('Priority', values.priority);
 	formData.append('StatusID', values.status);
@@ -345,11 +346,8 @@ export const updatedTask = values => dispatch => {
 		.then(res => {
 			const { data } = res;
 			if (!data.isError) {
-				// const dataRes = data.data;
-				dispatch(fetchProjectDetailFilter(values.prjID));
 				dispatch(fetchAllSubTask(values.prjID));
 				dispatch(getTaskDetailAll(values.prjID));
-				// dispatch(actions.updatedProject({ dataRes }));
 			} else {
 				dispatch(actions.catchErros({ callType: callTypes.action }));
 				notificationConfig('warning', 'Warning', data.errorMessage);
@@ -367,7 +365,6 @@ export const updatedTaskStatus = (values, status, percent) => dispatch => {
 		TaskID: values.taskID,
 		StatusID: status,
 		Percentage: percent || values.percentage,
-		// Version: values.version,
 		Lang: 'Vi'
 	};
 	return requestFrom
@@ -376,7 +373,7 @@ export const updatedTaskStatus = (values, status, percent) => dispatch => {
 			const { data } = res;
 			if (!data.isError) {
 				// const dataRes = data.data;
-				dispatch(fetchProjectDetailFilter(values.prjID));
+				// dispatch(fetchProjectDetailFilter(values.prjID));
 				dispatch(fetchAllSubTask(values.prjID));
 				// dispatch(actions.updatedProject({ dataRes }));
 			} else {
@@ -495,6 +492,29 @@ export const addTaskWatcher = id => dispatch => {
 				dispatch(actions.catchErros({ callType: callTypes.action }));
 				notificationConfig('warning', 'Warning', data.errorMessage);
 			}
+		})
+		.catch(err => {
+			dispatch(actions.catchErros({ callType: callTypes.action }));
+			notificationConfig('warning', 'Warning', 'Server error');
+		});
+};
+export const deleteTask = values => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.action }));
+	const dataReq = {
+		TaskID: values.taskID
+	};
+	return requestFrom
+		.deleteTask(dataReq)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				dispatch(fetchAllSubTask(values.taskID));
+				notificationConfig('success', 'Success', 'Delete project success');
+			} else {
+				dispatch(actions.catchErros({ callType: callTypes.action }));
+				notificationConfig('warning', 'Warning', data.errorMessage);
+			}
+			return data;
 		})
 		.catch(err => {
 			dispatch(actions.catchErros({ callType: callTypes.action }));

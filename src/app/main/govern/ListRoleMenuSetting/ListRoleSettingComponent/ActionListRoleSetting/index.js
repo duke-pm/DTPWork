@@ -1,10 +1,8 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable import/no-extraneous-dependencies */
-import { Button, IconButton, Paper, Typography } from '@material-ui/core';
+import { Button, Paper, Typography } from '@material-ui/core';
 import React from 'react';
-import InputBase from '@material-ui/core/InputBase';
-import SearchIcon from '@material-ui/icons/Search';
 import 'antd/dist/antd.css';
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import { Select } from 'antd';
@@ -20,7 +18,6 @@ export default function ActionListRoleSetting({
 	setUserOption,
 	userID,
 	UserOption,
-	classes,
 	groupUser,
 	setGroupUser,
 	handleUpdatedRole

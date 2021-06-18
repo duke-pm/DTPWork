@@ -9,6 +9,9 @@ export const fetchsProject = params => {
 export const deleteProject = params => {
 	return request(`${url}/Delete`, { params });
 };
+export const deleteTask = params => {
+	return request(`${urlDetail}/Delete`, { params });
+};
 
 export const projectModify = data => {
 	return request({

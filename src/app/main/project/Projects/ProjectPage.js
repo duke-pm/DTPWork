@@ -38,12 +38,12 @@ export default function ProjectPage() {
 		const params = 'PrjStatus,PrjSector';
 		dispatch(getInformationCompany(params));
 	}, [dispatch]);
-	const sectorArr =
-		currentState &&
-		currentState.projectSector.reduce(
-			(arr, curr) => [...arr, { label: curr.sectorName, value: curr.sectorID }],
-			[]
-		);
+	// const sectorArr =
+	// 	currentState &&
+	// 	currentState.projectSector.reduce(
+	// 		(arr, curr) => [...arr, { label: curr.sectorName, value: curr.sectorID }],
+	// 		[]
+	// 	);
 	const ArrProjectStatus =
 		currentState &&
 		currentState.projectStatus.reduce(
@@ -56,7 +56,7 @@ export default function ProjectPage() {
 		<>
 			<FormProject
 				projectSub={projectSub}
-				sectorArr={sectorArr}
+				// sectorArr={sectorArr}
 				ArrProjectStatus={ArrProjectStatus}
 				owner={owner}
 			/>
@@ -86,7 +86,7 @@ export default function ProjectPage() {
 				}
 				content={
 					<Box p={3}>
-						<ProjectComponent sectorArr={sectorArr} ArrProjectStatus={ArrProjectStatus} owner={owner} />
+						<ProjectComponent ArrProjectStatus={ArrProjectStatus} owner={owner} />
 					</Box>
 				}
 			/>

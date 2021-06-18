@@ -3,11 +3,10 @@
 import React, { useContext, useEffect } from 'react';
 import { Paper, Table, TableContainer } from '@material-ui/core';
 import Panigation from '@fuse/core/FusePanigate';
-import image from '@fuse/assets/group.png';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import FuseLoading from '@fuse/core/FuseLoading';
-import { Spin } from 'antd';
+import { Empty, Spin } from 'antd';
 import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import * as actions from '../_redux/possesionActions';
 import FormCustomUsed from './FormCustomUsed';
@@ -23,18 +22,8 @@ export default function PossessionUsed(props) {
 	const possessionContext = useContext(PossessionContext);
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;
-	const {
-		rowPage,
-		setRowPage,
-		page,
-		setPage,
-		search,
-		value,
-		sort,
-		setSort,
-		setFormService,
-		typeSetFormService
-	} = possessionContext;
+	const { rowPage, setRowPage, page, setPage, search, value, sort, setSort, setFormService, typeSetFormService } =
+		possessionContext;
 	const handleOpenFormRequest = () => setFormRequest(true);
 	const handleClose = () => setOpen(false);
 	useEffect(() => {
@@ -94,15 +83,7 @@ export default function PossessionUsed(props) {
 								</Table>
 								{(entities && entities.length === 0) || lastErrors ? (
 									<FuseAnimate delay={300}>
-										<div className="flex items-center justify-center h-auto">
-											<img
-												className="rounded-full mx-auto"
-												src={image}
-												alt=""
-												width="384"
-												height="512"
-											/>
-										</div>
+										<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
 									</FuseAnimate>
 								) : null}
 							</Paper>

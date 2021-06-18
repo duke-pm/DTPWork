@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
-import { FormGroup } from '@material-ui/core';
 import { Form, Select } from 'antd';
 
 const FormItem = Form.Item;

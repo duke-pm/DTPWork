@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { notificationConfig } from '@fuse/core/DtpConfig';
 import * as moment from 'moment';
-import { Drawer, AppBar, IconButton, Toolbar, Typography, SwipeableDrawer } from '@material-ui/core';
+import { Drawer, AppBar, IconButton, Toolbar, Typography } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { ProjectContext } from '../../ProjectContext';
 import * as actions from '../../../_redux/_projectActions';
@@ -22,6 +22,7 @@ let initial = {
 	ownership: '',
 	project: null,
 	priority: null,
+	sectorID: null,
 	status: 1,
 	taskType: '',
 	prjID: '',
@@ -38,13 +39,15 @@ export default function FormProjectDrawer({
 	ArrTaskComponent,
 	taskSub,
 	params,
-	classes
+	classes,
+	sectorArr
 }) {
 	const dispatch = useDispatch();
 	const [fileCheck, setFileCheck] = useState(true);
 	const [listFile, setListFile] = useState(null);
 	const projectContext = useContext(ProjectContext);
-	const { formProject, setFormProject } = projectContext;
+	const { formProject, setFormProject, rowPage, page, ownerFilter, status, dateStart, sector, search } =
+		projectContext;
 	const handleCloseFormProject = () => {
 		setFormProject({
 			open: false,
@@ -64,6 +67,7 @@ export default function FormProjectDrawer({
 			ownership: '',
 			project: null,
 			priority: null,
+			sectorID: null,
 			status: 1,
 			taskType: '',
 			prjID: '',
@@ -89,6 +93,18 @@ export default function FormProjectDrawer({
 					if (data && !data.isError) {
 						notificationConfig('success', 'Success', 'Updated task success');
 						handleCloseFormProject();
+						dispatch(
+							actions.fetchProjectDetailFilter(
+								params.detail,
+								rowPage,
+								page,
+								ownerFilter,
+								status,
+								dateStart,
+								sector,
+								search
+							)
+						);
 					}
 				});
 			} else {
@@ -129,6 +145,7 @@ export default function FormProjectDrawer({
 		ownership: entitiesEdit && entitiesEdit.ownershipDTP,
 		priority: entitiesEdit && entitiesEdit.priority,
 		project: entitiesEdit ? (entitiesEdit.parentID === 0 ? null : entitiesEdit.parentID) : null,
+		sectorID: entitiesEdit ? (entitiesEdit.sectorID === 0 ? null : entitiesEdit.sectorID) : null,
 		status: entitiesEdit && entitiesEdit.statusID,
 		fileEdit: entitiesEdit && entitiesEdit.attachFiles,
 		percentage: entitiesEdit && entitiesEdit.percentage,
@@ -156,6 +173,7 @@ export default function FormProjectDrawer({
 			<FormCustomProjectTask
 				inititalValues={entitiesEdit && entitiesEdit.taskID ? initialEdit : initial}
 				owner={owner}
+				sectorArr={sectorArr}
 				listFile={listFile}
 				setListFile={setListFile}
 				entitiesEdit={entitiesEdit}

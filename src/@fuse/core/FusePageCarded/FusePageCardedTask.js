@@ -141,7 +141,6 @@ const FusePageCardedTask = React.forwardRef((props, ref) => {
 	const classes = useStyles(props);
 	const isRightSidebar = props.rightSidebarHeader || props.rightSidebarContent;
 	const isLeftSidebar = props.leftSidebarHeader || props.leftSidebarContent;
-	console.log(props.formProject);
 	React.useImperativeHandle(ref, () => ({
 		rootRef,
 		toggleLeftSidebar: () => {

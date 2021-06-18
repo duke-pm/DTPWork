@@ -18,16 +18,20 @@ function TableProject(props) {
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.up('xl'));
 	const dispatch = useDispatch();
-	const { entities, classes } = props;
+	const { entities } = props;
 	const projectContext = useContext(ProjectContext);
-	const { setFormProject, setTitle } = projectContext;
+	const { setFormProject, setTitle, rowPage, page, status, ownerFilter, dateStart, search } = projectContext;
 	const handleOpenFormProject = (item, type) => {
 		setFormProject(true);
 		setTitle(type);
 		dispatch(actions.setTaskEditProject(item));
 	};
 	const handleDelteProject = item => {
-		dispatch(actions.deleteProject(item.prjID));
+		dispatch(actions.deleteProject(item.prjID)).then(data => {
+			if (data && !data.isError) {
+				dispatch(actions.fetchsProjectFilter(rowPage, page, status, ownerFilter, dateStart, search));
+			}
+		});
 	};
 	const handleDetail = item => {
 		if (item.countChild === 0) {
@@ -99,12 +103,12 @@ function TableProject(props) {
 				</Typography>
 			)
 		},
-		{
-			title: 'Sector',
-			dataIndex: 'sectorName',
-			key: 'sectorName',
-			width: '10%'
-		},
+		// {
+		// 	title: 'Sector',
+		// 	dataIndex: 'sectorName',
+		// 	key: 'sectorName',
+		// 	width: '10%'
+		// },
 		{
 			title: 'Description',
 			dataIndex: 'descr',
@@ -188,7 +192,7 @@ function TableProject(props) {
 				}}
 				childrenColumnName="lstProjectItem"
 				pagination={false}
-				scroll={{ x: matches ? 1520 : 1540 }}
+				scroll={{ x: entities && entities.length ? (matches ? 1520 : 1540) : null }}
 				columns={columns}
 				dataSource={entities}
 			/>{' '}

@@ -10,7 +10,7 @@ import { badgeStatus } from 'app/main/project/Project/ProjectComponent/TableProj
 import { ProjectContext } from '../../ProjectContext';
 import { setTaskEditProject, fetchsProjectFilter } from '../../../_redux/_projectActions';
 
-export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStatus, owner }) {
+export default function ActionHeaderProject({ classes, ArrProjectStatus, owner }) {
 	const dispatch = useDispatch();
 	const projectContext = useContext(ProjectContext);
 	const {
@@ -19,14 +19,10 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 		setSearch,
 		dateStart,
 		setDateStart,
-		dateEnd,
-		setDateEnd,
 		ownerFilter,
 		setOwnerFilter,
 		status,
 		setStatus,
-		sector,
-		setSector,
 		page,
 		rowPage
 	} = projectContext;
@@ -35,22 +31,31 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 		dispatch(setTaskEditProject());
 	};
 	const handleSearch = () => {
-		dispatch(fetchsProjectFilter(search));
+		dispatch(fetchsProjectFilter(rowPage, page, status, ownerFilter, dateStart, search));
 	};
 	const onHandleChange = e => {
 		setSearch(e.target.value);
-
 		if (e.target.value.length <= 0) {
-			dispatch(fetchsProjectFilter(e.target.value));
+			dispatch(fetchsProjectFilter(rowPage, page, status, ownerFilter, dateStart, e.target.value));
 		}
 	};
 	const handleChangeFilterDateStart = (date, dateString) => setDateStart(dateString);
-	const handleChangeFilterDateEnd = (date, dateString) => setDateEnd(dateString);
-	const onHandleChangeOwner = value => setOwnerFilter(value);
-	const onHandleChangeStatus = value => setStatus(value);
-	const onHandleChangeSector = value => setSector(value);
+	const onHandleChangeOwner = value => {
+		if (value.length > 0) {
+			setOwnerFilter(value.toString());
+		} else {
+			setOwnerFilter(value);
+		}
+	};
+	const onHandleChangeStatus = value => {
+		if (value.length > 0) {
+			setStatus(value.toString());
+		} else {
+			setStatus(value);
+		}
+	};
 	const handleFilter = () => {
-		console.log({ rowPage, page, dateStart, dateEnd, ownerFilter, status, sector });
+		dispatch(fetchsProjectFilter(rowPage, page, status, ownerFilter, dateStart, search));
 	};
 	return (
 		<div>
@@ -65,7 +70,7 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 					</Typography>
 				</div>
 				<div className="flex flex-col sm:flex-row mb-16">
-					<Paper className="w-full sm:w-1/4 flex justify-between">
+					<Paper style={{ width: '180px' }} className="w-full sm:w-1/4 flex justify-between">
 						<DatePicker
 							onChange={handleChangeFilterDateStart}
 							defaultValue={moment()}
@@ -74,20 +79,14 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 							placeholder="Year start"
 							style={{ width: '100%' }}
 						/>
-						<DatePicker
-							picker="year"
-							onChange={handleChangeFilterDateEnd}
-							defaultValue={moment().add(5, 'year')}
-							format="YYYY"
-							placeholder="Ngày kết thúc"
-							style={{ width: '100%' }}
-						/>
 					</Paper>
-					<Paper style={{ width: '180px' }} className="ml-16 sm:mb-0 mb-9">
+					<Paper style={{ width: '270px' }} className="ml-16 sm:mb-0 mb-9">
 						<Select
 							placeholder="Owner"
 							showSearch
+							mode="multiple"
 							allowClear
+							maxTagCount={1}
 							onChange={onHandleChangeOwner}
 							bordered={false}
 							optionFilterProp="children"
@@ -104,10 +103,12 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 								))}
 						</Select>
 					</Paper>
-					<Paper style={{ width: '180px' }} className="ml-16 sm:mb-0 mb-9">
+					<Paper style={{ width: '230px' }} className="ml-16 sm:mb-0 mb-9">
 						<Select
 							allowClear
 							placeholder="Status"
+							mode="multiple"
+							maxTagCount={1}
 							onChange={onHandleChangeStatus}
 							bordered={false}
 							style={{ width: '100%' }}
@@ -116,22 +117,6 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 								ArrProjectStatus.map(item => (
 									<Select.Option value={item.value} key={item.value}>
 										<p style={{ color: badgeStatus[item.value] }}> {item.label} </p>
-									</Select.Option>
-								))}
-						</Select>
-					</Paper>
-					<Paper style={{ width: '180px' }} className="ml-16 sm:mb-0 mb-9">
-						<Select
-							allowClear
-							placeholder="Sector"
-							onChange={onHandleChangeSector}
-							bordered={false}
-							style={{ width: '100%' }}
-						>
-							{sectorArr &&
-								sectorArr.map(item => (
-									<Select.Option value={item.value} key={item.value}>
-										<p> {item.label} </p>
 									</Select.Option>
 								))}
 						</Select>
@@ -147,9 +132,31 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 						{' '}
 						Filter{' '}
 					</Button>
-				</div>
-				<div className="flex flex-col sm:flex-row justify-between">
 					<Button
+						onClick={handleOpenFormProject}
+						className="ml-16 sm:mb-0 mb-9 mt-8 sm:mt-0 max-w-sm md:max-w-lg h-26"
+						variant="contained"
+						color="primary"
+					>
+						<svg
+							className="h-16 w-16"
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+						>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth={2}
+								d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+							/>
+						</svg>
+						Project
+					</Button>{' '}
+				</div>
+				<div className="flex flex-col sm:flex-row justify-end">
+					{/* <Button
 						onClick={handleOpenFormProject}
 						className="mt-8 sm:mt-0 max-w-sm md:max-w-lg h-26"
 						variant="contained"
@@ -170,7 +177,7 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 							/>
 						</svg>
 						Project
-					</Button>{' '}
+					</Button>{' '} */}
 					<Paper className="w-full sm:w-1/4 flex justify-between ">
 						<InputBase
 							onKeyPress={event => {

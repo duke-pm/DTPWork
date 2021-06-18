@@ -1,9 +1,8 @@
 /* eslint-disable no-shadow */
 import React, { useContext, useState, useEffect } from 'react';
 import { Table, TableContainer, Paper } from '@material-ui/core';
-import { Spin } from 'antd';
+import { Empty, Spin } from 'antd';
 import Panigation from '@fuse/core/FusePanigate';
-import image from '@fuse/assets/group.png';
 import FuseLoading from '@fuse/core/FuseLoading';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
@@ -88,15 +87,7 @@ function PossessionUnused(props) {
 								</Table>
 								{(entities && entities.length === 0) || lastErrors ? (
 									<FuseAnimate delay={300}>
-										<div className="flex items-center justify-center h-auto">
-											<img
-												className="rounded-full mx-auto"
-												src={image}
-												alt=""
-												width="384"
-												height="512"
-											/>
-										</div>
+										<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
 									</FuseAnimate>
 								) : null}
 							</Paper>

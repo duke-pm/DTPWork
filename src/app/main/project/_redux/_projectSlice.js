@@ -81,10 +81,11 @@ export const projectSlice = createSlice({
 			state.entities = newEnities;
 		},
 		fetchProjectDetail: (state, action) => {
-			const { dataRes } = action.payload;
+			const { dataRes, total_count } = action.payload;
 			state.listLoading = false;
 			state.actionLoading = false;
 			state.entitiesDetail = dataRes;
+			state.total_count = total_count;
 		},
 		fetchTaskDetailAll: (state, action) => {
 			const { newData } = action.payload;

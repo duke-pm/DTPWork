@@ -2,8 +2,7 @@ import FuseAnimate from '@fuse/core/FuseAnimate';
 import { Paper, Table, TableContainer } from '@material-ui/core';
 import React, { useState, useEffect, useContext } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import image from '@fuse/assets/group.png';
-import { Spin } from 'antd';
+import { Empty, Spin } from 'antd';
 import Panigation from '@fuse/core/FusePanigate';
 import FuseLoading from '@fuse/core/FuseLoading';
 import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
@@ -81,15 +80,7 @@ export default function GroupUserContent() {
 							</Table>
 							{!entities || entities.length === 0 ? (
 								<FuseAnimate delay={300}>
-									<div className="flex items-center justify-center h-auto">
-										<img
-											className="rounded-full mx-auto"
-											src={image}
-											alt=""
-											width="384"
-											height="512"
-										/>
-									</div>
+									<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
 								</FuseAnimate>
 							) : null}
 						</Paper>

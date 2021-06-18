@@ -2,10 +2,10 @@ import FuseAnimate from '@fuse/core/FuseAnimate';
 import { Paper, Table, TableContainer } from '@material-ui/core';
 import React, { useState, useContext } from 'react';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import image from '@fuse/assets/group.png';
-import { Spin } from 'antd';
+import { Empty, Spin } from 'antd';
 import Panigation from '@fuse/core/FusePanigate';
 import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
+import FuseLoading from '@fuse/core/FuseLoading';
 import ListUserContentBody from './ListUserContentBody';
 import ListUserHeader from './ListUserHeader';
 import FormListUser from './FormListUser';
@@ -20,7 +20,7 @@ export default function ListUserContent() {
 	const { page, rowPage, setPage, sort, setRowPage, setSort } = useListUserContext;
 	const [formListUser, setFormListUser] = useState(false);
 	const { currentState } = useSelector(state => ({ currentState: state.govern.listUser }), shallowEqual);
-	const { entities, actionLoading, total_count } = currentState;
+	const { entities, actionLoading, total_count, listLoading } = currentState;
 	const handleOpenFormGroupUser = () => {
 		setFormListUser(true);
 		dispatch(actions.setTaskEditListUser(null));
@@ -55,6 +55,9 @@ export default function ListUserContent() {
 			id
 		});
 	};
+	if (listLoading) {
+		return <FuseLoading />;
+	}
 	return (
 		<div className="w-full flex flex-col">
 			<FormListUser handleCloseFormGroupUser={handleCloseFormGroupUser} open={formListUser} />
@@ -74,15 +77,7 @@ export default function ListUserContent() {
 							</Table>
 							{!entities || entities.length === 0 ? (
 								<FuseAnimate delay={300}>
-									<div className="flex items-center justify-center h-auto">
-										<img
-											className="rounded-full mx-auto"
-											src={image}
-											alt=""
-											width="384"
-											height="512"
-										/>
-									</div>
+									<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
 								</FuseAnimate>
 							) : null}
 						</Paper>
