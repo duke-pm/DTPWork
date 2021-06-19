@@ -39,7 +39,7 @@ export default function ProcessingUseAsset({ openHistory, setOpenHistory }) {
 					</Typography>
 				</Toolbar>
 			</AppBar>
-			<DialogContent style={{ height: '75vh' }}>
+			<DialogContent style={{ height: '85vh' }}>
 				<InformationProceeUseAsset actionLoading={actionLoading} entitiesEdit={entitiesEdit} />
 			</DialogContent>
 		</Dialog>

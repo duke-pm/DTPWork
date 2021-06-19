@@ -57,12 +57,6 @@ function TableProject(props) {
 									</ListItemIcon>
 									<ListItemText primary="Project settings" />
 								</MenuItem>
-								<MenuItem onClick={() => handleOpenFormProject(item, 'Clone')} role="button">
-									<ListItemIcon className="min-w-40">
-										<Icon>file_copy_icon</Icon>
-									</ListItemIcon>
-									<ListItemText primary="Clone" />
-								</MenuItem>
 								{item.countChild === 0 && (
 									<MenuItem onClick={() => handleDetail(item)} role="button">
 										<ListItemIcon className="min-w-40">
@@ -71,6 +65,12 @@ function TableProject(props) {
 										<ListItemText primary="Open detail view" />
 									</MenuItem>
 								)}
+								<MenuItem onClick={() => handleOpenFormProject(item, 'Clone')} role="button">
+									<ListItemIcon className="min-w-40">
+										<Icon>file_copy_icon</Icon>
+									</ListItemIcon>
+									<ListItemText primary="Clone project" />
+								</MenuItem>
 								{item.countChild === 0 && (
 									<MenuItem onClick={() => handleDelteProject(item)} role="button">
 										<ListItemIcon className="min-w-40">

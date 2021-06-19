@@ -82,7 +82,7 @@ export default function FormCustomProject({
 									<Field
 										label="Description"
 										name="descr"
-										row={4}
+										row={8}
 										component={InputTextArea}
 										className="mx-4"
 									/>
@@ -96,7 +96,7 @@ export default function FormCustomProject({
 										className="mx-4"
 									/> */}
 									<Field
-										label="Owner"
+										label="Project Owner"
 										name="owner"
 										component={SelectAntd || []}
 										options={owner}
