@@ -35,6 +35,7 @@ export default function FormProject({ owner, sectorArr, ArrProjectStatus, projec
 					if (data && !data.isError) {
 						notificationConfig('success', 'Success', 'Clone project success');
 						handleCloseFormProject();
+						dispatch(actions.fetchsProjectFilter(rowPage, page, status, ownerFilter, dateStart, search));
 					}
 				});
 			}
@@ -43,6 +44,7 @@ export default function FormProject({ owner, sectorArr, ArrProjectStatus, projec
 				if (data && !data.isError) {
 					notificationConfig('success', 'Success', 'Created project success');
 					handleCloseFormProject();
+					dispatch(actions.fetchsProjectFilter(rowPage, page, status, ownerFilter, dateStart, search));
 				}
 			});
 		}
