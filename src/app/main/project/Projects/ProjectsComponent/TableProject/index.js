@@ -68,7 +68,7 @@ function TableProject(props) {
 										<ListItemIcon className="min-w-40">
 											<Icon>visibility</Icon>
 										</ListItemIcon>
-										<ListItemText primary="Open detail view" />
+										<ListItemText primary="Open detail" />
 									</MenuItem>
 								)}
 								{item.countChild === 0 && item.isModified && (
