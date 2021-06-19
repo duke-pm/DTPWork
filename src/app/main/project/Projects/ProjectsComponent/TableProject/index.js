@@ -65,17 +65,7 @@ function TableProject(props) {
 										<ListItemText primary="Open detail view" />
 									</MenuItem>
 								)}
-<<<<<<< HEAD
-								<MenuItem onClick={() => handleOpenFormProject(item, 'Clone')} role="button">
-									<ListItemIcon className="min-w-40">
-										<Icon>file_copy_icon</Icon>
-									</ListItemIcon>
-									<ListItemText primary="Clone project" />
-								</MenuItem>
-								{item.countChild === 0 && (
-=======
 								{item.countChild === 0 && item.isModified && (
->>>>>>> 9234a573c714fdd5b3785126feab9890ccc58d6d
 									<MenuItem onClick={() => handleDelteProject(item)} role="button">
 										<ListItemIcon className="min-w-40">
 											<Icon>delete</Icon>
