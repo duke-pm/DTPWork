@@ -41,7 +41,7 @@ export const fetchsProject = () => dispatch => {
 export const fetchsProjectFilter = (limit, page, status, owner, year, search) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const paramsReq = {
-		Lang: 'vi',
+		Lang: 'en',
 		pageSize: limit || 25,
 		pageNum: page || 1,
 		StatusID: status || null,
@@ -76,7 +76,7 @@ export const createdProject = values => dispatch => {
 		Descr: values.descr,
 		IsPublic: values.isPublic,
 		Owner: values.owner || 0,
-		Lang: 'vi'
+		Lang: 'en'
 	};
 	return requestFrom
 		.projectModify(dataReq)
@@ -111,7 +111,7 @@ export const updatedProject = values => dispatch => {
 		Descr: values.descr,
 		IsPublic: values.isPublic,
 		Owner: values.owner || 0,
-		Lang: 'vi'
+		Lang: 'en'
 	};
 	return requestFrom
 		.projectModify(dataReq)
@@ -218,7 +218,7 @@ export const fetchProjectDetail = params => dispatch => {
 		statusID: null,
 		Year: null,
 		Search: null,
-		Lang: 'vi'
+		Lang: 'en'
 	};
 	return requestFrom
 		.fetchProjectDetail(paramsReq)
@@ -249,7 +249,7 @@ export const fetchProjectDetailFilter =
 			statusID: status || null,
 			Year: year || null,
 			Search: search || null,
-			Lang: 'vi',
+			Lang: 'en',
 			SectorID: sector || null
 		};
 		return requestFrom
@@ -292,7 +292,7 @@ export const createdTask = (values, prjID, taskType) => dispatch => {
 	formData.append('OriginPublisher', values.originPublisher);
 	formData.append('OwnershipDTP', values.ownership);
 	formData.append('AttachFiles', values.file || '');
-	formData.append('Lang', 'vi');
+	formData.append('Lang', 'en');
 	formData.append('Percentage', values.percentage);
 	formData.append('Version', values.version);
 	return requestFrom
@@ -315,7 +315,6 @@ export const createdTask = (values, prjID, taskType) => dispatch => {
 		});
 };
 export const updatedTask = values => dispatch => {
-	console.log(values);
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const formData = new FormData();
 	formData.append('TaskID', values.taskID);
@@ -338,7 +337,7 @@ export const updatedTask = values => dispatch => {
 	if (values.file) {
 		formData.append('AttachFiles', values.file);
 	}
-	formData.append('Lang', 'vi');
+	formData.append('Lang', 'en');
 	formData.append('Percentage', values.percentage);
 	formData.append('Version', values.version);
 	return requestFrom
@@ -365,7 +364,7 @@ export const updatedTaskStatus = (values, status, percent) => dispatch => {
 		TaskID: values.taskID,
 		StatusID: status,
 		Percentage: percent || values.percentage,
-		Lang: 'Vi'
+		Lang: 'en'
 	};
 	return requestFrom
 		.updateStatusTask(dataReq)
@@ -414,7 +413,7 @@ export const getTaskDetailAll = params => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const paramsReq = {
 		PrjID: params,
-		Lang: 'vi',
+		Lang: 'en',
 		Search: ''
 	};
 	return requestFrom
@@ -455,7 +454,7 @@ export const addTaskActivity = (id, comment) => dispatch => {
 		taskID: id,
 		LineNum: '0',
 		Comments: comment,
-		Lang: 'vi'
+		Lang: 'en'
 	};
 	return requestFrom
 		.addTaskActivity(dataReq)

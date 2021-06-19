@@ -62,7 +62,7 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 		}
 	};
 	const handleOpenGant = () => setGantt(true);
-	const handleChangeFilterDateStart = (date, dateString) => setDateStart(dateString);
+	// const handleChangeFilterDateStart = (date, dateString) => setDateStart(dateString);
 	const onHandleChangeOwner = value => {
 		if (value.length > 0) {
 			setOwnerFilter(value.toString());
@@ -96,7 +96,7 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 					</Typography>
 				</div>
 				<div className="flex flex-col sm:flex-row mb-16">
-					<Paper style={{ width: '180px' }} className="w-full sm:w-1/4 flex justify-between">
+					{/* <Paper style={{ width: '180px' }} className="w-full sm:w-1/4 flex justify-between">
 						<DatePicker
 							onChange={handleChangeFilterDateStart}
 							defaultValue={moment()}
@@ -105,8 +105,8 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 							placeholder="Year start"
 							style={{ width: '100%' }}
 						/>
-					</Paper>
-					<Paper style={{ width: '180px' }} className="ml-16 sm:mb-0 mb-9">
+					</Paper> */}
+					<Paper style={{ width: '180px' }} className="sm:mb-0 mb-9">
 						<Select
 							allowClear
 							placeholder="Sector"
