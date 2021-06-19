@@ -72,7 +72,7 @@ export const createdProject = values => dispatch => {
 	const dataReq = {
 		PrjID: '0',
 		PrjName: values.prjName,
-		PrjParentID: values.PrjParentID || 0,
+		PrjParentID: values.prjParentID || 0,
 		Descr: values.descr,
 		IsPublic: values.isPublic,
 		Owner: values.owner || 0,
@@ -83,8 +83,8 @@ export const createdProject = values => dispatch => {
 		.then(res => {
 			const { data } = res;
 			if (!data.isError) {
-				const dataRes = data.data;
-				dispatch(actions.createdProject({ dataRes }));
+				// const dataRes = data.data;
+				// dispatch(actions.createdProject({ dataRes }));
 				dispatch(fetchAllProject());
 			} else {
 				dispatch(actions.catchErros({ callType: callTypes.action }));

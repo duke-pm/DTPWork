@@ -71,7 +71,7 @@ function TableProject(props) {
 										<ListItemText primary="Open detail view" />
 									</MenuItem>
 								)}
-								{item.countChild === 0 && (
+								{item.countChild === 0 && item.isModified && (
 									<MenuItem onClick={() => handleDelteProject(item)} role="button">
 										<ListItemIcon className="min-w-40">
 											<Icon>delete</Icon>
