@@ -250,7 +250,7 @@ export const fetchProjectDetailFilter =
 			Year: year || null,
 			Search: search || null,
 			Lang: 'vi',
-			sector: sector || null
+			SectorID: sector || null
 		};
 		return requestFrom
 			.fetchProjectDetail(paramsReq)
