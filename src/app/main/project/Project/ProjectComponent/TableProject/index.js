@@ -163,6 +163,12 @@ function TableProject(props) {
 			)
 		},
 		{
+			title: 'Sector',
+			dataIndex: 'sectorName',
+			key: 'sectorName',
+			width: '10%'
+		},
+		{
 			title: 'Type',
 			dataIndex: 'type',
 			key: 'type',
@@ -224,31 +230,12 @@ function TableProject(props) {
 			)
 		},
 		{
-			title: 'Processing',
+			title: 'Progress',
 			dataIndex: 'status',
 			key: 'status',
 			width: '15%',
 			render: (_, item) => (
 				<Progress percent={item.percentage} strokeColor={typeColor[item.typeName]} status="active" />
-			)
-		},
-		{
-			title: 'Sector',
-			dataIndex: 'sectorName',
-			key: 'sectorName',
-			width: '10%'
-		},
-		{
-			title: 'Assign',
-			dataIndex: 'assignee',
-			key: 'assignee',
-			width: '15%',
-			render: (_, item) => (
-				<div className="flex flex-row">
-					{' '}
-					<Avatar size={25} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
-					<p className="ml-8">{item.ownerName}</p>{' '}
-				</div>
 			)
 		},
 		{
@@ -263,6 +250,19 @@ function TableProject(props) {
 					color={priorityColor[item.priority]}
 					text={item.priorityName}
 				/>
+			)
+		},
+		{
+			title: 'Assign',
+			dataIndex: 'assignee',
+			key: 'assignee',
+			width: '15%',
+			render: (_, item) => (
+				<div className="flex flex-row">
+					{' '}
+					<Avatar size={25} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
+					<p className="ml-8">{item.ownerName}</p>{' '}
+				</div>
 			)
 		},
 		{
