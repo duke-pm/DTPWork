@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import FuseLoading from '@fuse/core/FuseLoading';
@@ -8,13 +9,13 @@ import CloseIcon from '@material-ui/icons/Close';
 import { IconButton } from '@material-ui/core';
 import Panigation from '@fuse/core/FusePanigate';
 import { Spin } from 'antd';
+import * as moment from 'moment';
 import ActionHeaderProject from './ActionProjectComponent/ActionHeaderProject';
 import DrawerComponent from './DrawerComponent';
 import FormProjectDrawer from './FormProject';
 import TableProject from './TableProject';
 import { ProjectContext } from '../ProjectContext';
-
-import { fetchProjectDetailFilter } from '../../_redux/_projectActions';
+import { fetchProjectDetailFilter, updatedGantt, getTaskDetailAll } from '../../_redux/_projectActions';
 
 export default function ProjectComponent({
 	owner,
@@ -56,12 +57,37 @@ export default function ProjectComponent({
 			fetchProjectDetailFilter(params.detail, rowPageParse, page, ownerFilter, status, dateStart, sector, search)
 		);
 	};
+	const onHandleChangeDate = (task, start, end) => {
+		const data = [];
+		const { id } = task;
+		const newData = [
+			...data,
+			{ TaskID: id, StartDate: moment(start).format('YYYY-MM-DD'), EndDate: moment(end).format('YYYY-MM-DD') }
+		];
+		dispatch(updatedGantt(newData, params.detail)).then(data => {
+			if (data && !data.isError) {
+				dispatch(
+					fetchProjectDetailFilter(
+						params.detail,
+						rowPage,
+						page,
+						ownerFilter,
+						status,
+						dateStart,
+						sector,
+						search
+					)
+				);
+				dispatch(getTaskDetailAll(params.detail, ownerFilter, status, sector, search));
+			}
+		});
+	};
 	if (listLoading) {
 		return <FuseLoading />;
 	}
 	return (
 		<div className="w-full flex flex-col ">
-			<DrawerComponent />
+			<DrawerComponent params={params} />
 			<FormProjectDrawer
 				owner={owner}
 				sectorArr={sectorArr}
@@ -86,7 +112,7 @@ export default function ProjectComponent({
 					{!gantt ? (
 						<div className="flex flex-col gap-8 mt-16 shadow-md  sm:border-1 sm:rounded-4 ">
 							<TableProject actionLoading={actionLoading} entitiesDetail={entitiesDetail} />
-							{entitiesDetail && entitiesDetail.listTask && entitiesDetail.listTask.length !== 0 && (
+							{entitiesDetail?.listTask?.length !== 0 && (
 								<div className="flex flex-row items-center justify-end">
 									{actionLoading && <Spin />}
 									<Panigation
@@ -106,7 +132,7 @@ export default function ProjectComponent({
 									onClick={handleCloseGantt}
 									edge="start"
 									color="inherit"
-									className="float-right"
+									className="float-left"
 									aria-label="close"
 								>
 									<CloseIcon />
@@ -116,8 +142,8 @@ export default function ProjectComponent({
 								{entitiesGantt.length > 0 && (
 									<FrappeGantt
 										tasks={entitiesGantt}
-										onDateChange={(task, start, end) => console.log(task, start, end)}
-										onProgressChange={(task, progress) => console.log(task, progress)}
+										onDateChange={(task, start, end) => onHandleChangeDate(task, start, end)}
+										// onProgressChange={(task, progress) => onHandleChangeProcess(task, progress)}
 									/>
 								)}
 							</div>

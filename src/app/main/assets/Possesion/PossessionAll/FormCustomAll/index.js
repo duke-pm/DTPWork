@@ -4,6 +4,7 @@ import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import * as moment from 'moment';
 import { notificationConfig } from '@fuse/core/DtpConfig';
 import CloseIcon from '@material-ui/icons/Close';
+import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import FormCustomEdit from './FormCustomEdit';
 import * as actions from '../../_redux/possesionActions';
 
@@ -95,19 +96,35 @@ function FormCustomAll({ handleClose, open, rowPage }) {
 		if (entitiesEdit && entitiesEdit.assetID) {
 			dispatch(actions.updatedPossesionAll(values)).then(data => {
 				if (data && !data.isError) {
-					notificationConfig('success', 'Thành công!', 'Cập nhật thành công');
+					notificationConfig(
+						'success',
+						notificationContent.content.vi.success,
+						notificationContent.description.gobal.vi.updatedSuccess
+					);
 					handleClose();
 				} else {
-					notificationConfig('warning', 'Thất bại!', 'Cập nhật thất bại vui lòng thử lại');
+					notificationConfig(
+						'warning',
+						notificationContent.content.vi.faild,
+						notificationContent.description.gobal.vi.UpdatedFaild
+					);
 				}
 			});
 		} else {
 			dispatch(actions.createdPossesionAll(values, prefix, rowPage)).then(data => {
 				if (data && !data.isError) {
-					notificationConfig('success', 'Thành công!', 'Tạo mới thành công');
+					notificationConfig(
+						'success',
+						notificationContent.content.vi.success,
+						notificationContent.description.gobal.vi.createdSuccess
+					);
 					handleClose();
 				} else {
-					notificationConfig('warning', 'Thất bại!', 'Tạo mới thất bại');
+					notificationConfig(
+						'warning',
+						notificationContent.content.vi.faild,
+						notificationContent.description.gobal.vi.createdFaild
+					);
 				}
 			});
 		}

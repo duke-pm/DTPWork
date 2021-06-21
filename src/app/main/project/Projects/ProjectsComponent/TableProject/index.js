@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Badge, Checkbox, Table, Popover, Avatar } from 'antd';
+import { Badge, Checkbox, Table, Popover, Avatar, Tooltip } from 'antd';
 import React, { useContext } from 'react';
 import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
 import { MenuItem, ListItemIcon, Icon, ListItemText, Typography } from '@material-ui/core';
@@ -92,12 +92,12 @@ function TableProject(props) {
 			title: 'Project Name',
 			dataIndex: 'prjName',
 			key: 'prjName',
-			width: '27%',
+			width: '40%',
 			ellipsis: {
 				showTitle: false
 			},
 			render: (_, item) => (
-				<Typography style={{ marginLeft: '20px', cursor: 'default' }} component="button">
+				<Typography style={{ marginLeft: '20px', cursor: 'default', fontFamily: 'Poppins' }} component="button">
 					{' '}
 					{item.prjName}{' '}
 				</Typography>
@@ -164,6 +164,23 @@ function TableProject(props) {
 					{' '}
 					<Avatar size={25} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
 					<p className="ml-8 "> {item.ownerName}</p>{' '}
+				</div>
+			)
+		},
+		{
+			title: 'Members',
+			dataIndex: 'member',
+			key: 'assignee',
+			width: '18%',
+			render: (_, item) => (
+				<div className="flex flex-row">
+					<Avatar.Group maxCount={3} maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
+						{item?.lstUserInvited?.map(av => (
+							<Tooltip key={av.userID} title={av.fullName} placement="top">
+								<Avatar style={{ backgroundColor: '#87d068' }}>{av.alphabet}</Avatar>
+							</Tooltip>
+						))}
+					</Avatar.Group>
 				</div>
 			)
 		}

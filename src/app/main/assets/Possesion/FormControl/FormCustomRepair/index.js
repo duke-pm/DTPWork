@@ -3,6 +3,7 @@ import { Dialog, AppBar, Toolbar, Typography, IconButton } from '@material-ui/co
 import CloseIcon from '@material-ui/icons/Close';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { notificationConfig } from '@fuse/core/DtpConfig';
+import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import FormCustomRepairEdit from './FormCustomRepairEdit';
 import { PossessionContext } from '../../PossessionContext';
 import * as actions from '../../_redux/possesionActions';
@@ -22,7 +23,11 @@ export default function FormCustomService() {
 	const handleSubmitRepairService = values => {
 		dispatch(actions.repairPossesion(values, entitiesEdit, typeFormService)).then(data => {
 			if (data && !data.isError) {
-				notificationConfig('success', 'Thành công', 'Tài sản đã được ghi nhận sửa chữa bảo hành');
+				notificationConfig(
+					'success',
+					notificationContent.content.vi.success,
+					notificationContent.description.assets.repairAssetsSuccess
+				);
 				handleClose();
 			}
 		});

@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Badge, Dropdown, Table, Popover, Avatar, Menu, Progress } from 'antd';
+import { Badge, Dropdown, Table, Popover, Avatar, Menu, Progress, Tooltip } from 'antd';
 import React, { useContext, useState, useEffect } from 'react';
 import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
 import { MenuItem, ListItemIcon, Icon, ListItemText, Typography } from '@material-ui/core';
@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { notificationConfig } from '@fuse/core/DtpConfig';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import * as actions from '../../../_redux/_projectActions';
 import { ProjectContext } from '../../ProjectContext';
 import { badgeStatus, typeColor, priorityColor } from './ConfigTableProject';
@@ -22,7 +23,7 @@ function TableProject(props) {
 	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 	const projectContext = useContext(ProjectContext);
 	useEffect(() => {
-		const newEntis = entitiesDetail && entitiesDetail.listTask && entitiesDetail.listTask.map(item => item.taskID);
+		const newEntis = entitiesDetail?.listTask?.map(item => item.taskID);
 		if (newEntis && newEntis.length > 0) {
 			setSelectedRowKeys(newEntis);
 		}
@@ -57,7 +58,11 @@ function TableProject(props) {
 	const updatedStatus = (item, statusTask) => {
 		dispatch(actions.updatedTaskStatus(item, statusTask)).then(data => {
 			if (data && !data.isError) {
-				notificationConfig('success', 'Success', 'Updated status success');
+				notificationConfig(
+					'success',
+					notificationContent.content.en.success,
+					notificationContent.description.project.task.updateStatusTask
+				);
 				dispatch(
 					actions.fetchProjectDetailFilter(
 						item.prjID,
@@ -70,6 +75,7 @@ function TableProject(props) {
 						search
 					)
 				);
+				dispatch(actions.getTaskDetailAll(item.prjID, ownerFilter, status, sector, search));
 			}
 		});
 	};
@@ -88,6 +94,7 @@ function TableProject(props) {
 						search
 					)
 				);
+				dispatch(actions.getTaskDetailAll(item.prjID, ownerFilter, status, sector, search));
 			}
 		});
 	};
@@ -149,7 +156,7 @@ function TableProject(props) {
 			key: 'subject',
 			width: '27%',
 			render: (_, item) => (
-				<Typography style={{ marginLeft: '20px', cursor: 'default' }} component="button">
+				<Typography style={{ marginLeft: '20px', cursor: 'default', fontFamily: 'Poppins' }} component="button">
 					{' '}
 					{item.taskName}{' '}
 				</Typography>
@@ -257,6 +264,23 @@ function TableProject(props) {
 					text={item.priorityName}
 				/>
 			)
+		},
+		{
+			title: 'Members',
+			dataIndex: 'member',
+			key: 'assignee',
+			width: '40%',
+			render: (_, item) => (
+				<div className="flex flex-row">
+					<Avatar.Group maxCount={3} maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
+						{item?.lstUserInvited?.map(av => (
+							<Tooltip key={av.userID} title={av.fullName} placement="top">
+								<Avatar style={{ backgroundColor: '#87d068' }}>{av.alphabet}</Avatar>
+							</Tooltip>
+						))}
+					</Avatar.Group>
+				</div>
+			)
 		}
 	];
 	return (
@@ -286,7 +310,7 @@ function TableProject(props) {
 						)
 				}}
 				scroll={{
-					x: entitiesDetail.listTask && entitiesDetail.listTask.length > 0 ? (matches ? 1400 : 1500) : null,
+					x: entitiesDetail.listTask?.length > 0 ? (matches ? 1900 : 1800) : null,
 					y: null
 				}}
 				pagination={false}

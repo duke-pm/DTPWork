@@ -49,6 +49,13 @@ export const updateStatusTask = params => {
 		data: params
 	});
 };
+export const updatedGantt = data => {
+	return request({
+		method: 'PUT',
+		url: `${urlDetail}/UpdateGrantt`,
+		data
+	});
+};
 export const getTaskViewDetail = params => {
 	return request(`${urlDetail}/GetByID`, { params });
 };

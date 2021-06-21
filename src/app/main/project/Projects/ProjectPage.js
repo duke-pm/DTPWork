@@ -20,7 +20,7 @@ export default function ProjectPage() {
 	}, [dispatch]);
 	useEffect(() => {
 		dispatch(actions.fetchOwner()).then(data => {
-			if (data && !data.isError) {
+			if (!data?.isError) {
 				const ownerArr = data.data.reduce(
 					(arr, curr) => [...arr, { label: curr.empName, value: curr.empID }],
 					[]
@@ -38,28 +38,14 @@ export default function ProjectPage() {
 		const params = 'PrjStatus,PrjSector';
 		dispatch(getInformationCompany(params));
 	}, [dispatch]);
-	// const sectorArr =
-	// 	currentState &&
-	// 	currentState.projectSector.reduce(
-	// 		(arr, curr) => [...arr, { label: curr.sectorName, value: curr.sectorID }],
-	// 		[]
-	// 	);
-	const ArrProjectStatus =
-		currentState &&
-		currentState.projectStatus.reduce(
-			(arr, curr) => [...arr, { label: curr.statusName, value: curr.statusID }],
-			[]
-		);
-	const projectSub =
-		projectAll && projectAll.reduce((arr, curr) => [...arr, { label: curr.prjName, value: curr.prjID }], []);
+	const ArrProjectStatus = currentState?.projectStatus?.reduce(
+		(arr, curr) => [...arr, { label: curr.statusName, value: curr.statusID }],
+		[]
+	);
+	const projectSub = projectAll?.reduce((arr, curr) => [...arr, { label: curr.prjName, value: curr.prjID }], []);
 	return (
 		<>
-			<FormProject
-				projectSub={projectSub}
-				// sectorArr={sectorArr}
-				ArrProjectStatus={ArrProjectStatus}
-				owner={owner}
-			/>
+			<FormProject projectSub={projectSub} ArrProjectStatus={ArrProjectStatus} owner={owner} />
 			<FusePageCarded
 				innerScroll
 				classes={{
@@ -79,9 +65,7 @@ export default function ProjectPage() {
 				}
 				contentToolbar={
 					<div className="flex  items-center px-16 flex-1">
-						<Typography component="span" className="font-bold flex text-sm	">
-							PROJECTS
-						</Typography>
+						<p className="font-semibold flex text-sm">Projects</p>
 					</div>
 				}
 				content={

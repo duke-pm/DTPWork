@@ -4,6 +4,7 @@ import { notificationConfig } from '@fuse/core/DtpConfig';
 import * as moment from 'moment';
 import { Drawer, AppBar, IconButton, Toolbar, Typography } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
+import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import { ProjectContext } from '../../ProjectContext';
 import * as actions from '../../../_redux/_projectActions';
 import FormCustomProjectTask from './FormProjectDrawer';
@@ -29,7 +30,8 @@ let initial = {
 	file: '',
 	fileEdit: '',
 	percentage: '',
-	version: ''
+	version: '',
+	userInvite: []
 };
 export default function FormProjectDrawer({
 	owner,
@@ -74,7 +76,8 @@ export default function FormProjectDrawer({
 			file: '',
 			fileEdit: '',
 			percentage: '',
-			version: ''
+			version: '',
+			userInvite: []
 		};
 		setListFile(null);
 		setFileCheck(true);
@@ -91,7 +94,11 @@ export default function FormProjectDrawer({
 			if (formProject.title === 'Setting task') {
 				dispatch(actions.updatedTask(values)).then(data => {
 					if (data && !data.isError) {
-						notificationConfig('success', 'Success', 'Updated task success');
+						notificationConfig(
+							'success',
+							notificationContent.content.en.success,
+							notificationContent.description.project.task.updatedTask
+						);
 						handleCloseFormProject();
 						dispatch(
 							actions.fetchProjectDetailFilter(
@@ -115,7 +122,11 @@ export default function FormProjectDrawer({
 				};
 				dispatch(actions.createdTask(values, params.detail, TaskType[values.taskType])).then(data => {
 					if (data && !data.isError) {
-						notificationConfig('success', 'Success', 'Created task success');
+						notificationConfig(
+							'success',
+							notificationContent.content.en.success,
+							notificationContent.description.project.task.createdTask
+						);
 						handleCloseFormProject();
 					}
 				});
@@ -123,39 +134,44 @@ export default function FormProjectDrawer({
 		} else {
 			dispatch(actions.createdTask(values, params.detail, formProject.title)).then(data => {
 				if (data && !data.isError) {
-					notificationConfig('success', 'Success', 'Created task success');
+					notificationConfig(
+						'success',
+						notificationContent.content.en.success,
+						notificationContent.description.project.task.createdTask
+					);
 					handleCloseFormProject();
 				}
 			});
 		}
 	};
 	const initialEdit = {
-		taskID: entitiesEdit && entitiesEdit.taskID,
-		taskType: entitiesEdit && entitiesEdit.taskTypeID,
-		prjID: entitiesEdit && entitiesEdit.prjID,
-		descr: entitiesEdit && entitiesEdit.descr,
-		taskName: entitiesEdit && entitiesEdit.taskName,
-		startDate: entitiesEdit && entitiesEdit.startDate,
-		endDate: entitiesEdit && entitiesEdit.endDate,
+		taskID: entitiesEdit?.taskID,
+		taskType: entitiesEdit?.taskTypeID,
+		prjID: entitiesEdit?.prjID,
+		descr: entitiesEdit?.descr,
+		taskName: entitiesEdit?.taskName,
+		startDate: entitiesEdit?.startDate,
+		endDate: entitiesEdit?.endDate,
 		grade: entitiesEdit ? (entitiesEdit.grade === 0 ? null : entitiesEdit.grade) : null,
-		author: entitiesEdit && entitiesEdit.author,
-		owner: entitiesEdit && entitiesEdit.owner,
+		author: entitiesEdit?.author,
+		owner: entitiesEdit?.owner,
 		component: entitiesEdit ? (entitiesEdit.component === 0 ? null : entitiesEdit.component) : null,
-		originPublisher: entitiesEdit && entitiesEdit.originPublisher,
-		ownership: entitiesEdit && entitiesEdit.ownershipDTP,
-		priority: entitiesEdit && entitiesEdit.priority,
+		originPublisher: entitiesEdit?.originPublisher,
+		ownership: entitiesEdit?.ownershipDTP,
+		priority: entitiesEdit?.priority,
 		project: entitiesEdit ? (entitiesEdit.parentID === 0 ? null : entitiesEdit.parentID) : null,
 		sectorID: entitiesEdit ? (entitiesEdit.sectorID === 0 ? null : entitiesEdit.sectorID) : null,
-		status: entitiesEdit && entitiesEdit.statusID,
-		fileEdit: entitiesEdit && entitiesEdit.attachFiles,
-		percentage: entitiesEdit && entitiesEdit.percentage,
-		version: entitiesEdit && entitiesEdit.version
+		status: entitiesEdit?.statusID,
+		fileEdit: entitiesEdit?.attachFiles,
+		percentage: entitiesEdit?.percentage,
+		version: entitiesEdit?.version,
+		userInvite: entitiesEdit?.listUserIDInvited ? entitiesEdit.listUserIDInvited.split(',').map(Number) : []
 	};
 	return (
 		<Drawer
 			className={classes.Drawer}
 			anchor="right"
-			title={entitiesEdit && entitiesEdit.taskID ? formProject.title : `New ${formProject.title}`}
+			title={entitiesEdit?.taskID ? formProject.title : `New ${formProject.title}`}
 			onClose={handleCloseFormProject}
 			open={formProject.open}
 			classes={{ paper: classes.DrawerFormInput }}
@@ -166,12 +182,12 @@ export default function FormProjectDrawer({
 						<CloseIcon />
 					</IconButton>
 					<Typography variant="subtitle1" color="inherit">
-						{entitiesEdit && entitiesEdit.taskID ? formProject.title : `New ${formProject.title}`}
+						{entitiesEdit?.taskID ? formProject.title : `New ${formProject.title}`}
 					</Typography>
 				</Toolbar>
 			</AppBar>
 			<FormCustomProjectTask
-				inititalValues={entitiesEdit && entitiesEdit.taskID ? initialEdit : initial}
+				inititalValues={entitiesEdit?.taskID ? initialEdit : initial}
 				owner={owner}
 				sectorArr={sectorArr}
 				listFile={listFile}

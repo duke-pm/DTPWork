@@ -3,6 +3,7 @@ import { Dialog, AppBar, Toolbar, Typography, IconButton } from '@material-ui/co
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import CloseIcon from '@material-ui/icons/Close';
 import { notificationConfig } from '@fuse/core/DtpConfig';
+import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import FormCustomUsedEdit from './FormCustomUsedEdit';
 import * as action from '../../_redux/possesionActions';
 
@@ -18,10 +19,18 @@ export default function FormCustomUsed({ handleClose, open }) {
 	const saveWithDraw = values => {
 		dispatch(action.withdrawPossesion(values, entitiesEdit)).then(data => {
 			if (data && !data.isError) {
-				notificationConfig('success', 'Thành công!', 'Cập nhật thành công');
+				notificationConfig(
+					'success',
+					notificationContent.content.vi.success,
+					notificationContent.description.gobal.vi.updatedSuccess
+				);
 				handleClose();
 			} else {
-				notificationConfig('warning', 'Thất bại!', 'Cập nhật thất bại vui lòng thử lại');
+				notificationConfig(
+					'warning',
+					notificationContent.content.vi.faild,
+					notificationContent.description.gobal.vi.UpdatedFaild
+				);
 			}
 		});
 	};

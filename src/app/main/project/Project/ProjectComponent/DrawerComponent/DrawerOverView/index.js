@@ -6,10 +6,16 @@ import React, { useState, useEffect, useContext } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import * as moment from 'moment';
 import { CaretDownOutlined, FileExcelOutlined, FileImageOutlined, FileWordOutlined } from '@ant-design/icons';
-import { updatedTaskStatus, addTaskWatcher, fetchProjectDetailFilter } from 'app/main/project/_redux/_projectActions';
+import {
+	updatedTaskStatus,
+	addTaskWatcher,
+	fetchProjectDetailFilter,
+	getTaskDetailAll
+} from 'app/main/project/_redux/_projectActions';
 import { checkFile, nameFile, notificationConfig, URL } from '@fuse/core/DtpConfig';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { useParams } from 'react-router';
+import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import { badgeStatus, priorityColor } from '../../TableProject/ConfigTableProject';
 import { ProjectContext } from '../../../ProjectContext';
 
@@ -40,7 +46,11 @@ export default function DrawerOverView({ closeVisible }) {
 		dispatch(updatedTaskStatus(entitiesView.detail, type)).then(data => {
 			if (data && !data.isError) {
 				closeVisible();
-				notificationConfig('success', 'Success', 'Updated status success');
+				notificationConfig(
+					'success',
+					notificationContent.content.en.success,
+					notificationContent.description.project.task.updateStatusTask
+				);
 				dispatch(
 					fetchProjectDetailFilter(
 						params.detail,
@@ -53,6 +63,7 @@ export default function DrawerOverView({ closeVisible }) {
 						search
 					)
 				);
+				dispatch(getTaskDetailAll(params.detail, ownerFilter, status, sector, search));
 			}
 		});
 	};
@@ -60,7 +71,11 @@ export default function DrawerOverView({ closeVisible }) {
 	const handleChangeSliderAfter = value => {
 		dispatch(updatedTaskStatus(entitiesView.detail, entitiesView.detail.statusID, value)).then(data => {
 			if (data && !data.isError) {
-				notificationConfig('success', 'Success', 'Updated processing success');
+				notificationConfig(
+					'success',
+					notificationContent.content.en.success,
+					notificationContent.description.project.task.updateProcessingTask
+				);
 				dispatch(
 					fetchProjectDetailFilter(
 						params.detail,
@@ -73,6 +88,7 @@ export default function DrawerOverView({ closeVisible }) {
 						search
 					)
 				);
+				dispatch(getTaskDetailAll(params.detail, ownerFilter, status, sector, search));
 			}
 		});
 	};
@@ -83,17 +99,17 @@ export default function DrawerOverView({ closeVisible }) {
 		<FuseAnimate animation="transition.slideUpBigIn" delay={300}>
 			<div className="flex flex-col">
 				<div className="flex flex-row">
-					<p className="text-xl font-medium" style={{ color: entitiesView && entitiesView.detail.typeColor }}>
+					<p className="text-xl font-medium" style={{ color: entitiesView?.detail.typeColor }}>
 						{' '}
-						{entitiesView && entitiesView.detail.typeName}{' '}
+						{entitiesView?.detail.typeName}{' '}
 					</p>
-					<p className="text-xl font-medium ml-8 "> {entitiesView && entitiesView.detail.taskName} </p>
+					<p className="text-xl font-medium ml-8 "> {entitiesView?.detail.taskName} </p>
 				</div>
 				<div className="flex flex-row">
 					<p>
 						{' '}
-						Created by {entitiesView && entitiesView.detail.author}. Last updated on{' '}
-						{moment(entitiesView && entitiesView.detail.lUpdDate).format('DD/MM/YYYY')}{' '}
+						Created by {entitiesView?.detail.author}. Last updated on{' '}
+						{moment(entitiesView?.detail.lUpdDate).format('DD/MM/YYYY')}{' '}
 					</p>
 				</div>
 				<Divider />
@@ -104,7 +120,7 @@ export default function DrawerOverView({ closeVisible }) {
 							<p className="text-base font-normal "> Status </p>
 							<Dropdown
 								className="ml-8"
-								disabled={entitiesView && !entitiesView.detail.isUpdated}
+								disabled={!entitiesView?.detail.isUpdated}
 								overlay={
 									<Menu>
 										<Menu.Item onClick={() => updatedStatus(1)} style={{ color: '#1890ff' }}>
@@ -138,11 +154,11 @@ export default function DrawerOverView({ closeVisible }) {
 									<Badge
 										size="default"
 										style={{
-											color: badgeStatus[entitiesView && entitiesView.detail.statusID],
+											color: badgeStatus[entitiesView?.detail.statusID],
 											cursor: 'pointer'
 										}}
-										color={badgeStatus[entitiesView && entitiesView.detail.statusID]}
-										text={entitiesView && entitiesView.detail.statusName}
+										color={badgeStatus[entitiesView?.detail.statusID]}
+										text={entitiesView?.detail.statusName}
 									/>
 									<CaretDownOutlined style={{ cursor: 'pointer', marginLeft: '10px' }} />
 								</div>
@@ -177,19 +193,16 @@ export default function DrawerOverView({ closeVisible }) {
 					<p className="text-xl font-medium">PEOPLE</p>
 					<div className="flex flex-row">
 						<p className="text-base font-normal "> Owner </p>
-						<p className="text-base font-normal text-gray-500 ml-56 ">
-							{' '}
-							{entitiesView && entitiesView.detail.ownerName}{' '}
-						</p>
+						<p className="text-base font-normal text-gray-500 ml-56 "> {entitiesView?.detail.ownerName} </p>
 					</div>
 					<div className="flex flex-row">
 						<p className="text-base font-normal "> Priority </p>
 						<div className="text-base font-normal text-gray-500 ml-56 ">
 							<Badge
 								size="default"
-								style={{ color: priorityColor[entitiesView && entitiesView.detail.priority] }}
-								color={priorityColor[entitiesView && entitiesView.detail.priority]}
-								text={entitiesView && entitiesView.detail.priorityName}
+								style={{ color: priorityColor[entitiesView?.detail.priority] }}
+								color={priorityColor[entitiesView?.detail.priority]}
+								text={entitiesView?.detail.priorityName}
 							/>
 						</div>
 					</div>
@@ -200,13 +213,13 @@ export default function DrawerOverView({ closeVisible }) {
 					<div className="flex flex-row">
 						<p className="text-base font-normal "> Start date task </p>
 						<p className="text-base font-normal text-gray-500 ml-56 ">
-							{moment(entitiesView && entitiesView.detail.startDate).format('DD/MM/YYYY')}{' '}
+							{moment(entitiesView?.detail.startDate).format('DD/MM/YYYY')}{' '}
 						</p>
 					</div>
 					<div className="flex flex-row">
 						<p className="text-base font-normal "> End date task </p>
 						<div className="text-base font-normal text-gray-500 ml-56 ">
-							{moment(entitiesView && entitiesView.detail.endDate).format('DD/MM/YYYY')}{' '}
+							{moment(entitiesView?.detail.endDate).format('DD/MM/YYYY')}{' '}
 						</div>
 					</div>
 				</div>
@@ -214,22 +227,20 @@ export default function DrawerOverView({ closeVisible }) {
 				<div className="flex flex-col mt-16">
 					<p className="text-xl font-medium">FILES</p>
 					<div className="flex flex-row justify-between">
-						{entitiesView && entitiesView.detail.attachFiles && (
+						{entitiesView?.detail.attachFiles && (
 							<div className="flex flex-row">
 								<Avatar
 									shape="square"
 									size={54}
 									style={{ backgroundColor: '#87d068' }}
-									icon={
-										entitiesView && file[checkFile(entitiesView && entitiesView.detail.attachFiles)]
-									}
+									icon={entitiesView && file[checkFile(entitiesView?.detail.attachFiles)]}
 								/>
 								<Button
 									style={{ backgroundColor: 'none', marginLeft: '10px' }}
-									href={`${URL}/${entitiesView && entitiesView.detail.attachFiles}`}
+									href={`${URL}/${entitiesView?.detail.attachFiles}`}
 								>
 									{' '}
-									{entitiesView && nameFile(entitiesView && entitiesView.detail.attachFiles)}
+									{entitiesView && nameFile(entitiesView?.detail.attachFiles)}
 								</Button>
 							</div>
 						)}

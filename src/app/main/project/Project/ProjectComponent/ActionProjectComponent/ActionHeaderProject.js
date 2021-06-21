@@ -3,12 +3,11 @@ import { Button, IconButton, InputBase, ListItemText, MenuItem, Paper, Typograph
 import React, { useContext } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import { useDispatch } from 'react-redux';
-import { DatePicker, Popover, Select } from 'antd';
+import { Popover, Select } from 'antd';
 import AppsIcon from '@material-ui/icons/Apps';
-import * as moment from 'moment';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { ProjectContext } from '../../ProjectContext';
-import { setTaskEditProject, fetchProjectDetailFilter } from '../../../_redux/_projectActions';
+import { setTaskEditProject, fetchProjectDetailFilter, getTaskDetailAll } from '../../../_redux/_projectActions';
 import { badgeStatus } from '../TableProject/ConfigTableProject';
 
 export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStatus, owner, params }) {
@@ -20,7 +19,6 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 		setSearch,
 		formProject,
 		setGantt,
-		setDateStart,
 		setOwnerFilter,
 		setSector,
 		sector,
@@ -42,6 +40,7 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 		dispatch(
 			fetchProjectDetailFilter(params.detail, rowPage, page, ownerFilter, status, dateStart, sector, search)
 		);
+		dispatch(getTaskDetailAll(params.detail, ownerFilter, status, sector, search));
 	};
 	const onHandleChange = e => {
 		setSearch(e.target.value);
@@ -59,6 +58,7 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 					e.target.value
 				)
 			);
+			dispatch(getTaskDetailAll(params.detail, ownerFilter, status, sector, e.target.value));
 		}
 	};
 	const handleOpenGant = () => setGantt(true);
@@ -82,6 +82,7 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 		dispatch(
 			fetchProjectDetailFilter(params.detail, rowPage, page, ownerFilter, status, dateStart, sector, search)
 		);
+		dispatch(getTaskDetailAll(params.detail, ownerFilter, status, sector, search));
 	};
 	return (
 		<div>

@@ -5,6 +5,7 @@ import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { notificationConfig } from '@fuse/core/DtpConfig';
 import FuseLoading from '@fuse/core/FuseLoading';
 import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
+import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import ListRoleSettingBody from './ListRoleSettingBody';
 import ActionListRoleSetting from './ActionListRoleSetting';
 import * as actions from '../_reduxListRoleMenu/listRoleMenuSettingActions';
@@ -28,7 +29,11 @@ export default function ListRoleSettingContent() {
 		if (groupUser) {
 			dispatch(actions.updatedRoleUser(newData, userID, groupUser)).then(data => {
 				if (data && !data.isError) {
-					notificationConfig('success', 'Thành công', 'Cập nhật thành công.');
+					notificationConfig(
+						'success',
+						notificationContent.content.vi.success,
+						notificationContent.description.gobal.vi.updatedSuccess
+					);
 				} else {
 					dispatch(actions.fetchsListFilterRole(groupUser, userID));
 				}

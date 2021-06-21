@@ -1,6 +1,7 @@
 @import-normalize ;
 
 @import 'tailwind-base.css';
+/* @import './font/Poppins-Bold.ttf'; */
 
 body.no-animate *,
 body.no-animate *::before,
@@ -11,7 +12,6 @@ body.no-animate *::after {
 
 html {
     font-size: 62.5%;
-    font-family: Muli, Roboto, Helvetica Neue, Arial, sans-serif;
     background-color: #121212;
 }
 .MuiTableCell-root{
@@ -24,6 +24,7 @@ html {
 body {
     font-size: 14px;
     line-height: 1.4;
+    font-family:'Poppins', '"Roboto"', 'Helvetica', 'sans-serif';
 }
 
 html, body, #root {
@@ -32,6 +33,7 @@ html, body, #root {
     overflow: hidden;
     position: relative;
     margin: 0;
+    font-family: 'Poppins', '"Roboto"', 'Helvetica', 'sans-serif';
 }
 
 h1, .h1 {

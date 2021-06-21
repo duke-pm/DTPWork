@@ -3,6 +3,7 @@ import React, { useContext } from 'react';
 import CloseIcon from '@material-ui/icons/Close';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { notificationConfig } from '@fuse/core/DtpConfig';
+import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import FormCustomProject from './FormCustomProject';
 import { ProjectContext } from '../../ProjectContext';
 import * as actions from '../../../_redux/_projectActions';
@@ -25,7 +26,11 @@ export default function FormProject({ owner, sectorArr, ArrProjectStatus, projec
 			if (title === 'Settings') {
 				dispatch(actions.updatedProject(values)).then(data => {
 					if (data && !data.isError) {
-						notificationConfig('success', 'Success', 'Updated project success');
+						notificationConfig(
+							'success',
+							notificationContent.content.en.success,
+							notificationContent.description.project.projects.updatedProject
+						);
 						handleCloseFormProject();
 						dispatch(actions.fetchsProjectFilter(rowPage, page, status, ownerFilter, dateStart, search));
 					}
@@ -33,7 +38,11 @@ export default function FormProject({ owner, sectorArr, ArrProjectStatus, projec
 			} else {
 				dispatch(actions.createdProject(values)).then(data => {
 					if (data && !data.isError) {
-						notificationConfig('success', 'Success', 'Clone project success');
+						notificationConfig(
+							'success',
+							notificationContent.content.en.success,
+							notificationContent.description.project.projects.cloneProject
+						);
 						handleCloseFormProject();
 						dispatch(actions.fetchsProjectFilter(rowPage, page, status, ownerFilter, dateStart, search));
 					}
@@ -42,7 +51,11 @@ export default function FormProject({ owner, sectorArr, ArrProjectStatus, projec
 		} else {
 			dispatch(actions.createdProject(values)).then(data => {
 				if (data && !data.isError) {
-					notificationConfig('success', 'Success', 'Created project success');
+					notificationConfig(
+						'success',
+						notificationContent.content.en.success,
+						notificationContent.description.project.projects.createdProject
+					);
 					handleCloseFormProject();
 					dispatch(actions.fetchsProjectFilter(rowPage, page, status, ownerFilter, dateStart, search));
 				}

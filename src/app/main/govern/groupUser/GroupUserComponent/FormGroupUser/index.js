@@ -3,6 +3,7 @@ import React from 'react';
 import CloseIcon from '@material-ui/icons/Close';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { notificationConfig } from '@fuse/core/DtpConfig';
+import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import FormGroupUserCustom from './FormGroupUserCustom';
 import * as actions from '../../_reduxGroupUser/groupUserActions';
 
@@ -19,14 +20,22 @@ export default function FormGroupUser({ open, handleCloseFormGroupUser }) {
 		if (entitiesEdit && entitiesEdit.groupID) {
 			dispatch(actions.updatedGroupUser(values)).then(data => {
 				if (data && !data.isError) {
-					notificationConfig('success', 'Thành công', 'Cập nhật nhóm người dùng thành công.');
+					notificationConfig(
+						'success',
+						notificationContent.content.vi.success,
+						notificationContent.description.setting.groupUser.updatedGroupUserSuccess
+					);
 					handleCloseFormGroupUser();
 				}
 			});
 		} else {
 			dispatch(actions.createdGroupUser(values)).then(data => {
 				if (data && !data.isError) {
-					notificationConfig('success', 'Thành công', 'Thêm mới nhóm người dùng thành công.');
+					notificationConfig(
+						'success',
+						notificationContent.content.vi.success,
+						notificationContent.description.setting.groupUser.createdGroupUserSuccess
+					);
 					handleCloseFormGroupUser();
 				}
 			});

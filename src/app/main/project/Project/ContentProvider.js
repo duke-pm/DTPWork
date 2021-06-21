@@ -37,7 +37,7 @@ export default function ContentProvider() {
 	}, [dispatch]);
 	useEffect(() => {
 		dispatch(fetchOwner()).then(data => {
-			if (data && !data.isError) {
+			if (!data.isError) {
 				const ownerArr = data.data.reduce(
 					(arr, curr) => [...arr, { label: curr.empName, value: curr.empID }],
 					[]
@@ -51,27 +51,24 @@ export default function ContentProvider() {
 	useEffect(() => {
 		dispatch(fetchAllSubTask(params.detail));
 	}, [dispatch, params.detail]);
-	const ArrProjectStatus =
-		currentState && currentState.projectStatus
-			? currentState.projectStatus.reduce(
-					(arr, curr) => [...arr, { label: curr.statusName, value: curr.statusID }],
-					[]
-			  )
-			: [];
-	const ArrTaskPri =
-		currentState && currentState.projectPriority
-			? currentState.projectPriority.reduce(
-					(arr, curr) => [...arr, { label: curr.priorityName, value: curr.priority }],
-					[]
-			  )
-			: [];
-	const ArrTaskComponent =
-		currentState && currentState.projectComponent
-			? currentState.projectComponent.reduce(
-					(arr, curr) => [...arr, { label: curr.componentName, value: curr.componentID }],
-					[]
-			  )
-			: [];
+	const ArrProjectStatus = currentState?.projectStatus
+		? currentState.projectStatus.reduce(
+				(arr, curr) => [...arr, { label: curr.statusName, value: curr.statusID }],
+				[]
+		  )
+		: [];
+	const ArrTaskPri = currentState?.projectPriority
+		? currentState.projectPriority.reduce(
+				(arr, curr) => [...arr, { label: curr.priorityName, value: curr.priority }],
+				[]
+		  )
+		: [];
+	const ArrTaskComponent = currentState?.projectComponent
+		? currentState.projectComponent.reduce(
+				(arr, curr) => [...arr, { label: curr.componentName, value: curr.componentID }],
+				[]
+		  )
+		: [];
 	const taskSub = projectAll
 		? projectAll.reduce((arr, curr) => [...arr, { label: curr.taskName, value: curr.taskID }], [])
 		: [];
@@ -89,12 +86,10 @@ export default function ContentProvider() {
 		{ label: 'Lớp 11', value: 11 },
 		{ label: 'Lớp 12', value: 12 }
 	];
-	const sectorArr =
-		currentState &&
-		currentState.projectSector.reduce(
-			(arr, curr) => [...arr, { label: curr.sectorName, value: curr.sectorID }],
-			[]
-		);
+	const sectorArr = currentState?.projectSector.reduce(
+		(arr, curr) => [...arr, { label: curr.sectorName, value: curr.sectorID }],
+		[]
+	);
 	return (
 		<FusePageCardedTask
 			innerScroll
@@ -122,9 +117,9 @@ export default function ContentProvider() {
 			}
 			contentToolbar={
 				<div className="flex  items-center px-16 flex-1">
-					<Typography component="span" className="font-bold flex text-sm	">
+					<p className="font-semibold flex text-sm	">
 						Project plan of {listLoading ? <Spin style={{ marginLeft: '20px' }} /> : project.projectName}
-					</Typography>
+					</p>
 				</div>
 			}
 			content={

@@ -12,6 +12,7 @@ import { validateField, checkFile, nameFile } from '@fuse/core/DtpConfig';
 import FileCustomVersion2Eng from '@fuse/CustomForm/FileCustomVersion2Eng';
 import { FileExcelOutlined, FileImageOutlined, FileWordOutlined } from '@ant-design/icons';
 import SelectAntdCustomStatus from '@fuse/CustomForm/SelectAntdCustomStatus';
+import SelectAntdMulti from '@fuse/CustomForm/SelectAntdMulti';
 
 const file = {
 	docx: <FileWordOutlined />,
@@ -64,7 +65,7 @@ export default function FormCustomProjectTask({
 						<div className=" mt-8 px-16 sm:px-24">
 							<div className="grid grid-cols-1 gap-8 ">
 								<Field
-									label="Task name"
+									label="Task Name"
 									name="taskName"
 									type="text"
 									readOnly={entitiesEdit && !entitiesEdit.isModified}
@@ -198,7 +199,19 @@ export default function FormCustomProjectTask({
 							</div>
 							<div className="grid grid-cols-1 gap-8 ">
 								<Field
-									label="Origin publisher"
+									label="Add Team Member"
+									name="userInvite"
+									options={owner}
+									count={3}
+									component={SelectAntdMulti || []}
+									readOnly={entitiesEdit && !entitiesEdit.isModified}
+									position="right"
+									className="mx-4"
+								/>
+							</div>
+							<div className="grid grid-cols-1 gap-8 ">
+								<Field
+									label="Origin Publisher"
 									component={AntInput}
 									type="text"
 									name="originPublisher"

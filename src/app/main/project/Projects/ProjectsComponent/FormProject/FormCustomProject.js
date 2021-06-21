@@ -1,6 +1,7 @@
 import { AntInput } from '@fuse/CustomForm/CreateAntField';
 import SelectAntd from '@fuse/CustomForm/SelectAntd';
 import CheckboxAntd from '@fuse/CustomForm/CheckboxAntd';
+import SelectAntdMulti from '@fuse/CustomForm/SelectAntdMulti';
 import { Button, DialogActions, DialogContent, Divider } from '@material-ui/core';
 import { Field, Formik, Form } from 'formik';
 import React from 'react';
@@ -27,18 +28,19 @@ export default function FormCustomProject({
 		owner: null,
 		isPublic: true,
 		descr: '',
-		statusID: 1
+		statusID: 1,
+		userInvite: []
 	};
 	if (entitiesEdit && entitiesEdit.prjID) {
 		initial = {
-			prjID: entitiesEdit && entitiesEdit.prjID,
-			prjName: entitiesEdit && entitiesEdit.prjName,
-			// sectorID: entitiesEdit && entitiesEdit.sectorID === 0 ? null : entitiesEdit.sectorID,
-			prjParentID: entitiesEdit && entitiesEdit.prjParentID === 0 ? null : entitiesEdit.prjParentID,
-			owner: entitiesEdit && entitiesEdit.owner === 0 ? null : entitiesEdit.owner,
-			isPublic: entitiesEdit && entitiesEdit.isPublic,
-			descr: entitiesEdit && entitiesEdit.descr,
-			statusID: entitiesEdit && entitiesEdit.statusID
+			prjID: entitiesEdit?.prjID,
+			prjName: entitiesEdit?.prjName,
+			prjParentID: entitiesEdit?.prjParentID === 0 ? null : entitiesEdit.prjParentID,
+			owner: entitiesEdit?.owner === 0 ? null : entitiesEdit.owner,
+			isPublic: entitiesEdit?.isPublic,
+			descr: entitiesEdit?.descr,
+			statusID: entitiesEdit?.statusID,
+			userInvite: entitiesEdit?.listUserIDInvited ? entitiesEdit.listUserIDInvited.split(',').map(Number) : []
 		};
 	}
 	const validateSchema = Yup.object().shape({
@@ -88,13 +90,6 @@ export default function FormCustomProject({
 									/>
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
-									{/* <Field
-										label="Sector"
-										name="sectorID"
-										component={SelectAntd || []}
-										options={sectorArr}
-										className="mx-4"
-									/> */}
 									<Field
 										label="Project Owner"
 										name="owner"
@@ -104,13 +99,23 @@ export default function FormCustomProject({
 										className="mx-4"
 									/>
 									<Field
+										label="Add Team Member"
+										name="userInvite"
+										component={SelectAntdMulti || []}
+										options={owner}
+										count={2}
+										className="mx-4"
+									/>
+								</div>
+								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
+									<Field
 										label="Public"
 										hasFeedback
 										name="isPublic"
 										value={initial.isPublic}
 										component={CheckboxAntd}
 										className="mx-4"
-										top="20px"
+										top="10px"
 									/>
 								</div>
 							</div>
@@ -121,7 +126,7 @@ export default function FormCustomProject({
 								<Spin />
 							) : (
 								<Button type="submit" className="h-26 font-sans" variant="contained" color="primary">
-									{initial && initial.prjID !== '0' ? 'Save' : 'Save'}
+									{initial?.prjID !== '0' ? 'Save' : 'Save'}
 								</Button>
 							)}
 

@@ -3,6 +3,7 @@ import { Dialog, AppBar, Toolbar, Typography, IconButton } from '@material-ui/co
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import CloseIcon from '@material-ui/icons/Close';
 import { notificationConfig } from '@fuse/core/DtpConfig';
+import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import * as action from '../../_redux/possesionActions';
 import FormCustomLiquidation from './FormCustomLiquidation';
 import { PossessionContext } from '../../PossessionContext';
@@ -22,7 +23,11 @@ export default function FormAssetLiquidation() {
 	const saveWithDraw = values => {
 		dispatch(action.liquidationAsset(values, entitiesEdit, typeliquiAsset)).then(data => {
 			if (data && !data.isError) {
-				notificationConfig('success', 'Thành công!', 'Tài sản đã được thanh lý');
+				notificationConfig(
+					'success',
+					notificationContent.content.vi.success,
+					notificationContent.description.assets.liquidationAsset
+				);
 				setLiquiAsset(false);
 			}
 		});

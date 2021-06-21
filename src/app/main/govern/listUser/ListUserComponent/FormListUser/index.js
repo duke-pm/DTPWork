@@ -3,6 +3,7 @@ import React from 'react';
 import CloseIcon from '@material-ui/icons/Close';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { notificationConfig } from '@fuse/core/DtpConfig';
+import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import FormListUserCustom from './FormListUserCustom';
 import * as actions from '../../_reduxListUser/listUserActions';
 
@@ -20,14 +21,22 @@ export default function FormListUser({ open, handleCloseFormGroupUser }) {
 		if (entitiesEdit && entitiesEdit.userID) {
 			dispatch(actions.updatedListUser(values)).then(data => {
 				if (data && !data.isError) {
-					notificationConfig('success', 'Thành công', 'Cập nhật người dùng thành công');
+					notificationConfig(
+						'success',
+						notificationContent.content.vi.success,
+						notificationContent.description.setting.listUser.updatedListUserSuccess
+					);
 					handleCloseFormGroupUser();
 				}
 			});
 		} else {
 			dispatch(actions.createdListUser(values)).then(data => {
 				if (data && !data.isError) {
-					notificationConfig('success', 'Thành công', 'Thêm người dùng thành công');
+					notificationConfig(
+						'success',
+						notificationContent.content.vi.success,
+						notificationContent.description.setting.listUser.createdListUserSuccess
+					);
 					handleCloseFormGroupUser();
 				}
 			});

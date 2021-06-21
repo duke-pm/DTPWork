@@ -1,4 +1,6 @@
+/* eslint-disable no-shadow */
 import { notificationConfig } from '@fuse/core/DtpConfig';
+import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import * as moment from 'moment';
 import * as requestFrom from './_projectCrud';
 import { projectSlice, callTypes } from './_projectSlice';
@@ -76,7 +78,8 @@ export const createdProject = values => dispatch => {
 		Descr: values.descr,
 		IsPublic: values.isPublic,
 		Owner: values.owner || 0,
-		Lang: 'en'
+		Lang: 'en',
+		LstUserInvited: values.userInvite.length > 0 ? values.userInvite.toString() : ''
 	};
 	return requestFrom
 		.projectModify(dataReq)
@@ -111,7 +114,8 @@ export const updatedProject = values => dispatch => {
 		Descr: values.descr,
 		IsPublic: values.isPublic,
 		Owner: values.owner || 0,
-		Lang: 'en'
+		Lang: 'en',
+		LstUserInvited: values.userInvite.length > 0 ? values.userInvite.toString() : ''
 	};
 	return requestFrom
 		.projectModify(dataReq)
@@ -247,7 +251,7 @@ export const fetchProjectDetailFilter =
 			pageSize: pageSize || 25,
 			pageNum: pageNum || 1,
 			statusID: status || null,
-			Year: year || null,
+			Year: null,
 			Search: search || null,
 			Lang: 'en',
 			SectorID: sector || null
@@ -295,6 +299,7 @@ export const createdTask = (values, prjID, taskType) => dispatch => {
 	formData.append('Lang', 'en');
 	formData.append('Percentage', values.percentage);
 	formData.append('Version', values.version);
+	formData.append('LstUserInvited', values.userInvite.length > 0 ? values.userInvite.toString() : '');
 	return requestFrom
 		.taskModify(formData)
 		.then(res => {
@@ -334,6 +339,7 @@ export const updatedTask = values => dispatch => {
 	formData.append('Component', values.component || 0);
 	formData.append('OriginPublisher', values.originPublisher);
 	formData.append('OwnershipDTP', values.ownership);
+	formData.append('LstUserInvited', values?.userInvite?.length > 0 ? values.userInvite.toString() : '');
 	if (values.file) {
 		formData.append('AttachFiles', values.file);
 	}
@@ -361,7 +367,7 @@ export const updatedTask = values => dispatch => {
 export const updatedTaskStatus = (values, status, percent) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const dataReq = {
-		TaskID: values.taskID,
+		TaskID: values.taskID || values,
 		StatusID: status,
 		Percentage: percent || values.percentage,
 		Lang: 'en'
@@ -371,10 +377,7 @@ export const updatedTaskStatus = (values, status, percent) => dispatch => {
 		.then(res => {
 			const { data } = res;
 			if (!data.isError) {
-				// const dataRes = data.data;
-				// dispatch(fetchProjectDetailFilter(values.prjID));
 				dispatch(fetchAllSubTask(values.prjID));
-				// dispatch(actions.updatedProject({ dataRes }));
 			} else {
 				dispatch(actions.catchErros({ callType: callTypes.action }));
 				notificationConfig('warning', 'Warning', data.errorMessage);
@@ -409,12 +412,18 @@ export const getTaskViewDetail = params => dispatch => {
 			notificationConfig('warning', 'Warning', 'Server error');
 		});
 };
-export const getTaskDetailAll = params => dispatch => {
+export const getTaskDetailAll = (params, owner, status, sector, search) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const paramsReq = {
 		PrjID: params,
+		OwnerID: owner || null,
+		pageSize: 256,
+		pageNum: 1,
+		statusID: status || null,
+		Year: null,
+		Search: search || null,
 		Lang: 'en',
-		Search: ''
+		SectorID: sector || null
 	};
 	return requestFrom
 		.getTaskDetailAll(paramsReq)
@@ -432,7 +441,8 @@ export const getTaskDetailAll = params => dispatch => {
 							end: moment(curr.endDate).format('YYYY-MM-DD'),
 							progress: curr.percentage,
 							dependencies: curr.parentID === 0 ? '' : JSON.stringify(curr.parentID),
-							custom_class: curr.typeName
+							custom_class: curr.typeName,
+							status: curr.statusID
 						}
 					],
 					[]
@@ -508,7 +518,34 @@ export const deleteTask = values => dispatch => {
 			const { data } = res;
 			if (!data.isError) {
 				dispatch(fetchAllSubTask(values.taskID));
-				notificationConfig('success', 'Success', 'Delete project success');
+				notificationConfig(
+					'success',
+					notificationContent.content.en.success,
+					notificationContent.description.project.projects.deleteProject
+				);
+			} else {
+				dispatch(actions.catchErros({ callType: callTypes.action }));
+				notificationConfig('warning', 'Warning', data.errorMessage);
+			}
+			return data;
+		})
+		.catch(err => {
+			dispatch(actions.catchErros({ callType: callTypes.action }));
+			notificationConfig('warning', 'Warning', 'Server error');
+		});
+};
+export const updatedGantt = (value, prjID) => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.action }));
+	const dataReq = {
+		LstUpdateInfo: value,
+		Lang: 'en'
+	};
+	return requestFrom
+		.updatedGantt(dataReq)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				console.log(data);
 			} else {
 				dispatch(actions.catchErros({ callType: callTypes.action }));
 				notificationConfig('warning', 'Warning', data.errorMessage);

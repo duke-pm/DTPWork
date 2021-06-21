@@ -3,6 +3,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import React from 'react';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { notificationConfig } from '@fuse/core/DtpConfig';
+import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import FormCustomMenu from './FormCustomMenu';
 import * as actions from '../../_redux/menuActions';
 
@@ -17,14 +18,22 @@ export default function FormMenuComponent({ openSettingMenu, setOpenSettingMenu 
 		if (entitiesEdit && entitiesEdit.menuID) {
 			dispatch(actions.updatedMenuSettings(values)).then(data => {
 				if (data && !data.isError) {
-					notificationConfig('success', 'Thành công', 'Cập nhật menu thành công');
+					notificationConfig(
+						'success',
+						notificationContent.content.vi.success,
+						notificationContent.description.setting.menu.updatedMenuSuccess
+					);
 					handleCloseFormMenu();
 				}
 			});
 		} else {
 			dispatch(actions.createdMenuSettings(values)).then(data => {
 				if (data && !data.isError) {
-					notificationConfig('success', 'Thành công', 'Thêm menu mới thành công');
+					notificationConfig(
+						'success',
+						notificationContent.content.vi.success,
+						notificationContent.description.setting.menu.createdMenuSuccess
+					);
 					handleCloseFormMenu();
 				}
 			});

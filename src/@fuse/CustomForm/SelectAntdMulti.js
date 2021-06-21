@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
-import { FormGroup } from '@material-ui/core';
 import { Form, Select } from 'antd';
 
 const FormItem = Form.Item;
@@ -13,7 +12,10 @@ export default function SelectAntdMulti({
 	valueProps,
 	handleChangeState,
 	options,
+	count,
+	width,
 	placeholder,
+	position,
 	hasFeedback,
 	notFoundContent,
 	readOnly,
@@ -31,7 +33,7 @@ export default function SelectAntdMulti({
 	};
 	return (
 		<>
-			<FormGroup>
+			<div className={`${position && 'flex flex-row  justify-between'}`}>
 				<div className="flex flex-row">
 					<span> {label} </span>
 					{hasFeedback && (
@@ -42,7 +44,7 @@ export default function SelectAntdMulti({
 					)}
 				</div>
 				<FormItem
-					style={{ width: '100%' }}
+					style={{ width: position ? width || '80%' : '100%' }}
 					rules={[{ required: true }]}
 					help={submittedError || touchedError ? hasError : false}
 					validateStatus={submittedError || touchedError ? 'error' : hasFeedback && 'success'}
@@ -59,7 +61,7 @@ export default function SelectAntdMulti({
 						filterOption={(input, option) =>
 							option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
 						}
-						maxTagCount={1}
+						maxTagCount={count || 1}
 						onChange={handleSelect}
 					>
 						{options.map(p => (
@@ -69,7 +71,7 @@ export default function SelectAntdMulti({
 						))}
 					</Select>
 				</FormItem>
-			</FormGroup>
+			</div>
 		</>
 	);
 }

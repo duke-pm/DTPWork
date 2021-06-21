@@ -3,6 +3,9 @@ import { lightBlue, red } from '@material-ui/core/colors';
 
 const themesConfig = {
 	default: {
+		typography: {
+			fontFamily: ['Poppins', '"Roboto"', 'Helvetica', 'sans-serif'].join(',')
+		},
 		palette: {
 			type: 'light',
 			primary: fuseDark,

@@ -3,6 +3,7 @@ import { Dialog, AppBar, Toolbar, Typography, IconButton } from '@material-ui/co
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { notificationConfig } from '@fuse/core/DtpConfig';
 import CloseIcon from '@material-ui/icons/Close';
+import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import FormCustomUnusedEdit from './FormCustomUnusedEdit';
 import * as actions from '../../_redux/possesionActions';
 
@@ -19,10 +20,18 @@ export default function FormCustomUnused({ handleClose, open }) {
 	const saveAddAsset = values => {
 		dispatch(actions.addPersonalPossesion(values, entitiesEdit.assetID)).then(data => {
 			if (data && !data.isError) {
-				notificationConfig('success', ' Thành công!', 'Tài sản đã được cấp phát.');
+				notificationConfig(
+					'success',
+					notificationContent.content.vi.success,
+					notificationContent.description.assets.providerAssetsSuccess
+				);
 				handleClose();
 			} else {
-				notificationConfig('warning', 'Thất bại!', 'Cấp phát tài sản thất bại vui lòng thử lại.');
+				notificationConfig(
+					'warning',
+					notificationContent.content.vi.faild,
+					notificationContent.description.assets.providerAssetsFail
+				);
 			}
 		});
 	};

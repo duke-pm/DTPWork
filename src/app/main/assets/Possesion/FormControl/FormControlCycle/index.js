@@ -3,6 +3,7 @@ import { Dialog, AppBar, Toolbar, Typography, IconButton } from '@material-ui/co
 import CloseIcon from '@material-ui/icons/Close';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { notificationConfig } from '@fuse/core/DtpConfig';
+import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import { PossessionContext } from '../../PossessionContext';
 import FormCustomCycleEdit from './FormCustomCycleEdit';
 import * as actions from '../../_redux/possesionActions';
@@ -21,7 +22,11 @@ export default function FormControlCycle() {
 	const handleSubmitCycle = values => {
 		dispatch(actions.assetReuse(values, entitiesEdit)).then(data => {
 			if (data && !data.isError) {
-				notificationConfig('success', 'Thành công', 'Tài sản được đưa vào để tái sử dụng.');
+				notificationConfig(
+					'success',
+					notificationContent.content.vi.success,
+					notificationContent.description.assets.CycleAssets
+				);
 				handleCloseFormCycle();
 			}
 		});
