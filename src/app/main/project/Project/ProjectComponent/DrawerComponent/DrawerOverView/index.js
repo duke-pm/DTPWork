@@ -125,11 +125,11 @@ export default function DrawerOverView({ closeVisible }) {
 					</p>
 				</div>
 				<div className="flex flex-row">
-					<p className="text-base font-normal"> Description</p>
+					<p className="text-base font-normal"> Description: </p>
 					<p className="text-gray-500 ml-8 "> {entitiesView?.detail.descr}</p>
 				</div>
 				<div className="flex flex-col">
-					<p className="text-xl font-medium">Action</p>
+					<p className="font-extrabold">ACTION</p>
 					<Divider />
 					<div className="flex flex-row justify-between mt-16">
 						<div className="flex flex-row">
@@ -181,7 +181,7 @@ export default function DrawerOverView({ closeVisible }) {
 							</Dropdown>
 						</div>
 						<div className="flex flex-row ml-8">
-							<p className="text-base font-normal "> Processing </p>
+							<p className="text-base font-normal "> Progress </p>
 							<Slider
 								disabled={entitiesView ? !entitiesView.detail.isUpdated || process === 100 : true}
 								onChange={handleChangeSlider}
@@ -201,11 +201,11 @@ export default function DrawerOverView({ closeVisible }) {
 						color="primary"
 						startIcon={<VisibilityIcon />}
 					>
-						Watchers
+						Watches
 					</Button>
 				</div>
 				<div className="flex flex-col">
-					<p className="text-xl font-medium">PEOPLE & TIME</p>
+					<p className="font-extrabold">PEOPLE & TIME</p>
 					<Divider />
 					<div className="flex flex-row mt-16">
 						<p className="text-base font-normal " style={{ width: '128px' }}>
@@ -264,7 +264,7 @@ export default function DrawerOverView({ closeVisible }) {
 					</div>
 				</div>
 				<div className="flex flex-col">
-					<p className="text-xl font-medium">Detail</p>
+					<p className="font-extrabold">DETAIL</p>
 					<Divider />
 					<div className="flex flex-row mt-16">
 						<p className="text-base font-normal " style={{ width: '118px' }}>
@@ -318,7 +318,7 @@ export default function DrawerOverView({ closeVisible }) {
 					</div>
 				</div>
 				<div className="flex flex-col ">
-					<p className="text-xl font-medium">FILES</p>
+					<p className="font-extrabold">FILES</p>
 					<Divider />
 					<div className="flex flex-row justify-between mt-16">
 						{entitiesView?.detail.attachFiles && (
