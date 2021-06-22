@@ -73,18 +73,18 @@ export default function ContentProvider() {
 		? projectAll.reduce((arr, curr) => [...arr, { label: curr.taskName, value: curr.taskID }], [])
 		: [];
 	const gradeGolbal = [
-		{ label: ' Lớp 1', value: 1 },
-		{ label: 'Lớp 2', value: 2 },
-		{ label: 'Lớp 3', value: 3 },
-		{ label: 'Lớp 4', value: 4 },
-		{ label: 'Lớp 5', value: 5 },
-		{ label: 'Lớp 6', value: 6 },
-		{ label: 'Lớp 7', value: 7 },
-		{ label: 'Lớp 8', value: 8 },
-		{ label: 'Lớp 9', value: 9 },
-		{ label: 'Lớp 10', value: 10 },
-		{ label: 'Lớp 11', value: 11 },
-		{ label: 'Lớp 12', value: 12 }
+		{ label: 'Grade 1', value: 1 },
+		{ label: 'Grade 2', value: 2 },
+		{ label: 'Grade 3', value: 3 },
+		{ label: 'Grade 4', value: 4 },
+		{ label: 'Grade 5', value: 5 },
+		{ label: 'Grade 6', value: 6 },
+		{ label: 'Grade 7', value: 7 },
+		{ label: 'Grade 8', value: 8 },
+		{ label: 'Grade 9', value: 9 },
+		{ label: 'Grade 10', value: 10 },
+		{ label: 'Grade 11', value: 11 },
+		{ label: 'Grade 12', value: 12 }
 	];
 	const sectorArr = currentState?.projectSector.reduce(
 		(arr, curr) => [...arr, { label: curr.sectorName, value: curr.sectorID }],

@@ -99,7 +99,7 @@ export default function FormCustomProject({
 										className="mx-4"
 									/>
 									<Field
-										label="Add Members"
+										label="Add Team Member"
 										name="userInvite"
 										component={SelectAntdMulti || []}
 										options={owner}

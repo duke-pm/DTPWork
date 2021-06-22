@@ -102,7 +102,7 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 								<div className="grid grid-cols-1 sm:grid-cols-2 mb-16 gap-8 ">
 									<div className="flex flex-col">
 										<Field
-											label="Lý do sửa chữa,bảo hành"
+											label="Lý do sửa chữa, bảo hành"
 											name="note"
 											row={4}
 											component={InputTextAreaLg}
@@ -119,7 +119,7 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 										/>
 									</div>
 									<Field
-										label="File Đính kèm"
+										label="File đính kèm"
 										autoFocus
 										name="file"
 										style={{ height: '48px' }}

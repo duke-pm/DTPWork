@@ -111,7 +111,7 @@ export default function FormCustomCycleEdit({ handleClose, entitiesEdit, handleS
 										/>
 									</div>
 									<Field
-										label="File Đính kèm"
+										label="File đính kèm"
 										style={{ height: '58px' }}
 										name="file"
 										component={FileCustomVersion2}
