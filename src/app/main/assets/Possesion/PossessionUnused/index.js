@@ -85,14 +85,14 @@ function PossessionUnused(props) {
 										lastErrors={lastErrors}
 									/>
 								</Table>
-								{(entities && entities.length === 0) || lastErrors ? (
+								{entities?.length === 0 || lastErrors ? (
 									<FuseAnimate delay={300}>
 										<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
 									</FuseAnimate>
 								) : null}
 							</Paper>
 						</TableContainer>
-						{entities && entities.length !== 0 && (
+						{entities?.length !== 0 && (
 							<div className="flex flex-row items-center justify-end">
 								{actionLoading && <Spin />}
 								<Panigation

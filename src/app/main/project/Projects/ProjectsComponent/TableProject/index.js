@@ -113,7 +113,7 @@ function TableProject(props) {
 			title: 'Description',
 			dataIndex: 'descr',
 			key: 'descr',
-			width: '18%',
+			width: '20%',
 			ellipsis: {
 				showTitle: false
 			},

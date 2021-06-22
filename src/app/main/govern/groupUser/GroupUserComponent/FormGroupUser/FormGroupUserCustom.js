@@ -23,7 +23,7 @@ export default function FormGroupUserCustom({
 	const validationSchema = Yup.object().shape({
 		groupName: Yup.string().required(`${validateField}`)
 	});
-	const initialState = entitiesEdit && entitiesEdit.groupID ? entitiesEdit : initial;
+	const initialState = entitiesEdit?.groupID ? entitiesEdit : initial;
 	return (
 		<>
 			<Formik

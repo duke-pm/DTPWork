@@ -13,10 +13,10 @@ export default function ContentForm({ entitiesEdit }) {
 					<p className="p-6"> Mô tả </p>
 				</div>
 				<div className="flex sm:mr-96 mr-auto  flex-col" style={{ width: '650px' }}>
-					<p className="p-6 font-extrabold">{entitiesEdit && entitiesEdit.assetCode}</p>
-					<p className="p-6 font-extrabold">{entitiesEdit && entitiesEdit.assetName}</p>
-					<p className="p-6 font-extrabold">{entitiesEdit && entitiesEdit.groupName}</p>
-					<p className="p-6 font-extrabold"> {entitiesEdit && entitiesEdit.descr}</p>
+					<p className="p-6 font-extrabold">{entitiesEdit?.assetCode}</p>
+					<p className="p-6 font-extrabold">{entitiesEdit?.assetName}</p>
+					<p className="p-6 font-extrabold">{entitiesEdit?.groupName}</p>
+					<p className="p-6 font-extrabold"> {entitiesEdit?.descr}</p>
 				</div>
 			</div>
 			<div className="flex-row flex ">

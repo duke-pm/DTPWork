@@ -47,51 +47,45 @@ function FormCustomAll({ handleClose, open, rowPage }) {
 		}),
 		shallowEqual
 	);
-	const suppiler =
-		entitiesInformation && entitiesInformation.supplier
-			? entitiesInformation.supplier.reduce(
-					(arr, curr) => [...arr, { value: curr.supplierID, label: curr.supplierName }],
-					[]
-			  )
-			: [];
-	const department =
-		entitiesInformation && entitiesInformation.department
-			? entitiesInformation.department.reduce(
-					(arr, curr) => [...arr, { value: curr.deptCode, label: curr.deptName }],
-					[]
-			  )
-			: [];
-	const company =
-		entitiesInformation && entitiesInformation.company
-			? entitiesInformation.company.reduce(
-					(arr, curr) => [...arr, { value: curr.cmpnID, label: curr.cmpnName, shortName: curr.shortName }],
-					[]
-			  )
-			: [];
-	const category =
-		entitiesInformation && entitiesInformation.assetType
-			? entitiesInformation.assetType.reduce(
-					(arr, curr) => [...arr, { value: curr.typeID, label: curr.typeName }],
-					[]
-			  )
-			: [];
-	const group =
-		entitiesInformation && entitiesInformation.assetGroup
-			? entitiesInformation.assetGroup.reduce(
-					(arr, curr) => [...arr, { value: curr.groupID, label: curr.groupName, typeID: curr.typeID }],
-					[]
-			  )
-			: [];
-	const assetDetail =
-		entitiesInformation && entitiesInformation.assetGroupDetail
-			? entitiesInformation.assetGroupDetail.reduce(
-					(arr, curr) => [
-						...arr,
-						{ value: curr.absID, label: curr.itemName, code: curr.itemCode, groupID: curr.groupID }
-					],
-					[]
-			  )
-			: [];
+	const suppiler = entitiesInformation?.supplier
+		? entitiesInformation.supplier.reduce(
+				(arr, curr) => [...arr, { value: curr.supplierID, label: curr.supplierName }],
+				[]
+		  )
+		: [];
+	const department = entitiesInformation?.department
+		? entitiesInformation.department.reduce(
+				(arr, curr) => [...arr, { value: curr.deptCode, label: curr.deptName }],
+				[]
+		  )
+		: [];
+	const company = entitiesInformation?.company
+		? entitiesInformation.company.reduce(
+				(arr, curr) => [...arr, { value: curr.cmpnID, label: curr.cmpnName, shortName: curr.shortName }],
+				[]
+		  )
+		: [];
+	const category = entitiesInformation?.assetType
+		? entitiesInformation.assetType.reduce(
+				(arr, curr) => [...arr, { value: curr.typeID, label: curr.typeName }],
+				[]
+		  )
+		: [];
+	const group = entitiesInformation?.assetGroup
+		? entitiesInformation.assetGroup.reduce(
+				(arr, curr) => [...arr, { value: curr.groupID, label: curr.groupName, typeID: curr.typeID }],
+				[]
+		  )
+		: [];
+	const assetDetail = entitiesInformation?.assetGroupDetail
+		? entitiesInformation.assetGroupDetail.reduce(
+				(arr, curr) => [
+					...arr,
+					{ value: curr.absID, label: curr.itemName, code: curr.itemCode, groupID: curr.groupID }
+				],
+				[]
+		  )
+		: [];
 	const saveAsset = (values, prefix) => {
 		if (entitiesEdit && entitiesEdit.assetID) {
 			dispatch(actions.updatedPossesionAll(values)).then(data => {
@@ -132,17 +126,17 @@ function FormCustomAll({ handleClose, open, rowPage }) {
 	let newIntialState;
 	if (entitiesEdit) {
 		newIntialState = {
-			assetID: entitiesEdit && entitiesEdit.assetID,
-			assetName: entitiesEdit && entitiesEdit.assetName,
-			suppiler: entitiesEdit && entitiesEdit.suppiler === 0 ? null : entitiesEdit.suppiler,
-			descr: entitiesEdit && entitiesEdit.descr,
-			purchaseDate: entitiesEdit && entitiesEdit.purchaseDate,
-			effectiveDate: entitiesEdit && entitiesEdit.effectiveDate,
-			depreciationPeriod: entitiesEdit && entitiesEdit.depreciationPeriod,
-			warrantyPeriod: entitiesEdit && entitiesEdit.warrantyPeriod,
-			originalPrice: entitiesEdit && entitiesEdit.originalPrice,
-			deptCodeManager: entitiesEdit && entitiesEdit.deptCodeManager,
-			inactive: entitiesEdit && entitiesEdit.inactive
+			assetID: entitiesEdit?.assetID,
+			assetName: entitiesEdit?.assetName,
+			suppiler: entitiesEdit?.suppiler === 0 ? null : entitiesEdit.suppiler,
+			descr: entitiesEdit?.descr,
+			purchaseDate: entitiesEdit?.purchaseDate,
+			effectiveDate: entitiesEdit?.effectiveDate,
+			depreciationPeriod: entitiesEdit?.depreciationPeriod,
+			warrantyPeriod: entitiesEdit?.warrantyPeriod,
+			originalPrice: entitiesEdit?.originalPrice,
+			deptCodeManager: entitiesEdit?.deptCodeManager,
+			inactive: entitiesEdit?.inactive
 		};
 	}
 	return (
@@ -153,7 +147,7 @@ function FormCustomAll({ handleClose, open, rowPage }) {
 						<CloseIcon />
 					</IconButton>
 					<Typography variant="subtitle1" color="inherit">
-						{entitiesEdit && entitiesEdit.assetID ? 'Cập nhật tài sản' : 'Tạo mới tài sản'}
+						{entitiesEdit?.assetID ? 'Cập nhật tài sản' : 'Tạo mới tài sản'}
 					</Typography>
 				</Toolbar>
 			</AppBar>
@@ -166,7 +160,7 @@ function FormCustomAll({ handleClose, open, rowPage }) {
 				suppiler={suppiler}
 				actionLoading={actionLoading}
 				saveAsset={saveAsset}
-				initialValue={entitiesEdit && entitiesEdit.assetID ? newIntialState : initial}
+				initialValue={entitiesEdit?.assetID ? newIntialState : initial}
 				handleClose={handleClose}
 			/>
 		</Dialog>

@@ -31,36 +31,33 @@ export default function FormCustomUnusedEdit({
 		file: '',
 		note: ''
 	});
-	const employees =
-		entitiesInformation && entitiesInformation.employees
-			? entitiesInformation.employees.reduce(
-					(arr, curr) => [
-						...arr,
-						{
-							value: curr.empCode,
-							label: curr.empName,
-							deptCode: curr.deptCode,
-							jobTitle: curr.jobTitle,
-							regionCode: curr.regionCode
-						}
-					],
-					[]
-			  )
-			: [];
-	const department =
-		entitiesInformation && entitiesInformation.department
-			? entitiesInformation.department.reduce(
-					(arr, curr) => [...arr, { value: curr.deptCode, label: curr.deptName }],
-					[]
-			  )
-			: [];
-	const regionEmployee =
-		entitiesInformation && entitiesInformation.region
-			? entitiesInformation.region.reduce(
-					(arr, curr) => [...arr, { value: curr.regionCode, label: curr.regionName }],
-					[]
-			  )
-			: [];
+	const employees = entitiesInformation?.employees
+		? entitiesInformation.employees.reduce(
+				(arr, curr) => [
+					...arr,
+					{
+						value: curr.empCode,
+						label: curr.empName,
+						deptCode: curr.deptCode,
+						jobTitle: curr.jobTitle,
+						regionCode: curr.regionCode
+					}
+				],
+				[]
+		  )
+		: [];
+	const department = entitiesInformation?.department
+		? entitiesInformation.department.reduce(
+				(arr, curr) => [...arr, { value: curr.deptCode, label: curr.deptName }],
+				[]
+		  )
+		: [];
+	const regionEmployee = entitiesInformation?.region
+		? entitiesInformation.region.reduce(
+				(arr, curr) => [...arr, { value: curr.regionCode, label: curr.regionName }],
+				[]
+		  )
+		: [];
 	const onHandleChangeEmployee = value => {
 		const newDataEmployee = employees.reduce((arr, curr) => (curr.value === value ? curr : arr));
 		if (newDataEmployee) {

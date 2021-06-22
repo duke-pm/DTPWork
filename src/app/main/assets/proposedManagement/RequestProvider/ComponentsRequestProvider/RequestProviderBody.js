@@ -16,6 +16,7 @@ import InputTextAreaRequest from '@fuse/CustomForm/InputTextAreaRequest';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { useHistory } from 'react-router-dom';
+import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import * as actions from '../../_redux/confirmAction';
 import { validateSchema } from './ConfigRequestProvider';
 
@@ -29,6 +30,7 @@ export default function RequestProviderBody({
 }) {
 	const dispatch = useDispatch();
 	const history = useHistory();
+	const classes = DtpCustomStyles();
 	const [optionDept, setOptionsDept] = useState([]);
 	const [optionRegion, setOptionsRegion] = useState([]);
 	const [optionLocation, setOptionsLocation] = useState([]);
@@ -175,7 +177,7 @@ export default function RequestProviderBody({
 							<div style={{ width: '90%' }} className="sm">
 								<div className="px-16 w-full sm:px-24">
 									<div className="flex justify-between flex-row">
-										<h5 className="font-extrabold">Thông tin người yêu cầu.</h5>
+										<h5 className={classes.CustomFont}>Thông tin người yêu cầu.</h5>
 									</div>
 									<div className="grid grid-cols-1 sm:grid-cols-4 gap-8 ">
 										<Field
@@ -226,7 +228,7 @@ export default function RequestProviderBody({
 								</div>
 								<div className="px-16 sm:px-24">
 									<div className="flex justify-between flex-row">
-										<h5 className="font-extrabold">Tài sản yêu cầu.</h5>
+										<h5 className={classes.CustomFont}>Tài sản yêu cầu.</h5>
 									</div>
 									<Typography variant="subtitle2" color="inherit" className="mb-16">
 										<AddCircleOutlineIcon style={{ color: '#1890ff' }} />

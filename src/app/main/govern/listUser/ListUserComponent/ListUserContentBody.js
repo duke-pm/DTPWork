@@ -15,35 +15,34 @@ export default function ListUserContentBody({
 	return (
 		<>
 			<TableBody>
-				{entities &&
-					entities.map(items => (
-						<TableRow key={items.userID} hover className={classes.tableHead}>
-							<TableCell align="center" className="p-4 md:p-12">
-								<Popover
-									overlayStyle={{ zIndex: '19' }}
-									placement="rightTop"
-									content={() => (
-										<ActionsListUserBody
-											items={items}
-											handleEditListUser={handleEditListUser}
-											handleDeleteListUser={handleDeleteListUser}
-										/>
-									)}
-									title="Hành động"
-								>
-									<MoreVertIcon className="cursor-pointer" />
-								</Popover>
-							</TableCell>
-							<TableCell align="left">{items.userID} </TableCell>
-							<TableCell align="left">{items.userName} </TableCell>
-							<TableCell align="left"> {items.fullName}</TableCell>
-							<TableCell align="left">{items.email} </TableCell>
-							<TableCell align="left">{items.groupName} </TableCell>
-							<TableCell align="left">
-								<Checkbox checked={items.inactive} />
-							</TableCell>
-						</TableRow>
-					))}
+				{entities?.map(items => (
+					<TableRow key={items.userID} hover className={classes.tableHead}>
+						<TableCell align="center" className="p-4 md:p-12">
+							<Popover
+								overlayStyle={{ zIndex: '19' }}
+								placement="rightTop"
+								content={() => (
+									<ActionsListUserBody
+										items={items}
+										handleEditListUser={handleEditListUser}
+										handleDeleteListUser={handleDeleteListUser}
+									/>
+								)}
+								title="Hành động"
+							>
+								<MoreVertIcon className="cursor-pointer" />
+							</Popover>
+						</TableCell>
+						<TableCell align="left">{items.userID} </TableCell>
+						<TableCell align="left">{items.userName} </TableCell>
+						<TableCell align="left"> {items.fullName}</TableCell>
+						<TableCell align="left">{items.email} </TableCell>
+						<TableCell align="left">{items.groupName} </TableCell>
+						<TableCell align="left">
+							<Checkbox checked={items.inactive} />
+						</TableCell>
+					</TableRow>
+				))}
 			</TableBody>
 		</>
 	);

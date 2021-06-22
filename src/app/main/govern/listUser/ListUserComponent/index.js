@@ -82,7 +82,7 @@ export default function ListUserContent() {
 							) : null}
 						</Paper>
 					</TableContainer>
-					{entities && entities.length !== 0 && (
+					{entities?.length !== 0 && (
 						<div className="flex flex-row items-center justify-end">
 							{actionLoading && <Spin />}
 							<Panigation

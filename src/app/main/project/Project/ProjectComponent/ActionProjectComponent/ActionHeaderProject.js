@@ -5,6 +5,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import { useDispatch } from 'react-redux';
 import { Popover, Select } from 'antd';
 import AppsIcon from '@material-ui/icons/Apps';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { ProjectContext } from '../../ProjectContext';
 import { setTaskEditProject, fetchProjectDetailFilter, getTaskDetailAll } from '../../../_redux/_projectActions';
@@ -175,30 +176,19 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 						{' '}
 						Filter{' '}
 					</Button>
+					<Button
+						onClick={handleOpenGant}
+						className="ml-16 sm:mb-0 mb-9"
+						variant="contained"
+						color="primary"
+						startIcon={<EqualizerIcon />}
+					>
+						Gantt chart
+					</Button>{' '}
 				</div>
 				<div>
 					<div className="flex flex-col sm:flex-row justify-between ">
 						<div className="flex flex-row">
-							<Popover
-								overlayStyle={{ zIndex: '19', display: formProject.open ? 'none' : '' }}
-								placement="bottom"
-								content={() => (
-									<>
-										<MenuItem onClick={handleOpenGant} role="button">
-											<ListItemText primary="Gantt Chart" />
-										</MenuItem>
-									</>
-								)}
-								// title="Action"
-							>
-								<Button
-									className="mt-8 sm:mt-0 max-w-sm md:max-w-lg h-26"
-									variant="contained"
-									color="primary"
-								>
-									<AppsIcon />
-								</Button>{' '}
-							</Popover>
 							<Popover
 								overlayStyle={{ zIndex: '19', display: formProject.open ? 'none' : '' }}
 								placement="rightTop"
@@ -218,7 +208,7 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 								// title="Action"
 							>
 								<Button
-									className="mt-8 ml-16 sm:mt-0 max-w-sm md:max-w-lg h-26"
+									className="mt-8 sm:mt-0 max-w-sm md:max-w-lg h-26"
 									variant="contained"
 									color="primary"
 								>

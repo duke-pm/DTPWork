@@ -55,31 +55,16 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 												<p className="p-6"> Mô tả </p>
 											</div>
 											<div className="flex sm:mr-96 mr-auto flex-col" style={{ width: '300px' }}>
-												<p className="p-6 font-extrabold">
-													{' '}
-													{entitiesEdit && entitiesEdit.assetCode}
-												</p>
-												<p className="p-6 font-extrabold">
-													{' '}
-													{entitiesEdit && entitiesEdit.assetName}{' '}
-												</p>
-												<p className="p-6 font-extrabold">
-													{' '}
-													{entitiesEdit && entitiesEdit.groupName}{' '}
-												</p>
+												<p className="p-6 font-extrabold"> {entitiesEdit?.assetCode}</p>
+												<p className="p-6 font-extrabold"> {entitiesEdit?.assetName} </p>
+												<p className="p-6 font-extrabold"> {entitiesEdit?.groupName} </p>
 												<p className="p-6 font-extrabold">
 													{' '}
 													{entitiesEdit &&
 														moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY')}{' '}
 												</p>
-												<p className="p-6 font-extrabold">
-													{' '}
-													{entitiesEdit && entitiesEdit.statusName}{' '}
-												</p>
-												<p className="p-6 font-extrabold">
-													{' '}
-													{entitiesEdit && entitiesEdit.descr}{' '}
-												</p>
+												<p className="p-6 font-extrabold"> {entitiesEdit?.statusName} </p>
+												<p className="p-6 font-extrabold"> {entitiesEdit?.descr} </p>
 											</div>
 										</div>
 									</div>
@@ -95,21 +80,10 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 												<p className="p-6"> Khu vực </p>
 											</div>
 											<div className="flex sm:mr-96 mr-auto flex-col w-full">
-												<p className="p-6 font-extrabold">
-													{entitiesEdit && entitiesEdit.empName}{' '}
-												</p>
-												<p className="p-6 font-extrabold">
-													{' '}
-													{entitiesEdit && entitiesEdit.jobTitle}{' '}
-												</p>
-												<p className="p-6 font-extrabold">
-													{' '}
-													{entitiesEdit && entitiesEdit.deptNameManager}{' '}
-												</p>
-												<p className="p-6 font-extrabold">
-													{' '}
-													{entitiesEdit && entitiesEdit.regionName}{' '}
-												</p>
+												<p className="p-6 font-extrabold">{entitiesEdit?.empName} </p>
+												<p className="p-6 font-extrabold"> {entitiesEdit?.jobTitle} </p>
+												<p className="p-6 font-extrabold"> {entitiesEdit?.deptNameManager} </p>
+												<p className="p-6 font-extrabold"> {entitiesEdit?.regionName} </p>
 											</div>
 										</div>
 									</div>

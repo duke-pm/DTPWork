@@ -97,6 +97,10 @@ const DtpCustomStyles = makeStyles(theme => ({
 	Drawer: {
 		zIndex: '150 !important'
 	},
+	CustomFont: {
+		lineHeight: 1.4,
+		fontWeight: 'bold'
+	},
 	paper: {
 		backgroundColor: theme.palette.background.paper,
 		boxShadow: theme.shadows[5],

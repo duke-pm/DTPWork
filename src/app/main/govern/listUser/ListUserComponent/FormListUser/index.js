@@ -42,37 +42,27 @@ export default function FormListUser({ open, handleCloseFormGroupUser }) {
 			});
 		}
 	};
-	const groupUser =
-		inforCompany && inforCompany.userGroup
-			? inforCompany.userGroup.reduce((arr, curr) => [...arr, { value: curr.groupID, label: curr.groupName }], [])
-			: [];
-	const arrCompany =
-		inforCompany && inforCompany.company
-			? inforCompany.company.reduce((arr, curr) => [...arr, { value: curr.cmpnID, label: curr.cmpnName }], [])
-			: [];
-	const arrBizLine =
-		inforCompany && inforCompany.bizlines
-			? inforCompany.bizlines.reduce(
-					(arr, curr) => [...arr, { value: curr.bizLineID, label: curr.bizLineName }],
-					[]
-			  )
-			: [];
-	const arrSales =
-		inforCompany && inforCompany.sales
-			? inforCompany.sales.reduce((arr, curr) => [...arr, { value: curr.slpCode, label: curr.slpName }], [])
-			: [];
-	const arrManag =
-		inforCompany && inforCompany.users
-			? inforCompany.users.reduce((arr, curr) => [...arr, { value: curr.empID, label: curr.empName }], [])
-			: [];
-	const arrSap =
-		inforCompany && inforCompany.employees
-			? inforCompany.employees.reduce((arr, curr) => [...arr, { value: curr.empCode, label: curr.empName }], [])
-			: [];
-	const arrRegion =
-		inforCompany && inforCompany.region
-			? inforCompany.region.reduce((arr, curr) => [...arr, { value: curr.regionID, label: curr.regionName }], [])
-			: [];
+	const groupUser = inforCompany?.userGroup
+		? inforCompany.userGroup.reduce((arr, curr) => [...arr, { value: curr.groupID, label: curr.groupName }], [])
+		: [];
+	const arrCompany = inforCompany?.company
+		? inforCompany.company.reduce((arr, curr) => [...arr, { value: curr.cmpnID, label: curr.cmpnName }], [])
+		: [];
+	const arrBizLine = inforCompany?.bizlines
+		? inforCompany.bizlines.reduce((arr, curr) => [...arr, { value: curr.bizLineID, label: curr.bizLineName }], [])
+		: [];
+	const arrSales = inforCompany?.sales
+		? inforCompany.sales.reduce((arr, curr) => [...arr, { value: curr.slpCode, label: curr.slpName }], [])
+		: [];
+	const arrManag = inforCompany?.users
+		? inforCompany.users.reduce((arr, curr) => [...arr, { value: curr.empID, label: curr.empName }], [])
+		: [];
+	const arrSap = inforCompany?.employees
+		? inforCompany.employees.reduce((arr, curr) => [...arr, { value: curr.empCode, label: curr.empName }], [])
+		: [];
+	const arrRegion = inforCompany?.region
+		? inforCompany.region.reduce((arr, curr) => [...arr, { value: curr.regionID, label: curr.regionName }], [])
+		: [];
 	return (
 		<Dialog fullWidth style={{ zIndex: 20 }} maxWidth="sm" aria-labelledby="customized-dialog-title" open={open}>
 			<AppBar position="static" className="shadow-md">
