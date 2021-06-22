@@ -79,6 +79,7 @@ export default function DrawerOverView({ closeVisible }) {
 					notificationContent.content.en.success,
 					notificationContent.description.project.task.updateProcessingTask
 				);
+				closeVisible();
 				const comment = `*TIẾN ĐỘ (%) được thay đổi từ ${entitiesView.detail.percentage} đến ${value}`;
 				dispatch(addTaskActivity(entitiesView.detail.taskID, comment));
 				dispatch(

@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Badge, Dropdown, Table, Popover, Avatar, Menu, Tooltip, Slider } from 'antd';
+import { Badge, Dropdown, Table, Popover, Avatar, Menu, Tooltip, Slider, Progress } from 'antd';
 import React, { useContext, useState, useEffect } from 'react';
 import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
 import { MenuItem, ListItemIcon, Icon, ListItemText, Typography } from '@material-ui/core';
@@ -268,13 +268,7 @@ function TableProject(props) {
 			key: 'status',
 			width: '15%',
 			render: (_, item) => (
-				<Slider
-					disabled={!item.isUpdated || actionLoading}
-					onAfterChange={value => handleChangeSliderAfter(item, value)}
-					defaultValue={item.percentage}
-					style={{ width: ' 180px', marginLeft: 30 }}
-					tipFormatter={formatter}
-				/>
+				<Progress percent={item.percentage} strokeColor={typeColor[item.typeName]} status="active" />
 			)
 		},
 		{
