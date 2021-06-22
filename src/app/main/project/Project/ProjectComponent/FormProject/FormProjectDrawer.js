@@ -65,7 +65,7 @@ export default function FormCustomProjectTask({
 						<div className=" mt-8 px-16 sm:px-24">
 							<div className="grid grid-cols-1 gap-8 ">
 								<Field
-									label="Task Name"
+									label="Name"
 									name="taskName"
 									type="text"
 									readOnly={entitiesEdit && !entitiesEdit.isModified}
@@ -101,7 +101,7 @@ export default function FormCustomProjectTask({
 							<Divider className="mb-16" />
 							<div className="grid grid-cols-1 gap-8 ">
 								<Field
-									label="Owner"
+									label="Assignee"
 									name="owner"
 									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									hasFeedback
@@ -109,6 +109,18 @@ export default function FormCustomProjectTask({
 									options={owner}
 									className="mx-4"
 									position="right"
+								/>
+							</div>
+							<div className="grid grid-cols-1 gap-8 ">
+								<Field
+									label="Add Team Member"
+									name="userInvite"
+									options={owner}
+									count={3}
+									component={SelectAntdMulti || []}
+									readOnly={entitiesEdit && !entitiesEdit.isModified}
+									position="right"
+									className="mx-4"
 								/>
 							</div>
 							<div className="grid grid-cols-1 sm:grid-cols-2 gap-16 ">
@@ -192,18 +204,6 @@ export default function FormCustomProjectTask({
 									name="author"
 									component={AntInput}
 									type="text"
-									readOnly={entitiesEdit && !entitiesEdit.isModified}
-									position="right"
-									className="mx-4"
-								/>
-							</div>
-							<div className="grid grid-cols-1 gap-8 ">
-								<Field
-									label="Add Team Member"
-									name="userInvite"
-									options={owner}
-									count={3}
-									component={SelectAntdMulti || []}
 									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									position="right"
 									className="mx-4"

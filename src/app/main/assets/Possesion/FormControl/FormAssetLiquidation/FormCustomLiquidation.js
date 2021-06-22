@@ -140,7 +140,7 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 										/>
 									</div>
 									<Field
-										label="File Đính kèm"
+										label="File đính kèm"
 										style={{ height: '47.5px' }}
 										name="file"
 										component={FileCustomVersion2}

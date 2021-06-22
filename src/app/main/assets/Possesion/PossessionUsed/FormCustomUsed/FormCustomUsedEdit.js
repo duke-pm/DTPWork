@@ -142,7 +142,7 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 										/>
 									</div>
 									<Field
-										label="File Đính kèm"
+										label="File đính kèm"
 										style={{ height: '48.5px' }}
 										name="file"
 										component={FileCustomVersion2}

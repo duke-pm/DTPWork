@@ -89,7 +89,7 @@ export default function FormCustomCorruptEdit() {
 										/>
 									</div>
 									<Field
-										label="File Đính kèm"
+										label="File đính kèm"
 										autoFocus
 										style={{ height: '35px' }}
 										name="file"
