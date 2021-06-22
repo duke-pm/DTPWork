@@ -247,37 +247,33 @@ export default function DrawerOverView({ closeVisible }) {
 				<div className="flex flex-col">
 					<p className="text-xl font-medium">Detail</p>
 					<Divider />
-					<div className="flex flex-row mt-16">
-						<p className="text-base font-normal "> Sector </p>
-						<p className="text-base font-normal text-gray-500 ml-72 ">{entitiesView?.detail.sectorName}</p>
-					</div>
 					<div className="flex flex-row">
-						<p className="text-base font-normal "> Grade </p>
-						<p className="text-base font-normal text-gray-500 ml-72 ">
-							{grade[entitiesView?.detail.grade]}
-						</p>
-					</div>
-					<div className="flex flex-row">
-						<p className="text-base font-normal "> Component </p>
-						<p className="text-base font-normal text-gray-500 ml-60 ">
-							{entitiesView?.detail.componentName}
-						</p>
-					</div>
-					<div className="flex flex-row">
-						<p className="text-base font-normal "> Author </p>
-						<p className="text-base font-normal text-gray-500 ml-72 ">{entitiesView?.detail.author}</p>
-					</div>
-					<div className="flex flex-row">
-						<p className="text-base font-normal "> Origin Publisher </p>
-						<p className="text-base font-normal text-gray-500 ml-72 ">
-							{entitiesView?.detail.originPublisher}
-						</p>
-					</div>
-					<div className="flex flex-row">
-						<p className="text-base font-normal "> Ownership DTP </p>
-						<p className="text-base font-normal text-gray-500 ml-72 ">
-							{entitiesView?.detail.ownershipDTP}
-						</p>
+						<div className="flex flex-col mt-16">
+							<p className="text-base font-normal "> Sector </p>
+							<p className="text-base font-normal "> Grade </p>
+							<p className="text-base font-normal "> Component </p>
+							<p className="text-base font-normal "> Author </p>
+							<p className="text-base font-normal "> Origin Publisher </p>
+							<p className="text-base font-normal "> Ownership DTP </p>
+						</div>
+						<div className="flex flex-col  mt-16">
+							<p className="text-base font-normal text-gray-500 ml-72 ">
+								{entitiesView?.detail.sectorName}
+							</p>
+							<p className="text-base font-normal text-gray-500 ml-72 ">
+								{grade[entitiesView?.detail.grade]}
+							</p>
+							<p className="text-base font-normal text-gray-500 ml-72 ">
+								{entitiesView?.detail.componentName}
+							</p>
+							<p className="text-base font-normal text-gray-500 ml-72 ">{entitiesView?.detail.author}</p>
+							<p className="text-base font-normal text-gray-500 ml-72 ">
+								{entitiesView?.detail.originPublisher}
+							</p>
+							<p className="text-base font-normal text-gray-500 ml-72 ">
+								{entitiesView?.detail.ownershipDTP}
+							</p>
+						</div>
 					</div>
 				</div>
 				<div className="flex flex-col ">
