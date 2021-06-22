@@ -126,6 +126,7 @@ export default function ContentProvider() {
 				<Box p={3}>
 					<ProjectComponent
 						owner={owner}
+						project={project}
 						gradeGolbal={gradeGolbal}
 						taskSub={taskSub}
 						ArrTaskComponent={ArrTaskComponent}

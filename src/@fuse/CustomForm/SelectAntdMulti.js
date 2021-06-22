@@ -66,7 +66,7 @@ export default function SelectAntdMulti({
 					>
 						{options.map(p => (
 							<Option key={p.value} value={p.value}>
-								<p style={{ fontFamily: 'Poppins' }}>{p.label}</p>
+								<p> {p.label} </p>
 							</Option>
 						))}
 					</Select>

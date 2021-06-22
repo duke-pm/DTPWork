@@ -11,7 +11,8 @@ import {
 	addTaskWatcher,
 	fetchProjectDetailFilter,
 	getTaskDetailAll,
-	addTaskActivity
+	addTaskActivity,
+	getTaskViewDetail
 } from 'app/main/project/_redux/_projectActions';
 import { checkFile, nameFile, notificationConfig, URL } from '@fuse/core/DtpConfig';
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -46,7 +47,7 @@ export default function DrawerOverView({ closeVisible }) {
 	const updatedStatus = type => {
 		dispatch(updatedTaskStatus(entitiesView.detail, type)).then(data => {
 			if (data && !data.isError) {
-				closeVisible();
+				dispatch(getTaskViewDetail(entitiesView.detail.taskID));
 				notificationConfig(
 					'success',
 					notificationContent.content.en.success,
@@ -74,14 +75,19 @@ export default function DrawerOverView({ closeVisible }) {
 	const handleChangeSliderAfter = value => {
 		dispatch(updatedTaskStatus(entitiesView.detail, entitiesView.detail.statusID, value)).then(data => {
 			if (data && !data.isError) {
+				setProcess(value);
 				notificationConfig(
 					'success',
 					notificationContent.content.en.success,
 					notificationContent.description.project.task.updateProcessingTask
 				);
-				closeVisible();
-				const comment = `*TIẾN ĐỘ (%) được thay đổi từ ${entitiesView.detail.percentage} đến ${value}`;
+				const comment = `${
+					entitiesView.detail.percentage === value
+						? `*TIẾN ĐỘ (${value}%)`
+						: `*TIẾN ĐỘ (%) được thay đổi từ ${entitiesView.detail.percentage} đến ${value}`
+				}`;
 				dispatch(addTaskActivity(entitiesView.detail.taskID, comment));
+				dispatch(getTaskViewDetail(entitiesView.detail.taskID));
 				dispatch(
 					fetchProjectDetailFilter(
 						params.detail,

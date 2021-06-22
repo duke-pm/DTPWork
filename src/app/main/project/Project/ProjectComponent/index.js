@@ -25,7 +25,8 @@ export default function ProjectComponent({
 	ArrTaskComponent,
 	taskSub,
 	params,
-	sectorArr
+	sectorArr,
+	project
 }) {
 	const classes = DtpCustomStyles();
 	const dispatch = useDispatch();
@@ -100,6 +101,7 @@ export default function ProjectComponent({
 				classes={classes}
 			/>
 			<ActionHeaderProject
+				project={project}
 				params={params}
 				sectorArr={sectorArr}
 				ArrProjectStatus={ArrProjectStatus}
