@@ -201,11 +201,17 @@ export default function DrawerOverView({ closeVisible }) {
 					<p className="font-extrabold">PEOPLE & TIME</p>
 					<Divider />
 					<div className="flex flex-row mt-16">
-						<p className="text-base font-normal "> Assignee </p>
+						<p className="text-base font-normal " style={{ width: '128px' }}>
+							{' '}
+							Assignee{' '}
+						</p>
 						<p className="text-base font-normal text-gray-500 ml-56 "> {entitiesView?.detail.ownerName} </p>
 					</div>
 					<div className="flex flex-row">
-						<p className="text-base font-normal "> Members </p>
+						<p className="text-base font-normal " style={{ width: '128px' }}>
+							{' '}
+							Members{' '}
+						</p>
 						<Avatar.Group
 							className="ml-56"
 							maxCount={5}
@@ -219,7 +225,10 @@ export default function DrawerOverView({ closeVisible }) {
 						</Avatar.Group>{' '}
 					</div>
 					<div className="flex flex-row">
-						<p className="text-base font-normal "> Priority </p>
+						<p className="text-base font-normal " style={{ width: '114px' }}>
+							{' '}
+							Priority{' '}
+						</p>
 						<div className="text-base font-normal text-gray-500 ml-72">
 							<Badge
 								size="default"
@@ -231,12 +240,15 @@ export default function DrawerOverView({ closeVisible }) {
 					</div>
 					<div className="flex flex-row justify-between">
 						<div className="flex flex-row">
-							<p className="text-base font-normal "> Start date </p>
+							<p className="text-base font-normal" style={{ width: '126px' }}>
+								{' '}
+								Start date{' '}
+							</p>
 							<p className="text-base font-normal text-gray-500 ml-56 ">
 								{moment(entitiesView?.detail.startDate).format('DD/MM/YYYY')}{' '}
 							</p>
 						</div>
-						<div className="flex flex-row" style={{ marginRight: '140px' }}>
+						<div className="flex flex-row">
 							<p className="text-base font-normal "> End date </p>
 							<div className="text-base font-normal text-gray-500 ml-56 ">
 								{moment(entitiesView?.detail.endDate).format('DD/MM/YYYY')}{' '}
