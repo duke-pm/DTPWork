@@ -1,7 +1,6 @@
 import { Button, Divider } from '@material-ui/core';
 import { Avatar, Input, Empty } from 'antd';
 import React, { useState, useRef, useEffect } from 'react';
-import * as moment from 'moment';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import { sliceString } from '@fuse/core/DtpConfig';
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
@@ -32,15 +31,8 @@ export default function DrawerActivity() {
 	}
 	return (
 		<div className="flex flex-col">
-			<div className="flex flex-row justify-between mt-16">
-				<p className="text-base font-normal">
-					{' '}
-					Updated at {moment(entitiesView && entitiesView.detail.lUpdDate).format('DD/MM/YYYY')}{' '}
-				</p>
-			</div>
-			<Divider />
 			<div style={{ height: classes.Acitivity }}>
-				<FuseScrollbars ref={chatRef} className="flex-col overflow-y-auto xl:max-h-512 max-h-320">
+				<FuseScrollbars ref={chatRef} className="flex-col overflow-y-auto xl:max-h-640 max-h-400">
 					<FuseAnimateGroup
 						enter={{
 							animation: 'transition.slideUpBigIn'
@@ -68,13 +60,13 @@ export default function DrawerActivity() {
 												</div>
 												<div className="w-full flex-none text-sm font-normal text-gray-500">
 													{' '}
-													{item.timeUpdate}{' '}
+													Updated on {item.timeUpdate}{' '}
 												</div>
 											</div>
 										</div>
 										<div className="font-medium flex-none"> #{item.rowNum}</div>
 									</div>
-									<div className="mt-8">
+									<div className="mt-8" style={{ marginLeft: '4.8rem' }}>
 										<p className="text-sm font-light">{item.comments}</p>
 									</div>
 								</div>

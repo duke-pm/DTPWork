@@ -111,7 +111,11 @@ export default function ProjectComponent({
 				<div className={`'grid-cols-1'}  gap-8`}>
 					{!gantt ? (
 						<div className="flex flex-col gap-8 mt-16 shadow-md  sm:border-1 sm:rounded-4 ">
-							<TableProject actionLoading={actionLoading} entitiesDetail={entitiesDetail} />
+							<TableProject
+								params={params}
+								actionLoading={actionLoading}
+								entitiesDetail={entitiesDetail}
+							/>
 							{entitiesDetail?.listTask?.length !== 0 && (
 								<div className="flex flex-row items-center justify-end">
 									{actionLoading && <Spin />}

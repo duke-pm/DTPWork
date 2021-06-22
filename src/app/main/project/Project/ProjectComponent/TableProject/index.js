@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Badge, Dropdown, Table, Popover, Avatar, Menu, Progress, Tooltip } from 'antd';
+import { Badge, Dropdown, Table, Popover, Avatar, Menu, Tooltip, Slider } from 'antd';
 import React, { useContext, useState, useEffect } from 'react';
 import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
 import { MenuItem, ListItemIcon, Icon, ListItemText, Typography } from '@material-ui/core';
@@ -13,13 +13,16 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import * as actions from '../../../_redux/_projectActions';
 import { ProjectContext } from '../../ProjectContext';
-import { badgeStatus, typeColor, priorityColor } from './ConfigTableProject';
+import { badgeStatus, typeColor, priorityColor, badgeText } from './ConfigTableProject';
 
+function formatter(value) {
+	return `${value}%`;
+}
 function TableProject(props) {
 	const dispatch = useDispatch();
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.up('xl'));
-	const { entitiesDetail, actionLoading } = props;
+	const { entitiesDetail, actionLoading, params } = props;
 	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 	const projectContext = useContext(ProjectContext);
 	useEffect(() => {
@@ -55,6 +58,34 @@ function TableProject(props) {
 		});
 		dispatch(actions.setTaskEditProject(item));
 	};
+	const handleChangeSliderAfter = (item, value) => {
+		dispatch(actions.updatedTaskStatus(item, item.statusID, value)).then(data => {
+			if (data && !data.isError) {
+				notificationConfig(
+					'success',
+					notificationContent.content.en.success,
+					notificationContent.description.project.task.updateProcessingTask
+				);
+				const comment = `*TIẾN ĐỘ (%) được thay đổi từ ${item.percentage} ${
+					item.percentage > value ? 'xuống' : 'lên'
+				} ${value}`;
+				dispatch(actions.addTaskActivity(item.taskID, comment, 'type'));
+				dispatch(
+					actions.fetchProjectDetailFilter(
+						params.detail,
+						rowPage,
+						page,
+						ownerFilter,
+						status,
+						dateStart,
+						sector,
+						search
+					)
+				);
+				dispatch(actions.getTaskDetailAll(params.detail, ownerFilter, status, sector, search));
+			}
+		});
+	};
 	const updatedStatus = (item, statusTask) => {
 		dispatch(actions.updatedTaskStatus(item, statusTask)).then(data => {
 			if (data && !data.isError) {
@@ -63,9 +94,11 @@ function TableProject(props) {
 					notificationContent.content.en.success,
 					notificationContent.description.project.task.updateStatusTask
 				);
+				const comment = `*TRẠNG THÁI được thay đổi từ ${item.statusName} đến ${badgeText[statusTask]}`;
+				dispatch(actions.addTaskActivity(item.taskID, comment, 'type'));
 				dispatch(
 					actions.fetchProjectDetailFilter(
-						item.prjID,
+						params.detail,
 						rowPage,
 						page,
 						ownerFilter,
@@ -75,7 +108,7 @@ function TableProject(props) {
 						search
 					)
 				);
-				dispatch(actions.getTaskDetailAll(item.prjID, ownerFilter, status, sector, search));
+				dispatch(actions.getTaskDetailAll(params.detail, ownerFilter, status, sector, search));
 			}
 		});
 	};
@@ -84,7 +117,7 @@ function TableProject(props) {
 			if (data && !data.isError) {
 				dispatch(
 					actions.fetchProjectDetailFilter(
-						item.prjID,
+						params.detail,
 						rowPage,
 						page,
 						ownerFilter,
@@ -94,7 +127,7 @@ function TableProject(props) {
 						search
 					)
 				);
-				dispatch(actions.getTaskDetailAll(item.prjID, ownerFilter, status, sector, search));
+				dispatch(actions.getTaskDetailAll(params.detail, ownerFilter, status, sector, search));
 			}
 		});
 	};
@@ -131,7 +164,7 @@ function TableProject(props) {
 											</ListItemIcon>
 											<ListItemText primary="Copy" />
 										</MenuItem>
-										{item.taskTypeID === 2 && item.countChild === 0 && (
+										{item.taskTypeID === 2 && item.statusName === 'New' && item.countChild === 0 && (
 											<MenuItem onClick={() => deleteTask(item)} role="button">
 												<ListItemIcon className="min-w-40">
 													<Icon>delete</Icon>
@@ -235,7 +268,13 @@ function TableProject(props) {
 			key: 'status',
 			width: '15%',
 			render: (_, item) => (
-				<Progress percent={item.percentage} strokeColor={typeColor[item.typeName]} status="active" />
+				<Slider
+					disabled={!item.isUpdated || actionLoading}
+					onAfterChange={value => handleChangeSliderAfter(item, value)}
+					defaultValue={item.percentage}
+					style={{ width: ' 180px', marginLeft: 30 }}
+					tipFormatter={formatter}
+				/>
 			)
 		},
 		{

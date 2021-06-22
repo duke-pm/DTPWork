@@ -127,7 +127,7 @@ export default function FormCustomProjectTask({
 								<Field
 									label="Start Date"
 									name="startDate"
-									width="60%"
+									width="58.8%"
 									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									component={DateCustom}
 									className="mx-4"
@@ -135,7 +135,7 @@ export default function FormCustomProjectTask({
 								/>
 								<Field
 									label="End Date"
-									width="60%"
+									width="58.8%"
 									position="right"
 									name="endDate"
 									readOnly={entitiesEdit && !entitiesEdit.isModified}
@@ -155,11 +155,21 @@ export default function FormCustomProjectTask({
 										<Field
 											label="Percentage"
 											name="percentage"
-											width="60%"
+											width="58.8%"
 											readOnly={entitiesEdit && !entitiesEdit.isModified}
 											type="number"
 											component={AntInput}
 											position="right"
+											className="mx-4"
+										/>
+										<Field
+											label="Status"
+											name="status"
+											width="58.8%"
+											readOnly={entitiesEdit && !entitiesEdit.isModified}
+											position="right"
+											component={SelectAntdCustomStatus}
+											options={ArrProjectStatus}
 											className="mx-4"
 										/>
 									</div>
@@ -168,11 +178,23 @@ export default function FormCustomProjectTask({
 								<Field
 									label="Sector"
 									name="sectorID"
-									width="60%"
+									width="58.8%"
 									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									position="right"
 									component={SelectAntd || []}
 									options={sectorArr}
+									className="mx-4"
+								/>
+								<Field
+									label="Priority"
+									name="priority"
+									readOnly={entitiesEdit && !entitiesEdit.isModified}
+									hasFeedback
+									// value={inititalValues.priority}
+									component={SelectAntd}
+									options={ArrTaskPri}
+									position="right"
+									width="58.8%"
 									className="mx-4"
 								/>
 							</div>
@@ -180,7 +202,7 @@ export default function FormCustomProjectTask({
 								<Field
 									label="Grade"
 									name="grade"
-									width="60%"
+									width="58.8%"
 									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									options={gradeGolbal}
 									component={SelectAntd}
@@ -189,7 +211,7 @@ export default function FormCustomProjectTask({
 								/>
 								<Field
 									label="Component"
-									width="60%"
+									width="58.8%"
 									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									name="component"
 									component={SelectAntd}
@@ -231,19 +253,7 @@ export default function FormCustomProjectTask({
 									className="mx-4"
 								/>
 							</div>
-							<div className="grid grid-cols-1 gap-8 ">
-								<Field
-									label="Priority"
-									name="priority"
-									readOnly={entitiesEdit && !entitiesEdit.isModified}
-									hasFeedback
-									component={SelectAntd}
-									options={ArrTaskPri}
-									position="right"
-									className="mx-4"
-								/>
-							</div>
-							{entitiesEdit &&
+							{/* {entitiesEdit &&
 								entitiesEdit.taskID &&
 								entitiesEdit.typeName === 'TASK' &&
 								formProject.title !== 'New task' && (
@@ -258,7 +268,7 @@ export default function FormCustomProjectTask({
 											className="mx-4"
 										/>
 									</div>
-								)}
+								)} */}
 							<div className="flex justify-between flex-row">
 								<h5 className="font-extrabold">FILES</h5>
 							</div>

@@ -63,10 +63,10 @@ const DtpCustomStyles = makeStyles(theme => ({
 	},
 	Acitivity: {
 		[theme.breakpoints.up('lg')]: {
-			height: '400px'
+			height: '470px'
 		},
 		[theme.breakpoints.up('xl')]: {
-			height: '640px'
+			height: '690px'
 		}
 	},
 	containerGrantt: {

@@ -4,7 +4,6 @@ import React, { useContext } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import { useDispatch } from 'react-redux';
 import { Popover, Select } from 'antd';
-import AppsIcon from '@material-ui/icons/Apps';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { ProjectContext } from '../../ProjectContext';
@@ -98,16 +97,6 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 					</Typography>
 				</div>
 				<div className="flex flex-col sm:flex-row mb-16">
-					{/* <Paper style={{ width: '180px' }} className="w-full sm:w-1/4 flex justify-between">
-						<DatePicker
-							onChange={handleChangeFilterDateStart}
-							defaultValue={moment()}
-							picker="year"
-							format="YYYY"
-							placeholder="Year start"
-							style={{ width: '100%' }}
-						/>
-					</Paper> */}
 					<Paper style={{ width: '180px' }} className="sm:mb-0 mb-9">
 						<Select
 							allowClear
@@ -188,48 +177,41 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 				</div>
 				<div>
 					<div className="flex flex-col sm:flex-row justify-between ">
-						<div className="flex flex-row">
-							<Popover
-								overlayStyle={{ zIndex: '19', display: formProject.open ? 'none' : '' }}
-								placement="rightTop"
-								content={() => (
-									<>
-										<MenuItem onClick={() => handleOpenFormProject('Task')} role="button">
-											<ListItemText style={{ color: '#108ee9' }} primary="TASK" />
-										</MenuItem>
-										<MenuItem onClick={() => handleOpenFormProject('Miltestone')} role="button">
-											<ListItemText style={{ color: '#87d068' }} primary="MILESTONE" />
-										</MenuItem>
-										<MenuItem onClick={() => handleOpenFormProject('Phase')} role="button">
-											<ListItemText style={{ color: '#f50' }} primary="PHASE" />
-										</MenuItem>
-									</>
-								)}
-								// title="Action"
-							>
-								<Button
-									className="mt-8 sm:mt-0 max-w-sm md:max-w-lg h-26"
-									variant="contained"
-									color="primary"
+						<Popover
+							overlayStyle={{ zIndex: '19', display: formProject.open ? 'none' : '' }}
+							placement="rightTop"
+							content={() => (
+								<>
+									<MenuItem onClick={() => handleOpenFormProject('Task')} role="button">
+										<ListItemText style={{ color: '#108ee9' }} primary="TASK" />
+									</MenuItem>
+									<MenuItem onClick={() => handleOpenFormProject('Miltestone')} role="button">
+										<ListItemText style={{ color: '#87d068' }} primary="MILESTONE" />
+									</MenuItem>
+									<MenuItem onClick={() => handleOpenFormProject('Phase')} role="button">
+										<ListItemText style={{ color: '#f50' }} primary="PHASE" />
+									</MenuItem>
+								</>
+							)}
+						>
+							<Button className="mt-8 max-w-sm md:max-w-lg h-26" variant="contained" color="primary">
+								<svg
+									className="h-16 w-16"
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke="currentColor"
 								>
-									<svg
-										className="h-16 w-16"
-										xmlns="http://www.w3.org/2000/svg"
-										fill="none"
-										viewBox="0 0 24 24"
-										stroke="currentColor"
-									>
-										<path
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											strokeWidth={2}
-											d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-										/>
-									</svg>
-									Create
-								</Button>{' '}
-							</Popover>
-						</div>
+									<path
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										strokeWidth={2}
+										d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+									/>
+								</svg>
+								Create
+							</Button>{' '}
+						</Popover>
 						<Paper className="w-full sm:w-1/4 flex justify-between ">
 							<InputBase
 								onKeyPress={event => {

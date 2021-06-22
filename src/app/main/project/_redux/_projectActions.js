@@ -458,7 +458,7 @@ export const getTaskDetailAll = (params, owner, status, sector, search) => dispa
 			notificationConfig('warning', 'Warning', 'Server error');
 		});
 };
-export const addTaskActivity = (id, comment) => dispatch => {
+export const addTaskActivity = (id, comment, type) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const dataReq = {
 		taskID: id,
@@ -472,7 +472,11 @@ export const addTaskActivity = (id, comment) => dispatch => {
 			const { data } = res;
 			if (!data.isError) {
 				const dataRes = data.data;
-				dispatch(actions.addTaskActivity({ dataRes }));
+				if (type !== 'type') {
+					dispatch(actions.addTaskActivity({ dataRes }));
+				} else {
+					dispatch(actions.catchErros({ callType: callTypes.action }));
+				}
 			} else {
 				dispatch(actions.catchErros({ callType: callTypes.action }));
 				notificationConfig('warning', 'Warning', data.errorMessage);
