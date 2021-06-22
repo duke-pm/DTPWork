@@ -13,6 +13,7 @@ import FileCustomVersion2Eng from '@fuse/CustomForm/FileCustomVersion2Eng';
 import { FileExcelOutlined, FileImageOutlined, FileWordOutlined } from '@ant-design/icons';
 import SelectAntdCustomStatus from '@fuse/CustomForm/SelectAntdCustomStatus';
 import SelectAntdMulti from '@fuse/CustomForm/SelectAntdMulti';
+import SliderAntd from '@fuse/CustomForm/SliderAntd';
 
 const file = {
 	docx: <FileWordOutlined />,
@@ -167,8 +168,7 @@ export default function FormCustomProjectTask({
 											name="percentage"
 											width="58.8%"
 											readOnly={entitiesEdit && !entitiesEdit.isModified}
-											type="number"
-											component={AntInput}
+											component={SliderAntd}
 											position="right"
 											className="mx-4"
 										/>

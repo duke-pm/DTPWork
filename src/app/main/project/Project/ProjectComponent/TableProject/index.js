@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Badge, Dropdown, Table, Popover, Avatar, Menu, Tooltip, Slider, Progress } from 'antd';
+import { Badge, Dropdown, Table, Popover, Avatar, Menu, Tooltip, Progress } from 'antd';
 import React, { useContext, useState, useEffect } from 'react';
 import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
 import { MenuItem, ListItemIcon, Icon, ListItemText, Typography } from '@material-ui/core';
@@ -15,9 +15,6 @@ import * as actions from '../../../_redux/_projectActions';
 import { ProjectContext } from '../../ProjectContext';
 import { badgeStatus, typeColor, priorityColor, badgeText } from './ConfigTableProject';
 
-function formatter(value) {
-	return `${value}%`;
-}
 function TableProject(props) {
 	const dispatch = useDispatch();
 	const theme = useTheme();
@@ -57,34 +54,6 @@ function TableProject(props) {
 			title: type
 		});
 		dispatch(actions.setTaskEditProject(item));
-	};
-	const handleChangeSliderAfter = (item, value) => {
-		dispatch(actions.updatedTaskStatus(item, item.statusID, value)).then(data => {
-			if (data && !data.isError) {
-				notificationConfig(
-					'success',
-					notificationContent.content.en.success,
-					notificationContent.description.project.task.updateProcessingTask
-				);
-				const comment = `*TIẾN ĐỘ (%) được thay đổi từ ${item.percentage} ${
-					item.percentage > value ? 'xuống' : 'lên'
-				} ${value}`;
-				dispatch(actions.addTaskActivity(item.taskID, comment, 'type'));
-				dispatch(
-					actions.fetchProjectDetailFilter(
-						params.detail,
-						rowPage,
-						page,
-						ownerFilter,
-						status,
-						dateStart,
-						sector,
-						search
-					)
-				);
-				dispatch(actions.getTaskDetailAll(params.detail, ownerFilter, status, sector, search));
-			}
-		});
 	};
 	const updatedStatus = (item, statusTask) => {
 		dispatch(actions.updatedTaskStatus(item, statusTask)).then(data => {
