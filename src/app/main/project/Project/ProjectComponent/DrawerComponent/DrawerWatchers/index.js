@@ -38,7 +38,7 @@ export default function DrawerWatchers() {
 			)
 		},
 		{
-			title: 'User Name',
+			title: 'User name',
 			dataIndex: 'userName',
 			key: 'userName',
 			width: '2%'
@@ -66,7 +66,7 @@ export default function DrawerWatchers() {
 				>
 					<div className="text-sm font-medium text-black head-example "> View </div>
 					<div className="w-full flex-none text-sm font-normal text-gray-500">
-						List of users viewing my tasks{' '}
+						List of user viewing your tasks{' '}
 					</div>
 					<Button
 						onClick={handleTraffic}
