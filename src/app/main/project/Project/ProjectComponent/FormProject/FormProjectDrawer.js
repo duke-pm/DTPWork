@@ -153,16 +153,6 @@ export default function FormCustomProjectTask({
 								formProject.title !== 'New task' && (
 									<div className="grid grid-cols-1 sm:grid-cols-2 gap-16 ">
 										<Field
-											label="Percentage"
-											name="percentage"
-											width="58.8%"
-											readOnly={entitiesEdit && !entitiesEdit.isModified}
-											type="number"
-											component={AntInput}
-											position="right"
-											className="mx-4"
-										/>
-										<Field
 											label="Status"
 											name="status"
 											width="58.8%"
@@ -170,6 +160,16 @@ export default function FormCustomProjectTask({
 											position="right"
 											component={SelectAntdCustomStatus}
 											options={ArrProjectStatus}
+											className="mx-4"
+										/>
+										<Field
+											label="Percentage"
+											name="percentage"
+											width="58.8%"
+											readOnly={entitiesEdit && !entitiesEdit.isModified}
+											type="number"
+											component={AntInput}
+											position="right"
 											className="mx-4"
 										/>
 									</div>
