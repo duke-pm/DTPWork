@@ -79,7 +79,7 @@ export default function DrawerActivity() {
 			</div>
 			<Divider />
 			<div className="flex flex-row justify-between mt-16">
-				<TextArea value={comment} onChange={e => setComment(e.target.value)} placeholder="Comment" rows={5} />
+				<TextArea value={comment} onChange={e => setComment(e.target.value)} placeholder="Comment" rows={4} />
 			</div>
 			<div className="flex flex-row justify-end mt-8">
 				<Button onClick={submitComment} variant="contained" className="mr-1" color="primary">
