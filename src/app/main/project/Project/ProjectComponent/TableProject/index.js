@@ -63,8 +63,10 @@ function TableProject(props) {
 					notificationContent.content.en.success,
 					notificationContent.description.project.task.updateStatusTask
 				);
-				const comment = `*TRẠNG THÁI được thay đổi từ ${item.statusName} đến ${badgeText[statusTask]}`;
-				dispatch(actions.addTaskActivity(item.taskID, comment, 'type'));
+				if (item.statusID !== statusTask) {
+					const comment = `*TRẠNG THÁI được thay đổi từ ${item.statusName} đến ${badgeText[statusTask]}`;
+					dispatch(actions.addTaskActivity(item.taskID, comment, 'type'));
+				}
 				dispatch(
 					actions.fetchProjectDetailFilter(
 						params.detail,
@@ -236,9 +238,7 @@ function TableProject(props) {
 			dataIndex: 'status',
 			key: 'status',
 			width: '15%',
-			render: (_, item) => (
-				<Progress percent={item.percentage} strokeColor={typeColor[item.typeName]} status="active" />
-			)
+			render: (_, item) => <Progress percent={item.percentage} strokeColor={typeColor[item.typeName]} />
 		},
 		{
 			title: 'Priority',

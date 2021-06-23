@@ -6,7 +6,7 @@ export const notificationContent = {
 		},
 		en: {
 			success: 'Success',
-			faild: 'Fail'
+			faild: 'Faild'
 		}
 	},
 	description: {
@@ -51,7 +51,8 @@ export const notificationContent = {
 				createdTask: 'Created task success.',
 				deleteTask: 'Delete task success.',
 				updateStatusTask: 'Updated task success.',
-				updateProcessingTask: 'Updated processing success.'
+				updateProcessingTask: 'Updated processing success.',
+				updateFailDate: ' Cannot update date by because the status project was closed or reject'
 			}
 		}
 	}

@@ -10,12 +10,19 @@ import { IconButton } from '@material-ui/core';
 import Panigation from '@fuse/core/FusePanigate';
 import { Spin } from 'antd';
 import * as moment from 'moment';
+import { notificationConfig } from '@fuse/core/DtpConfig';
+import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import ActionHeaderProject from './ActionProjectComponent/ActionHeaderProject';
 import DrawerComponent from './DrawerComponent';
 import FormProjectDrawer from './FormProject';
 import TableProject from './TableProject';
 import { ProjectContext } from '../ProjectContext';
-import { fetchProjectDetailFilter, updatedGantt, getTaskDetailAll } from '../../_redux/_projectActions';
+import {
+	fetchProjectDetailFilter,
+	updatedGantt,
+	getTaskDetailAll,
+	addTaskActivity
+} from '../../_redux/_projectActions';
 
 export default function ProjectComponent({
 	owner,
@@ -61,27 +68,47 @@ export default function ProjectComponent({
 	const onHandleChangeDate = (task, start, end) => {
 		const data = [];
 		const { id } = task;
-		const newData = [
-			...data,
-			{ TaskID: id, StartDate: moment(start).format('YYYY-MM-DD'), EndDate: moment(end).format('YYYY-MM-DD') }
-		];
-		dispatch(updatedGantt(newData, params.detail)).then(data => {
-			if (data && !data.isError) {
-				dispatch(
-					fetchProjectDetailFilter(
-						params.detail,
-						rowPage,
-						page,
-						ownerFilter,
-						status,
-						dateStart,
-						sector,
-						search
-					)
-				);
-				dispatch(getTaskDetailAll(params.detail, ownerFilter, status, sector, search));
-			}
-		});
+		if (task.status !== 5 && task.status !== 7) {
+			const newData = [
+				...data,
+				{ TaskID: id, StartDate: moment(start).format('YYYY-MM-DD'), EndDate: moment(end).format('YYYY-MM-DD') }
+			];
+			dispatch(updatedGantt(newData, params.detail)).then(data => {
+				if (data && !data.isError) {
+					dispatch(
+						fetchProjectDetailFilter(
+							params.detail,
+							rowPage,
+							page,
+							ownerFilter,
+							status,
+							dateStart,
+							sector,
+							search
+						)
+					);
+					if (
+						task.start !== moment(start).format('YYYY-MM-DD') ||
+						task.end !== moment(end).format('YYYY-MM-DD')
+					) {
+						const comment = `*THỜI GIAN thay đổi từ ${moment(task.start).format('DD/MM/YYYY')} - ${moment(
+							task.end
+						).format('DD/MM/YYYY')} đến ${moment(start).format('DD/MM/YYYY')} - ${moment(end).format(
+							'DD/MM/YYYY'
+						)}`;
+						dispatch(addTaskActivity(task.id, comment, 'type'));
+					}
+					dispatch(getTaskDetailAll(params.detail, ownerFilter, status, sector, search));
+				}
+			});
+		} else {
+			notificationConfig(
+				'warning',
+				notificationContent.content.en.faild,
+				notificationContent.description.project.task.updateFailDate
+			);
+			dispatch(getTaskDetailAll(params.detail, ownerFilter, status, sector, search));
+		}
 	};
 	if (listLoading) {
 		return <FuseLoading />;
@@ -136,9 +163,7 @@ export default function ProjectComponent({
 							{gantt && entitiesGantt.length > 0 && (
 								<IconButton
 									onClick={handleCloseGantt}
-									edge="start"
-									color="inherit"
-									className="float-left"
+									className={classes.customHoverFocus}
 									aria-label="close"
 								>
 									<CloseIcon />

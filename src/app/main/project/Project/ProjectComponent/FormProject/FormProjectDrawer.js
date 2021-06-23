@@ -300,6 +300,7 @@ export default function FormCustomProjectTask({
 										<div>
 											{' '}
 											<IconButton
+												disabled={entitiesEdit && !entitiesEdit.isModified}
 												edge="start"
 												color="inherit"
 												onClick={handleClearFile}
@@ -326,6 +327,7 @@ export default function FormCustomProjectTask({
 										<div>
 											{' '}
 											<IconButton
+												disabled={entitiesEdit && !entitiesEdit.isModified}
 												edge="start"
 												color="inherit"
 												onClick={handleClearListFile}

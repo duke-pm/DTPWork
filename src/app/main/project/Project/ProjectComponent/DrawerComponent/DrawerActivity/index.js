@@ -32,7 +32,7 @@ export default function DrawerActivity() {
 	return (
 		<div className="flex flex-col">
 			<div style={{ height: classes.Acitivity }}>
-				<FuseScrollbars ref={chatRef} className="flex-col overflow-y-auto xl:max-h-640 max-h-400">
+				<FuseScrollbars ref={chatRef} className="flex-col overflow-y-auto xl:max-h-512 max-h-400">
 					<FuseAnimateGroup
 						enter={{
 							animation: 'transition.slideUpBigIn'
@@ -79,7 +79,7 @@ export default function DrawerActivity() {
 			</div>
 			<Divider />
 			<div className="flex flex-row justify-between mt-16">
-				<TextArea value={comment} onChange={e => setComment(e.target.value)} placeholder="Comment" rows={4} />
+				<TextArea value={comment} onChange={e => setComment(e.target.value)} placeholder="Comment" rows={5} />
 			</div>
 			<div className="flex flex-row justify-end mt-8">
 				<Button onClick={submitComment} variant="contained" className="mr-1" color="primary">

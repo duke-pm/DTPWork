@@ -288,7 +288,7 @@ export const createdTask = (values, prjID, taskType) => dispatch => {
 	formData.append('EndDate', moment(values.endDate).format('YYYY-MM-DD'));
 	formData.append('Owner', values.owner);
 	formData.append('Priority', values.priority);
-	formData.append('StatusID', values.status);
+	formData.append('StatusID', 1);
 	formData.append('SectorID', values.sectorID || 0);
 	formData.append('Grade', values.grade || 0);
 	formData.append('Author', values.author);
@@ -297,7 +297,7 @@ export const createdTask = (values, prjID, taskType) => dispatch => {
 	formData.append('OwnershipDTP', values.ownership);
 	formData.append('AttachFiles', values.file || '');
 	formData.append('Lang', 'en');
-	formData.append('Percentage', values.percentage);
+	formData.append('Percentage', 0);
 	formData.append('Version', values.version);
 	formData.append('LstUserInvited', values.userInvite.length > 0 ? values.userInvite.toString() : '');
 	return requestFrom

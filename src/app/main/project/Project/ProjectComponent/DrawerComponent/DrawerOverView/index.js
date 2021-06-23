@@ -53,8 +53,10 @@ export default function DrawerOverView({ closeVisible }) {
 					notificationContent.content.en.success,
 					notificationContent.description.project.task.updateStatusTask
 				);
-				const comment = `*TRẠNG THÁI được thay đổi từ ${entitiesView.detail.statusName} đến ${badgeText[type]}`;
-				dispatch(addTaskActivity(entitiesView.detail.taskID, comment));
+				if (entitiesView.detail.statusName !== type) {
+					const comment = `*TRẠNG THÁI được thay đổi từ ${entitiesView.detail.statusName} đến ${badgeText[type]}`;
+					dispatch(addTaskActivity(entitiesView.detail.taskID, comment));
+				}
 				dispatch(
 					fetchProjectDetailFilter(
 						params.detail,
@@ -75,19 +77,16 @@ export default function DrawerOverView({ closeVisible }) {
 	const handleChangeSliderAfter = value => {
 		dispatch(updatedTaskStatus(entitiesView.detail, entitiesView.detail.statusID, value)).then(data => {
 			if (data && !data.isError) {
-				setProcess(value);
+				// setProcess(value);
 				notificationConfig(
 					'success',
 					notificationContent.content.en.success,
 					notificationContent.description.project.task.updateProcessingTask
 				);
-				const comment = `${
-					entitiesView.detail.percentage === value
-						? `*TIẾN ĐỘ (${value}%)`
-						: `*TIẾN ĐỘ (%) được thay đổi từ ${entitiesView.detail.percentage} đến ${value}`
-				}`;
-				dispatch(addTaskActivity(entitiesView.detail.taskID, comment));
-				dispatch(getTaskViewDetail(entitiesView.detail.taskID));
+				if (entitiesView.detail.percentage !== value) {
+					const comment = `*TIẾN ĐỘ (%) được thay đổi từ ${entitiesView.detail.percentage} đến ${value}`;
+					dispatch(addTaskActivity(entitiesView.detail.taskID, comment));
+				}
 				dispatch(
 					fetchProjectDetailFilter(
 						params.detail,
@@ -101,6 +100,8 @@ export default function DrawerOverView({ closeVisible }) {
 					)
 				);
 				dispatch(getTaskDetailAll(params.detail, ownerFilter, status, sector, search));
+			} else {
+				dispatch(getTaskViewDetail(entitiesView.detail.taskID));
 			}
 		});
 	};
@@ -183,7 +184,7 @@ export default function DrawerOverView({ closeVisible }) {
 						<div className="flex flex-row ml-8">
 							<p className="text-base font-normal "> Progress </p>
 							<Slider
-								disabled={entitiesView ? !entitiesView.detail.isUpdated || process === 100 : true}
+								disabled={entitiesView ? !entitiesView.detail.isUpdated : true}
 								onChange={handleChangeSlider}
 								onAfterChange={handleChangeSliderAfter}
 								value={process}

@@ -8,6 +8,7 @@ import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import { ProjectContext } from '../../ProjectContext';
 import * as actions from '../../../_redux/_projectActions';
 import FormCustomProjectTask from './FormProjectDrawer';
+import { badgeText } from '../TableProject/ConfigTableProject';
 
 let initial = {
 	TaskID: '',
@@ -99,6 +100,20 @@ export default function FormProjectDrawer({
 							notificationContent.content.en.success,
 							notificationContent.description.project.task.updatedTask
 						);
+						let str = '';
+						if (entitiesEdit.statusID !== values.status)
+							str = `${str} *TRẠNG THÁI được thay đổi từ ${badgeText[entitiesEdit.statusID]} đến ${
+								badgeText[values.status]
+							}.`;
+						if (entitiesEdit.percentage !== values.percentage)
+							str = `${str} *TIẾN ĐỘ (%) được thay đổi từ ${entitiesEdit.percentage} đến ${values.percentage}.`;
+						if (values.startDate !== entitiesEdit.startDate || values.endDate !== entitiesEdit.endDate)
+							str = `${str} *THỜI GIAN được thay đổi từ ${moment(entitiesEdit.startDate).format(
+								'DD/MM/YYYYY'
+							)} - ${moment(entitiesEdit.endDate).format('DD/MM/YYYYY')} đến ${moment(
+								values.startDate
+							).format('DD/MM/YYYY')} - ${moment(values.endDate).format('DD/MM/YYYY')}.`;
+						if (str !== '') dispatch(actions.addTaskActivity(entitiesEdit.taskID, str, 'type'));
 						handleCloseFormProject();
 						dispatch(
 							actions.fetchProjectDetailFilter(
