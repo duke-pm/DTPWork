@@ -1,5 +1,5 @@
 /* eslint-disable no-shadow */
-import { notificationConfig } from '@fuse/core/DtpConfig';
+import { checkDeadline, notificationConfig } from '@fuse/core/DtpConfig';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import * as moment from 'moment';
 import * as requestFrom from './_projectCrud';
@@ -441,7 +441,14 @@ export const getTaskDetailAll = (params, owner, status, sector, search) => dispa
 							end: moment(curr.endDate).format('YYYY-MM-DD'),
 							progress: curr.percentage,
 							dependencies: curr.parentID === 0 ? '' : JSON.stringify(curr.parentID),
-							custom_class: curr.typeName,
+							custom_class:
+								checkDeadline(curr.endDate) > 0 &&
+								curr.statusID !== 5 &&
+								curr.statusID !== 6 &&
+								curr.statusID !== 7 &&
+								curr.typeName === 'TASK'
+									? 'DURATION'
+									: curr.typeName,
 							status: curr.statusID
 						}
 					],

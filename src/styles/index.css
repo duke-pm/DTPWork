@@ -35,7 +35,9 @@ html, body, #root {
     margin: 0;
     font-family: 'Poppins', '"Roboto"', 'Helvetica', 'sans-serif';
 }
-
+.ant-table-measure-row{
+    display: none;
+}
 h1, .h1 {
     font-size: 24px;
 }
@@ -81,6 +83,9 @@ a[role=button] {
 .PHASE .bar{
     fill: #f50 !important;
 }
+.DURATION .bar{
+    fill: #f5deab !important;
+}
 .PHASE .bar-progress{
     fill: #f0f7f7 !important;
     opacity: 0.5;
@@ -93,8 +98,18 @@ a[role=button] {
     fill: #f0f7f7 !important;
     opacity: 0.5;
 }
+.DURATION .bar-progress{
+    fill: #f0f7f7 !important;
+    opacity: 0.5;
+}
 .ant-table-thead > tr > th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
     background-color: none;
+}
+.table-row-light {
+    background-color: #ffffff;
+}
+.table-row-dark {
+    background-color: #fff7e6;
 }
 /* .gantt .bar-wrapper {
     pointer-events: none;

@@ -4,7 +4,13 @@
 /* eslint-disable no-unused-expressions */
 import { notification } from 'antd';
 import Cookies from 'js-cookie';
+import * as moment from 'moment';
 // notification
+
+export const checkDeadline = time => {
+	const deadline = moment().diff(time, 'days');
+	return deadline;
+};
 export const badgeStatusGobal = {
 	1: '#1890ff',
 	2: '#560bad',

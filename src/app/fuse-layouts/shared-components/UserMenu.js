@@ -23,7 +23,10 @@ function UserMenu(props) {
 	const userMenuClose = () => {
 		setUserMenu(null);
 	};
-	// const handleOpenForm = () => setFormChange(true);
+	const handleOpenForm = () => {
+		setUserMenu(null);
+		setFormChange(true);
+	};
 	const handlelogoutUser = () => {
 		dispatch(logoutUser());
 	};
@@ -48,8 +51,8 @@ function UserMenu(props) {
 					<Avatar className="md:mx-4">{user.data.displayName[0]}</Avatar>
 				)} */}
 			</Button>
-
 			<Popover
+				style={{ zIndex: 19 }}
 				open={Boolean(userMenu)}
 				anchorEl={userMenu}
 				onClose={userMenuClose}
@@ -72,12 +75,12 @@ function UserMenu(props) {
 						</ListItemIcon>
 						<ListItemText primary="Đăng xuất" />
 					</MenuItem>
-					{/* <MenuItem onClick={handleOpenForm} role="button">
+					<MenuItem onClick={handleOpenForm} role="button">
 						<ListItemIcon className="min-w-40">
 							<Icon>cached</Icon>
 						</ListItemIcon>
 						<ListItemText primary="Đổi mật khẩu" />
-					</MenuItem> */}
+					</MenuItem>
 				</>
 			</Popover>
 		</>

@@ -14,12 +14,17 @@ import { validateField } from '@fuse/core/DtpConfig';
 import { Spin } from 'antd';
 import { Link } from 'react-router-dom';
 import InputMaterialUi from '@fuse/CustomForm/InputMaterialUi';
-import CheckboxAntdCustom from '@fuse/CustomForm/CheckboxAntdCustom';
+
+// import Auth0LoginTab from './tabs/Auth0LoginTab';
+// import FirebaseLoginTab from './tabs/FirebaseLoginTab';
+// import JWTLoginTab from './tabs/JWTLoginTab';
 
 const useStyles = makeStyles(theme => ({
 	root: {
-		background: `linear-gradient(to bottom, #0F2027 0%, #203A43 50%, #2C5364 100% )`,
-		// backgroundColor: '#f0f0f0',
+		background: `linear-gradient(to left, ${theme.palette.primary.dark} 0%, ${darken(
+			theme.palette.primary.dark,
+			0.5
+		)} 100%)`,
 		color: theme.palette.primary.contrastText
 	},
 	leftSection: {},
@@ -35,7 +40,7 @@ const initialState = {
 	email: '',
 	password: ''
 };
-function Login() {
+function ChangePass() {
 	const [confirmLoading, setConfirmLoading] = useState(false);
 	const checkValidateForm = Yup.object().shape({
 		email: Yup.string().required(`${validateField}`),
@@ -66,15 +71,18 @@ function Login() {
 					<Card
 						className={clsx(
 							classes.leftSection,
-							'flex flex-col w-full max-w-md items-center justify-center '
+							'flex flex-col w-full max-w-sm items-center justify-center shadow-0'
 						)}
 						square
 					>
 						<CardContent className="flex flex-col items-center justify-center w-full py-80 max-w-320">
 							<FuseAnimate delay={300}>
-								<div className="flex items-center mb-32">
+								<div className="flex items-center">
 									<img className="logo-icon w-96" src="assets/images/logo_DTP-01.png" alt="logo" />
 								</div>
+							</FuseAnimate>
+							<FuseAnimate delay={500}>
+								<h3 className="mt-8 mb-32">Reset your password.</h3>
 							</FuseAnimate>
 							<div className="w-full">
 								<Formik
@@ -88,38 +96,31 @@ function Login() {
 									{({ handleSubmit, isSubmitting }) => (
 										<Form>
 											<Field
-												label="User"
+												label="Email"
 												name="email"
 												component={InputMaterialUi}
 												type="text"
 												hasFeedback
 											/>
 											<Field
-												name="password"
 												label="Password"
+												name="password"
 												component={InputMaterialUi}
 												type="password"
 												hasFeedback
 											/>
-											<div className="flex flex-row justify-between ">
-												<Field
-													name="rember"
-													labelAligh="right"
-													position="right"
-													label="Remember Me"
-													component={CheckboxAntdCustom}
-												/>
-												<Link
-													to="/forgotPassword"
-													style={{
-														textDecoration: 'none',
-														color: '#40a9ff'
-													}}
-													className="mt-8 mb-8"
-												>
-													Forgot password?
-												</Link>
-											</div>
+											<Field
+												label="Password (Confirm)"
+												name="passwordConfirm"
+												component={InputMaterialUi}
+												type="password"
+												hasFeedback
+											/>
+											{login.error && (
+												<FuseAnimate delay={300}>
+													<p className="text-red"> {login.error} </p>
+												</FuseAnimate>
+											)}
 											{confirmLoading ? (
 												<Spin className="w-full mx-auto" />
 											) : (
@@ -129,7 +130,7 @@ function Login() {
 													color="primary"
 													className="w-full mx-auto mt-16"
 												>
-													Login
+													Reset my password
 												</Button>
 											)}
 										</Form>
@@ -137,6 +138,15 @@ function Login() {
 								</Formik>
 							</div>
 						</CardContent>
+						<div className="flex flex-col items-center justify-center pb-32">
+							<Link
+								style={{ textDecoration: 'none', color: '#40a9ff' }}
+								className="font-medium mt-8"
+								to="/login"
+							>
+								Go back to login
+							</Link>
+						</div>
 					</Card>
 				</div>
 			</FuseAnimate>
@@ -144,4 +154,4 @@ function Login() {
 	);
 }
 
-export default Login;
+export default ChangePass;

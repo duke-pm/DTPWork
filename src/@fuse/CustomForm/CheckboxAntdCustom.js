@@ -1,11 +1,21 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
-import { FormGroup } from '@material-ui/core';
+import { FormGroup, makeStyles } from '@material-ui/core';
 import { Form, Checkbox } from 'antd';
 
 const FormItem = Form.Item;
 
-export default function CheckboxAntd({
+const useStyles = makeStyles(theme => ({
+	spanLabel: {
+		width: '11rem',
+		marginLeft: '16px'
+	},
+	hasFeedback: {
+		marginBottom: '20px'
+	}
+}));
+
+export default function CheckboxAntdCustom({
 	field, // { name, value, onChange, onBlur }
 	form, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
 	label,
@@ -14,6 +24,7 @@ export default function CheckboxAntd({
 	handleChangeState,
 	readOnly,
 	options,
+	position,
 	labelAligh,
 	hasFeedback,
 	top,
@@ -21,6 +32,7 @@ export default function CheckboxAntd({
 	submitCount,
 	...props
 }) {
+	const classes = useStyles();
 	const touched = form.touched[field.name];
 	const submitted = submitCount > 0;
 	const hasError = form.errors[field.name];
@@ -32,9 +44,17 @@ export default function CheckboxAntd({
 	};
 	return (
 		<>
-			<FormGroup>
+			<div className={`${position === 'right' ? 'flex flex-row-reverse ' : 'flex flex-row  justify-between'}`}>
+				<div className={`flex flex-row ${position && 'mt-8'}`}>
+					<span className={classes.spanLabel}> {label} </span>
+					{hasFeedback && (
+						<p style={{ marginBottom: '-20px' }} className="text-red ml-8">
+							{' '}
+							(*){' '}
+						</p>
+					)}
+				</div>{' '}
 				<FormItem
-					label={label}
 					style={{ width: '100%', marginTop: top || '0px' }}
 					rules={[{ required: true }]}
 					hasFeedback={!!((hasFeedback && submitted) || (hasFeedback && touched))}
@@ -43,7 +63,7 @@ export default function CheckboxAntd({
 				>
 					<Checkbox className={readOnly ? 'readOnly' : ''} defaultChecked={value} onChange={onChange} />
 				</FormItem>
-			</FormGroup>
+			</div>
 		</>
 	);
 }

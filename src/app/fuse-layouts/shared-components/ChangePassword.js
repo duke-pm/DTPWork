@@ -1,6 +1,7 @@
 import { AppBar, Dialog, IconButton, Toolbar, Typography } from '@material-ui/core';
 import React from 'react';
 import CloseIcon from '@material-ui/icons/Close';
+import ChangePassworForm from './ChangePassworForm';
 
 export default function ChangePassword({ formChange, setFormChange }) {
 	const handleClose = () => setFormChange(false);
@@ -18,10 +19,11 @@ export default function ChangePassword({ formChange, setFormChange }) {
 						<CloseIcon />
 					</IconButton>
 					<Typography variant="subtitle1" color="inherit">
-						Đổi mật khẩu
+						Reset your password
 					</Typography>
 				</Toolbar>
 			</AppBar>
+			<ChangePassworForm />
 		</Dialog>
 	);
 }

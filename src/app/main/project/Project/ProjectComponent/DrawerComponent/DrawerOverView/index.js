@@ -14,7 +14,7 @@ import {
 	addTaskActivity,
 	getTaskViewDetail
 } from 'app/main/project/_redux/_projectActions';
-import { checkFile, nameFile, notificationConfig, URL } from '@fuse/core/DtpConfig';
+import { checkDeadline, checkFile, nameFile, notificationConfig, URL } from '@fuse/core/DtpConfig';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { useParams } from 'react-router';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
@@ -121,7 +121,7 @@ export default function DrawerOverView({ closeVisible }) {
 				<div className="flex flex-row">
 					<p>
 						{' '}
-						Created by {entitiesView?.detail.author}. Last updated on{' '}
+						Created by {entitiesView?.detail.crtdUser}. Last updated on{' '}
 						{moment(entitiesView?.detail.lUpdDate).format('DD/MM/YYYY')}{' '}
 					</p>
 				</div>
@@ -263,6 +263,22 @@ export default function DrawerOverView({ closeVisible }) {
 							</div>
 						</div>
 					</div>
+					{checkDeadline(entitiesView?.detail.endDate) > 0 &&
+						entitiesView?.detail.statusID !== 5 &&
+						entitiesView?.detail.statusID !== 6 &&
+						entitiesView?.detail.statusID !== 7 &&
+						entitiesView?.detail.typeName === 'TASK' && (
+							<div className="flex flex-row justify-between">
+								<div className="flex flex-row">
+									<p className="text-base font-normal" style={{ width: '126px' }}>
+										Deadline
+									</p>
+									<p className="text-base font-normal text-red-500 ml-56 ">
+										Expired {checkDeadline(entitiesView?.detail.endDate)} days
+									</p>
+								</div>
+							</div>
+						)}
 				</div>
 				<div className="flex flex-col">
 					<p className="font-extrabold">DETAIL</p>

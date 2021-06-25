@@ -7,7 +7,7 @@ import AppsIcon from '@material-ui/icons/Apps';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { withRouter } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { notificationConfig } from '@fuse/core/DtpConfig';
+import { checkDeadline, notificationConfig } from '@fuse/core/DtpConfig';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
@@ -292,6 +292,15 @@ function TableProject(props) {
 				rowKey="taskID"
 				childrenColumnName="lstTaskItem"
 				className="virtual-table"
+				rowClassName={record =>
+					checkDeadline(record.endDate) > 0 &&
+					record.statusID !== 5 &&
+					record.statusID !== 6 &&
+					record.statusID !== 7 &&
+					record.typeName === 'TASK'
+						? 'table-row-dark'
+						: 'table-row-light'
+				}
 				onExpandedRowsChange={onSelectedRowKeysChange}
 				expandedRowKeys={selectedRowKeys}
 				expandable={{

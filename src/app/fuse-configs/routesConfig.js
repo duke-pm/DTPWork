@@ -14,9 +14,15 @@ import listRoleSettingConfig from 'app/main/govern/ListRoleMenuSetting/listRoleS
 import ProjectConfig from 'app/main/project/ProjectConfig';
 import HomeConfig from 'app/main/Home/HomeConfig';
 import Error404PageConfig from 'app/main/error/404/Error404PageConfig';
+import ForgotPassConfig from 'app/main/forgotPassword/ForgotPassConfig';
+import ChangePassConfig from 'app/main/changePassword/ChangePassConfig';
+import ConfimPassConfig from 'app/main/Confirm/ConfimPassConfig';
 
 const routeConfigs = [
 	PossesionConfig,
+	ForgotPassConfig,
+	ChangePassConfig,
+	ConfimPassConfig,
 	LoginConfig,
 	CheckConfig,
 	RequestConfig,

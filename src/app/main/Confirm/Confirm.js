@@ -6,15 +6,14 @@ import { darken } from '@material-ui/core/styles/colorManipulator';
 import * as Yup from 'yup';
 import clsx from 'clsx';
 import React, { useState } from 'react';
-import { Button } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { submitLogin } from 'app/auth/store/loginSlice';
-import { Formik, Form, Field } from 'formik';
 import { validateField } from '@fuse/core/DtpConfig';
-import { Spin } from 'antd';
 import { Link } from 'react-router-dom';
-import InputMaterialUi from '@fuse/CustomForm/InputMaterialUi';
-import CheckboxAntdCustom from '@fuse/CustomForm/CheckboxAntdCustom';
+
+// import Auth0LoginTab from './tabs/Auth0LoginTab';
+// import FirebaseLoginTab from './tabs/FirebaseLoginTab';
+// import JWTLoginTab from './tabs/JWTLoginTab';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -35,7 +34,7 @@ const initialState = {
 	email: '',
 	password: ''
 };
-function Login() {
+function Confirm() {
 	const [confirmLoading, setConfirmLoading] = useState(false);
 	const checkValidateForm = Yup.object().shape({
 		email: Yup.string().required(`${validateField}`),
@@ -66,77 +65,42 @@ function Login() {
 					<Card
 						className={clsx(
 							classes.leftSection,
-							'flex flex-col w-full max-w-md items-center justify-center '
+							'flex flex-col w-full max-w-sm items-center justify-center shadow-0'
 						)}
 						square
 					>
 						<CardContent className="flex flex-col items-center justify-center w-full py-80 max-w-320">
 							<FuseAnimate delay={300}>
-								<div className="flex items-center mb-32">
-									<img className="logo-icon w-96" src="assets/images/logo_DTP-01.png" alt="logo" />
+								<div className="flex items-center">
+									<img className="logo-icon w-96" src="assets/email.png" alt="logo" />
 								</div>
 							</FuseAnimate>
-							<div className="w-full">
-								<Formik
-									enableReinitialize
-									validationSchema={checkValidateForm}
-									initialValues={initialState}
-									onSubmit={values => {
-										handleSubmitForm(values);
-									}}
-								>
-									{({ handleSubmit, isSubmitting }) => (
-										<Form>
-											<Field
-												label="User"
-												name="email"
-												component={InputMaterialUi}
-												type="text"
-												hasFeedback
-											/>
-											<Field
-												name="password"
-												label="Password"
-												component={InputMaterialUi}
-												type="password"
-												hasFeedback
-											/>
-											<div className="flex flex-row justify-between ">
-												<Field
-													name="rember"
-													labelAligh="right"
-													position="right"
-													label="Remember Me"
-													component={CheckboxAntdCustom}
-												/>
-												<Link
-													to="/forgotPassword"
-													style={{
-														textDecoration: 'none',
-														color: '#40a9ff'
-													}}
-													className="mt-8 mb-8"
-												>
-													Forgot password?
-												</Link>
-											</div>
-											{confirmLoading ? (
-												<Spin className="w-full mx-auto" />
-											) : (
-												<Button
-													type="submit"
-													variant="contained"
-													color="primary"
-													className="w-full mx-auto mt-16"
-												>
-													Login
-												</Button>
-											)}
-										</Form>
-									)}
-								</Formik>
+							<FuseAnimate delay={500}>
+								<h3 className="mt-8 mb-32">Xác nhận địa chỉ email của bạn.</h3>
+							</FuseAnimate>
+							<div className="w-full m-0">
+								<div className="flex flex-col items-center">
+									<p className="text-gray-400"> Một email xác nhận đã gửi đến.</p>
+									<p> Chaulinh.se.it@gmail.com</p>
+								</div>
+								<div className="flex flex-col items-center">
+									<p className="text-gray-400 text-center">
+										{' '}
+										Kiểm tra hộp thư đến của bạn và nhấp vào liên kết "Xác nhận email của tôi" để
+										xác nhận địa chỉ email của bạn.
+									</p>
+								</div>
 							</div>
 						</CardContent>
+						<div className="flex flex-col items-center justify-center pb-32">
+							<Link
+								style={{ textDecoration: 'none', color: '#40a9ff' }}
+								className="font-medium mt-8"
+								to="/login"
+							>
+								Quay lại đăng nhập
+							</Link>
+						</div>
 					</Card>
 				</div>
 			</FuseAnimate>
@@ -144,4 +108,4 @@ function Login() {
 	);
 }
 
-export default Login;
+export default Confirm;
