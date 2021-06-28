@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Table } from 'antd';
+import { Avatar, Checkbox, Table } from 'antd';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { sliceString } from '@fuse/core/DtpConfig';
 import { Button } from '@material-ui/core';
@@ -14,6 +14,9 @@ export default function DrawerWatchers() {
 	const { entitiesView } = currentState;
 	const handleTraffic = () => {
 		dispatch(addTaskWatcher(entitiesView.detail.taskID));
+	};
+	const onChange = e => {
+		console.log(e.target.checked);
 	};
 	const columns = [
 		{
@@ -68,16 +71,25 @@ export default function DrawerWatchers() {
 					<div className="w-full flex-none text-sm font-normal text-gray-500">
 						List of user viewing your tasks{' '}
 					</div>
-					<Button
-						onClick={handleTraffic}
-						type="submit"
-						style={{ width: '10rem' }}
-						className="h-26 font-sans mt-8"
-						variant="contained"
-						color="primary"
-					>
-						<VisibilityIcon />
-					</Button>
+					<div className="flex flex-row">
+						<Button
+							onClick={handleTraffic}
+							type="submit"
+							style={{ width: '10rem' }}
+							className="h-26 font-sans mt-8"
+							variant="contained"
+							color="primary"
+						>
+							<VisibilityIcon />
+						</Button>
+						<div className="ml-8 mt-16">
+							<Checkbox onChange={onChange}>
+								<p style={{ fontWeight: 'bold', color: '#006565' }}>
+									Recieve email notifications when members about changes{' '}
+								</p>
+							</Checkbox>
+						</div>
+					</div>
 				</FuseAnimateGroup>
 			</div>
 			<div className="mt-16">

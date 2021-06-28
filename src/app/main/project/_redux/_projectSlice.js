@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { cloneDeep } from 'lodash';
 
 const inititalState = {
 	listLoading: false,
@@ -9,6 +10,7 @@ const inititalState = {
 	entitiesDetail: [],
 	entitiesGantt: [],
 	entitiesView: null,
+	entitiesActivity: [],
 	total_count: 0,
 	total_item: null,
 	lastErrors: false
@@ -99,9 +101,40 @@ export const projectSlice = createSlice({
 			state.actionLoading = false;
 			state.entitiesView = dataRes;
 		},
+		entitiesActivity: (state, action) => {
+			const { dataActivity } = action.payload;
+			const groupDate = dataActivity.reduce((groups, game) => {
+				const date = game.timeUpdate.split('-')[0];
+				if (!groups[date]) {
+					groups[date] = [];
+				}
+				groups[date].push(game);
+				return groups;
+			}, {});
+			const groupArrays = Object.keys(groupDate).map(date => {
+				return {
+					date,
+					data: groupDate[date]
+				};
+			});
+			state.entitiesActivity = groupArrays;
+		},
 		addTaskActivity: (state, action) => {
 			const { dataRes } = action.payload;
 			state.actionLoading = false;
+			const { entitiesActivity } = state;
+			// Case updateData important
+			const findIndex = entitiesActivity.findIndex(item => item.date === dataRes.timeUpdate.split('-')[0]);
+			if (findIndex !== -1) {
+				const newData = cloneDeep(entitiesActivity);
+				const objectNew = newData[findIndex];
+				objectNew.data.push(dataRes);
+				newData.splice(findIndex, 1, objectNew);
+				state.entitiesActivity = newData;
+			} else {
+				const dataNew = { date: dataRes.timeUpdate.split('-')[0], data: [dataRes] };
+				state.entitiesActivity = [...entitiesActivity, dataNew];
+			}
 			const { activities } = state.entitiesView;
 			const newData = [...activities, dataRes];
 			state.entitiesView.activities = newData;

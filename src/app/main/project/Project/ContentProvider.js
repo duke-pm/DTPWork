@@ -37,8 +37,8 @@ export default function ContentProvider() {
 	}, [dispatch]);
 	useEffect(() => {
 		dispatch(fetchOwner()).then(data => {
-			if (!data.isError) {
-				const ownerArr = data.data.reduce(
+			if (data && !data.isError) {
+				const ownerArr = data?.data.reduce(
 					(arr, curr) => [...arr, { label: curr.empName, value: curr.empID }],
 					[]
 				);

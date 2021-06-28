@@ -21,7 +21,7 @@ export default function ProjectPage() {
 	useEffect(() => {
 		dispatch(actions.fetchOwner()).then(data => {
 			if (!data?.isError) {
-				const ownerArr = data.data.reduce(
+				const ownerArr = data?.data.reduce(
 					(arr, curr) => [...arr, { label: curr.empName, value: curr.empID }],
 					[]
 				);

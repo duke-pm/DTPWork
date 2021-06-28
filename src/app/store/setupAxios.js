@@ -1,6 +1,7 @@
-import { getToken, removeCookies, removeLocalStorage } from '@fuse/core/DtpConfig';
+import { getToken, notificationConfig, removeCookies, removeLocalStorage } from '@fuse/core/DtpConfig';
 import axios from 'axios';
 import history from '@history';
+import { notification } from 'antd';
 
 const baseUrl = process.env.REACT_APP_API_URL;
 const request = axios.create({

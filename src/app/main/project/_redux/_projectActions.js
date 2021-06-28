@@ -401,7 +401,9 @@ export const getTaskViewDetail = params => dispatch => {
 			const { data } = res;
 			if (!data.isError) {
 				const dataRes = data.data;
+				const dataActivity = data.data.activities;
 				dispatch(actions.fetchTaskView({ dataRes }));
+				dispatch(actions.entitiesActivity({ dataActivity }));
 			} else {
 				dispatch(actions.catchErros({ callType: callTypes.action }));
 				notificationConfig('warning', 'Warning', data.errorMessage);

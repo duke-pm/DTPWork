@@ -1,11 +1,12 @@
-import { Button, Divider } from '@material-ui/core';
-import { Avatar, Input, Empty } from 'antd';
+import { Button } from '@material-ui/core';
+import { Avatar, Input, Empty, Divider } from 'antd';
 import React, { useState, useRef, useEffect } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
-import { sliceString } from '@fuse/core/DtpConfig';
+import { formatDate, sliceString } from '@fuse/core/DtpConfig';
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import FuseScrollbars from '@fuse/core/FuseScrollbars';
 import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
+import * as moment from 'moment';
 import { addTaskActivity } from '../../../../_redux/_projectActions';
 
 const { TextArea } = Input;
@@ -13,7 +14,7 @@ const { TextArea } = Input;
 export default function DrawerActivity() {
 	const dispatch = useDispatch();
 	const { currentState } = useSelector(state => ({ currentState: state.project }), shallowEqual);
-	const { entitiesView } = currentState;
+	const { entitiesActivity, entitiesView } = currentState;
 	const chatRef = useRef(null);
 	const [comment, setComment] = useState('');
 	const submitComment = () => {
@@ -22,10 +23,10 @@ export default function DrawerActivity() {
 	};
 	const classes = DtpCustomStyles();
 	useEffect(() => {
-		if (entitiesView.activities) {
+		if (entitiesActivity?.length > 0) {
 			scrollToBottom();
 		}
-	}, [entitiesView.activities]);
+	}, [entitiesActivity]);
 	function scrollToBottom() {
 		chatRef.current.scrollTop = chatRef.current.scrollHeight;
 	}
@@ -38,39 +39,46 @@ export default function DrawerActivity() {
 							animation: 'transition.slideUpBigIn'
 						}}
 					>
-						{entitiesView &&
-							entitiesView.activities.map(item => (
-								<div key={item.lineNum} className="flex flex-col">
-									<div className="flex flex-row justify-between">
-										<div className="flex flex-row">
-											<Avatar
-												style={{
-													backgroundColor: '#87d068',
-													verticalAlign: 'middle',
-													marginTop: 5
-												}}
-												size="large"
-											>
-												<p className="uppercase"> {sliceString(item.userName)}</p>
-											</Avatar>
-											<div className="flex flex-col ml-8">
-												<div className="w-full flex-none text-sm font-medium text-black ">
-													{' '}
-													{item.fullName}{' '}
-												</div>
-												<div className="w-full flex-none text-sm font-normal text-gray-500">
-													{' '}
-													Updated on {item.timeUpdate}{' '}
+						{entitiesActivity?.map(item => (
+							<div className="flex flex-col">
+								{' '}
+								<Divider>
+									{moment(item.date, 'DD/MM/YYYY - HH:mm').format('dddd - DD/MM/YYYY')}
+								</Divider>{' '}
+								{item?.data.map(it => (
+									<div key={it.lineNum} className="flex flex-col">
+										<div className="flex flex-row justify-between">
+											<div className="flex flex-row">
+												<Avatar
+													style={{
+														backgroundColor: '#87d068',
+														verticalAlign: 'middle',
+														marginTop: 5
+													}}
+													size="large"
+												>
+													<p className="uppercase"> {sliceString(it.userName)}</p>
+												</Avatar>
+												<div className="flex flex-col ml-8">
+													<div className="w-full flex-none text-sm font-medium text-black ">
+														{' '}
+														{it.fullName}{' '}
+													</div>
+													<div className="w-full flex-none text-sm font-normal text-gray-500">
+														{' '}
+														Updated on {it.timeUpdate.split('-')[1]}{' '}
+													</div>
 												</div>
 											</div>
+											<div className="font-medium flex-none"> #{it.rowNum}</div>
 										</div>
-										<div className="font-medium flex-none"> #{item.rowNum}</div>
+										<div className="mt-8" style={{ marginLeft: '4.8rem' }}>
+											<p className="text-sm font-light">{it.comments}</p>
+										</div>
 									</div>
-									<div className="mt-8" style={{ marginLeft: '4.8rem' }}>
-										<p className="text-sm font-light">{item.comments}</p>
-									</div>
-								</div>
-							))}
+								))}
+							</div>
+						))}
 					</FuseAnimateGroup>
 					{entitiesView && entitiesView.activities.length === 0 ? (
 						<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
