@@ -70,11 +70,14 @@ function Login() {
 						)}
 						square
 					>
-						<CardContent className="flex flex-col items-center justify-center w-full py-80 max-w-320">
+						<CardContent className="flex flex-col items-center justify-center w-full py-60 max-w-320">
 							<FuseAnimate delay={300}>
 								<div className="flex items-center mb-32">
 									<img className="logo-icon w-96" src="assets/images/logo_DTP-01.png" alt="logo" />
 								</div>
+							</FuseAnimate>
+							<FuseAnimate delay={500}>
+								<h2 className="mt-8 mb-32">Login to your account</h2>
 							</FuseAnimate>
 							<div className="w-full">
 								<Formik
@@ -88,7 +91,7 @@ function Login() {
 									{({ handleSubmit, isSubmitting }) => (
 										<Form>
 											<Field
-												label="User"
+												label="User name"
 												name="email"
 												component={InputMaterialUi}
 												type="text"
