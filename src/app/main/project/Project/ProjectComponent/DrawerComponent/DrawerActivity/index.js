@@ -2,7 +2,7 @@ import { Button } from '@material-ui/core';
 import { Avatar, Input, Empty, Divider } from 'antd';
 import React, { useState, useRef, useEffect } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
-import { formatDate, sliceString } from '@fuse/core/DtpConfig';
+import { sliceString } from '@fuse/core/DtpConfig';
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import FuseScrollbars from '@fuse/core/FuseScrollbars';
 import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';

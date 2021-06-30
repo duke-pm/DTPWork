@@ -121,8 +121,8 @@ export default function DrawerOverView({ closeVisible }) {
 				<div className="flex flex-row">
 					<p>
 						{' '}
-						Created by {entitiesView?.detail.crtdUser}. Last updated on{' '}
-						{moment(entitiesView?.detail.lUpdDate).format('DD/MM/YYYY')}{' '}
+						Created by <span style={{ fontWeight: 'bold' }}>{entitiesView?.detail.crtdUser}</span>. Last
+						updated on {moment(entitiesView?.detail.lUpdDate).format('DD/MM/YYYY')}{' '}
 					</p>
 				</div>
 				<div className="flex flex-row">

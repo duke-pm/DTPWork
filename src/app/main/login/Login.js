@@ -47,7 +47,7 @@ function Login() {
 	function handleSubmitForm(values) {
 		setConfirmLoading(true);
 		dispatch(submitLogin(values)).then(user => {
-			if (user && user.access_token) {
+			if (user?.access_token) {
 				setConfirmLoading(false);
 			} else {
 				setConfirmLoading(false);

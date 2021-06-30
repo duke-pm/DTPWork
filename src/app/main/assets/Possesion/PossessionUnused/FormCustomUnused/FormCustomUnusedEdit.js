@@ -2,8 +2,6 @@
 import React, { useState } from 'react';
 import { DialogContent, DialogActions, Button } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
-// import Select from '@fuse/CustomForm/Select';
-// import InputCustom from '@fuse/CustomForm/Input';
 import DateCustom from '@fuse/CustomForm/Date';
 import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
 import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
@@ -13,7 +11,6 @@ import { Spin } from 'antd';
 import SelectAntd from '@fuse/CustomForm/SelectAntd';
 import { checkValidateForm } from '../ConfigPossessionUnused';
 import ContentForm from './ContentForm';
-// import SelectAntd from '@fuse/CustomForm/SelectAntd';
 
 export default function FormCustomUnusedEdit({
 	entitiesEdit,

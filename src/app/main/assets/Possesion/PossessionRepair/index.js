@@ -81,7 +81,7 @@ export default function PossessionRepair(props) {
 						<TableContainer className={`${classes.TableContainer} flex flex-1`}>
 							<Paper className={classes.rootPaper}>
 								<Table
-									className={entities && entities.length === 0 ? classes.tableNodata : classes.table}
+									className={entities?.length === 0 ? classes.tableNodata : classes.table}
 									stickyHeader
 								>
 									<TableHeaderRepair createSortHandler={createSortHandler} sort={sort} />
