@@ -40,7 +40,7 @@ export default function DrawerActivity() {
 						}}
 					>
 						{entitiesActivity?.map(item => (
-							<div className="flex flex-col">
+							<div key={item.date} className="flex flex-col">
 								{' '}
 								<Divider>
 									{moment(item.date, 'DD/MM/YYYY - HH:mm').format('dddd - DD/MM/YYYY')}

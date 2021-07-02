@@ -31,7 +31,7 @@ const App = () => {
 		>
 			<StylesProvider jss={jss} generateClassName={generateClassName}>
 				<Provider store={store}>
-					<Auth>
+					<Auth history={history}>
 						<MuiPickersUtilsProvider utils={MomentUtils}>
 							<Router history={history}>
 								<FuseAuthorization>

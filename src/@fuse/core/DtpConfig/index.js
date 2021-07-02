@@ -67,6 +67,7 @@ export const nameFile = url => {
 	return file;
 };
 export const validateField = 'Nội dung bắt buộc không được để trống.';
+export const validateFieldEN = 'Please fill in the field.';
 export function findIndexMultiple(id, newData, arr) {
 	arr.forEach((d, i) => {
 		if (d.menuID === id) {

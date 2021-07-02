@@ -18,6 +18,7 @@ import { checkDeadline, checkFile, nameFile, notificationConfig, URL } from '@fu
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { useParams } from 'react-router';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import { badgeStatus, badgeText, grade, priorityColor } from '../../TableProject/ConfigTableProject';
 import { ProjectContext } from '../../../ProjectContext';
 
@@ -36,7 +37,7 @@ export default function DrawerOverView({ closeVisible }) {
 	const params = useParams();
 	const [process, setProcess] = useState(0);
 	const { currentState } = useSelector(state => ({ currentState: state.project }), shallowEqual);
-	const { entitiesView } = currentState;
+	const { entitiesView, isWatcherOverView } = currentState;
 	const projectContext = useContext(ProjectContext);
 	const { rowPage, page, ownerFilter, status, dateStart, sector, search } = projectContext;
 	useEffect(() => {
@@ -106,7 +107,7 @@ export default function DrawerOverView({ closeVisible }) {
 		});
 	};
 	const handleTraffic = () => {
-		dispatch(addTaskWatcher(entitiesView.detail.taskID));
+		dispatch(addTaskWatcher(entitiesView.detail.taskID, isWatcherOverView, false, 'watcher'));
 	};
 	return (
 		<FuseAnimate animation="transition.slideUpBigIn" delay={300}>
@@ -196,13 +197,13 @@ export default function DrawerOverView({ closeVisible }) {
 					<Button
 						onClick={handleTraffic}
 						type="submit"
-						style={{ width: '10rem' }}
+						style={{ width: '15rem' }}
 						className="h-26 font-sans mb-16 "
 						variant="contained"
 						color="primary"
-						startIcon={<VisibilityIcon />}
+						startIcon={!isWatcherOverView ? <VisibilityIcon /> : <VisibilityOffIcon />}
 					>
-						Watches
+						{!isWatcherOverView ? 'Watches' : 'UnWatches'}
 					</Button>
 				</div>
 				<div className="flex flex-col">

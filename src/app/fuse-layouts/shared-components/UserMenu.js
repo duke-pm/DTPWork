@@ -9,12 +9,13 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { logoutUser } from 'app/auth/store/userSlice';
 import { getDataUserLocalStorage } from '@fuse/core/DtpConfig';
-import ChangePassword from './ChangePassword';
+import { useHistory } from 'react-router';
 
 function UserMenu(props) {
+	const history = useHistory();
 	const dispatch = useDispatch();
 	const [userMenu, setUserMenu] = useState(null);
-	const [formChange, setFormChange] = useState(false);
+	// const [formChange, setFormChange] = useState(false);
 	const dataUser = getDataUserLocalStorage();
 	const userMenuClick = event => {
 		setUserMenu(event.currentTarget);
@@ -24,15 +25,16 @@ function UserMenu(props) {
 		setUserMenu(null);
 	};
 	const handleOpenForm = () => {
-		setUserMenu(null);
-		setFormChange(true);
+		// setUserMenu(null);
+		// setFormChange(true);
+		history.push('/thong-tin-nguoi-dung');
 	};
 	const handlelogoutUser = () => {
 		dispatch(logoutUser());
 	};
 	return (
 		<>
-			<ChangePassword formChange={formChange} setFormChange={setFormChange} />
+			{/* <ChangePassword formChange={formChange} setFormChange={setFormChange} /> */}
 			<Button className="min-h-40 min-w-40 px-0 md:px-16 py-0 md:py-6" onClick={userMenuClick}>
 				<div className="hidden md:flex flex-col mx-4 items-end">
 					<Typography component="span" className="font-bold flex">

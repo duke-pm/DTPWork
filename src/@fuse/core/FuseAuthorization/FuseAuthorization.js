@@ -57,7 +57,6 @@ class FuseAuthorization extends Component {
         Redirect to Login Page
         */
 		if (!role || !token) {
-			console.log('logout');
 			history.push({
 				pathname: '/login',
 				state: { redirectUrl: pathname }

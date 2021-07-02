@@ -5,7 +5,6 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from '@reduxjs/toolkit';
 import { hideMessage, showMessage } from 'app/store/fuse/messageSlice';
-
 import {
 	getToken,
 	getRoleCookies,

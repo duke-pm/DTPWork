@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Avatar, Checkbox, Table } from 'antd';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { sliceString } from '@fuse/core/DtpConfig';
@@ -7,16 +7,23 @@ import { addTaskWatcher } from 'app/main/project/_redux/_projectActions';
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 
 export default function DrawerWatchers() {
 	const dispatch = useDispatch();
+	const [isReceiveEmail, setIsReceiveEmail] = useState(false);
 	const { currentState } = useSelector(state => ({ currentState: state.project }), shallowEqual);
-	const { entitiesView } = currentState;
+	const { entitiesView, isWatcherOverView, isEmailOverView } = currentState;
+	useEffect(() => {
+		setIsReceiveEmail(isEmailOverView);
+	}, [isEmailOverView]);
 	const handleTraffic = () => {
-		dispatch(addTaskWatcher(entitiesView.detail.taskID));
+		dispatch(addTaskWatcher(entitiesView.detail.taskID, isWatcherOverView, true, 'watcher'));
+		setIsReceiveEmail(!isWatcherOverView);
 	};
 	const onChange = e => {
-		console.log(e.target.checked);
+		dispatch(addTaskWatcher(entitiesView.detail.taskID, !isWatcherOverView, e.target.checked, 'isEmail'));
+		setIsReceiveEmail(e.target.checked);
 	};
 	const columns = [
 		{
@@ -80,10 +87,10 @@ export default function DrawerWatchers() {
 							variant="contained"
 							color="primary"
 						>
-							<VisibilityIcon />
+							{isWatcherOverView ? <VisibilityOffIcon /> : <VisibilityIcon />}
 						</Button>
 						<div className="ml-8 mt-16">
-							<Checkbox onChange={onChange}>
+							<Checkbox checked={isReceiveEmail} disabled={!isWatcherOverView} onChange={onChange}>
 								<p style={{ fontWeight: 'bold', color: '#006565' }}>
 									Recieve email notifications when members about changes{' '}
 								</p>

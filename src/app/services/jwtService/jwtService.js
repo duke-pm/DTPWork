@@ -3,10 +3,12 @@ import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import Cookies from 'js-cookie';
 import { notificationConfig } from '@fuse/core/DtpConfig';
+import request from 'app/store/setupAxios';
 /* eslint-disable camelcase */
 const baseUrl = process.env.REACT_APP_API_URL;
 const url = 'api/User/Login';
 const urlRefreshToken = 'api/User/RefreshToken';
+const userUrl = 'api/User';
 
 class JwtService extends FuseUtils.EventEmitter {
 	init() {
@@ -58,6 +60,72 @@ class JwtService extends FuseUtils.EventEmitter {
 					resolve(response.data.user);
 				} else {
 					reject(response.data.error);
+				}
+			});
+		});
+	};
+
+	forgotPassword = email => {
+		const paramReq = {
+			Email: email,
+			lang: 'en'
+		};
+		return new Promise((resolve, reject) => {
+			axios({
+				method: 'GET',
+				url: `${baseUrl}/${userUrl}/ForgotPassword`,
+				params: paramReq
+			}).then(res => {
+				const { data } = res;
+				if (!data.isError) {
+					resolve(data);
+				} else {
+					reject(data);
+				}
+			});
+		});
+	};
+
+	changePasswordPublic = (password, token) => {
+		const dataReq = {
+			NewPassword: password,
+			TokenData: token,
+			Lang: 'en'
+		};
+		return new Promise((resolve, reject) => {
+			axios({
+				method: 'PUT',
+				url: `${baseUrl}/${userUrl}/UpdateNewPassword`,
+				data: dataReq
+			}).then(res => {
+				const { data } = res;
+				if (!data.isError) {
+					resolve(data);
+				} else {
+					reject(data);
+				}
+			});
+		});
+	};
+
+	changePassword = (passwordOld, passwordNew) => {
+		const dataReq = {
+			CurrentPassword: passwordOld,
+			NewPassword: passwordNew,
+			Lang: 'en'
+		};
+
+		return new Promise((resolve, reject) => {
+			request({
+				method: 'PUT',
+				url: `${baseUrl}/${userUrl}/ChangePassword`,
+				data: dataReq
+			}).then(res => {
+				const { data } = res;
+				if (!data.isError) {
+					resolve(data);
+				} else {
+					reject(data);
 				}
 			});
 		});

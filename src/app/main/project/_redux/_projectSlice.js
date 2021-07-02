@@ -11,6 +11,8 @@ const inititalState = {
 	entitiesGantt: [],
 	entitiesView: null,
 	entitiesActivity: [],
+	isWatcherOverView: false,
+	isEmailOverView: false,
 	total_count: 0,
 	total_item: null,
 	lastErrors: false
@@ -96,10 +98,12 @@ export const projectSlice = createSlice({
 			state.entitiesGantt = newData;
 		},
 		fetchTaskView: (state, action) => {
-			const { dataRes } = action.payload;
+			const { dataRes, isWatcherOverView, isReceiveOverView } = action.payload;
 			state.listLoading = false;
 			state.actionLoading = false;
 			state.entitiesView = dataRes;
+			state.isWatcherOverView = isWatcherOverView;
+			state.isEmailOverView = isReceiveOverView;
 		},
 		entitiesActivity: (state, action) => {
 			const { dataActivity } = action.payload;
@@ -140,11 +144,22 @@ export const projectSlice = createSlice({
 			state.entitiesView.activities = newData;
 		},
 		addTaskWatcher: (state, action) => {
-			const { dataRes } = action.payload;
+			const { dataRes, type } = action.payload;
 			state.actionLoading = false;
 			const { watcher } = state.entitiesView;
-			const newData = [dataRes, ...watcher];
-			state.entitiesView.watcher = newData;
+			if (type === 'watcher') {
+				if (dataRes.isWatched) {
+					const newData = [dataRes.watcher, ...watcher];
+					state.entitiesView.watcher = newData;
+				} else {
+					const dataRemove = watcher.filter(item => item.lineNum !== dataRes.lineNum);
+					state.entitiesView.watcher = dataRemove;
+				}
+				state.isEmailOverView = dataRes.isReceivedEmail;
+				state.isWatcherOverView = dataRes.isWatched;
+			} else {
+				state.isEmailOverView = dataRes.isReceivedEmail;
+			}
 		}
 	}
 });

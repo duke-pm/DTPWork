@@ -10,6 +10,16 @@ export const notificationContent = {
 		}
 	},
 	description: {
+		forgotPasswor: {
+			faild: 'Password change time has expired, please confirm email again',
+			success: 'Change password successfully'
+		},
+		requestEmail: {
+			falid: 'Account does not exist, please check again'
+		},
+		changePassword: {
+			faild: 'The current password you entered is incorrect. Please retype your current password'
+		},
 		gobal: {
 			vi: {
 				updatedSuccess: 'Cập nhật thành công',

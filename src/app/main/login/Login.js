@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import clsx from 'clsx';
 import React, { useState } from 'react';
 import { Button } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { submitLogin } from 'app/auth/store/loginSlice';
 import { Formik, Form, Field } from 'formik';
 import { validateField } from '@fuse/core/DtpConfig';
@@ -42,7 +42,6 @@ function Login() {
 		password: Yup.string().required(`${validateField}`)
 	});
 	const classes = useStyles();
-	const login = useSelector(({ auth }) => auth.login);
 	const dispatch = useDispatch();
 	function handleSubmitForm(values) {
 		setConfirmLoading(true);
@@ -123,18 +122,20 @@ function Login() {
 													Forgot password?
 												</Link>
 											</div>
-											{confirmLoading ? (
-												<Spin className="w-full mx-auto" />
-											) : (
-												<Button
-													type="submit"
-													variant="contained"
-													color="primary"
-													className="w-full mx-auto mt-16"
-												>
-													Login
-												</Button>
-											)}
+											<div>
+												{confirmLoading ? (
+													<Spin className="w-full mx-auto" />
+												) : (
+													<Button
+														type="submit"
+														variant="contained"
+														color="primary"
+														className="w-full mx-auto mt-16"
+													>
+														Login
+													</Button>
+												)}
+											</div>
 										</Form>
 									)}
 								</Formik>

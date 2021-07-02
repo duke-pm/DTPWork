@@ -1,5 +1,5 @@
-import { authRoles } from 'app/auth';
 import ForgotPass from './ForgotPass';
+import ForgotPassChangePass from './ForgotPassChangePass';
 
 const ForgotPassConfig = {
 	settings: {
@@ -23,8 +23,12 @@ const ForgotPassConfig = {
 			}
 		}
 	},
-	auth: authRoles.onlyGuest,
+	// auth: authRoles.onlyGuest,
 	routes: [
+		{
+			path: '/changePassword/:detail',
+			component: ForgotPassChangePass
+		},
 		{
 			path: '/forgotPassword',
 			component: ForgotPass

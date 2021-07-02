@@ -7,13 +7,13 @@ import * as Yup from 'yup';
 import clsx from 'clsx';
 import React, { useState } from 'react';
 import { Button } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
-import { notificationConfig, validateFieldEN } from '@fuse/core/DtpConfig';
+import { notificationConfig } from '@fuse/core/DtpConfig';
 import { Spin } from 'antd';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import InputMaterialUi from '@fuse/CustomForm/InputMaterialUi';
-import { forgotPassword } from 'app/auth/store/forgotPasswordSlice';
+import { changePasswordPublic } from 'app/auth/store/forgotPasswordSlice';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 
 // import Auth0LoginTab from './tabs/Auth0LoginTab';
@@ -36,31 +36,39 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 const initialState = {
-	email: '',
-	password: ''
+	password: '',
+	passwordConfirm: ''
 };
-function ForgotPass() {
+function ForgotPassChangePass() {
 	const [confirmLoading, setConfirmLoading] = useState(false);
+	const [error, setError] = useState(false);
 	const checkValidateForm = Yup.object().shape({
-		email: Yup.string().required(`${validateFieldEN}`)
+		password: Yup.string().required('Password is required'),
+		passwordConfirm: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
 	});
+	const params = useParams();
 	const classes = useStyles();
 	const history = useHistory();
-	const login = useSelector(({ auth }) => auth.login);
 	const dispatch = useDispatch();
 	function handleSubmitForm(values) {
 		setConfirmLoading(true);
-		dispatch(forgotPassword(values)).then(data => {
+		dispatch(changePasswordPublic(values, params.detail)).then(data => {
 			if (data && !data.isError) {
 				setConfirmLoading(false);
-				history.push('/check-mail');
+				history.push('/login');
+				notificationConfig(
+					'success',
+					notificationContent.content.en.success,
+					notificationContent.description.forgotPasswor.success
+				);
 			} else {
-				setConfirmLoading(false);
+				setError(true);
 				notificationConfig(
 					'warning',
 					notificationContent.content.en.faild,
-					notificationContent.description.requestEmail.falid
+					notificationContent.description.forgotPasswor.faild
 				);
+				setConfirmLoading(false);
 			}
 		});
 	}
@@ -87,7 +95,7 @@ function ForgotPass() {
 								</div>
 							</FuseAnimate>
 							<FuseAnimate delay={500}>
-								<h2 className="mt-8 mb-32">Recover your password.</h2>
+								<h2 className="mt-8 mb-32">Please enter new password</h2>
 							</FuseAnimate>
 							<div className="w-full">
 								<Formik
@@ -101,17 +109,19 @@ function ForgotPass() {
 									{({ handleSubmit, isSubmitting }) => (
 										<Form>
 											<Field
-												label="Your email address"
-												name="email"
+												label="Your new password"
+												name="password"
 												component={InputMaterialUi}
-												type="text"
+												type="password"
 												hasFeedback
 											/>
-											{login.error && (
-												<FuseAnimate delay={300}>
-													<p className="text-red"> {login.error} </p>
-												</FuseAnimate>
-											)}
+											<Field
+												label="Confirm your new password "
+												name="passwordConfirm"
+												component={InputMaterialUi}
+												type="password"
+												hasFeedback
+											/>
 											{confirmLoading ? (
 												<Spin className="w-full mx-auto" />
 											) : (
@@ -121,7 +131,7 @@ function ForgotPass() {
 													color="primary"
 													className="w-full mx-auto mt-16"
 												>
-													Send reset link
+													Save
 												</Button>
 											)}
 										</Form>
@@ -129,15 +139,17 @@ function ForgotPass() {
 								</Formik>
 							</div>
 						</CardContent>
-						<div className="flex flex-col items-center justify-center pb-32">
-							<Link
-								style={{ textDecoration: 'none', color: '#40a9ff' }}
-								className="font-medium mt-8"
-								to="/login"
-							>
-								Go back to login
-							</Link>
-						</div>
+						{error && (
+							<div className="flex flex-col items-center justify-center pb-32">
+								<Link
+									style={{ textDecoration: 'none', color: '#40a9ff' }}
+									className="font-medium mt-8"
+									to="/forgotPassword"
+								>
+									Go back to forgot password
+								</Link>
+							</div>
+						)}
 					</Card>
 				</div>
 			</FuseAnimate>
@@ -145,4 +157,4 @@ function ForgotPass() {
 	);
 }
 
-export default ForgotPass;
+export default ForgotPassChangePass;

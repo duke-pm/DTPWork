@@ -21,7 +21,7 @@ export const setUserData = user => async (dispatch, getState) => {
 };
 
 export const logoutUser = () => async (dispatch, getState) => {
-	removeLocalStorage();
+	// removeLocalStorage();
 	removeCookies();
 	history.push({
 		pathname: '/login'

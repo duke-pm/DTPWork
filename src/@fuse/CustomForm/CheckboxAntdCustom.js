@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
-import { FormGroup, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { Form, Checkbox } from 'antd';
 
 const FormItem = Form.Item;

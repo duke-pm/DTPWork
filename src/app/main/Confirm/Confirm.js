@@ -3,12 +3,8 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { makeStyles } from '@material-ui/core/styles';
 import { darken } from '@material-ui/core/styles/colorManipulator';
-import * as Yup from 'yup';
 import clsx from 'clsx';
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { submitLogin } from 'app/auth/store/loginSlice';
-import { validateField } from '@fuse/core/DtpConfig';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 // import Auth0LoginTab from './tabs/Auth0LoginTab';
@@ -30,29 +26,8 @@ const useStyles = makeStyles(theme => ({
 		color: theme.palette.primary.contrastText
 	}
 }));
-const initialState = {
-	email: '',
-	password: ''
-};
 function Confirm() {
-	const [confirmLoading, setConfirmLoading] = useState(false);
-	const checkValidateForm = Yup.object().shape({
-		email: Yup.string().required(`${validateField}`),
-		password: Yup.string().required(`${validateField}`)
-	});
 	const classes = useStyles();
-	const login = useSelector(({ auth }) => auth.login);
-	const dispatch = useDispatch();
-	function handleSubmitForm(values) {
-		setConfirmLoading(true);
-		dispatch(submitLogin(values)).then(user => {
-			if (user && user.access_token) {
-				setConfirmLoading(false);
-			} else {
-				setConfirmLoading(false);
-			}
-		});
-	}
 	return (
 		<div
 			className={clsx(
@@ -76,18 +51,14 @@ function Confirm() {
 								</div>
 							</FuseAnimate>
 							<FuseAnimate delay={500}>
-								<h3 className="mt-8 mb-32">Xác nhận địa chỉ email của bạn.</h3>
+								<h3 className="mt-8 mb-32">Confirm your email address.</h3>
 							</FuseAnimate>
 							<div className="w-full m-0">
 								<div className="flex flex-col items-center">
-									<p className="text-gray-400"> Một email xác nhận đã gửi đến.</p>
-									<p> Chaulinh.se.it@gmail.com</p>
-								</div>
-								<div className="flex flex-col items-center">
 									<p className="text-gray-400 text-center">
 										{' '}
-										Kiểm tra hộp thư đến của bạn và nhấp vào liên kết "Xác nhận email của tôi" để
-										xác nhận địa chỉ email của bạn.
+										Check your inbox and click the "Confirm my email" link to confirm your email
+										address.
 									</p>
 								</div>
 							</div>
@@ -98,7 +69,7 @@ function Confirm() {
 								className="font-medium mt-8"
 								to="/login"
 							>
-								Quay lại đăng nhập
+								Go back to login.
 							</Link>
 						</div>
 					</Card>

@@ -2,7 +2,17 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import { FormGroup } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
 
+const useStyles = makeStyles(theme => ({
+	root: {
+		'& .MuiFormLabel-root': {
+			color: '#006565',
+			fontWeight: 'bold'
+		}
+	}
+}));
 export default function InputMaterialUi({
 	field, // { name, value, onChange, onBlur }
 	form, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
@@ -20,6 +30,7 @@ export default function InputMaterialUi({
 	submitCount,
 	...props
 }) {
+	const classes = useStyles();
 	const touched = form.touched[field.name];
 	const hasError = form.errors[field.name];
 	const touchedError = hasError && touched;
@@ -36,7 +47,8 @@ export default function InputMaterialUi({
 						name={field.name}
 						label={label}
 						variant="outlined"
-						className="mb-32"
+						// className="mb-32"
+						className={clsx(classes.root, 'mb-32')}
 						error={touchedError}
 						helperText={touched && hasError}
 					/>

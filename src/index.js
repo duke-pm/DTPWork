@@ -8,6 +8,7 @@ import './i18n';
 import './react-chartjs-2-defaults';
 import './styles/index.css';
 import App from 'app/App';
+import 'antd/dist/antd.css';
 import * as serviceWorker from './serviceWorker';
 import reportWebVitals from './reportWebVitals';
 

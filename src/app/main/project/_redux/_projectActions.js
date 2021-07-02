@@ -402,7 +402,9 @@ export const getTaskViewDetail = params => dispatch => {
 			if (!data.isError) {
 				const dataRes = data.data;
 				const dataActivity = data.data.activities;
-				dispatch(actions.fetchTaskView({ dataRes }));
+				const isWatcherOverView = data.data.isWatched;
+				const isReceiveOverView = data.data.isReceivedEmail;
+				dispatch(actions.fetchTaskView({ dataRes, isWatcherOverView, isReceiveOverView }));
 				dispatch(actions.entitiesActivity({ dataActivity }));
 			} else {
 				dispatch(actions.catchErros({ callType: callTypes.action }));
@@ -496,20 +498,22 @@ export const addTaskActivity = (id, comment, type) => dispatch => {
 			notificationConfig('warning', 'Warning', 'Server error');
 		});
 };
-export const addTaskWatcher = id => dispatch => {
+export const addTaskWatcher = (id, isWatch, isEmail, type) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const dataReq = {
-		LineNum: 0,
 		TaskID: id,
+		IsWatched: !isWatch ? 1 : 0,
+		IsReceiveEmail: !isWatch ? (isEmail ? 1 : 0) : 0,
 		Lang: 'en'
 	};
+	console.log(dataReq);
 	return requestFrom
 		.addTaskWatch(dataReq)
 		.then(res => {
 			const { data } = res;
 			if (!data.isError) {
 				const dataRes = data.data;
-				dispatch(actions.addTaskWatcher({ dataRes }));
+				dispatch(actions.addTaskWatcher({ dataRes, type }));
 			} else {
 				dispatch(actions.catchErros({ callType: callTypes.action }));
 				notificationConfig('warning', 'Warning', data.errorMessage);

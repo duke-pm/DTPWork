@@ -1,32 +1,14 @@
-import { authRoles } from 'app/auth';
 import ChangePass from './ChangePass';
 
 const ChangePassConfig = {
 	settings: {
 		layout: {
-			config: {
-				navbar: {
-					display: false
-				},
-				toolbar: {
-					display: false
-				},
-				footer: {
-					display: false
-				},
-				leftSidePanel: {
-					display: false
-				},
-				rightSidePanel: {
-					display: false
-				}
-			}
+			config: {}
 		}
 	},
-	auth: authRoles.onlyGuest,
 	routes: [
 		{
-			path: '/doi-mat-khau',
+			path: '/thong-tin-nguoi-dung',
 			component: ChangePass
 		}
 	]
