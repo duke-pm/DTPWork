@@ -60,7 +60,7 @@ export const notificationContent = {
 				updatedTask: 'Updated task success.',
 				createdTask: 'Created task success.',
 				deleteTask: 'Delete task success.',
-				updateStatusTask: 'Updated task success.',
+				updateStatusTask: 'Updated status success.',
 				updateProcessingTask: 'Updated processing success.',
 				updateFailDate: ' Cannot update date by because the status project was closed or reject'
 			}

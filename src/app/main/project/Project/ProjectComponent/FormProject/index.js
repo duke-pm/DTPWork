@@ -32,7 +32,8 @@ let initial = {
 	fileEdit: '',
 	percentage: '',
 	version: '',
-	userInvite: []
+	userInvite: [],
+	ownerName: ''
 };
 export default function FormProjectDrawer({
 	owner,
@@ -91,6 +92,7 @@ export default function FormProjectDrawer({
 	);
 	const { entitiesEdit, actionLoading } = currentState;
 	const handleSubmitForm = values => {
+		console.log(values);
 		if (entitiesEdit && entitiesEdit.taskID) {
 			if (formProject.title === 'Setting task') {
 				dispatch(actions.updatedTask(values)).then(data => {
@@ -180,8 +182,12 @@ export default function FormProjectDrawer({
 		fileEdit: entitiesEdit?.attachFiles,
 		percentage: entitiesEdit?.percentage,
 		version: entitiesEdit?.version,
+		ownerName: entitiesEdit?.ownerName,
 		userInvite: entitiesEdit?.listUserIDInvited ? entitiesEdit.listUserIDInvited.split(',').map(Number) : []
 	};
+	const userInviteNoPermiss = entitiesEdit?.lstUserInvited
+		? entitiesEdit.lstUserInvited?.reduce((arr, curr) => [...arr, curr.fullName], [])
+		: [];
 	return (
 		<Drawer
 			className={classes.Drawer}
@@ -204,6 +210,7 @@ export default function FormProjectDrawer({
 			<FormCustomProjectTask
 				inititalValues={entitiesEdit?.taskID ? initialEdit : initial}
 				owner={owner}
+				userInviteNoPermiss={userInviteNoPermiss}
 				sectorArr={sectorArr}
 				listFile={listFile}
 				setListFile={setListFile}

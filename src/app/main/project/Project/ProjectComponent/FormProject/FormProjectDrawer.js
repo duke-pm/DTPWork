@@ -39,7 +39,8 @@ export default function FormCustomProjectTask({
 	setListFile,
 	listFile,
 	formProject,
-	sectorArr
+	sectorArr,
+	userInviteNoPermiss
 }) {
 	const handleClearFile = () => setFileCheck(false);
 	const handleClearListFile = () => setListFile(null);
@@ -103,26 +104,40 @@ export default function FormCustomProjectTask({
 							<div className="grid grid-cols-1 gap-8 ">
 								<Field
 									label="Assignee"
-									name="owner"
+									name={entitiesEdit && !entitiesEdit.isModified ? 'ownerName' : 'owner'}
 									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									hasFeedback
-									component={SelectAntd}
-									options={owner}
+									component={entitiesEdit && !entitiesEdit.isModified ? AntInput : SelectAntd}
+									options={entitiesEdit && !entitiesEdit.isModified ? null : owner}
 									className="mx-4"
 									position="right"
 								/>
 							</div>
 							<div className="grid grid-cols-1 gap-8 ">
-								<Field
-									label="Add Team Member"
-									name="userInvite"
-									options={owner}
-									count={3}
-									component={SelectAntdMulti || []}
-									readOnly={entitiesEdit && !entitiesEdit.isModified}
-									position="right"
-									className="mx-4"
-								/>
+								{entitiesEdit && !entitiesEdit.isModified ? (
+									<Field
+										label="Add Team Member"
+										name="userInvite"
+										options={owner}
+										count={3}
+										value={entitiesEdit && !entitiesEdit.isModified ? userInviteNoPermiss : []}
+										component={SelectAntdMulti}
+										readOnly={entitiesEdit && !entitiesEdit.isModified}
+										position="right"
+										className="mx-4"
+									/>
+								) : (
+									<Field
+										label="Add Team Member"
+										name="userInvite"
+										options={owner}
+										count={3}
+										component={SelectAntdMulti}
+										readOnly={entitiesEdit && !entitiesEdit.isModified}
+										position="right"
+										className="mx-4"
+									/>
+								)}
 							</div>
 							<div className="grid grid-cols-1 sm:grid-cols-2 gap-16 ">
 								<Field
