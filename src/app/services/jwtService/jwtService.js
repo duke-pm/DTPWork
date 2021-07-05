@@ -191,7 +191,7 @@ class JwtService extends FuseUtils.EventEmitter {
 				})
 				.catch(error => {
 					this.logout();
-					reject(new Error('Failed to login with token.'));
+					// reject(new  Error('Failed to login with token.'));
 				});
 		});
 	};

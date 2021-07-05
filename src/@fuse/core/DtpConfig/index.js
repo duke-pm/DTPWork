@@ -11,6 +11,7 @@ export const checkDeadline = time => {
 	const deadline = moment().diff(time, 'days');
 	return deadline;
 };
+
 export const badgeStatusGobal = {
 	1: '#1890ff',
 	2: '#560bad',

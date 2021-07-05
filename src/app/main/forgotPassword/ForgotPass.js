@@ -107,11 +107,6 @@ function ForgotPass() {
 												type="text"
 												hasFeedback
 											/>
-											{login.error && (
-												<FuseAnimate delay={300}>
-													<p className="text-red"> {login.error} </p>
-												</FuseAnimate>
-											)}
 											{confirmLoading ? (
 												<Spin className="w-full mx-auto" />
 											) : (

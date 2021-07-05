@@ -1,4 +1,4 @@
-import { getToken, removeCookies, removeLocalStorage } from '@fuse/core/DtpConfig';
+import { getToken, notificationConfig, removeCookies, removeLocalStorage } from '@fuse/core/DtpConfig';
 import axios from 'axios';
 import history from '@history';
 
@@ -62,7 +62,7 @@ request.interceptors.response.use(
 			if (err.response.status === 401 && err.config && !err.config.__isRetryRequest) {
 				// if you ever get an unauthorized response, logout the user
 				removeCookies();
-				removeLocalStorage();
+				// removeLocalStorage();
 				history.push({
 					pathname: '/login'
 				});

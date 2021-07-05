@@ -15,6 +15,7 @@ import { Spin } from 'antd';
 import { Link } from 'react-router-dom';
 import InputMaterialUi from '@fuse/CustomForm/InputMaterialUi';
 import CheckboxAntdCustom from '@fuse/CustomForm/CheckboxAntdCustom';
+// import hashPassword from 'crypto-js/sha256';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -33,7 +34,8 @@ const useStyles = makeStyles(theme => ({
 }));
 const initialState = {
 	email: '',
-	password: ''
+	password: '',
+	remmber: false
 };
 function Login() {
 	const [confirmLoading, setConfirmLoading] = useState(false);
@@ -41,13 +43,29 @@ function Login() {
 		email: Yup.string().required(`${validateField}`),
 		password: Yup.string().required(`${validateField}`)
 	});
+	const rememberLogin = JSON.parse(localStorage.getItem('rememberLogin')) || null;
+	if (rememberLogin !== null) {
+		// initialState = {
+		// 	email:
+		// }
+	}
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	function handleSubmitForm(values) {
 		setConfirmLoading(true);
 		dispatch(submitLogin(values)).then(user => {
-			if (user?.access_token) {
+			if (user?.tokenInfo?.access_token) {
 				setConfirmLoading(false);
+				// if (values.remmber) {
+				// 	const item = {
+				// 		userName: hashPassword(values.email),
+				// 		hashPassword: hashPassword(values.password),
+				// 		remmber: values.remmber
+				// 	};
+				// 	localStorage.setItem('rememberLogin', JSON.stringify(item));
+				// } else {
+				// 	localStorage.removeItem('rememberLogin');
+				// }
 			} else {
 				setConfirmLoading(false);
 			}
@@ -105,7 +123,7 @@ function Login() {
 											/>
 											<div className="flex flex-row justify-between ">
 												<Field
-													name="rember"
+													name="remmber"
 													labelAligh="right"
 													position="right"
 													label="Remember Me"
