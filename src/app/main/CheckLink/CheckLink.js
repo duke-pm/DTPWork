@@ -58,7 +58,7 @@ function CheckLink() {
 								</div>
 							</FuseAnimate>
 							<FuseAnimate delay={500}>
-								<h3 className="mt-8 mb-32">Change password failed.</h3>
+								<h3 className="mt-8 mb-32">Change password timeout.</h3>
 							</FuseAnimate>
 							<div className="w-full m-0">
 								<div className="flex flex-col items-center">
