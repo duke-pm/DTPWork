@@ -41,7 +41,7 @@ export default function InputMaterialUi({
 					<TextField
 						{...props}
 						{...field}
-						required={hasFeedback}
+						// required={hasFeedback}
 						type={type}
 						id={field.name}
 						name={field.name}

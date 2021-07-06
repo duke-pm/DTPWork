@@ -17,6 +17,7 @@ import Error404PageConfig from 'app/main/error/404/Error404PageConfig';
 import ForgotPassConfig from 'app/main/forgotPassword/ForgotPassConfig';
 import ChangePassConfig from 'app/main/changePassword/ChangePassConfig';
 import ConfimPassConfig from 'app/main/Confirm/ConfimPassConfig';
+import CheckLinkConfig from 'app/main/CheckLink/CheckLinkConfig';
 
 const routeConfigs = [
 	PossesionConfig,
@@ -33,6 +34,7 @@ const routeConfigs = [
 	ListUserConfig,
 	listRoleSettingConfig,
 	ProjectConfig,
+	CheckLinkConfig,
 	Error404PageConfig,
 	HomeConfig
 ];

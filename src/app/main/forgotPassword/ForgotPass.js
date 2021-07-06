@@ -42,7 +42,7 @@ const initialState = {
 function ForgotPass() {
 	const [confirmLoading, setConfirmLoading] = useState(false);
 	const checkValidateForm = Yup.object().shape({
-		email: Yup.string().required(`${validateFieldEN}`)
+		email: Yup.string().email('Email format is incorrect').required(`${validateFieldEN}`)
 	});
 	const classes = useStyles();
 	const history = useHistory();

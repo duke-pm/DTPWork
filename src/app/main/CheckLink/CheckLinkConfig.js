@@ -1,6 +1,7 @@
-import React from 'react';
+import { authRoles } from 'app/auth';
+import CheckLink from './CheckLink';
 
-const Error404PageConfig = {
+const CheckLinkConfig = {
 	settings: {
 		layout: {
 			config: {
@@ -22,12 +23,13 @@ const Error404PageConfig = {
 			}
 		}
 	},
+	auth: authRoles.onlyGuest,
 	routes: [
 		{
-			path: '/error-404',
-			component: React.lazy(() => import('./Error404Page'))
+			path: '/check-Link',
+			component: CheckLink
 		}
 	]
 };
 
-export default Error404PageConfig;
+export default CheckLinkConfig;

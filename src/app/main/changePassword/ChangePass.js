@@ -9,14 +9,13 @@ import React, { useState } from 'react';
 import { Button, Typography } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
-import { notificationConfig } from '@fuse/core/DtpConfig';
+import { notificationConfig, validateFieldEN } from '@fuse/core/DtpConfig';
 import { Spin } from 'antd';
 import InputMaterialUi from '@fuse/CustomForm/InputMaterialUi';
 import FusePageCarded from '@fuse/core/FusePageCarded';
 import { changePassword } from 'app/auth/store/changePasswordSlice';
-import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import { logoutUser } from 'app/auth/store/userSlice';
-
+import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 // import Auth0LoginTab from './tabs/Auth0LoginTab';
 // import FirebaseLoginTab from './tabs/FirebaseLoginTab';
 // import JWTLoginTab from './tabs/JWTLoginTab';
@@ -43,15 +42,21 @@ const initialState = {
 function ChangePass() {
 	const [confirmLoading, setConfirmLoading] = useState(false);
 	const checkValidateForm = Yup.object().shape({
-		oldPassword: Yup.string().required('Old password is required'),
-		newPassword: Yup.string().required('New password is required'),
-		passwordConfirm: Yup.string().oneOf([Yup.ref('newPassword'), null], 'Passwords must match')
+		oldPassword: Yup.string().required(validateFieldEN),
+		newPassword: Yup.string().required(validateFieldEN),
+		passwordConfirm: Yup.string()
+			.required(validateFieldEN)
+			.oneOf([Yup.ref('newPassword'), null], 'Password does not match')
 	});
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	function handleSubmitForm(values, resetForm) {
 		if (values.oldPassword === values.newPassword) {
-			notificationConfig('warning', 'Warning!!!', 'The new password matches the current password');
+			notificationConfig(
+				'warning',
+				'Warning!!!',
+				'The new password must not be the same as the current password'
+			);
 		} else {
 			setConfirmLoading(true);
 			dispatch(changePassword(values)).then(data => {
@@ -102,7 +107,7 @@ function ChangePass() {
 			contentToolbar={
 				<div className="flex  items-center px-16 flex-1">
 					<Typography component="span" className="font-bold flex text-sm	">
-						Update information
+						Reset password
 					</Typography>
 				</div>
 			}
@@ -176,7 +181,7 @@ function ChangePass() {
 															color="primary"
 															className="w-full mx-auto mt-16"
 														>
-															Reset my password
+															Reset password
 														</Button>
 													)}
 												</Form>
