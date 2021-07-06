@@ -44,7 +44,7 @@ function ForgotPassChangePass() {
 	const [error, setError] = useState(false);
 	const checkValidateForm = Yup.object().shape({
 		password: Yup.string().required('Password is required'),
-		passwordConfirm: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
+		passwordConfirm: Yup.string().oneOf([Yup.ref('password'), null], 'Password does not match')
 	});
 	const params = useParams();
 	const classes = useStyles();
@@ -95,7 +95,7 @@ function ForgotPassChangePass() {
 								</div>
 							</FuseAnimate>
 							<FuseAnimate delay={500}>
-								<h2 className="mt-8 mb-32">Please enter new password</h2>
+								<h2 className="mt-8 mb-32">Reset your password</h2>
 							</FuseAnimate>
 							<div className="w-full">
 								<Formik
@@ -109,14 +109,14 @@ function ForgotPassChangePass() {
 									{({ handleSubmit, isSubmitting }) => (
 										<Form>
 											<Field
-												label="Your new password"
+												label="New password"
 												name="password"
 												component={InputMaterialUi}
 												type="password"
 												hasFeedback
 											/>
 											<Field
-												label="Confirm your new password "
+												label="Confirm new password "
 												name="passwordConfirm"
 												component={InputMaterialUi}
 												type="password"
@@ -131,7 +131,7 @@ function ForgotPassChangePass() {
 													color="primary"
 													className="w-full mx-auto mt-16"
 												>
-													Save
+													Reset password
 												</Button>
 											)}
 										</Form>

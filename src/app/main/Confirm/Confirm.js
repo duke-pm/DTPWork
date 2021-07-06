@@ -51,14 +51,14 @@ function Confirm() {
 								</div>
 							</FuseAnimate>
 							<FuseAnimate delay={500}>
-								<h3 className="mt-8 mb-32">Confirm your email address.</h3>
+								<h3 className="mt-8 mb-32">Confirm your email address !</h3>
 							</FuseAnimate>
 							<div className="w-full m-0">
 								<div className="flex flex-col items-center">
 									<p className="text-gray-400 text-center">
 										{' '}
-										Check your inbox and click the "Confirm my email" link to confirm your email
-										address.
+										A confirmation e-mail has been sent to you.
+										Check your inbox and click on the link to change your password.
 									</p>
 								</div>
 							</div>
