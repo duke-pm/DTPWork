@@ -63,7 +63,9 @@ function CheckLink() {
 							<div className="w-full m-0">
 								<div className="flex flex-col items-center">
 									<p className="text-gray-400 text-center">
-										Update failed because the link has expired.
+										Your password change link has expired, please try again by 
+										going back to login, click link forgot password and enter your email and then 
+										check your inbox to get new link to change password.
 									</p>
 								</div>
 							</div>

@@ -107,7 +107,7 @@ function ChangePass() {
 			contentToolbar={
 				<div className="flex  items-center px-16 flex-1">
 					<Typography component="span" className="font-bold flex text-sm	">
-						Reset password
+						Change password
 					</Typography>
 				</div>
 			}
@@ -138,7 +138,7 @@ function ChangePass() {
 										</div>
 									</FuseAnimate>
 									<FuseAnimate delay={500}>
-										<h3 className="mt-8 mb-32">Reset your password</h3>
+										<h3 className="mt-8 mb-32">Change your password</h3>
 									</FuseAnimate>
 									<div className="w-full">
 										<Formik
@@ -181,7 +181,7 @@ function ChangePass() {
 															color="primary"
 															className="w-full mx-auto mt-16"
 														>
-															Reset password
+															Change password
 														</Button>
 													)}
 												</Form>
