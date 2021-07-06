@@ -15,6 +15,7 @@ import { Link, useHistory, useParams } from 'react-router-dom';
 import InputMaterialUi from '@fuse/CustomForm/InputMaterialUi';
 import { changePasswordPublic, checkToken } from 'app/auth/store/forgotPasswordSlice';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
+import { logoutUser, logoutUserDoneRedirect } from 'app/auth/store/userSlice';
 
 // import Auth0LoginTab from './tabs/Auth0LoginTab';
 // import FirebaseLoginTab from './tabs/FirebaseLoginTab';
@@ -53,6 +54,7 @@ function ForgotPassChangePass() {
 	const history = useHistory();
 	const dispatch = useDispatch();
 	useEffect(() => {
+		dispatch(logoutUserDoneRedirect());
 		if (params.detail) {
 			dispatch(checkToken(params.detail)).then(data => {
 				if (data.isError) {
@@ -66,7 +68,7 @@ function ForgotPassChangePass() {
 		dispatch(changePasswordPublic(values, params.detail)).then(data => {
 			if (data && !data.isError) {
 				setConfirmLoading(false);
-				history.push('/login');
+				dispatch(logoutUser());
 				notificationConfig(
 					'success',
 					notificationContent.content.en.success,

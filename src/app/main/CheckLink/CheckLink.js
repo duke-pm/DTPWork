@@ -1,11 +1,14 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import FuseAnimate from '@fuse/core/FuseAnimate';
+import { Link } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { makeStyles } from '@material-ui/core/styles';
 import { darken } from '@material-ui/core/styles/colorManipulator';
+import { logoutUser, logoutUserDoneRedirect } from 'app/auth/store/userSlice';
 import clsx from 'clsx';
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 // import Auth0LoginTab from './tabs/Auth0LoginTab';
 // import FirebaseLoginTab from './tabs/FirebaseLoginTab';
@@ -28,6 +31,10 @@ const useStyles = makeStyles(theme => ({
 }));
 function CheckLink() {
 	const classes = useStyles();
+	const dispatch = useDispatch();
+	const handleDisPatchLogin = () => {
+		dispatch(logoutUser());
+	};
 	return (
 		<div
 			className={clsx(
@@ -65,7 +72,7 @@ function CheckLink() {
 							<Link
 								style={{ textDecoration: 'none', color: '#40a9ff' }}
 								className="font-medium mt-8"
-								to="/login"
+								onClick={handleDisPatchLogin}
 							>
 								Go back to login.
 							</Link>

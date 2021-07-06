@@ -23,7 +23,6 @@ const CheckLinkConfig = {
 			}
 		}
 	},
-	auth: authRoles.onlyGuest,
 	routes: [
 		{
 			path: '/check-Link',

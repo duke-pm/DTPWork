@@ -18,6 +18,7 @@ import ForgotPassConfig from 'app/main/forgotPassword/ForgotPassConfig';
 import ChangePassConfig from 'app/main/changePassword/ChangePassConfig';
 import ConfimPassConfig from 'app/main/Confirm/ConfimPassConfig';
 import CheckLinkConfig from 'app/main/CheckLink/CheckLinkConfig';
+import ChangePassTokenConfig from 'app/main/ChangePassToken/ChangePassTokenConfig';
 
 const routeConfigs = [
 	PossesionConfig,
@@ -36,7 +37,8 @@ const routeConfigs = [
 	ProjectConfig,
 	CheckLinkConfig,
 	Error404PageConfig,
-	HomeConfig
+	HomeConfig,
+	ChangePassTokenConfig
 ];
 
 const routes = [

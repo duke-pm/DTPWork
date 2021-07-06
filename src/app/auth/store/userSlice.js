@@ -30,6 +30,13 @@ export const logoutUser = () => async (dispatch, getState) => {
 
 	return dispatch(userLoggedOut());
 };
+export const logoutUserDoneRedirect = () => async (dispatch, getState) => {
+	// removeLocalStorage();
+	removeCookies();
+	// dispatch(setInitialSettings());
+
+	// return dispatch(userLoggedOut());
+};
 const initialState = {
 	role: [], // guest
 	data: {
