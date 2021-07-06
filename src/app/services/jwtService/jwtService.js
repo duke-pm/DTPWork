@@ -86,6 +86,26 @@ class JwtService extends FuseUtils.EventEmitter {
 		});
 	};
 
+	checkTokenExp = token => {
+		const paramsReq = {
+			Token: token
+		};
+		return new Promise((resolve, reject) => {
+			axios({
+				method: 'GET',
+				url: `${baseUrl}/${userUrl}/CheckToken`,
+				params: paramsReq
+			}).then(res => {
+				const { data } = res;
+				if (!data.isError) {
+					resolve(data);
+				} else {
+					reject(data);
+				}
+			});
+		});
+	};
+
 	changePasswordPublic = (password, token) => {
 		const dataReq = {
 			NewPassword: password,
@@ -154,7 +174,7 @@ class JwtService extends FuseUtils.EventEmitter {
 						this.setSession(response.data.data.tokenInfo, response.data.data.lstMenu);
 						resolve(response.data.data);
 					} else {
-						notificationConfig('warning', 'Thất bại', 'Vui lòng nhập đúng tài khoản và mật khẩu');
+						notificationConfig('warning', 'Warning', 'Please enter the correct account and password');
 						reject(response.data.error);
 					}
 				})

@@ -12,7 +12,7 @@ export const submitLogin =
 				return user;
 			})
 			.catch(error => {
-				return dispatch(loginError('Vui lòng nhập đúng tài khoản và mật khẩu'));
+				return dispatch(loginError('Please enter the correct account and password'));
 			});
 	};
 

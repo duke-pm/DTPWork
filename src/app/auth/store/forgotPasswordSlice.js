@@ -23,7 +23,15 @@ export const changePasswordPublic = (value, token) => async dispatch => {
 			return error;
 		});
 };
-
+export const checkToken = token => async dispatch => {
+	return JwtService.checkTokenExp(token)
+		.then(data => {
+			return data;
+		})
+		.catch(error => {
+			return error;
+		});
+};
 const initialState = {
 	success: false,
 	error: null,

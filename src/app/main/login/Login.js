@@ -10,7 +10,7 @@ import { Button } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { submitLogin } from 'app/auth/store/loginSlice';
 import { Formik, Form, Field } from 'formik';
-import { validateField } from '@fuse/core/DtpConfig';
+import { validateField, validateFieldEN } from '@fuse/core/DtpConfig';
 import { Spin } from 'antd';
 import { Link } from 'react-router-dom';
 import InputMaterialUi from '@fuse/CustomForm/InputMaterialUi';
@@ -41,8 +41,8 @@ const initialState = {
 function Login() {
 	const [confirmLoading, setConfirmLoading] = useState(false);
 	const checkValidateForm = Yup.object().shape({
-		email: Yup.string().required(`${validateField}`),
-		password: Yup.string().required(`${validateField}`)
+		email: Yup.string().required(`${validateFieldEN}`),
+		password: Yup.string().required(`${validateFieldEN}`)
 	});
 	// const rememberLogin = JSON.parse(localStorage.getItem('rememberLogin')) || null;
 	// if (rememberLogin !== null) {

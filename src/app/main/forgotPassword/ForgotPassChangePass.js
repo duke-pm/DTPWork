@@ -5,15 +5,15 @@ import { makeStyles } from '@material-ui/core/styles';
 import { darken } from '@material-ui/core/styles/colorManipulator';
 import * as Yup from 'yup';
 import clsx from 'clsx';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
-import { notificationConfig } from '@fuse/core/DtpConfig';
+import { notificationConfig, validateFieldEN } from '@fuse/core/DtpConfig';
 import { Spin } from 'antd';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import InputMaterialUi from '@fuse/CustomForm/InputMaterialUi';
-import { changePasswordPublic } from 'app/auth/store/forgotPasswordSlice';
+import { changePasswordPublic, checkToken } from 'app/auth/store/forgotPasswordSlice';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 
 // import Auth0LoginTab from './tabs/Auth0LoginTab';
@@ -43,13 +43,24 @@ function ForgotPassChangePass() {
 	const [confirmLoading, setConfirmLoading] = useState(false);
 	const [error, setError] = useState(false);
 	const checkValidateForm = Yup.object().shape({
-		password: Yup.string().required('Password is required'),
-		passwordConfirm: Yup.string().oneOf([Yup.ref('password'), null], 'Password does not match')
+		password: Yup.string().required(validateFieldEN),
+		passwordConfirm: Yup.string()
+			.required(validateFieldEN)
+			.oneOf([Yup.ref('password'), null], 'Password does not match')
 	});
 	const params = useParams();
 	const classes = useStyles();
 	const history = useHistory();
 	const dispatch = useDispatch();
+	useEffect(() => {
+		if (params.detail) {
+			dispatch(checkToken(params.detail)).then(data => {
+				if (data.isError) {
+					history.push('/check-link');
+				}
+			});
+		}
+	}, [params.detail]);
 	function handleSubmitForm(values) {
 		setConfirmLoading(true);
 		dispatch(changePasswordPublic(values, params.detail)).then(data => {
@@ -62,12 +73,8 @@ function ForgotPassChangePass() {
 					notificationContent.description.forgotPasswor.success
 				);
 			} else {
+				history.push('/check-link');
 				setError(true);
-				notificationConfig(
-					'warning',
-					notificationContent.content.en.faild,
-					notificationContent.description.forgotPasswor.faild
-				);
 				setConfirmLoading(false);
 			}
 		});
