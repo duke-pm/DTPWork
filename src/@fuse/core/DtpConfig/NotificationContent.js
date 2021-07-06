@@ -18,7 +18,8 @@ export const notificationContent = {
 			falid: 'Account does not exist, please check again'
 		},
 		changePassword: {
-			faild: 'The current password you entered is incorrect. Please retype your current password'
+			faild: 'The current password you entered is incorrect. Please retype your current password',
+			checkNewPassword: 'The new password matches the current password'
 		},
 		gobal: {
 			vi: {

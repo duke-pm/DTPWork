@@ -15,6 +15,7 @@ import InputMaterialUi from '@fuse/CustomForm/InputMaterialUi';
 import FusePageCarded from '@fuse/core/FusePageCarded';
 import { changePassword } from 'app/auth/store/changePasswordSlice';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
+import { logoutUser } from 'app/auth/store/userSlice';
 
 // import Auth0LoginTab from './tabs/Auth0LoginTab';
 // import FirebaseLoginTab from './tabs/FirebaseLoginTab';
@@ -57,6 +58,7 @@ function ChangePass() {
 				if (data && !data.isError) {
 					setConfirmLoading(false);
 					resetForm();
+					dispatch(logoutUser());
 					notificationConfig(
 						'success',
 						notificationContent.content.en.success,
