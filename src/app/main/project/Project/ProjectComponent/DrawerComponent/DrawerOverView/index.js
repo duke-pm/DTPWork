@@ -44,7 +44,7 @@ export default function DrawerOverView({ closeVisible }) {
 		if (entitiesView) {
 			setProcess(entitiesView.detail.percentage);
 		}
-	}, [entitiesView]);
+	}, [entitiesView?.detail.percentage]);
 	const updatedStatus = type => {
 		dispatch(updatedTaskStatus(entitiesView.detail, type)).then(data => {
 			if (data && !data.isError) {
@@ -78,7 +78,7 @@ export default function DrawerOverView({ closeVisible }) {
 	const handleChangeSliderAfter = value => {
 		dispatch(updatedTaskStatus(entitiesView.detail, entitiesView.detail.statusID, value)).then(data => {
 			if (data && !data.isError) {
-				// setProcess(value);
+				setProcess(value);
 				notificationConfig(
 					'success',
 					notificationContent.content.en.success,
@@ -101,6 +101,7 @@ export default function DrawerOverView({ closeVisible }) {
 					)
 				);
 				dispatch(getTaskDetailAll(params.detail, ownerFilter, status, sector, search));
+				dispatch(getTaskViewDetail(entitiesView.detail.taskID));
 			} else {
 				dispatch(getTaskViewDetail(entitiesView.detail.taskID));
 			}
