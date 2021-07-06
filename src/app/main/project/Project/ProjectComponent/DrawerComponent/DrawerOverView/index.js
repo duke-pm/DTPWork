@@ -108,7 +108,7 @@ export default function DrawerOverView({ closeVisible }) {
 		});
 	};
 	const handleTraffic = () => {
-		dispatch(addTaskWatcher(entitiesView.detail.taskID, isWatcherOverView, false, 'watcher'));
+		dispatch(addTaskWatcher(entitiesView.detail.taskID, isWatcherOverView, true, 'watcher'));
 	};
 	return (
 		<FuseAnimate animation="transition.slideUpBigIn" delay={300}>
