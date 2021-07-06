@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { darken } from '@material-ui/core/styles/colorManipulator';
 import * as Yup from 'yup';
 import clsx from 'clsx';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
@@ -15,6 +15,8 @@ import { Link, useHistory } from 'react-router-dom';
 import InputMaterialUi from '@fuse/CustomForm/InputMaterialUi';
 import { forgotPassword } from 'app/auth/store/forgotPasswordSlice';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
+
+import { logoutUserDoneRedirect } from 'app/auth/store/userSlice';
 
 // import Auth0LoginTab from './tabs/Auth0LoginTab';
 // import FirebaseLoginTab from './tabs/FirebaseLoginTab';
@@ -48,6 +50,9 @@ function ForgotPass() {
 	const history = useHistory();
 	const login = useSelector(({ auth }) => auth.login);
 	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(logoutUserDoneRedirect());
+	}, [dispatch]);
 	function handleSubmitForm(values) {
 		setConfirmLoading(true);
 		dispatch(forgotPassword(values)).then(data => {
