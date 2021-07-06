@@ -1,5 +1,6 @@
 import ForgotPass from './ForgotPass';
 import ForgotPassChangePass from './ForgotPassChangePass';
+// import ForgotPassChangePass from './ForgotPassChangePass';
 
 const ForgotPassConfig = {
 	settings: {
