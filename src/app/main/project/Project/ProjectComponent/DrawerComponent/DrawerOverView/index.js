@@ -204,7 +204,7 @@ export default function DrawerOverView({ closeVisible }) {
 						color="primary"
 						startIcon={!isWatcherOverView ? <VisibilityIcon /> : <VisibilityOffIcon />}
 					>
-						{!isWatcherOverView ? 'Watches' : 'UnWatches'}
+						{!isWatcherOverView ? 'Follow' : 'Unfollow'}
 					</Button>
 				</div>
 				<div className="flex flex-col">

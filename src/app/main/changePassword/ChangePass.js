@@ -44,13 +44,13 @@ function ChangePass() {
 	const checkValidateForm = Yup.object().shape({
 		oldPassword: Yup.string().required('Old password is required'),
 		newPassword: Yup.string().required('New password is required'),
-		passwordConfirm: Yup.string().oneOf([Yup.ref('newPassword'), null], 'Passwords must match')
+		passwordConfirm: Yup.string().oneOf([Yup.ref('newPassword'), null], 'Password does not match')
 	});
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	function handleSubmitForm(values, resetForm) {
 		if (values.oldPassword === values.newPassword) {
-			notificationConfig('warning', 'Warning!!!', 'The new password matches the current password');
+			notificationConfig('warning', 'Warning!!!', 'The new password must not be the same as the current password');
 		} else {
 			setConfirmLoading(true);
 			dispatch(changePassword(values)).then(data => {
@@ -100,7 +100,7 @@ function ChangePass() {
 			contentToolbar={
 				<div className="flex  items-center px-16 flex-1">
 					<Typography component="span" className="font-bold flex text-sm	">
-						Update information
+						Reset password	
 					</Typography>
 				</div>
 			}
@@ -174,7 +174,7 @@ function ChangePass() {
 															color="primary"
 															className="w-full mx-auto mt-16"
 														>
-															Reset my password
+															Reset password
 														</Button>
 													)}
 												</Form>

@@ -6,7 +6,7 @@ export const notificationContent = {
 		},
 		en: {
 			success: 'Success',
-			faild: 'Faild'
+			faild: 'Failed'
 		}
 	},
 	description: {
@@ -18,7 +18,7 @@ export const notificationContent = {
 			falid: 'Account does not exist, please check again'
 		},
 		changePassword: {
-			faild: 'The current password you entered is incorrect. Please retype your current password'
+			faild: 'The current password is incorrect. Please re-enter.'
 		},
 		gobal: {
 			vi: {
@@ -51,18 +51,18 @@ export const notificationContent = {
 		},
 		project: {
 			projects: {
-				updatedProject: 'Updated project success.',
-				createdProject: 'Created project success.',
-				cloneProject: 'Clone project success.',
-				deleteProject: 'Delete project success'
+				updatedProject: 'Updated project successfully.',
+				createdProject: 'Created project successfully.',
+				cloneProject: 'Clone project successfully.',
+				deleteProject: 'Delete project successfully'
 			},
 			task: {
-				updatedTask: 'Updated task success.',
-				createdTask: 'Created task success.',
-				deleteTask: 'Delete task success.',
-				updateStatusTask: 'Updated status success.',
-				updateProcessingTask: 'Updated processing success.',
-				updateFailDate: ' Cannot update date by because the status project was closed or reject'
+				updatedTask: 'Updated task successfully.',
+				createdTask: 'Created task successfully.',
+				deleteTask: 'Delete task successfully.',
+				updateStatusTask: 'Updated status successfully.',
+				updateProcessingTask: 'Updated processing successfully.',
+				updateFailDate: 'Cannot update because the status project was closed or reject'
 			}
 		}
 	}
