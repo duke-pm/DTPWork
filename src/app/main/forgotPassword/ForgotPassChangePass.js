@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -81,6 +82,9 @@ function ForgotPassChangePass() {
 			}
 		});
 	}
+	const handleDisPatchLogin = () => {
+		dispatch(logoutUser());
+	};
 	return (
 		<div
 			className={clsx(
@@ -148,17 +152,15 @@ function ForgotPassChangePass() {
 								</Formik>
 							</div>
 						</CardContent>
-						{error && (
-							<div className="flex flex-col items-center justify-center pb-32">
-								<Link
-									style={{ textDecoration: 'none', color: '#40a9ff' }}
-									className="font-medium mt-8"
-									to="/forgotPassword"
-								>
-									Go back to forgot password
-								</Link>
-							</div>
-						)}
+						<div className="flex flex-col items-center justify-center pb-32">
+							<Link
+								style={{ textDecoration: 'none', color: '#40a9ff' }}
+								className="font-medium mt-8"
+								onClick={handleDisPatchLogin}
+							>
+								Go back to login.
+							</Link>
+						</div>
 					</Card>
 				</div>
 			</FuseAnimate>
