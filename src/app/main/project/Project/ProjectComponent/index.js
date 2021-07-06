@@ -8,7 +8,7 @@ import { FrappeGantt } from 'frappe-gantt-react';
 import CloseIcon from '@material-ui/icons/Close';
 import { IconButton } from '@material-ui/core';
 import Panigation from '@fuse/core/FusePanigate';
-import { Spin } from 'antd';
+import { Badge, Spin, Tag } from 'antd';
 import * as moment from 'moment';
 import { notificationConfig } from '@fuse/core/DtpConfig';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
@@ -146,15 +146,26 @@ export default function ProjectComponent({
 								entitiesDetail={entitiesDetail}
 							/>
 							{entitiesDetail?.listTask?.length !== 0 && (
-								<div className="flex flex-row items-center justify-end">
-									{actionLoading && <Spin />}
-									<Panigation
-										page={page}
-										handleChangePage={handleChangePage}
-										rowPage={rowPage}
-										handleChangeRowsPerPage={handleRowPage}
-										count={total_count}
-									/>
+								<div className="flex flex-row items-center justify-between">
+									<div className="flex flex-row">
+										<Tag
+											className="shadow-md"
+											style={{ width: '25px', height: '25px', marginLeft: '8px' }}
+											color="#fff7e6"
+										/>
+										<p style={{ fontWeight: '600', color: '#006565' }}>Late deadline</p>
+									</div>
+
+									<div>
+										{actionLoading && <Spin />}
+										<Panigation
+											page={page}
+											handleChangePage={handleChangePage}
+											rowPage={rowPage}
+											handleChangeRowsPerPage={handleRowPage}
+											count={total_count}
+										/>
+									</div>
 								</div>
 							)}
 						</div>
