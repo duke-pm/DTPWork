@@ -153,7 +153,7 @@ export default function ProjectComponent({
 											style={{ width: '25px', height: '25px', marginLeft: '8px' }}
 											color="#fff7e6"
 										/>
-										<p style={{ fontWeight: '600', color: '#006565' }}>Late deadline</p>
+										<p style={{ fontWeight: '400', color: '#006565' }}>Late deadline</p>
 									</div>
 
 									<div>
