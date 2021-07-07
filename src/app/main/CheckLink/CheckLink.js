@@ -5,9 +5,9 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { makeStyles } from '@material-ui/core/styles';
 import { darken } from '@material-ui/core/styles/colorManipulator';
-import { logoutUser, logoutUserDoneRedirect } from 'app/auth/store/userSlice';
+import { logoutUser } from 'app/auth/store/userSlice';
 import clsx from 'clsx';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 
 // import Auth0LoginTab from './tabs/Auth0LoginTab';

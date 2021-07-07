@@ -158,6 +158,12 @@ export const projectSlice = createSlice({
 				state.isEmailOverView = dataRes.isReceivedEmail;
 				state.isWatcherOverView = dataRes.isWatched;
 			} else {
+				state.entitiesView.watcher = state.entitiesView.watcher.map(entity => {
+					if (entity.lineNum === dataRes.watcher.lineNum) {
+						return dataRes.watcher;
+					}
+					return entity;
+				});
 				state.isEmailOverView = dataRes.isReceivedEmail;
 			}
 		}

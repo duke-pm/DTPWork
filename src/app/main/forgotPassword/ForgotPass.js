@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import clsx from 'clsx';
 import React, { useState, useEffect } from 'react';
 import { Button } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import { notificationConfig, validateFieldEN } from '@fuse/core/DtpConfig';
 import { Spin } from 'antd';
@@ -48,7 +48,6 @@ function ForgotPass() {
 	});
 	const classes = useStyles();
 	const history = useHistory();
-	const login = useSelector(({ auth }) => auth.login);
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(logoutUserDoneRedirect());

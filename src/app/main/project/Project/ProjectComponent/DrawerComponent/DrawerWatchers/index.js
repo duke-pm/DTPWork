@@ -60,6 +60,16 @@ export default function DrawerWatchers() {
 			width: '2%'
 		},
 		{
+			title: 'Receive Email',
+			dataIndex: 'IsReceiveEmail',
+			width: '1%',
+			render: (text, record, index) => (
+				<>
+					<Checkbox checked={record.isReceiveEmail} />
+				</>
+			)
+		},
+		{
 			title: 'Date view',
 			dataIndex: 'timeUpdate',
 			key: 'timeUpdate',

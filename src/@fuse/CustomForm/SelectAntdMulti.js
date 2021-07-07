@@ -54,20 +54,20 @@ export default function SelectAntdMulti({
 						{...props}
 						showSearch
 						allowClear
+						maxTagCount={count || 1}
 						mode="multiple"
 						placeholder={placeholder || ''}
 						className={readOnly ? 'readOnly' : ''}
 						optionFilterProp="children"
-						defaultValue={field.value && []}
 						filterOption={(input, option) =>
 							option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
 						}
-						maxTagCount={count || 1}
+						defaultValue={field.value && []}
 						onChange={handleSelect}
 					>
 						{options.map(p => (
 							<Option key={p.value} value={p.value}>
-								<p> {p.label} </p>
+								{p.label}
 							</Option>
 						))}
 					</Select>

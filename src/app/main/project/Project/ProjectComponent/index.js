@@ -8,7 +8,7 @@ import { FrappeGantt } from 'frappe-gantt-react';
 import CloseIcon from '@material-ui/icons/Close';
 import { IconButton } from '@material-ui/core';
 import Panigation from '@fuse/core/FusePanigate';
-import { Badge, Spin, Tag } from 'antd';
+import { Spin, Tag } from 'antd';
 import * as moment from 'moment';
 import { notificationConfig } from '@fuse/core/DtpConfig';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';

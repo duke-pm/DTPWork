@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import 'firebase/auth';
 import history from '@history';
 import { setInitialSettings } from 'app/store/fuse/settingsSlice';
-import { removeCookies, removeLocalStorage } from '@fuse/core/DtpConfig';
+import { removeCookies } from '@fuse/core/DtpConfig';
 
 export const setUserData = user => async (dispatch, getState) => {
 	/*

@@ -1,4 +1,4 @@
-import { getToken, notificationConfig, removeCookies, removeLocalStorage } from '@fuse/core/DtpConfig';
+import { getToken, removeCookies } from '@fuse/core/DtpConfig';
 import axios from 'axios';
 import history from '@history';
 

@@ -17,6 +17,7 @@ import { badgeStatus, badgeText } from '../ConfigTableProject';
 function TableProject(props) {
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.up('xl'));
+	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
 	const dispatch = useDispatch();
 	const { entities } = props;
 	const projectContext = useContext(ProjectContext);
@@ -209,7 +210,7 @@ function TableProject(props) {
 				}}
 				childrenColumnName="lstProjectItem"
 				pagination={false}
-				scroll={{ x: entities && entities.length ? (matches ? 1520 : 1540) : null }}
+				scroll={{ x: entities && entities.length ? (matches ? 1520 : 1540) : matchesSM ? 1540 : null }}
 				columns={columns}
 				dataSource={entities}
 			/>{' '}

@@ -11,6 +11,6 @@ export default function Home() {
 		if (!token || !roles) {
 			dispatch(logoutUser());
 		}
-	}, [token, roles]);
+	}, [token, roles, dispatch]);
 	return <div />;
 }

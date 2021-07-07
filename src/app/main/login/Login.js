@@ -10,7 +10,7 @@ import { Button } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { submitLogin } from 'app/auth/store/loginSlice';
 import { Formik, Form, Field } from 'formik';
-import { validateField, validateFieldEN } from '@fuse/core/DtpConfig';
+import { validateFieldEN } from '@fuse/core/DtpConfig';
 import { Spin } from 'antd';
 import { Link } from 'react-router-dom';
 import InputMaterialUi from '@fuse/CustomForm/InputMaterialUi';

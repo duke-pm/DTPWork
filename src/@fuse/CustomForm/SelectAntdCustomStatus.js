@@ -52,14 +52,10 @@ export default function SelectAntdCustomStatus({
 					<Select
 						{...field}
 						{...props}
-						showSearch
 						allowClear
 						placeholder={placeholder || ''}
 						className={readOnly ? 'readOnly' : ''}
 						optionFilterProp="children"
-						filterOption={(input, option) =>
-							option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-						}
 						defaultValue={field.value}
 						onChange={handleSelect}
 					>

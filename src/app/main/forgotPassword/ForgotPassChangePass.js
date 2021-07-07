@@ -43,7 +43,7 @@ const initialState = {
 };
 function ForgotPassChangePass() {
 	const [confirmLoading, setConfirmLoading] = useState(false);
-	const [error, setError] = useState(false);
+	const [, setError] = useState(false);
 	const checkValidateForm = Yup.object().shape({
 		password: Yup.string().required(validateFieldEN),
 		passwordConfirm: Yup.string()
@@ -63,7 +63,7 @@ function ForgotPassChangePass() {
 				}
 			});
 		}
-	}, [params.detail]);
+	}, [params.detail, dispatch]);
 	function handleSubmitForm(values) {
 		setConfirmLoading(true);
 		dispatch(changePasswordPublic(values, params.detail)).then(data => {

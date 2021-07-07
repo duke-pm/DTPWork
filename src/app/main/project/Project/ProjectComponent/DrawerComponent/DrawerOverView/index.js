@@ -44,7 +44,7 @@ export default function DrawerOverView({ closeVisible }) {
 		if (entitiesView) {
 			setProcess(entitiesView.detail.percentage);
 		}
-	}, [entitiesView?.detail.percentage]);
+	}, [entitiesView]);
 	const updatedStatus = type => {
 		dispatch(updatedTaskStatus(entitiesView.detail, type)).then(data => {
 			if (data && !data.isError) {

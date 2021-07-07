@@ -1,14 +1,16 @@
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import { Button, IconButton, InputBase, Paper, Typography } from '@material-ui/core';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import { useDispatch } from 'react-redux';
 import { DatePicker, Select } from 'antd';
 import * as moment from 'moment';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { badgeStatus } from 'app/main/project/Project/ProjectComponent/TableProject/ConfigTableProject';
+import clsx from 'clsx';
 import { ProjectContext } from '../../ProjectContext';
 import { setTaskEditProject, fetchsProjectFilter } from '../../../_redux/_projectActions';
+import ModalListControlFilter from './ModalListControlFilter';
 
 export default function ActionHeaderProject({ classes, ArrProjectStatus, owner }) {
 	const dispatch = useDispatch();
@@ -30,6 +32,9 @@ export default function ActionHeaderProject({ classes, ArrProjectStatus, owner }
 		setFormProject(true);
 		dispatch(setTaskEditProject());
 	};
+	const [openFilter, setOpenFilter] = useState(false);
+	const handleOpenFilter = () => setOpenFilter(true);
+	const handleCloseFilter = () => setOpenFilter(false);
 	const handleSearch = () => {
 		dispatch(fetchsProjectFilter(rowPage, page, status, ownerFilter, dateStart, search));
 	};
@@ -59,17 +64,31 @@ export default function ActionHeaderProject({ classes, ArrProjectStatus, owner }
 	};
 	return (
 		<div>
+			<ModalListControlFilter
+				onHandleChangeOwner={onHandleChangeOwner}
+				owner={owner}
+				handleChangeFilterDateStart={handleChangeFilterDateStart}
+				onHandleChangeStatus={onHandleChangeStatus}
+				ArrProjectStatus={ArrProjectStatus}
+				badgeStatus={badgeStatus}
+				handleFilter={handleFilter}
+				openFilter={openFilter}
+				status={status}
+				ownerFilter={ownerFilter}
+				dateStart={dateStart}
+				handleCloseFilter={handleCloseFilter}
+			/>
 			<FuseAnimateGroup
 				enter={{
 					animation: 'transition.slideUpBigIn'
 				}}
 			>
-				<div className="flex flex-col sm:flex-row justify-between">
+				<div className="flex flex-col sm:flex-row justify-between sm:block hidden">
 					<Typography variant="subtitle1" color="inherit">
 						Filter
 					</Typography>
 				</div>
-				<div className="flex flex-col sm:flex-row mb-16">
+				<div className="flex flex-col sm:flex-row mb-16 sm:inline-flex hidden">
 					<Paper style={{ width: '180px' }} className="w-full sm:w-1/4 flex justify-between">
 						<DatePicker
 							onChange={handleChangeFilterDateStart}
@@ -134,28 +153,34 @@ export default function ActionHeaderProject({ classes, ArrProjectStatus, owner }
 					</Button>
 				</div>
 				<div className="flex flex-col sm:flex-row justify-between">
-					<Button
-						onClick={handleOpenFormProject}
-						className="sm:mb-0 mb-9 mt-8 sm:mt-0 max-w-sm md:max-w-lg h-26"
-						variant="contained"
-						color="primary"
-					>
-						<svg
-							className="h-16 w-16"
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
+					<div className="flex flex-row justify-between">
+						<IconButton onClick={handleOpenFilter} className={clsx('sm:hidden block')}>
+							{' '}
+							<FilterListIcon />{' '}
+						</IconButton>
+						<Button
+							onClick={handleOpenFormProject}
+							className="sm:mb-0 mb-9 mt-8 sm:mt-0 max-w-sm md:max-w-lg h-26"
+							variant="contained"
+							color="primary"
 						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								strokeWidth={2}
-								d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-							/>
-						</svg>
-						Project
-					</Button>{' '}
+							<svg
+								className="h-16 w-16"
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+							>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									strokeWidth={2}
+									d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+								/>
+							</svg>
+							Project
+						</Button>{' '}
+					</div>
 					<Paper className="w-full sm:w-1/4 flex justify-between ">
 						<InputBase
 							onKeyPress={event => {

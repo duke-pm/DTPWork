@@ -64,7 +64,7 @@ export default function SelectAntd({
 					>
 						{options.map(p => (
 							<Option key={p.value} value={p.value}>
-								<p> {p.label} </p>
+								{p.label}
 							</Option>
 						))}
 					</Select>

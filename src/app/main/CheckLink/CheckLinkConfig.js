@@ -1,4 +1,3 @@
-import { authRoles } from 'app/auth';
 import CheckLink from './CheckLink';
 
 const CheckLinkConfig = {
