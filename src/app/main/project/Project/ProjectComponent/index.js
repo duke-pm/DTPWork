@@ -115,7 +115,7 @@ export default function ProjectComponent({
 	}
 	return (
 		<div className="w-full flex flex-col ">
-			<DrawerComponent params={params} />
+			<DrawerComponent ArrProjectStatus={ArrProjectStatus} params={params} />
 			<FormProjectDrawer
 				owner={owner}
 				sectorArr={sectorArr}
@@ -141,6 +141,7 @@ export default function ProjectComponent({
 					{!gantt ? (
 						<div className="flex flex-col gap-8 mt-16 shadow-md  sm:border-1 sm:rounded-4 ">
 							<TableProject
+								ArrProjectStatus={ArrProjectStatus}
 								params={params}
 								actionLoading={actionLoading}
 								entitiesDetail={entitiesDetail}

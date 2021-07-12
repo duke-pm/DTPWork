@@ -75,7 +75,7 @@ export default function FormCustomProject({
 									<Field
 										label="Subproject of"
 										name="prjParentID"
-										component={SelectAntd || []}
+										component={SelectAntd}
 										options={projectSub}
 										className="mx-4"
 									/>
@@ -93,7 +93,7 @@ export default function FormCustomProject({
 									<Field
 										label="Project Owner"
 										name="owner"
-										component={SelectAntd || []}
+										component={SelectAntd}
 										options={owner}
 										hasFeedback
 										className="mx-4"
@@ -101,7 +101,7 @@ export default function FormCustomProject({
 									<Field
 										label="Add Team Member"
 										name="userInvite"
-										component={SelectAntdMulti || []}
+										component={SelectAntdMulti}
 										options={owner}
 										count={2}
 										className="mx-4"

@@ -38,13 +38,16 @@ const useStyles = makeStyles(theme => ({
 		borderBottom: `1px solid ${theme.palette.divider}`
 	},
 	DrawerFormInput: {
-		width: '660px'
+		width: '660px',
+		[theme.breakpoints.down('sm')]: {
+			width: '400px'
+		}
 	},
 	Drawer: {
 		zIndex: '150 !important'
 	}
 }));
-export default function DrawerComponent() {
+export default function DrawerComponent({ ArrProjectStatus }) {
 	const { currentState } = useSelector(state => ({ currentState: state.project }), shallowEqual);
 	const { entitiesView } = currentState;
 	const projectContext = useContext(ProjectContext);
@@ -90,12 +93,12 @@ export default function DrawerComponent() {
 				>
 					<Tab className="font-sans" label="Overview" {...a11yProps(0)} />
 					<Tab
-						className="font-sans"
+						className="font-sans sm:w-auto w-full"
 						label={
 							<Badge
 								offset={[14]}
 								count={entitiesView && entitiesView.activities ? entitiesView.activities.length : null}
-								className="site-badge-count-4"
+								className="site-badge-count-4 "
 							>
 								{' '}
 								Activity{' '}
@@ -104,7 +107,7 @@ export default function DrawerComponent() {
 						{...a11yProps(1)}
 					/>
 					<Tab
-						className="font-sans"
+						className="font-sans sm:w-auto w-full"
 						label={
 							<Badge
 								offset={[14]}
@@ -121,7 +124,7 @@ export default function DrawerComponent() {
 			</div>
 			<div>
 				<TabPanel value={tab} index={0}>
-					<DrawerOverView closeVisible={closeVisible} />
+					<DrawerOverView ArrProjectStatus={ArrProjectStatus} closeVisible={closeVisible} />
 				</TabPanel>
 				<TabPanel value={tab} index={1}>
 					<DrawerActivity />

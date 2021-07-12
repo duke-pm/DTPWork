@@ -92,7 +92,6 @@ export default function FormProjectDrawer({
 	);
 	const { entitiesEdit, actionLoading } = currentState;
 	const handleSubmitForm = values => {
-		console.log(values);
 		if (entitiesEdit && entitiesEdit.taskID) {
 			if (formProject.title === 'Setting task') {
 				dispatch(actions.updatedTask(values)).then(data => {

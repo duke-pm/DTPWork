@@ -14,6 +14,8 @@ import { FileExcelOutlined, FileImageOutlined, FileWordOutlined } from '@ant-des
 import SelectAntdCustomStatus from '@fuse/CustomForm/SelectAntdCustomStatus';
 import SelectAntdMulti from '@fuse/CustomForm/SelectAntdMulti';
 import SliderAntd from '@fuse/CustomForm/SliderAntd';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const file = {
 	docx: <FileWordOutlined />,
@@ -42,6 +44,8 @@ export default function FormCustomProjectTask({
 	sectorArr,
 	userInviteNoPermiss
 }) {
+	const theme = useTheme();
+	const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
 	const handleClearFile = () => setFileCheck(false);
 	const handleClearListFile = () => setListFile(null);
 	const validateSchema = Yup.object().shape({
@@ -110,7 +114,7 @@ export default function FormCustomProjectTask({
 									component={entitiesEdit && !entitiesEdit.isModified ? AntInput : SelectAntd}
 									options={entitiesEdit && !entitiesEdit.isModified ? null : owner}
 									className="mx-4"
-									position="right"
+									position={matchesSM ? null : 'right'}
 								/>
 							</div>
 							<div className="grid grid-cols-1 gap-8 ">
@@ -123,7 +127,7 @@ export default function FormCustomProjectTask({
 										value={entitiesEdit && !entitiesEdit.isModified ? userInviteNoPermiss : []}
 										component={SelectAntdMulti}
 										readOnly={entitiesEdit && !entitiesEdit.isModified}
-										position="right"
+										position={matchesSM ? null : 'right'}
 										className="mx-4"
 									/>
 								) : (
@@ -134,7 +138,7 @@ export default function FormCustomProjectTask({
 										count={3}
 										component={SelectAntdMulti}
 										readOnly={entitiesEdit && !entitiesEdit.isModified}
-										position="right"
+										position={matchesSM ? null : 'right'}
 										className="mx-4"
 									/>
 								)}
@@ -147,12 +151,12 @@ export default function FormCustomProjectTask({
 									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									component={DateCustom}
 									className="mx-4"
-									position="right"
+									position={matchesSM ? null : 'right'}
 								/>
 								<Field
 									label="End Date"
 									width="58.8%"
-									position="right"
+									position={matchesSM ? null : 'right'}
 									name="endDate"
 									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									component={DateCustom}
@@ -173,7 +177,7 @@ export default function FormCustomProjectTask({
 											name="status"
 											width="58.8%"
 											readOnly={entitiesEdit && !entitiesEdit.isModified}
-											position="right"
+											position={matchesSM ? null : 'right'}
 											component={SelectAntdCustomStatus}
 											options={ArrProjectStatus}
 											className="mx-4"
@@ -184,7 +188,7 @@ export default function FormCustomProjectTask({
 											width="58.8%"
 											readOnly={entitiesEdit && !entitiesEdit.isModified}
 											component={SliderAntd}
-											position="right"
+											position={matchesSM ? null : 'right'}
 											className="mx-4"
 										/>
 									</div>
@@ -195,7 +199,7 @@ export default function FormCustomProjectTask({
 									name="sectorID"
 									width="58.8%"
 									readOnly={entitiesEdit && !entitiesEdit.isModified}
-									position="right"
+									position={matchesSM ? null : 'right'}
 									component={SelectAntd || []}
 									options={sectorArr}
 									className="mx-4"
@@ -208,7 +212,7 @@ export default function FormCustomProjectTask({
 									// value={inititalValues.priority}
 									component={SelectAntd}
 									options={ArrTaskPri}
-									position="right"
+									position={matchesSM ? null : 'right'}
 									width="58.8%"
 									className="mx-4"
 								/>
@@ -221,7 +225,7 @@ export default function FormCustomProjectTask({
 									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									options={gradeGolbal}
 									component={SelectAntd}
-									position="right"
+									position={matchesSM ? null : 'right'}
 									className="mx-4"
 								/>
 								<Field
@@ -232,7 +236,7 @@ export default function FormCustomProjectTask({
 									component={SelectAntd}
 									options={ArrTaskComponent}
 									className="mx-4"
-									position="right"
+									position={matchesSM ? null : 'right'}
 								/>
 							</div>
 							<div className="grid grid-cols-1 gap-8 ">
@@ -242,7 +246,7 @@ export default function FormCustomProjectTask({
 									component={AntInput}
 									type="text"
 									readOnly={entitiesEdit && !entitiesEdit.isModified}
-									position="right"
+									position={matchesSM ? null : 'right'}
 									className="mx-4"
 								/>
 							</div>
@@ -252,7 +256,7 @@ export default function FormCustomProjectTask({
 									component={AntInput}
 									type="text"
 									name="originPublisher"
-									position="right"
+									position={matchesSM ? null : 'right'}
 									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									className="mx-4"
 								/>
@@ -264,7 +268,7 @@ export default function FormCustomProjectTask({
 									type="text"
 									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									name="ownership"
-									position="right"
+									position={matchesSM ? null : 'right'}
 									className="mx-4"
 								/>
 							</div>

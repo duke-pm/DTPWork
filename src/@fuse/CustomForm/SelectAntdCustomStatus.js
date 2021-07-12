@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import { Form, Select } from 'antd';
-import { badgeStatusGobal } from '@fuse/core/DtpConfig';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -61,7 +60,7 @@ export default function SelectAntdCustomStatus({
 					>
 						{options.map(p => (
 							<Option key={p.value} value={p.value}>
-								<p style={{ color: badgeStatusGobal[p.value] }}> {p.label} </p>
+								<p style={{ color: p.colorCode }}> {p.label} </p>
 							</Option>
 						))}
 					</Select>

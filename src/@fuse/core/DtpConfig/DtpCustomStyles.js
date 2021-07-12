@@ -92,7 +92,10 @@ const DtpCustomStyles = makeStyles(theme => ({
 	},
 	DrawerFormInput: {
 		width: '700px',
-		zIndex: 20
+		zIndex: 20,
+		[theme.breakpoints.down('sm')]: {
+			width: '400px'
+		}
 	},
 	Drawer: {
 		zIndex: '150 !important'

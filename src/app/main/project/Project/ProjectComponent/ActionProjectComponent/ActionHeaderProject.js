@@ -1,14 +1,15 @@
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import { Button, IconButton, InputBase, ListItemText, MenuItem, Paper, Typography } from '@material-ui/core';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import { useDispatch } from 'react-redux';
 import { Popover, Select } from 'antd';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import clsx from 'clsx';
 import { ProjectContext } from '../../ProjectContext';
 import { setTaskEditProject, fetchProjectDetailFilter, getTaskDetailAll } from '../../../_redux/_projectActions';
-import { badgeStatus } from '../TableProject/ConfigTableProject';
+import ModalListControlFilter from './ModalListControlFilter';
 
 export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStatus, owner, params, project }) {
 	const dispatch = useDispatch();
@@ -29,6 +30,9 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 		ownerFilter,
 		dateStart
 	} = projectContext;
+	const [openFilter, setOpenFilter] = useState(false);
+	const handleOpenFilter = () => setOpenFilter(true);
+	const handleCloseFilter = () => setOpenFilter(false);
 	const handleOpenFormProject = title => {
 		setFormProject({
 			open: true,
@@ -86,17 +90,31 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 	};
 	return (
 		<div>
+			<ModalListControlFilter
+				handleFilter={handleFilter}
+				onHandleChangeOwner={onHandleChangeOwner}
+				owner={owner}
+				handleCloseFilter={handleCloseFilter}
+				onHandleChangeStatus={onHandleChangeStatus}
+				ArrProjectStatus={ArrProjectStatus}
+				onHandleChangeSector={onHandleChangeSector}
+				sectorArr={sectorArr}
+				openFilter={openFilter}
+				sector={sector}
+				ownerFilter={ownerFilter}
+				status={status}
+			/>
 			<FuseAnimateGroup
 				enter={{
 					animation: 'transition.slideUpBigIn'
 				}}
 			>
-				<div className="flex flex-col sm:flex-row justify-between">
+				<div className="flex flex-col sm:flex-row justify-between sm:block hidden">
 					<Typography variant="subtitle1" color="inherit">
 						Filter
 					</Typography>
 				</div>
-				<div className="flex flex-col sm:flex-row mb-16">
+				<div className="flex flex-col sm:flex-row mb-16 sm:inline-flex hidden">
 					<Paper style={{ width: '180px' }} className="sm:mb-0 mb-9">
 						<Select
 							allowClear
@@ -149,7 +167,7 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 							{ArrProjectStatus &&
 								ArrProjectStatus.map(item => (
 									<Select.Option value={item.value} key={item.value}>
-										<p style={{ color: badgeStatus[item.value] }}> {item.label} </p>
+										<p style={{ color: item.colorCode }}> {item.label} </p>
 									</Select.Option>
 								))}
 						</Select>
@@ -175,12 +193,25 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 						Gantt chart
 					</Button>{' '}
 				</div>
-				<div>
-					<div
-						className={`flex flex-col sm:flex-row ${
-							project?.isProjectOwner ? ' justify-between' : 'justify-end'
-						} `}
-					>
+				<div
+					className={`flex flex-col sm:flex-row ${
+						project?.isProjectOwner ? ' justify-between' : 'justify-end'
+					} `}
+				>
+					<div className="flex flex-row justify-between">
+						<IconButton onClick={handleOpenFilter} className={clsx('sm:hidden block')}>
+							{' '}
+							<FilterListIcon />{' '}
+						</IconButton>
+						<Button
+							onClick={handleOpenGant}
+							className="sm:hidden inline-flex "
+							variant="contained"
+							color="primary"
+							startIcon={<EqualizerIcon />}
+						>
+							Gantt chart
+						</Button>{' '}
 						{project?.isProjectOwner && (
 							<Popover
 								d={!project?.isProjectOwner}
@@ -219,29 +250,30 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 								</Button>{' '}
 							</Popover>
 						)}
-						<Paper className="w-full sm:w-1/4 flex justify-between ">
-							<InputBase
-								onKeyPress={event => {
-									if (event.key === 'Enter') {
-										handleSearch();
-									}
-								}}
-								onChange={e => onHandleChange(e)}
-								className={classes.input}
-								value={search}
-								placeholder="Search"
-								inputProps={{ 'aria-label': 'search google maps' }}
-							/>
-							<IconButton
-								onClick={handleSearch}
-								type="button"
-								className={classes.iconButton}
-								aria-label="search"
-							>
-								<SearchIcon />
-							</IconButton>
-						</Paper>
 					</div>
+
+					<Paper className="w-full sm:w-1/4 flex justify-between ">
+						<InputBase
+							onKeyPress={event => {
+								if (event.key === 'Enter') {
+									handleSearch();
+								}
+							}}
+							onChange={e => onHandleChange(e)}
+							className={classes.input}
+							value={search}
+							placeholder="Search"
+							inputProps={{ 'aria-label': 'search google maps' }}
+						/>
+						<IconButton
+							onClick={handleSearch}
+							type="button"
+							className={classes.iconButton}
+							aria-label="search"
+						>
+							<SearchIcon />
+						</IconButton>
+					</Paper>
 				</div>
 			</FuseAnimateGroup>
 		</div>

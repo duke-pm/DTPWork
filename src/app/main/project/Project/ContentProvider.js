@@ -53,7 +53,7 @@ export default function ContentProvider() {
 	}, [dispatch, params.detail]);
 	const ArrProjectStatus = currentState?.projectStatus
 		? currentState.projectStatus.reduce(
-				(arr, curr) => [...arr, { label: curr.statusName, value: curr.statusID }],
+				(arr, curr) => [...arr, { label: curr.statusName, value: curr.statusID, colorCode: curr.colorCode }],
 				[]
 		  )
 		: [];
@@ -118,7 +118,7 @@ export default function ContentProvider() {
 			contentToolbar={
 				<div className="flex  items-center px-16 flex-1">
 					<p className="font-semibold flex text-sm	">
-						Project plan of {listLoading ? <Spin style={{ marginLeft: '20px' }} /> : project.projectName}
+						Project plan of {listLoading ? <Spin style={{ marginLeft: '20px' }} /> : project?.projectName}
 					</p>
 				</div>
 			}

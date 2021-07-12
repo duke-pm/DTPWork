@@ -8,8 +8,12 @@ import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 export default function DrawerWatchers() {
+	const theme = useTheme();
+	const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
 	const dispatch = useDispatch();
 	const [isReceiveEmail, setIsReceiveEmail] = useState(false);
 	const { currentState } = useSelector(state => ({ currentState: state.project }), shallowEqual);
@@ -88,7 +92,7 @@ export default function DrawerWatchers() {
 					<div className="w-full flex-none text-sm font-normal text-gray-500">
 						List of user viewing your tasks{' '}
 					</div>
-					<div className="flex flex-row">
+					<div className="flex sm:flex-row flex-col">
 						<Button
 							onClick={handleTraffic}
 							type="submit"
@@ -99,7 +103,7 @@ export default function DrawerWatchers() {
 						>
 							{isWatcherOverView ? <VisibilityOffIcon /> : <VisibilityIcon />}
 						</Button>
-						<div className="ml-8 mt-16">
+						<div className="sm:ml-8 ml-0 mt-16">
 							<Checkbox checked={isReceiveEmail} disabled={!isWatcherOverView} onChange={onChange}>
 								<p style={{ fontWeight: 'bold', color: '#006565' }}>
 									Recieve email notifications when members about changes{' '}
@@ -114,7 +118,7 @@ export default function DrawerWatchers() {
 					<Table
 						rowKey="rowNum"
 						className="virtual-table"
-						// scroll={{ y: 290 }}
+						scroll={{ x: matchesSM && 620 }}
 						pagination={false}
 						columns={columns}
 						dataSource={entitiesView && entitiesView.watcher}

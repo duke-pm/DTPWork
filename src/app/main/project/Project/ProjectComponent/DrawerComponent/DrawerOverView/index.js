@@ -19,7 +19,9 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import { useParams } from 'react-router';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
-import { badgeStatus, badgeText, grade, priorityColor } from '../../TableProject/ConfigTableProject';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { badgeText, grade, priorityColor } from '../../TableProject/ConfigTableProject';
 import { ProjectContext } from '../../../ProjectContext';
 
 function formatter(value) {
@@ -32,7 +34,9 @@ const file = {
 	jpg: <FileImageOutlined />,
 	jpge: <FileImageOutlined />
 };
-export default function DrawerOverView({ closeVisible }) {
+export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
+	const theme = useTheme();
+	const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
 	const dispatch = useDispatch();
 	const params = useParams();
 	const [process, setProcess] = useState(0);
@@ -134,35 +138,22 @@ export default function DrawerOverView({ closeVisible }) {
 				<div className="flex flex-col">
 					<p className="font-extrabold">ACTION</p>
 					<Divider />
-					<div className="flex flex-row justify-between mt-16">
-						<div className="flex flex-row">
+					<div className="flex flex-col sm:flex-row justify-between mt-16">
+						<div className="flex  flex-row ">
 							<p className="text-base font-normal "> Status </p>
 							<Dropdown
 								className="ml-8"
 								disabled={!entitiesView?.detail.isUpdated}
 								overlay={
 									<Menu>
-										<Menu.Item onClick={() => updatedStatus(1)} style={{ color: '#1890ff' }}>
-											New
-										</Menu.Item>
-										<Menu.Item onClick={() => updatedStatus(2)} style={{ color: '#560bad' }}>
-											To be scheduled
-										</Menu.Item>
-										<Menu.Item onClick={() => updatedStatus(3)} style={{ color: '#e85d04' }}>
-											Scheduled
-										</Menu.Item>
-										<Menu.Item onClick={() => updatedStatus(4)} style={{ color: '#faad14' }}>
-											In progress
-										</Menu.Item>
-										<Menu.Item onClick={() => updatedStatus(5)} style={{ color: '#d9d9d9' }}>
-											Closed
-										</Menu.Item>
-										<Menu.Item onClick={() => updatedStatus(6)} style={{ color: '#52c41a' }}>
-											On hold
-										</Menu.Item>
-										<Menu.Item onClick={() => updatedStatus(7)} style={{ color: '#ff4d4f' }}>
-											Rejected
-										</Menu.Item>
+										{ArrProjectStatus?.map(itemStatus => (
+											<Menu.Item
+												onClick={() => updatedStatus(itemStatus.value)}
+												style={{ color: itemStatus.colorCode }}
+											>
+												{itemStatus.label}
+											</Menu.Item>
+										))}
 									</Menu>
 								}
 								placement="bottomLeft"
@@ -173,17 +164,17 @@ export default function DrawerOverView({ closeVisible }) {
 									<Badge
 										size="default"
 										style={{
-											color: badgeStatus[entitiesView?.detail.statusID],
+											color: entitiesView?.detail.colorCode,
 											cursor: 'pointer'
 										}}
-										color={badgeStatus[entitiesView?.detail.statusID]}
+										color={entitiesView?.detail.colorCode}
 										text={entitiesView?.detail.statusName}
 									/>
 									<CaretDownOutlined style={{ cursor: 'pointer', marginLeft: '10px' }} />
 								</div>
 							</Dropdown>
 						</div>
-						<div className="flex flex-row ml-8">
+						<div className="flex flex-row sm:ml-8 ml-0">
 							<p className="text-base font-normal "> Progress </p>
 							<Slider
 								disabled={entitiesView ? !entitiesView.detail.isUpdated : true}
@@ -248,7 +239,7 @@ export default function DrawerOverView({ closeVisible }) {
 							/>
 						</div>
 					</div>
-					<div className="flex flex-row justify-between">
+					<div className="flex flex-col sm:flex-row justify-between">
 						<div className="flex flex-row">
 							<p className="text-base font-normal" style={{ width: '126px' }}>
 								{' '}
@@ -259,7 +250,10 @@ export default function DrawerOverView({ closeVisible }) {
 							</p>
 						</div>
 						<div className="flex flex-row">
-							<p className="text-base font-normal "> End date </p>
+							<p className="text-base font-normal " style={{ width: matchesSM && '126px' }}>
+								{' '}
+								End date{' '}
+							</p>
 							<div className="text-base font-normal text-gray-500 ml-56 ">
 								{moment(entitiesView?.detail.endDate).format('DD/MM/YYYY')}{' '}
 							</div>

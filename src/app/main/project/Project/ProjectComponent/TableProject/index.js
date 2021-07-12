@@ -13,21 +13,23 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import * as actions from '../../../_redux/_projectActions';
 import { ProjectContext } from '../../ProjectContext';
-import { badgeStatus, typeColor, priorityColor, badgeText } from './ConfigTableProject';
+import { typeColor, priorityColor, badgeText } from './ConfigTableProject';
 
 function TableProject(props) {
 	const dispatch = useDispatch();
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.up('xl'));
+	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
 	const { entitiesDetail, actionLoading, params } = props;
 	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 	const projectContext = useContext(ProjectContext);
+	console.log(props.ArrProjectStatus);
 	useEffect(() => {
 		const newEntis = entitiesDetail?.listTask?.map(item => item.taskID);
 		if (newEntis && newEntis.length > 0) {
 			setSelectedRowKeys(newEntis);
 		}
-	}, [entitiesDetail.listTask]);
+	}, [entitiesDetail?.listTask]);
 	const onSelectedRowKeysChange = selectedRowKey => {
 		setSelectedRowKeys(selectedRowKey);
 	};
@@ -194,27 +196,14 @@ function TableProject(props) {
 					disabled={!item.isUpdated || actionLoading}
 					overlay={
 						<Menu>
-							<Menu.Item onClick={() => updatedStatus(item, 1)} style={{ color: '#1890ff' }}>
-								New
-							</Menu.Item>
-							<Menu.Item onClick={() => updatedStatus(item, 2)} style={{ color: '#560bad' }}>
-								To be scheduled
-							</Menu.Item>
-							<Menu.Item onClick={() => updatedStatus(item, 3)} style={{ color: '#e85d04' }}>
-								Scheduled
-							</Menu.Item>
-							<Menu.Item onClick={() => updatedStatus(item, 4)} style={{ color: '#faad14' }}>
-								In progress
-							</Menu.Item>
-							<Menu.Item onClick={() => updatedStatus(item, 5)} style={{ color: '#d9d9d9' }}>
-								Closed
-							</Menu.Item>
-							<Menu.Item onClick={() => updatedStatus(item, 6)} style={{ color: '#52c41a' }}>
-								On hold
-							</Menu.Item>
-							<Menu.Item onClick={() => updatedStatus(item, 7)} style={{ color: '#ff4d4f' }}>
-								Rejected
-							</Menu.Item>
+							{props.ArrProjectStatus?.map(itemStatus => (
+								<Menu.Item
+									onClick={() => updatedStatus(item, itemStatus.value)}
+									style={{ color: itemStatus.colorCode }}
+								>
+									{itemStatus.label}
+								</Menu.Item>
+							))}
 						</Menu>
 					}
 					placement="bottomLeft"
@@ -224,8 +213,8 @@ function TableProject(props) {
 						{' '}
 						<Badge
 							size="default"
-							style={{ color: badgeStatus[item.statusID], cursor: 'pointer' }}
-							color={badgeStatus[item.statusID]}
+							style={{ color: item.colorCode, cursor: 'pointer' }}
+							color={item.colorCode}
 							text={item.statusName}
 						/>
 						<CaretDownOutlined style={{ cursor: 'pointer', marginLeft: '10px' }} />
@@ -321,12 +310,12 @@ function TableProject(props) {
 						)
 				}}
 				scroll={{
-					x: entitiesDetail.listTask?.length > 0 ? (matches ? 1900 : 1800) : null,
+					x: entitiesDetail?.listTask?.length > 0 ? (matches ? 1900 : 1800) : matchesSM ? 1800 : null,
 					y: null
 				}}
 				pagination={false}
 				columns={columns}
-				dataSource={entitiesDetail.listTask}
+				dataSource={entitiesDetail?.listTask}
 			/>{' '}
 		</>
 	);

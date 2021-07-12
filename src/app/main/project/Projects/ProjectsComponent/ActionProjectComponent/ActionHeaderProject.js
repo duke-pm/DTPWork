@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux';
 import { DatePicker, Select } from 'antd';
 import * as moment from 'moment';
 import FilterListIcon from '@material-ui/icons/FilterList';
-import { badgeStatus } from 'app/main/project/Project/ProjectComponent/TableProject/ConfigTableProject';
 import clsx from 'clsx';
 import { ProjectContext } from '../../ProjectContext';
 import { setTaskEditProject, fetchsProjectFilter } from '../../../_redux/_projectActions';
@@ -70,7 +69,6 @@ export default function ActionHeaderProject({ classes, ArrProjectStatus, owner }
 				handleChangeFilterDateStart={handleChangeFilterDateStart}
 				onHandleChangeStatus={onHandleChangeStatus}
 				ArrProjectStatus={ArrProjectStatus}
-				badgeStatus={badgeStatus}
 				handleFilter={handleFilter}
 				openFilter={openFilter}
 				status={status}
@@ -135,7 +133,7 @@ export default function ActionHeaderProject({ classes, ArrProjectStatus, owner }
 							{ArrProjectStatus &&
 								ArrProjectStatus.map(item => (
 									<Select.Option value={item.value} key={item.value}>
-										<p style={{ color: badgeStatus[item.value] }}> {item.label} </p>
+										<p style={{ color: item.colorCode }}> {item.label} </p>
 									</Select.Option>
 								))}
 						</Select>

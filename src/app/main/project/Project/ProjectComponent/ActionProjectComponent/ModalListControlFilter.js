@@ -12,11 +12,9 @@ import {
 import FilterListIcon from '@material-ui/icons/FilterList';
 import React from 'react';
 import CloseIcon from '@material-ui/icons/Close';
-import { DatePicker, Select } from 'antd';
-import moment from 'moment';
+import { Select } from 'antd';
 
 export default function ModalListControlFilter({
-	handleChangeFilterDateStart,
 	onHandleChangeOwner,
 	owner,
 	onHandleChangeStatus,
@@ -26,7 +24,9 @@ export default function ModalListControlFilter({
 	handleCloseFilter,
 	status,
 	ownerFilter,
-	dateStart
+	onHandleChangeSector,
+	sectorArr,
+	sector
 }) {
 	return (
 		<Dialog
@@ -48,15 +48,22 @@ export default function ModalListControlFilter({
 			</AppBar>
 			<DialogContent>
 				<div className="flex flex-col">
-					<Paper className="w-full justify-between">
-						<DatePicker
-							onChange={handleChangeFilterDateStart}
-							defaultValue={moment()}
-							picker="year"
-							format="YYYY"
-							placeholder="Year start"
+					<Paper className="sm:mb-0 mb-9">
+						<Select
+							allowClear
+							placeholder="Sector"
+							value={sector}
+							onChange={onHandleChangeSector}
+							bordered={false}
 							style={{ width: '100%' }}
-						/>
+						>
+							{sectorArr &&
+								sectorArr.map(item => (
+									<Select.Option value={item.value} key={item.value}>
+										<p> {item.label} </p>
+									</Select.Option>
+								))}
+						</Select>
 					</Paper>
 					<Paper className="mb-16 mt-16">
 						<Select

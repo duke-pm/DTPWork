@@ -12,7 +12,6 @@ import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { ProjectContext } from '../../ProjectContext';
 import * as actions from '../../../_redux/_projectActions';
-import { badgeStatus, badgeText } from '../ConfigTableProject';
 
 function TableProject(props) {
 	const theme = useTheme();
@@ -133,12 +132,7 @@ function TableProject(props) {
 			key: 'status',
 			width: '12%',
 			render: (_, item) => (
-				<Badge
-					size="default"
-					style={{ color: badgeStatus[item.statusID] }}
-					color={badgeStatus[item.statusID]}
-					text={badgeText[item.statusID]}
-				/>
+				<Badge size="default" style={{ color: item.colorCode }} color={item.colorCode} text={item.statusName} />
 			)
 		},
 		{
