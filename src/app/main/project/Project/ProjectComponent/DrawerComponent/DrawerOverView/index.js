@@ -148,6 +148,7 @@ export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
 									<Menu>
 										{ArrProjectStatus?.map(itemStatus => (
 											<Menu.Item
+												key={itemStatus.value}
 												onClick={() => updatedStatus(itemStatus.value)}
 												style={{ color: itemStatus.colorCode }}
 											>
@@ -291,9 +292,7 @@ export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
 							{' '}
 							Grade{' '}
 						</p>
-						<p className="text-base font-normal text-gray-500 ml-72 ">
-							{grade[entitiesView?.detail.grade]}
-						</p>
+						<p className="text-base font-normal text-gray-500 ml-72 ">{entitiesView?.detail.gradeName}</p>
 					</div>
 					<div className="flex flex-row">
 						<p className="text-base font-normal " style={{ width: '131px' }}>

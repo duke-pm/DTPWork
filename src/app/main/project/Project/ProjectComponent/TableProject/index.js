@@ -23,7 +23,6 @@ function TableProject(props) {
 	const { entitiesDetail, actionLoading, params } = props;
 	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 	const projectContext = useContext(ProjectContext);
-	console.log(props.ArrProjectStatus);
 	useEffect(() => {
 		const newEntis = entitiesDetail?.listTask?.map(item => item.taskID);
 		if (newEntis && newEntis.length > 0) {
@@ -198,6 +197,7 @@ function TableProject(props) {
 						<Menu>
 							{props.ArrProjectStatus?.map(itemStatus => (
 								<Menu.Item
+									key={itemStatus.value}
 									onClick={() => updatedStatus(item, itemStatus.value)}
 									style={{ color: itemStatus.colorCode }}
 								>

@@ -1,7 +1,7 @@
 export const badgeText = {
 	1: 'Not yet started',
 	2: 'To be scheduled',
-	3: 'Being edited/re-write',
+	3: 'Confirmed',
 	4: 'In progress',
 	5: 'Finshed',
 	6: 'Postponed',
