@@ -7,7 +7,7 @@
 /**
  * Removes the default spacing and border for appropriate elements.
  */
-
+/* 
 blockquote,
 dl,
 dd,
@@ -22,7 +22,7 @@ figure,
 p,
 pre {
     margin: 0;
-}
+} */
 
 button {
     background: transparent;

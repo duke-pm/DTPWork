@@ -164,6 +164,14 @@ thead[class*="ant-table-thead"] th{
 .ant-drawer-body {
     padding: 10px 20px !important;
 }
+.font-extrabold {
+    font-weight: 600;
+    font-family: 'Poppins', '"Roboto"', 'Helvetica', 'sans-serif';
+  }
+.font-medium{
+    font-weight: 400;
+    font-family: 'Poppins', '"Roboto"', 'Helvetica', 'sans-serif';
+}
 @keyframes autofill {
     0%,100% {
         background: transparent;
