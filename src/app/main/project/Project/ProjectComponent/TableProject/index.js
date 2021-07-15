@@ -57,32 +57,65 @@ function TableProject(props) {
 		dispatch(actions.setTaskEditProject(item));
 	};
 	const updatedStatus = (item, statusTask) => {
-		dispatch(actions.updatedTaskStatus(item, statusTask)).then(data => {
-			if (data && !data.isError) {
-				notificationConfig(
-					'success',
-					notificationContent.content.en.success,
-					notificationContent.description.project.task.updateStatusTask
-				);
-				if (item.statusID !== statusTask) {
-					const comment = `*TRẠNG THÁI được thay đổi từ ${item.statusName} đến ${badgeText[statusTask]}`;
-					dispatch(actions.addTaskActivity(item.taskID, comment, 'type'));
+		if (statusTask === 5) {
+			dispatch(actions.updatedTaskStatus(item, statusTask, 100)).then(data => {
+				if (data && !data.isError) {
+					notificationConfig(
+						'success',
+						notificationContent.content.en.success,
+						notificationContent.description.project.task.updateStatusTask
+					);
+					let str = '';
+					if (item.statusID !== statusTask) {
+						str = `${str} *TRẠNG THÁI được thay đổi từ ${item.statusName} đến ${badgeText[statusTask]}`;
+					}
+					if (item.percentage !== 100) {
+						str = `${str} *TIẾN ĐỘ (%) được thay đổi từ ${item.percentage} đến 100.`;
+					}
+					if (str !== '') dispatch(actions.addTaskActivity(item.taskID, str, 'type'));
+					dispatch(
+						actions.fetchProjectDetailFilter(
+							params.detail,
+							rowPage,
+							page,
+							ownerFilter,
+							status,
+							dateStart,
+							sector,
+							search
+						)
+					);
+					dispatch(actions.getTaskDetailAll(params.detail, ownerFilter, status, sector, search));
 				}
-				dispatch(
-					actions.fetchProjectDetailFilter(
-						params.detail,
-						rowPage,
-						page,
-						ownerFilter,
-						status,
-						dateStart,
-						sector,
-						search
-					)
-				);
-				dispatch(actions.getTaskDetailAll(params.detail, ownerFilter, status, sector, search));
-			}
-		});
+			});
+		} else {
+			dispatch(actions.updatedTaskStatus(item, statusTask)).then(data => {
+				if (data && !data.isError) {
+					notificationConfig(
+						'success',
+						notificationContent.content.en.success,
+						notificationContent.description.project.task.updateStatusTask
+					);
+					if (item.statusID !== statusTask) {
+						const comment = `*TRẠNG THÁI được thay đổi từ ${item.statusName} đến ${badgeText[statusTask]}`;
+						dispatch(actions.addTaskActivity(item.taskID, comment, 'type'));
+					}
+					dispatch(
+						actions.fetchProjectDetailFilter(
+							params.detail,
+							rowPage,
+							page,
+							ownerFilter,
+							status,
+							dateStart,
+							sector,
+							search
+						)
+					);
+					dispatch(actions.getTaskDetailAll(params.detail, ownerFilter, status, sector, search));
+				}
+			});
+		}
 	};
 	const deleteTask = item => {
 		dispatch(actions.deleteTask(item)).then(data => {

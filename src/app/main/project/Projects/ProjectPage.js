@@ -39,7 +39,7 @@ export default function ProjectPage() {
 		dispatch(getInformationCompany(params));
 	}, [dispatch]);
 	const ArrProjectStatus = currentState?.projectStatus?.reduce(
-		(arr, curr) => [...arr, { label: curr.statusName, value: curr.statusID }],
+		(arr, curr) => [...arr, { label: curr.statusName, value: curr.statusID, colorCode: curr.colorCode }],
 		[]
 	);
 	const projectSub = projectAll?.reduce((arr, curr) => [...arr, { label: curr.prjName, value: curr.prjID }], []);

@@ -21,7 +21,7 @@ import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { badgeText, grade, priorityColor } from '../../TableProject/ConfigTableProject';
+import { badgeText, priorityColor } from '../../TableProject/ConfigTableProject';
 import { ProjectContext } from '../../../ProjectContext';
 
 function formatter(value) {
@@ -50,33 +50,67 @@ export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
 		}
 	}, [entitiesView]);
 	const updatedStatus = type => {
-		dispatch(updatedTaskStatus(entitiesView.detail, type)).then(data => {
-			if (data && !data.isError) {
-				dispatch(getTaskViewDetail(entitiesView.detail.taskID));
-				notificationConfig(
-					'success',
-					notificationContent.content.en.success,
-					notificationContent.description.project.task.updateStatusTask
-				);
-				if (entitiesView.detail.statusName !== type) {
-					const comment = `*TRẠNG THÁI được thay đổi từ ${entitiesView.detail.statusName} đến ${badgeText[type]}`;
-					dispatch(addTaskActivity(entitiesView.detail.taskID, comment));
+		if (type === 5) {
+			dispatch(updatedTaskStatus(entitiesView.detail, type, 100)).then(data => {
+				if (data && !data.isError) {
+					dispatch(getTaskViewDetail(entitiesView.detail.taskID));
+					notificationConfig(
+						'success',
+						notificationContent.content.en.success,
+						notificationContent.description.project.task.updateStatusTask
+					);
+					let str = '';
+					if (entitiesView.detail.percentage !== 100) {
+						str = `${str} *TIẾN ĐỘ (%) được thay đổi từ ${entitiesView.detail.percentage} đến 100.`;
+					}
+					if (entitiesView.detail.statusName !== type) {
+						str = `${str} *TRẠNG THÁI được thay đổi từ ${entitiesView.detail.statusName} đến ${badgeText[type]}`;
+					}
+					if (str !== '') dispatch(addTaskActivity(entitiesView.detail.taskID, str));
+					dispatch(
+						fetchProjectDetailFilter(
+							params.detail,
+							rowPage,
+							page,
+							ownerFilter,
+							status,
+							dateStart,
+							sector,
+							search
+						)
+					);
+					dispatch(getTaskDetailAll(params.detail, ownerFilter, status, sector, search));
 				}
-				dispatch(
-					fetchProjectDetailFilter(
-						params.detail,
-						rowPage,
-						page,
-						ownerFilter,
-						status,
-						dateStart,
-						sector,
-						search
-					)
-				);
-				dispatch(getTaskDetailAll(params.detail, ownerFilter, status, sector, search));
-			}
-		});
+			});
+		} else {
+			dispatch(updatedTaskStatus(entitiesView.detail, type)).then(data => {
+				if (data && !data.isError) {
+					dispatch(getTaskViewDetail(entitiesView.detail.taskID));
+					notificationConfig(
+						'success',
+						notificationContent.content.en.success,
+						notificationContent.description.project.task.updateStatusTask
+					);
+					if (entitiesView.detail.statusName !== type) {
+						const comment = `*TRẠNG THÁI được thay đổi từ ${entitiesView.detail.statusName} đến ${badgeText[type]}`;
+						dispatch(addTaskActivity(entitiesView.detail.taskID, comment));
+					}
+					dispatch(
+						fetchProjectDetailFilter(
+							params.detail,
+							rowPage,
+							page,
+							ownerFilter,
+							status,
+							dateStart,
+							sector,
+							search
+						)
+					);
+					dispatch(getTaskDetailAll(params.detail, ownerFilter, status, sector, search));
+				}
+			});
+		}
 	};
 	const handleChangeSlider = value => setProcess(value);
 	const handleChangeSliderAfter = value => {

@@ -112,12 +112,11 @@ export default function ActionHeaderProject({ classes, ArrProjectStatus, owner }
 							}
 							style={{ width: '100%' }}
 						>
-							{owner &&
-								owner.map(item => (
-									<Select.Option value={item.value} key={item.value}>
-										{item.label}
-									</Select.Option>
-								))}
+							{owner?.map(item => (
+								<Select.Option value={item.value} key={item.value}>
+									{item.label}
+								</Select.Option>
+							))}
 						</Select>
 					</Paper>
 					<Paper style={{ width: '230px' }} className="ml-16 sm:mb-0 mb-9">
@@ -130,12 +129,11 @@ export default function ActionHeaderProject({ classes, ArrProjectStatus, owner }
 							bordered={false}
 							style={{ width: '100%' }}
 						>
-							{ArrProjectStatus &&
-								ArrProjectStatus.map(item => (
-									<Select.Option value={item.value} key={item.value}>
-										<p style={{ color: item.colorCode }}> {item.label} </p>
-									</Select.Option>
-								))}
+							{ArrProjectStatus?.map(item => (
+								<Select.Option value={item.value} key={item.value}>
+									<p style={{ color: item.colorCode }}> {item.label} </p>
+								</Select.Option>
+							))}
 						</Select>
 					</Paper>
 					<Button
