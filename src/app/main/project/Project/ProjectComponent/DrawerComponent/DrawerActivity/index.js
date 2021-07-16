@@ -32,8 +32,8 @@ export default function DrawerActivity() {
 	}
 	return (
 		<div className="flex flex-col">
-			<div style={{ height: classes.Acitivity }}>
-				<FuseScrollbars ref={chatRef} className="flex-col overflow-y-auto xl:max-h-512 max-h-384">
+			<div className={classes.Acitivity}>
+				<FuseScrollbars ref={chatRef} className="flex-col overflow-y-auto xl:max-h-512 max-h-360">
 					<FuseAnimateGroup
 						enter={{
 							animation: 'transition.slideUpBigIn'

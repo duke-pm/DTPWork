@@ -83,9 +83,7 @@ export default function ActionComponent({ actionLoading }) {
 				}}
 			>
 				<div className="flex flex-col sm:flex-row justify-between">
-					<Typography variant="subtitle1" color="inherit">
-						Filter
-					</Typography>
+					<h5 className="font-extrabold">Filter</h5>
 				</div>
 				<div className="flex flex-col sm:flex-row">
 					<Paper className="w-full sm:w-1/4 flex justify-between">
@@ -107,7 +105,7 @@ export default function ActionComponent({ actionLoading }) {
 					<Paper style={{ width: '220px' }} className="ml-16 sm:mb-0 mb-9">
 						<Select
 							loading={!!actionLoading}
-							placeholder="Tìm kiếm theo loại yêu cầu"
+							placeholder="Tìm loại yêu cầu"
 							onChange={onHandleChangeType}
 							bordered={false}
 							style={{ width: '100%' }}

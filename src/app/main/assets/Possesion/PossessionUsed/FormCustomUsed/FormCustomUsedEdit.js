@@ -81,7 +81,7 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 											</div>
 											<div
 												className="flex sm:mr-96 mr-auto flex-col w-full"
-												style={{ width: '650px' }}
+												style={{ width: '870px' }}
 											>
 												<p className="p-6 font-extrabold">{entitiesEdit?.empName} </p>
 												<p className="p-6 font-extrabold"> {entitiesEdit?.jobTitle} </p>

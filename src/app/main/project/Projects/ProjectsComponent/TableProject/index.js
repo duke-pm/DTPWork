@@ -97,7 +97,7 @@ function TableProject(props) {
 				showTitle: false
 			},
 			render: (_, item) => (
-				<Typography style={{ marginLeft: '20px', cursor: 'default', fontFamily: 'Poppins' }} component="button">
+				<Typography style={{ marginLeft: '20px', cursor: 'default' }} component="button">
 					{' '}
 					{item.prjName}{' '}
 				</Typography>

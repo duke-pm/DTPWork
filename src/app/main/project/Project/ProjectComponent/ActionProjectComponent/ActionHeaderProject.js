@@ -110,9 +110,7 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 				}}
 			>
 				<div className="flex flex-col sm:flex-row justify-between sm:block hidden">
-					<Typography variant="subtitle1" color="inherit">
-						Filter
-					</Typography>
+					<h5 className="font-extrabold">Filter</h5>
 				</div>
 				<div className="flex flex-col sm:flex-row mb-16 sm:inline-flex hidden">
 					<Paper style={{ width: '180px' }} className="sm:mb-0 mb-9">

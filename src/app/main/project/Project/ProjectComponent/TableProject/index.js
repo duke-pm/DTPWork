@@ -194,7 +194,7 @@ function TableProject(props) {
 			key: 'subject',
 			width: '27%',
 			render: (_, item) => (
-				<Typography style={{ marginLeft: '20px', cursor: 'default', fontFamily: 'Poppins' }} component="button">
+				<Typography style={{ marginLeft: '20px', cursor: 'default' }} component="button">
 					{' '}
 					{item.taskName}{' '}
 				</Typography>
@@ -212,10 +212,10 @@ function TableProject(props) {
 			key: 'type',
 			width: '7%',
 			render: (_, item) => (
-				<p style={{ color: typeColor[item.typeName], textTransform: 'uppercase', fontWeight: 'bold' }}>
+				<Typography style={{ color: typeColor[item.typeName], textTransform: 'uppercase', fontWeight: 'bold' }}>
 					{' '}
 					{item.typeName}{' '}
-				</p>
+				</Typography>
 			)
 		},
 		{
@@ -242,7 +242,7 @@ function TableProject(props) {
 					placement="bottomLeft"
 					arrow
 				>
-					<div className="flex flex-row justify-between">
+					<div className="flex flex-row justify-between items-center">
 						{' '}
 						<Badge
 							size="default"
@@ -282,10 +282,10 @@ function TableProject(props) {
 			key: 'assignee',
 			width: '15%',
 			render: (_, item) => (
-				<div className="flex flex-row">
+				<div className="flex flex-row items-center ">
 					{' '}
 					<Avatar size={25} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
-					<p className="ml-8">{item.ownerName}</p>{' '}
+					<Typography className="ml-8">{item.ownerName}</Typography>{' '}
 				</div>
 			)
 		},

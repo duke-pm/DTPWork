@@ -52,9 +52,7 @@ export default function ActionListRoleSetting({
 				}}
 			>
 				<div className="flex flex-col sm:flex-row justify-between">
-					<Typography variant="subtitle1" color="inherit">
-						Filter
-					</Typography>
+					<h5 className="font-extrabold">Filter</h5>
 				</div>
 				<div className="flex flex-col sm:flex-row">
 					<Paper style={{ width: '220px' }} className="sm:mb-0 mb-9">

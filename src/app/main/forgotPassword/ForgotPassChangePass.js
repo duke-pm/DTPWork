@@ -63,7 +63,7 @@ function ForgotPassChangePass() {
 				}
 			});
 		}
-	}, [params.detail, dispatch]);
+	}, [params.detail, dispatch, history]);
 	function handleSubmitForm(values) {
 		setConfirmLoading(true);
 		dispatch(changePasswordPublic(values, params.detail)).then(data => {

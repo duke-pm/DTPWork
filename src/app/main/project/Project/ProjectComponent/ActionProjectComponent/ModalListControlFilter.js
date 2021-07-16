@@ -41,9 +41,7 @@ export default function ModalListControlFilter({
 					<IconButton onClick={handleCloseFilter} edge="start" color="inherit" aria-label="close">
 						<CloseIcon />
 					</IconButton>
-					<Typography variant="subtitle1" color="inherit">
-						Filter
-					</Typography>
+					<h5 className="font-extrabold">Filter</h5>
 				</Toolbar>
 			</AppBar>
 			<DialogContent>
