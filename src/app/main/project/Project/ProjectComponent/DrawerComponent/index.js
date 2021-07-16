@@ -122,7 +122,7 @@ export default function DrawerComponent({ ArrProjectStatus }) {
 					/>{' '}
 				</Tabs>
 			</div>
-			<div>
+			<div className="overflow-scroll">
 				<TabPanel value={tab} index={0}>
 					<DrawerOverView ArrProjectStatus={ArrProjectStatus} closeVisible={closeVisible} />
 				</TabPanel>

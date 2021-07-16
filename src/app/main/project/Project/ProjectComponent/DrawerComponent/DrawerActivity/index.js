@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import { Avatar, Input, Empty, Divider } from 'antd';
 import React, { useState, useRef, useEffect } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
@@ -30,69 +30,77 @@ export default function DrawerActivity() {
 	function scrollToBottom() {
 		chatRef.current.scrollTop = chatRef.current.scrollHeight;
 	}
+
 	return (
 		<div className="flex flex-col">
-			<div className={classes.Acitivity}>
-				<FuseScrollbars ref={chatRef} className="flex-col overflow-y-auto xl:max-h-512 max-h-360">
-					<FuseAnimateGroup
-						enter={{
-							animation: 'transition.slideUpBigIn'
-						}}
-					>
-						{entitiesActivity?.map(item => (
-							<div key={item.date} className="flex flex-col">
-								{' '}
-								<Divider>
+			<FuseScrollbars ref={chatRef} enable={false} className="mb-72">
+				<FuseAnimateGroup
+					enter={{
+						animation: 'transition.slideUpBigIn'
+					}}
+				>
+					{entitiesActivity?.map(item => (
+						<div key={item.date} className="flex flex-col">
+							<Divider>
+								<Typography variant="caption">
 									{moment(item.date, 'DD/MM/YYYY - HH:mm').format('dddd - DD/MM/YYYY')}
-								</Divider>{' '}
-								{item?.data.map(it => (
-									<div key={it.lineNum} className="flex flex-col">
-										<div className="flex flex-row justify-between">
-											<div className="flex flex-row">
+								</Typography>
+							</Divider>
+							{item?.data.map((it, index) => {
+								return (
+									<div key={it.lineNum} className="flex flex-row items-start mb-6">
+										<div className="flex flex-col items-center w-60 max-w-60">
+											{((item?.data[index - 1] &&
+												item?.data[index - 1].userName !== it.userName) ||
+												item?.data[index - 1] === undefined) && (
 												<Avatar
 													style={{
 														backgroundColor: '#87d068',
-														verticalAlign: 'middle',
-														marginTop: 5
+														verticalAlign: 'middle'
 													}}
 													size="large"
 												>
-													<p className="uppercase"> {sliceString(it.userName)}</p>
+													<Typography className="uppercase" variant="inherit">
+														{sliceString(it.userName)}
+													</Typography>
 												</Avatar>
-												<div className="flex flex-col ml-8">
-													<div className="w-full flex-none text-sm font-medium text-black ">
-														{' '}
-														{it.fullName}{' '}
-													</div>
-													<div className="w-full flex-none text-sm font-normal text-gray-500">
-														{' '}
-														Updated on {it.timeUpdate.split('-')[1]}{' '}
-													</div>
-												</div>
+											)}
+											<div className="flex-none mt-8">
+												<Typography variant="caption">{it.timeUpdate.split('-')[1]}</Typography>
 											</div>
-											<div className="font-medium flex-none"> #{it.rowNum}</div>
 										</div>
-										<div className="mt-8" style={{ marginLeft: '4.8rem' }}>
-											<p className="text-sm font-light">{it.comments}</p>
+
+										<div
+											className="ml-16 p-16 rounded-8"
+											style={{ backgroundColor: 'rgba(160,174,192,0.2)' }}
+										>
+											<div className="flex-none">
+												<Typography className="font-bold" variant="body1">
+													{it.fullName}
+												</Typography>
+											</div>
+											<div className="mt-8">
+												<Typography variant="body1">{it.comments}</Typography>
+											</div>
 										</div>
 									</div>
-								))}
-							</div>
-						))}
-					</FuseAnimateGroup>
-					{entitiesView && entitiesView.activities.length === 0 ? (
-						<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-					) : null}
-				</FuseScrollbars>
-			</div>
-			<Divider />
-			<div className="flex flex-row justify-between mt-16">
-				<TextArea value={comment} onChange={e => setComment(e.target.value)} placeholder="Comment" rows={5} />
-			</div>
-			<div className="flex flex-row justify-end mt-8">
-				<Button onClick={submitComment} variant="contained" className="mr-1" color="primary">
-					Save
-				</Button>{' '}
+								);
+							})}
+						</div>
+					))}
+				</FuseAnimateGroup>
+				{entitiesView && entitiesView.activities.length === 0 ? (
+					<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+				) : null}
+			</FuseScrollbars>
+
+			<div className="absolute bottom-0 right-0 left-0 pt-16 pb-6 px-6 flex w-full flex-row items-center">
+				<TextArea value={comment} onChange={e => setComment(e.target.value)} placeholder="Comment" rows={3} />
+				<div className="flex flex-1" style={{ backgroundColor: 'white' }}>
+					<Button className="mx-16" onClick={submitComment} variant="contained" color="primary">
+						<Typography variant="inherit">Save</Typography>
+					</Button>
+				</div>
 			</div>
 		</div>
 	);

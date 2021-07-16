@@ -1,12 +1,12 @@
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
-import { Button, IconButton, InputBase, Paper, Typography } from '@material-ui/core';
+import { Button, IconButton, InputBase, Paper, Typography, Grid } from '@material-ui/core';
 import React, { useContext, useState } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import { useDispatch } from 'react-redux';
 import { DatePicker, Select } from 'antd';
 import * as moment from 'moment';
 import FilterListIcon from '@material-ui/icons/FilterList';
-import clsx from 'clsx';
+import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 import { ProjectContext } from '../../ProjectContext';
 import { setTaskEditProject, fetchsProjectFilter } from '../../../_redux/_projectActions';
 import ModalListControlFilter from './ModalListControlFilter';
@@ -81,101 +81,95 @@ export default function ActionHeaderProject({ classes, ArrProjectStatus, owner }
 					animation: 'transition.slideUpBigIn'
 				}}
 			>
-				<div className="flex flex-col sm:flex-row justify-between sm:block hidden">
-					<h5 className="font-extrabold">Filter</h5>
-				</div>
-				<div className="flex flex-col sm:flex-row mb-16 sm:inline-flex hidden">
-					<Paper style={{ width: '180px' }} className="w-full sm:w-1/4 flex justify-between">
-						<DatePicker
-							onChange={handleChangeFilterDateStart}
-							defaultValue={moment()}
-							picker="year"
-							format="YYYY"
-							placeholder="Year start"
-							style={{ width: '100%' }}
-						/>
-					</Paper>
-					<Paper style={{ width: '270px' }} className="ml-16 sm:mb-0 mb-9">
-						<Select
-							placeholder="Owner"
-							showSearch
-							mode="multiple"
-							allowClear
-							maxTagCount={1}
-							onChange={onHandleChangeOwner}
-							bordered={false}
-							optionFilterProp="children"
-							filterOption={(input, option) =>
-								option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-							}
-							style={{ width: '100%' }}
-						>
-							{owner?.map(item => (
-								<Select.Option value={item.value} key={item.value}>
-									{item.label}
-								</Select.Option>
-							))}
-						</Select>
-					</Paper>
-					<Paper style={{ width: '230px' }} className="ml-16 sm:mb-0 mb-9">
-						<Select
-							allowClear
-							placeholder="Status"
-							mode="multiple"
-							maxTagCount={1}
-							onChange={onHandleChangeStatus}
-							bordered={false}
-							style={{ width: '100%' }}
-						>
-							{ArrProjectStatus?.map(item => (
-								<Select.Option value={item.value} key={item.value}>
-									<p style={{ color: item.colorCode }}> {item.label} </p>
-								</Select.Option>
-							))}
-						</Select>
-					</Paper>
-					<Button
-						onClick={handleFilter}
-						variant="contained"
-						type="button"
-						color="primary"
-						className="ml-16 sm:mb-0 mb-9"
-						startIcon={<FilterListIcon />}
-					>
-						{' '}
-						Filter{' '}
-					</Button>
-				</div>
 				<div className="flex flex-col sm:flex-row justify-between">
+					<Typography variant="h6">Filter</Typography>
+				</div>
+				<Grid className="mb-16" container spacing={2}>
+					<Grid item xs={12} sm={6} md={2} lg={2}>
+						<Paper className="flex justify-between">
+							<DatePicker
+								onChange={handleChangeFilterDateStart}
+								defaultValue={moment()}
+								picker="year"
+								format="YYYY"
+								placeholder="Year start"
+								style={{ width: '100%' }}
+							/>
+						</Paper>
+					</Grid>
+					<Grid item xs={12} sm={6} md={4} lg={3}>
+						<Paper className="sm:mb-0 mb-9">
+							<Select
+								placeholder="Owner"
+								showSearch
+								mode="multiple"
+								allowClear
+								maxTagCount={1}
+								onChange={onHandleChangeOwner}
+								bordered={false}
+								optionFilterProp="children"
+								filterOption={(input, option) =>
+									option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+								}
+								style={{ width: '100%' }}
+							>
+								{owner?.map(item => (
+									<Select.Option value={item.value} key={item.value}>
+										{item.label}
+									</Select.Option>
+								))}
+							</Select>
+						</Paper>
+					</Grid>
+					<Grid item xs={12} sm={6} md={4} lg={3}>
+						<Paper className="sm:mb-0 mb-9">
+							<Select
+								allowClear
+								placeholder="Status"
+								mode="multiple"
+								maxTagCount={1}
+								onChange={onHandleChangeStatus}
+								bordered={false}
+								style={{ width: '100%' }}
+							>
+								{ArrProjectStatus?.map(item => (
+									<Select.Option value={item.value} key={item.value}>
+										<p style={{ color: item.colorCode }}> {item.label} </p>
+									</Select.Option>
+								))}
+							</Select>
+						</Paper>
+					</Grid>
+					<Grid item xs={12} sm={6} md={2} lg={4}>
+						<Button
+							onClick={handleFilter}
+							variant="contained"
+							type="button"
+							color="primary"
+							className="sm:mb-0 mb-9"
+							startIcon={<FilterListIcon />}
+						>
+							<Typography variant="inherit">Filter</Typography>
+						</Button>
+					</Grid>
+				</Grid>
+				<div className="flex flex-row justify-between items-center">
 					<div className="flex flex-row justify-between">
-						<IconButton onClick={handleOpenFilter} className={clsx('sm:hidden block')}>
+						{/* <IconButton onClick={handleOpenFilter} className={clsx('sm:hidden block')}>
 							{' '}
 							<FilterListIcon />{' '}
-						</IconButton>
+						</IconButton> */}
 						<Button
 							onClick={handleOpenFormProject}
 							className="sm:mb-0 mb-9 mt-8 sm:mt-0 max-w-sm md:max-w-lg h-26"
 							variant="contained"
 							color="primary"
+							startIcon={<AddCircleOutline />}
 						>
-							<svg
-								className="h-16 w-16"
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth={2}
-									d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-								/>
-							</svg>
-							Project
-						</Button>{' '}
+							<Typography variant="inherit">Project</Typography>
+						</Button>
 					</div>
-					<Paper className="w-full sm:w-1/4 flex justify-between ">
+					<Paper className="flex justify-between">
 						<InputBase
 							onKeyPress={event => {
 								if (event.key === 'Enter') {
