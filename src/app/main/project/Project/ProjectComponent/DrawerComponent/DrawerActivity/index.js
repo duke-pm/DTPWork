@@ -44,7 +44,7 @@ export default function DrawerActivity() {
 							{item?.data.map((it, index) => {
 								return (
 									<div key={it.lineNum} className="flex flex-row items-start mb-6">
-										<div className="flex flex-col items-start w-60 min-w-60 max-w-60">
+										<div className="flex flex-col items-center w-60 min-w-60 max-w-60">
 											{((item?.data[index - 1] &&
 												item?.data[index - 1].userName !== it.userName) ||
 												item?.data[index - 1] === undefined) && (

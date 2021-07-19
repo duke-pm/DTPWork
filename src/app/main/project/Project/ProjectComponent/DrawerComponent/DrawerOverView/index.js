@@ -171,7 +171,7 @@ export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
 				<div className="mt-16">
 					<Grid container className="flex flex-row items-center">
 						<Grid item xs={4} md={2}>
-							<Typography variant="subtitle1">Description:</Typography>
+							<Typography variant="body1">Description:</Typography>
 						</Grid>
 						<Grid item xs={8} md={10}>
 							<Typography variant="body1">{entitiesView?.detail.descr}</Typography>
@@ -187,7 +187,7 @@ export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
 						<Grid item xs={12} md={6} className="mt-16">
 							<Grid container className="flex flex-row items-center">
 								<Grid item xs={3}>
-									<Typography variant="subtitle1">Status</Typography>
+									<Typography variant="body1">Status</Typography>
 								</Grid>
 								<Grid item xs={9}>
 									<Dropdown
@@ -228,7 +228,7 @@ export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
 						<Grid item xs={12} md={6} className="mt-16">
 							<Grid container className="flex flex-row items-center">
 								<Grid item xs={3}>
-									<Typography variant="subtitle1">Progress</Typography>
+									<Typography variant="body1">Progress</Typography>
 								</Grid>
 								<Grid item xs={9}>
 									<Slider
@@ -264,7 +264,7 @@ export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
 							<Grid item xs={12} md={5} className="mt-16">
 								<Grid container className="flex flex-row items-center">
 									<Grid item xs={6}>
-										<Typography variant="subtitle1">Start date</Typography>
+										<Typography variant="body1">Start date</Typography>
 									</Grid>
 									<Grid item xs={6}>
 										<Typography variant="body1">
@@ -279,7 +279,7 @@ export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
 							<Grid item xs={12} md={5} className="mt-16">
 								<Grid container className="flex flex-row items-center">
 									<Grid item xs={6}>
-										<Typography variant="subtitle1">End date</Typography>
+										<Typography variant="body1">End date</Typography>
 									</Grid>
 									<Grid item xs={6}>
 										<Typography variant="body1">
@@ -293,7 +293,7 @@ export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
 					<div className="mt-16">
 						<Grid container className="flex flex-row items-center">
 							<Grid item xs={4}>
-								<Typography variant="subtitle1">Assignee</Typography>
+								<Typography variant="body1">Assignee</Typography>
 							</Grid>
 							<Grid item xs={8}>
 								<div className="flex flex-row items-center">
@@ -308,7 +308,7 @@ export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
 					<div className="mt-16">
 						<Grid container className="flex flex-row items-center">
 							<Grid item xs={4}>
-								<Typography variant="subtitle1">Members</Typography>
+								<Typography variant="body1">Members</Typography>
 							</Grid>
 							<Grid item xs={8}>
 								<Avatar.Group maxCount={5} maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
@@ -328,7 +328,7 @@ export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
 					<div className="mt-16">
 						<Grid container className="flex flex-row items-center">
 							<Grid item xs={4}>
-								<Typography variant="subtitle1">Priority</Typography>
+								<Typography variant="body1">Priority</Typography>
 							</Grid>
 							<Grid item xs={8}>
 								<Typography
@@ -348,7 +348,7 @@ export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
 							<div className="mt-16">
 								<Grid container className="flex flex-row items-center">
 									<Grid item xs={4}>
-										<Typography variant="subtitle1">Deadline</Typography>
+										<Typography variant="body1">Deadline</Typography>
 									</Grid>
 									<Grid item xs={8}>
 										<Typography variant="body1" style={{ color: 'red' }}>
@@ -367,7 +367,7 @@ export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
 					<div className="mt-16">
 						<Grid container className="flex flex-row items-center">
 							<Grid item xs={4}>
-								<Typography variant="subtitle1">Sector</Typography>
+								<Typography variant="body1">Sector</Typography>
 							</Grid>
 							<Grid item xs={8}>
 								<Typography variant="body1">{entitiesView?.detail.sectorName}</Typography>
@@ -377,7 +377,7 @@ export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
 					<div className="mt-16">
 						<Grid container className="flex flex-row items-center">
 							<Grid item xs={4}>
-								<Typography variant="subtitle1">Grade</Typography>
+								<Typography variant="body1">Grade</Typography>
 							</Grid>
 							<Grid item xs={8}>
 								<Typography variant="body1">{entitiesView?.detail.gradeName}</Typography>
@@ -387,7 +387,7 @@ export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
 					<div className="mt-16">
 						<Grid container className="flex flex-row items-center">
 							<Grid item xs={4}>
-								<Typography variant="subtitle1">Component</Typography>
+								<Typography variant="body1">Component</Typography>
 							</Grid>
 							<Grid item xs={8}>
 								<Typography variant="body1">{entitiesView?.detail.componentName}</Typography>
@@ -397,7 +397,7 @@ export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
 					<div className="mt-16">
 						<Grid container className="flex flex-row items-center">
 							<Grid item xs={4}>
-								<Typography variant="subtitle1">Author</Typography>
+								<Typography variant="body1">Author</Typography>
 							</Grid>
 							<Grid item xs={8}>
 								<Typography variant="body1">{entitiesView?.detail.author}</Typography>
@@ -407,7 +407,7 @@ export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
 					<div className="mt-16">
 						<Grid container className="flex flex-row items-center">
 							<Grid item xs={4}>
-								<Typography variant="subtitle1">Origin Publisher</Typography>
+								<Typography variant="body1">Origin Publisher</Typography>
 							</Grid>
 							<Grid item xs={8}>
 								<Typography variant="body1">{entitiesView?.detail.originPublisher}</Typography>
@@ -417,7 +417,7 @@ export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
 					<div className="mt-16">
 						<Grid container className="flex flex-row items-center">
 							<Grid item xs={4}>
-								<Typography variant="subtitle1">Ownership DTP</Typography>
+								<Typography variant="body1">Ownership DTP</Typography>
 							</Grid>
 							<Grid item xs={8}>
 								<Typography variant="body1">{entitiesView?.detail.ownershipDTP}</Typography>

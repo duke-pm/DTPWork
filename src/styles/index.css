@@ -23,8 +23,9 @@ html {
  font-family: Muli, Roboto, Helvetica Neue, Arial, sans-serif;
 } */
 body {
-    font-size: 14px;
-    line-height: 1.4;
+    font-size: 1.4rem !important;
+    line-height: 1.4 !important;
+    font-family: sans-serif, Muli, Roboto, Helvetica Neue, Arial !important;
 }
 /* .Button{
 
@@ -187,6 +188,12 @@ input:-webkit-autofill {
 
 .xs\:mt-16 {
     margin-top: 1.6rem;
+}
+
+.ant-input {
+    font-size: 1.4rem !important;
+    line-height: 1.4 !important;
+    font-family: sans-serif, Muli, Roboto, Helvetica Neue, Arial !important;
 }
 
 @import 'print.css';
