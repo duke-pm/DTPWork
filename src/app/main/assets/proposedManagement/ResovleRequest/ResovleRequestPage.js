@@ -42,9 +42,7 @@ export default function ResovleRequestPage() {
 				}
 				contentToolbar={
 					<div className="flex  items-center px-16 flex-1">
-						<Typography component="span" className="font-bold flex text-sm	">
-							Đề xuất cần xử lý
-						</Typography>
+						<Typography variant="h6"> Đề xuất cần xử lý</Typography>
 					</div>
 				}
 				content={

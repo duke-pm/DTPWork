@@ -61,9 +61,7 @@ export default function RequestProviderPage() {
 			}
 			contentToolbar={
 				<div className="flex  items-center px-16 flex-1">
-					<Typography component="span" className="font-bold flex text-sm	">
-						Yêu cầu cấp phát tài sản
-					</Typography>
+					<Typography variant="h6">Yêu cầu cấp phát tài sản</Typography>
 				</div>
 			}
 			content={

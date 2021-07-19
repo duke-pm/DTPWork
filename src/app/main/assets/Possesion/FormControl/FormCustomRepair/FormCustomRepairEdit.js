@@ -9,7 +9,7 @@ import { AntInput } from '@fuse/CustomForm/CreateAntField';
 import * as moment from 'moment';
 import * as Yup from 'yup';
 import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
-import { Spin } from 'antd';
+import { Spin, Tooltip } from 'antd';
 import { validateField } from '@fuse/core/DtpConfig';
 
 const initial = {
@@ -51,10 +51,15 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 											<p className="p-6"> Mô tả </p>
 										</div>
 										<div className="flex flex-col sm:mr-96 mr-auto">
-											<p className="p-6 font-extrabold"> {entitiesEdit.assetCode || ''} </p>
-											<p className="p-6 font-extrabold"> {entitiesEdit.assetName || ''} </p>
-											<p className="p-6 font-extrabold"> {entitiesEdit.groupName || ''} </p>
-											<p className="p-6 font-extrabold"> {entitiesEdit?.descr} </p>
+											<p className="p-6 font-extrabold"> {entitiesEdit?.assetCode} </p>
+											<p className="p-6 font-extrabold"> {entitiesEdit?.assetName} </p>
+											<p className="p-6 font-extrabold"> {entitiesEdit?.groupName} </p>
+											<Tooltip placement="topLeft" title={entitiesEdit?.deptNameManager}>
+												<p className="p-6 font-extrabold truncate max-w-200">
+													{' '}
+													{entitiesEdit?.descr}
+												</p>
+											</Tooltip>
 										</div>
 									</div>
 									<div className="flex-row flex">

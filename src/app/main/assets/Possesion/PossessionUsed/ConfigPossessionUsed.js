@@ -29,6 +29,12 @@ export const rowPossesion = [
 		sort: true
 	},
 	{
+		id: 'StatusName',
+		align: 'left',
+		label: 'Trạng thái',
+		sort: true
+	},
+	{
 		id: 'PurchaseDate',
 		align: 'left',
 		label: 'Ngày mua',
@@ -50,12 +56,6 @@ export const rowPossesion = [
 		id: 'RegionName',
 		align: 'left',
 		label: 'Khu vực',
-		sort: true
-	},
-	{
-		id: 'StatusName',
-		align: 'left',
-		label: 'Trạng thái',
 		sort: true
 	},
 	{

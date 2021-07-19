@@ -95,7 +95,9 @@ export default function DrawerWatchers() {
 						<Grid item xs={7} md={9}>
 							<div>
 								<Checkbox checked={isReceiveEmail} disabled={!isWatcherOverView} onChange={onChange}>
-									<Typography variant="caption" style={{color: '#006565'}}>Recieve email notifications when members about changes</Typography>
+									<Typography variant="caption" style={{ color: '#006565' }}>
+										Recieve email notifications when members about changes
+									</Typography>
 								</Checkbox>
 							</div>
 						</Grid>

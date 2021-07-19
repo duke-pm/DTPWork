@@ -10,6 +10,8 @@ import { useDispatch } from 'react-redux';
 import { logoutUser } from 'app/auth/store/userSlice';
 import { getDataUserLocalStorage } from '@fuse/core/DtpConfig';
 import { useHistory } from 'react-router';
+import { Avatar } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 
 function UserMenu(props) {
 	const history = useHistory();
@@ -41,12 +43,10 @@ function UserMenu(props) {
 						{dataUser.userName || ''}
 					</Typography>
 					<Typography className="text-11 capitalize" color="textSecondary">
-						{/* {user.userName ? user.userName.toString() : 'ADMIN'}
-						{(!user.userName || (Array.isArray(user.userName) && user.userName.length === 0)) && 'Guest'} */}
 						{dataUser.jobTitle || ''}
 					</Typography>
 				</div>
-
+				<Avatar size={32} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
 				{/* {user.data.photoURL ? (
 					<Avatar className="md:mx-4" alt="user photo" src={user.data.photoURL} />
 				) : (

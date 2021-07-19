@@ -33,10 +33,6 @@ export default function TableBodyUsed({ entities, handleOpenForm, handleOpenFrom
 						<TableCell align="left">{items.assetName} </TableCell>
 						<TableCell align="left">{items.groupName}</TableCell>
 						<TableCell align="left">{items.groupDetailName}</TableCell>
-						<TableCell align="left">{moment(items.purchaseDate).format('DD-MM-YYYY')} </TableCell>
-						<TableCell align="left">{items.deptNameManager}</TableCell>
-						<TableCell align="left"> {items && items.empName ? items.empName : null}</TableCell>
-						<TableCell align="left">{items.regionName}</TableCell>
 						<TableCell align="left">
 							<div
 								className={`inline text-12 p-4 rounded-full truncate ${
@@ -50,6 +46,10 @@ export default function TableBodyUsed({ entities, handleOpenForm, handleOpenFrom
 								{items.isProcessing ? items.requestTypeName : 'Đang sử dụng'}
 							</div>
 						</TableCell>
+						<TableCell align="left">{moment(items.purchaseDate).format('DD-MM-YYYY')} </TableCell>
+						<TableCell align="left">{items.deptNameManager}</TableCell>
+						<TableCell align="left"> {items && items.empName ? items.empName : null}</TableCell>
+						<TableCell align="left">{items.regionName}</TableCell>
 						<TableCell align="left"> {items.remarks} </TableCell>
 					</TableRow>
 				))}

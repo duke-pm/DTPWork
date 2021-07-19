@@ -14,7 +14,7 @@ export const rowConfirmAllocation = [
 	{
 		id: 'RequestID',
 		align: 'left',
-		label: 'Số yêu cầu',
+		label: '#',
 		sort: true,
 		width: 20
 	},

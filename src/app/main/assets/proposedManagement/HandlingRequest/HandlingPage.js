@@ -35,9 +35,7 @@ export default function HandlingPage() {
 			}
 			contentToolbar={
 				<div className="flex  items-center px-16 flex-1">
-					<Typography component="span" className="font-bold flex text-sm	">
-						Báo {value === 1 ? 'hỏng' : 'mất'} tài sản
-					</Typography>
+					<Typography variant="h6"> Báo {value === 1 ? 'hỏng' : 'mất'} tài sản</Typography>
 				</div>
 			}
 			content={
