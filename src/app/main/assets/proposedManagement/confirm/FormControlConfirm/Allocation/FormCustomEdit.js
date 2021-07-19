@@ -11,6 +11,8 @@ import { AntInput } from '@fuse/CustomForm/CreateAntField';
 import InputTextArea from '@fuse/CustomForm/InputTextArea';
 import RadioAntd from '@fuse/CustomForm/RadioAntd';
 import DateCustom from '@fuse/CustomForm/Date';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 export default function FormCustomEdit({ handleSubmitForm, entitiesEdit, newEntitiesEdit }) {
 	const dialogContent = useRef();
@@ -64,6 +66,8 @@ export default function FormCustomEdit({ handleSubmitForm, entitiesEdit, newEnti
 			render: (text, record, index) => <h4 className="text-right">{currencyFormat(text)}</h4>
 		}
 	];
+	const theme = useTheme();
+	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
 
 	// const onConfirm = values => {
 	// 	// handleSubmitForm(values, dataSource);
@@ -84,7 +88,7 @@ export default function FormCustomEdit({ handleSubmitForm, entitiesEdit, newEnti
 								<div className="flex justify-between flex-row">
 									<h5 className="font-extrabold">Thông tin nhân viên.</h5>
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-4 gap-8 ">
+								<div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-8 ">
 									<Field
 										readOnly
 										label="Nhân viên"
@@ -126,6 +130,7 @@ export default function FormCustomEdit({ handleSubmitForm, entitiesEdit, newEnti
 									<h5 className="font-extrabold">Tài sản yêu cầu.</h5>
 								</div>
 								<Table
+									scroll={{ x: matchesSM && 720 }}
 									rowKey="descr"
 									className="time-table-row-select"
 									columns={columns}
@@ -171,7 +176,7 @@ export default function FormCustomEdit({ handleSubmitForm, entitiesEdit, newEnti
 										/>
 									)}
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-16 ">
+								<div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 mt-16 ">
 									<div className="flex flex-col">
 										<Field
 											readOnly

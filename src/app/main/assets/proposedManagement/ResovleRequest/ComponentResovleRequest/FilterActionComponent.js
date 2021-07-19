@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable import/no-extraneous-dependencies */
-import { IconButton, Paper, Typography } from '@material-ui/core';
+import { IconButton, Paper } from '@material-ui/core';
 import React, { useContext } from 'react';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
@@ -86,7 +86,7 @@ export default function ActionComponent({ actionLoading }) {
 					<h5 className="font-extrabold">Filter</h5>
 				</div>
 				<div className="flex flex-col sm:flex-row">
-					<Paper className="w-full sm:w-1/4 flex justify-between">
+					<Paper className="w-full sm:w-1/4  sm:mb-0 mb-9 flex justify-between">
 						<DatePicker
 							onChange={handleChangeFilterDateStart}
 							defaultValue={moment().startOf('month')}
@@ -102,7 +102,7 @@ export default function ActionComponent({ actionLoading }) {
 							style={{ width: '100%' }}
 						/>
 					</Paper>
-					<Paper style={{ width: '220px' }} className="ml-16 sm:mb-0 mb-9">
+					<Paper style={{ width: '220px' }} className=" sm:ml-16 ml-0 sm:mb-0 mb-9">
 						<Select
 							loading={!!actionLoading}
 							placeholder="Tìm loại yêu cầu"

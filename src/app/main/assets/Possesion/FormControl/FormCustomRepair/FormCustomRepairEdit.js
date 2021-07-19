@@ -42,15 +42,15 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 								<div className="flex justify-between flex-row">
 									<h5 className="font-extrabold">Thông tin tài sản.</h5>
 								</div>
-								<div className=" grid grid-cols-1 sm:grid-cols-2 ">
+								<div className=" grid lg:grid-cols-2 md:grid-cols-2  sm:grid-cols-1">
 									<div className="flex-row flex ">
-										<div className="flex flex-col" style={{ width: '40rem' }}>
+										<div className="flex flex-col">
 											<p className="p-6"> Mã tài sản </p>
 											<p className="p-6"> Tên tài sản </p>
 											<p className="p-6"> Nhóm tài sản </p>
 											<p className="p-6"> Mô tả </p>
 										</div>
-										<div className="flex flex-col sm:mr-96 mr-auto" style={{ width: '600px' }}>
+										<div className="flex flex-col sm:mr-96 mr-auto">
 											<p className="p-6 font-extrabold"> {entitiesEdit.assetCode || ''} </p>
 											<p className="p-6 font-extrabold"> {entitiesEdit.assetName || ''} </p>
 											<p className="p-6 font-extrabold"> {entitiesEdit.groupName || ''} </p>
@@ -58,12 +58,12 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 										</div>
 									</div>
 									<div className="flex-row flex">
-										<div className="flex flex-col" style={{ width: '27rem' }}>
+										<div className="flex flex-col">
 											<p className="p-6">Ngày mua </p>
 											<p className="p-6"> Nguyên giá </p>
 											<p className="p-6"> Tình trạng </p>
 										</div>
-										<div className="flex flex-col sm:mr-96 mr-auto" style={{ width: '600px' }}>
+										<div className="flex flex-col sm:mr-96 mr-auto">
 											<p className="p-6 font-extrabold">
 												{' '}
 												{moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY') || ''}{' '}
@@ -80,7 +80,7 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 								<div className="flex justify-between flex-row">
 									<h5 className="font-extrabold">Thông tin sửa chữa bảo hành.</h5>
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 mb-16 gap-8 ">
+								<div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 gap-8 ">
 									<Field
 										label="Tên đơn vị sửa chữa, bảo hành"
 										name="nameService"
@@ -99,7 +99,7 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 										variant="outlined"
 									/>
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 mb-16 gap-8 ">
+								<div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 mb-16 gap-8 ">
 									<div className="flex flex-col">
 										<Field
 											label="Lý do sửa chữa, bảo hành"

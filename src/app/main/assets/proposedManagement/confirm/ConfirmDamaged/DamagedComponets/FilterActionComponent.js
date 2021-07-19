@@ -88,12 +88,10 @@ export default function ActionComponent({ actionLoading }) {
 				}}
 			>
 				<div className="flex flex-col sm:flex-row justify-between">
-					<Typography variant="subtitle1" color="inherit">
-						Filter
-					</Typography>
+					<h5 className="font-extrabold">Filter </h5>
 				</div>
 				<div className="flex flex-col sm:flex-row">
-					<Paper className="flex flex-row w-full sm:w-1/3 justify-around ">
+					<Paper className="flex flex-row w-full sm:mb-0 mb-9 sm:w-1/3 justify-around ">
 						<DatePicker
 							onChange={handleChangeFilterDateStart}
 							defaultValue={moment().startOf('month')}
@@ -109,7 +107,7 @@ export default function ActionComponent({ actionLoading }) {
 							style={{ width: '100%' }}
 						/>
 					</Paper>
-					<Paper style={{ width: '220px' }} className="ml-16">
+					<Paper style={{ width: '220px' }} className=" sm:ml-16 ml-0 sm:mb-0 mb-9">
 						<Select
 							loading={!!actionLoading}
 							onChange={onHandleChangeStatus}

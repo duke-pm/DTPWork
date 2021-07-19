@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable import/no-extraneous-dependencies */
-import { Button, Paper, Typography } from '@material-ui/core';
+import { Button, Paper } from '@material-ui/core';
 import React from 'react';
 import 'antd/dist/antd.css';
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';

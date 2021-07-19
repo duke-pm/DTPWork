@@ -17,6 +17,8 @@ import FuseAnimate from '@fuse/core/FuseAnimate';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { useHistory } from 'react-router-dom';
 import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import * as actions from '../../_redux/confirmAction';
 import { validateSchema } from './ConfigRequestProvider';
 
@@ -28,6 +30,8 @@ export default function RequestProviderBody({
 	dataSource,
 	setDataSource
 }) {
+	const theme = useTheme();
+	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const classes = DtpCustomStyles();
@@ -179,7 +183,7 @@ export default function RequestProviderBody({
 									<div className="flex justify-between flex-row">
 										<h5 className={classes.CustomFont}>Thông tin người yêu cầu.</h5>
 									</div>
-									<div className="grid grid-cols-1 sm:grid-cols-4 gap-8 ">
+									<div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 ">
 										<Field
 											label="Nhân viên"
 											name="nameEmp"
@@ -237,6 +241,7 @@ export default function RequestProviderBody({
 										</Link>
 									</Typography>
 									<Table
+										scroll={{ x: matchesSM && 720 }}
 										rowKey="id"
 										columns={columns}
 										bordered
@@ -246,7 +251,7 @@ export default function RequestProviderBody({
 									/>
 								</div>
 								<div className="px-16 sm:px-24 mt-16">
-									<div className="grid grid-cols-1 sm:grid-cols-2 gap-16 ">
+									<div className="grid sm:grid-cols-1 md:grid-cols-2 gap-16 ">
 										<Field
 											label="Nơi dùng"
 											hasFeedback

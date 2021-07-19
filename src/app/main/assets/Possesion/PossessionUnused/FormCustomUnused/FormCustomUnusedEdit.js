@@ -117,7 +117,7 @@ export default function FormCustomUnusedEdit({
 								<div className="flex justify-between flex-row">
 									<h5 className="font-extrabold">Thông tin cấp phát tài sản.</h5>
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
+								<div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 gap-8 ">
 									<Field
 										label="Cấp phát cho"
 										name="customer"
@@ -138,7 +138,7 @@ export default function FormCustomUnusedEdit({
 										className="mx-4 mb-16"
 									/>
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
+								<div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 gap-8 ">
 									<Field
 										label="Bộ phận"
 										name="department"
@@ -162,7 +162,7 @@ export default function FormCustomUnusedEdit({
 										className="mx-4 mb-16"
 									/>
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
+								<div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 gap-8 ">
 									<div className="flex flex-col">
 										<Field
 											label="Ngày cấp"

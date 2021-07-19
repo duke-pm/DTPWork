@@ -46,7 +46,7 @@ export default function ActionComponent({ value, handleOpenForm }) {
 				<div className="flex flex-col sm:flex-row justify-between">
 					<Button
 						onClick={handleOpenForm}
-						className="mt-8 sm:mt-0 max-w-sm md:max-w-lg h-26"
+						className="mt-8 sm:mt-0 mb-8 sm:mb-0 max-w-sm md:max-w-lg h-26"
 						variant="contained"
 						color="primary"
 					>

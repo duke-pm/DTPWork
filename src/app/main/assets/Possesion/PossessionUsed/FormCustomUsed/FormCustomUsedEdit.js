@@ -5,7 +5,6 @@ import DateCustom from '@fuse/CustomForm/Date';
 import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
 import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
 import * as moment from 'moment';
-import { makeStyles } from '@material-ui/core/styles';
 import { Spin } from 'antd';
 import * as Yup from 'yup';
 import { validateField } from '@fuse/core/DtpConfig';
@@ -15,16 +14,11 @@ const initial = {
 	note: '',
 	file: ''
 };
-const useStyles = makeStyles(theme => ({
-	widthFont: {
-		width: '30rem'
-	}
-}));
+
 export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionLoading, handleClose }) {
 	const checkValidateForm = Yup.object().shape({
 		date: Yup.string().required(`${validateField}`)
 	});
-	const classes = useStyles();
 	return (
 		<>
 			<Formik
@@ -40,13 +34,13 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 					<Form>
 						<DialogContent dividers>
 							<div className="px-16 sm:px-24">
-								<div className=" grid grid-cols-1 sm:grid-cols-2">
+								<div className=" grid lg:grid-cols-2 md:grid-cols-2  sm:grid-cols-1">
 									<div className="flex-col flex ">
 										<div className="flex flex-row">
 											<h5 className="font-extrabold">Thông tin tài sản.</h5>
 										</div>
-										<div className="flex-row justify-between flex ">
-											<div className={`${classes.widthFont} flex flex-col`}>
+										<div className="flex-row flex ">
+											<div className="flex flex-col">
 												<p className="p-6"> Mã tài sản </p>
 												<p className="p-6"> Tên tài sản </p>
 												<p className="p-6"> Nhóm tài sản </p>
@@ -54,7 +48,7 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 												<p className="p-6"> Tình trạng </p>
 												<p className="p-6"> Mô tả </p>
 											</div>
-											<div className="flex sm:mr-96 mr-auto flex-col" style={{ width: '600px' }}>
+											<div className="flex sm:mr-96 mr-auto flex-col">
 												<p className="p-6 font-extrabold"> {entitiesEdit?.assetCode}</p>
 												<p className="p-6 font-extrabold"> {entitiesEdit?.assetName} </p>
 												<p className="p-6 font-extrabold"> {entitiesEdit?.groupName} </p>
@@ -72,17 +66,14 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 										<div className="flex flex-row">
 											<h5 className="font-extrabold">Thông tin nhân viên sử dụng.</h5>
 										</div>
-										<div className="flex-row justify-between flex ">
-											<div className={`${classes.widthFont} flex flex-col`}>
+										<div className="flex-row  flex ">
+											<div className="flex flex-col">
 												<p className="p-6"> Nhân viên </p>
 												<p className="p-6"> Chức vụ </p>
 												<p className="p-6"> Bộ phận </p>
 												<p className="p-6"> Khu vực </p>
 											</div>
-											<div
-												className="flex sm:mr-96 mr-auto flex-col w-full"
-												style={{ width: '870px' }}
-											>
+											<div className="flex sm:mr-96 mr-auto flex-col">
 												<p className="p-6 font-extrabold">{entitiesEdit?.empName} </p>
 												<p className="p-6 font-extrabold"> {entitiesEdit?.jobTitle} </p>
 												<p className="p-6 font-extrabold"> {entitiesEdit?.deptNameManager} </p>
@@ -96,7 +87,7 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 								<div className="flex flex-row">
 									<h5 className="font-extrabold">Thông tin thu hồi.</h5>
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 p-4 mb-16 gap-8 ">
+								<div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 p-4 mb-16 gap-8 ">
 									<div className="flex flex-col">
 										<Field
 											label="Lý do thu hồi"
