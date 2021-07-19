@@ -31,8 +31,8 @@ function TabPanel(props) {
 }
 const useStyles = makeStyles(theme => ({
 	toolbar: {
-		height: 64,
-		minHeight: 64,
+		height: 56,
+		minHeight: 56,
 		display: 'flex',
 		alignItems: 'center',
 		borderBottom: `1px solid ${theme.palette.divider}`
@@ -62,7 +62,6 @@ export default function DrawerComponent({ ArrProjectStatus }) {
 		setTabs(newValue);
 	};
 	return (
-		// <div className="site-drawer-render-in-current-wrapper">
 		<Drawer
 			anchor="right"
 			onClose={closeVisible}
@@ -82,16 +81,23 @@ export default function DrawerComponent({ ArrProjectStatus }) {
 			</AppBar>
 			<div className={classes.toolbar}>
 				<Tabs
-					classes={{ root: 'w-full h-64' }}
+					classes={{ root: 'flex w-full h-56' }}
 					value={tab}
 					onChange={handleChange}
 					indicatorColor="primary"
 					textColor="primary"
-					variant="scrollable"
+					variant="fullWidth"
 					scrollButtons="auto"
-					aria-label="scrollable auto tabs example"
 				>
-					<Tab className="font-sans" label="Overview" {...a11yProps(0)} />
+					<Tab
+						className="font-sans sm:w-auto w-full"
+						label={
+							<Badge offset={[14]} count={null} className="site-badge-count-4 ">
+								<Typography variant="body1">Overview</Typography>
+							</Badge>
+						}
+						{...a11yProps(0)}
+					/>
 					<Tab
 						className="font-sans sm:w-auto w-full"
 						label={
@@ -100,8 +106,7 @@ export default function DrawerComponent({ ArrProjectStatus }) {
 								count={entitiesView && entitiesView.activities ? entitiesView.activities.length : null}
 								className="site-badge-count-4 "
 							>
-								{' '}
-								Activity{' '}
+								<Typography variant="body1">Activity</Typography>
 							</Badge>
 						}
 						{...a11yProps(1)}
@@ -114,8 +119,7 @@ export default function DrawerComponent({ ArrProjectStatus }) {
 								count={entitiesView && entitiesView.watcher ? entitiesView.watcher.length : null}
 								className="site-badge-count-4"
 							>
-								{' '}
-								Watchers{' '}
+								<Typography variant="body1">Watchers</Typography>
 							</Badge>
 						}
 						{...a11yProps(2)}
@@ -134,6 +138,5 @@ export default function DrawerComponent({ ArrProjectStatus }) {
 				</TabPanel>
 			</div>
 		</Drawer>
-		// </div>
 	);
 }

@@ -105,10 +105,10 @@ export default function ContentProvider() {
 				</div>
 			}
 			contentToolbar={
-				<div className="flex  items-center px-16 flex-1">
-					<p className="font-semibold flex text-sm	">
-						Project plan of {listLoading ? <Spin style={{ marginLeft: '20px' }} /> : project?.projectName}
-					</p>
+				<div className="flex items-center p-16 flex-1">
+					<Typography variant="h6">
+						Project plan of {listLoading ? <Spin className="ml-16" /> : project?.projectName}
+					</Typography>
 				</div>
 			}
 			content={

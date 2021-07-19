@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Avatar, Checkbox, Table } from 'antd';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { sliceString } from '@fuse/core/DtpConfig';
-import { Button } from '@material-ui/core';
+import { Button, Typography, Grid } from '@material-ui/core';
 import { addTaskWatcher } from 'app/main/project/_redux/_projectActions';
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import FuseAnimate from '@fuse/core/FuseAnimate';
@@ -34,39 +34,28 @@ export default function DrawerWatchers() {
 			title: '',
 			dataIndex: 'userName',
 			key: 'userName',
-			width: '1%',
+			width: '7%',
+			className: 'items-center',
 			render: (_, item) => (
 				<div className="flex flex-row">
-					{' '}
-					<Avatar
-						style={{
-							backgroundColor: '#87d068',
-							verticalAlign: 'middle',
-							marginTop: 5
-						}}
-						size="large"
-					>
-						<p className="uppercase"> {sliceString(item.userName)}</p>
-					</Avatar>{' '}
+					<Avatar size={32} style={{ backgroundColor: '#87d068' }}>
+						<Typography color="inherit" variant="subtitle1">
+							{sliceString(item.userName).toUpperCase()}
+						</Typography>
+					</Avatar>
 				</div>
 			)
-		},
-		{
-			title: 'User name',
-			dataIndex: 'userName',
-			key: 'userName',
-			width: '2%'
 		},
 		{
 			title: 'Full name',
 			dataIndex: 'fullName',
 			key: 'fullName',
-			width: '2%'
+			width: '30%'
 		},
 		{
 			title: 'Receive Email',
 			dataIndex: 'IsReceiveEmail',
-			width: '1%',
+			width: '15%',
 			render: (text, record, index) => (
 				<>
 					<Checkbox checked={record.isReceiveEmail} />
@@ -77,40 +66,40 @@ export default function DrawerWatchers() {
 			title: 'Date view',
 			dataIndex: 'timeUpdate',
 			key: 'timeUpdate',
-			width: '2%'
+			width: '20%'
 		}
 	];
 	return (
 		<div>
-			<div className="flex flex-col ml-8">
+			<div className="flex flex-col">
 				<FuseAnimateGroup
 					enter={{
 						animation: 'transition.slideUpBigIn'
 					}}
 				>
-					<div className="text-sm font-medium text-black head-example "> View </div>
-					<div className="w-full flex-none text-sm font-normal text-gray-500">
-						List of user viewing your tasks{' '}
-					</div>
-					<div className="flex sm:flex-row flex-col">
-						<Button
-							onClick={handleTraffic}
-							type="submit"
-							style={{ width: '10rem' }}
-							className="h-26 font-sans mt-8"
-							variant="contained"
-							color="primary"
-						>
-							{isWatcherOverView ? <VisibilityOffIcon /> : <VisibilityIcon />}
-						</Button>
-						<div className="sm:ml-8 ml-0 mt-16">
-							<Checkbox checked={isReceiveEmail} disabled={!isWatcherOverView} onChange={onChange}>
-								<p style={{ fontWeight: 'bold', color: '#006565' }}>
-									Recieve email notifications when members about changes{' '}
-								</p>
-							</Checkbox>
-						</div>
-					</div>
+					<Typography variant="h6">Watchers</Typography>
+					<Typography variant="caption">List of user following your tasks</Typography>
+					<Grid container className="flex flex-row sm:items-start md:items-center mt-20">
+						<Grid item xs={5} md={3}>
+							<Button
+								onClick={handleTraffic}
+								type="submit"
+								style={{ width: '10rem' }}
+								className="h-26 font-sans"
+								variant="contained"
+								color="primary"
+							>
+								{isWatcherOverView ? <VisibilityOffIcon /> : <VisibilityIcon />}
+							</Button>
+						</Grid>
+						<Grid item xs={7} md={9}>
+							<div>
+								<Checkbox checked={isReceiveEmail} disabled={!isWatcherOverView} onChange={onChange}>
+									<Typography variant="caption" style={{color: '#006565'}}>Recieve email notifications when members about changes</Typography>
+								</Checkbox>
+							</div>
+						</Grid>
+					</Grid>
 				</FuseAnimateGroup>
 			</div>
 			<div className="mt-16">
@@ -118,7 +107,7 @@ export default function DrawerWatchers() {
 					<Table
 						rowKey="rowNum"
 						className="virtual-table"
-						scroll={{ x: matchesSM && 620 }}
+						scroll={{ x: matchesSM && 620, y: null }}
 						pagination={false}
 						columns={columns}
 						dataSource={entitiesView && entitiesView.watcher}

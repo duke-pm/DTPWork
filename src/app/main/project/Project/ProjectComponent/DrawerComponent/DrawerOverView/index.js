@@ -1,11 +1,17 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import FuseAnimate from '@fuse/core/FuseAnimate';
-import { Button, Divider } from '@material-ui/core';
+import { Button, Divider, Typography, Grid } from '@material-ui/core';
 import { Dropdown, Menu, Badge, Avatar, Slider, Tooltip } from 'antd';
 import React, { useState, useEffect, useContext } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import * as moment from 'moment';
-import { CaretDownOutlined, FileExcelOutlined, FileImageOutlined, FileWordOutlined } from '@ant-design/icons';
+import {
+	CaretDownOutlined,
+	FileExcelOutlined,
+	FileImageOutlined,
+	FileWordOutlined,
+	UserOutlined
+} from '@ant-design/icons';
 import {
 	updatedTaskStatus,
 	addTaskWatcher,
@@ -151,81 +157,96 @@ export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
 	return (
 		<FuseAnimate animation="transition.slideUpBigIn" delay={300}>
 			<div className="flex flex-col">
-				<div className="flex flex-row">
-					<p className="text-xl font-medium" style={{ color: entitiesView?.detail.typeColor }}>
-						{' '}
-						{entitiesView?.detail.typeName}{' '}
-					</p>
-					<p className="text-xl font-medium  ml-8 "> {entitiesView?.detail.taskName} </p>
+				<div className="flex flex-row items-center">
+					<Typography variant="h6" style={{ color: entitiesView?.detail.typeColor }}>
+						{entitiesView?.detail.typeName}
+					</Typography>
+					<Typography className="ml-16" variant="h6">{entitiesView?.detail.taskName}</Typography>
 				</div>
-				<div className="flex flex-row">
-					<p>
-						{' '}
-						Created by <span style={{ fontWeight: 'bold' }}>{entitiesView?.detail.crtdUser}</span>. Last
-						updated on {moment(entitiesView?.detail.lUpdDate).format('DD/MM/YYYY')}{' '}
-					</p>
+				<Typography variant="caption">
+					Created by <span style={{ fontWeight: 'bold' }}>{entitiesView?.detail.crtdUser}</span>. Last updated
+					on {moment(entitiesView?.detail.lUpdDate).format('DD/MM/YYYY')}{' '}
+				</Typography>
+
+				<div className="mt-16">
+					<Grid container className="flex flex-row items-center">
+						<Grid item xs={4} md={2}>
+							<Typography variant="subtitle1">Description:</Typography>
+						</Grid>
+						<Grid item xs={8} md={10}>
+							<Typography variant="body1">{entitiesView?.detail.descr}</Typography>
+						</Grid>
+					</Grid>
 				</div>
-				<div className="flex flex-row">
-					<p className="text-base font-normal"> Description: </p>
-					<p className="text-gray-500 ml-8 "> {entitiesView?.detail.descr}</p>
-				</div>
-				<div className="flex flex-col">
-					<p className="font-extrabold">ACTION</p>
+				<div className="flex flex-col mt-20">
+					<Typography className="font-extrabold" variant="subtitle2">
+						ACTION
+					</Typography>
 					<Divider />
-					<div className="flex flex-col sm:flex-row justify-between mt-16">
-						<div className="flex  flex-row ">
-							<p className="text-base font-normal "> Status </p>
-							<Dropdown
-								className="ml-8"
-								disabled={!entitiesView?.detail.isUpdated}
-								overlay={
-									<Menu>
-										{ArrProjectStatus?.map(itemStatus => (
-											<Menu.Item
-												key={itemStatus.value}
-												onClick={() => updatedStatus(itemStatus.value)}
-												style={{ color: itemStatus.colorCode }}
-											>
-												{itemStatus.label}
-											</Menu.Item>
-										))}
-									</Menu>
-								}
-								placement="bottomLeft"
-								arrow
-							>
-								<div className="flex flex-row">
-									{' '}
-									<Badge
-										size="default"
-										style={{
-											color: entitiesView?.detail.colorCode,
-											cursor: 'pointer'
-										}}
-										color={entitiesView?.detail.colorCode}
-										text={entitiesView?.detail.statusName}
+					<Grid container>
+						<Grid item xs={12} md={6} className="mt-16">
+							<Grid container className="flex flex-row items-center">
+								<Grid item xs={3}>
+									<Typography variant="subtitle1">Status</Typography>
+								</Grid>
+								<Grid item xs={9}>
+									<Dropdown
+										disabled={!entitiesView?.detail.isUpdated}
+										overlay={
+											<Menu>
+												{ArrProjectStatus?.map(itemStatus => (
+													<Menu.Item
+														key={itemStatus.value}
+														onClick={() => updatedStatus(itemStatus.value)}
+														style={{ color: itemStatus.colorCode }}
+													>
+														{itemStatus.label}
+													</Menu.Item>
+												))}
+											</Menu>
+										}
+										placement="bottomLeft"
+										arrow
+									>
+										<div className="flex flex-row items-center">
+											<Badge
+												size="default"
+												style={{
+													color: entitiesView?.detail.colorCode,
+													cursor: 'pointer'
+												}}
+												color={entitiesView?.detail.colorCode}
+												text={entitiesView?.detail.statusName}
+											/>
+											<CaretDownOutlined style={{ cursor: 'pointer', marginLeft: '10px' }} />
+										</div>
+									</Dropdown>
+								</Grid>
+							</Grid>
+						</Grid>
+
+						<Grid item xs={12} md={6} className="mt-16">
+							<Grid container className="flex flex-row items-center">
+								<Grid item xs={3}>
+									<Typography variant="subtitle1">Progress</Typography>
+								</Grid>
+								<Grid item xs={9}>
+									<Slider
+										disabled={entitiesView ? !entitiesView.detail.isUpdated : true}
+										onChange={handleChangeSlider}
+										onAfterChange={handleChangeSliderAfter}
+										value={process}
+										tipFormatter={formatter}
 									/>
-									<CaretDownOutlined style={{ cursor: 'pointer', marginLeft: '10px' }} />
-								</div>
-							</Dropdown>
-						</div>
-						<div className="flex flex-row sm:ml-8 ml-0">
-							<p className="text-base font-normal "> Progress </p>
-							<Slider
-								disabled={entitiesView ? !entitiesView.detail.isUpdated : true}
-								onChange={handleChangeSlider}
-								onAfterChange={handleChangeSliderAfter}
-								value={process}
-								style={{ width: ' 240px', marginLeft: 30 }}
-								tipFormatter={formatter}
-							/>
-						</div>
-					</div>
+								</Grid>
+							</Grid>
+						</Grid>
+					</Grid>
 					<Button
 						onClick={handleTraffic}
 						type="submit"
 						style={{ width: '15rem' }}
-						className="h-26 font-sans mb-16 "
+						className="h-26 font-sans mt-16"
 						variant="contained"
 						color="primary"
 						startIcon={!isWatcherOverView ? <VisibilityIcon /> : <VisibilityOffIcon />}
@@ -233,142 +254,185 @@ export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
 						{!isWatcherOverView ? 'Follow' : 'Unfollow'}
 					</Button>
 				</div>
-				<div className="flex flex-col">
-					<p className="font-extrabold">PEOPLE & TIME</p>
+				<div className="flex flex-col mt-20">
+					<Typography className="font-extrabold" variant="subtitle2">
+						PEOPLE & TIME
+					</Typography>
 					<Divider />
-					<div className="flex flex-row mt-16">
-						<p className="text-base font-normal " style={{ width: '128px' }}>
-							{' '}
-							Assignee{' '}
-						</p>
-						<p className="text-base font-normal text-gray-500 ml-56 "> {entitiesView?.detail.ownerName} </p>
+					<div className="flex flex-row items-center">
+						<Grid container className="flex flex-row items-center">
+							<Grid item xs={12} md={5} className="mt-16">
+								<Grid container className="flex flex-row items-center">
+									<Grid item xs={6}>
+										<Typography variant="subtitle1">Start date</Typography>
+									</Grid>
+									<Grid item xs={6}>
+										<Typography variant="body1">
+											{moment(entitiesView?.detail.startDate).format('DD/MM/YYYY')}
+										</Typography>
+									</Grid>
+								</Grid>
+							</Grid>
+
+							<Grid item xs={0} md={2} />
+
+							<Grid item xs={12} md={5} className="mt-16">
+								<Grid container className="flex flex-row items-center">
+									<Grid item xs={6}>
+										<Typography variant="subtitle1">End date</Typography>
+									</Grid>
+									<Grid item xs={6}>
+										<Typography variant="body1">
+											{moment(entitiesView?.detail.endDate).format('DD/MM/YYYY')}
+										</Typography>
+									</Grid>
+								</Grid>
+							</Grid>
+						</Grid>
 					</div>
-					<div className="flex flex-row">
-						<p className="text-base font-normal " style={{ width: '128px' }}>
-							{' '}
-							Members{' '}
-						</p>
-						<Avatar.Group
-							className="ml-56"
-							maxCount={5}
-							maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
-						>
-							{entitiesView?.detail.lstUserInvited?.map(av => (
-								<Tooltip key={av.userID} title={av.fullName} placement="top">
-									<Avatar style={{ backgroundColor: '#87d068' }}>{av.alphabet}</Avatar>
-								</Tooltip>
-							))}
-						</Avatar.Group>{' '}
+					<div className="mt-16">
+						<Grid container className="flex flex-row items-center">
+							<Grid item xs={4}>
+								<Typography variant="subtitle1">Assignee</Typography>
+							</Grid>
+							<Grid item xs={8}>
+								<div className="flex flex-row items-center">
+									<Avatar size={32} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
+									<Typography className="ml-8" variant="body1">
+										{entitiesView?.detail.ownerName}
+									</Typography>
+								</div>
+							</Grid>
+						</Grid>
 					</div>
-					<div className="flex flex-row">
-						<p className="text-base font-normal " style={{ width: '114px' }}>
-							{' '}
-							Priority{' '}
-						</p>
-						<div className="text-base font-normal text-gray-500 ml-72">
-							<Badge
-								size="default"
-								style={{ color: priorityColor[entitiesView?.detail.priority] }}
-								color={priorityColor[entitiesView?.detail.priority]}
-								text={entitiesView?.detail.priorityName}
-							/>
-						</div>
+					<div className="mt-16">
+						<Grid container className="flex flex-row items-center">
+							<Grid item xs={4}>
+								<Typography variant="subtitle1">Members</Typography>
+							</Grid>
+							<Grid item xs={8}>
+								<Avatar.Group maxCount={5} maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
+									{entitiesView?.detail.lstUserInvited?.map(av => (
+										<Tooltip key={av.userID} title={av.fullName} placement="top">
+											<Avatar style={{ backgroundColor: '#87d068' }}>
+												<Typography color="inherit" variant="subtitle1">
+													{av.alphabet}
+												</Typography>
+											</Avatar>
+										</Tooltip>
+									))}
+								</Avatar.Group>
+							</Grid>
+						</Grid>
 					</div>
-					<div className="flex flex-col sm:flex-row justify-between">
-						<div className="flex flex-row">
-							<p className="text-base font-normal" style={{ width: '126px' }}>
-								{' '}
-								Start date{' '}
-							</p>
-							<p className="text-base font-normal text-gray-500 ml-56 ">
-								{moment(entitiesView?.detail.startDate).format('DD/MM/YYYY')}{' '}
-							</p>
-						</div>
-						<div className="flex flex-row">
-							<p className="text-base font-normal " style={{ width: matchesSM && '126px' }}>
-								{' '}
-								End date{' '}
-							</p>
-							<div className="text-base font-normal text-gray-500 ml-56 ">
-								{moment(entitiesView?.detail.endDate).format('DD/MM/YYYY')}{' '}
-							</div>
-						</div>
+					<div className="mt-16">
+						<Grid container className="flex flex-row items-center">
+							<Grid item xs={4}>
+								<Typography variant="subtitle1">Priority</Typography>
+							</Grid>
+							<Grid item xs={8}>
+								<Typography
+									variant="body1"
+									style={{ color: priorityColor[entitiesView?.detail.priority] }}
+								>
+									{entitiesView?.detail.priorityName}
+								</Typography>
+							</Grid>
+						</Grid>
 					</div>
 					{checkDeadline(entitiesView?.detail.endDate) > 0 &&
 						entitiesView?.detail.statusID !== 5 &&
 						entitiesView?.detail.statusID !== 6 &&
 						entitiesView?.detail.statusID !== 7 &&
 						entitiesView?.detail.typeName === 'TASK' && (
-							<div className="flex flex-row justify-between">
-								<div className="flex flex-row">
-									<p className="text-base font-normal" style={{ width: '126px' }}>
-										Deadline
-									</p>
-									<p className="text-base font-normal text-red-500 ml-56 ">
-										Expired {checkDeadline(entitiesView?.detail.endDate)} days
-									</p>
-								</div>
+							<div className="mt-16">
+								<Grid container className="flex flex-row items-center">
+									<Grid item xs={4}>
+										<Typography variant="subtitle1">Deadline</Typography>
+									</Grid>
+									<Grid item xs={8}>
+										<Typography variant="body1" style={{ color: 'red' }}>
+											Expired {checkDeadline(entitiesView?.detail.endDate)} days
+										</Typography>
+									</Grid>
+								</Grid>
 							</div>
 						)}
 				</div>
-				<div className="flex flex-col">
-					<p className="font-extrabold">DETAIL</p>
+				<div className="flex flex-col mt-20">
+					<Typography className="font-extrabold" variant="subtitle2">
+						DETAIL
+					</Typography>
 					<Divider />
-					<div className="flex flex-row mt-16">
-						<p className="text-base font-normal " style={{ width: '118px' }}>
-							{' '}
-							Sector{' '}
-						</p>
-						<p className="text-base font-normal text-gray-500 ml-72 ">{entitiesView?.detail.sectorName}</p>
+					<div className="mt-16">
+						<Grid container className="flex flex-row items-center">
+							<Grid item xs={4}>
+								<Typography variant="subtitle1">Sector</Typography>
+							</Grid>
+							<Grid item xs={8}>
+								<Typography variant="body1">{entitiesView?.detail.sectorName}</Typography>
+							</Grid>
+						</Grid>
 					</div>
-					<div className="flex flex-row">
-						<p className="text-base font-normal " style={{ width: '118px' }}>
-							{' '}
-							Grade{' '}
-						</p>
-						<p className="text-base font-normal text-gray-500 ml-72 ">{entitiesView?.detail.gradeName}</p>
+					<div className="mt-16">
+						<Grid container className="flex flex-row items-center">
+							<Grid item xs={4}>
+								<Typography variant="subtitle1">Grade</Typography>
+							</Grid>
+							<Grid item xs={8}>
+								<Typography variant="body1">{entitiesView?.detail.gradeName}</Typography>
+							</Grid>
+						</Grid>
 					</div>
-					<div className="flex flex-row">
-						<p className="text-base font-normal " style={{ width: '131px' }}>
-							{' '}
-							Component{' '}
-						</p>
-						<p className="text-base font-normal text-gray-500 ml-60 ">
-							{entitiesView?.detail.componentName}
-						</p>
+					<div className="mt-16">
+						<Grid container className="flex flex-row items-center">
+							<Grid item xs={4}>
+								<Typography variant="subtitle1">Component</Typography>
+							</Grid>
+							<Grid item xs={8}>
+								<Typography variant="body1">{entitiesView?.detail.componentName}</Typography>
+							</Grid>
+						</Grid>
 					</div>
-					<div className="flex flex-row">
-						<p className="text-base font-normal " style={{ width: '117px' }}>
-							{' '}
-							Author{' '}
-						</p>
-						<p className="text-base font-normal text-gray-500 ml-72 ">{entitiesView?.detail.author}</p>
+					<div className="mt-16">
+						<Grid container className="flex flex-row items-center">
+							<Grid item xs={4}>
+								<Typography variant="subtitle1">Author</Typography>
+							</Grid>
+							<Grid item xs={8}>
+								<Typography variant="body1">{entitiesView?.detail.author}</Typography>
+							</Grid>
+						</Grid>
 					</div>
-					<div className="flex flex-row">
-						<p className="text-base font-normal " style={{ width: '117px' }}>
-							{' '}
-							Origin Publisher{' '}
-						</p>
-						<p className="text-base font-normal text-gray-500 ml-72 ">
-							{entitiesView?.detail.originPublisher}
-						</p>
+					<div className="mt-16">
+						<Grid container className="flex flex-row items-center">
+							<Grid item xs={4}>
+								<Typography variant="subtitle1">Origin Publisher</Typography>
+							</Grid>
+							<Grid item xs={8}>
+								<Typography variant="body1">{entitiesView?.detail.originPublisher}</Typography>
+							</Grid>
+						</Grid>
 					</div>
-					<div className="flex flex-row">
-						<p className="text-base font-normal " style={{ width: '117px' }}>
-							{' '}
-							Ownership DTP{' '}
-						</p>
-						<p className="text-base font-normal text-gray-500 ml-72 ">
-							{entitiesView?.detail.ownershipDTP}
-						</p>
+					<div className="mt-16">
+						<Grid container className="flex flex-row items-center">
+							<Grid item xs={4}>
+								<Typography variant="subtitle1">Ownership DTP</Typography>
+							</Grid>
+							<Grid item xs={8}>
+								<Typography variant="body1">{entitiesView?.detail.ownershipDTP}</Typography>
+							</Grid>
+						</Grid>
 					</div>
 				</div>
-				<div className="flex flex-col ">
-					<p className="font-extrabold">FILES</p>
+				<div className="flex flex-col mt-20">
+					<Typography className="font-extrabold" variant="subtitle2">
+						FILES
+					</Typography>
 					<Divider />
 					<div className="flex flex-row justify-between mt-16">
 						{entitiesView?.detail.attachFiles && (
-							<div className="flex flex-row">
+							<div className="flex flex-row items-center">
 								<Avatar
 									shape="square"
 									size={54}
@@ -379,8 +443,9 @@ export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
 									style={{ backgroundColor: 'none', marginLeft: '10px' }}
 									href={`${URL}/${entitiesView?.detail.attachFiles}`}
 								>
-									{' '}
-									{entitiesView && nameFile(entitiesView?.detail.attachFiles)}
+									<Typography variant="button">
+										{entitiesView && nameFile(entitiesView?.detail.attachFiles)}
+									</Typography>
 								</Button>
 							</div>
 						)}

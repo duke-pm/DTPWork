@@ -1,7 +1,7 @@
 import { AntInput } from '@fuse/CustomForm/CreateAntField';
 import SelectAntd from '@fuse/CustomForm/SelectAntd';
 import DateCustom from '@fuse/CustomForm/Date';
-import { Divider, Button, DialogActions, IconButton } from '@material-ui/core';
+import { Divider, Button, DialogActions, IconButton, Typography } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { Field, Formik, Form } from 'formik';
 import React from 'react';
@@ -99,7 +99,9 @@ export default function FormCustomProjectTask({
 								/>
 							</div>
 							<div className="flex justify-between flex-row">
-								<h5 className="font-extrabold">PEOPLE AND TIME</h5>
+								<Typography className="font-extrabold" variant="subtitle2">
+									PEOPLE & TIME
+								</Typography>
 							</div>
 							<Divider className="mb-16" />
 							<div className="grid grid-cols-1 gap-8 ">
@@ -156,7 +158,9 @@ export default function FormCustomProjectTask({
 								/>
 							</div>
 							<div className="flex justify-between flex-row">
-								<h5 className="font-extrabold">DETAIL</h5>
+								<Typography className="font-extrabold" variant="subtitle2">
+									DETAIL
+								</Typography>
 							</div>
 							<Divider className="mb-16" />
 							{entitiesEdit &&
@@ -271,7 +275,9 @@ export default function FormCustomProjectTask({
 									</div>
 								)} */}
 							<div className="flex justify-between flex-row">
-								<h5 className="font-extrabold">FILES</h5>
+								<Typography className="font-extrabold" variant="subtitle2">
+									FILES
+								</Typography>
 							</div>
 							<Divider className="mb-16" />
 							<div className="grid grid-cols-1 gap-8 ">

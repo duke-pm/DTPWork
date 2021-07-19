@@ -64,8 +64,8 @@ export default function ProjectPage() {
 					</div>
 				}
 				contentToolbar={
-					<div className="flex  items-center px-16 flex-1">
-						<p className="font-semibold flex text-sm">Projects</p>
+					<div className="flex items-center p-16 flex-1">
+						<Typography variant="h6">Projects</Typography>
 					</div>
 				}
 				content={

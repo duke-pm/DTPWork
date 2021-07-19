@@ -185,6 +185,10 @@ input:-webkit-autofill {
     outline-color: transparent;
 }
 
+.xs\:mt-16 {
+    margin-top: 1.6rem;
+}
+
 @import 'print.css';
 
 @import 'tables.css';

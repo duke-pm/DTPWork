@@ -114,7 +114,7 @@ export default function ProjectComponent({
 		return <FuseLoading />;
 	}
 	return (
-		<div className="w-full flex flex-col ">
+		<div className="w-full flex flex-col">
 			<DrawerComponent ArrProjectStatus={ArrProjectStatus} params={params} />
 			<FormProjectDrawer
 				owner={owner}
@@ -146,6 +146,7 @@ export default function ProjectComponent({
 								actionLoading={actionLoading}
 								entitiesDetail={entitiesDetail}
 							/>
+
 							{entitiesDetail?.listTask?.length !== 0 && (
 								<div className="flex flex-row items-center justify-between">
 									<div className="flex flex-row">

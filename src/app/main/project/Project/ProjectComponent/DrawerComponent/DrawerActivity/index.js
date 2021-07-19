@@ -1,21 +1,20 @@
 import { Button, Typography } from '@material-ui/core';
 import { Avatar, Input, Empty, Divider } from 'antd';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, createRef, useRef, useEffect } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import { sliceString } from '@fuse/core/DtpConfig';
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
-import FuseScrollbars from '@fuse/core/FuseScrollbars';
 import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import * as moment from 'moment';
 import { addTaskActivity } from '../../../../_redux/_projectActions';
 
 const { TextArea } = Input;
+let messagesEnd = createRef().current;
 
 export default function DrawerActivity() {
 	const dispatch = useDispatch();
 	const { currentState } = useSelector(state => ({ currentState: state.project }), shallowEqual);
 	const { entitiesActivity, entitiesView } = currentState;
-	const chatRef = useRef(null);
 	const [comment, setComment] = useState('');
 	const submitComment = () => {
 		dispatch(addTaskActivity(entitiesView.detail.taskID, comment));
@@ -28,17 +27,13 @@ export default function DrawerActivity() {
 		}
 	}, [entitiesActivity]);
 	function scrollToBottom() {
-		chatRef.current.scrollTop = chatRef.current.scrollHeight;
+		messagesEnd.scrollIntoView({ behavior: 'smooth' });
 	}
 
 	return (
 		<div className="flex flex-col">
-			<FuseScrollbars ref={chatRef} enable={false} className="mb-72">
-				<FuseAnimateGroup
-					enter={{
-						animation: 'transition.slideUpBigIn'
-					}}
-				>
+			<div className="flex flex-1 flex-col overflow-y-auto mb-72">
+				<div>
 					{entitiesActivity?.map(item => (
 						<div key={item.date} className="flex flex-col">
 							<Divider>
@@ -49,7 +44,7 @@ export default function DrawerActivity() {
 							{item?.data.map((it, index) => {
 								return (
 									<div key={it.lineNum} className="flex flex-row items-start mb-6">
-										<div className="flex flex-col items-center w-60 max-w-60">
+										<div className="flex flex-col items-start w-60 min-w-60 max-w-60">
 											{((item?.data[index - 1] &&
 												item?.data[index - 1].userName !== it.userName) ||
 												item?.data[index - 1] === undefined) && (
@@ -71,7 +66,7 @@ export default function DrawerActivity() {
 										</div>
 
 										<div
-											className="ml-16 p-16 rounded-8"
+											className="p-16 rounded-8"
 											style={{ backgroundColor: 'rgba(160,174,192,0.2)' }}
 										>
 											<div className="flex-none">
@@ -88,11 +83,12 @@ export default function DrawerActivity() {
 							})}
 						</div>
 					))}
-				</FuseAnimateGroup>
+					<div style={{ float: 'left', clear: 'both' }} ref={el => (messagesEnd = el)} />
+				</div>
 				{entitiesView && entitiesView.activities.length === 0 ? (
 					<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
 				) : null}
-			</FuseScrollbars>
+			</div>
 
 			<div className="absolute bottom-0 right-0 left-0 pt-16 pb-6 px-6 flex w-full flex-row items-center">
 				<TextArea value={comment} onChange={e => setComment(e.target.value)} placeholder="Comment" rows={3} />

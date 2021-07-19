@@ -126,7 +126,7 @@ export default function FormCustomProject({
 								<Spin />
 							) : (
 								<Button type="submit" className="h-26 font-sans" variant="contained" color="primary">
-									{initial?.prjID !== '0' ? 'Save' : 'Save'}
+									<span>{initial?.prjID !== '0' ? 'Save' : 'Save'}</span>
 								</Button>
 							)}
 
@@ -137,7 +137,7 @@ export default function FormCustomProject({
 								variant="contained"
 								color="secondary"
 							>
-								Cancel
+								<span>Cancel</span>
 							</Button>
 						</DialogActions>
 					</Form>

@@ -206,6 +206,7 @@ function TableProject(props) {
 		},
 		{
 			title: 'Type',
+			align: 'center',
 			dataIndex: 'type',
 			key: 'type',
 			width: '7%',
@@ -219,7 +220,7 @@ function TableProject(props) {
 			title: 'Status',
 			dataIndex: 'status',
 			key: 'status',
-			width: '13%',
+			width: '10%',
 			render: (_, item) => (
 				<Dropdown
 					disabled={!item.isUpdated || actionLoading}
@@ -253,6 +254,7 @@ function TableProject(props) {
 		},
 		{
 			title: 'Progress',
+			align: 'center',
 			dataIndex: 'status',
 			key: 'status',
 			width: '15%',
@@ -260,9 +262,10 @@ function TableProject(props) {
 		},
 		{
 			title: 'Priority',
+			align: 'center',
 			dataIndex: 'priority',
 			key: 'priority',
-			width: '8%',
+			width: '6%',
 			render: (_, item) => (
 				<Typography variant="body1" style={{ color: priorityColor[item.priority] }}>
 					{item.priorityName}
@@ -273,9 +276,9 @@ function TableProject(props) {
 			title: 'Assign',
 			dataIndex: 'assignee',
 			key: 'assignee',
-			width: '15%',
+			width: '12%',
 			render: (_, item) => (
-				<div className="flex flex-row items-center ">
+				<div className="flex flex-row items-center">
 					<Avatar size={32} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
 					<Typography className="ml-8" variant="body1">
 						{item.ownerName}
@@ -287,7 +290,7 @@ function TableProject(props) {
 			title: 'Members',
 			dataIndex: 'member',
 			key: 'assignee',
-			width: '30%',
+			width: '8%',
 			render: (_, item) => (
 				<div className="flex flex-row">
 					<Avatar.Group maxCount={3} maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
@@ -319,12 +322,11 @@ function TableProject(props) {
 					? 'table-row-dark'
 					: 'table-row-light'
 			}
-			onExpandedRowsChange={onSelectedRowKeysChange}
-			expandedRowKeys={selectedRowKeys}
 			expandable={{
 				expandRowByClick: false,
 				expandIconAsCell: false,
 				expandIconColumnIndex: 1,
+				expandedRowKeys: selectedRowKeys,
 				expandIcon: ({ expanded, onExpand, record, expandable }) =>
 					expandable.length === 0 ? (
 						<CaretUpOutlined className="w-40" style={{ color: 'transparent' }} />
@@ -340,7 +342,8 @@ function TableProject(props) {
 							onClick={e => onExpand(record, e)}
 							style={{ fontSize: '10pt' }}
 						/>
-					)
+					),
+				onExpandedRowsChange: onSelectedRowKeysChange
 			}}
 			scroll={{
 				x: entitiesDetail?.listTask?.length > 0 ? (matches ? 1900 : 1800) : matchesSM ? 1800 : null,

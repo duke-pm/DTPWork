@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Badge, Checkbox, Table, Popover, Avatar, Tooltip } from 'antd';
+import { Badge, Checkbox, Table, Popover, Avatar, Tooltip, TableProps } from 'antd';
 import React, { useContext } from 'react';
 import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
 import { MenuItem, ListItemIcon, Icon, ListItemText, Typography } from '@material-ui/core';
@@ -133,6 +133,7 @@ function TableProject(props) {
 		},
 		{
 			title: 'Public',
+			align: 'center',
 			dataIndex: 'public',
 			key: 'public',
 			width: '8%',
@@ -140,6 +141,7 @@ function TableProject(props) {
 		},
 		{
 			title: 'Created on',
+			align: 'center',
 			dataIndex: 'crtdDate',
 			key: 'crtdDate',
 			width: '12%',
@@ -181,39 +183,37 @@ function TableProject(props) {
 			)
 		}
 	];
-
 	return (
-		<>
-			<Table
-				rowKey="prjID"
-				expandable={{
-					expandRowByClick: false,
-					expandIconAsCell: false,
-					expandIconColumnIndex: 1,
-					expandIcon: ({ expanded, onExpand, record, expandable }) =>
-						expandable.length === 0 ? (
-							<CaretUpOutlined className="w-40" style={{ color: 'white' }} />
-						) : expanded ? (
-							<CaretUpOutlined
-								className="w-40"
-								onClick={e => onExpand(record, e)}
-								style={{ fontSize: '10pt' }}
-							/>
-						) : (
-							<CaretDownOutlined
-								className="w-40"
-								onClick={e => onExpand(record, e)}
-								style={{ fontSize: '10pt' }}
-							/>
-						)
-				}}
-				childrenColumnName="lstProjectItem"
-				pagination={false}
-				scroll={{ x: entities && entities.length ? (matches ? 1520 : 1540) : matchesSM ? 1540 : null }}
-				columns={columns}
-				dataSource={entities}
-			/>{' '}
-		</>
+		<Table
+			rowKey="prjID"
+			expandable={{
+				expandRowByClick: false,
+				expandIconAsCell: false,
+				expandIconColumnIndex: 1,
+				fixed: false,
+				expandIcon: ({ expanded, onExpand, record, expandable }) =>
+					expandable.length === 0 ? (
+						<CaretUpOutlined className="w-40" style={{ color: 'white' }} />
+					) : expanded ? (
+						<CaretUpOutlined
+							className="w-40"
+							onClick={e => onExpand(record, e)}
+							style={{ fontSize: '10pt' }}
+						/>
+					) : (
+						<CaretDownOutlined
+							className="w-40"
+							onClick={e => onExpand(record, e)}
+							style={{ fontSize: '10pt' }}
+						/>
+					)
+			}}
+			childrenColumnName="lstProjectItem"
+			pagination={false}
+			scroll={{ x: entities && entities.length ? (matches ? 1520 : 1540) : matchesSM ? 1540 : null }}
+			columns={columns}
+			dataSource={entities}
+		/>
 	);
 }
 
