@@ -1,4 +1,4 @@
-import { TableCell, TableRow, TableBody } from '@material-ui/core';
+import { TableCell, TableRow, TableBody, Typography } from '@material-ui/core';
 import { Popover } from 'antd';
 import React from 'react';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -23,20 +23,41 @@ const TableBodyAssetAll = ({ entities, lastErrors, classes, HandleOpenHistory })
 								<MoreVertIcon className="cursor-pointer" />
 							</Popover>
 						</TableCell>
-						<TableCell align="left"> {items.assetCode} </TableCell>
-						<TableCell align="left">{items.assetName} </TableCell>
-						<TableCell align="left">{items.groupName}</TableCell>
-						<TableCell align="left">{items.groupDetailName}</TableCell>
 						<TableCell align="left">
-							<div className={`inline text-12 p-4 rounded-full truncate ${chipColor[items.statusID]}`}>
-								{chipText[items.statusID]}
-							</div>
+							<Typography variant="body1">{items.assetCode}</Typography>
 						</TableCell>
-						<TableCell align="left">{moment(items.purchaseDate).format('DD-MM-YYYY')} </TableCell>
-						<TableCell align="left">{items.deptNameManager}</TableCell>
-						<TableCell align="left">{items && items.empName ? items.empName : null}</TableCell>
-						<TableCell align="left">{items.regionName}</TableCell>
-						<TableCell align="left"> {items.remarks} </TableCell>
+						<TableCell align="left">
+							<Typography variant="body1">{items.assetName}</Typography>
+						</TableCell>
+						<TableCell align="left">
+							<Typography variant="body1">{items.groupName}</Typography>
+						</TableCell>
+						<TableCell align="left">
+							<Typography variant="body1">{items.groupDetailName}</Typography>
+						</TableCell>
+						<TableCell align="center">
+							<Typography
+								variant="body1"
+								className={`rounded-full inline px-10 py-4 ${chipColor[items.statusID]}`}
+							>
+								{chipText[items.statusID]}
+							</Typography>
+						</TableCell>
+						<TableCell align="center">
+							<Typography variant="body1">{moment(items.purchaseDate).format('DD-MM-YYYY')}</Typography>
+						</TableCell>
+						<TableCell align="left">
+							<Typography variant="body1">{items.deptNameManager}</Typography>
+						</TableCell>
+						<TableCell align="left">
+							<Typography variant="body1">{items && items.empName ? items.empName : null}</Typography>
+						</TableCell>
+						<TableCell align="left">
+							<Typography variant="body1">{items.regionName}</Typography>
+						</TableCell>
+						<TableCell align="left">
+							<Typography variant="body1">{items.remarks}</Typography>
+						</TableCell>
 					</TableRow>
 				))}
 		</TableBody>

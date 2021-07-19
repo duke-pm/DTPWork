@@ -66,7 +66,7 @@ function PossesionPage(props) {
 				innerScroll
 				classes={{
 					// content: 'flex',
-					header: 'min-h-10 h-10	sm:h-16 sm:min-h-16'
+					header: 'min-h-10 h-10	sm:h-16 sm:min-h-16',
 				}}
 				header={
 					<div className="flex flex-1 w-full items-center justify-between">
@@ -87,14 +87,13 @@ function PossesionPage(props) {
 				}
 				contentToolbar={
 					<Tabs
-						classes={{ root: 'w-full h-64' }}
+						classes={{ root: 'flex w-full h-64' }}
 						value={value}
 						onChange={handleChange}
 						indicatorColor="primary"
 						textColor="primary"
 						variant="scrollable"
 						scrollButtons="auto"
-						aria-label="scrollable auto tabs example"
 					>
 						<Tab
 							className="font-sans"

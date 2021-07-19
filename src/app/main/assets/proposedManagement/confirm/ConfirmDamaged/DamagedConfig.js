@@ -1,8 +1,8 @@
 export const chipColor = {
-	1: 'bg-blue text-white',
-	2: 'bg-orange text-black',
+	1: 'bg-orange text-white',
+	2: 'bg-blue text-white',
 	3: 'bg-green text-white',
-	4: 'bg-purple text-white'
+	4: 'bg-red text-white'
 };
 export const chipText = {
 	1: 'Chờ phê duyệt',
@@ -13,7 +13,7 @@ export const chipText = {
 export const rowConfirmAllocation = [
 	{
 		id: 'RequestID',
-		align: 'left',
+		align: 'center',
 		label: '#',
 		sort: true,
 		width: 20
@@ -41,13 +41,12 @@ export const rowConfirmAllocation = [
 		align: 'left',
 		label: 'Ngày yêu cầu',
 		sort: true,
-		width: 60
+		width: 30
 	},
 	{
 		id: 'statusID',
 		align: 'left',
 		label: 'Trạng thái',
-		sort: true,
-		width: 20
+		sort: true
 	}
 ];

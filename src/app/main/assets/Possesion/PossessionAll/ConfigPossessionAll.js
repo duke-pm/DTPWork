@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 export const chipColor = {
 	1: 'bg-blue text-white',
 	2: 'bg-green text-white',
-	3: 'bg-orange text-black',
+	3: 'bg-gray text-white',
 	4: 'bg-purple text-white',
 	5: 'bg-red-700 text-white',
 	6: 'bg-yellow-900 text-white'
@@ -45,13 +45,13 @@ export const rowPossesion = [
 	},
 	{
 		id: 'StatusName',
-		align: 'left',
+		align: 'center',
 		label: 'Trạng thái',
 		sort: true
 	},
 	{
 		id: 'PurchaseDate',
-		align: 'left',
+		align: 'center',
 		label: 'Ngày mua',
 		sort: true
 	},

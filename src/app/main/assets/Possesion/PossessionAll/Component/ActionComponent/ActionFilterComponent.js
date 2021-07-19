@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable import/no-extraneous-dependencies */
-import { Button, IconButton, Paper } from '@material-ui/core';
+import { Button, IconButton, Paper, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React, { useContext } from 'react';
 import FuseAnimate from '@fuse/core/FuseAnimate';
@@ -42,38 +42,35 @@ export default function ActionComponent({ value, handleOpenForm }) {
 		}
 	};
 	return (
-		<>
-			<FuseAnimate animation="transition.slideLeftIn" delay={300}>
-				<div className="flex flex-col sm:flex-row justify-between">
-					<Button
-						onClick={handleOpenForm}
-						className="mt-8 sm:mt-0 mb-8 sm:mb-0 max-w-sm md:max-w-lg h-26"
-						variant="contained"
-						color="primary"
-						startIcon={<AddCircleOutline />}
-					>
-						Thêm mới
-					</Button>{' '}
-					<Paper className="w-full sm:w-1/4 flex justify-between">
-						<InputBase
-							onKeyPress={event => {
-								if (event.key === 'Enter') {
-									handleSearch();
-								}
-							}}
-							onChange={e => onHandleChange(e)}
-							className={classes.input}
-							value={search}
-							placeholder="Tìm kiếm"
-							inputProps={{ 'aria-label': 'search google maps' }}
-						/>
-						<IconButton onClick={handleSearch} type="button" className={classes.iconButton}>
-							<SearchIcon />
-						</IconButton>
-						{/* <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} /> */}
-					</Paper>
-				</div>
-			</FuseAnimate>
-		</>
+		<FuseAnimate animation="transition.slideLeftIn" delay={300}>
+			<div className="flex flex-row items-center justify-between">
+				<Button
+					onClick={handleOpenForm}
+					className="mt-8 sm:mt-0 mb-8 sm:mb-0 h-26"
+					variant="contained"
+					color="primary"
+					startIcon={<AddCircleOutline />}
+				>
+					Thêm mới
+				</Button>
+				<Paper className="flex justify-between">
+					<InputBase
+						onKeyPress={event => {
+							if (event.key === 'Enter') {
+								handleSearch();
+							}
+						}}
+						onChange={e => onHandleChange(e)}
+						className={classes.input}
+						value={search}
+						placeholder="Tìm kiếm"
+					/>
+					<IconButton onClick={handleSearch} type="button" className={classes.iconButton}>
+						<SearchIcon />
+					</IconButton>
+					{/* <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} /> */}
+				</Paper>
+			</div>
+		</FuseAnimate>
 	);
 }

@@ -1,4 +1,4 @@
-import { TableBody, TableRow, TableCell } from '@material-ui/core';
+import { TableBody, TableRow, TableCell, Typography } from '@material-ui/core';
 import { Popover } from 'antd';
 import React from 'react';
 import * as moment from 'moment';
@@ -29,15 +29,18 @@ export default function BodyTableAllocation({ entities, lastErrors, classes, han
 								<MoreVertIcon className="cursor-pointer" />
 							</Popover>
 						</TableCell>
-						<TableCell align="left"> {items.requestID} </TableCell>
-						<TableCell align="left">{items.fullName} </TableCell>
+						<TableCell align="justify">{items.requestID}</TableCell>
+						<TableCell align="left">{items.fullName}</TableCell>
 						<TableCell align="left">{items.deptName}</TableCell>
-						<TableCell align="left">{items.regionName} </TableCell>
-						<TableCell align="left">{moment(items.requestDate).format('DD/MM/YYYY')} </TableCell>
+						<TableCell align="left">{items.regionName}</TableCell>
+						<TableCell align="left">{moment(items.requestDate).format('DD/MM/YYYY')}</TableCell>
 						<TableCell align="left">
-							<div className={`inline text-12 p-4 rounded-full truncate ${chipColor[items.statusID]}`}>
+							<Typography
+								variant="body1"
+								className={`rounded-full inline px-10 py-4 ${chipColor[items.statusID]}`}
+							>
 								{chipText[items.statusID]}
-							</div>
+							</Typography>
 						</TableCell>
 					</TableRow>
 				))}

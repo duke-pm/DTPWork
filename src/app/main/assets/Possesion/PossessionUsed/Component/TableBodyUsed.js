@@ -1,4 +1,4 @@
-import { TableBody, TableCell, TableRow } from '@material-ui/core';
+import { TableBody, TableCell, TableRow, Typography } from '@material-ui/core';
 import { Popover } from 'antd';
 import React from 'react';
 import moment from 'moment';
@@ -29,13 +29,14 @@ export default function TableBodyUsed({ entities, handleOpenForm, handleOpenFrom
 								</Popover>
 							)}
 						</TableCell>
-						<TableCell align="left"> {items.assetCode} </TableCell>
-						<TableCell align="left">{items.assetName} </TableCell>
+						<TableCell align="left">{items.assetCode}</TableCell>
+						<TableCell align="left">{items.assetName}</TableCell>
 						<TableCell align="left">{items.groupName}</TableCell>
 						<TableCell align="left">{items.groupDetailName}</TableCell>
-						<TableCell align="left">
-							<div
-								className={`inline text-12 p-4 rounded-full truncate ${
+						<TableCell align="center">
+							<Typography
+								variant="body1"
+								className={`inline p-4 rounded-full px-10 py-4 ${
 									items.isProcessing
 										? items.requestTypeName === 'Đã báo hỏng'
 											? 'bg-purple text-white'
@@ -44,13 +45,13 @@ export default function TableBodyUsed({ entities, handleOpenForm, handleOpenFrom
 								}`}
 							>
 								{items.isProcessing ? items.requestTypeName : 'Đang sử dụng'}
-							</div>
+							</Typography>
 						</TableCell>
-						<TableCell align="left">{moment(items.purchaseDate).format('DD-MM-YYYY')} </TableCell>
+						<TableCell align="center">{moment(items.purchaseDate).format('DD-MM-YYYY')}</TableCell>
 						<TableCell align="left">{items.deptNameManager}</TableCell>
-						<TableCell align="left"> {items && items.empName ? items.empName : null}</TableCell>
+						<TableCell align="left">{items && items.empName ? items.empName : null}</TableCell>
 						<TableCell align="left">{items.regionName}</TableCell>
-						<TableCell align="left"> {items.remarks} </TableCell>
+						<TableCell align="left">{items.remarks}</TableCell>
 					</TableRow>
 				))}
 		</TableBody>

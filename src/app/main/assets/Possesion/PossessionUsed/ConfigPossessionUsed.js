@@ -30,13 +30,13 @@ export const rowPossesion = [
 	},
 	{
 		id: 'StatusName',
-		align: 'left',
+		align: 'center',
 		label: 'Trạng thái',
 		sort: true
 	},
 	{
 		id: 'PurchaseDate',
-		align: 'left',
+		align: 'center',
 		label: 'Ngày mua',
 		sort: true
 	},
