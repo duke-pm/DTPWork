@@ -5,7 +5,7 @@ import DateCustom from '@fuse/CustomForm/Date';
 import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
 import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
 import * as moment from 'moment';
-import { Spin } from 'antd';
+import { Spin, Tooltip } from 'antd';
 import * as Yup from 'yup';
 import { validateField } from '@fuse/core/DtpConfig';
 
@@ -50,7 +50,12 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 											</div>
 											<div className="flex sm:mr-96 mr-auto flex-col">
 												<p className="p-6 font-extrabold"> {entitiesEdit?.assetCode}</p>
-												<p className="p-6 font-extrabold"> {entitiesEdit?.assetName} </p>
+												<Tooltip placement="topLeft" title={entitiesEdit?.assetName}>
+													<p className="p-6 font-extrabold truncate max-w-200">
+														{' '}
+														{entitiesEdit?.assetName}
+													</p>
+												</Tooltip>
 												<p className="p-6 font-extrabold"> {entitiesEdit?.groupName} </p>
 												<p className="p-6 font-extrabold">
 													{' '}
@@ -58,7 +63,12 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 														moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY')}{' '}
 												</p>
 												<p className="p-6 font-extrabold"> {entitiesEdit?.statusName} </p>
-												<p className="p-6 font-extrabold"> {entitiesEdit?.descr} </p>
+												<Tooltip placement="topLeft" title={entitiesEdit?.descr}>
+													<p className="p-6 font-extrabold truncate max-w-200">
+														{' '}
+														{entitiesEdit?.descr}
+													</p>
+												</Tooltip>
 											</div>
 										</div>
 									</div>
@@ -68,15 +78,30 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 										</div>
 										<div className="flex-row  flex ">
 											<div className="flex flex-col">
-												<p className="p-6"> Nhân viên </p>
-												<p className="p-6"> Chức vụ </p>
-												<p className="p-6"> Bộ phận </p>
-												<p className="p-6"> Khu vực </p>
+												<p className="p-6 truncate"> Nhân viên </p>
+												<p className="p-6 truncate"> Chức vụ </p>
+												<p className="p-6 truncate"> Bộ phận </p>
+												<p className="p-6 truncate"> Khu vực </p>
 											</div>
 											<div className="flex sm:mr-96 mr-auto flex-col">
-												<p className="p-6 font-extrabold">{entitiesEdit?.empName} </p>
-												<p className="p-6 font-extrabold"> {entitiesEdit?.jobTitle} </p>
-												<p className="p-6 font-extrabold"> {entitiesEdit?.deptNameManager} </p>
+												<Tooltip placement="topLeft" title={entitiesEdit?.empName}>
+													<p className="p-6 font-extrabold truncate max-w-200">
+														{' '}
+														{entitiesEdit?.empName}
+													</p>
+												</Tooltip>
+												<Tooltip placement="topLeft" title={entitiesEdit?.jobTitle}>
+													<p className="p-6 font-extrabold truncate max-w-200">
+														{' '}
+														{entitiesEdit?.jobTitle}
+													</p>
+												</Tooltip>
+												<Tooltip placement="topLeft" title={entitiesEdit?.deptNameManager}>
+													<p className="p-6 font-extrabold truncate max-w-200">
+														{' '}
+														{entitiesEdit?.deptNameManager}
+													</p>
+												</Tooltip>
 												<p className="p-6 font-extrabold"> {entitiesEdit?.regionName} </p>
 											</div>
 										</div>

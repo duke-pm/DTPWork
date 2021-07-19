@@ -10,6 +10,7 @@ export default function ResovleRequestContext({ children }) {
 	const [dateEnd, setDateEnd] = useState(moment().endOf('month').format('YYYY/MM/DD'));
 	const [status, setStatus] = useState(0);
 	const [search, setSearch] = useState('');
+	const [requestTypeId, setRequestTypeId] = useState(0);
 	const [timeLine, setTimeLine] = useState({
 		open: false,
 		title: ''
@@ -47,7 +48,9 @@ export default function ResovleRequestContext({ children }) {
 			rowPage,
 			setRowPage,
 			sort,
-			setSort
+			setSort,
+			requestTypeId,
+			setRequestTypeId
 		};
 	}, [
 		timeLine,
@@ -73,7 +76,9 @@ export default function ResovleRequestContext({ children }) {
 		typeDialogCorrupt,
 		setTypeDialogCorrupt,
 		diaglogConfirmGobal,
-		setDialogConfirmGobal
+		setDialogConfirmGobal,
+		requestTypeId,
+		setRequestTypeId
 	]);
 	return <ResovleContext.Provider value={valueMemo}>{children}</ResovleContext.Provider>;
 }

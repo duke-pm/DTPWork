@@ -1,7 +1,8 @@
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
-import { Button, IconButton, InputBase, ListItemText, MenuItem, Paper } from '@material-ui/core';
+import { Button, IconButton, InputBase, ListItemText, MenuItem, Paper, Typography, Grid } from '@material-ui/core';
 import React, { useContext, useState } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
+import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
 import { useDispatch } from 'react-redux';
 import { Popover, Select } from 'antd';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
@@ -109,96 +110,99 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 					animation: 'transition.slideUpBigIn'
 				}}
 			>
-				<div className="flex flex-col sm:flex-row justify-between sm:block hidden">
-					<h5 className="font-extrabold">Filter</h5>
+				<div className="flex flex-col sm:flex-row justify-between">
+					<h5 className="font-extrabold">Filter </h5>
 				</div>
-				<div className="flex flex-col sm:flex-row mb-16 sm:inline-flex hidden">
-					<Paper style={{ width: '180px' }} className="sm:mb-0 mb-9">
-						<Select
-							allowClear
-							placeholder="Sector"
-							onChange={onHandleChangeSector}
-							bordered={false}
-							style={{ width: '100%' }}
+				<Grid className="mb-16" container spacing={2}>
+					<Grid item xs={12} sm={6} md={6} lg={2}>
+						<Paper>
+							<Select
+								allowClear
+								placeholder="Sector"
+								onChange={onHandleChangeSector}
+								bordered={false}
+								style={{ width: '100%' }}
+							>
+								{sectorArr?.map(item => (
+									<Select.Option value={item.value} key={item.value}>
+										<p> {item.label} </p>
+									</Select.Option>
+								))}
+							</Select>
+						</Paper>
+					</Grid>
+					<Grid item xs={12} sm={6} md={6} lg={2}>
+						<Paper>
+							<Select
+								placeholder="Owner"
+								showSearch
+								mode="multiple"
+								allowClear
+								maxTagCount={1}
+								onChange={onHandleChangeOwner}
+								bordered={false}
+								optionFilterProp="children"
+								filterOption={(input, option) =>
+									option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+								}
+								style={{ width: '100%' }}
+							>
+								{owner?.map(item => (
+									<Select.Option value={item.value} key={item.value}>
+										{item.label}
+									</Select.Option>
+								))}
+							</Select>
+						</Paper>
+					</Grid>
+					<Grid item xs={12} sm={6} md={6} lg={2}>
+						<Paper>
+							<Select
+								allowClear
+								placeholder="Status"
+								mode="multiple"
+								maxTagCount={1}
+								onChange={onHandleChangeStatus}
+								bordered={false}
+								style={{ width: '100%' }}
+							>
+								{ArrProjectStatus?.map(item => (
+									<Select.Option value={item.value} key={item.value}>
+										<p style={{ color: item.colorCode }}> {item.label} </p>
+									</Select.Option>
+								))}
+							</Select>
+						</Paper>
+					</Grid>
+					<Grid item xs={12} sm={6} md={6} lg={6}>
+						<Button
+							onClick={handleFilter}
+							variant="contained"
+							type="button"
+							color="primary"
+							startIcon={<FilterListIcon />}
 						>
-							{sectorArr?.map(item => (
-								<Select.Option value={item.value} key={item.value}>
-									<p> {item.label} </p>
-								</Select.Option>
-							))}
-						</Select>
-					</Paper>
-					<Paper style={{ width: '260px' }} className="ml-16 sm:mb-0 mb-9">
-						<Select
-							placeholder="Owner"
-							showSearch
-							mode="multiple"
-							allowClear
-							maxTagCount={1}
-							onChange={onHandleChangeOwner}
-							bordered={false}
-							optionFilterProp="children"
-							filterOption={(input, option) =>
-								option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-							}
-							style={{ width: '100%' }}
+							<Typography variant="inherit">Filter</Typography>
+						</Button>
+						<Button
+							onClick={handleOpenGant}
+							variant="contained"
+							type="button"
+							color="primary"
+							className="ml-16"
+							startIcon={<EqualizerIcon />}
 						>
-							{owner?.map(item => (
-								<Select.Option value={item.value} key={item.value}>
-									{item.label}
-								</Select.Option>
-							))}
-						</Select>
-					</Paper>
-					<Paper style={{ width: '250px' }} className="ml-16 sm:mb-0 mb-9">
-						<Select
-							allowClear
-							placeholder="Status"
-							mode="multiple"
-							maxTagCount={1}
-							onChange={onHandleChangeStatus}
-							bordered={false}
-							style={{ width: '100%' }}
-						>
-							{ArrProjectStatus?.map(item => (
-								<Select.Option value={item.value} key={item.value}>
-									<p style={{ color: item.colorCode }}> {item.label} </p>
-								</Select.Option>
-							))}
-						</Select>
-					</Paper>
-					<Button
-						onClick={handleFilter}
-						variant="contained"
-						type="button"
-						color="primary"
-						className="ml-16 sm:mb-0 mb-9"
-						startIcon={<FilterListIcon />}
-					>
-						{' '}
-						Filter{' '}
-					</Button>
-					<Button
-						onClick={handleOpenGant}
-						className="ml-16 sm:mb-0 mb-9"
-						variant="contained"
-						color="primary"
-						startIcon={<EqualizerIcon />}
-					>
-						Gantt chart
-					</Button>{' '}
-				</div>
-				<div
-					className={`flex flex-col sm:flex-row ${
-						project?.isProjectOwner ? ' justify-between' : 'justify-end'
-					} `}
-				>
+							<Typography variant="inherit">Gantt chart</Typography>
+						</Button>
+					</Grid>
+				</Grid>
+				<div className="flex flex-row justify-between">
 					<div className="flex flex-row justify-between">
-						<IconButton onClick={handleOpenFilter} className={clsx('sm:hidden block')}>
+						{/* <IconButton onClick={handleOpenFilter} className={clsx('sm:hidden block')}>
 							{' '}
 							<FilterListIcon />{' '}
-						</IconButton>
-						<Button
+						</IconButton> */}
+						{/* <Button
 							onClick={handleOpenGant}
 							className="sm:hidden inline-flex "
 							variant="contained"
@@ -206,7 +210,7 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 							startIcon={<EqualizerIcon />}
 						>
 							Gantt chart
-						</Button>{' '}
+						</Button>{' '} */}
 						{project?.isProjectOwner && (
 							<Popover
 								d={!project?.isProjectOwner}
@@ -226,28 +230,19 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 									</>
 								)}
 							>
-								<Button className="mt-8 max-w-sm md:max-w-lg h-26" variant="contained" color="primary">
-									<svg
-										className="h-16 w-16"
-										xmlns="http://www.w3.org/2000/svg"
-										fill="none"
-										viewBox="0 0 24 24"
-										stroke="currentColor"
-									>
-										<path
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											strokeWidth={2}
-											d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-										/>
-									</svg>
+								<Button
+									className="mt-8 max-w-sm md:max-w-lg h-26"
+									variant="contained"
+									color="primary"
+									startIcon={<AddCircleOutline />}
+								>
 									Create
-								</Button>{' '}
+								</Button>
 							</Popover>
 						)}
 					</div>
 
-					<Paper className="w-full sm:w-1/4 flex justify-between ">
+					<Paper className="flex justify-between">
 						<InputBase
 							onKeyPress={event => {
 								if (event.key === 'Enter') {

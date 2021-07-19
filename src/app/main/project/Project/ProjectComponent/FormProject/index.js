@@ -206,26 +206,28 @@ export default function FormProjectDrawer({
 					</Typography>
 				</Toolbar>
 			</AppBar>
-			<FormCustomProjectTask
-				inititalValues={entitiesEdit?.taskID ? initialEdit : initial}
-				owner={owner}
-				userInviteNoPermiss={userInviteNoPermiss}
-				sectorArr={sectorArr}
-				listFile={listFile}
-				setListFile={setListFile}
-				entitiesEdit={entitiesEdit}
-				fileCheck={fileCheck}
-				setFileCheck={setFileCheck}
-				gradeGolbal={gradeGolbal}
-				taskSub={taskSub}
-				ArrTaskComponent={ArrTaskComponent}
-				ArrProjectStatus={ArrProjectStatus}
-				ArrTaskPri={ArrTaskPri}
-				actionLoading={actionLoading}
-				formProject={formProject}
-				handleSubmitForm={handleSubmitForm}
-				handleCloseFormProject={handleCloseFormProject}
-			/>
+			<div className="overflow-scroll">
+				<FormCustomProjectTask
+					inititalValues={entitiesEdit?.taskID ? initialEdit : initial}
+					owner={owner}
+					userInviteNoPermiss={userInviteNoPermiss}
+					sectorArr={sectorArr}
+					listFile={listFile}
+					setListFile={setListFile}
+					entitiesEdit={entitiesEdit}
+					fileCheck={fileCheck}
+					setFileCheck={setFileCheck}
+					gradeGolbal={gradeGolbal}
+					taskSub={taskSub}
+					ArrTaskComponent={ArrTaskComponent}
+					ArrProjectStatus={ArrProjectStatus}
+					ArrTaskPri={ArrTaskPri}
+					actionLoading={actionLoading}
+					formProject={formProject}
+					handleSubmitForm={handleSubmitForm}
+					handleCloseFormProject={handleCloseFormProject}
+				/>
+			</div>
 		</Drawer>
 	);
 }

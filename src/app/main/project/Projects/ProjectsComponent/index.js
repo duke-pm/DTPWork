@@ -1,6 +1,7 @@
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import React, { useContext } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
+import FusePageCarded from '@fuse/core/FusePageCarded';
 import FuseLoading from '@fuse/core/FuseLoading';
 import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import Panigation from '@fuse/core/FusePanigate';

@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import image from '@fuse/assets/group.png';
 import { TableContainer, Paper, Table } from '@material-ui/core';
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
-import { Spin } from 'antd';
+import { Spin, Tooltip } from 'antd';
 import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import * as actions from '../../../_redux/possesionActions';
 import TableHeaderProcessing from './TableProcessingUseAsset/TableHeaderProcessing';
@@ -35,10 +35,16 @@ export default function InformationProceeUseAsset({ entitiesEdit, actionLoading 
 							<p className="p-6"> Mô tả </p>
 						</div>
 						<div className="flex sm:mr-96 mr-auto flex-col">
-							<p className="p-6 font-extrabold">{entitiesEdit && entitiesEdit.assetCode}</p>
-							<p className="p-6 font-extrabold">{entitiesEdit && entitiesEdit.assetName}</p>
-							<p className="p-6 font-extrabold">{entitiesEdit && entitiesEdit.groupName}</p>
-							<p className="p-6 font-extrabold"> {entitiesEdit && entitiesEdit.descr}</p>
+							<p className="p-6 font-extrabold truncate "> {entitiesEdit?.assetCode}</p>
+							<Tooltip placement="topLeft" title={entitiesEdit?.assetName}>
+								<p className="p-6 font-extrabold truncate"> {entitiesEdit?.assetName}</p>
+							</Tooltip>
+							<Tooltip placement="topLeft" title={entitiesEdit?.groupName}>
+								<p className="p-6 font-extrabold truncate max-w-200"> {entitiesEdit?.groupName}</p>
+							</Tooltip>
+							<Tooltip placement="topLeft" title={entitiesEdit?.descr}>
+								<p className="p-6 font-extrabold truncate max-w-200"> {entitiesEdit?.descr}</p>
+							</Tooltip>
 						</div>
 					</div>
 					<div className="flex-row flex ">

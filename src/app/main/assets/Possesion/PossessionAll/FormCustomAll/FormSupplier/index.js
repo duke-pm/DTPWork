@@ -17,7 +17,7 @@ export default function FormSupplier({ open, handleCloseFormSupplier }) {
 		});
 	};
 	return (
-		<Dialog style={{ zIndex: 20 }} fullWidth maxWidth="sm" aria-labelledby="customized-dialog-title" open={open}>
+		<Dialog style={{ zIndex: 21 }} fullWidth maxWidth="sm" aria-labelledby="customized-dialog-title" open={open}>
 			<AppBar position="static" className="shadow-md">
 				<Toolbar className="flex w-full">
 					<IconButton onClick={handleCloseFormSupplier} edge="start" color="inherit" aria-label="close">

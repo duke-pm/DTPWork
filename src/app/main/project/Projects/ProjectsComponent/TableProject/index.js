@@ -45,47 +45,45 @@ function TableProject(props) {
 			key: 'operation',
 			width: '4%',
 			render: (_, item) => (
-				<>
-					<Popover
-						overlayStyle={{ zIndex: '19' }}
-						placement="rightTop"
-						content={() => (
-							<>
-								<MenuItem onClick={() => handleOpenFormProject(item, 'Settings')} role="button">
+				<Popover
+					overlayStyle={{ zIndex: '19' }}
+					placement="rightTop"
+					content={() => (
+						<>
+							<MenuItem onClick={() => handleOpenFormProject(item, 'Settings')} role="button">
+								<ListItemIcon className="min-w-40">
+									<Icon>settings</Icon>
+								</ListItemIcon>
+								<ListItemText primary="Project settings" />
+							</MenuItem>
+							<MenuItem onClick={() => handleOpenFormProject(item, 'Clone')} role="button">
+								<ListItemIcon className="min-w-40">
+									<Icon>file_copy_icon</Icon>
+								</ListItemIcon>
+								<ListItemText primary="Clone" />
+							</MenuItem>
+							{item.countChild === 0 && (
+								<MenuItem onClick={() => handleDetail(item)} role="button">
 									<ListItemIcon className="min-w-40">
-										<Icon>settings</Icon>
+										<Icon>visibility</Icon>
 									</ListItemIcon>
-									<ListItemText primary="Project settings" />
+									<ListItemText primary="Open detail" />
 								</MenuItem>
-								<MenuItem onClick={() => handleOpenFormProject(item, 'Clone')} role="button">
+							)}
+							{item.countChild === 0 && item.isModified && (
+								<MenuItem onClick={() => handleDelteProject(item)} role="button">
 									<ListItemIcon className="min-w-40">
-										<Icon>file_copy_icon</Icon>
+										<Icon>delete</Icon>
 									</ListItemIcon>
-									<ListItemText primary="Clone" />
+									<ListItemText primary="Delete project" />
 								</MenuItem>
-								{item.countChild === 0 && (
-									<MenuItem onClick={() => handleDetail(item)} role="button">
-										<ListItemIcon className="min-w-40">
-											<Icon>visibility</Icon>
-										</ListItemIcon>
-										<ListItemText primary="Open detail" />
-									</MenuItem>
-								)}
-								{item.countChild === 0 && item.isModified && (
-									<MenuItem onClick={() => handleDelteProject(item)} role="button">
-										<ListItemIcon className="min-w-40">
-											<Icon>delete</Icon>
-										</ListItemIcon>
-										<ListItemText primary="Delete project" />
-									</MenuItem>
-								)}
-							</>
-						)}
-						title="Action"
-					>
-						<MoreVertIcon className="cursor-pointer" />
-					</Popover>
-				</>
+							)}
+						</>
+					)}
+					title="Action"
+				>
+					<MoreVertIcon className="cursor-pointer" />
+				</Popover>
 			)
 		},
 		{
@@ -97,9 +95,8 @@ function TableProject(props) {
 				showTitle: false
 			},
 			render: (_, item) => (
-				<Typography style={{ marginLeft: '20px', cursor: 'default' }} component="button">
-					{' '}
-					{item.prjName}{' '}
+				<Typography variant="body1" component="button">
+					{item.prjName}
 				</Typography>
 			)
 		},
@@ -109,16 +106,15 @@ function TableProject(props) {
 		// 	key: 'sectorName',
 		// 	width: '10%'
 		// },
-		{
-			title: 'Description',
-			dataIndex: 'descr',
-			key: 'descr',
-			width: '20%',
-			ellipsis: {
-				showTitle: false
-			},
-			render: descr => <p>{descr}</p>
-		},
+		// {
+		// 	title: 'Description',
+		// 	dataIndex: 'descr',
+		// 	key: 'descr',
+		// 	width: '20%',
+		// 	ellipsis: {
+		// 		showTitle: false
+		// 	}
+		// },
 		// {
 		// 	title: 'Processing',
 		// 	dataIndex: 'status',
@@ -130,7 +126,7 @@ function TableProject(props) {
 			title: 'Status',
 			dataIndex: 'status',
 			key: 'status',
-			width: '12%',
+			width: '15%',
 			render: (_, item) => (
 				<Badge size="default" style={{ color: item.colorCode }} color={item.colorCode} text={item.statusName} />
 			)
@@ -147,7 +143,7 @@ function TableProject(props) {
 			dataIndex: 'crtdDate',
 			key: 'crtdDate',
 			width: '12%',
-			render: (_, item) => <p> {moment(item.crtdDate).format('DD/MM/YYYY')} </p>
+			render: (_, item) => <Typography variant="body1">{moment(item.crtdDate).format('DD/MM/YYYY')}</Typography>
 		},
 		{
 			title: 'Project Owner',
@@ -155,10 +151,11 @@ function TableProject(props) {
 			key: 'assignee',
 			width: '18%',
 			render: (_, item) => (
-				<div className="flex flex-row">
-					{' '}
-					<Avatar size={25} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
-					<p className="ml-8 "> {item.ownerName}</p>{' '}
+				<div className="flex flex-row items-center">
+					<Avatar size={32} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
+					<Typography className="ml-8" variant="body1">
+						{item.ownerName}
+					</Typography>
 				</div>
 			)
 		},
@@ -166,13 +163,17 @@ function TableProject(props) {
 			title: 'Members',
 			dataIndex: 'member',
 			key: 'assignee',
-			width: '18%',
+			width: '12%',
 			render: (_, item) => (
 				<div className="flex flex-row">
 					<Avatar.Group maxCount={3} maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
 						{item?.lstUserInvited?.map(av => (
 							<Tooltip key={av.userID} title={av.fullName} placement="top">
-								<Avatar style={{ backgroundColor: '#87d068' }}>{av.alphabet}</Avatar>
+								<Avatar size={32} style={{ backgroundColor: '#87d068' }}>
+									<Typography color="inherit" variant="subtitle1">
+										{av.alphabet}
+									</Typography>
+								</Avatar>
 							</Tooltip>
 						))}
 					</Avatar.Group>
@@ -190,15 +191,19 @@ function TableProject(props) {
 					expandIconAsCell: false,
 					expandIconColumnIndex: 1,
 					expandIcon: ({ expanded, onExpand, record, expandable }) =>
-						expandable.length === 0 ? null : expanded ? (
+						expandable.length === 0 ? (
+							<CaretUpOutlined className="w-40" style={{ color: 'white' }} />
+						) : expanded ? (
 							<CaretUpOutlined
+								className="w-40"
 								onClick={e => onExpand(record, e)}
-								style={{ marginRight: '8px !important', fontSize: '10pt' }}
+								style={{ fontSize: '10pt' }}
 							/>
 						) : (
 							<CaretDownOutlined
+								className="w-40"
 								onClick={e => onExpand(record, e)}
-								style={{ marginRight: '8px !important', fontSize: '10pt' }}
+								style={{ fontSize: '10pt' }}
 							/>
 						)
 				}}

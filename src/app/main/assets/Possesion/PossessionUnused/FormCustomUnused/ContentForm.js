@@ -1,6 +1,7 @@
 import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import React from 'react';
 import * as moment from 'moment';
+import { Tooltip } from 'antd';
 
 export default function ContentForm({ entitiesEdit }) {
 	return (
@@ -14,9 +15,13 @@ export default function ContentForm({ entitiesEdit }) {
 				</div>
 				<div className="flex sm:mr-96 mr-auto  flex-col">
 					<p className="p-6 font-extrabold">{entitiesEdit?.assetCode}</p>
-					<p className="p-6 font-extrabold">{entitiesEdit?.assetName}</p>
+					<Tooltip placement="topLeft" title={entitiesEdit?.assetName}>
+						<p className="p-6 font-extrabold truncate max-w-200"> {entitiesEdit?.assetName}</p>
+					</Tooltip>
 					<p className="p-6 font-extrabold">{entitiesEdit?.groupName}</p>
-					<p className="p-6 font-extrabold"> {entitiesEdit?.descr}</p>
+					<Tooltip placement="topLeft" title={entitiesEdit?.descr}>
+						<p className="p-6 font-extrabold truncate max-w-200"> {entitiesEdit?.descr}</p>
+					</Tooltip>
 				</div>
 			</div>
 			<div className="flex-row flex ">

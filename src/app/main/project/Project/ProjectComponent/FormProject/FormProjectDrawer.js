@@ -77,7 +77,6 @@ export default function FormCustomProjectTask({
 									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									hasFeedback
 									component={AntInput}
-									className="mx-4"
 								/>
 							</div>
 							<div className="grid grid-cols-1 gap-8 mb-16 ">
@@ -87,7 +86,6 @@ export default function FormCustomProjectTask({
 									row={4}
 									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									component={InputTextArea}
-									className="mx-4"
 								/>
 							</div>
 							<div className="grid grid-cols-1 sm:grid-cols-1 gap-8 ">
@@ -98,7 +96,6 @@ export default function FormCustomProjectTask({
 									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									component={SelectAntd}
 									options={taskSub}
-									className="mx-4"
 								/>
 							</div>
 							<div className="flex justify-between flex-row">
@@ -113,7 +110,6 @@ export default function FormCustomProjectTask({
 									hasFeedback
 									component={entitiesEdit && !entitiesEdit.isModified ? AntInput : SelectAntd}
 									options={entitiesEdit && !entitiesEdit.isModified ? null : owner}
-									className="mx-4"
 									position={matchesSM ? null : 'right'}
 								/>
 							</div>
@@ -128,7 +124,6 @@ export default function FormCustomProjectTask({
 										component={SelectAntdMulti}
 										readOnly={entitiesEdit && !entitiesEdit.isModified}
 										position={matchesSM ? null : 'right'}
-										className="mx-4"
 									/>
 								) : (
 									<Field
@@ -139,7 +134,6 @@ export default function FormCustomProjectTask({
 										component={SelectAntdMulti}
 										readOnly={entitiesEdit && !entitiesEdit.isModified}
 										position={matchesSM ? null : 'right'}
-										className="mx-4"
 									/>
 								)}
 							</div>
@@ -150,7 +144,6 @@ export default function FormCustomProjectTask({
 									width="58.8%"
 									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									component={DateCustom}
-									className="mx-4"
 									position={matchesSM ? null : 'right'}
 								/>
 								<Field
@@ -160,7 +153,6 @@ export default function FormCustomProjectTask({
 									name="endDate"
 									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									component={DateCustom}
-									className="mx-4"
 								/>
 							</div>
 							<div className="flex justify-between flex-row">
@@ -180,7 +172,6 @@ export default function FormCustomProjectTask({
 											position={matchesSM ? null : 'right'}
 											component={SelectAntdCustomStatus}
 											options={ArrProjectStatus}
-											className="mx-4"
 										/>
 										<Field
 											label="Percentage"
@@ -189,7 +180,6 @@ export default function FormCustomProjectTask({
 											readOnly={entitiesEdit && !entitiesEdit.isModified}
 											component={SliderAntd}
 											position={matchesSM ? null : 'right'}
-											className="mx-4"
 										/>
 									</div>
 								)}
@@ -202,7 +192,6 @@ export default function FormCustomProjectTask({
 									position={matchesSM ? null : 'right'}
 									component={SelectAntd || []}
 									options={sectorArr}
-									className="mx-4"
 								/>
 								<Field
 									label="Priority"
@@ -214,7 +203,6 @@ export default function FormCustomProjectTask({
 									options={ArrTaskPri}
 									position={matchesSM ? null : 'right'}
 									width="58.8%"
-									className="mx-4"
 								/>
 							</div>
 							<div className="grid grid-cols-1 sm:grid-cols-2 gap-16 ">
@@ -226,7 +214,6 @@ export default function FormCustomProjectTask({
 									options={gradeGolbal}
 									component={SelectAntd}
 									position={matchesSM ? null : 'right'}
-									className="mx-4"
 								/>
 								<Field
 									label="Component"
@@ -235,7 +222,6 @@ export default function FormCustomProjectTask({
 									name="component"
 									component={SelectAntd}
 									options={ArrTaskComponent}
-									className="mx-4"
 									position={matchesSM ? null : 'right'}
 								/>
 							</div>
@@ -247,7 +233,6 @@ export default function FormCustomProjectTask({
 									type="text"
 									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									position={matchesSM ? null : 'right'}
-									className="mx-4"
 								/>
 							</div>
 							<div className="grid grid-cols-1 gap-8 ">
@@ -258,7 +243,6 @@ export default function FormCustomProjectTask({
 									name="originPublisher"
 									position={matchesSM ? null : 'right'}
 									readOnly={entitiesEdit && !entitiesEdit.isModified}
-									className="mx-4"
 								/>
 							</div>
 							<div className="grid grid-cols-1 gap-8 ">
@@ -269,7 +253,6 @@ export default function FormCustomProjectTask({
 									readOnly={entitiesEdit && !entitiesEdit.isModified}
 									name="ownership"
 									position={matchesSM ? null : 'right'}
-									className="mx-4"
 								/>
 							</div>
 							{/* {entitiesEdit &&
@@ -284,7 +267,6 @@ export default function FormCustomProjectTask({
 											position="right"
 											component={SelectAntdCustomStatus}
 											options={ArrProjectStatus}
-											className="mx-4"
 										/>
 									</div>
 								)} */}
@@ -364,7 +346,7 @@ export default function FormCustomProjectTask({
 										style={{ height: '25px' }}
 										name="file"
 										component={FileCustomVersion2Eng}
-										className="mx-4 mb-16"
+										className="mb-16"
 										variant="outlined"
 									/>
 								)}

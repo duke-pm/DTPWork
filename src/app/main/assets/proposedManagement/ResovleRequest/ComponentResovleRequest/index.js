@@ -31,7 +31,8 @@ export default function RequestResovelTable(props) {
 		dateEnd,
 		sort,
 		setSort,
-		setTimeLine
+		setTimeLine,
+		requestTypeId
 	} = ResovleContextHandle;
 	const { currentState } = useSelector(state => ({ currentState: state.confirm }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;
@@ -43,7 +44,17 @@ export default function RequestResovelTable(props) {
 		const rowPageParse = parseInt(e.target.value, 10);
 		setRowPage(rowPageParse);
 		dispatch(
-			action.searchConfirms(status, rowPageParse, page, 1, sort.id, sort.direction, search, dateStart, dateEnd)
+			action.searchConfirms(
+				status,
+				rowPageParse,
+				page,
+				requestTypeId,
+				sort.id,
+				sort.direction,
+				search,
+				dateStart,
+				dateEnd
+			)
 		);
 	};
 	const handleChangePage = (event, newPage) => {
@@ -53,10 +64,9 @@ export default function RequestResovelTable(props) {
 				status,
 				rowPage,
 				newPage + 1,
-				1,
+				requestTypeId,
 				sort.id,
 				sort.direction,
-				search,
 				search,
 				dateStart,
 				dateEnd

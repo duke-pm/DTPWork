@@ -143,60 +143,57 @@ function TableProject(props) {
 			key: 'operation',
 			width: '2%',
 			render: (_, item) => (
-				<>
-					<Popover
-						overlayStyle={{ zIndex: '8', display: visible || formProject.open ? 'none' : '' }}
-						placement="rightTop"
-						content={() => (
-							<>
-								<MenuItem onClick={() => handleOpenVisible(item)} role="button">
-									<ListItemIcon className="min-w-40">
-										<Icon> visibility </Icon>
-									</ListItemIcon>
-									<ListItemText primary="Overview" />
-								</MenuItem>
-								<MenuItem onClick={() => handleEditForm(item, 'Setting task')} role="button">
-									<ListItemIcon className="min-w-40">
-										<Icon> settings </Icon>
-									</ListItemIcon>
-									<ListItemText primary="Task settings" />
-								</MenuItem>
-								{item.isModified && (
-									<>
-										<MenuItem onClick={() => handleEditForm(item, 'New task')} role="button">
+				<Popover
+					overlayStyle={{ zIndex: '8', display: visible || formProject.open ? 'none' : '' }}
+					placement="rightTop"
+					content={() => (
+						<>
+							<MenuItem onClick={() => handleOpenVisible(item)} role="button">
+								<ListItemIcon className="min-w-40">
+									<Icon> visibility </Icon>
+								</ListItemIcon>
+								<ListItemText primary="Overview" />
+							</MenuItem>
+							<MenuItem onClick={() => handleEditForm(item, 'Setting task')} role="button">
+								<ListItemIcon className="min-w-40">
+									<Icon> settings </Icon>
+								</ListItemIcon>
+								<ListItemText primary="Task settings" />
+							</MenuItem>
+							{item.isModified && (
+								<>
+									<MenuItem onClick={() => handleEditForm(item, 'New task')} role="button">
+										<ListItemIcon className="min-w-40">
+											<Icon>file_copy</Icon>
+										</ListItemIcon>
+										<ListItemText primary="Copy" />
+									</MenuItem>
+									{item.taskTypeID === 2 && item.statusName === 'New' && item.countChild === 0 && (
+										<MenuItem onClick={() => deleteTask(item)} role="button">
 											<ListItemIcon className="min-w-40">
-												<Icon>file_copy</Icon>
+												<Icon>delete</Icon>
 											</ListItemIcon>
-											<ListItemText primary="Copy" />
+											<ListItemText primary="Delete" />
 										</MenuItem>
-										{item.taskTypeID === 2 && item.statusName === 'New' && item.countChild === 0 && (
-											<MenuItem onClick={() => deleteTask(item)} role="button">
-												<ListItemIcon className="min-w-40">
-													<Icon>delete</Icon>
-												</ListItemIcon>
-												<ListItemText primary="Delete" />
-											</MenuItem>
-										)}
-									</>
-								)}
-							</>
-						)}
-						title="Action"
-					>
-						<MoreVertIcon className="cursor-pointer" />
-					</Popover>
-				</>
+									)}
+								</>
+							)}
+						</>
+					)}
+					title="Action"
+				>
+					<MoreVertIcon className="cursor-pointer" />
+				</Popover>
 			)
 		},
 		{
 			title: 'Subject',
 			dataIndex: 'subject',
 			key: 'subject',
-			width: '27%',
+			width: '20%',
 			render: (_, item) => (
-				<Typography style={{ marginLeft: '20px', cursor: 'default' }} component="button">
-					{' '}
-					{item.taskName}{' '}
+				<Typography variant="body1" component="button">
+					{item.taskName}
 				</Typography>
 			)
 		},
@@ -204,7 +201,8 @@ function TableProject(props) {
 			title: 'Sector',
 			dataIndex: 'sectorName',
 			key: 'sectorName',
-			width: '10%'
+			width: '10%',
+			render: (_, item) => <Typography variant="body1">{item.sectorName}</Typography>
 		},
 		{
 			title: 'Type',
@@ -212,9 +210,8 @@ function TableProject(props) {
 			key: 'type',
 			width: '7%',
 			render: (_, item) => (
-				<Typography style={{ color: typeColor[item.typeName], textTransform: 'uppercase', fontWeight: 'bold' }}>
-					{' '}
-					{item.typeName}{' '}
+				<Typography variant="subtitle2" style={{ color: typeColor[item.typeName], textTransform: 'uppercase' }}>
+					{item.typeName}
 				</Typography>
 			)
 		},
@@ -234,7 +231,7 @@ function TableProject(props) {
 									onClick={() => updatedStatus(item, itemStatus.value)}
 									style={{ color: itemStatus.colorCode }}
 								>
-									{itemStatus.label}
+									<Typography variant="body1">{itemStatus.label}</Typography>
 								</Menu.Item>
 							))}
 						</Menu>
@@ -243,7 +240,6 @@ function TableProject(props) {
 					arrow
 				>
 					<div className="flex flex-row justify-between items-center">
-						{' '}
 						<Badge
 							size="default"
 							style={{ color: item.colorCode, cursor: 'pointer' }}
@@ -266,14 +262,11 @@ function TableProject(props) {
 			title: 'Priority',
 			dataIndex: 'priority',
 			key: 'priority',
-			width: '10%',
+			width: '8%',
 			render: (_, item) => (
-				<Badge
-					size="default"
-					style={{ color: priorityColor[item.priority] }}
-					color={priorityColor[item.priority]}
-					text={item.priorityName}
-				/>
+				<Typography variant="body1" style={{ color: priorityColor[item.priority] }}>
+					{item.priorityName}
+				</Typography>
 			)
 		},
 		{
@@ -283,9 +276,10 @@ function TableProject(props) {
 			width: '15%',
 			render: (_, item) => (
 				<div className="flex flex-row items-center ">
-					{' '}
-					<Avatar size={25} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
-					<Typography className="ml-8">{item.ownerName}</Typography>{' '}
+					<Avatar size={32} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
+					<Typography className="ml-8" variant="body1">
+						{item.ownerName}
+					</Typography>
 				</div>
 			)
 		},
@@ -293,13 +287,17 @@ function TableProject(props) {
 			title: 'Members',
 			dataIndex: 'member',
 			key: 'assignee',
-			width: '40%',
+			width: '30%',
 			render: (_, item) => (
 				<div className="flex flex-row">
 					<Avatar.Group maxCount={3} maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
 						{item?.lstUserInvited?.map(av => (
 							<Tooltip key={av.userID} title={av.fullName} placement="top">
-								<Avatar style={{ backgroundColor: '#87d068' }}>{av.alphabet}</Avatar>
+								<Avatar size={32} style={{ backgroundColor: '#87d068' }}>
+									<Typography color="inherit" variant="subtitle1">
+										{av.alphabet}
+									</Typography>
+								</Avatar>
 							</Tooltip>
 						))}
 					</Avatar.Group>
@@ -308,49 +306,50 @@ function TableProject(props) {
 		}
 	];
 	return (
-		<>
-			{' '}
-			<Table
-				rowKey="taskID"
-				childrenColumnName="lstTaskItem"
-				className="virtual-table"
-				rowClassName={record =>
-					checkDeadline(record.endDate) > 0 &&
-					record.statusID !== 5 &&
-					record.statusID !== 6 &&
-					record.statusID !== 7 &&
-					record.typeName === 'TASK'
-						? 'table-row-dark'
-						: 'table-row-light'
-				}
-				onExpandedRowsChange={onSelectedRowKeysChange}
-				expandedRowKeys={selectedRowKeys}
-				expandable={{
-					expandRowByClick: false,
-					expandIconAsCell: false,
-					expandIconColumnIndex: 1,
-					expandIcon: ({ expanded, onExpand, record, expandable }) =>
-						expandable.length === 0 ? null : expanded ? (
-							<CaretUpOutlined
-								onClick={e => onExpand(record, e)}
-								style={{ marginRight: '8px !important', fontSize: '10pt' }}
-							/>
-						) : (
-							<CaretDownOutlined
-								onClick={e => onExpand(record, e)}
-								style={{ marginRight: '8px !important', fontSize: '10pt' }}
-							/>
-						)
-				}}
-				scroll={{
-					x: entitiesDetail?.listTask?.length > 0 ? (matches ? 1900 : 1800) : matchesSM ? 1800 : null,
-					y: null
-				}}
-				pagination={false}
-				columns={columns}
-				dataSource={entitiesDetail?.listTask}
-			/>{' '}
-		</>
+		<Table
+			rowKey="taskID"
+			childrenColumnName="lstTaskItem"
+			className="virtual-table"
+			rowClassName={record =>
+				checkDeadline(record.endDate) > 0 &&
+				record.statusID !== 5 &&
+				record.statusID !== 6 &&
+				record.statusID !== 7 &&
+				record.typeName === 'TASK'
+					? 'table-row-dark'
+					: 'table-row-light'
+			}
+			onExpandedRowsChange={onSelectedRowKeysChange}
+			expandedRowKeys={selectedRowKeys}
+			expandable={{
+				expandRowByClick: false,
+				expandIconAsCell: false,
+				expandIconColumnIndex: 1,
+				expandIcon: ({ expanded, onExpand, record, expandable }) =>
+					expandable.length === 0 ? (
+						<CaretUpOutlined className="w-40" style={{ color: 'transparent' }} />
+					) : expanded ? (
+						<CaretUpOutlined
+							className="w-40"
+							onClick={e => onExpand(record, e)}
+							style={{ fontSize: '10pt' }}
+						/>
+					) : (
+						<CaretDownOutlined
+							className="w-40"
+							onClick={e => onExpand(record, e)}
+							style={{ fontSize: '10pt' }}
+						/>
+					)
+			}}
+			scroll={{
+				x: entitiesDetail?.listTask?.length > 0 ? (matches ? 1900 : 1800) : matchesSM ? 1800 : null,
+				y: null
+			}}
+			pagination={false}
+			columns={columns}
+			dataSource={entitiesDetail?.listTask}
+		/>
 	);
 }
 

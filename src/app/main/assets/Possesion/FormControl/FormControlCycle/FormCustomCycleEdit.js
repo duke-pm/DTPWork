@@ -9,7 +9,7 @@ import { AntInput } from '@fuse/CustomForm/CreateAntField';
 import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import * as Yup from 'yup';
 import * as moment from 'moment';
-import { Spin } from 'antd';
+import { Spin, Tooltip } from 'antd';
 import { validateField } from '@fuse/core/DtpConfig';
 
 const initial = {
@@ -53,10 +53,20 @@ export default function FormCustomCycleEdit({ handleClose, entitiesEdit, handleS
 											<p className="p-6"> Mô tả </p>
 										</div>
 										<div className="flex flex-col sm:mr-98 mr-auto">
-											<p className="p-6 font-extrabold"> {entitiesEdit.assetCode || ''} </p>
-											<p className="p-6 font-extrabold"> {entitiesEdit.assetName || ''} </p>
-											<p className="p-6 font-extrabold"> {entitiesEdit.groupName || ''} </p>
-											<p className="p-6 font-extrabold"> {entitiesEdit?.descr} </p>
+											<p className="p-6 font-extrabold"> {entitiesEdit?.assetCode} </p>
+											<Tooltip placement="topLeft" title={entitiesEdit?.assetName}>
+												<p className="p-6 font-extrabold truncate max-w-200">
+													{' '}
+													{entitiesEdit?.assetName}
+												</p>
+											</Tooltip>
+											<p className="p-6 font-extrabold"> {entitiesEdit?.groupName} </p>
+											<Tooltip placement="topLeft" title={entitiesEdit?.descr}>
+												<p className="p-6 font-extrabold truncate max-w-200">
+													{' '}
+													{entitiesEdit?.descr}
+												</p>
+											</Tooltip>
 										</div>
 									</div>
 									<div className="flex-row justify-between  flex ">
@@ -124,7 +134,7 @@ export default function FormCustomCycleEdit({ handleClose, entitiesEdit, handleS
 								<div className="flex justify-between flex-row">
 									<h5 className="font-extrabold">Thông tin đưa vào sử dụng lại.</h5>
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 mb-16 gap-8 ">
+								<div className="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 mb-16 gap-8 ">
 									<div className="flex flex-col">
 										<Field
 											label="Lý do đưa vào sử dụng lại"
