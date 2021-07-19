@@ -49,7 +49,7 @@ export default function FormCustomCycleEdit({ handleClose, entitiesEdit, handleS
 										<div className="flex flex-col">
 											<p className="p-6"> Mã tài sản </p>
 											<p className="p-6"> Tên tài sản </p>
-											<p className="p-6"> Nhóm tài sản </p>
+											<p className="p-6 truncate"> Nhóm tài sản </p>
 											<p className="p-6"> Mô tả </p>
 										</div>
 										<div className="flex flex-col sm:mr-98 mr-auto">
