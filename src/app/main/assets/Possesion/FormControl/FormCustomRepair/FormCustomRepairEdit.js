@@ -92,7 +92,7 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 										type="text"
 										hasFeedback
 										component={AntInput}
-										className="mx-4 mb-16"
+										className="mb-16"
 										variant="outlined"
 									/>
 									<Field
@@ -100,7 +100,7 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 										hasFeedback
 										name="price"
 										component={InputCurrency}
-										className="mx-4 mb-16"
+										className="mb-16"
 										variant="outlined"
 									/>
 								</div>
@@ -111,7 +111,7 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 											name="note"
 											row={4}
 											component={InputTextAreaLg}
-											className="mx-4 mb-16"
+											className="mb-16"
 											variant="outlined"
 										/>
 										<Field
@@ -119,7 +119,7 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 											name="date"
 											hasFeedback
 											component={DateCustom}
-											className="mx-4 mb-16"
+											className="mb-16"
 											variant="outlined"
 										/>
 									</div>
@@ -129,7 +129,7 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 										name="file"
 										style={{ height: '48px' }}
 										component={FileCustomVersion2}
-										className="mx-4 mb-16"
+										className="mb-16"
 										variant="outlined"
 									/>
 								</div>

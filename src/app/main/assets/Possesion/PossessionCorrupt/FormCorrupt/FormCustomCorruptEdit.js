@@ -83,7 +83,7 @@ export default function FormCustomCorruptEdit() {
 											autoFocus
 											name="note"
 											component={InputTextAreaLg}
-											className="mx-4 mb-16"
+											className="mb-16"
 											variant="outlined"
 											row={7}
 										/>
@@ -94,7 +94,7 @@ export default function FormCustomCorruptEdit() {
 										style={{ height: '35px' }}
 										name="file"
 										component={FileCustomVersion2}
-										className="mx-4 mb-16"
+										className="mb-16"
 										variant="outlined"
 									/>
 								</div>

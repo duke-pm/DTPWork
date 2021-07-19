@@ -113,7 +113,6 @@ function FormCustomEdit({
 											placeholder="Vui lòng nhập số lượng tài sản cần tạo"
 											hasFeedback
 											component={AntInput}
-											// className="mx-4"
 										/>
 									</div>
 								)}
@@ -123,7 +122,6 @@ function FormCustomEdit({
 										name="assetName"
 										type="text"
 										component={AntInput}
-										className="mx-4"
 										hasFeedback
 										placeholder="Vui lòng điền tên tài sản"
 									/>
@@ -133,7 +131,6 @@ function FormCustomEdit({
 										component={SelectAntdCustom}
 										handleOpenSelectCustom={handleOpenFormSupplier}
 										options={suppiler}
-										className="mx-4"
 									/>
 								</div>
 								<div className="grid gap-8 ">
@@ -143,7 +140,6 @@ function FormCustomEdit({
 										component={InputTextArea}
 										row={6}
 										placeholder="Mô tả quy cách, thông số tài sản"
-										className="mx-4"
 									/>
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-12 ">
@@ -154,7 +150,6 @@ function FormCustomEdit({
 										format="DD-MM-YYYY"
 										placeholder="Vui lòng chọn ngày mua"
 										component={DateCustom}
-										className="mx-4"
 										hasFeedback
 									/>
 									<Field
@@ -163,7 +158,6 @@ function FormCustomEdit({
 										name="effectiveDate"
 										format="DD-MM-YYYY"
 										component={DateCustom}
-										className="mx-4"
 									/>
 									<Field
 										label="Thời gian bảo hành (tháng) "
@@ -171,7 +165,6 @@ function FormCustomEdit({
 										name="warrantyPeriod"
 										type="number"
 										component={AntInput}
-										className="mx-4"
 									/>
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-3 gap-8 ">
@@ -181,7 +174,6 @@ function FormCustomEdit({
 										type="number"
 										placeholder="Nguyên giá tài sản"
 										component={InputCurrency}
-										className="mx-4"
 									/>
 									<Field
 										label="Thời gian KH (tháng) "
@@ -189,7 +181,6 @@ function FormCustomEdit({
 										type="number"
 										component={AntInput}
 										placeholder="Số tháng khấu hao của tài sản"
-										className="mx-4"
 									/>
 									<Field
 										label="Bộ phận quản lý"
@@ -228,7 +219,7 @@ function FormCustomEdit({
 											handleChangeState={onChangeCompany}
 											component={SelectAntd}
 											options={company}
-											className="mx-4 w-auto	"
+											className="w-auto	"
 											hasFeedback
 										/>
 										<Field
@@ -239,7 +230,6 @@ function FormCustomEdit({
 											placeholder="Vui lòng chọn tài sản "
 											handleChangeState={onChangeCategory}
 											options={category}
-											className="mx-4"
 											variant="outlined"
 											hasFeedback
 										/>
@@ -252,7 +242,6 @@ function FormCustomEdit({
 											handleChangeState={onChangeGroup}
 											component={SelectAntd}
 											options={arrGroup}
-											className="mx-4"
 											hasFeedback
 										/>
 										<Field
@@ -264,7 +253,6 @@ function FormCustomEdit({
 											component={SelectAntd}
 											handleChangeState={onChangeAsset}
 											options={arrAsset}
-											className="mx-4"
 											hasFeedback
 										/>
 										<Field
@@ -273,7 +261,7 @@ function FormCustomEdit({
 											value={prefix}
 											component={AntInput}
 											type="text"
-											className="mx-4 flex-1"
+											className="flex-1"
 											hasFeedback
 										/>
 									</div>

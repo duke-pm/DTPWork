@@ -81,7 +81,7 @@ export default function FormConfirmGobal() {
 										hasFeedback
 										name="note"
 										component={InputTextAreaLg}
-										className="mx-4 mb-16"
+										className="mb-16"
 										variant="outlined"
 										row={8}
 									/>

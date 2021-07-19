@@ -121,7 +121,7 @@ export default function FormCustomEdit({ handleSubmitForm, entitiesEdit, newEnti
 										format="DD/MM/YYYY"
 										placeholder="Vui lòng chọn ngày yêu cầu"
 										component={DateCustom}
-										className="mx-4 mb-16"
+										className="mb-16"
 									/>
 								</div>
 							</div>
@@ -210,7 +210,7 @@ export default function FormCustomEdit({ handleSubmitForm, entitiesEdit, newEnti
 										name="supplier"
 										row={3}
 										component={InputTextArea}
-										className="mx-4 mb-16"
+										className="mb-16"
 									/>
 								</div>
 							</div>
