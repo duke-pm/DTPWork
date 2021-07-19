@@ -119,7 +119,7 @@ export default function HandlingBody({ dataAssets, setDataAssets, value }) {
 											name="note"
 											row={4}
 											component={InputTextAreaRequest}
-											className="mx-4 mb-16"
+											className="mb-16"
 											variant="outlined"
 											hasFeedback
 										/>
@@ -129,7 +129,7 @@ export default function HandlingBody({ dataAssets, setDataAssets, value }) {
 											name="date"
 											hasFeedback
 											component={DateCustom}
-											className="mx-4 mb-16"
+											className="mb-16"
 											variant="outlined"
 										/>
 									</div>
@@ -139,7 +139,7 @@ export default function HandlingBody({ dataAssets, setDataAssets, value }) {
 										name="file"
 										style={{ height: '49.5px' }}
 										component={FileCustomVersion2}
-										className="mx-4 mb-16"
+										className="mb-16"
 										variant="outlined"
 									/>
 								</div>

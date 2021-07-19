@@ -68,7 +68,6 @@ export default function FormCustomProject({
 										type="text"
 										name="prjName"
 										component={AntInput}
-										className="mx-4"
 									/>
 								</div>
 								<div className="grid grid-cols-1 gap-8 ">
@@ -77,17 +76,10 @@ export default function FormCustomProject({
 										name="prjParentID"
 										component={SelectAntd}
 										options={projectSub}
-										className="mx-4"
 									/>
 								</div>
 								<div className="grid grid-cols-1 gap-8 mb-16 ">
-									<Field
-										label="Description"
-										name="descr"
-										row={8}
-										component={InputTextArea}
-										className="mx-4"
-									/>
+									<Field label="Description" name="descr" row={8} component={InputTextArea} />
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
 									<Field
@@ -96,7 +88,6 @@ export default function FormCustomProject({
 										component={SelectAntd}
 										options={owner}
 										hasFeedback
-										className="mx-4"
 									/>
 									<Field
 										label="Add Team Member"
@@ -104,7 +95,6 @@ export default function FormCustomProject({
 										component={SelectAntdMulti}
 										options={owner}
 										count={2}
-										className="mx-4"
 									/>
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
@@ -114,7 +104,6 @@ export default function FormCustomProject({
 										name="isPublic"
 										value={initial.isPublic}
 										component={CheckboxAntd}
-										className="mx-4"
 										top="10px"
 									/>
 								</div>

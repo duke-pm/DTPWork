@@ -50,12 +50,10 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 											</div>
 											<div className="flex sm:mr-96 mr-auto flex-col">
 												<p className="p-6 font-extrabold"> {entitiesEdit?.assetCode}</p>
-												<Tooltip placement="topLeft" title={entitiesEdit?.assetName}>
-													<p className="p-6 font-extrabold truncate max-w-200">
-														{' '}
-														{entitiesEdit?.assetName}
-													</p>
-												</Tooltip>
+												<p className="p-6 font-extrabold truncate">
+													{' '}
+													{entitiesEdit?.assetName}
+												</p>
 												<p className="p-6 font-extrabold"> {entitiesEdit?.groupName} </p>
 												<p className="p-6 font-extrabold">
 													{' '}
@@ -63,12 +61,7 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 														moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY')}{' '}
 												</p>
 												<p className="p-6 font-extrabold"> {entitiesEdit?.statusName} </p>
-												<Tooltip placement="topLeft" title={entitiesEdit?.descr}>
-													<p className="p-6 font-extrabold truncate max-w-200">
-														{' '}
-														{entitiesEdit?.descr}
-													</p>
-												</Tooltip>
+												<p className="p-6 font-extrabold truncate"> {entitiesEdit?.descr}</p>
 											</div>
 										</div>
 									</div>
@@ -84,24 +77,12 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 												<p className="p-6 truncate"> Khu vực </p>
 											</div>
 											<div className="flex sm:mr-96 mr-auto flex-col">
-												<Tooltip placement="topLeft" title={entitiesEdit?.empName}>
-													<p className="p-6 font-extrabold truncate max-w-200">
-														{' '}
-														{entitiesEdit?.empName}
-													</p>
-												</Tooltip>
-												<Tooltip placement="topLeft" title={entitiesEdit?.jobTitle}>
-													<p className="p-6 font-extrabold truncate max-w-200">
-														{' '}
-														{entitiesEdit?.jobTitle}
-													</p>
-												</Tooltip>
-												<Tooltip placement="topLeft" title={entitiesEdit?.deptNameManager}>
-													<p className="p-6 font-extrabold truncate max-w-200">
-														{' '}
-														{entitiesEdit?.deptNameManager}
-													</p>
-												</Tooltip>
+												<p className="p-6 font-extrabold truncate"> {entitiesEdit?.empName}</p>
+												<p className="p-6 font-extrabold truncate"> {entitiesEdit?.jobTitle}</p>
+												<p className="p-6 font-extrabold truncate">
+													{' '}
+													{entitiesEdit?.deptNameManager}
+												</p>
 												<p className="p-6 font-extrabold"> {entitiesEdit?.regionName} </p>
 											</div>
 										</div>
@@ -120,7 +101,7 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 											name="note"
 											row={4}
 											component={InputTextAreaLg}
-											className="mx-4 mb-16"
+											className="mb-16"
 											variant="outlined"
 										/>
 										<Field
@@ -128,7 +109,7 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 											name="date"
 											hasFeedback
 											component={DateCustom}
-											className="mx-4 mb-16"
+											className="mb-16"
 										/>
 									</div>
 									<Field
@@ -136,7 +117,7 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 										style={{ height: '48.5px' }}
 										name="file"
 										component={FileCustomVersion2}
-										className="mx-4 mb-16"
+										className="mb-16"
 										variant="outlined"
 									/>
 								</div>

@@ -49,12 +49,10 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 											</div>
 											<div className="flex sm:mr-96 mr-auto flex-col">
 												<p className="p-6 font-extrabold"> {entitiesEdit?.assetCode}</p>
-												<Tooltip placement="topLeft" title={entitiesEdit?.assetName}>
-													<p className="p-6 font-extrabold truncate max-w-200">
-														{' '}
-														{entitiesEdit?.assetName}
-													</p>
-												</Tooltip>
+												<p className="p-6 font-extrabold truncate">
+													{' '}
+													{entitiesEdit?.assetName}
+												</p>
 												<p className="p-6 font-extrabold"> {entitiesEdit?.groupName} </p>
 												<p className="p-6 font-extrabold">
 													{' '}
@@ -62,12 +60,7 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 														moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY')}{' '}
 												</p>
 												<p className="p-6 font-extrabold"> {entitiesEdit?.statusName} </p>
-												<Tooltip placement="topLeft" title={entitiesEdit?.deptNameManager}>
-													<p className="p-6 font-extrabold truncate max-w-200">
-														{' '}
-														{entitiesEdit?.descr}
-													</p>
-												</Tooltip>
+												<p className="p-6 font-extrabold truncate "> {entitiesEdit?.descr}</p>
 											</div>
 										</div>
 									</div>
@@ -85,12 +78,10 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 											<div className="flex sm:mr-96 mr-auto flex-col">
 												<p className="p-6 font-extrabold">{entitiesEdit?.empName} </p>
 												<p className="p-6 font-extrabold"> {entitiesEdit?.jobTitle} </p>
-												<Tooltip placement="topLeft" title={entitiesEdit?.deptNameManager}>
-													<p className="p-6 font-extrabold truncate max-w-200">
-														{' '}
-														{entitiesEdit?.deptNameManager}{' '}
-													</p>
-												</Tooltip>
+												<p className="p-6 font-extrabold truncate ">
+													{' '}
+													{entitiesEdit?.deptNameManager}{' '}
+												</p>
 												<p className="p-6 font-extrabold"> {entitiesEdit?.regionName} </p>
 											</div>
 										</div>
@@ -109,7 +100,7 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 											name="note"
 											row={4}
 											component={InputTextAreaLg}
-											className="mx-4 mb-16"
+											className="mb-16"
 											variant="outlined"
 										/>
 										<Field
@@ -118,7 +109,7 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 											hasFeedback
 											format="DD/MM/YYYY"
 											component={DateCustom}
-											className="mx-4 mb-16"
+											className="mb-16"
 										/>
 									</div>
 									<Field
@@ -126,7 +117,7 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 										style={{ height: '47.5px' }}
 										name="file"
 										component={FileCustomVersion2}
-										className="mx-4 mb-16"
+										className="mb-16"
 										variant="outlined"
 									/>
 								</div>

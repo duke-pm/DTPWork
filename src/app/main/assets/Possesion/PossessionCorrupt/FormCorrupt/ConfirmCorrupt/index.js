@@ -36,7 +36,7 @@ export default function FormConfirm({ handleClose, open, type }) {
 												autoFocus
 												name="note"
 												component={InputTextAreaLg}
-												className="mx-4 mb-16"
+												className="mb-16"
 												variant="outlined"
 												row={8}
 											/>
@@ -47,7 +47,7 @@ export default function FormConfirm({ handleClose, open, type }) {
 											autoFocus
 											name="note"
 											component={InputTextAreaLg}
-											className="mx-4 mb-16"
+											className="mb-16"
 											variant="outlined"
 											row={8}
 										/>

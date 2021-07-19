@@ -54,19 +54,9 @@ export default function FormCustomCycleEdit({ handleClose, entitiesEdit, handleS
 										</div>
 										<div className="flex flex-col sm:mr-98 mr-auto">
 											<p className="p-6 font-extrabold"> {entitiesEdit?.assetCode} </p>
-											<Tooltip placement="topLeft" title={entitiesEdit?.assetName}>
-												<p className="p-6 font-extrabold truncate max-w-200">
-													{' '}
-													{entitiesEdit?.assetName}
-												</p>
-											</Tooltip>
+											<p className="p-6 font-extrabold truncate"> {entitiesEdit?.assetName}</p>
 											<p className="p-6 font-extrabold"> {entitiesEdit?.groupName} </p>
-											<Tooltip placement="topLeft" title={entitiesEdit?.descr}>
-												<p className="p-6 font-extrabold truncate max-w-200">
-													{' '}
-													{entitiesEdit?.descr}
-												</p>
-											</Tooltip>
+											<p className="p-6 font-extrabold truncate "> {entitiesEdit?.descr}</p>
 										</div>
 									</div>
 									<div className="flex-row justify-between  flex ">
@@ -100,7 +90,7 @@ export default function FormCustomCycleEdit({ handleClose, entitiesEdit, handleS
 											name="dateEnd"
 											hasFeedback
 											component={DateCustom}
-											className="mx-4 mb-16"
+											className="mb-16"
 											variant="outlined"
 										/>
 										<Field
@@ -109,14 +99,14 @@ export default function FormCustomCycleEdit({ handleClose, entitiesEdit, handleS
 											type="text"
 											name="nameService"
 											component={AntInput}
-											className="mx-4 mb-16"
+											className="mb-16"
 										/>
 										<Field
 											label="Chi phí thực tế"
 											name="price"
 											hasFeedback
 											component={InputCurrency}
-											className="mx-4 mb-16"
+											className="mb-16"
 											variant="outlined"
 										/>
 									</div>
@@ -125,7 +115,7 @@ export default function FormCustomCycleEdit({ handleClose, entitiesEdit, handleS
 										style={{ height: '58px' }}
 										name="file"
 										component={FileCustomVersion2}
-										className="mx-4 mb-16"
+										className="mb-16"
 										variant="outlined"
 									/>
 								</div>
@@ -141,7 +131,7 @@ export default function FormCustomCycleEdit({ handleClose, entitiesEdit, handleS
 											name="note"
 											row={2}
 											component={InputTextAreaLg}
-											className="mx-4 mb-16"
+											className="mb-16"
 											variant="outlined"
 										/>
 										<Field
@@ -149,7 +139,7 @@ export default function FormCustomCycleEdit({ handleClose, entitiesEdit, handleS
 											name="date"
 											hasFeedback
 											component={DateCustom}
-											className="mx-4 mb-16"
+											className="mb-16"
 											variant="outlined"
 										/>
 									</div>

@@ -15,13 +15,9 @@ export default function ContentForm({ entitiesEdit }) {
 				</div>
 				<div className="flex sm:mr-96 mr-auto  flex-col">
 					<p className="p-6 font-extrabold">{entitiesEdit?.assetCode}</p>
-					<Tooltip placement="topLeft" title={entitiesEdit?.assetName}>
-						<p className="p-6 font-extrabold truncate max-w-200"> {entitiesEdit?.assetName}</p>
-					</Tooltip>
+					<p className="p-6 font-extrabold truncate"> {entitiesEdit?.assetName}</p>
 					<p className="p-6 font-extrabold">{entitiesEdit?.groupName}</p>
-					<Tooltip placement="topLeft" title={entitiesEdit?.descr}>
-						<p className="p-6 font-extrabold truncate max-w-200"> {entitiesEdit?.descr}</p>
-					</Tooltip>
+					<p className="p-6 font-extrabold truncate"> {entitiesEdit?.descr}</p>
 				</div>
 			</div>
 			<div className="flex-row flex ">

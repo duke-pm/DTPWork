@@ -225,7 +225,7 @@ export default function RequestProviderBody({
 											format="DD/MM/YYYY"
 											placeholder="Vui lòng chọn ngày yêu cầu"
 											component={DateCustom}
-											className="mx-4 mb-16"
+											className="mb-16"
 											hasFeedback
 										/>
 									</div>
@@ -301,7 +301,7 @@ export default function RequestProviderBody({
 											name="supplier"
 											row={3}
 											component={InputTextAreaRequest}
-											className="mx-4 mb-16"
+											className="mb-16"
 										/>
 									</div>
 								</div>

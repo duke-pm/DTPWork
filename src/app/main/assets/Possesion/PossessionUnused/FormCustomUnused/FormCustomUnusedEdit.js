@@ -135,7 +135,7 @@ export default function FormCustomUnusedEdit({
 										name="position"
 										// handleInputChange={handleInputChangePostion}
 										component={AntInput}
-										className="mx-4 mb-16"
+										className="mb-16"
 									/>
 								</div>
 								<div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 gap-8 ">
@@ -159,7 +159,7 @@ export default function FormCustomUnusedEdit({
 										value={intialState.location}
 										options={regionEmployee}
 										handleChangeState={onChangeRegion}
-										className="mx-4 mb-16"
+										className="mb-16"
 									/>
 								</div>
 								<div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 gap-8 ">
@@ -172,7 +172,7 @@ export default function FormCustomUnusedEdit({
 											format="DD-MM-YYYY"
 											placeholder="Vui lòng chọn ngày mua"
 											component={DateCustom}
-											className="mx-4 mb-16"
+											className="mb-16"
 										/>
 										<Field
 											label="Lý do cấp phát"
@@ -181,7 +181,7 @@ export default function FormCustomUnusedEdit({
 											row={3}
 											handleInputChangeNote={handleInputChangeNote}
 											component={InputTextAreaLg}
-											className="mx-4 mb-16"
+											className="mb-16"
 										/>
 									</div>
 									<Field
@@ -189,7 +189,7 @@ export default function FormCustomUnusedEdit({
 										name="file"
 										style={{ height: '26.5px' }}
 										component={FileCustomVersion2}
-										className="mx-4 mb-16"
+										className="mb-16"
 										handleChangeImage={handleChangeImage}
 									/>
 								</div>

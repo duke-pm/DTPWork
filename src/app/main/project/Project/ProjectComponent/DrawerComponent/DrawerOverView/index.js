@@ -161,7 +161,9 @@ export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
 					<Typography variant="h6" style={{ color: entitiesView?.detail.typeColor }}>
 						{entitiesView?.detail.typeName}
 					</Typography>
-					<Typography className="ml-16" variant="h6">{entitiesView?.detail.taskName}</Typography>
+					<Typography className="ml-16" variant="h6">
+						{entitiesView?.detail.taskName}
+					</Typography>
 				</div>
 				<Typography variant="caption">
 					Created by <span style={{ fontWeight: 'bold' }}>{entitiesView?.detail.crtdUser}</span>. Last updated
