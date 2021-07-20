@@ -21,7 +21,7 @@ export default function ProcessingUseAsset({ openHistory, setOpenHistory }) {
 			style={{ zIndex: 20 }}
 			fullWidth
 			classes={{ scrollPaper: classes.scrollPaper }}
-			maxWidth="lg"
+			maxWidth="md"
 			open={openHistory}
 			aria-labelledby="customized-dialog-title"
 		>

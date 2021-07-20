@@ -248,7 +248,7 @@ export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
 						onClick={handleTraffic}
 						type="submit"
 						style={{ width: '15rem' }}
-						className="h-26 font-sans mt-16"
+						className="h-26  mt-16"
 						variant="contained"
 						color="primary"
 						startIcon={!isWatcherOverView ? <VisibilityIcon /> : <VisibilityOffIcon />}

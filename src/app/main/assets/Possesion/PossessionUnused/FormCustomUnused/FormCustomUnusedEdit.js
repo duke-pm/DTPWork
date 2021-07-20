@@ -117,7 +117,7 @@ export default function FormCustomUnusedEdit({
 								<div className="flex justify-between flex-row">
 									<h5 className="font-extrabold">Thông tin cấp phát tài sản.</h5>
 								</div>
-								<div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 gap-8 ">
+								<div className="grid lg:grid-cols-2  md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1 gap-8 ">
 									<Field
 										label="Cấp phát cho"
 										name="customer"
@@ -138,7 +138,7 @@ export default function FormCustomUnusedEdit({
 										className="mb-16"
 									/>
 								</div>
-								<div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 gap-8 ">
+								<div className="grid lg:grid-cols-2  md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1 gap-8 ">
 									<Field
 										label="Bộ phận"
 										name="department"
@@ -187,7 +187,7 @@ export default function FormCustomUnusedEdit({
 									<Field
 										label="File đính kèm"
 										name="file"
-										style={{ height: '26.5px' }}
+										style={{ height: '14.5px' }}
 										component={FileCustomVersion2}
 										className="mb-16"
 										handleChangeImage={handleChangeImage}

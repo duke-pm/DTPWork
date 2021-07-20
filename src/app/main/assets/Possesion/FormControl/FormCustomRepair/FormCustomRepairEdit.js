@@ -1,5 +1,5 @@
 import React from 'react';
-import { DialogContent, DialogActions, Button } from '@material-ui/core';
+import { DialogContent, DialogActions, Button, Grid, Typography } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
 import DateCustom from '@fuse/CustomForm/Date';
 import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
@@ -42,50 +42,88 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 								<div className="flex justify-between flex-row">
 									<h5 className="font-extrabold">Thông tin tài sản.</h5>
 								</div>
-								<div className=" grid lg:grid-cols-2 md:grid-cols-2  sm:grid-cols-1">
-									<div className="flex-row flex ">
-										<div className="flex flex-col">
-											<p className="p-6"> Mã tài sản </p>
-											<p className="p-6"> Tên tài sản </p>
-											<p className="p-6"> Nhóm tài sản </p>
-											<p className="p-6"> Mô tả </p>
-										</div>
-										<div className="flex flex-col sm:mr-96 mr-auto">
-											<p className="p-6 font-extrabold"> {entitiesEdit?.assetCode} </p>
-											<p className="p-6 font-extrabold"> {entitiesEdit?.assetName} </p>
-											<p className="p-6 font-extrabold"> {entitiesEdit?.groupName} </p>
-											<Tooltip placement="topLeft" title={entitiesEdit?.deptNameManager}>
-												<p className="p-6 font-extrabold truncate max-w-200">
-													{' '}
-													{entitiesEdit?.descr}
-												</p>
-											</Tooltip>
-										</div>
-									</div>
-									<div className="flex-row flex">
-										<div className="flex flex-col">
-											<p className="p-6">Ngày mua </p>
-											<p className="p-6"> Nguyên giá </p>
-											<p className="p-6"> Tình trạng </p>
-										</div>
-										<div className="flex flex-col sm:mr-96 mr-auto">
-											<p className="p-6 font-extrabold">
-												{' '}
-												{moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY') || ''}{' '}
-											</p>
-											<p className="p-6 font-extrabold">
-												{currencyFormat(entitiesEdit.originalPrice) || ''}{' '}
-											</p>
-											<p className="p-6 font-extrabold"> {entitiesEdit.statusName || ''} </p>
-										</div>
-									</div>
-								</div>
+								<Grid alignItems="flex-start" container item>
+									<Grid container item xs={12} sm={6} md={6} lg={6}>
+										<Grid item xs={5} md={4} lg={3}>
+											<Typography className="p-6 text-left truncate" variant="body1">
+												Mã tài sản
+											</Typography>
+										</Grid>
+										<Grid item xs={7} md={8} lg={9}>
+											<Typography className="p-6 font-extrabold " variant="body1">
+												{entitiesEdit?.assetCode}
+											</Typography>
+										</Grid>
+										<Grid item xs={5} md={4} lg={3}>
+											<Typography className="p-6 text-left truncate" variant="body1">
+												Tên tài sản
+											</Typography>
+										</Grid>
+										<Grid item xs={7} md={8} lg={9}>
+											<Typography className="p-6 font-extrabold " variant="body1">
+												{entitiesEdit?.assetName}
+											</Typography>
+										</Grid>
+										<Grid item xs={5} md={4} lg={3}>
+											<Typography className="p-6 text-left truncate" variant="body1">
+												Nhóm tài sản
+											</Typography>
+										</Grid>
+										<Grid item xs={7} md={8} lg={9}>
+											<Typography className="p-6 font-extrabold " variant="body1">
+												{entitiesEdit?.groupName}
+											</Typography>
+										</Grid>
+										<Grid item xs={5} md={4} lg={3}>
+											<Typography className="p-6 text-left truncate" variant="body1">
+												Mô tả
+											</Typography>
+										</Grid>
+										<Grid item xs={7} md={8} lg={9}>
+											<Typography className="p-6 font-extrabold " variant="body1">
+												{entitiesEdit?.descr}
+											</Typography>
+										</Grid>
+									</Grid>
+									<Grid container item xs={12} sm={6} md={6} lg={6}>
+										<Grid item xs={5} md={4} lg={3}>
+											<Typography className="p-6 text-left truncate" variant="body1">
+												Ngày mua
+											</Typography>
+										</Grid>
+										<Grid item xs={7} md={8} lg={9}>
+											<Typography className="p-6 font-extrabold " variant="body1">
+												{moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY') || ''}
+											</Typography>
+										</Grid>
+										<Grid item xs={5} md={4} lg={3}>
+											<Typography className="p-6 text-left truncate" variant="body1">
+												Nguyên giá
+											</Typography>
+										</Grid>
+										<Grid item xs={7} md={8} lg={9}>
+											<Typography className="p-6 font-extrabold " variant="body1">
+												{currencyFormat(entitiesEdit.originalPrice) || ''}
+											</Typography>
+										</Grid>
+										<Grid item xs={5} md={4} lg={3}>
+											<Typography className="p-6 text-left truncate" variant="body1">
+												Tình trạng
+											</Typography>
+										</Grid>
+										<Grid item xs={7} md={8} lg={9}>
+											<Typography className="p-6 font-extrabold " variant="body1">
+												{entitiesEdit?.statusName}
+											</Typography>
+										</Grid>
+									</Grid>
+								</Grid>
 							</div>
 							<div className="px-16 sm:px-24">
 								<div className="flex justify-between flex-row">
 									<h5 className="font-extrabold">Thông tin sửa chữa bảo hành.</h5>
 								</div>
-								<div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 gap-8 ">
+								<div className="grid lg:grid-cols-2 md:grid-cols-2 xs:grid-cols-1 sm:grid-cols-2 gap-8 ">
 									<Field
 										label="Tên đơn vị sửa chữa, bảo hành"
 										name="nameService"
@@ -127,7 +165,7 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 										label="File đính kèm"
 										autoFocus
 										name="file"
-										style={{ height: '48px' }}
+										style={{ height: '34px' }}
 										component={FileCustomVersion2}
 										className="mb-16"
 										variant="outlined"

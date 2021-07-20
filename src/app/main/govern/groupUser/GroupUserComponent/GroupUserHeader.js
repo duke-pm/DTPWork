@@ -7,18 +7,14 @@ export default function GroupUserHeader({ sort, createSortHandler }) {
 	return (
 		<TableHead>
 			<TableRow>
-				<TableCell className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans" align="left">
+				<TableCell className="whitespace-nowrap p-4 md:p-12 " align="left">
 					<IconButton aria-label="delete">
 						<AppsIcon />
 					</IconButton>
 				</TableCell>
 
 				{column.map(item => (
-					<TableCell
-						key={item.id}
-						className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
-						align={item.align}
-					>
+					<TableCell key={item.id} className="whitespace-nowrap p-4 md:p-12  w-screen" align={item.align}>
 						{item.sort ? (
 							<TableSortLabel
 								active={sort.id === item.id}

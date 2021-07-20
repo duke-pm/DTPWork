@@ -7,7 +7,7 @@ export default function TableHeaderProcessing() {
 		<TableHead>
 			<TableRow>
 				{columnsConfig.map(col => (
-					<TableCell className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen" key={col.id}>
+					<TableCell className="whitespace-nowrap p-4 md:p-12 w-screen" key={col.id}>
 						{col.label}
 					</TableCell>
 				))}

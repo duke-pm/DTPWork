@@ -82,7 +82,7 @@ export default function HandlingBody({ dataAssets, setDataAssets, value }) {
 					<Form className="flex flex-col w-full items-center justify-between mb-28 mt-28">
 						<div style={{ width: '90%' }}>
 							<div className="px-16 sm:px-24">
-								<div className="grid grid-cols-1 sm:grid-cols-2 mb-16 gap-16 ">
+								<div className="grid grid-cols-1 sm:grid-cols-2 mb-16 gap-8 ">
 									<Field
 										name="assets"
 										hasFeedback
@@ -137,7 +137,7 @@ export default function HandlingBody({ dataAssets, setDataAssets, value }) {
 										label="File Đính kèm"
 										autoFocus
 										name="file"
-										style={{ height: '49.5px' }}
+										style={{ height: '32.5px' }}
 										component={FileCustomVersion2}
 										className="mb-16"
 										variant="outlined"
@@ -148,19 +148,14 @@ export default function HandlingBody({ dataAssets, setDataAssets, value }) {
 								{actionLoading ? (
 									<Spin className="mr-23" />
 								) : (
-									<Button
-										type="submit"
-										className="h-26 mr-16 font-sans"
-										variant="contained"
-										color="primary"
-									>
+									<Button type="submit" className="h-26 mr-16" variant="contained" color="primary">
 										Gửi yêu cầu
 									</Button>
 								)}
 								<Button
 									type="button"
 									onClick={() => history.goBack()}
-									className="h-26 font-sans"
+									className="h-26"
 									variant="contained"
 									color="secondary"
 								>

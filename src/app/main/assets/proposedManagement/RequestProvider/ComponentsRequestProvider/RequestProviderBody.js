@@ -92,7 +92,9 @@ export default function RequestProviderBody({
 			dataIndex: 'Qty',
 			title: 'Số lượng',
 			width: '10%',
-			render: (text, record, index) => <Input type="number" value={text} onChange={onInputChange('Qty', index)} />
+			render: (text, record, index) => (
+				<Input className="text-right" type="number" value={text} onChange={onInputChange('Qty', index)} />
+			)
 		},
 		{
 			dataIndex: 'UnitPrice',
@@ -100,6 +102,7 @@ export default function RequestProviderBody({
 			width: '20%',
 			render: (text, record, index) => (
 				<NumberFormat
+					className="text-right"
 					customInput={Input}
 					value={text}
 					onValueChange={onChangeFormatCurr('UnitPrice', index)}
@@ -181,7 +184,7 @@ export default function RequestProviderBody({
 							<div style={{ width: '90%' }} className="sm">
 								<div className="px-16 w-full sm:px-24">
 									<div className="flex justify-between flex-row">
-										<h5 className={classes.CustomFont}>Thông tin người yêu cầu.</h5>
+										<h5 className="font-extrabold">Thông tin người yêu cầu.</h5>
 									</div>
 									<div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 ">
 										<Field
@@ -232,7 +235,7 @@ export default function RequestProviderBody({
 								</div>
 								<div className="px-16 sm:px-24">
 									<div className="flex justify-between flex-row">
-										<h5 className={classes.CustomFont}>Tài sản yêu cầu.</h5>
+										<h5 className="font-extrabold">Tài sản yêu cầu.</h5>
 									</div>
 									<Typography variant="subtitle2" color="inherit" className="mb-16">
 										<AddCircleOutlineIcon style={{ color: '#1890ff' }} />
@@ -251,7 +254,7 @@ export default function RequestProviderBody({
 									/>
 								</div>
 								<div className="px-16 sm:px-24 mt-16">
-									<div className="grid sm:grid-cols-1 md:grid-cols-2 gap-16 ">
+									<div className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 ">
 										<Field
 											label="Nơi dùng"
 											hasFeedback
@@ -260,7 +263,7 @@ export default function RequestProviderBody({
 											options={optionLocation}
 											className="mt-8"
 										/>
-										<div className="flex flex-row justify-around">
+										<div className="flex flex-row">
 											<Field
 												label="Loại yêu cầu "
 												hasFeedback
@@ -316,7 +319,7 @@ export default function RequestProviderBody({
 									<Button
 										type="button"
 										onClick={() => handleResetForm(resetForm)}
-										className="h-26 font-sans"
+										className="h-26"
 										variant="contained"
 										color="secondary"
 									>

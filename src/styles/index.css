@@ -17,6 +17,10 @@ html {
 }
 .MuiTableCell-root{
     padding: 9px;
+    font-weight: normal;
+}
+.MuiTableSortLabel-root{
+    font-weight: normal !important;
 }
 /* label {
  font-size: 14px;

@@ -2,38 +2,85 @@ import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import React from 'react';
 import * as moment from 'moment';
 import { Tooltip } from 'antd';
+import { Grid, Typography } from '@material-ui/core';
 
 export default function ContentForm({ entitiesEdit }) {
 	return (
-		<div className=" grid lg:grid-cols-2 md:grid-cols-2  sm:grid-cols-1">
-			<div className="flex-row flex">
-				<div className="flex flex-col ">
-					<p className="p-6"> Mã tài sản </p>
-					<p className="p-6"> Tên tài sản </p>
-					<p className="p-6"> Nhóm tài sản </p>
-					<p className="p-6"> Mô tả </p>
-				</div>
-				<div className="flex sm:mr-96 mr-auto  flex-col">
-					<p className="p-6 font-extrabold">{entitiesEdit?.assetCode}</p>
-					<p className="p-6 font-extrabold truncate"> {entitiesEdit?.assetName}</p>
-					<p className="p-6 font-extrabold">{entitiesEdit?.groupName}</p>
-					<p className="p-6 font-extrabold truncate"> {entitiesEdit?.descr}</p>
-				</div>
-			</div>
-			<div className="flex-row flex ">
-				<div className="flex flex-col">
-					<p className="p-6">Ngày mua </p>
-					<p className="p-6"> Nguyên giá </p>
-					<p className="p-6"> Tình trạng </p>
-				</div>
-				<div className="flex sm:mr-96 mr-auto flex-col">
-					<p className="p-6 font-extrabold">
+		<Grid alignItems="flex-start" container item spacing={2}>
+			<Grid container item xs={12} sm={6} md={6} lg={6}>
+				<Grid item xs={5} md={4} lg={3}>
+					<Typography className="p-6 text-left truncate" variant="body1">
+						Mã tài sản
+					</Typography>
+				</Grid>
+				<Grid item xs={7} md={8} lg={9}>
+					<Typography className="p-6 font-extrabold " variant="body1">
+						{entitiesEdit?.assetCode}
+					</Typography>
+				</Grid>
+				<Grid item xs={5} md={4} lg={3}>
+					<Typography className="p-6 text-left truncate" variant="body1">
+						Tên tài sản
+					</Typography>
+				</Grid>
+				<Grid item xs={7} md={8} lg={9}>
+					<Typography className="p-6 font-extrabold " variant="body1">
+						{entitiesEdit?.assetName}
+					</Typography>
+				</Grid>
+				<Grid item xs={5} md={4} lg={3}>
+					<Typography className="p-6 text-left truncate" variant="body1">
+						Nhóm tài sản
+					</Typography>
+				</Grid>
+				<Grid item xs={7} md={8} lg={9}>
+					<Typography className="p-6 font-extrabold " variant="body1">
+						{entitiesEdit?.groupName}
+					</Typography>
+				</Grid>
+				<Grid item xs={5} md={4} lg={3}>
+					<Typography className="p-6 text-left truncate" variant="body1">
+						Mô tả
+					</Typography>
+				</Grid>
+				<Grid item xs={7} md={8} lg={9}>
+					<Typography className="p-6 font-extrabold " variant="body1">
+						{entitiesEdit?.descr}
+					</Typography>
+				</Grid>
+			</Grid>
+			<Grid container item xs={12} sm={6} md={6} lg={6}>
+				<Grid item xs={5} md={4} lg={3}>
+					<Typography className="p-6 text-left truncate" variant="body1">
+						Ngày mua
+					</Typography>
+				</Grid>
+				<Grid item xs={7} md={8} lg={9}>
+					<Typography className="p-6 font-extrabold " variant="body1">
 						{entitiesEdit && moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY')}
-					</p>
-					<p className="p-6 font-extrabold"> {entitiesEdit && currencyFormat(entitiesEdit.originalPrice)}</p>
-					<p className="p-6 font-extrabold"> Chưa sử dụng </p>
-				</div>
-			</div>
-		</div>
+					</Typography>
+				</Grid>
+				<Grid item xs={5} md={4} lg={3}>
+					<Typography className="p-6 text-left truncate" variant="body1">
+						Nguyên giá
+					</Typography>
+				</Grid>
+				<Grid item xs={7} md={8} lg={9}>
+					<Typography className="p-6 font-extrabold " variant="body1">
+						{entitiesEdit && currencyFormat(entitiesEdit.originalPrice)}
+					</Typography>
+				</Grid>
+				<Grid item xs={5} md={4} lg={3}>
+					<Typography className="p-6 text-left truncate" variant="body1">
+						Tình trạng
+					</Typography>
+				</Grid>
+				<Grid item xs={7} md={8} lg={9}>
+					<Typography className="p-6 font-extrabold " variant="body1">
+						Chưa sử dụng
+					</Typography>
+				</Grid>
+			</Grid>
+		</Grid>
 	);
 }

@@ -41,9 +41,7 @@ export default function ListRoleSettingPage() {
 				}
 				contentToolbar={
 					<div className="flex  items-center px-16 flex-1">
-						<Typography component="span" className="font-bold flex text-sm	">
-							Phân quyền chức năng
-						</Typography>
+						<Typography variant="h6">Phân quyền chức năng</Typography>
 					</div>
 				}
 				content={

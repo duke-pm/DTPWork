@@ -1,5 +1,5 @@
 import React from 'react';
-import { DialogContent, DialogActions, Button } from '@material-ui/core';
+import { DialogContent, DialogActions, Button, Grid, Typography } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
 import DateCustom from '@fuse/CustomForm/Date';
 import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
@@ -34,66 +34,129 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 					<Form>
 						<DialogContent dividers>
 							<div className="px-16 sm:px-24">
-								<div className=" grid lg:grid-cols-2 md:grid-cols-2  sm:grid-cols-1">
-									<div className="flex-col flex ">
+								<Grid alignItems="flex-start" container item spacing={2}>
+									<Grid container item xs={12} sm={6} md={6} lg={6}>
 										<div className="flex flex-row">
 											<h5 className="font-extrabold">Thông tin tài sản.</h5>
 										</div>
-										<div className="flex-row flex ">
-											<div className="flex flex-col">
-												<p className="p-6"> Mã tài sản </p>
-												<p className="p-6"> Tên tài sản </p>
-												<p className="p-6"> Nhóm tài sản </p>
-												<p className="p-6"> Ngày mua </p>
-												<p className="p-6"> Tình trạng </p>
-												<p className="p-6"> Mô tả </p>
-											</div>
-											<div className="flex sm:mr-96 mr-auto flex-col">
-												<p className="p-6 font-extrabold"> {entitiesEdit?.assetCode}</p>
-												<p className="p-6 font-extrabold truncate">
-													{' '}
+										<Grid container item>
+											<Grid item xs={5} md={4} lg={3}>
+												<Typography className="p-6 text-left truncate" variant="body1">
+													Mã tài sản
+												</Typography>
+											</Grid>
+											<Grid item xs={7} md={8} lg={9}>
+												<Typography className="p-6 font-extrabold " variant="body1">
+													{entitiesEdit?.assetCode}
+												</Typography>
+											</Grid>
+											<Grid item xs={5} md={4} lg={3}>
+												<Typography className="p-6 text-left truncate" variant="body1">
+													Tên tài sản
+												</Typography>
+											</Grid>
+											<Grid item xs={7} md={8} lg={9}>
+												<Typography className="p-6 font-extrabold " variant="body1">
 													{entitiesEdit?.assetName}
-												</p>
-												<p className="p-6 font-extrabold"> {entitiesEdit?.groupName} </p>
-												<p className="p-6 font-extrabold">
-													{' '}
+												</Typography>
+											</Grid>
+											<Grid item xs={5} md={4} lg={3}>
+												<Typography className="p-6 text-left truncate" variant="body1">
+													Nhóm tài sản
+												</Typography>
+											</Grid>
+											<Grid item xs={7} md={8} lg={9}>
+												<Typography className="p-6 font-extrabold " variant="body1">
+													{entitiesEdit?.groupName}
+												</Typography>
+											</Grid>
+											<Grid item xs={5} md={4} lg={3}>
+												<Typography className="p-6 text-left truncate" variant="body1">
+													Ngày mua
+												</Typography>
+											</Grid>
+											<Grid item xs={7} md={8} lg={9}>
+												<Typography className="p-6 font-extrabold " variant="body1">
 													{entitiesEdit &&
 														moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY')}{' '}
-												</p>
-												<p className="p-6 font-extrabold"> {entitiesEdit?.statusName} </p>
-												<p className="p-6 font-extrabold truncate"> {entitiesEdit?.descr}</p>
-											</div>
-										</div>
-									</div>
-									<div className="flex-col flex ">
+												</Typography>
+											</Grid>
+											<Grid item xs={5} md={4} lg={3}>
+												<Typography className="p-6 text-left truncate" variant="body1">
+													Tình trạng
+												</Typography>
+											</Grid>
+											<Grid item xs={7} md={8} lg={9}>
+												<Typography className="p-6 font-extrabold " variant="body1">
+													{entitiesEdit?.statusName}
+												</Typography>
+											</Grid>
+											<Grid item xs={5} md={4} lg={3}>
+												<Typography className="p-6 text-left truncate" variant="body1">
+													Mô tả
+												</Typography>
+											</Grid>
+											<Grid item xs={7} md={8} lg={9}>
+												<Typography className="p-6 font-extrabold " variant="body1">
+													{entitiesEdit?.descr}
+												</Typography>
+											</Grid>
+										</Grid>
+									</Grid>
+									<Grid container item xs={12} sm={6} md={6} lg={6}>
 										<div className="flex flex-row">
 											<h5 className="font-extrabold">Thông tin nhân viên sử dụng.</h5>
 										</div>
-										<div className="flex-row  flex ">
-											<div className="flex flex-col">
-												<p className="p-6 truncate"> Nhân viên </p>
-												<p className="p-6 truncate"> Chức vụ </p>
-												<p className="p-6 truncate"> Bộ phận </p>
-												<p className="p-6 truncate"> Khu vực </p>
-											</div>
-											<div className="flex sm:mr-96 mr-auto flex-col">
-												<p className="p-6 font-extrabold truncate"> {entitiesEdit?.empName}</p>
-												<p className="p-6 font-extrabold truncate"> {entitiesEdit?.jobTitle}</p>
-												<p className="p-6 font-extrabold truncate">
-													{' '}
+										<Grid container item>
+											<Grid item xs={5} md={4} lg={3}>
+												<Typography className="p-6 text-left truncate" variant="body1">
+													Nhân viên
+												</Typography>
+											</Grid>
+											<Grid item xs={7} md={8} lg={9}>
+												<Typography className="p-6 font-extrabold " variant="body1">
+													{entitiesEdit?.empName}
+												</Typography>
+											</Grid>
+											<Grid item xs={5} md={4} lg={3}>
+												<Typography className="p-6 text-left truncate" variant="body1">
+													Chức vụ
+												</Typography>
+											</Grid>
+											<Grid item xs={7} md={8} lg={9}>
+												<Typography className="p-6 font-extrabold " variant="body1">
+													{entitiesEdit?.jobTitle}
+												</Typography>
+											</Grid>
+											<Grid item xs={5} md={4} lg={3}>
+												<Typography className="p-6 text-left truncate" variant="body1">
+													Bộ phận
+												</Typography>
+											</Grid>
+											<Grid item xs={7} md={8} lg={9}>
+												<Typography className="p-6 font-extrabold " variant="body1">
 													{entitiesEdit?.deptNameManager}
-												</p>
-												<p className="p-6 font-extrabold"> {entitiesEdit?.regionName} </p>
-											</div>
-										</div>
-									</div>
-								</div>
+												</Typography>
+											</Grid>
+											<Grid item xs={5} md={4} lg={3}>
+												<Typography className="p-6 text-left truncate" variant="body1">
+													Khu vực
+												</Typography>
+											</Grid>
+											<Grid item xs={7} md={8} lg={9}>
+												<Typography className="p-6 font-extrabold " variant="body1">
+													{entitiesEdit?.regionName}
+												</Typography>
+											</Grid>
+										</Grid>
+									</Grid>
+								</Grid>
 							</div>
 							<div className="px-16 sm:px-24">
 								<div className="flex flex-row">
 									<h5 className="font-extrabold">Thông tin thu hồi.</h5>
 								</div>
-								<div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 p-4 mb-16 gap-8 ">
+								<div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 mb-16 gap-8 ">
 									<div className="flex flex-col">
 										<Field
 											label="Lý do thu hồi"
@@ -114,7 +177,7 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 									</div>
 									<Field
 										label="File đính kèm"
-										style={{ height: '48.5px' }}
+										style={{ height: '34.5px' }}
 										name="file"
 										component={FileCustomVersion2}
 										className="mb-16"

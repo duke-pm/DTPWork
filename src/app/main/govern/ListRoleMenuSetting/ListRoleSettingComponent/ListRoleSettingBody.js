@@ -6,12 +6,12 @@ import __ from 'lodash';
 import { findIndexMultiple, findIndexMultipleAsset } from '@fuse/core/DtpConfig';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 import { Typography } from '@material-ui/core';
-// import { useTheme } from '@material-ui/core/styles';
-// import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 export default function ListRoleSettingBody({ entities, newData, setNewData, actionLoading }) {
-	// const theme = useTheme();
-	// const matches = useMediaQuery(theme.breakpoints.up('xl'));
+	const theme = useTheme();
+	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
 	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 	useEffect(() => {
 		const newEntis = entities && entities.map(item => item.menuID);
@@ -99,7 +99,7 @@ export default function ListRoleSettingBody({ entities, newData, setNewData, act
 				className="virtual-table"
 				pagination={false}
 				columns={column}
-				// scroll={{ y: matches ? 580 : 460 }}
+				scroll={{ x: matchesSM && 580 }}
 				loading={actionLoading}
 				rowKey="menuID"
 				onExpandedRowsChange={onSelectedRowKeysChange}

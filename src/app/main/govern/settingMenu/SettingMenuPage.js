@@ -41,9 +41,7 @@ export default function SettingMenuPage() {
 				}
 				contentToolbar={
 					<div className="flex  items-center px-16 flex-1">
-						<Typography component="span" className="font-bold flex text-sm	">
-							Thiết lập menu
-						</Typography>
+						<Typography variant="h6">Thiết lập menu</Typography>
 					</div>
 				}
 				content={

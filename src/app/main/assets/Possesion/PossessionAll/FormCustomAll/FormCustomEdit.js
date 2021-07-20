@@ -133,7 +133,7 @@ function FormCustomEdit({
 										options={suppiler}
 									/>
 								</div>
-								<div className="grid gap-8 ">
+								<div className="grid gap-8 mb-20 ">
 									<Field
 										label="Quy cách tài sản/Thông số"
 										name="descr"
@@ -142,7 +142,7 @@ function FormCustomEdit({
 										placeholder="Mô tả quy cách, thông số tài sản"
 									/>
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-12 ">
+								<div className="grid xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-8">
 									<Field
 										label="Ngày mua"
 										defaultValue={initialValue.purchaseDate}
@@ -167,7 +167,7 @@ function FormCustomEdit({
 										component={AntInput}
 									/>
 								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-3 gap-8 ">
+								<div className="grid xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-8">
 									<Field
 										label="Nguyên giá "
 										name="originalPrice"
@@ -210,7 +210,7 @@ function FormCustomEdit({
 									<div className="flex justify-between flex-row">
 										<h5 className="font-extrabold">Quy tắc đánh mã tài sản. </h5>
 									</div>
-									<div className="grid grid-cols-1 sm:grid-cols-3 mb:6 gap-8 ">
+									<div className="grid xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-8">
 										<Field
 											label="Công ty"
 											name="company"
@@ -219,7 +219,7 @@ function FormCustomEdit({
 											handleChangeState={onChangeCompany}
 											component={SelectAntd}
 											options={company}
-											className="w-auto	"
+											className="w-auto"
 											hasFeedback
 										/>
 										<Field

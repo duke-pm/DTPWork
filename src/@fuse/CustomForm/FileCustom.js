@@ -19,7 +19,7 @@ export default function FileCustom({
 				<input style={{ display: 'none' }} id="upload-photo" name="upload-photo" type="file" />
 
 				<Fab
-					className="text-gray-800 font-sans"
+					className="text-gray-800 "
 					color="secondary"
 					size="small"
 					component="span"
