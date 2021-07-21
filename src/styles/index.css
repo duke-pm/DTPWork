@@ -196,7 +196,7 @@ input:-webkit-autofill {
 
 .ant-input {
     font-size: 1.4rem !important;
-    line-height: 1.4 !important;
+    /* line-height: 1.4 !important; */
     font-family: sans-serif, Muli, Roboto, Helvetica Neue, Arial !important;
 }
 

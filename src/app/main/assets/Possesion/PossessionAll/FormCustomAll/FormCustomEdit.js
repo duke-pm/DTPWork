@@ -123,11 +123,13 @@ function FormCustomEdit({
 										type="text"
 										component={AntInput}
 										hasFeedback
+										className="mx-4"
 										placeholder="Vui lòng điền tên tài sản"
 									/>
 									<Field
 										label="Nhà cung cấp"
 										name="suppiler"
+										className="mx-4"
 										component={SelectAntdCustom}
 										handleOpenSelectCustom={handleOpenFormSupplier}
 										options={suppiler}
@@ -157,6 +159,7 @@ function FormCustomEdit({
 										defaultValue={initialValue.effectiveDate}
 										name="effectiveDate"
 										format="DD-MM-YYYY"
+										className="mx-4"
 										component={DateCustom}
 									/>
 									<Field
