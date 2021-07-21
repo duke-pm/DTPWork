@@ -9,7 +9,7 @@ import { AntInput } from '@fuse/CustomForm/CreateAntField';
 import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import * as Yup from 'yup';
 import * as moment from 'moment';
-import { Spin, Tooltip } from 'antd';
+import { Spin } from 'antd';
 import { validateField } from '@fuse/core/DtpConfig';
 
 const initial = {

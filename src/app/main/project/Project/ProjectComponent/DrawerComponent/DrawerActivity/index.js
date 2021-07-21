@@ -1,10 +1,8 @@
 import { Button, Typography } from '@material-ui/core';
 import { Avatar, Input, Empty, Divider } from 'antd';
-import React, { useState, createRef, useRef, useEffect } from 'react';
+import React, { useState, createRef, useEffect } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import { sliceString } from '@fuse/core/DtpConfig';
-import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
-import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import * as moment from 'moment';
 import { addTaskActivity } from '../../../../_redux/_projectActions';
 
@@ -20,7 +18,6 @@ export default function DrawerActivity() {
 		dispatch(addTaskActivity(entitiesView.detail.taskID, comment));
 		setComment('');
 	};
-	const classes = DtpCustomStyles();
 	useEffect(() => {
 		if (entitiesActivity?.length > 0) {
 			scrollToBottom();

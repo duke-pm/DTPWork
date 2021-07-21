@@ -41,9 +41,7 @@ export default function ListUserPage() {
 				}
 				contentToolbar={
 					<div className="flex  items-center px-16 flex-1">
-						<Typography component="span" className="font-bold flex text-sm	">
-							Danh sách người dùng
-						</Typography>
+						<Typography variant="h6">Danh sách người dùng</Typography>
 					</div>
 				}
 				content={

@@ -7,7 +7,6 @@ import { useDispatch } from 'react-redux';
 import { Popover, Select } from 'antd';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import FilterListIcon from '@material-ui/icons/FilterList';
-import clsx from 'clsx';
 import { ProjectContext } from '../../ProjectContext';
 import { setTaskEditProject, fetchProjectDetailFilter, getTaskDetailAll } from '../../../_redux/_projectActions';
 import ModalListControlFilter from './ModalListControlFilter';
@@ -32,7 +31,6 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 		dateStart
 	} = projectContext;
 	const [openFilter, setOpenFilter] = useState(false);
-	const handleOpenFilter = () => setOpenFilter(true);
 	const handleCloseFilter = () => setOpenFilter(false);
 	const handleOpenFormProject = title => {
 		setFormProject({

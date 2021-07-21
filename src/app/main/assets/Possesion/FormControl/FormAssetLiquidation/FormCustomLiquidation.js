@@ -5,7 +5,7 @@ import DateCustom from '@fuse/CustomForm/Date';
 import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
 import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
 import * as moment from 'moment';
-import { Spin, Tooltip } from 'antd';
+import { Spin } from 'antd';
 import * as Yup from 'yup';
 import { validateField } from '@fuse/core/DtpConfig';
 

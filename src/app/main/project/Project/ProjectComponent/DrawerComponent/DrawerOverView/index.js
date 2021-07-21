@@ -25,8 +25,6 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import { useParams } from 'react-router';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
-import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { badgeText, priorityColor } from '../../TableProject/ConfigTableProject';
 import { ProjectContext } from '../../../ProjectContext';
 
@@ -41,8 +39,6 @@ const file = {
 	jpge: <FileImageOutlined />
 };
 export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
-	const theme = useTheme();
-	const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
 	const dispatch = useDispatch();
 	const params = useParams();
 	const [process, setProcess] = useState(0);

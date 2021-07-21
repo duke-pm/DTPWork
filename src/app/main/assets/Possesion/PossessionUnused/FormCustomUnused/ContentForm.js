@@ -1,7 +1,6 @@
 import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import React from 'react';
 import * as moment from 'moment';
-import { Tooltip } from 'antd';
 import { Grid, Typography } from '@material-ui/core';
 
 export default function ContentForm({ entitiesEdit }) {

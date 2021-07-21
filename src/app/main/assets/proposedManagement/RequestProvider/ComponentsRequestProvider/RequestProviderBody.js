@@ -16,7 +16,6 @@ import InputTextAreaRequest from '@fuse/CustomForm/InputTextAreaRequest';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { useHistory } from 'react-router-dom';
-import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import * as actions from '../../_redux/confirmAction';
@@ -34,7 +33,6 @@ export default function RequestProviderBody({
 	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
 	const dispatch = useDispatch();
 	const history = useHistory();
-	const classes = DtpCustomStyles();
 	const [optionDept, setOptionsDept] = useState([]);
 	const [optionRegion, setOptionsRegion] = useState([]);
 	const [optionLocation, setOptionsLocation] = useState([]);

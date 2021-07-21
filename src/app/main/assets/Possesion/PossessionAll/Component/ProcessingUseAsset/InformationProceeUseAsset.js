@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import image from '@fuse/assets/group.png';
 import { TableContainer, Paper, Table, Grid, Typography } from '@material-ui/core';
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
-import { Spin, Tooltip } from 'antd';
+import { Spin } from 'antd';
 import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import * as actions from '../../../_redux/possesionActions';
 import TableHeaderProcessing from './TableProcessingUseAsset/TableHeaderProcessing';
