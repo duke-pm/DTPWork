@@ -187,7 +187,6 @@ export default function FormCustomUnusedEdit({
 									<Field
 										label="File đính kèm"
 										name="file"
-										style={{ height: '14.5px' }}
 										component={FileCustomVersion2}
 										className="mb-16"
 										handleChangeImage={handleChangeImage}

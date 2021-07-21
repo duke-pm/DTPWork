@@ -165,7 +165,7 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 										label="File đính kèm"
 										autoFocus
 										name="file"
-										style={{ height: '34px' }}
+										style={{ height: '4.5rem' }}
 										component={FileCustomVersion2}
 										className="mb-16"
 										variant="outlined"
