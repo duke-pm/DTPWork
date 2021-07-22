@@ -85,7 +85,7 @@ export default function ActionComponent({ actionLoading }) {
 				}}
 			>
 				<div className="flex flex-col sm:flex-row justify-between">
-					<h5 className="font-extrabold">Filter </h5>
+					<Typography variant="subtitle2">Filter </Typography>
 				</div>
 				<Grid className="mb-16" item container spacing={2}>
 					<Grid item xs={12} sm={12} md={4} lg={6}>
@@ -135,7 +135,7 @@ export default function ActionComponent({ actionLoading }) {
 						</Button>
 					</Grid>
 				</Grid>
-				<div className="flex flex-col sm:flex-row justify-between">
+				<div className="flex sm:flex-row flex-col-reverse justify-between">
 					<Typography variant="subtitle1" color="inherit" className="mt-16">
 						<AddCircleOutlineIcon style={{ color: '#1890ff' }} />
 						<Link style={{ color: '#1890ff' }} to="/tai-san/bao-mat-hong-tai-san">

@@ -109,7 +109,7 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 				}}
 			>
 				<div className="flex flex-col sm:flex-row justify-between">
-					<h5 className="font-extrabold">Filter </h5>
+					<Typography variant="subtitle2">Filter </Typography>
 				</div>
 				<Grid className="mb-16" container spacing={2}>
 					<Grid item xs={12} sm={6} md={6} lg={2}>
@@ -194,7 +194,7 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 						</Button>
 					</Grid>
 				</Grid>
-				<div className="flex flex-row justify-between">
+				<div className="flex sm:flex-row flex-col-reverse justify-between">
 					<div className="flex flex-row justify-between">
 						{/* <IconButton onClick={handleOpenFilter} className={clsx('sm:hidden block')}>
 							{' '}
@@ -229,7 +229,7 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 								)}
 							>
 								<Button
-									className="mt-8 max-w-sm md:max-w-lg h-26"
+									className="mt-8 sm:mt-0 mb-8 sm:mb-0 h-26 max-w-160 "
 									variant="contained"
 									color="primary"
 									startIcon={<AddCircleOutline />}

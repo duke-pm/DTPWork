@@ -96,35 +96,53 @@ function PossesionPage(props) {
 						scrollButtons="auto"
 					>
 						<Tab
-							className="font-sans"
-							label={`Tất cả (${(total_Record && total_Record.countAll) || 0})`}
+							label={
+								<Typography variant="body1">
+									Tất cả ({(total_Record && total_Record.countAll) || 0})
+								</Typography>
+							}
 							{...a11yProps(0)}
 						/>
 						<Tab
-							className="font-sans	"
-							label={`Chưa sử dụng (${(total_Record && total_Record.countNoUseYet) || 0})`}
+							label={
+								<Typography variant="body1">
+									{' '}
+									Chưa sử dụng ({(total_Record && total_Record.countNoUseYet) || 0}){' '}
+								</Typography>
+							}
 							{...a11yProps(1)}
 						/>
 						<Tab
-							className=" font-sans	"
-							label={`Đang sử dụng (${(total_Record && total_Record.countUsing) || 0})`}
+							label={
+								<Typography variant="body1">
+									Đang sử dụng ({(total_Record && total_Record.countUsing) || 0}){' '}
+								</Typography>
+							}
 							{...a11yProps(2)}
 						/>
 						<Tab
-							className=" font-sans	"
-							label={`Sửa chữa - bảo hành (${(total_Record && total_Record.countWarrantyRepair) || 0})`}
+							label={
+								<Typography variant="body1">
+									Sửa chữa - bảo hành ({(total_Record && total_Record.countWarrantyRepair) || 0})
+								</Typography>
+							}
 							{...a11yProps(3)}
 						/>
 						<Tab
-							className=" font-sans	"
-							label={`Hư hỏng - mất (${(total_Record && total_Record.countDamaged) || 0} - ${
-								(total_Record && total_Record.countLost) || 0
-							} )`}
+							label={
+								<Typography variant="body1">
+									Hư hỏng - mất ({(total_Record && total_Record.countDamaged) || 0} -{' '}
+									{(total_Record && total_Record.countLost) || 0} )
+								</Typography>
+							}
 							{...a11yProps(4)}
 						/>
 						<Tab
-							className=" font-sans	"
-							label={`Thanh lý (${(total_Record && total_Record.countLiquidation) || 0})`}
+							label={
+								<Typography variant="body1">
+									Thanh lý ({(total_Record && total_Record.countLiquidation) || 0})
+								</Typography>
+							}
 							{...a11yProps(5)}
 						/>
 					</Tabs>

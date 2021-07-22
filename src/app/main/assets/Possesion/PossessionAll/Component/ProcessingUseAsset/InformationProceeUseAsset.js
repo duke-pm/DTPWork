@@ -24,7 +24,7 @@ export default function InformationProceeUseAsset({ entitiesEdit, actionLoading 
 		<>
 			<div className="px-16 sm:px-24">
 				<div className="flex justify-between flex-row">
-					<h5 className="font-extrabold">Thông tin tài sản.</h5>
+					<Typography variant="subtitle2">Thông tin tài sản.</Typography>
 				</div>
 				<Grid alignItems="flex-start" container item>
 					<Grid container item xs={12} sm={6} md={6} lg={6}>
@@ -34,7 +34,7 @@ export default function InformationProceeUseAsset({ entitiesEdit, actionLoading 
 							</Typography>
 						</Grid>
 						<Grid item xs={7} md={8} lg={9}>
-							<Typography className="p-6 font-extrabold " variant="body1">
+							<Typography className="p-6" variant="subtitle2">
 								{entitiesEdit?.assetCode}
 							</Typography>
 						</Grid>
@@ -44,7 +44,7 @@ export default function InformationProceeUseAsset({ entitiesEdit, actionLoading 
 							</Typography>
 						</Grid>
 						<Grid item xs={7} md={8} lg={9}>
-							<Typography className="p-6 font-extrabold " variant="body1">
+							<Typography className="p-6 " variant="subtitle2">
 								{entitiesEdit?.assetName}
 							</Typography>
 						</Grid>
@@ -54,7 +54,7 @@ export default function InformationProceeUseAsset({ entitiesEdit, actionLoading 
 							</Typography>
 						</Grid>
 						<Grid item xs={7} md={8} lg={9}>
-							<Typography className="p-6 font-extrabold " variant="body1">
+							<Typography className="p-6 " variant="subtitle2">
 								{entitiesEdit?.groupName}
 							</Typography>
 						</Grid>
@@ -64,7 +64,7 @@ export default function InformationProceeUseAsset({ entitiesEdit, actionLoading 
 							</Typography>
 						</Grid>
 						<Grid item xs={7} md={8} lg={9}>
-							<Typography className="p-6 font-extrabold " variant="body1">
+							<Typography className="p-6" variant="subtitle2">
 								{entitiesEdit?.descr}
 							</Typography>
 						</Grid>
@@ -76,7 +76,7 @@ export default function InformationProceeUseAsset({ entitiesEdit, actionLoading 
 							</Typography>
 						</Grid>
 						<Grid item xs={7} md={8} lg={9}>
-							<Typography className="p-6 font-extrabold " variant="body1">
+							<Typography className="p-6" variant="subtitle2">
 								{entitiesEdit && moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY')}
 							</Typography>
 						</Grid>
@@ -86,7 +86,7 @@ export default function InformationProceeUseAsset({ entitiesEdit, actionLoading 
 							</Typography>
 						</Grid>
 						<Grid item xs={7} md={8} lg={9}>
-							<Typography className="p-6 font-extrabold " variant="body1">
+							<Typography className="p-6" variant="subtitle2">
 								{entitiesEdit && currencyFormat(entitiesEdit.originalPrice)}
 							</Typography>
 						</Grid>
@@ -96,7 +96,7 @@ export default function InformationProceeUseAsset({ entitiesEdit, actionLoading 
 							</Typography>
 						</Grid>
 						<Grid item xs={7} md={8} lg={9}>
-							<Typography className="p-6 font-extrabold " variant="body1">
+							<Typography className="p-6" variant="subtitle2">
 								{entitiesEdit?.statusName}
 							</Typography>
 						</Grid>
@@ -105,7 +105,7 @@ export default function InformationProceeUseAsset({ entitiesEdit, actionLoading 
 			</div>
 			<div className="px-16 sm:px-24">
 				<div className="flex flex-row">
-					<h5 className="font-extrabold">Quá trình sử dụng.</h5>
+					<Typography variant="subtitle2">Quá trình sử dụng.</Typography>
 					{actionLoading && <Spin className="mr-18" />}
 				</div>
 				<FuseAnimateGroup

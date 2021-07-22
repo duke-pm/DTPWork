@@ -99,9 +99,7 @@ export default function FormCustomProjectTask({
 								/>
 							</div>
 							<div className="flex justify-between flex-row">
-								<Typography className="font-extrabold" variant="subtitle2">
-									PEOPLE & TIME
-								</Typography>
+								<Typography variant="subtitle2">PEOPLE & TIME</Typography>
 							</div>
 							<Divider className="mb-16" />
 							<div className="grid grid-cols-1 gap-8 ">
@@ -158,9 +156,7 @@ export default function FormCustomProjectTask({
 								/>
 							</div>
 							<div className="flex justify-between flex-row">
-								<Typography className="font-extrabold" variant="subtitle2">
-									DETAIL
-								</Typography>
+								<Typography variant="subtitle2">DETAIL</Typography>
 							</div>
 							<Divider className="mb-16" />
 							{entitiesEdit &&
@@ -275,9 +271,7 @@ export default function FormCustomProjectTask({
 									</div>
 								)} */}
 							<div className="flex justify-between flex-row">
-								<Typography className="font-extrabold" variant="subtitle2">
-									FILES
-								</Typography>
+								<Typography variant="subtitle2">FILES</Typography>
 							</div>
 							<Divider className="mb-16" />
 							<div className="grid grid-cols-1 gap-8 ">
@@ -366,14 +360,14 @@ export default function FormCustomProjectTask({
 								<Button
 									disabled={!entitiesEdit.isModified}
 									type="submit"
-									className="h-26 font-sans"
+									className="h-26"
 									variant="contained"
 									color="primary"
 								>
 									Save
 								</Button>
 							) : (
-								<Button type="submit" className="h-26 font-sans" variant="contained" color="primary">
+								<Button type="submit" className="h-26" variant="contained" color="primary">
 									Save
 								</Button>
 							)}
@@ -381,7 +375,7 @@ export default function FormCustomProjectTask({
 							<Button
 								onClick={handleCloseFormProject}
 								type="button"
-								className="h-26 font-sans"
+								className="h-26"
 								variant="contained"
 								color="secondary"
 							>

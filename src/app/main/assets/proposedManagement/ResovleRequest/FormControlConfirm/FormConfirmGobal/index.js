@@ -96,7 +96,7 @@ export default function FormConfirmGobal() {
 									<Button
 										autoFocus
 										type="submit"
-										className="h-26 font-sans"
+										className="h-26"
 										variant="contained"
 										color="primary"
 									>

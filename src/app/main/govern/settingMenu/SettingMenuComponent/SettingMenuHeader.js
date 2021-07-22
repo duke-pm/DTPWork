@@ -26,10 +26,10 @@ export default function SettingMenuHeader({ handleOpenSettingMenu }) {
 	return (
 		<div>
 			<FuseAnimate animation="transition.slideLeftIn" delay={300}>
-				<div className="flex flex-row items-center justify-between">
+				<div className="flex sm:flex-row flex-col-reverse justify-between">
 					<Button
 						onClick={handleOpenSettingMenu}
-						className="mt-8 sm:mt-0 max-w-sm md:max-w-lg h-26"
+						className="mt-8 sm:mt-0 mb-8 sm:mb-0 h-26 max-w-160 "
 						variant="contained"
 						color="primary"
 						startIcon={<AddCircleOutline />}

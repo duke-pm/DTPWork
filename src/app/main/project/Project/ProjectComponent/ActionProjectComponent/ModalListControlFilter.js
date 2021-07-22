@@ -1,4 +1,4 @@
-import { AppBar, Button, Dialog, DialogActions, DialogContent, IconButton, Paper, Toolbar } from '@material-ui/core';
+import { AppBar, Button, Dialog, DialogActions, DialogContent, IconButton, Paper, Toolbar, Typography } from '@material-ui/core';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import React from 'react';
 import CloseIcon from '@material-ui/icons/Close';
@@ -31,7 +31,7 @@ export default function ModalListControlFilter({
 					<IconButton onClick={handleCloseFilter} edge="start" color="inherit" aria-label="close">
 						<CloseIcon />
 					</IconButton>
-					<h5 className="font-extrabold">Filter</h5>
+					<Typography variant="subtitle2">Filter</Typography>
 				</Toolbar>
 			</AppBar>
 			<DialogContent>

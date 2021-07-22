@@ -147,7 +147,7 @@ export default function ActionComponent({ actionLoading }) {
 				}}
 			>
 				<div className="flex flex-col sm:flex-row justify-between">
-					<h5 className="font-extrabold">Filter</h5>
+					<Typography variant="subtitle2">Filter</Typography>
 				</div>
 				<Grid className="mb-16" item container spacing={2}>
 					<Grid item xs={12} sm={12} md={4} lg={6}>

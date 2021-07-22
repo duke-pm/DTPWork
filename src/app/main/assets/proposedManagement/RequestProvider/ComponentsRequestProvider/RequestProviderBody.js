@@ -182,7 +182,7 @@ export default function RequestProviderBody({
 							<div style={{ width: '90%' }} className="sm">
 								<div className="px-16 w-full sm:px-24">
 									<div className="flex justify-between flex-row">
-										<h5 className="font-extrabold">Thông tin người yêu cầu.</h5>
+										<Typography variant="subtitle2">Thông tin người yêu cầu.</Typography>
 									</div>
 									<div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 ">
 										<Field
@@ -233,7 +233,7 @@ export default function RequestProviderBody({
 								</div>
 								<div className="px-16 sm:px-24">
 									<div className="flex justify-between flex-row">
-										<h5 className="font-extrabold">Tài sản yêu cầu.</h5>
+										<Typography variant="subtitle2">Tài sản yêu cầu.</Typography>
 									</div>
 									<Typography variant="subtitle2" color="inherit" className="mb-16">
 										<AddCircleOutlineIcon style={{ color: '#1890ff' }} />
@@ -293,7 +293,7 @@ export default function RequestProviderBody({
 											name="reason"
 											// value={initialState.reason || ''}
 											component={InputTextAreaRequest}
-											className="mt-8 mb-16"
+											className="mb-16"
 											row={3}
 										/>
 										<Field

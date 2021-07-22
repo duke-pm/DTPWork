@@ -77,14 +77,14 @@ export default function FormCustomSupplier({ actionLoading, handleSaveFormSuppli
 							{actionLoading ? (
 								<Spin size="middle" />
 							) : (
-								<Button type="submit" className="h-26 font-sans" variant="contained" color="primary">
+								<Button type="submit" className="h-26" variant="contained" color="primary">
 									Lưu
 								</Button>
 							)}
 							<Button
 								type="button"
 								onClick={handleCloseFormSupplier}
-								className="h-26 font-sans"
+								className="h-26"
 								variant="contained"
 								color="secondary"
 							>

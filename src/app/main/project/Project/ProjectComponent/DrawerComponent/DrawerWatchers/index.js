@@ -85,7 +85,7 @@ export default function DrawerWatchers() {
 								onClick={handleTraffic}
 								type="submit"
 								style={{ width: '10rem' }}
-								className="h-26 font-sans"
+								className="h-26"
 								variant="contained"
 								color="primary"
 							>

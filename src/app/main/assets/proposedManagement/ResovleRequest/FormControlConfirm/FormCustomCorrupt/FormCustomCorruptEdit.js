@@ -1,5 +1,5 @@
 import React from 'react';
-import { DialogContent, DialogActions, Button } from '@material-ui/core';
+import { DialogContent, DialogActions, Button, Typography } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
 import { useDispatch } from 'react-redux';
 import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
@@ -43,7 +43,7 @@ export default function FormCustomCorruptEdit({
 						<DialogContent dividers>
 							<div className="px-16 sm:px-24">
 								<div className="flex justify-between flex-row">
-									<h5 className="font-extrabold">Thông tin tài sản.</h5>
+									<Typography variant="subtitle2">Thông tin tài sản.</Typography>
 								</div>
 								<div className=" grid grid-cols-1 sm:grid-cols-2">
 									<div className="flex-row flex ">
@@ -83,9 +83,9 @@ export default function FormCustomCorruptEdit({
 							</div>
 							<div className="px-16 sm:px-24">
 								<div className="flex justify-between flex-row">
-									<h5 className="font-extrabold">
+									<Typography variant="subtitle2">
 										Thông tin tài sản bị {type === 'lost' ? ' mất' : 'hỏng'}.
-									</h5>
+									</Typography>
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-1 mb-16 gap-8 ">
 									<div className="flex flex-col">
@@ -118,7 +118,7 @@ export default function FormCustomCorruptEdit({
 									<Button
 										autoFocus
 										type="submit"
-										className="h-26 font-sans"
+										className="h-26"
 										variant="contained"
 										color="primary"
 									>
@@ -127,7 +127,7 @@ export default function FormCustomCorruptEdit({
 									<Button
 										onClick={handleOpenFormReject}
 										autoFocus
-										className="h-26 font-sans"
+										className="h-26"
 										variant="contained"
 										color="secondary"
 									>

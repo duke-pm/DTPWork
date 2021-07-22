@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
-import { DialogContent, DialogActions, Button } from '@material-ui/core';
+import { DialogContent, DialogActions, Button, Typography } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
 import DateCustom from '@fuse/CustomForm/Date';
 import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
@@ -109,13 +109,13 @@ export default function FormCustomUnusedEdit({
 						<DialogContent dividers>
 							<div className="px-16 sm:px-24">
 								<div className="flex justify-between flex-row">
-									<h5 className="font-extrabold">Thông tin tài sản.</h5>
+									<Typography variant="subtitle2">Thông tin tài sản.</Typography>
 								</div>
 								<ContentForm entitiesEdit={entitiesEdit} />
 							</div>
 							<div className="px-16 sm:px-24">
 								<div className="flex justify-between flex-row">
-									<h5 className="font-extrabold">Thông tin cấp phát tài sản.</h5>
+									<Typography variant="subtitle2">Thông tin cấp phát tài sản.</Typography>
 								</div>
 								<div className="grid lg:grid-cols-2  md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1 gap-8 ">
 									<Field
@@ -198,14 +198,14 @@ export default function FormCustomUnusedEdit({
 							{actionLoading ? (
 								<Spin size="middle" />
 							) : (
-								<Button type="submit" className="h-26 font-sans" variant="contained" color="primary">
+								<Button type="submit" className="h-26" variant="contained" color="primary">
 									Lưu
 								</Button>
 							)}
 							<Button
 								onClick={() => handleClose()}
 								type="button"
-								className="h-26 font-sans"
+								className="h-26"
 								variant="contained"
 								color="secondary"
 							>

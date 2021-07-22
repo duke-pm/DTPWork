@@ -1,12 +1,13 @@
 import React from 'react';
 import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import * as moment from 'moment';
+import { Typography } from '@material-ui/core';
 
 export default function ContentFormReport({ entitiesEdit, classes }) {
 	return (
 		<>
 			<div className="flex justify-between flex-row">
-				<h5 className="font-extrabold">Thông tin tài sản.</h5>
+				<Typography variant="subtitle2">Thông tin tài sản.</Typography>
 				<span className="border-b-1 mt-3 ml-6 border-fuchsia w-auto sm:w-5/6 h-10" />
 			</div>
 			<div className=" grid grid-cols-1 sm:grid-cols-2 gap-48">

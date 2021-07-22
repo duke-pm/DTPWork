@@ -114,7 +114,7 @@ export default function FormCustomProject({
 							{actionLoading ? (
 								<Spin />
 							) : (
-								<Button type="submit" className="h-26 font-sans" variant="contained" color="primary">
+								<Button type="submit" className="h-26" variant="contained" color="primary">
 									<span>{initial?.prjID !== '0' ? 'Save' : 'Save'}</span>
 								</Button>
 							)}
@@ -122,7 +122,7 @@ export default function FormCustomProject({
 							<Button
 								onClick={handleCloseFormProject}
 								type="button"
-								className="h-26 font-sans"
+								className="h-26"
 								variant="contained"
 								color="secondary"
 							>

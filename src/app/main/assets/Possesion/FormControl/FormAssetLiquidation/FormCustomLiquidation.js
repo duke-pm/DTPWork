@@ -36,7 +36,7 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 								<Grid alignItems="flex-start" container item>
 									<Grid container item xs={12} sm={6} md={6} lg={6}>
 										<div className="flex flex-row">
-											<h5 className="font-extrabold">Thông tin tài sản.</h5>
+											<Typography variant="subtitle2">Thông tin tài sản.</Typography>
 										</div>
 										<Grid container item>
 											<Grid item xs={5} md={4} lg={3}>
@@ -45,7 +45,7 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 												</Typography>
 											</Grid>
 											<Grid item xs={7} md={8} lg={9}>
-												<Typography className="p-6 font-extrabold " variant="body1">
+												<Typography className="p-6" variant="subtitle2">
 													{entitiesEdit?.assetCode}
 												</Typography>
 											</Grid>
@@ -55,7 +55,7 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 												</Typography>
 											</Grid>
 											<Grid item xs={7} md={8} lg={9}>
-												<Typography className="p-6 font-extrabold " variant="body1">
+												<Typography className="p-6" variant="subtitle2">
 													{entitiesEdit?.assetName}
 												</Typography>
 											</Grid>
@@ -65,7 +65,7 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 												</Typography>
 											</Grid>
 											<Grid item xs={7} md={8} lg={9}>
-												<Typography className="p-6 font-extrabold " variant="body1">
+												<Typography className="p-6" variant="subtitle2">
 													{entitiesEdit?.groupName}
 												</Typography>
 											</Grid>
@@ -75,7 +75,7 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 												</Typography>
 											</Grid>
 											<Grid item xs={7} md={8} lg={9}>
-												<Typography className="p-6 font-extrabold " variant="body1">
+												<Typography className="p-6" variant="subtitle2">
 													{entitiesEdit &&
 														moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY')}{' '}
 												</Typography>
@@ -86,7 +86,7 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 												</Typography>
 											</Grid>
 											<Grid item xs={7} md={8} lg={9}>
-												<Typography className="p-6 font-extrabold " variant="body1">
+												<Typography className="p-6" variant="subtitle2">
 													{entitiesEdit?.statusName}
 												</Typography>
 											</Grid>
@@ -96,7 +96,7 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 												</Typography>
 											</Grid>
 											<Grid item xs={7} md={8} lg={9}>
-												<Typography className="p-6 font-extrabold " variant="body1">
+												<Typography className="p-6" variant="subtitle2">
 													{entitiesEdit?.descr}
 												</Typography>
 											</Grid>
@@ -104,7 +104,7 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 									</Grid>
 									<Grid container item xs={12} sm={6} md={6} lg={6}>
 										<div className="flex flex-row">
-											<h5 className="font-extrabold">Thông tin nhân viên sử dụng.</h5>
+											<Typography variant="subtitle2">Thông tin nhân viên sử dụng.</Typography>
 										</div>
 										<Grid container item>
 											<Grid item xs={5} md={4} lg={3}>
@@ -113,7 +113,7 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 												</Typography>
 											</Grid>
 											<Grid item xs={7} md={8} lg={9}>
-												<Typography className="p-6 font-extrabold " variant="body1">
+												<Typography className="p-6" variant="subtitle2">
 													{entitiesEdit?.empName}
 												</Typography>
 											</Grid>
@@ -123,7 +123,7 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 												</Typography>
 											</Grid>
 											<Grid item xs={7} md={8} lg={9}>
-												<Typography className="p-6 font-extrabold " variant="body1">
+												<Typography className="p-6" variant="subtitle2">
 													{entitiesEdit?.jobTitle}
 												</Typography>
 											</Grid>
@@ -133,7 +133,7 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 												</Typography>
 											</Grid>
 											<Grid item xs={7} md={8} lg={9}>
-												<Typography className="p-6 font-extrabold " variant="body1">
+												<Typography className="p-6" variant="subtitle2">
 													{entitiesEdit?.deptNameManager}
 												</Typography>
 											</Grid>
@@ -143,7 +143,7 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 												</Typography>
 											</Grid>
 											<Grid item xs={7} md={8} lg={9}>
-												<Typography className="p-6 font-extrabold " variant="body1">
+												<Typography className="p-6" variant="subtitle2">
 													{entitiesEdit?.regionName}
 												</Typography>
 											</Grid>
@@ -153,7 +153,7 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 							</div>
 							<div className="px-16 sm:px-24">
 								<div className="flex flex-row">
-									<h5 className="font-extrabold">Thông tin thanh lý.</h5>
+									<Typography variant="subtitle2">Thông tin thanh lý.</Typography>
 								</div>
 								<div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 mb-16 gap-8 ">
 									<div className="flex flex-col">
@@ -190,14 +190,14 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 							{actionLoading ? (
 								<Spin size="middle" />
 							) : (
-								<Button type="submit" className="h-26 font-sans" variant="contained" color="primary">
+								<Button type="submit" className="h-26" variant="contained" color="primary">
 									Lưu
 								</Button>
 							)}
 							<Button
 								type="button"
 								onClick={handleClose}
-								className="h-26 font-sans"
+								className="h-26"
 								variant="contained"
 								color="secondary"
 							>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DialogContent, DialogActions, Button } from '@material-ui/core';
+import { DialogContent, DialogActions, Button, Typography } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
 import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
 import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
@@ -37,7 +37,7 @@ export default function FormCustomCorruptEdit() {
 						<DialogContent dividers>
 							<div className="px-16 sm:px-24">
 								<div className="flex justify-between flex-row">
-									<h5 className="font-extrabold">Thông tin tài sản.</h5>
+									<Typography variant="subtitle2">Thông tin tài sản.</Typography>
 									<span className="border-b-1 mt-3 ml-6 border-fuchsia w-3/6 sm:w-5/6 h-10" />
 								</div>
 								<div className=" grid grid-cols-1 sm:grid-cols-2 gap-8">
@@ -73,7 +73,7 @@ export default function FormCustomCorruptEdit() {
 							</div>
 							<div className="px-16 sm:px-24">
 								<div className="flex justify-between flex-row">
-									<h5 className="font-extrabold">Thông tin tài sản bị hỏng/mất.</h5>
+									<Typography variant="subtitle2">Thông tin tài sản bị hỏng/mất.</Typography>
 									<span className="border-b-1 mt-3 ml-2 border-fuchsia w-auto sm:w-9/12 h-10" />
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 mb-16 gap-8 ">
@@ -105,7 +105,7 @@ export default function FormCustomCorruptEdit() {
 								onClick={() => handleConfirm('confirm')}
 								autoFocus
 								type="submit"
-								className="h-26 font-sans"
+								className="h-26"
 								variant="contained"
 								color="secondary"
 							>
@@ -115,7 +115,7 @@ export default function FormCustomCorruptEdit() {
 								onClick={() => handleConfirm('doneConfirm')}
 								autoFocus
 								type="submit"
-								className="h-26 font-sans"
+								className="h-26"
 								variant="contained"
 								color="primary"
 							>

@@ -177,9 +177,7 @@ export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
 					</Grid>
 				</div>
 				<div className="flex flex-col mt-20">
-					<Typography className="font-extrabold" variant="subtitle2">
-						ACTION
-					</Typography>
+					<Typography variant="subtitle2">ACTION</Typography>
 					<Divider />
 					<Grid container>
 						<Grid item xs={12} md={6} className="mt-16">
@@ -253,9 +251,7 @@ export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
 					</Button>
 				</div>
 				<div className="flex flex-col mt-20">
-					<Typography className="font-extrabold" variant="subtitle2">
-						PEOPLE & TIME
-					</Typography>
+					<Typography variant="subtitle2">PEOPLE & TIME</Typography>
 					<Divider />
 					<div className="flex flex-row items-center">
 						<Grid container className="flex flex-row items-center">
@@ -358,9 +354,7 @@ export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
 						)}
 				</div>
 				<div className="flex flex-col mt-20">
-					<Typography className="font-extrabold" variant="subtitle2">
-						DETAIL
-					</Typography>
+					<Typography variant="subtitle2">DETAIL</Typography>
 					<Divider />
 					<div className="mt-16">
 						<Grid container className="flex flex-row items-center">
@@ -424,9 +418,7 @@ export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
 					</div>
 				</div>
 				<div className="flex flex-col mt-20">
-					<Typography className="font-extrabold" variant="subtitle2">
-						FILES
-					</Typography>
+					<Typography variant="subtitle2">FILES</Typography>
 					<Divider />
 					<div className="flex flex-row justify-between mt-16">
 						{entitiesView?.detail.attachFiles && (

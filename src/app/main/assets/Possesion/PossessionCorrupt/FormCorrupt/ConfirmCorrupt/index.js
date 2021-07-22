@@ -56,13 +56,7 @@ export default function FormConfirm({ handleClose, open, type }) {
 							</div>
 						</DialogContent>
 						<DialogActions>
-							<Button
-								autoFocus
-								type="submit"
-								className="h-26 font-sans"
-								variant="contained"
-								color="secondary"
-							>
+							<Button autoFocus type="submit" className="h-26" variant="contained" color="secondary">
 								Hoàn thành
 							</Button>
 						</DialogActions>

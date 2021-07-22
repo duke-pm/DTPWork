@@ -3,7 +3,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useRef } from 'react';
-import { DialogContent, DialogActions, Button } from '@material-ui/core';
+import { DialogContent, DialogActions, Button, Typography } from '@material-ui/core';
 import { Formik, Field, Form } from 'formik';
 import { Table, Spin } from 'antd';
 import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
@@ -86,7 +86,7 @@ export default function FormCustomEdit({
 						<DialogContent ref={dialogContent} dividers>
 							<div className="px-16 sm:px-24">
 								<div className="flex justify-between flex-row">
-									<h5 className="font-extrabold">Thông tin nhân viên.</h5>
+									<Typography variant="subtitle2">Thông tin nhân viên.</Typography>
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-4 gap-8 ">
 									<Field
@@ -127,7 +127,7 @@ export default function FormCustomEdit({
 							</div>
 							<div className="px-16 sm:px-24">
 								<div className="flex justify-between flex-row">
-									<h5 className="font-extrabold">Tài sản yêu cầu.</h5>
+									<Typography variant="subtitle2">Tài sản yêu cầu.</Typography>
 								</div>
 								<Table
 									rowKey="descr"

@@ -40,7 +40,7 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 						<DialogContent dividers>
 							<div className="px-16 sm:px-24">
 								<div className="flex justify-between flex-row">
-									<h5 className="font-extrabold">Thông tin tài sản.</h5>
+									<Typography variant="subtitle2">Thông tin tài sản.</Typography>
 								</div>
 								<Grid alignItems="flex-start" container item>
 									<Grid container item xs={12} sm={6} md={6} lg={6}>
@@ -50,7 +50,7 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 											</Typography>
 										</Grid>
 										<Grid item xs={7} md={8} lg={9}>
-											<Typography className="p-6 font-extrabold " variant="body1">
+											<Typography className="p-6" variant="subtitle2">
 												{entitiesEdit?.assetCode}
 											</Typography>
 										</Grid>
@@ -60,7 +60,7 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 											</Typography>
 										</Grid>
 										<Grid item xs={7} md={8} lg={9}>
-											<Typography className="p-6 font-extrabold " variant="body1">
+											<Typography className="p-6" variant="subtitle2">
 												{entitiesEdit?.assetName}
 											</Typography>
 										</Grid>
@@ -70,7 +70,7 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 											</Typography>
 										</Grid>
 										<Grid item xs={7} md={8} lg={9}>
-											<Typography className="p-6 font-extrabold " variant="body1">
+											<Typography className="p-6" variant="subtitle2">
 												{entitiesEdit?.groupName}
 											</Typography>
 										</Grid>
@@ -80,7 +80,7 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 											</Typography>
 										</Grid>
 										<Grid item xs={7} md={8} lg={9}>
-											<Typography className="p-6 font-extrabold " variant="body1">
+											<Typography className="p-6" variant="subtitle2">
 												{entitiesEdit?.descr}
 											</Typography>
 										</Grid>
@@ -92,7 +92,7 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 											</Typography>
 										</Grid>
 										<Grid item xs={7} md={8} lg={9}>
-											<Typography className="p-6 font-extrabold " variant="body1">
+											<Typography className="p-6" variant="subtitle2">
 												{moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY') || ''}
 											</Typography>
 										</Grid>
@@ -102,7 +102,7 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 											</Typography>
 										</Grid>
 										<Grid item xs={7} md={8} lg={9}>
-											<Typography className="p-6 font-extrabold " variant="body1">
+											<Typography className="p-6" variant="subtitle2">
 												{currencyFormat(entitiesEdit.originalPrice) || ''}
 											</Typography>
 										</Grid>
@@ -112,7 +112,7 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 											</Typography>
 										</Grid>
 										<Grid item xs={7} md={8} lg={9}>
-											<Typography className="p-6 font-extrabold " variant="body1">
+											<Typography className="p-6" variant="subtitle2">
 												{entitiesEdit?.statusName}
 											</Typography>
 										</Grid>
@@ -121,7 +121,7 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 							</div>
 							<div className="px-16 sm:px-24">
 								<div className="flex justify-between flex-row">
-									<h5 className="font-extrabold">Thông tin sửa chữa bảo hành.</h5>
+									<Typography variant="subtitle2">Thông tin sửa chữa bảo hành.</Typography>
 								</div>
 								<div className="grid lg:grid-cols-2 md:grid-cols-2 xs:grid-cols-1 sm:grid-cols-2 gap-8 ">
 									<Field
@@ -177,14 +177,14 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 							{actionLoading ? (
 								<Spin />
 							) : (
-								<Button type="submit" className="h-26 font-sans" variant="contained" color="primary">
+								<Button type="submit" className="h-26" variant="contained" color="primary">
 									Lưu
 								</Button>
 							)}
 							<Button
 								onClick={handleClose}
 								type="button"
-								className="h-26 font-sans"
+								className="h-26"
 								variant="contained"
 								color="secondary"
 							>

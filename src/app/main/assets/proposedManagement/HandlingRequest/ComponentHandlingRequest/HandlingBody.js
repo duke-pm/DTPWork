@@ -137,7 +137,7 @@ export default function HandlingBody({ dataAssets, setDataAssets, value }) {
 										label="File Đính kèm"
 										autoFocus
 										name="file"
-										style={{ height: '32.5px' }}
+										style={{ height: '4.5rem' }}
 										component={FileCustomVersion2}
 										className="mb-16"
 										variant="outlined"

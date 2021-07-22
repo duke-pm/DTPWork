@@ -122,18 +122,28 @@ function PossesionPage(props) {
 						aria-label="scrollable auto tabs example"
 					>
 						<Tab
-							className="font-sans"
-							label={`Cấp phát (${(total_Record && total_Record.countAllocation) || 0})`}
+							label={
+								<Typography variant="body1">
+									{' '}
+									Cấp phát ({(total_Record && total_Record.countAllocation) || 0}){' '}
+								</Typography>
+							}
 							{...a11yProps(0)}
 						/>
 						<Tab
-							className="font-sans	"
-							label={`Báo hỏng (${(total_Record && total_Record.countDamage) || 0})`}
+							label={
+								<Typography variant="body1">
+									Báo hỏng ({(total_Record && total_Record.countDamage) || 0})
+								</Typography>
+							}
 							{...a11yProps(1)}
 						/>
 						<Tab
-							className=" font-sans	"
-							label={`Báo mất (${(total_Record && total_Record.countLost) || 0})`}
+							label={
+								<Typography variant="body1">
+									Báo mất ({(total_Record && total_Record.countLost) || 0})
+								</Typography>
+							}
 							{...a11yProps(2)}
 						/>
 					</Tabs>

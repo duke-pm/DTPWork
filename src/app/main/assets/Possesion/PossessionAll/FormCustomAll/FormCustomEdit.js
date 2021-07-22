@@ -1,5 +1,5 @@
 import React from 'react';
-import { DialogContent, DialogActions, Button } from '@material-ui/core';
+import { DialogContent, DialogActions, Button, Typography } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
 import DateCustom from '@fuse/CustomForm/Date';
 import InputTextArea from '@fuse/CustomForm/InputTextArea';
@@ -101,7 +101,7 @@ function FormCustomEdit({
 						<DialogContent dividers>
 							<div className="px-16 sm:px-24">
 								<div className="flex justify-between flex-row">
-									<h5 className="font-extrabold">Thông tin tài sản</h5>
+									<Typography variant="subtitle2">Thông tin tài sản</Typography>
 								</div>
 								{!initialValue.assetID && (
 									<div className="grid grid-cols-1 sm:grid-cols-3  gap-8 ">
@@ -211,7 +211,7 @@ function FormCustomEdit({
 							{!initialValue.assetID ? (
 								<div className="px-16 sm:px-24">
 									<div className="flex justify-between flex-row">
-										<h5 className="font-extrabold">Quy tắc đánh mã tài sản. </h5>
+										<Typography variant="subtitle2">Quy tắc đánh mã tài sản. </Typography>
 									</div>
 									<div className="grid xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-8">
 										<Field
@@ -282,7 +282,7 @@ function FormCustomEdit({
 							<Button
 								type="button"
 								onClick={handleClose}
-								className="h-26 font-sans"
+								className="h-26"
 								variant="contained"
 								color="secondary"
 							>

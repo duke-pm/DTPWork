@@ -13,7 +13,7 @@ export default function ContentForm({ entitiesEdit }) {
 					</Typography>
 				</Grid>
 				<Grid item xs={7} md={8} lg={9}>
-					<Typography className="p-6 font-extrabold " variant="body1">
+					<Typography className="p-6" variant="subtitle2">
 						{entitiesEdit?.assetCode}
 					</Typography>
 				</Grid>
@@ -23,7 +23,7 @@ export default function ContentForm({ entitiesEdit }) {
 					</Typography>
 				</Grid>
 				<Grid item xs={7} md={8} lg={9}>
-					<Typography className="p-6 font-extrabold " variant="body1">
+					<Typography className="p-6" variant="subtitle2">
 						{entitiesEdit?.assetName}
 					</Typography>
 				</Grid>
@@ -33,7 +33,7 @@ export default function ContentForm({ entitiesEdit }) {
 					</Typography>
 				</Grid>
 				<Grid item xs={7} md={8} lg={9}>
-					<Typography className="p-6 font-extrabold " variant="body1">
+					<Typography className="p-6" variant="subtitle2">
 						{entitiesEdit?.groupName}
 					</Typography>
 				</Grid>
@@ -43,7 +43,7 @@ export default function ContentForm({ entitiesEdit }) {
 					</Typography>
 				</Grid>
 				<Grid item xs={7} md={8} lg={9}>
-					<Typography className="p-6 font-extrabold " variant="body1">
+					<Typography className="p-6" variant="subtitle2">
 						{entitiesEdit?.descr}
 					</Typography>
 				</Grid>
@@ -55,7 +55,7 @@ export default function ContentForm({ entitiesEdit }) {
 					</Typography>
 				</Grid>
 				<Grid item xs={7} md={8} lg={9}>
-					<Typography className="p-6 font-extrabold " variant="body1">
+					<Typography className="p-6" variant="subtitle2">
 						{entitiesEdit && moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY')}
 					</Typography>
 				</Grid>
@@ -65,7 +65,7 @@ export default function ContentForm({ entitiesEdit }) {
 					</Typography>
 				</Grid>
 				<Grid item xs={7} md={8} lg={9}>
-					<Typography className="p-6 font-extrabold " variant="body1">
+					<Typography className="p-6" variant="subtitle2">
 						{entitiesEdit && currencyFormat(entitiesEdit.originalPrice)}
 					</Typography>
 				</Grid>
@@ -75,7 +75,7 @@ export default function ContentForm({ entitiesEdit }) {
 					</Typography>
 				</Grid>
 				<Grid item xs={7} md={8} lg={9}>
-					<Typography className="p-6 font-extrabold " variant="body1">
+					<Typography className="p-6" variant="subtitle2">
 						Chưa sử dụng
 					</Typography>
 				</Grid>

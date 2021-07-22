@@ -90,7 +90,7 @@ export default function DrawerComponent({ ArrProjectStatus }) {
 					scrollButtons="auto"
 				>
 					<Tab
-						className="font-sans sm:w-auto w-full"
+						className="sm:w-auto w-full"
 						label={
 							<Badge offset={[14]} count={null} className="site-badge-count-4 ">
 								<Typography variant="body1">Overview</Typography>
@@ -99,7 +99,7 @@ export default function DrawerComponent({ ArrProjectStatus }) {
 						{...a11yProps(0)}
 					/>
 					<Tab
-						className="font-sans sm:w-auto w-full"
+						className="sm:w-auto w-full"
 						label={
 							<Badge
 								offset={[14]}
@@ -112,7 +112,7 @@ export default function DrawerComponent({ ArrProjectStatus }) {
 						{...a11yProps(1)}
 					/>
 					<Tab
-						className="font-sans sm:w-auto w-full"
+						className="sm:w-auto w-full"
 						label={
 							<Badge
 								offset={[14]}

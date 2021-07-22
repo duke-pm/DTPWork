@@ -7,11 +7,7 @@ export default function TableHeaderPay({ sort, createSortHandler }) {
 		<TableHead>
 			<TableRow>
 				{rowPossesion.map(row => (
-					<TableCell
-						key={row.id}
-						className="whitespace-nowrap p-4 md:p-12 text-gray-800 font-sans w-screen"
-						align={row.align}
-					>
+					<TableCell key={row.id} className="whitespace-nowrap p-4 md:p-12  w-screen" align={row.align}>
 						{row.sort ? (
 							<TableSortLabel
 								active={sort.id === row.id}
