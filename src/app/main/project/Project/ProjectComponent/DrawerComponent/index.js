@@ -40,7 +40,10 @@ const useStyles = makeStyles(theme => ({
 	DrawerFormInput: {
 		width: '660px',
 		[theme.breakpoints.down('sm')]: {
-			width: '400px'
+			width: '55rem'
+		},
+		[theme.breakpoints.down('xs')]: {
+			width: '37rem'
 		}
 	},
 	Drawer: {

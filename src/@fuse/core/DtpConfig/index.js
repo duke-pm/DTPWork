@@ -27,7 +27,7 @@ export const notificationConfig = (type, mess, descr) => {
 		description: descr
 	});
 };
-export const URL = `http://api.dtp-education.com`;
+export const URL = process.env.REACT_APP_API_URL;
 export const sliceString = string => {
 	return string.slice(0, 1);
 };
