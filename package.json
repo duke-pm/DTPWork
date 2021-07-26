@@ -136,9 +136,9 @@
     },
     "scripts": {
         "start": "yarn run tailwind  && react-scripts start",
-        "start:prod": "yarn run tailwind  && env-cmd -f .env.production react-scripts start",
-        "build:dev": "yarn run tailwind  && env-cmd -f .env.development GENERATE_SOURCEMAP=false react-scripts build",
-        "build:prod": "yarn run tailwind  && env-cmd -f .env.production GENERATE_SOURCEMAP=false react-scripts build",
+        "start:prod": "yarn run tailwind && env-cmd -f .env.production react-scripts start",
+        "build:dev": "yarn run tailwind  && GENERATE_SOURCEMAP=false env-cmd -f .env.development react-scripts build",
+        "build:prod": "yarn run tailwind && GENERATE_SOURCEMAP=false env-cmd -f .env.production react-scripts build",
         "tailwind": "tailwind build ./src/styles/tailwind-config.css -c ./tailwind.config.js -o ./src/styles/tailwind.css",
         "purge-tailwind": "node ./purge-tailwindcss.js",
         "test": "react-scripts test --env=node",
