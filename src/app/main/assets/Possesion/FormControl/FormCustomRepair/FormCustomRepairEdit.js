@@ -93,7 +93,9 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 										</Grid>
 										<Grid item xs={7} md={8} lg={9}>
 											<Typography className="p-6" variant="subtitle2">
-												{moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY') || ''}
+												{entitiesEdit?.purchaseDate
+													? moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY')
+													: ' '}
 											</Typography>
 										</Grid>
 										<Grid item xs={5} md={4} lg={3}>

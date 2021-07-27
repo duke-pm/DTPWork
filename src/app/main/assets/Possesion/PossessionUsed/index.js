@@ -68,7 +68,7 @@ export default function PossessionUsed(props) {
 		<>
 			<FormCustomUsed open={open} handleClose={handleClose} />
 			<div className="flex flex-col">
-				<ActionComponent handleOpenForm={handleOpenFormRequest} value={props.value} />
+				<ActionComponent entities={entities} handleOpenForm={handleOpenFormRequest} value={props.value} />
 				<FuseAnimate delay={200} animation="transition.slideUpIn">
 					<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
 						<TableContainer className={`${classes.TableContainer} flex flex-1`}>
