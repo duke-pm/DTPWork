@@ -15,6 +15,7 @@ import { Spin } from 'antd';
 import { Link } from 'react-router-dom';
 import InputMaterialUi from '@fuse/CustomForm/InputMaterialUi';
 import CheckboxAntdCustom from '@fuse/CustomForm/CheckboxAntdCustom';
+import InputMaterialUiUser from '@fuse/CustomForm/InputMaterialUiUser';
 // import CryptoAES from 'crypto-js/aes';
 // import CryptoENC from 'crypto-js/enc-utf8';
 
@@ -101,7 +102,7 @@ function Login() {
 											<Field
 												label="User name"
 												name="email"
-												component={InputMaterialUi}
+												component={InputMaterialUiUser}
 												type="text"
 												hasFeedback
 											/>

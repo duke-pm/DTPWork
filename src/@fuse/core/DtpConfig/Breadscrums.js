@@ -29,6 +29,8 @@ export function convertToVietNamese(array) {
 				return 'Quản lý dự án';
 			case 'thong-tin-nguoi-dung':
 				return 'Thông tin người dùng';
+			case 'tong-quan-du-an':
+				return 'Tổng quan dự án';
 			default:
 				break;
 		}

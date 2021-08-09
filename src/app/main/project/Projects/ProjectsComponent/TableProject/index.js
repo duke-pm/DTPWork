@@ -140,6 +140,19 @@ function TableProject(props) {
 			render: (_, item) => <Checkbox checked={item.isPublic} />
 		},
 		{
+			title: 'Priority',
+			align: 'center',
+			dataIndex: 'public',
+			key: 'public',
+			width: '8%',
+			render: (_, item) =>
+				item.priorityLevel !== 0 && (
+					<Badge count={item.priorityLevel} size="small">
+						<img className="w-24 h-20" src="assets/icons8-flag-64.png" alt="flag" />
+					</Badge>
+				)
+		},
+		{
 			title: 'Created on',
 			align: 'center',
 			dataIndex: 'crtdDate',
@@ -148,13 +161,25 @@ function TableProject(props) {
 			render: (_, item) => <Typography variant="body1">{moment(item.crtdDate).format('DD/MM/YYYY')}</Typography>
 		},
 		{
+			title: 'Appraisal time',
+			align: 'center',
+			dataIndex: 'crtdDate',
+			key: 'crtdDate',
+			width: '12%',
+			render: (_, item) => (
+				<Typography variant="body1">
+					{item.appraisalTime ? moment(item.appraisalTime).format('DD/MM/YYYY') : ''}
+				</Typography>
+			)
+		},
+		{
 			title: 'Project Owner',
 			dataIndex: 'assignee',
 			key: 'assignee',
 			width: '18%',
 			render: (_, item) => (
 				<div className="flex flex-row items-center">
-					<Avatar size={32} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
+					<Avatar size={32} style={{ backgroundColor: item.colorCode }} icon={<UserOutlined />} />
 					<Typography className="ml-8" variant="body1">
 						{item.ownerName}
 					</Typography>

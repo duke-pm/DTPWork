@@ -22,6 +22,7 @@ function TableProject(props) {
 	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
 	const { entitiesDetail, actionLoading, params } = props;
 	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+	const [onClickRow, setOnClickRow] = useState(null);
 	const projectContext = useContext(ProjectContext);
 	useEffect(() => {
 		const newEntis = entitiesDetail?.listTask?.map(item => item.taskID);
@@ -47,9 +48,14 @@ function TableProject(props) {
 	} = projectContext;
 	const handleOpenVisible = item => {
 		setVisible(true);
+		setOnClickRow(item.taskID);
 		dispatch(actions.getTaskViewDetail(item.taskID));
 	};
+	const setRowClassName = record => {
+		return record.taskID === onClickRow ? 'clickRowStyl' : '';
+	};
 	const handleEditForm = (item, type) => {
+		setOnClickRow(item.taskID);
 		setFormProject({
 			open: true,
 			title: type
@@ -192,7 +198,26 @@ function TableProject(props) {
 			key: 'subject',
 			width: '20%',
 			render: (_, item) => (
-				<Typography variant="body1" component="button">
+				<Typography
+					className={
+						checkDeadline(item.endDate) > 0 &&
+						item.statusID !== 5 &&
+						item.statusID !== 6 &&
+						item.statusID !== 7 &&
+						item.typeName === 'TASK' &&
+						'table-row-dark'
+					}
+					variant={
+						checkDeadline(item.endDate) > 0 &&
+						item.statusID !== 5 &&
+						item.statusID !== 6 &&
+						item.statusID !== 7 &&
+						item.typeName === 'TASK'
+							? 'subtitle2'
+							: 'body1   '
+					}
+					component="button"
+				>
 					{item.taskName}
 				</Typography>
 			)
@@ -279,7 +304,7 @@ function TableProject(props) {
 			width: '12%',
 			render: (_, item) => (
 				<div className="flex flex-row items-center">
-					<Avatar size={32} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
+					<Avatar size={32} style={{ backgroundColor: item.colorCode }} icon={<UserOutlined />} />
 					<Typography className="ml-8" variant="body1">
 						{item.ownerName}
 					</Typography>
@@ -313,15 +338,7 @@ function TableProject(props) {
 			rowKey="taskID"
 			childrenColumnName="lstTaskItem"
 			className="virtual-table"
-			rowClassName={record =>
-				checkDeadline(record.endDate) > 0 &&
-				record.statusID !== 5 &&
-				record.statusID !== 6 &&
-				record.statusID !== 7 &&
-				record.typeName === 'TASK'
-					? 'table-row-dark'
-					: 'table-row-light'
-			}
+			rowClassName={record => setRowClassName(record)}
 			expandable={{
 				expandRowByClick: false,
 				expandIconAsCell: false,

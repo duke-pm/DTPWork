@@ -163,7 +163,7 @@ export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
 				</div>
 				<Typography variant="caption">
 					Created by <span style={{ fontWeight: 'bold' }}>{entitiesView?.detail.crtdUser}</span>. Last updated
-					on {moment(entitiesView?.detail.lUpdDate).format('DD/MM/YYYY')}{' '}
+					on {moment(entitiesView?.detail.lUpdDate).format('DD MMM, YY')}
 				</Typography>
 
 				<div className="mt-16">
@@ -291,7 +291,11 @@ export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
 							</Grid>
 							<Grid item xs={8}>
 								<div className="flex flex-row items-center">
-									<Avatar size={32} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
+									<Avatar
+										size={32}
+										style={{ backgroundColor: entitiesView?.detail.colorCode }}
+										icon={<UserOutlined />}
+									/>
 									<Typography className="ml-8" variant="body1">
 										{entitiesView?.detail.ownerName}
 									</Typography>
@@ -308,7 +312,7 @@ export default function DrawerOverView({ closeVisible, ArrProjectStatus }) {
 								<Avatar.Group maxCount={5} maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
 									{entitiesView?.detail.lstUserInvited?.map(av => (
 										<Tooltip key={av.userID} title={av.fullName} placement="top">
-											<Avatar style={{ backgroundColor: '#87d068' }}>
+											<Avatar gap={4} style={{ backgroundColor: '#87d068' }}>
 												<Typography color="inherit" variant="subtitle1">
 													{av.alphabet}
 												</Typography>

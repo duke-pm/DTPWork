@@ -8,6 +8,7 @@ const urlInformation = '/api/MasterData/GetDataForForm';
 const UrlType = `/api/AssetTrans/ProcessAsset`;
 const UrlHistory = `/api/Assets/GetHistoryByID`;
 const urlSupplier = `/api/Supplier/Modify`;
+const urlExportExcel = `/api/Assets/ExportExcel`;
 export const fetchDataPossesion = params => {
 	return request.get(`${urlRule}`, { params });
 };
@@ -52,5 +53,14 @@ export const addNewsSupplier = data => {
 		method: 'POST',
 		url: urlSupplier,
 		data
+	});
+};
+
+export const exportExcel = paramsReq => {
+	return request({
+		method: 'POST',
+		url: urlExportExcel,
+		responseType: 'Blob',
+		params: paramsReq
 	});
 };

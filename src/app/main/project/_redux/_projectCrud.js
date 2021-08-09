@@ -3,6 +3,7 @@ import request from 'app/store/setupAxios';
 const url = '/api/Project';
 const urlDetail = '/api/Task';
 const fetchOwner = '/api/User/GetListByUserLogin';
+const urlOverview = '/api/';
 export const fetchsProject = params => {
 	return request(`${url}/GetList`, { params });
 };
@@ -73,4 +74,7 @@ export const getTaskSub = params => {
 };
 export const getTaskDetailAll = params => {
 	return request.get(`${urlDetail}/GetListAll`, { params });
+};
+export const fetchProjectOverviews = params => {
+	return request.get(`${urlOverview}`, { params });
 };

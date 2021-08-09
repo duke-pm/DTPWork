@@ -6,7 +6,7 @@ export const submitLogin =
 	({ email, password }) =>
 	async dispatch => {
 		return jwtService
-			.signInWithEmailAndPassword(email, password)
+			.signInWithEmailAndPassword(email.toLowerCase(), password)
 			.then(user => {
 				dispatch(setUserData(user));
 				return user;

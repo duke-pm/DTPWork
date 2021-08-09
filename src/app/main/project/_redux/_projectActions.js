@@ -79,6 +79,8 @@ export const createdProject = values => dispatch => {
 		IsPublic: values.isPublic,
 		Owner: values.owner || 0,
 		Lang: 'en',
+		AppraisalTime: values.appraisalTime,
+		PriorityLevel: values.priority,
 		LstUserInvited: values.userInvite.length > 0 ? values.userInvite.toString() : ''
 	};
 	return requestFrom
@@ -115,6 +117,8 @@ export const updatedProject = values => dispatch => {
 		IsPublic: values.isPublic,
 		Owner: values.owner || 0,
 		Lang: 'en',
+		AppraisalTime: values.appraisalTime,
+		PriorityLevel: values.priority,
 		LstUserInvited: values.userInvite.length > 0 ? values.userInvite.toString() : ''
 	};
 	return requestFrom
@@ -568,6 +572,25 @@ export const updatedGantt = (value, prjID) => dispatch => {
 				notificationConfig('warning', 'Warning', data.errorMessage);
 			}
 			return data;
+		})
+		.catch(err => {
+			dispatch(actions.catchErros({ callType: callTypes.action }));
+			notificationConfig('warning', 'Warning', 'Server error');
+		});
+};
+
+export const fetchsProjectOverview = () => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.list }));
+	return requestFrom
+		.fetchProjectOverviews()
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				dispatch(actions.fetchProjectOverview({ data }));
+			} else {
+				dispatch(actions.catchErros({ callType: callTypes.list }));
+				notificationConfig('warning', 'Warning', data.errorMessage);
+			}
 		})
 		.catch(err => {
 			dispatch(actions.catchErros({ callType: callTypes.action }));

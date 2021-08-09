@@ -79,7 +79,7 @@ export const createdMenuSettings = dataReq => dispatch => {
 		MenuName: dataReq.menuName,
 		TypeID: dataReq.typeID,
 		LevelID: 0,
-		ParentID: dataReq.parentID || null,
+		ParentID: dataReq.parentID || 0,
 		Url: dataReq.url || null,
 		Icon: dataReq.icon || null,
 		DirectionIcon: dataReq.directionIcon || null,

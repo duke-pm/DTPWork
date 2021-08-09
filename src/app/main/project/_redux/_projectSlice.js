@@ -9,6 +9,7 @@ const inititalState = {
 	entitiesAll: [],
 	entitiesDetail: [],
 	entitiesGantt: [],
+	projectOverview: [],
 	entitiesView: null,
 	entitiesActivity: [],
 	isWatcherOverView: false,
@@ -166,6 +167,11 @@ export const projectSlice = createSlice({
 				});
 				state.isEmailOverView = dataRes.isReceivedEmail;
 			}
+		},
+		fetchProjectOverview: (state, action) => {
+			const { dataRes } = action.payload;
+			state.projectOverview = dataRes;
+			state.listLoading = false;
 		}
 	}
 });
