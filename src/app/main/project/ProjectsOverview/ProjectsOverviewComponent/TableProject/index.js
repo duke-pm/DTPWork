@@ -62,7 +62,7 @@ function TableProject(props) {
 				<Typography
 					variant="subtitle1"
 					component="button"
-					style={{ color: item.duration < 3 ? '#FF3F00' : '#71EFA3' }}
+					style={{ color: item.duration < 3 ? '#FF3F00' : '#001E6C' }}
 				>
 					{item.duration} Days
 				</Typography>
