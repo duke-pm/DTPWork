@@ -8,39 +8,64 @@ import { Spin } from 'antd';
 import ActionHeaderProject from './ActionProjectOverviewComponent/ActionHeaderProject';
 import TableProject from './TableProject';
 import { ProjectOverviewContext } from '../ProjectOverviewContext';
-import { fetchsProjectFilter } from '../../_redux/_projectActions';
+import { fetchsProjectOverviewFilter } from '../../_redux/_projectActions';
 
-export default function ProjectOverviewComponent({ ArrProjectStatus, owner }) {
+export default function ProjectOverviewComponent({ ArrProjectStatus, owner, sectorArr }) {
 	const projectContext = useContext(ProjectOverviewContext);
 	const dispatch = useDispatch();
-	const { page, rowPage, setPage, setRowPage, status, ownerFilter, year } = projectContext;
+	const { page, rowPage, setPage, setRowPage, status, ownerFilter, year, sector, dateStart, dateEnd, search } =
+		projectContext;
 	const { currentState } = useSelector(state => ({ currentState: state.project }), shallowEqual);
-	const { entities, listLoading, actionLoading, total_count } = currentState;
+	const { projectOverview, listLoading, actionLoading, total_count } = currentState;
 	const classes = DtpCustomStyles();
 	if (listLoading) {
 		return <FuseLoading />;
 	}
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
-		dispatch(fetchsProjectFilter(rowPage, newPage + 1, status, ownerFilter, year));
+		dispatch(
+			fetchsProjectOverviewFilter(
+				rowPage,
+				newPage + 1,
+				year,
+				ownerFilter,
+				sector,
+				status,
+				dateStart,
+				dateEnd,
+				search
+			)
+		);
 	};
 	const handleRowPage = e => {
 		const rowPageParse = parseInt(e.target.value, 10);
 		setRowPage(rowPageParse);
-		dispatch(fetchsProjectFilter(rowPageParse, page, status, ownerFilter, year));
+		dispatch(
+			fetchsProjectOverviewFilter(
+				rowPageParse,
+				page,
+				year,
+				ownerFilter,
+				sector,
+				status,
+				dateStart,
+				dateEnd,
+				search
+			)
+		);
 	};
 	return (
 		<div className="w-full flex flex-col">
 			<ActionHeaderProject
-				// sectorArr={sectorArr}
+				sectorArr={sectorArr}
 				ArrProjectStatus={ArrProjectStatus}
 				owner={owner}
 				classes={classes}
 			/>
 			<FuseAnimate animation="transition.slideUpIn" delay={200}>
 				<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
-					<TableProject actionLoading={actionLoading} classes={classes} entities={entities} />
-					{entities && entities.length !== 0 && (
+					<TableProject actionLoading={actionLoading} classes={classes} entities={projectOverview} />
+					{projectOverview?.length !== 0 && (
 						<div className="flex flex-row items-center justify-end">
 							{actionLoading && <Spin />}
 							<Panigation

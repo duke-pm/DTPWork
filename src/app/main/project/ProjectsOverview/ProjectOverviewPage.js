@@ -15,7 +15,7 @@ export default function ProjectOverviewPage() {
 	const [owner, setOwner] = useState([]);
 	const dispatch = useDispatch();
 	useEffect(() => {
-		dispatch(actions.fetchsProject());
+		dispatch(actions.fetchsProjectOverview());
 	}, [dispatch]);
 	useEffect(() => {
 		dispatch(actions.fetchOwner()).then(data => {
@@ -39,6 +39,10 @@ export default function ProjectOverviewPage() {
 	}, [dispatch]);
 	const ArrProjectStatus = currentState?.projectStatus?.reduce(
 		(arr, curr) => [...arr, { label: curr.statusName, value: curr.statusID, colorCode: curr.colorCode }],
+		[]
+	);
+	const sectorArr = currentState?.projectSector.reduce(
+		(arr, curr) => [...arr, { label: curr.sectorName, value: curr.sectorID }],
 		[]
 	);
 	return (
@@ -67,7 +71,11 @@ export default function ProjectOverviewPage() {
 				}
 				content={
 					<Box p={3}>
-						<ProjectOverviewComponent ArrProjectStatus={ArrProjectStatus} owner={owner} />
+						<ProjectOverviewComponent
+							sectorArr={sectorArr}
+							ArrProjectStatus={ArrProjectStatus}
+							owner={owner}
+						/>
 					</Box>
 				}
 			/>

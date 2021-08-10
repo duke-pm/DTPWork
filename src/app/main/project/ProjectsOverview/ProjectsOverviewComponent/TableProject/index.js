@@ -1,73 +1,102 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Badge, Table, Avatar, Progress } from 'antd';
-import React from 'react';
+import { Table, Avatar, Progress } from 'antd';
+import React, { useState, useEffect, useCallback } from 'react';
 import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
 import { Typography } from '@material-ui/core';
 import { withRouter } from 'react-router';
-// import { useDispatch } from 'react-redux';
 import * as moment from 'moment';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { typeColor } from 'app/main/project/Project/ProjectComponent/TableProject/ConfigTableProject';
-// import { ProjectOverviewContext } from '../../ProjectOverviewContext';
 
 function TableProject(props) {
 	const theme = useTheme();
+	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+	const { entities } = props;
+
+	const array = [];
+	const mapDataKey = useCallback(
+		arr => {
+			arr.forEach(item => {
+				array.push(item.itemID);
+				if (item.lstItemChild.length) {
+					mapDataKey(item.lstItemChild);
+				}
+			});
+		},
+		[array]
+	);
+
+	useEffect(() => {
+		mapDataKey(entities);
+		if (array?.length > 0) {
+			setSelectedRowKeys(array);
+		}
+	}, [entities]);
+	const onSelectedRowKeysChange = selectedRowKey => {
+		setSelectedRowKeys(selectedRowKey);
+	};
 	const matches = useMediaQuery(theme.breakpoints.up('xl'));
 	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
-	// const dispatch = useDispatch();
-	const { entities } = props;
-	// const projectContext = useContext(ProjectOverviewContext);
-	// const { rowPage, page, status, ownerFilter, dateStart, search } = projectContext;
 	const columns = [
 		{
 			title: 'Task Name',
 			dataIndex: 'prjName',
-			key: 'prjName',
-			width: '40%',
+			key: 'itemName',
+			width: '15%',
 			ellipsis: {
 				showTitle: false
 			},
 			render: (_, item) => (
-				<Typography variant="body1" component="button">
-					{item.prjName}
+				<Typography variant={item.codeParentID === 'P0' ? 'subtitle2' : 'body1'} component="button">
+					{item.itemName}
 				</Typography>
 			)
 		},
 		{
 			title: 'Duration',
+			align: 'center',
 			dataIndex: 'duration',
 			key: 'duration',
-			width: '15%',
+			width: '6%',
 			render: (_, item) => (
-				<Badge size="default" style={{ color: item.colorCode }} color={item.colorCode} text={item.statusName} />
+				<Typography
+					variant="subtitle1"
+					component="button"
+					style={{ color: item.duration < 3 ? '#FF3F00' : '#71EFA3' }}
+				>
+					{item.duration} Days
+				</Typography>
 			)
 		},
 		{
 			title: 'Start',
 			align: 'center',
-			dataIndex: 'crtdDate',
-			key: 'crtdDate',
-			width: '12%',
-			render: (_, item) => <Typography variant="body1">{moment(item.crtdDate).format('DD/MM/YYYY')}</Typography>
+			dataIndex: 'startDate',
+			key: 'startDate',
+			width: '5%',
+			render: (_, item) => (
+				<Typography variant="body1">{item.startDate && moment(item.startDate).format('DD/MM/YYYY')}</Typography>
+			)
 		},
 		{
 			title: 'Finish',
 			align: 'center',
-			dataIndex: 'crtdDate',
-			key: 'crtdDate',
-			width: '12%',
-			render: (_, item) => <Typography variant="body1">{moment(item.crtdDate).format('DD/MM/YYYY')}</Typography>
+			dataIndex: 'endDate',
+			key: 'endDate',
+			width: '5%',
+			render: (_, item) => (
+				<Typography variant="body1">{item.endDate && moment(item.endDate).format('DD/MM/YYYY')}</Typography>
+			)
 		},
 		{
 			title: 'Recource Names',
 			align: 'center',
 			dataIndex: 'public',
 			key: 'public',
-			width: '8%',
+			width: '6%',
 			render: (_, item) => (
 				<div className="flex flex-row items-center">
-					<Avatar size={32} style={{ backgroundColor: item.color }} icon={<UserOutlined />} />
+					<Avatar size={32} style={{ backgroundColor: item.colorCode }} icon={<UserOutlined />} />
 					<Typography className="ml-8" variant="body1">
 						{item.ownerName}
 					</Typography>
@@ -77,20 +106,20 @@ function TableProject(props) {
 		{
 			title: 'Progress',
 			align: 'center',
-			dataIndex: 'status',
-			key: 'status',
-			width: '15%',
-			render: (_, item) => <Progress percent={item.percentage} strokeColor={typeColor[item.typeName]} />
+			dataIndex: 'completedPercent',
+			key: 'completedPercent',
+			width: '7%',
+			render: (_, item) => <Progress percent={item.completedPercent} strokeColor={item.colorCode} />
 		}
 	];
 	return (
 		<Table
-			rowKey="prjID"
+			rowKey="itemID"
 			expandable={{
 				expandRowByClick: false,
 				expandIconAsCell: false,
-				expandIconColumnIndex: 1,
-				fixed: false,
+				expandIconColumnIndex: 0,
+				expandedRowKeys: selectedRowKeys,
 				expandIcon: ({ expanded, onExpand, record, expandable }) =>
 					expandable.length === 0 ? (
 						<CaretUpOutlined className="w-40" style={{ color: 'white' }} />
@@ -106,13 +135,14 @@ function TableProject(props) {
 							onClick={e => onExpand(record, e)}
 							style={{ fontSize: '10pt' }}
 						/>
-					)
+					),
+				onExpandedRowsChange: onSelectedRowKeysChange
 			}}
-			childrenColumnName="lstProjectItem"
+			childrenColumnName="lstItemChild"
 			pagination={false}
 			scroll={{ x: entities && entities.length ? (matches ? 1520 : 1540) : matchesSM ? 1540 : null }}
 			columns={columns}
-			dataSource={[]}
+			dataSource={entities}
 		/>
 	);
 }

@@ -7,8 +7,9 @@ export default function ProjectOverviewContextProvider({ children }) {
 	const [formProject, setFormProject] = useState(false);
 	const [title, setTitle] = useState('');
 	const [search, setSearch] = useState('');
-	const [dateStart, setDateStart] = useState(moment().format('YYYY'));
-	const [dateEnd, setDateEnd] = useState(moment().add(5, 'year').format('YYYY'));
+	const [dateStart, setDateStart] = useState(null);
+	const [dateEnd, setDateEnd] = useState(null);
+	const [year, setYear] = useState(moment().format('YYYY'));
 	const [ownerFilter, setOwnerFilter] = useState(null);
 	const [status, setStatus] = useState(null);
 	const [sector, setSector] = useState(null);
@@ -35,7 +36,9 @@ export default function ProjectOverviewContextProvider({ children }) {
 			page,
 			setPage,
 			rowPage,
-			setRowPage
+			setRowPage,
+			year,
+			setYear
 		};
 	}, [
 		formProject,
@@ -57,7 +60,9 @@ export default function ProjectOverviewContextProvider({ children }) {
 		page,
 		setPage,
 		rowPage,
-		setRowPage
+		setRowPage,
+		year,
+		setYear
 	]);
 	return <ProjectOverviewContext.Provider value={valueMemo}> {children} </ProjectOverviewContext.Provider>;
 }

@@ -579,14 +579,25 @@ export const updatedGantt = (value, prjID) => dispatch => {
 		});
 };
 
-export const fetchsProjectOverview = () => dispatch => {
+export const fetchsProjectOverview = (limit, page, year, owner, sector, status, search) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.list }));
+	const paramReq = {
+		PageSize: limit || 25,
+		PageNum: page || 1,
+		Year: year || null,
+		OwnerID: owner || null,
+		SectorID: sector || null,
+		StatusID: status || null,
+		Search: search || null
+	};
 	return requestFrom
-		.fetchProjectOverviews()
+		.fetchProjectOverviews(paramReq)
 		.then(res => {
 			const { data } = res;
+			const dataRes = data.data;
+			const total_count = data.totalRow;
 			if (!data.isError) {
-				dispatch(actions.fetchProjectOverview({ data }));
+				dispatch(actions.fetchProjectOverview({ dataRes, total_count }));
 			} else {
 				dispatch(actions.catchErros({ callType: callTypes.list }));
 				notificationConfig('warning', 'Warning', data.errorMessage);
@@ -597,3 +608,36 @@ export const fetchsProjectOverview = () => dispatch => {
 			notificationConfig('warning', 'Warning', 'Server error');
 		});
 };
+
+export const fetchsProjectOverviewFilter =
+	(limit, page, year, owner, sector, status, dateStart, dateEnd, search) => dispatch => {
+		dispatch(actions.startCall({ callType: callTypes.action }));
+		const paramReq = {
+			PageSize: limit || 25,
+			PageNum: page || 1,
+			Year: year || null,
+			OwnerID: owner || null,
+			SectorID: sector || null,
+			StatusID: status || null,
+			FromDate: dateStart || null,
+			ToDate: dateEnd || null,
+			Search: search || null
+		};
+		return requestFrom
+			.fetchProjectOverviews(paramReq)
+			.then(res => {
+				const { data } = res;
+				const dataRes = data.data;
+				const total_count = data.totalRow;
+				if (!data.isError) {
+					dispatch(actions.fetchProjectOverview({ dataRes, total_count }));
+				} else {
+					dispatch(actions.catchErros({ callType: callTypes.action }));
+					notificationConfig('warning', 'Warning', data.errorMessage);
+				}
+			})
+			.catch(err => {
+				dispatch(actions.catchErros({ callType: callTypes.action }));
+				notificationConfig('warning', 'Warning', 'Server error');
+			});
+	};

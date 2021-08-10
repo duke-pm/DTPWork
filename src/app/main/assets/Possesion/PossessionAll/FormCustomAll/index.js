@@ -2,11 +2,13 @@ import React from 'react';
 import { Dialog, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import * as moment from 'moment';
-import { notificationConfig } from '@fuse/core/DtpConfig';
+import { getDataUserLocalStorage, notificationConfig } from '@fuse/core/DtpConfig';
 import CloseIcon from '@material-ui/icons/Close';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import FormCustomEdit from './FormCustomEdit';
 import * as actions from '../../_redux/possesionActions';
+
+const getDepartMent = getDataUserLocalStorage();
 
 const initial = {
 	assetID: '',
@@ -22,7 +24,7 @@ const initial = {
 	time_kh: '',
 	location: '',
 	note: '',
-	deptCodeManager: 'LA0000',
+	deptCodeManager: getDepartMent?.deptCode,
 	descr: '',
 	DepreciationPeriod: '',
 

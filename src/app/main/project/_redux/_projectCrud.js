@@ -3,7 +3,7 @@ import request from 'app/store/setupAxios';
 const url = '/api/Project';
 const urlDetail = '/api/Task';
 const fetchOwner = '/api/User/GetListByUserLogin';
-const urlOverview = '/api/';
+const urlOverview = '/api/Project/GetListOverview';
 export const fetchsProject = params => {
 	return request(`${url}/GetList`, { params });
 };

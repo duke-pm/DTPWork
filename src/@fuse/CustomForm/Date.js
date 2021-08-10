@@ -29,7 +29,7 @@ export default function DateCustom({
 	const handleDateChange = (date, dateString) => {
 		form.setFieldValue(field.name, date);
 	};
-	const dateFormat = 'DD-MM-YYYY';
+	const dateFormat = 'DD/MM/YYYY';
 	return (
 		<>
 			<div className={`${position && 'flex flex-row justify-between '}`}>

@@ -169,9 +169,11 @@ export const projectSlice = createSlice({
 			}
 		},
 		fetchProjectOverview: (state, action) => {
-			const { dataRes } = action.payload;
+			const { dataRes, total_count } = action.payload;
 			state.projectOverview = dataRes;
 			state.listLoading = false;
+			state.actionLoading = false;
+			state.total_count = total_count;
 		}
 	}
 });
