@@ -60,7 +60,7 @@ function TableProject(props) {
 			width: '6%',
 			render: (_, item) => (
 				<Typography
-					variant="subtitle1"
+					variant="body1"
 					component="button"
 					style={{ color: item.duration < 3 ? '#FF3F00' : '#001E6C' }}
 				>

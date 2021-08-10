@@ -91,10 +91,10 @@ export default function ActionHeaderProject({ classes, ArrProjectStatus, owner, 
 						<Paper className="flex justify-between">
 							<DatePicker
 								onChange={handleChangeFilterYear}
-								defaultValue={moment()}
+								// defaultValue={moment()}
 								picker="year"
 								format="YYYY"
-								placeholder="Year start"
+								placeholder="Select Year"
 								style={{ width: '100%' }}
 							/>
 						</Paper>

@@ -619,8 +619,8 @@ export const fetchsProjectOverviewFilter =
 			OwnerID: owner || null,
 			SectorID: sector || null,
 			StatusID: status || null,
-			FromDate: dateStart || null,
-			ToDate: dateEnd || null,
+			FromDate: (dateStart && moment(dateStart).format('YYYY/MM/DD')) || null,
+			ToDate: (dateEnd && moment(dateEnd).format('YYYY/MM/DD')) || null,
 			Search: search || null
 		};
 		return requestFrom
