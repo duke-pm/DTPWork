@@ -79,6 +79,8 @@ export const createdProject = values => dispatch => {
 		IsPublic: values.isPublic,
 		Owner: values.owner || 0,
 		Lang: 'en',
+		AppraisalTime: values.appraisalTime,
+		PriorityLevel: values.priority,
 		LstUserInvited: values.userInvite.length > 0 ? values.userInvite.toString() : ''
 	};
 	return requestFrom
@@ -115,6 +117,8 @@ export const updatedProject = values => dispatch => {
 		IsPublic: values.isPublic,
 		Owner: values.owner || 0,
 		Lang: 'en',
+		AppraisalTime: values.appraisalTime,
+		PriorityLevel: values.priority,
 		LstUserInvited: values.userInvite.length > 0 ? values.userInvite.toString() : ''
 	};
 	return requestFrom
@@ -574,3 +578,66 @@ export const updatedGantt = (value, prjID) => dispatch => {
 			notificationConfig('warning', 'Warning', 'Server error');
 		});
 };
+
+export const fetchsProjectOverview = (limit, page, year, owner, sector, status, search) => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.list }));
+	const paramReq = {
+		PageSize: limit || 25,
+		PageNum: page || 1,
+		Year: year || null,
+		OwnerID: owner || null,
+		SectorID: sector || null,
+		StatusID: status || null,
+		Search: search || null
+	};
+	return requestFrom
+		.fetchProjectOverviews(paramReq)
+		.then(res => {
+			const { data } = res;
+			const dataRes = data.data;
+			const total_count = data.totalRow;
+			if (!data.isError) {
+				dispatch(actions.fetchProjectOverview({ dataRes, total_count }));
+			} else {
+				dispatch(actions.catchErros({ callType: callTypes.list }));
+				notificationConfig('warning', 'Warning', data.errorMessage);
+			}
+		})
+		.catch(err => {
+			dispatch(actions.catchErros({ callType: callTypes.action }));
+			notificationConfig('warning', 'Warning', 'Server error');
+		});
+};
+
+export const fetchsProjectOverviewFilter =
+	(limit, page, year, owner, sector, status, dateStart, dateEnd, search) => dispatch => {
+		dispatch(actions.startCall({ callType: callTypes.action }));
+		const paramReq = {
+			PageSize: limit || 25,
+			PageNum: page || 1,
+			Year: year || null,
+			OwnerID: owner || null,
+			SectorID: sector || null,
+			StatusID: status || null,
+			FromDate: (dateStart && moment(dateStart).format('YYYY/MM/DD')) || null,
+			ToDate: (dateEnd && moment(dateEnd).format('YYYY/MM/DD')) || null,
+			Search: search || null
+		};
+		return requestFrom
+			.fetchProjectOverviews(paramReq)
+			.then(res => {
+				const { data } = res;
+				const dataRes = data.data;
+				const total_count = data.totalRow;
+				if (!data.isError) {
+					dispatch(actions.fetchProjectOverview({ dataRes, total_count }));
+				} else {
+					dispatch(actions.catchErros({ callType: callTypes.action }));
+					notificationConfig('warning', 'Warning', data.errorMessage);
+				}
+			})
+			.catch(err => {
+				dispatch(actions.catchErros({ callType: callTypes.action }));
+				notificationConfig('warning', 'Warning', 'Server error');
+			});
+	};

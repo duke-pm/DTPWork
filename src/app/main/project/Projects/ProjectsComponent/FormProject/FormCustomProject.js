@@ -9,6 +9,7 @@ import { Spin } from 'antd';
 import InputTextArea from '@fuse/CustomForm/InputTextArea';
 import * as Yup from 'yup';
 import { validateField } from '@fuse/core/DtpConfig';
+import DateCustom from '@fuse/CustomForm/Date';
 
 export default function FormCustomProject({
 	actionLoading,
@@ -19,7 +20,8 @@ export default function FormCustomProject({
 	// ArrProjectStatus,
 	projectSub,
 	handleSubmitForm,
-	title
+	title,
+	role
 }) {
 	let initial = {
 		prjID: '0',
@@ -29,7 +31,9 @@ export default function FormCustomProject({
 		isPublic: true,
 		descr: '',
 		statusID: 1,
-		userInvite: []
+		userInvite: [],
+		priority: 0,
+		appraisalTime: null
 	};
 	if (entitiesEdit && entitiesEdit.prjID) {
 		initial = {
@@ -40,6 +44,8 @@ export default function FormCustomProject({
 			isPublic: entitiesEdit?.isPublic,
 			descr: entitiesEdit?.descr,
 			statusID: entitiesEdit?.statusID,
+			priority: entitiesEdit?.priorityLevel,
+			appraisalTime: entitiesEdit?.appraisalTime,
 			userInvite: entitiesEdit?.listUserIDInvited ? entitiesEdit.listUserIDInvited.split(',').map(Number) : []
 		};
 	}
@@ -98,6 +104,22 @@ export default function FormCustomProject({
 									/>
 								</div>
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
+									{role?.userName === 'phucvd' && (
+										<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
+											<Field
+												label="Appraisal time"
+												name="appraisalTime"
+												placeholder="Please select time"
+												component={DateCustom}
+											/>
+											<Field
+												label="Priority"
+												name="priority"
+												type="number"
+												component={AntInput}
+											/>
+										</div>
+									)}
 									<Field
 										label="Public"
 										hasFeedback
@@ -107,6 +129,9 @@ export default function FormCustomProject({
 										top="10px"
 									/>
 								</div>
+								{/* <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
+									
+								</div> */}
 							</div>
 						</DialogContent>
 						<Divider />

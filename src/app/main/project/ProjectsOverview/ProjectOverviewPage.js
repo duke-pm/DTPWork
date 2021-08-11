@@ -3,21 +3,19 @@ import FusePageCarded from '@fuse/core/FusePageCarded';
 import { Box, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { getDataUserLocalStorage } from '@fuse/core/DtpConfig';
-import ProjectComponent from './ProjectsComponent';
-import FormProject from './ProjectsComponent/FormProject';
 import * as actions from '../_redux/_projectActions';
 import { getInformationCompany } from '../../assets/Possesion/_redux/possesionActions/index';
+import ProjectOverviewComponent from './ProjectsOverviewComponent';
 
-export default function ProjectPage() {
-	const { currentState, projectAll } = useSelector(
+export default function ProjectOverviewPage() {
+	const { currentState } = useSelector(
 		state => ({ currentState: state.possesion.entitiesInformation, projectAll: state.project.entitiesAll }),
 		shallowEqual
 	);
 	const [owner, setOwner] = useState([]);
 	const dispatch = useDispatch();
 	useEffect(() => {
-		dispatch(actions.fetchsProject());
+		dispatch(actions.fetchsProjectOverview());
 	}, [dispatch]);
 	useEffect(() => {
 		dispatch(actions.fetchOwner()).then(data => {
@@ -43,11 +41,12 @@ export default function ProjectPage() {
 		(arr, curr) => [...arr, { label: curr.statusName, value: curr.statusID, colorCode: curr.colorCode }],
 		[]
 	);
-	const role = getDataUserLocalStorage();
-	const projectSub = projectAll?.reduce((arr, curr) => [...arr, { label: curr.prjName, value: curr.prjID }], []);
+	const sectorArr = currentState?.projectSector.reduce(
+		(arr, curr) => [...arr, { label: curr.sectorName, value: curr.sectorID }],
+		[]
+	);
 	return (
 		<>
-			<FormProject role={role} projectSub={projectSub} ArrProjectStatus={ArrProjectStatus} owner={owner} />
 			<FusePageCarded
 				innerScroll
 				classes={{
@@ -67,12 +66,16 @@ export default function ProjectPage() {
 				}
 				contentToolbar={
 					<div className="flex items-center p-16 flex-1">
-						<Typography variant="h6">Projects</Typography>
+						<Typography variant="h6">Project overview</Typography>
 					</div>
 				}
 				content={
 					<Box p={3}>
-						<ProjectComponent ArrProjectStatus={ArrProjectStatus} owner={owner} />
+						<ProjectOverviewComponent
+							sectorArr={sectorArr}
+							ArrProjectStatus={ArrProjectStatus}
+							owner={owner}
+						/>
 					</Box>
 				}
 			/>

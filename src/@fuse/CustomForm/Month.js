@@ -5,7 +5,7 @@ import * as moment from 'moment';
 
 const FormItem = Form.Item;
 
-export default function DateCustom({
+export default function MonthCustom({
 	field, // { name, value, onChange, onBlur }
 	form, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
 	label,
@@ -29,7 +29,7 @@ export default function DateCustom({
 	const handleDateChange = (date, dateString) => {
 		form.setFieldValue(field.name, date);
 	};
-	const dateFormat = 'DD/MM/YYYY';
+	const dateFormat = 'MM-YYYY';
 	return (
 		<>
 			<div className={`${position && 'flex flex-row justify-between '}`}>
@@ -51,11 +51,12 @@ export default function DateCustom({
 					<DatePicker
 						className={readOnly ? 'readOnly' : ''}
 						style={{ width: '100%' }}
-						placeholder={placeholder || 'Vui lòng chọn ngày'}
+						placeholder={placeholder || 'Vui lòng chọn tháng'}
 						margin="normal"
 						format={dateFormat}
 						value={value ? moment(moment(value), dateFormat) : null}
 						onChange={handleDateChange}
+						picker="month"
 					/>
 				</FormItem>
 			</div>

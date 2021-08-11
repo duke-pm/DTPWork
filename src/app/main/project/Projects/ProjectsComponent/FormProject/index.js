@@ -8,7 +8,7 @@ import FormCustomProject from './FormCustomProject';
 import { ProjectContext } from '../../ProjectContext';
 import * as actions from '../../../_redux/_projectActions';
 
-export default function FormProject({ owner, sectorArr, ArrProjectStatus, projectSub }) {
+export default function FormProject({ owner, sectorArr, ArrProjectStatus, projectSub, role }) {
 	const dispatch = useDispatch();
 	const projectContext = useContext(ProjectContext);
 	const { formProject, setFormProject, title, rowPage, page, status, ownerFilter, dateStart, search } =
@@ -85,6 +85,7 @@ export default function FormProject({ owner, sectorArr, ArrProjectStatus, projec
 				</Toolbar>
 			</AppBar>
 			<FormCustomProject
+				role={role}
 				title={title}
 				actionLoading={actionLoading}
 				handleSubmitForm={handleSubmitForm}

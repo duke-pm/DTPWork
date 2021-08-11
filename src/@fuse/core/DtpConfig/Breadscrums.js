@@ -26,9 +26,11 @@ export function convertToVietNamese(array) {
 			case 'phan-quyen-chuc-nang':
 				return 'Phân quyền chức năng';
 			case 'quan-ly-du-an':
-				return 'Quản lý dự án';
+				return 'Dự án';
 			case 'thong-tin-nguoi-dung':
 				return 'Thông tin người dùng';
+			case 'tong-quan-du-an':
+				return 'Dự án';
 			default:
 				break;
 		}

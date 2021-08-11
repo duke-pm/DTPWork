@@ -114,11 +114,8 @@ a[role=button] {
 .ant-table-thead > tr > th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
     background-color: none;
 }
-.table-row-light {
-    background-color: #ffffff;
-}
 .table-row-dark {
-    background-color: #fff7e6;
+    color: #d50000;
 }
 /* .gantt .bar-wrapper {
     pointer-events: none;
@@ -173,6 +170,13 @@ thead[class*="ant-table-thead"] th{
 .ant-drawer-body {
     padding: 10px 20px !important;
 }
+.clickRowStyl{
+    background-color:#fafafa
+} 
+.ant-table-tbody>.clickRowStyl:hover>td{
+    background-color: #fafafa
+}
+  
 
 @keyframes autofill {
     0%,100% {

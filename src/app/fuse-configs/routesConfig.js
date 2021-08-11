@@ -18,12 +18,14 @@ import ForgotPassConfig from 'app/main/forgotPassword/ForgotPassConfig';
 import ChangePassConfig from 'app/main/changePassword/ChangePassConfig';
 import ConfimPassConfig from 'app/main/Confirm/ConfimPassConfig';
 import CheckLinkConfig from 'app/main/CheckLink/CheckLinkConfig';
+import ProjectConfigOverview from 'app/main/project/ProjectConfigOverview';
 
 const routeConfigs = [
 	PossesionConfig,
 	ForgotPassConfig,
 	ChangePassConfig,
 	ConfimPassConfig,
+	ProjectConfigOverview,
 	LoginConfig,
 	CheckConfig,
 	RequestConfig,

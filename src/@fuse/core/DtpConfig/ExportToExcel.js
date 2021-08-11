@@ -5,7 +5,7 @@ import * as fs from 'file-saver';
 import ExcelJs from 'exceljs';
 import { Button } from '@material-ui/core';
 import moment from 'moment';
-import { currencyFormat } from '../FuseFormatCurrency';
+import { GetApp } from '@material-ui/icons';
 
 class ExportToExcel extends React.Component {
 	getTotalPrice = arr => {
@@ -195,6 +195,7 @@ class ExportToExcel extends React.Component {
 				variant="contained"
 				color="primary"
 				onClick={this.exportToExcel}
+				startIcon={<GetApp />}
 			>
 				{' '}
 				Xuất excel{' '}

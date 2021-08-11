@@ -1,6 +1,7 @@
 /* eslint-disable no-shadow */
 import { notificationConfig } from '@fuse/core/DtpConfig';
 import * as moment from 'moment';
+import FileDownload from 'js-file-download';
 import * as requestFrom from '../posseionCruds';
 import { callTypes, possesionSlice } from '../possesionSlice';
 
@@ -365,7 +366,6 @@ export const addNewsSupplier = values => dispatch => {
 		CnctPhone: values.phoneContact,
 		Inactive: values.inactive
 	};
-	console.log(dataReq);
 	return requestFrom
 		.addNewsSupplier(dataReq)
 		.then(res => {
@@ -382,4 +382,19 @@ export const addNewsSupplier = values => dispatch => {
 		.catch(err => {
 			notificationConfig('warning', 'Thất bại', 'Đã có lỗi xảy ra ');
 		});
+};
+
+export const exportToExcel = () => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.actions }));
+	const paramsReq = {
+		CountryID: 1,
+		RegionID: 123,
+		StatusID: 'abc'
+	};
+	return requestFrom
+		.exportExcel(paramsReq)
+		.then(response => {
+			FileDownload(response.data, 'report.csv');
+		})
+		.catch(err => console.log(err));
 };
