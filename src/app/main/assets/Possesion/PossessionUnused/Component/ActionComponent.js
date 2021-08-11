@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import InputBase from '@material-ui/core/InputBase';
 import { makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
+import ExportToExcel from '@fuse/core/DtpConfig/ExportToExcel';
 import * as actions from '../../_redux/possesionActions';
 import { PossessionContext } from '../../PossessionContext';
 
@@ -24,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 
 function ActionComponent(props) {
 	const classes = useStyles();
-	const { value } = props;
+	const { value, entities } = props;
 	const dispatch = useDispatch();
 	const possesionConext = useContext(PossessionContext);
 	const { search, setSearch, rowPage, page, setPage, sort } = possesionConext;
@@ -41,7 +42,8 @@ function ActionComponent(props) {
 	};
 	return (
 		<FuseAnimate animation="transition.slideLeftIn" delay={300}>
-			<div className="flex flex-col sm:flex-row justify-end">
+			<div className="flex sm:flex-row flex-col-reverse justify-between">
+				<ExportToExcel entities={entities} />
 				<Paper className="flex justify-between">
 					<InputBase
 						onKeyPress={event => {

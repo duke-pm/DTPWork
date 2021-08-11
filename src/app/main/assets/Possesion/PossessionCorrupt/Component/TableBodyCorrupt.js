@@ -48,9 +48,11 @@ export default function TableBodyCorrupt({
 								{chipText[items.statusID]}
 							</div>
 						</TableCell>
-						<TableCell align="left">{moment(items.purchaseDate).format('DD-MM-YYYY')} </TableCell>
+						<TableCell align="left">
+							{items.purchaseDate ? moment(items.purchaseDate).format('DD-MM-YYYY') : ''}{' '}
+						</TableCell>
 						<TableCell align="left">{items.deptNameManager}</TableCell>
-						<TableCell align="left">{items && items.empName ? items.empName : null}</TableCell>
+						<TableCell align="left">{items?.empName ? items.empName : null}</TableCell>
 						<TableCell align="left">{items.regionName}</TableCell>
 						<TableCell align="left"> {items.remarks} </TableCell>
 					</TableRow>

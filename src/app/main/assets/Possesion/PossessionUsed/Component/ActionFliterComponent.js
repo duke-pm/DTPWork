@@ -4,6 +4,7 @@ import FuseAnimate from '@fuse/core/FuseAnimate';
 import SearchIcon from '@material-ui/icons/Search';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
+import ExportToExcel from '@fuse/core/DtpConfig/ExportToExcel';
 import * as actions from '../../_redux/possesionActions';
 import { PossessionContext } from '../../PossessionContext';
 
@@ -26,7 +27,7 @@ const useStyles = makeStyles(theme => ({
 		margin: 4
 	}
 }));
-export default function ActionComponent({ handleOpenForm, value }) {
+export default function ActionComponent({ handleOpenForm, value, entities }) {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const possesionConext = useContext(PossessionContext);
@@ -44,7 +45,8 @@ export default function ActionComponent({ handleOpenForm, value }) {
 	};
 	return (
 		<FuseAnimate animation="transition.slideLeftIn" delay={300}>
-			<div className="flex flex-col sm:flex-row justify-end">
+			<div className="flex sm:flex-row flex-col-reverse justify-between">
+				<ExportToExcel entities={entities} />
 				<Paper className="flex justify-between">
 					<InputBase
 						onKeyPress={event => {

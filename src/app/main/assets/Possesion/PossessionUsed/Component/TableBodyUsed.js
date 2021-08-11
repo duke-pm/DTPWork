@@ -47,7 +47,9 @@ export default function TableBodyUsed({ entities, handleOpenForm, handleOpenFrom
 								{items.isProcessing ? items.requestTypeName : 'Đang sử dụng'}
 							</Typography>
 						</TableCell>
-						<TableCell align="center">{moment(items.purchaseDate).format('DD-MM-YYYY')}</TableCell>
+						<TableCell align="center">
+							{items.purchaseDate ? moment(items.purchaseDate).format('DD-MM-YYYY') : ''}
+						</TableCell>
 						<TableCell align="left">{items.deptNameManager}</TableCell>
 						<TableCell align="left">{items && items.empName ? items.empName : null}</TableCell>
 						<TableCell align="left">{items.regionName}</TableCell>

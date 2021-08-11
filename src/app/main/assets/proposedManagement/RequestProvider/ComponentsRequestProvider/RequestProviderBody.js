@@ -1,3 +1,4 @@
+/* eslint-disable new-cap */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from 'react';
 import { Button, Link, Typography } from '@material-ui/core';
@@ -179,7 +180,7 @@ export default function RequestProviderBody({
 				{({ handleSubmit, isSubmitting, resetForm }) => (
 					<FuseAnimate animation="transition.slideRightIn" delay={300}>
 						<Form className="flex flex-col w-full items-center justify-between mb-28 mt-28">
-							<div style={{ width: '90%' }} className="sm">
+							<div style={{ width: '90%' }} className="sm" id="content">
 								<div className="px-16 w-full sm:px-24">
 									<div className="flex justify-between flex-row">
 										<Typography variant="subtitle2">Thông tin người yêu cầu.</Typography>

@@ -71,7 +71,7 @@ function PossessionUnused(props) {
 			<FormCustomUnused open={open} handleClose={handleClose} />
 			<PossessionAll rowPage={rowPage} open={editAssets} handleClose={handleClose} />
 			<div className="flex flex-col">
-				<ActionComponent value={value} />
+				<ActionComponent entities={entities} value={value} />
 				<FuseAnimate delay={200} animation="transition.slideUpIn">
 					<div className="flex flex-col mt-16 min-h-full  sm:border-1 sm:rounded-4 overflow-hidden">
 						<TableContainer className={`${classes.TableContainer} flex flex-1`}>

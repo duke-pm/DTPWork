@@ -34,7 +34,9 @@ export default function BodyTableResovle({ entities, lastErrors, classes, handle
 							<TableCell align="left">{items.fullName} </TableCell>
 							<TableCell align="left">{items.deptName}</TableCell>
 							<TableCell align="left">{items.regionName} </TableCell>
-							<TableCell align="left">{moment(items.requestDate).format('DD/MM/YYYY')} </TableCell>
+							<TableCell align="left">
+								{items.requestDate ? moment(items.requestDate).format('DD-MM-YYYY') : ''}{' '}
+							</TableCell>
 							<TableCell align="left">
 								<div
 									className={`inline text-12 p-4 rounded-full truncate ${

@@ -44,7 +44,9 @@ const TableBodyAssetAll = ({ entities, lastErrors, classes, HandleOpenHistory })
 							</Typography>
 						</TableCell>
 						<TableCell align="center">
-							<Typography variant="body1">{moment(items.purchaseDate).format('DD-MM-YYYY')}</Typography>
+							<Typography variant="body1">
+								{items.purchaseDate ? moment(items.purchaseDate).format('DD-MM-YYYY') : ''}
+							</Typography>
 						</TableCell>
 						<TableCell align="left">
 							<Typography variant="body1">{items.deptNameManager}</Typography>

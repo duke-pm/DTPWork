@@ -32,7 +32,9 @@ function TableBodyUnUsed({ handleOpenForm, handleOpenFormEdit, entities, lastErr
 						<TableCell align="left">{items.assetName} </TableCell>
 						<TableCell align="left">{items.groupName}</TableCell>
 						<TableCell align="left">{items.groupDetailName}</TableCell>
-						<TableCell align="left">{moment(items.purchaseDate).format('DD-MM-YYYY')} </TableCell>
+						<TableCell align="left">
+							{items.purchaseDate ? moment(items.purchaseDate).format('DD-MM-YYYY') : ''}{' '}
+						</TableCell>
 						<TableCell align="left"> {currencyFormat(items.originalPrice)} </TableCell>
 						<TableCell align="left">{items.deptNameManager}</TableCell>
 						<TableCell align="left"> {items.remarks} </TableCell>
