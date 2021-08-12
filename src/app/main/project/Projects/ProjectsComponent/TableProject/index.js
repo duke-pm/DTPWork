@@ -2,7 +2,7 @@
 import { Badge, Checkbox, Table, Popover, Avatar, Tooltip } from 'antd';
 import React, { useContext, useState } from 'react';
 import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
-import { MenuItem, ListItemIcon, Icon, ListItemText, Typography } from '@material-ui/core';
+import { MenuItem, ListItemIcon, Icon, ListItemText, Typography, Link } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { withRouter } from 'react-router';
 import { useDispatch } from 'react-redux';
@@ -99,9 +99,15 @@ function TableProject(props) {
 				showTitle: false
 			},
 			render: (_, item) => (
-				<Typography variant="body1" component="button">
-					{item.prjName}
-				</Typography>
+				<Link
+					style={{ color: '#000000d9' }}
+					component="button"
+					variant="body1"
+					onClick={() => handleDetail(item)}
+				>
+					{' '}
+					{item.prjName}{' '}
+				</Link>
 			)
 		},
 		{

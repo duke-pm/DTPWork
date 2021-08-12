@@ -2,15 +2,16 @@
 import { Badge, Dropdown, Table, Popover, Avatar, Menu, Tooltip, Progress } from 'antd';
 import React, { useContext, useState, useEffect } from 'react';
 import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
-import { MenuItem, ListItemIcon, Icon, ListItemText, Typography } from '@material-ui/core';
+import { MenuItem, ListItemIcon, Icon, ListItemText, Typography, Link } from '@material-ui/core';
 import AppsIcon from '@material-ui/icons/Apps';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { withRouter } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { checkDeadline, notificationConfig } from '@fuse/core/DtpConfig';
+import { checkDeadline, durationDay, notificationConfig } from '@fuse/core/DtpConfig';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
+import * as moment from 'moment';
 import * as actions from '../../../_redux/_projectActions';
 import { ProjectContext } from '../../ProjectContext';
 import { typeColor, priorityColor, badgeText } from './ConfigTableProject';
@@ -198,7 +199,7 @@ function TableProject(props) {
 			key: 'subject',
 			width: '20%',
 			render: (_, item) => (
-				<Typography
+				<Link
 					className={
 						checkDeadline(item.endDate) > 0 &&
 						item.statusID !== 5 &&
@@ -206,7 +207,7 @@ function TableProject(props) {
 						item.statusID !== 7 &&
 						item.typeName === 'TASK'
 							? 'table-row-dark'
-							: ''
+							: 'table-row-primary'
 					}
 					variant={
 						checkDeadline(item.endDate) > 0 &&
@@ -217,17 +218,18 @@ function TableProject(props) {
 							? 'subtitle2'
 							: 'body1'
 					}
+					onClick={() => handleOpenVisible(item)}
 					component="button"
 				>
 					{item.taskName}
-				</Typography>
+				</Link>
 			)
 		},
 		{
 			title: 'Sector',
 			dataIndex: 'sectorName',
 			key: 'sectorName',
-			width: '10%',
+			width: '5%',
 			render: (_, item) => <Typography variant="body1">{item.sectorName}</Typography>
 		},
 		{
@@ -235,11 +237,47 @@ function TableProject(props) {
 			align: 'center',
 			dataIndex: 'type',
 			key: 'type',
-			width: '7%',
+			width: '5%',
 			render: (_, item) => (
 				<Typography variant="subtitle2" style={{ color: typeColor[item.typeName], textTransform: 'uppercase' }}>
 					{item.typeName}
 				</Typography>
+			)
+		},
+		{
+			title: 'Duration',
+			align: 'center',
+			dataIndex: 'duration',
+			key: 'duration',
+			width: '6%',
+			render: (_, item) => (
+				<Typography
+					variant="body1"
+					component="button"
+					style={{ color: durationDay(item.startDate, item.endDate) === 0 ? '#FF3F00' : '#001E6C' }}
+				>
+					{durationDay(item.startDate, item.endDate)} Days
+				</Typography>
+			)
+		},
+		{
+			title: 'Start',
+			align: 'center',
+			dataIndex: 'startDate',
+			key: 'startDate',
+			width: '5%',
+			render: (_, item) => (
+				<Typography variant="body1">{item.startDate && moment(item.startDate).format('DD/MM/YYYY')}</Typography>
+			)
+		},
+		{
+			title: 'Finish',
+			align: 'center',
+			dataIndex: 'endDate',
+			key: 'endDate',
+			width: '5%',
+			render: (_, item) => (
+				<Typography variant="body1">{item.endDate && moment(item.endDate).format('DD/MM/YYYY')}</Typography>
 			)
 		},
 		{
