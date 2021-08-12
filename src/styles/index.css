@@ -173,11 +173,11 @@ thead[class*="ant-table-thead"] th{
 .ant-drawer-body {
     padding: 10px 20px !important;
 }
-.clickRowStyl{
-    background-color:#fafafa
-} 
+.ant-table-tbody>.clickRowStyl>td{
+    background-color:#fafafa !important;
+}
 .ant-table-tbody>.clickRowStyl:hover>td{
-    background-color: #fafafa
+    background-color: #fafafa 
 }
   
 
