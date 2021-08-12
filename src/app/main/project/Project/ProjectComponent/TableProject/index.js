@@ -197,6 +197,7 @@ function TableProject(props) {
 			title: 'Subject',
 			dataIndex: 'subject',
 			key: 'subject',
+			fixed: 'left',
 			width: '20%',
 			render: (_, item) => (
 				<Link
@@ -229,7 +230,7 @@ function TableProject(props) {
 			title: 'Sector',
 			dataIndex: 'sectorName',
 			key: 'sectorName',
-			width: '5%',
+			width: '6%',
 			render: (_, item) => <Typography variant="body1">{item.sectorName}</Typography>
 		},
 		{
@@ -237,26 +238,10 @@ function TableProject(props) {
 			align: 'center',
 			dataIndex: 'type',
 			key: 'type',
-			width: '5%',
+			width: '6%',
 			render: (_, item) => (
 				<Typography variant="subtitle2" style={{ color: typeColor[item.typeName], textTransform: 'uppercase' }}>
 					{item.typeName}
-				</Typography>
-			)
-		},
-		{
-			title: 'Duration',
-			align: 'center',
-			dataIndex: 'duration',
-			key: 'duration',
-			width: '6%',
-			render: (_, item) => (
-				<Typography
-					variant="body1"
-					component="button"
-					style={{ color: durationDay(item.startDate, item.endDate) === 0 ? '#FF3F00' : '#001E6C' }}
-				>
-					{durationDay(item.startDate, item.endDate)} Days
 				</Typography>
 			)
 		},
@@ -278,6 +263,22 @@ function TableProject(props) {
 			width: '5%',
 			render: (_, item) => (
 				<Typography variant="body1">{item.endDate && moment(item.endDate).format('DD/MM/YYYY')}</Typography>
+			)
+		},
+		{
+			title: 'Duration',
+			align: 'center',
+			dataIndex: 'duration',
+			key: 'duration',
+			width: '6%',
+			render: (_, item) => (
+				<Typography
+					variant="body1"
+					component="button"
+					style={{ color: durationDay(item.startDate, item.endDate) === 0 ? '#FF3F00' : '#001E6C' }}
+				>
+					{durationDay(item.startDate, item.endDate)} Days
+				</Typography>
 			)
 		},
 		{
