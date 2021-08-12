@@ -17,7 +17,7 @@ function TableProject(props) {
 	const mapDataKey = useCallback(
 		arr => {
 			arr.forEach(item => {
-				array.push(item.itemID);
+				array.push(item.codeID);
 				if (item.lstItemChild.length) {
 					mapDataKey(item.lstItemChild);
 				}
@@ -62,7 +62,7 @@ function TableProject(props) {
 				<Typography
 					variant="body1"
 					component="button"
-					style={{ color: item.duration < 3 ? '#FF3F00' : '#001E6C' }}
+					style={{ color: item.duration === 0 ? '#FF3F00' : '#001E6C' }}
 				>
 					{item.duration} Days
 				</Typography>
@@ -114,7 +114,7 @@ function TableProject(props) {
 	];
 	return (
 		<Table
-			rowKey="itemID"
+			rowKey="codeID"
 			expandable={{
 				expandRowByClick: false,
 				expandIconAsCell: false,

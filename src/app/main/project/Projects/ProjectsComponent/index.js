@@ -15,7 +15,7 @@ export default function ProjectComponent({ ArrProjectStatus, owner }) {
 	const dispatch = useDispatch();
 	const { page, rowPage, setPage, setRowPage, status, ownerFilter, year } = projectContext;
 	const { currentState } = useSelector(state => ({ currentState: state.project }), shallowEqual);
-	const { entities, listLoading, actionLoading, total_count } = currentState;
+	const { entities, listLoading, actionLoading, total_count, entitiesEdit } = currentState;
 	const classes = DtpCustomStyles();
 	if (listLoading) {
 		return <FuseLoading />;
@@ -39,7 +39,12 @@ export default function ProjectComponent({ ArrProjectStatus, owner }) {
 			/>
 			<FuseAnimate animation="transition.slideUpIn" delay={200}>
 				<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
-					<TableProject actionLoading={actionLoading} classes={classes} entities={entities} />
+					<TableProject
+						actionLoading={actionLoading}
+						classes={classes}
+						entities={entities}
+						entitiesEdit={entitiesEdit}
+					/>
 					{entities && entities.length !== 0 && (
 						<div className="flex flex-row items-center justify-end">
 							{actionLoading && <Spin />}

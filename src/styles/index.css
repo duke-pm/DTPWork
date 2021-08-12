@@ -117,6 +117,9 @@ a[role=button] {
 .table-row-dark {
     color: #d50000;
 }
+.table-row-primary{
+    color: #000000d9;
+}
 /* .gantt .bar-wrapper {
     pointer-events: none;
 } */
