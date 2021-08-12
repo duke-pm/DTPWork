@@ -17,7 +17,7 @@ function TableProject(props) {
 	const mapDataKey = useCallback(
 		arr => {
 			arr.forEach(item => {
-				array.push(item.itemID);
+				array.push(item.codeID);
 				if (item.lstItemChild.length) {
 					mapDataKey(item.lstItemChild);
 				}
@@ -114,7 +114,7 @@ function TableProject(props) {
 	];
 	return (
 		<Table
-			rowKey="itemID"
+			rowKey="codeID"
 			expandable={{
 				expandRowByClick: false,
 				expandIconAsCell: false,

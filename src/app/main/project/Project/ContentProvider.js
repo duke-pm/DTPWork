@@ -1,11 +1,12 @@
 import FuseAnimate from '@fuse/core/FuseAnimate';
-import { Box, Typography } from '@material-ui/core';
+import { Box, IconButton, Typography } from '@material-ui/core';
 import React, { useEffect, useState, useContext } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { getInformationCompany } from 'app/main/assets/Possesion/_redux/possesionActions';
 import { Spin } from 'antd';
 import FusePageCardedTask from '@fuse/core/FusePageCarded/FusePageCardedTask';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ProjectComponent from './ProjectComponent';
 import { ProjectContext } from './ProjectContext';
 import { fetchProjectDetail, fetchOwner, fetchAllSubTask, getTaskDetailAll } from '../_redux/_projectActions';
@@ -22,6 +23,7 @@ export default function ContentProvider() {
 	);
 	const projectContext = useContext(ProjectContext);
 	const { formProject } = projectContext;
+	const history = useHistory();
 	const params = useParams();
 	const dispatch = useDispatch();
 	const [owner, setOwner] = useState([]);
@@ -79,6 +81,9 @@ export default function ContentProvider() {
 		(arr, curr) => [...arr, { label: curr.sectorName, value: curr.sectorID }],
 		[]
 	);
+	const goback = () => {
+		history.goBack();
+	};
 	return (
 		<FusePageCardedTask
 			innerScroll
@@ -106,6 +111,9 @@ export default function ContentProvider() {
 			}
 			contentToolbar={
 				<div className="flex items-center p-16 flex-1">
+					<IconButton edge="start" color="inherit" onClick={goback} aria-label="close">
+						<ArrowBackIcon color="primary" />
+					</IconButton>
 					<Typography variant="h6">
 						Project plan of {listLoading ? <Spin className="ml-16" /> : project?.projectName}
 					</Typography>

@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Badge, Checkbox, Table, Popover, Avatar, Tooltip } from 'antd';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
 import { MenuItem, ListItemIcon, Icon, ListItemText, Typography } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -18,13 +18,16 @@ function TableProject(props) {
 	const matches = useMediaQuery(theme.breakpoints.up('xl'));
 	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
 	const dispatch = useDispatch();
-	const { entities } = props;
+	const { entities, entitiesEdit } = props;
 	const projectContext = useContext(ProjectContext);
 	const { setFormProject, setTitle, rowPage, page, status, ownerFilter, dateStart, search } = projectContext;
 	const handleOpenFormProject = (item, type) => {
 		setFormProject(true);
 		setTitle(type);
 		dispatch(actions.setTaskEditProject(item));
+	};
+	const setRowClassName = record => {
+		return record.prjID === entitiesEdit?.prjID ? 'clickRowStyl' : '';
 	};
 	const handleDelteProject = item => {
 		dispatch(actions.deleteProject(item.prjID)).then(data => {
@@ -35,6 +38,7 @@ function TableProject(props) {
 	};
 	const handleDetail = item => {
 		if (item.countChild === 0) {
+			dispatch(actions.setTaskEditProject(item));
 			props.history.push(`/quan-ly-du-an/${item.prjID}`);
 		}
 	};
@@ -100,28 +104,6 @@ function TableProject(props) {
 				</Typography>
 			)
 		},
-		// {
-		// 	title: 'Sector',
-		// 	dataIndex: 'sectorName',
-		// 	key: 'sectorName',
-		// 	width: '10%'
-		// },
-		// {
-		// 	title: 'Description',
-		// 	dataIndex: 'descr',
-		// 	key: 'descr',
-		// 	width: '20%',
-		// 	ellipsis: {
-		// 		showTitle: false
-		// 	}
-		// },
-		// {
-		// 	title: 'Processing',
-		// 	dataIndex: 'status',
-		// 	key: 'status',
-		// 	width: '15%',
-		// 	render: (_, item) => <Progress percent={60} strokeColor={badgeStatus[item.statusID]} status="active" />
-		// },
 		{
 			title: 'Status',
 			dataIndex: 'status',
@@ -211,6 +193,7 @@ function TableProject(props) {
 	return (
 		<Table
 			rowKey="prjID"
+			rowClassName={record => setRowClassName(record)}
 			expandable={{
 				expandRowByClick: false,
 				expandIconAsCell: false,

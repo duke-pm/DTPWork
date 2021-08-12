@@ -204,8 +204,9 @@ function TableProject(props) {
 						item.statusID !== 5 &&
 						item.statusID !== 6 &&
 						item.statusID !== 7 &&
-						item.typeName === 'TASK' &&
-						'table-row-dark'
+						item.typeName === 'TASK'
+							? 'table-row-dark'
+							: ''
 					}
 					variant={
 						checkDeadline(item.endDate) > 0 &&
@@ -214,7 +215,7 @@ function TableProject(props) {
 						item.statusID !== 7 &&
 						item.typeName === 'TASK'
 							? 'subtitle2'
-							: 'body1   '
+							: 'body1'
 					}
 					component="button"
 				>
@@ -246,43 +247,44 @@ function TableProject(props) {
 			dataIndex: 'status',
 			key: 'status',
 			width: '10%',
-			render: (_, item) => (
-				<Dropdown
-					disabled={!item.isUpdated || actionLoading}
-					overlay={
-						<Menu>
-							{props.ArrProjectStatus?.map(itemStatus => (
-								<Menu.Item
-									key={itemStatus.value}
-									onClick={() => updatedStatus(item, itemStatus.value)}
-									style={{ color: itemStatus.colorCode }}
-								>
-									<Typography variant="body1">{itemStatus.label}</Typography>
-								</Menu.Item>
-							))}
-						</Menu>
-					}
-					placement="bottomLeft"
-					arrow
-				>
-					<div className="flex flex-row justify-between items-center">
-						<Badge
-							size="default"
-							style={{ color: item.colorCode, cursor: 'pointer' }}
-							color={item.colorCode}
-							text={item.statusName}
-						/>
-						<CaretDownOutlined style={{ cursor: 'pointer', marginLeft: '10px' }} />
-					</div>
-				</Dropdown>
-			)
+			render: (_, item) =>
+				item.typeName !== 'MILESTONE' && (
+					<Dropdown
+						disabled={!item.isUpdated || actionLoading}
+						overlay={
+							<Menu>
+								{props.ArrProjectStatus?.map(itemStatus => (
+									<Menu.Item
+										key={itemStatus.value}
+										onClick={() => updatedStatus(item, itemStatus.value)}
+										style={{ color: itemStatus.colorCode }}
+									>
+										<Typography variant="body1">{itemStatus.label}</Typography>
+									</Menu.Item>
+								))}
+							</Menu>
+						}
+						placement="bottomLeft"
+						arrow
+					>
+						<div className="flex flex-row justify-between items-center">
+							<Badge
+								size="default"
+								style={{ color: item.colorCode, cursor: 'pointer' }}
+								color={item.colorCode}
+								text={item.statusName}
+							/>
+							<CaretDownOutlined style={{ cursor: 'pointer', marginLeft: '10px' }} />
+						</div>
+					</Dropdown>
+				)
 		},
 		{
 			title: 'Progress',
 			align: 'center',
 			dataIndex: 'status',
 			key: 'status',
-			width: '15%',
+			width: '10%',
 			render: (_, item) => <Progress percent={item.percentage} strokeColor={typeColor[item.typeName]} />
 		},
 		{

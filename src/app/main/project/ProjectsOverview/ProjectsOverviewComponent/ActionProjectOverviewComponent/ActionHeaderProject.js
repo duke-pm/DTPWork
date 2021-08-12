@@ -1,5 +1,5 @@
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
-import { Button, IconButton, InputBase, Paper, Typography, Grid, Hidden } from '@material-ui/core';
+import { Button, IconButton, InputBase, Paper, Typography, Grid } from '@material-ui/core';
 import React, { useContext } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import { useDispatch } from 'react-redux';
