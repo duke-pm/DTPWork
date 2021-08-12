@@ -7,6 +7,7 @@ import { getInformationCompany } from 'app/main/assets/Possesion/_redux/possesio
 import { Spin } from 'antd';
 import FusePageCardedTask from '@fuse/core/FusePageCarded/FusePageCardedTask';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import ProjectComponent from './ProjectComponent';
 import { ProjectContext } from './ProjectContext';
 import { fetchProjectDetail, fetchOwner, fetchAllSubTask, getTaskDetailAll } from '../_redux/_projectActions';
@@ -25,6 +26,7 @@ export default function ContentProvider() {
 	const { formProject } = projectContext;
 	const history = useHistory();
 	const params = useParams();
+	const classes = DtpCustomStyles();
 	const dispatch = useDispatch();
 	const [owner, setOwner] = useState([]);
 	useEffect(() => {
@@ -111,10 +113,16 @@ export default function ContentProvider() {
 			}
 			contentToolbar={
 				<div className="flex items-center p-16 flex-1">
-					<IconButton edge="start" color="inherit" onClick={goback} aria-label="close">
+					<IconButton
+						className={classes.customFocus}
+						edge="start"
+						color="inherit"
+						onClick={goback}
+						aria-label="close"
+					>
 						<ArrowBackIcon color="primary" />
 					</IconButton>
-					<Typography variant="h6">
+					<Typography className="ml-16" variant="h6">
 						Project plan of {listLoading ? <Spin className="ml-16" /> : project?.projectName}
 					</Typography>
 				</div>

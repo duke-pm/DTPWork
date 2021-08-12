@@ -119,6 +119,11 @@ const DtpCustomStyles = makeStyles(theme => ({
 		color: '#fff',
 		'&:hover, &.Mui-focusVisible': { backgroundColor: '#003737' }
 	},
+	customFocus: {
+		backgroundColor: '#fafafa',
+		float: 'left',
+		'&:hover, &.Mui-focusVisible': { backgroundColor: 'none' }
+	},
 	scrollPaper: {
 		alignItems: 'baseline' // default center
 	}
