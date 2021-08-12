@@ -161,7 +161,7 @@ function TableProject(props) {
 			render: (_, item) => <Typography variant="body1">{moment(item.crtdDate).format('DD/MM/YYYY')}</Typography>
 		},
 		{
-			title: 'Appraisal time',
+			title: 'Inspection time',
 			align: 'center',
 			dataIndex: 'crtdDate',
 			key: 'crtdDate',

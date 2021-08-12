@@ -107,7 +107,7 @@ export default function FormCustomProject({
 									{role?.userName === 'phucvd' && (
 										<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
 											<Field
-												label="Appraisal time"
+												label="Inspection time"
 												name="appraisalTime"
 												placeholder="Please select time"
 												component={DateCustom}
@@ -126,7 +126,7 @@ export default function FormCustomProject({
 										name="isPublic"
 										value={initial.isPublic}
 										component={CheckboxAntd}
-										top="10px"
+										top="20px"
 									/>
 								</div>
 								{/* <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
