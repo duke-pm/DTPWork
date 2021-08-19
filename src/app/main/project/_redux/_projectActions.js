@@ -447,6 +447,8 @@ export const getTaskDetailAll = (params, owner, status, sector, search) => dispa
 							name: curr.taskName,
 							start: moment(curr.startDate).format('YYYY-MM-DD'),
 							end: moment(curr.endDate).format('YYYY-MM-DD'),
+							startDate: curr.startDate,
+							endDate: curr.endDate,
 							progress: curr.percentage,
 							dependencies: curr.parentID === 0 ? '' : JSON.stringify(curr.parentID),
 							custom_class:

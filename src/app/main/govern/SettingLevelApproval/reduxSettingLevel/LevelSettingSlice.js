@@ -12,8 +12,8 @@ export const callTypes = {
 	action: 'actions'
 };
 
-export const lineSettingSlice = createSlice({
-	name: 'line',
+export const levelSettingSlice = createSlice({
+	name: 'levelApproval',
 	initialState,
 	reducers: {
 		catchErrors: (state, action) => {
@@ -30,21 +30,21 @@ export const lineSettingSlice = createSlice({
 				state.actionLoading = true;
 			}
 		},
-		fetchListLines: (state, action) => {
+		fetchListLevels: (state, action) => {
 			const { dataRes, total_count } = action.payload;
 			state.listLoading = false;
 			state.actionLoading = false;
 			state.entities = dataRes;
 			state.total_count = total_count;
 		},
-		createdLine: (state, action) => {
+		createdLevel: (state, action) => {
 			const { dataRes } = action.payload;
 			state.actionLoading = false;
 			const { entities } = state;
 			const newEntities = [dataRes, ...entities];
 			state.entities = newEntities;
 		},
-		updatedLine: (state, action) => {
+		updatedLevel: (state, action) => {
 			const { dataRes } = action.payload;
 			state.actionLoading = false;
 			state.entities = state.entities.map(entity => {
@@ -54,12 +54,12 @@ export const lineSettingSlice = createSlice({
 				return entity;
 			});
 		},
-		fetchLine: (state, action) => {
+		fetchLevel: (state, action) => {
 			const { item } = action.payload;
 			state.actionLoading = false;
 			state.entitiesEdit = item;
 		},
-		deleteLine: (state, action) => {
+		deleteLevel: (state, action) => {
 			const { dataRes } = action.payload;
 			state.actionLoading = false;
 			const { entities } = state;

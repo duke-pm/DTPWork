@@ -1,22 +1,22 @@
 import { notificationConfig } from '@fuse/core/DtpConfig';
-import * as requestFrom from './LineSettingCrud';
-import { callTypes, lineSettingSlice } from './LineSettingSlice';
+import * as requestFrom from './LevelSettingCrud';
+import { callTypes, levelSettingSlice } from './LevelSettingSlice';
 
-const { actions } = lineSettingSlice;
-export const fetchListLines = (limit, page) => dispatch => {
+const { actions } = levelSettingSlice;
+export const fetchListLevels = (limit, page) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.list }));
 	const paramsRequest = {
 		PageSize: 25,
 		PageNum: 1
 	};
 	return requestFrom
-		.fetchLines(paramsRequest)
+		.fetchLevels(paramsRequest)
 		.then(res => {
 			const { data } = res;
 			if (!data.isError) {
 				const dataRes = data.data;
 				const total_count = data.totalPage;
-				dispatch(actions.fetchListLines({ dataRes, total_count }));
+				dispatch(actions.fetchListLevels({ dataRes, total_count }));
 			} else {
 				notificationConfig('warning', 'Fail', data.errorMessage);
 				dispatch(actions.catchErrors({ callType: callTypes.list }));
@@ -28,20 +28,20 @@ export const fetchListLines = (limit, page) => dispatch => {
 		});
 };
 
-export const fetchListLinesFilter = (limit, page) => dispatch => {
+export const fetchListLevelsFilter = (limit, page) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const paramsRequest = {
 		PageSize: limit || 25,
 		PageNum: page || 1
 	};
 	return requestFrom
-		.fetchLines(paramsRequest)
+		.fetchLevels(paramsRequest)
 		.then(res => {
 			const { data } = res;
 			if (!data.isError) {
 				const dataRes = data.data;
 				const total_count = data.totalPage;
-				dispatch(actions.fetchListLines({ dataRes, total_count }));
+				dispatch(actions.fetchListLevels({ dataRes, total_count }));
 			} else {
 				notificationConfig('warning', 'Fail', data.errorMessage);
 				dispatch(actions.catchErrors({ callType: callTypes.action }));
@@ -52,7 +52,7 @@ export const fetchListLinesFilter = (limit, page) => dispatch => {
 			notificationConfig('warning', 'Fail', 'Server error');
 		});
 };
-export const createdLine = values => dispatch => {
+export const createdLevel = values => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const dataReq = {
 		CodeID: '0',
@@ -60,12 +60,12 @@ export const createdLine = values => dispatch => {
 		Description: values.description
 	};
 	return requestFrom
-		.lineModify(dataReq)
+		.levelModify(dataReq)
 		.then(res => {
 			const { data } = res;
 			if (!data.isError) {
 				const dataRes = data.data;
-				dispatch(actions.createdLine({ dataRes }));
+				dispatch(actions.createdLevel({ dataRes }));
 			} else {
 				notificationConfig('warning', 'Fail', data.errorMessage);
 				dispatch(actions.catchErrors({ callType: callTypes.action }));
@@ -77,7 +77,7 @@ export const createdLine = values => dispatch => {
 		});
 };
 
-export const updatedLine = values => dispatch => {
+export const updatedLevel = values => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const dataReq = {
 		CodeID: values.codeID,
@@ -85,12 +85,12 @@ export const updatedLine = values => dispatch => {
 		Description: values.description
 	};
 	return requestFrom
-		.lineModify(dataReq)
+		.levelModify(dataReq)
 		.then(res => {
 			const { data } = res;
 			if (!data.isError) {
 				const dataRes = data.data;
-				dispatch(actions.updatedLine({ dataRes }));
+				dispatch(actions.updatedLevel({ dataRes }));
 			} else {
 				notificationConfig('warning', 'Fail', data.errorMessage);
 				dispatch(actions.catchErrors({ callType: callTypes.action }));
@@ -102,22 +102,22 @@ export const updatedLine = values => dispatch => {
 		});
 };
 
-export const setTaskEditLine = value => dispatch => {
+export const setTaskEditLevel = value => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
-	dispatch(actions.fetchLine({ value }));
+	dispatch(actions.fetchLevel({ value }));
 };
-export const deletedLine = item => dispatch => {
+export const deletedLevel = item => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const dataReq = {
 		CodeId: item.codeId
 	};
 	return requestFrom
-		.deletedLine(dataReq)
+		.deletedLevel(dataReq)
 		.then(res => {
 			// console.log(res);
 			const { data } = res;
 			if (!data.isError) {
-				dispatch(actions.deletedGroupUser({ dataReq }));
+				dispatch(actions.deleteLevel({ dataReq }));
 				notificationConfig('success', 'Success', 'Delete success');
 			} else {
 				dispatch(actions.catchErrors({ callType: callTypes.action }));

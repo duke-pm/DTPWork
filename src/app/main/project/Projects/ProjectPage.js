@@ -8,6 +8,7 @@ import ProjectComponent from './ProjectsComponent';
 import FormProject from './ProjectsComponent/FormProject';
 import * as actions from '../_redux/_projectActions';
 import { getInformationCompany } from '../../assets/Possesion/_redux/possesionActions/index';
+import ChartProject from './ProjectsComponent/ChartProject';
 
 export default function ProjectPage() {
 	const { currentState, projectAll } = useSelector(
@@ -47,6 +48,7 @@ export default function ProjectPage() {
 	const projectSub = projectAll?.reduce((arr, curr) => [...arr, { label: curr.prjName, value: curr.prjID }], []);
 	return (
 		<>
+			<ChartProject />
 			<FormProject role={role} projectSub={projectSub} ArrProjectStatus={ArrProjectStatus} owner={owner} />
 			<FusePageCarded
 				innerScroll
