@@ -13,7 +13,7 @@ export const checkDeadline = time => {
 };
 
 export const durationDay = (start, end) => {
-	const result = moment().diff(start, 'days') - moment().diff(end, 'days');
+	const result = moment().diff(start, 'days') - moment().diff(end, 'days') + 1;
 	return result;
 };
 

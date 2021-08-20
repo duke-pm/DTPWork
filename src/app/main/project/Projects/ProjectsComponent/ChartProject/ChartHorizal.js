@@ -9,9 +9,18 @@ export default function ChartHorizal({ entitiesGantt }) {
 	const valueName = useMemo(() => {
 		return entitiesGantt?.reduce((arr, curr) => [...arr, curr.name], []);
 	}, [entitiesGantt]);
-	console.log(valueName?.length);
+	const valueColor = useMemo(() => {
+		return entitiesGantt?.reduce((arr, curr) => [...arr, curr.color], []);
+	}, [entitiesGantt]);
+	console.log(valueColor);
 	return (
 		<Chart
+			series={[
+				{
+					name: 'Duration',
+					data: valueDuration || []
+				}
+			]}
 			options={{
 				chart: {
 					toolbar: {
@@ -23,10 +32,11 @@ export default function ChartHorizal({ entitiesGantt }) {
 					bar: {
 						borderRadius: 4,
 						horizontal: true,
+						distributed: true,
 						barHeight: valueName?.length < 4 ? '5%' : '30%'
 					}
 				},
-				colors: ['#006565'],
+				colors: valueColor,
 				dataLabels: {
 					enabled: false,
 					formatter: val => {
@@ -48,14 +58,16 @@ export default function ChartHorizal({ entitiesGantt }) {
 							return `${val} days`;
 						}
 					}
+				},
+				legend: {
+					show: true,
+					showForSingleSeries: true,
+					customLegendItems: ['TASK', 'PHASE', 'MILESTONE'],
+					markers: {
+						fillColors: ['#007AFF', '#FF9500', '#34C759']
+					}
 				}
 			}}
-			series={[
-				{
-					name: 'Duration',
-					data: valueDuration || []
-				}
-			]}
 			animations={{
 				enabled: true,
 				easing: 'linear',

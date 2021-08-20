@@ -217,13 +217,13 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 								content={() => (
 									<>
 										<MenuItem onClick={() => handleOpenFormProject('Task')} role="button">
-											<ListItemText style={{ color: '#108ee9' }} primary="TASK" />
+											<ListItemText style={{ color: '#007AFF' }} primary="TASK" />
 										</MenuItem>
 										<MenuItem onClick={() => handleOpenFormProject('Miltestone')} role="button">
-											<ListItemText style={{ color: '#87d068' }} primary="MILESTONE" />
+											<ListItemText style={{ color: '#34C759' }} primary="MILESTONE" />
 										</MenuItem>
 										<MenuItem onClick={() => handleOpenFormProject('Phase')} role="button">
-											<ListItemText style={{ color: '#f50' }} primary="PHASE" />
+											<ListItemText style={{ color: '#FF9500' }} primary="PHASE" />
 										</MenuItem>
 									</>
 								)}

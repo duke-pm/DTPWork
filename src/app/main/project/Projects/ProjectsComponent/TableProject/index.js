@@ -53,6 +53,7 @@ function TableProject(props) {
 			title: <AppsIcon />,
 			align: 'center',
 			key: 'operation',
+			fixed: 'left',
 			width: '4%',
 			render: (_, item) => (
 				<Popover
@@ -107,11 +108,9 @@ function TableProject(props) {
 		{
 			title: 'Project Name',
 			dataIndex: 'prjName',
+			fixed: 'left',
 			key: 'prjName',
 			width: '40%',
-			ellipsis: {
-				showTitle: false
-			},
 			render: (_, item) => (
 				<Link
 					style={{ color: '#000000d9' }}

@@ -459,7 +459,8 @@ export const getTaskDetailAll = (params, owner, status, sector, search) => dispa
 								curr.typeName === 'TASK'
 									? 'DURATION'
 									: curr.typeName,
-							status: curr.statusID
+							status: curr.statusID,
+							color: curr.typeColor
 						}
 					],
 					[]
