@@ -295,12 +295,10 @@ function TableProject(props) {
 				<div
 					className={clsx(
 						'flex items-center justify-center text-center px-8 py-4 mx-4 rounded-16 ',
-						durationDay(item.startDate, item.endDate) < 3 ? 'text-red' : 'text-blue'
+						'text-blue'
 					)}
 				>
-					<Icon className="text-16">
-						{durationDay(item.startDate, item.endDate) < 3 ? 'errors' : 'check_circle'}
-					</Icon>
+					<Icon className="text-16">check_circle</Icon>
 					<Typography className="ml-8" variant="subtitle1" component="button">
 						{durationDay(item.startDate, item.endDate)} Days
 					</Typography>{' '}
