@@ -9,9 +9,9 @@ export const badgeText = {
 };
 
 export const typeColor = {
-	PHASE: '#f50',
-	MILESTONE: '#87d068',
-	TASK: '#108ee9'
+	PHASE: '#FF9500',
+	MILESTONE: '#34C759',
+	TASK: '#007AFF'
 };
 export const priorityColor = {
 	H: '#f50',

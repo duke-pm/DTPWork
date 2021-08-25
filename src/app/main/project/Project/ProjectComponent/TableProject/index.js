@@ -12,6 +12,7 @@ import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import * as moment from 'moment';
+import clsx from 'clsx';
 import * as actions from '../../../_redux/_projectActions';
 import { ProjectContext } from '../../ProjectContext';
 import { typeColor, priorityColor, badgeText } from './ConfigTableProject';
@@ -147,6 +148,7 @@ function TableProject(props) {
 		{
 			title: <AppsIcon />,
 			align: 'center',
+			fixed: 'left',
 			key: 'operation',
 			width: '2%',
 			render: (_, item) => (
@@ -250,9 +252,18 @@ function TableProject(props) {
 			align: 'center',
 			dataIndex: 'startDate',
 			key: 'startDate',
-			width: '5%',
+			width: '7%',
 			render: (_, item) => (
-				<Typography variant="body1">{item.startDate && moment(item.startDate).format('DD/MM/YYYY')}</Typography>
+				<div
+					className={clsx(
+						'flex items-center justify-center text-center px-8 py-4 mx-4 text-white bg-green  rounded-16'
+					)}
+				>
+					<Icon className="text-16">access_time</Icon>
+					<Typography className="ml-8" variant="body1">
+						{item.startDate && moment(item.startDate).format('DD/MM/YY')}
+					</Typography>
+				</div>
 			)
 		},
 		{
@@ -260,9 +271,18 @@ function TableProject(props) {
 			align: 'center',
 			dataIndex: 'endDate',
 			key: 'endDate',
-			width: '5%',
+			width: '7%',
 			render: (_, item) => (
-				<Typography variant="body1">{item.endDate && moment(item.endDate).format('DD/MM/YYYY')}</Typography>
+				<div
+					className={clsx(
+						'flex items-center justify-center text-center px-8 py-4 mx-4 text-white bg-green  rounded-16'
+					)}
+				>
+					<Icon className="text-16">access_time</Icon>
+					<Typography className="ml-8" variant="body1">
+						{item.endDate && moment(item.endDate).format('DD/MM/YY')}
+					</Typography>
+				</div>
 			)
 		},
 		{
@@ -270,15 +290,19 @@ function TableProject(props) {
 			align: 'center',
 			dataIndex: 'duration',
 			key: 'duration',
-			width: '6%',
+			width: '8%',
 			render: (_, item) => (
-				<Typography
-					variant="body1"
-					component="button"
-					style={{ color: durationDay(item.startDate, item.endDate) === 0 ? '#FF3F00' : '#001E6C' }}
+				<div
+					className={clsx(
+						'flex items-center justify-center text-center px-8 py-4 mx-4 rounded-16 ',
+						'text-blue'
+					)}
 				>
-					{durationDay(item.startDate, item.endDate)} Days
-				</Typography>
+					<Icon className="text-16">check_circle</Icon>
+					<Typography className="ml-8" variant="subtitle1" component="button">
+						{durationDay(item.startDate, item.endDate)} Days
+					</Typography>{' '}
+				</div>
 			)
 		},
 		{
@@ -378,12 +402,12 @@ function TableProject(props) {
 		<Table
 			rowKey="taskID"
 			childrenColumnName="lstTaskItem"
-			className="virtual-table"
 			rowClassName={record => setRowClassName(record)}
 			expandable={{
 				expandRowByClick: false,
 				expandIconAsCell: false,
 				expandIconColumnIndex: 1,
+				fixed: false,
 				expandedRowKeys: selectedRowKeys,
 				expandIcon: ({ expanded, onExpand, record, expandable }) =>
 					expandable.length === 0 ? (

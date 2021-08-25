@@ -2,7 +2,8 @@
 import { Table, Avatar, Progress } from 'antd';
 import React, { useState, useEffect, useCallback } from 'react';
 import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
-import { Typography } from '@material-ui/core';
+import { Icon, Typography } from '@material-ui/core';
+import clsx from 'clsx';
 import { withRouter } from 'react-router';
 import * as moment from 'moment';
 import { useTheme } from '@material-ui/core/styles';
@@ -42,10 +43,8 @@ function TableProject(props) {
 			title: 'Task Name',
 			dataIndex: 'prjName',
 			key: 'itemName',
+			fixed: 'left',
 			width: '15%',
-			ellipsis: {
-				showTitle: false
-			},
 			render: (_, item) => (
 				<Typography variant={item.codeParentID === 'P0' ? 'subtitle2' : 'body1'} component="button">
 					{item.itemName}
@@ -54,18 +53,22 @@ function TableProject(props) {
 		},
 		{
 			title: 'Duration',
-			align: 'center',
 			dataIndex: 'duration',
 			key: 'duration',
-			width: '6%',
+			align: 'center',
+			width: '4%',
 			render: (_, item) => (
-				<Typography
-					variant="body1"
-					component="button"
-					style={{ color: item.duration === 0 ? '#FF3F00' : '#001E6C' }}
+				<div
+					className={clsx(
+						'flex items-center justify-center text-center px-8 py-4 mx-4 rounded-16 ',
+						'text-blue'
+					)}
 				>
-					{item.duration} Days
-				</Typography>
+					<Icon className="text-16">check_circle</Icon>
+					<Typography className="ml-8" variant="subtitle1" component="button">
+						{item.duration} Days
+					</Typography>{' '}
+				</div>
 			)
 		},
 		{
@@ -73,9 +76,18 @@ function TableProject(props) {
 			align: 'center',
 			dataIndex: 'startDate',
 			key: 'startDate',
-			width: '5%',
+			width: '4%',
 			render: (_, item) => (
-				<Typography variant="body1">{item.startDate && moment(item.startDate).format('DD/MM/YYYY')}</Typography>
+				<div
+					className={clsx(
+						'flex items-center justify-center text-center px-8 py-4 mx-4 text-white bg-green rounded-16'
+					)}
+				>
+					<Icon className="text-16">access_time</Icon>
+					<Typography className="ml-8" variant="body1">
+						{item.startDate && moment(item.startDate).format('DD/MM/YY')}
+					</Typography>
+				</div>
 			)
 		},
 		{
@@ -85,7 +97,16 @@ function TableProject(props) {
 			key: 'endDate',
 			width: '5%',
 			render: (_, item) => (
-				<Typography variant="body1">{item.endDate && moment(item.endDate).format('DD/MM/YYYY')}</Typography>
+				<div
+					className={clsx(
+						'flex items-center justify-center text-center px-8 py-4 mx-4 text-white bg-green  rounded-16'
+					)}
+				>
+					<Icon className="text-16">access_time</Icon>
+					<Typography className="ml-8" variant="body1">
+						{item.endDate && moment(item.endDate).format('DD/MM/YY')}
+					</Typography>
+				</div>
 			)
 		},
 		{

@@ -6,6 +6,7 @@ import { MenuItem, ListItemIcon, Icon, ListItemText, Typography, Link } from '@m
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { withRouter } from 'react-router';
 import { useDispatch } from 'react-redux';
+import clsx from 'clsx';
 import AppsIcon from '@material-ui/icons/Apps';
 import * as moment from 'moment';
 import { useTheme } from '@material-ui/core/styles';
@@ -53,6 +54,7 @@ function TableProject(props) {
 			title: <AppsIcon />,
 			align: 'center',
 			key: 'operation',
+			fixed: 'left',
 			width: '4%',
 			render: (_, item) => (
 				<Popover
@@ -107,11 +109,9 @@ function TableProject(props) {
 		{
 			title: 'Project Name',
 			dataIndex: 'prjName',
+			fixed: 'left',
 			key: 'prjName',
 			width: '40%',
-			ellipsis: {
-				showTitle: false
-			},
 			render: (_, item) => (
 				<Link
 					style={{ color: '#000000d9' }}
@@ -139,7 +139,12 @@ function TableProject(props) {
 			dataIndex: 'public',
 			key: 'public',
 			width: '8%',
-			render: (_, item) => <Checkbox checked={item.isPublic} />
+			render: (_, item) =>
+				item.isPublic ? (
+					<Icon className="text-green text-20">check_circle</Icon>
+				) : (
+					<Icon className="text-red text-20">remove_circle</Icon>
+				)
 		},
 		{
 			title: 'Priority',
@@ -160,7 +165,18 @@ function TableProject(props) {
 			dataIndex: 'crtdDate',
 			key: 'crtdDate',
 			width: '12%',
-			render: (_, item) => <Typography variant="body1">{moment(item.crtdDate).format('DD/MM/YYYY')}</Typography>
+			render: (_, item) => (
+				<div
+					className={clsx(
+						'flex items-center justify-center text-center px-8 py-4 mx-4 text-white bg-green  rounded-16'
+					)}
+				>
+					<Icon className="text-16">access_time</Icon>
+					<Typography className="ml-8" variant="body1">
+						{item.crtdDate && moment(item.crtdDate).format('DD/MM/YY')}
+					</Typography>
+				</div>
+			)
 		},
 		{
 			title: 'Inspection time',
@@ -168,11 +184,19 @@ function TableProject(props) {
 			dataIndex: 'crtdDate',
 			key: 'crtdDate',
 			width: '12%',
-			render: (_, item) => (
-				<Typography variant="body1">
-					{item.appraisalTime ? moment(item.appraisalTime).format('DD/MM/YYYY') : ''}
-				</Typography>
-			)
+			render: (_, item) =>
+				item.appraisalTime && (
+					<div
+						className={clsx(
+							'flex items-center justify-center text-center px-8 py-4 mx-4 text-white bg-green  rounded-16'
+						)}
+					>
+						<Icon className="text-16">access_time</Icon>
+						<Typography className="ml-8" variant="body1">
+							{item.appraisalTime && moment(item.appraisalTime).format('DD/MM/YY')}
+						</Typography>
+					</div>
+				)
 		},
 		{
 			title: 'Project Owner',
