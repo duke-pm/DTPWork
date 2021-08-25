@@ -9,14 +9,14 @@ export default function FormLevelApproval() {
 	const { form, setForm } = levelApprovalContext;
 	const handleCloseForm = () => setForm(false);
 	return (
-		<Dialog fullWidth style={{ zIndex: 20 }} maxWidth="md" aria-labelledby="customized-dialog-title" open>
+		<Dialog fullWidth style={{ zIndex: 20 }} maxWidth="md" aria-labelledby="customized-dialog-title" open={form}>
 			<AppBar position="static" className="shadow-md">
 				<Toolbar className="flex w-full">
 					<IconButton onClick={handleCloseForm} edge="start" color="inherit" aria-label="close">
 						<CloseIcon />
 					</IconButton>
 					<Typography variant="subtitle1" color="inherit">
-						Add New Role
+						Tạo quyền mới
 					</Typography>
 				</Toolbar>
 			</AppBar>

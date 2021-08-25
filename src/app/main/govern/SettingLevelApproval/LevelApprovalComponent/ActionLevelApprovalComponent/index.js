@@ -54,7 +54,7 @@ export default function ActionLevelApprovalLine({ classes }) {
 							color="primary"
 							startIcon={<AddCircleOutline />}
 						>
-							Create
+							Tạo mới
 						</Button>
 					</div>
 

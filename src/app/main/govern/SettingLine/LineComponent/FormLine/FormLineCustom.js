@@ -33,7 +33,7 @@ export default function FormLineCustom({ handleCloseForm }) {
 								<div className="grid grid-cols-1 gap-8">
 									<Field
 										hasFeedback
-										label="Code Name"
+										label="Tên mã"
 										name="codeName"
 										type="text"
 										component={AntInput}
@@ -42,7 +42,7 @@ export default function FormLineCustom({ handleCloseForm }) {
 								<div className="grid grid-cols-1 gap-8">
 									<Field
 										hasFeedback
-										label="Description"
+										label="Mô tả"
 										name="description"
 										type="text"
 										component={AntInput}
@@ -54,7 +54,7 @@ export default function FormLineCustom({ handleCloseForm }) {
 
 						<DialogActions>
 							<Button type="submit" className="h-26" variant="contained" color="primary">
-								<span>Save</span>
+								<span>Tạo mới</span>
 							</Button>
 
 							<Button
@@ -64,7 +64,7 @@ export default function FormLineCustom({ handleCloseForm }) {
 								variant="contained"
 								color="secondary"
 							>
-								<span>Cancel</span>
+								<span>Huỷ</span>
 							</Button>
 						</DialogActions>
 					</Form>

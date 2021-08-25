@@ -95,7 +95,7 @@ function TableProject(props) {
 			align: 'center',
 			dataIndex: 'endDate',
 			key: 'endDate',
-			width: '5%',
+			width: '4%',
 			render: (_, item) => (
 				<div
 					className={clsx(

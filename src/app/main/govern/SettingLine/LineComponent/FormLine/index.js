@@ -16,7 +16,7 @@ export default function FormLine() {
 						<CloseIcon />
 					</IconButton>
 					<Typography variant="subtitle1" color="inherit">
-						Add New Role
+						Tạo quyền mới
 					</Typography>
 				</Toolbar>
 			</AppBar>

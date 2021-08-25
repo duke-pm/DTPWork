@@ -49,49 +49,49 @@ function TableLevelApproval(props) {
 			)
 		},
 		{
-			title: 'Role code',
+			title: 'Mã quyền',
 			align: 'center',
 			dataIndex: 'roleCode',
 			key: 'roleCode',
 			render: (_, item) => <Typography variant="body1">{item.roleCodde}</Typography>
 		},
 		{
-			title: 'Role Name',
+			title: 'Tên quyền',
 			align: 'center',
 			dataIndex: 'roleName',
 			key: 'roleName',
 			render: (_, item) => <Typography variant="body1">{item.roleName}</Typography>
 		},
 		{
-			title: 'Level 1',
+			title: 'Cấp 1',
 			align: 'center',
 			dataIndex: 'level1',
 			key: 'level1',
 			render: (_, item) => <Typography variant="body1">{item.level1}</Typography>
 		},
 		{
-			title: 'Level 2',
+			title: 'Cấp 2',
 			align: 'center',
 			dataIndex: 'level2',
 			key: 'level2',
 			render: (_, item) => <Typography variant="body1">{item.level2}</Typography>
 		},
 		{
-			title: 'level 3',
+			title: 'Cấp 3',
 			align: 'center',
 			dataIndex: 'level3',
 			key: 'level3',
 			render: (_, item) => <Typography variant="body1">{item.level3}</Typography>
 		},
 		{
-			title: 'Level 4',
+			title: 'Cấp 4',
 			align: 'center',
 			dataIndex: 'level4',
 			key: 'level4',
 			render: (_, item) => <Typography variant="body1">{item.level4}</Typography>
 		},
 		{
-			title: 'level 5',
+			title: 'Cấp 5',
 			align: 'center',
 			dataIndex: 'level5',
 			key: 'level5',

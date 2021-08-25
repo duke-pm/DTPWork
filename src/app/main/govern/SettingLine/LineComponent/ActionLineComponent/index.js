@@ -54,7 +54,7 @@ export default function ActionHeaderLine({ classes }) {
 							color="primary"
 							startIcon={<AddCircleOutline />}
 						>
-							Create
+							Tạo mới
 						</Button>
 					</div>
 
