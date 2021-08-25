@@ -20,7 +20,8 @@ function TableProject(props) {
 	const dispatch = useDispatch();
 	const { entities, entitiesEdit } = props;
 	const projectContext = useContext(ProjectContext);
-	const { setFormProject, setTitle, rowPage, page, status, ownerFilter, dateStart, search } = projectContext;
+	const { setFormProject, setTitle, rowPage, page, status, ownerFilter, dateStart, search, setChart } =
+		projectContext;
 	const handleOpenFormProject = (item, type) => {
 		setFormProject(true);
 		setTitle(type);
@@ -41,6 +42,11 @@ function TableProject(props) {
 			dispatch(actions.setTaskEditProject(item));
 			props.history.push(`/quan-ly-du-an/${item.prjID}`);
 		}
+	};
+	const handleOpenBarChar = item => {
+		setChart(true);
+		dispatch(actions.getTaskDetailAll(item.prjID));
+		dispatch(actions.setTaskEditProject(item));
 	};
 	const columns = [
 		{
@@ -67,12 +73,20 @@ function TableProject(props) {
 								<ListItemText primary="Clone" />
 							</MenuItem>
 							{item.countChild === 0 && (
-								<MenuItem onClick={() => handleDetail(item)} role="button">
-									<ListItemIcon className="min-w-40">
-										<Icon>visibility</Icon>
-									</ListItemIcon>
-									<ListItemText primary="Open detail" />
-								</MenuItem>
+								<>
+									<MenuItem onClick={() => handleDetail(item)} role="button">
+										<ListItemIcon className="min-w-40">
+											<Icon>visibility</Icon>
+										</ListItemIcon>
+										<ListItemText primary="Open detail" />
+									</MenuItem>
+									<MenuItem onClick={() => handleOpenBarChar(item)} role="button">
+										<ListItemIcon className="min-w-40">
+											<Icon>bar_chart</Icon>
+										</ListItemIcon>
+										<ListItemText primary="Project plan" />
+									</MenuItem>
+								</>
 							)}
 							{item.countChild === 0 && item.isModified && (
 								<MenuItem onClick={() => handleDelteProject(item)} role="button">

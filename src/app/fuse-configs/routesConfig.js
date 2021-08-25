@@ -19,12 +19,16 @@ import ChangePassConfig from 'app/main/changePassword/ChangePassConfig';
 import ConfimPassConfig from 'app/main/Confirm/ConfimPassConfig';
 import CheckLinkConfig from 'app/main/CheckLink/CheckLinkConfig';
 import ProjectConfigOverview from 'app/main/project/ProjectConfigOverview';
+import ListConfig from 'app/main/govern/SettingLine/ListConfig';
+import LevelApprovalConfig from 'app/main/govern/SettingLevelApproval/LevelApprovalConfig';
 
 const routeConfigs = [
 	PossesionConfig,
 	ForgotPassConfig,
 	ChangePassConfig,
 	ConfimPassConfig,
+	LevelApprovalConfig,
+	ListConfig,
 	ProjectConfigOverview,
 	LoginConfig,
 	CheckConfig,

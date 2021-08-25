@@ -12,6 +12,7 @@ export default function ProjectContextProvider({ children }) {
 	const [ownerFilter, setOwnerFilter] = useState(null);
 	const [status, setStatus] = useState(null);
 	const [sector, setSector] = useState(null);
+	const [chart, setChart] = useState(false);
 	const [page, setPage] = useState(0);
 	const [rowPage, setRowPage] = useState(25);
 	const valueMemo = useMemo(() => {
@@ -35,7 +36,9 @@ export default function ProjectContextProvider({ children }) {
 			page,
 			setPage,
 			rowPage,
-			setRowPage
+			setRowPage,
+			chart,
+			setChart
 		};
 	}, [
 		formProject,
@@ -57,7 +60,9 @@ export default function ProjectContextProvider({ children }) {
 		page,
 		setPage,
 		rowPage,
-		setRowPage
+		setRowPage,
+		chart,
+		setChart
 	]);
 	return <ProjectContext.Provider value={valueMemo}> {children} </ProjectContext.Provider>;
 }
