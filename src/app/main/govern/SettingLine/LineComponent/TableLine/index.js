@@ -50,14 +50,14 @@ function TableProject(props) {
 			)
 		},
 		{
-			title: 'Role code',
+			title: 'Mã quyền',
 			align: 'center',
 			dataIndex: 'roleCode',
 			key: 'roleCode',
 			render: (_, item) => <Typography variant="body1">{item.roleCodde}</Typography>
 		},
 		{
-			title: 'Role Name',
+			title: 'Tên quyền',
 			align: 'center',
 			dataIndex: 'roleName',
 			key: 'roleName',

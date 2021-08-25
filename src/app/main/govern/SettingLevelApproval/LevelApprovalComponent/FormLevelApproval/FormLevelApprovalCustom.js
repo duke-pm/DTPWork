@@ -31,35 +31,35 @@ export default function FormLevelApprovalCustom({ handleCloseForm }) {
 						<DialogContent>
 							<div className="px-16 sm:px-24">
 								<div className="flex justify-between flex-row">
-									<Typography variant="subtitle2">Role </Typography>
+									<Typography variant="subtitle2">Quyền </Typography>
 								</div>
 								<Divider className="mb-32" />
 								<div className="grid grid-cols-2 gap-8">
 									<Field
 										position="right"
 										hasFeedback
-										label="Group"
+										label="Nhóm"
 										name="group"
 										options={[]}
 										component={SelectAntd}
 									/>
 									<Field
 										position="right"
-										label="Role"
+										label="Quyền"
 										name="role"
 										options={[]}
 										component={SelectAntd}
 									/>
 								</div>
 								<div className="flex justify-between flex-row">
-									<Typography variant="subtitle2">Level detail </Typography>
+									<Typography variant="subtitle2">Cấp độ chi tiết </Typography>
 								</div>
 								<Divider className="mb-32" />
 								<div className="grid grid-cols-2 gap-8">
 									<Field
 										hasFeedback
 										position="right"
-										label="Level 1"
+										label="Cấp 1"
 										name="level[0].name"
 										options={[]}
 										component={SelectAntd}
@@ -69,7 +69,7 @@ export default function FormLevelApprovalCustom({ handleCloseForm }) {
 								<div className="grid grid-cols-2 gap-8">
 									<Field
 										position="right"
-										label="Level 2"
+										label="Cấp 2"
 										name="level[1].name"
 										options={[]}
 										component={SelectAntd}
@@ -81,7 +81,7 @@ export default function FormLevelApprovalCustom({ handleCloseForm }) {
 						<Divider />
 						<DialogActions>
 							<Button type="submit" className="h-26" variant="contained" color="primary">
-								<span>Save</span>
+								<span>Tạo mới</span>
 							</Button>
 
 							<Button
@@ -91,7 +91,7 @@ export default function FormLevelApprovalCustom({ handleCloseForm }) {
 								variant="contained"
 								color="secondary"
 							>
-								<span>Cancel</span>
+								<span>Huỷ</span>
 							</Button>
 						</DialogActions>
 					</Form>
