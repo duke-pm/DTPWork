@@ -21,10 +21,7 @@ export default function index() {
 			</Grid>
 			<Grid item lg={6}>
 				{' '}
-				<Typography variant="body2" color="primary">
-					{' '}
-					BKRS-1
-				</Typography>
+				<Typography variant="body2"> BKRS-1</Typography>
 			</Grid>
 			<Grid item lg={6}>
 				<Typography variant="subtitle2" color="primary">
@@ -34,10 +31,7 @@ export default function index() {
 			</Grid>
 			<Grid item lg={6}>
 				{' '}
-				<Typography variant="body2" color="primary">
-					{' '}
-					Phòng họp
-				</Typography>
+				<Typography variant="body2"> Phòng họp</Typography>
 			</Grid>
 			<Grid item lg={6}>
 				<Typography variant="subtitle2" color="primary">
@@ -47,10 +41,7 @@ export default function index() {
 			</Grid>
 			<Grid item lg={6}>
 				{' '}
-				<Typography variant="body2" color="primary">
-					{' '}
-					Meeting room 303
-				</Typography>
+				<Typography variant="body2"> Meeting room 303</Typography>
 			</Grid>
 			<Grid item lg={6}>
 				<Typography variant="subtitle2" color="primary">
@@ -69,10 +60,7 @@ export default function index() {
 				</Typography>
 			</Grid>
 			<Grid item lg={6}>
-				<Typography variant="body2" color="primary">
-					{' '}
-					Không
-				</Typography>
+				<Typography variant="body2"> Không</Typography>
 			</Grid>
 			<Grid item lg={6}>
 				<Typography variant="subtitle2" color="primary">
@@ -90,9 +78,7 @@ export default function index() {
 				</Typography>
 			</Grid>
 			<Grid item lg={6}>
-				<Typography variant="body2" color="primary">
-					25/08/2021 14:03
-				</Typography>
+				<Typography variant="body2">25/08/2021 14:03</Typography>
 			</Grid>
 			<Grid item lg={6}>
 				<Typography variant="subtitle2" color="primary">
@@ -101,9 +87,7 @@ export default function index() {
 				</Typography>
 			</Grid>
 			<Grid item lg={6}>
-				<Typography variant="body2" color="primary">
-					25/08/2021 14:03
-				</Typography>
+				<Typography variant="body2">25/08/2021 14:03</Typography>
 			</Grid>
 			<Grid item lg={12}>
 				<Typography variant="subtitle2" className="title__view" color="primary">
@@ -117,9 +101,7 @@ export default function index() {
 				</Typography>
 			</Grid>
 			<Grid item lg={6}>
-				<Typography variant="body2" color="primary">
-					Booking created - Complete
-				</Typography>
+				<Typography variant="body2">Booking created - Complete</Typography>
 			</Grid>
 			<Grid item lg={12}>
 				<Typography variant="subtitle2" className="title__view" color="primary">
@@ -133,9 +115,7 @@ export default function index() {
 				</Typography>
 			</Grid>
 			<Grid item lg={6}>
-				<Typography variant="body2" color="primary">
-					Kịch bản thông báo mặc định
-				</Typography>
+				<Typography variant="body2">Kịch bản thông báo mặc định</Typography>
 			</Grid>
 			<Grid item lg={12}>
 				<Typography variant="subtitle2" className="title__view" color="primary">
@@ -153,7 +133,7 @@ export default function index() {
 					<Avatar size="small" style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
 						L
 					</Avatar>{' '}
-					<Typography className="ml-8" variant="body2" color="primary">
+					<Typography className="ml-8" variant="body2">
 						The Linh
 					</Typography>
 				</div>

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Icon, Typography } from '@material-ui/core';
-import { Avatar, Dropdown, Input, Menu, Radio, Switch, Table } from 'antd';
+import { Avatar, Dropdown, Input, Menu, Radio, Switch, Table, Tooltip } from 'antd';
 import Checkbox from 'antd/lib/checkbox/Checkbox';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
@@ -149,9 +149,6 @@ export default function TableResource() {
 							overlay={
 								<Menu overlaystyle={{ width: '200px' }}>
 									<Menu.Item>
-										<Input placeholder="Search" />
-									</Menu.Item>
-									<Menu.Item>
 										<Checkbox>User1</Checkbox>
 									</Menu.Item>
 								</Menu>
@@ -181,7 +178,26 @@ export default function TableResource() {
 			render: (_, item) => <Typography variant="body1">{item.resource}</Typography>
 		},
 		{
-			title: 'Owner',
+			title: () => {
+				return (
+					<div className="flex justify-around items-center ">
+						Owner
+						<Dropdown
+							overlay={
+								<Menu overlaystyle={{ width: '200px' }}>
+									<Menu.Item>
+										<Checkbox>User1</Checkbox>
+									</Menu.Item>
+								</Menu>
+							}
+							placement="bottomRight"
+							arrow
+						>
+							<Icon className="cursor-pointer"> arrow_drop_down </Icon>
+						</Dropdown>
+					</div>
+				);
+			},
 			dataIndex: 'owner',
 			key: 'owner',
 			align: 'center',
@@ -209,10 +225,51 @@ export default function TableResource() {
 			render: (_, item) => <Typography variant="body1">{item.lastModifide}</Typography>
 		},
 		{
-			title: 'Status',
+			title: () => {
+				return (
+					<div className="flex justify-around items-center ">
+						Status
+						<Dropdown
+							overlay={
+								<Menu overlaystyle={{ width: '200px' }}>
+									<Menu.Item>
+										<Checkbox>Active</Checkbox>
+									</Menu.Item>
+									<Menu.Item>
+										<Checkbox>Inactive</Checkbox>
+									</Menu.Item>
+								</Menu>
+							}
+							placement="bottomRight"
+							arrow
+						>
+							<Icon className="cursor-pointer"> arrow_drop_down </Icon>
+						</Dropdown>
+					</div>
+				);
+			},
 			dataIndex: 'status',
 			key: 'status',
 			render: (_, item) => <Switch defaultChecked />
+		},
+		{
+			title: '',
+			dataIndex: 'status',
+			key: 'status',
+			render: (_, item) => (
+				<div className="flex justify-end">
+					<Tooltip placement="bottom" title="Edit">
+						<span className="action--button mr-14">
+							<Icon fontSize="small">edit</Icon>
+						</span>
+					</Tooltip>
+					<Tooltip placement="bottom" title="Delete">
+						<span className="action--button ">
+							<Icon fontSize="small">delete</Icon>
+						</span>
+					</Tooltip>
+				</div>
+			)
 		}
 	];
 	function footer() {

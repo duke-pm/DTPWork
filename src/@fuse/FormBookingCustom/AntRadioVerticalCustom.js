@@ -23,8 +23,8 @@ export default function AntRadioVerticalCustom({
 	const hasError = form.errors[field.name];
 	const submittedError = hasError && submitted;
 	const touchedError = hasError && touched;
-	const onChange = value => {
-		form.setFieldValue(field.name, value);
+	const onChange = ({ target }) => {
+		form.setFieldValue(field.name, target.value);
 		// return handleInputChange ? handleInputChange(target) : null;
 	};
 	return (

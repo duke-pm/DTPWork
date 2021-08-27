@@ -100,7 +100,7 @@ export default function CustomForm({ initital }) {
 										}
 									]}
 									label="Overlapping booking"
-									name="allowAdding"
+									name="overlapping"
 									component={AntRadioVerticalCustom}
 								/>
 							</div>
