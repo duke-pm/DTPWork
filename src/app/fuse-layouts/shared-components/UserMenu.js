@@ -39,10 +39,10 @@ function UserMenu(props) {
 			{/* <ChangePassword formChange={formChange} setFormChange={setFormChange} /> */}
 			<Button className="min-h-40 min-w-40 px-0 md:px-16 py-0 md:py-6" onClick={userMenuClick}>
 				<div className="hidden md:flex flex-col mx-4 items-end">
-					<Typography component="span" className="font-bold flex">
+					<Typography component="span" className="font-bold flex text-white">
 						{dataUser.userName || ''}
 					</Typography>
-					<Typography className="text-11 capitalize" color="textSecondary">
+					<Typography className="text-11 capitalize text-white" color="textSecondary">
 						{dataUser.jobTitle || ''}
 					</Typography>
 				</div>
