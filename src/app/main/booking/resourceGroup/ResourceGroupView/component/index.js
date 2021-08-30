@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Icon, Typography } from '@material-ui/core';
 import { Avatar, Tag } from 'antd';
 import React from 'react';
 
@@ -10,13 +10,13 @@ export default function index() {
 			<Grid className="mb-20" item lg={12}>
 				<Typography variant="subtitle2" className="title__view" color="primary">
 					{' '}
-					Information{' '}
+					BASIC INFORMATION{' '}
 				</Typography>
 			</Grid>
 			<Grid item lg={6}>
 				<Typography variant="subtitle2" color="primary">
 					{' '}
-					Resource code :
+					Resource Group Code :
 				</Typography>
 			</Grid>
 			<Grid item lg={6}>
@@ -31,7 +31,7 @@ export default function index() {
 			</Grid>
 			<Grid item lg={6}>
 				{' '}
-				<Typography variant="body2"> Phòng họp</Typography>
+				<Typography variant="body2">Đào tạo</Typography>
 			</Grid>
 			<Grid item lg={6}>
 				<Typography variant="subtitle2" color="primary">
@@ -46,12 +46,14 @@ export default function index() {
 			<Grid item lg={6}>
 				<Typography variant="subtitle2" color="primary">
 					{' '}
-					Colors :
+					Resource group icons :
 				</Typography>
 			</Grid>
 			<Grid item lg={6}>
-				{' '}
-				<div className="resource__radio" style={{ backgroundColor: '#006565' }} />
+				<Icon fontSize="small" color="primary">
+					{' '}
+					directions_car{' '}
+				</Icon>
 			</Grid>
 			{/* <Grid item lg={6}>
 				<Typography variant="subtitle2" color="primary">

@@ -10,7 +10,7 @@ const data = [
 	{
 		id: 1,
 		code: 'BKEV-14',
-		name: 'Phong hop',
+		name: 'Đào tạo',
 		owner: 'The Linh',
 		resourcemanager: '',
 		lastModifide: '25/08/2021 02:03 PM',
@@ -19,7 +19,7 @@ const data = [
 	{
 		id: 2,
 		code: 'BKEV-14',
-		name: 'Phong hop',
+		name: 'Đào tạo',
 		owner: 'The Linh',
 		resourcemanager: '',
 		lastModifide: '25/08/2021 02:03 PM',
@@ -28,7 +28,7 @@ const data = [
 	{
 		id: 3,
 		code: 'BKEV-14',
-		name: 'Phong hop',
+		name: 'Đào tạo',
 		owner: 'The Linh',
 		resourcemanager: '',
 		lastModifide: '25/08/2021 02:03 PM',
@@ -37,7 +37,7 @@ const data = [
 	{
 		id: 4,
 		code: 'BKEV-14',
-		name: 'Phong hop',
+		name: 'Đào tạo',
 		owner: 'The Linh',
 		resourcemanager: '',
 		lastModifide: '25/08/2021 02:03 PM',
@@ -46,7 +46,7 @@ const data = [
 	{
 		id: 5,
 		code: 'BKEV-14',
-		name: 'Phong hop',
+		name: 'Đào tạo',
 		owner: 'The Linh',
 		resourcemanager: '',
 		lastModifide: '25/08/2021 02:03 PM',
@@ -55,7 +55,7 @@ const data = [
 	{
 		id: 6,
 		code: 'BKEV-14',
-		name: 'Phong hop',
+		name: 'Đào tạo',
 		owner: 'The Linh',
 		resourcemanager: '',
 		lastModifide: '25/08/2021 02:03 PM',
@@ -64,7 +64,7 @@ const data = [
 	{
 		id: 7,
 		code: 'BKEV-14',
-		name: 'Phong hop',
+		name: 'Đào tạo',
 		owner: 'The Linh',
 		resourcemanager: '',
 		lastModifide: '25/08/2021 02:03 PM',
@@ -73,7 +73,7 @@ const data = [
 	{
 		id: 8,
 		code: 'BKEV-14',
-		name: 'Phong hop',
+		name: 'Đào tạo',
 		owner: 'The Linh',
 		resourcemanager: '',
 		lastModifide: '25/08/2021 02:03 PM',
@@ -82,7 +82,7 @@ const data = [
 	{
 		id: 9,
 		code: 'BKEV-14',
-		name: 'Phong hop',
+		name: 'Đào tạo',
 		owner: 'The Linh',
 		resourcemanager: '',
 		lastModifide: '25/08/2021 02:03 PM',
@@ -91,7 +91,7 @@ const data = [
 	{
 		id: 10,
 		code: 'BKEV-14',
-		name: 'Phong hop',
+		name: 'Đào tạo',
 		owner: 'The Linh',
 		resourcemanager: '',
 		lastModifide: '25/08/2021 02:03 PM',
@@ -100,7 +100,7 @@ const data = [
 	{
 		id: 11,
 		code: 'BKEV-14',
-		name: 'Phong hop',
+		name: 'Đào tạo',
 		owner: 'The Linh',
 		resourcemanager: '',
 		lastModifide: '25/08/2021 02:03 PM',
@@ -109,7 +109,7 @@ const data = [
 	{
 		id: 12,
 		code: 'BKEV-14',
-		name: 'Phong hop',
+		name: 'Đào tạo',
 		owner: 'The Linh',
 		resourcemanager: '',
 		lastModifide: '25/08/2021 02:03 PM',
@@ -122,7 +122,7 @@ const options = [
 	{ label: 'Orange', value: 'Orange' }
 ];
 
-export default function TableResource() {
+export default function TableResourceGroup() {
 	const history = useHistory();
 	const filterOwner = value => {
 		console.log(value);
@@ -131,7 +131,7 @@ export default function TableResource() {
 		console.log(value);
 	};
 	const handChangeRouteView = () => {
-		history.push('/booking/resource/view/6');
+		history.push('/booking/resource-group/view/6');
 	};
 	const columns = [
 		{
@@ -145,19 +145,7 @@ export default function TableResource() {
 				return (
 					<div className="flex justify-around items-center ">
 						Name
-						<Dropdown
-							overlay={
-								<Menu overlaystyle={{ width: '200px' }}>
-									<Menu.Item>
-										<Checkbox>User1</Checkbox>
-									</Menu.Item>
-								</Menu>
-							}
-							placement="bottomRight"
-							arrow
-						>
-							<Icon className="cursor-pointer"> arrow_drop_down </Icon>
-						</Dropdown>
+						<Icon className="cursor-pointer"> arrow_drop_down </Icon>
 					</div>
 				);
 			},
@@ -165,17 +153,24 @@ export default function TableResource() {
 			align: 'center',
 			key: 'name',
 			render: (_, item) => (
-				<div onClick={handChangeRouteView} className="flex justify-around items-center cursor-pointer">
-					<div className="resource__radio--button" style={{ backgroundColor: '#006565' }} />
-					<Typography variant="name">{item.name}</Typography>
+				<div onClick={handChangeRouteView} className="flex items-center cursor-pointer">
+					<div className="">
+						{' '}
+						<Icon color="primary" fontSize="small">
+							ad_units
+						</Icon>{' '}
+					</div>
+					<Typography variant="name" className="ml-8 ">
+						{item.name}
+					</Typography>
 				</div>
 			)
 		},
 		{
-			title: 'Resource group',
-			dataIndex: 'resource',
-			key: 'resource',
-			render: (_, item) => <Typography variant="body1">{item.resource}</Typography>
+			title: 'Descriptions',
+			dataIndex: 'description',
+			key: 'description',
+			render: (_, item) => <Typography variant="body1">{item.description}</Typography>
 		},
 		{
 			title: () => {
@@ -200,7 +195,7 @@ export default function TableResource() {
 			},
 			dataIndex: 'owner',
 			key: 'owner',
-			align: 'center',
+			align: 'left',
 			render: (_, item) => (
 				<div className="flex items-center">
 					<Avatar size="small" style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>

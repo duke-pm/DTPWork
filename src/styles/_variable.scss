@@ -11,9 +11,15 @@ $border-ant-input : #f7740c;
 $backgroud-table : #f3f4f6;
 $primary-page:#006565;
 
+
 $primary-light: lighten($primary , 60%);
 $success-light: lighten($success, 47%);
 $warning-light: lighten($warning, 40%);
 $danger-light: lighten($danger, 35%);
 $info-light: lighten($info, 35%);
 $dark-light: lighten($dark, 25%);
+
+$button-small: 100px;
+$button-md: 200px ;
+$button-lg: 270px;
+$button-height: 31px

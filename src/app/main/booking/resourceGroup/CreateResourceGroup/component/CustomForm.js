@@ -4,24 +4,13 @@ import AntRadioColorCustom from '@fuse/FormBookingCustom/AntRadioColorCustom';
 import AntRadioCustom from '@fuse/FormBookingCustom/AntRadioCustom';
 import AntRadioVerticalCustom from '@fuse/FormBookingCustom/AntRadioVerticalCustom';
 import AntSelectCustom from '@fuse/FormBookingCustom/AntSelectCustom';
+import AntSelectIconCustom from '@fuse/FormBookingCustom/AntSelectIconCustom';
 import AntSelectMultiCustom from '@fuse/FormBookingCustom/AntSelectMultiCustom';
 import { Button, Typography } from '@material-ui/core';
 import { Form, Formik, Field } from 'formik';
 import React from 'react';
 
 export default function CustomForm({ initital }) {
-	const colors = [
-		{ value: '#ffe0b2', color: '#ffe0b2' },
-		{ value: '#ffcdd2', color: '#ffcdd2' },
-		{ value: '#f8bbd0', color: '#f8bbd0' },
-		{ value: '#fff0b6', color: '#fff0b6' },
-		{ value: '#c8e6c9', color: '#c8e6c9' },
-		{ value: '#b2dfdb', color: '#b2dfdb' },
-		{ value: '#b2ebf2', color: '#b2ebf2' },
-		{ value: '#bbdffb', color: '#bbdffb' },
-		{ value: '#c5cae9', color: '#c5cae9' },
-		{ value: '#c1d4e9', color: '#c1d4e9' }
-	];
 	return (
 		<>
 			<Formik enableReinitialize initialValues={initital}>
@@ -47,40 +36,28 @@ export default function CustomForm({ initital }) {
 									component={AntInputCustom}
 								/>
 							</div>
-							<div>
-								<Field
-									options={[]}
-									label="Resource group"
-									name="resourceGroup"
-									hasFeedback
-									component={AntSelectCustom}
-								/>
-							</div>
-							<div>
-								<Field
-									label="Color"
-									name="color"
-									options={colors}
-									hasFeedback
-									component={AntRadioColorCustom}
-								/>
-							</div>
 							{/* <div>
 								<Typography color="primary" variant="body1" className="label--form">
 									Resource photo
 								</Typography>
 							</div> */}
-							{/* <div>
+							<div className="grid grid-cols-3">
 								<Field
 									options={[
-										{ value: true, label: 'Yes' },
-										{ value: false, label: 'No' }
+										{ value: 'ad_units', label: 'ad_units', icon: 'ad_units' },
+										{ value: 'drive_eta', label: 'drive_eta', icon: 'drive_eta' },
+										{ value: 'credit_card', label: 'credit_card', icon: 'credit_card' },
+										{ value: 'favorite', label: 'favorite', icon: 'favorite' },
+										{ value: 'border_all', label: 'border_all', icon: 'border_all' },
+										{ value: 'tv', label: 'tv', icon: 'tv' },
+										{ value: 'star', label: 'star', icon: 'star' }
 									]}
-									label="Allow recurring bookings"
-									name="allowRecurre"
-									component={AntRadioCustom}
+									label="Group icon"
+									hasFeedback
+									name="icon"
+									component={AntSelectIconCustom}
 								/>
-							</div> */}
+							</div>
 							{/* <div>
 								<Field
 									options={[
