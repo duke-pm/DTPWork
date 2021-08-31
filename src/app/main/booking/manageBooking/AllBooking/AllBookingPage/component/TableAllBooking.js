@@ -122,7 +122,7 @@ const options = [
 	{ label: 'Orange', value: 'Orange' }
 ];
 
-export default function TableResourceGroup() {
+export default function TableAllBooking() {
 	const history = useHistory();
 	const filterOwner = value => {
 		console.log(value);
@@ -131,7 +131,7 @@ export default function TableResourceGroup() {
 		console.log(value);
 	};
 	const handChangeRouteView = () => {
-		history.push('/booking/resource-group/view/6');
+		history.push('/booking/view/6');
 	};
 	const columns = [
 		{
@@ -141,36 +141,51 @@ export default function TableResourceGroup() {
 			render: (_, item) => <Typography variant="body1">{item.code}</Typography>
 		},
 		{
-			title: () => {
-				return (
-					<div className="flex items-center ">
-						Name
-						<Icon className="cursor-pointer"> arrow_drop_down </Icon>
-					</div>
-				);
-			},
-			dataIndex: 'name',
+			title: 'Booking Title',
+			dataIndex: 'bookingTitle',
 			align: 'left',
-			key: 'name',
+			key: 'bookingTitle',
 			render: (_, item) => (
-				<div onClick={handChangeRouteView} className="flex items-center cursor-pointer">
-					<div className="">
-						{' '}
-						<Icon color="primary" fontSize="small">
-							ad_units
-						</Icon>{' '}
+				<Typography className="cursor-pointer" onClick={handChangeRouteView} variant="body1">
+					{item.name}
+				</Typography>
+			)
+		},
+		{
+			title: 'Booking Time',
+			dataIndex: 'bookingTime',
+			align: 'left',
+			key: 'bookingTime',
+			render: (_, item) => (
+				<div className="flex justify-between items-center">
+					<div>
+						<Typography variant="body1"> 04/09/2021 </Typography>{' '}
+						<Typography variant="caption"> 22:00 </Typography>{' '}
 					</div>
-					<Typography variant="name" className="ml-8 ">
-						{item.name}
-					</Typography>
+					<div>
+						<Icon fontSize="small" color="primary">
+							{' '}
+							arrow_forward{' '}
+						</Icon>
+					</div>
+					<div>
+						<Typography variant="body1"> 04/09/2021 </Typography>{' '}
+						<Typography variant="caption"> 22:00 </Typography>{' '}
+					</div>
 				</div>
 			)
 		},
 		{
-			title: 'Descriptions',
-			dataIndex: 'description',
-			key: 'description',
-			render: (_, item) => <Typography variant="body1">{item.description}</Typography>
+			title: 'Resource',
+			dataIndex: 'resource',
+			key: 'resource',
+			render: (_, item) => <Typography variant="body1">phong hop</Typography>
+		},
+		{
+			title: 'Frequency',
+			dataIndex: 'frequency',
+			key: 'frequency',
+			render: (_, item) => <Typography variant="body1">One-time booking</Typography>
 		},
 		{
 			title: () => {
@@ -208,10 +223,10 @@ export default function TableResourceGroup() {
 			)
 		},
 		{
-			title: 'Last modifide',
+			title: 'Time of creation',
 			dataIndex: 'lastModifide',
 			key: 'lastModifide',
-			render: (_, item) => <Typography variant="body1">{item.lastModifide}</Typography>
+			render: (_, item) => <Typography variant="body1">21:59 25/08/2021</Typography>
 		},
 		{
 			title: '',
@@ -226,7 +241,7 @@ export default function TableResourceGroup() {
 					</Tooltip>
 					<Tooltip placement="bottom" title="Delete">
 						<span className="action--button ">
-							<Icon fontSize="small">delete</Icon>
+							<Icon size="small">delete</Icon>
 						</span>
 					</Tooltip>
 				</div>

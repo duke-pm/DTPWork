@@ -10,13 +10,13 @@ export default function index() {
 			<Grid className="mb-20" item lg={12}>
 				<Typography variant="subtitle2" className="title__view" color="primary">
 					{' '}
-					BASIC INFORMATION{' '}
+					INFORMATION{' '}
 				</Typography>
 			</Grid>
 			<Grid item lg={6}>
 				<Typography variant="subtitle2" color="primary">
 					{' '}
-					Resource Group Code :
+					Group Code :
 				</Typography>
 			</Grid>
 			<Grid item lg={6}>

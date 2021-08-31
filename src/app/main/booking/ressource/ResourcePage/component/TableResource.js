@@ -143,7 +143,7 @@ export default function TableResource() {
 		{
 			title: () => {
 				return (
-					<div className="flex justify-around items-center ">
+					<div className="flex items-center ">
 						Name
 						<Dropdown
 							overlay={
@@ -162,12 +162,13 @@ export default function TableResource() {
 				);
 			},
 			dataIndex: 'name',
-			align: 'center',
 			key: 'name',
 			render: (_, item) => (
-				<div onClick={handChangeRouteView} className="flex justify-around items-center cursor-pointer">
+				<div onClick={handChangeRouteView} className="flex items-center cursor-pointer">
 					<div className="resource__radio--button" style={{ backgroundColor: '#006565' }} />
-					<Typography variant="name">{item.name}</Typography>
+					<Typography variant="name" className="ml-8">
+						{item.name}
+					</Typography>
 				</div>
 			)
 		},
@@ -180,7 +181,7 @@ export default function TableResource() {
 		{
 			title: () => {
 				return (
-					<div className="flex justify-around items-center ">
+					<div className="flex items-center ">
 						Created by
 						<Dropdown
 							overlay={

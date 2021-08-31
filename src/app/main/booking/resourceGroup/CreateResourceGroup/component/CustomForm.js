@@ -132,11 +132,11 @@ export default function CustomForm({ initital }) {
 								/>
 							</div> */}
 							<div className="flex justify-end">
-								<Button className="button__create mr-8" variant="contained" color="secondary">
+								<Button className="button__cancle mr-8" variant="contained" color="secondary">
 									{' '}
 									<Typography variant="body2"> Cancle </Typography>
 								</Button>
-								<Button className="button__create" variant="contained" color="primary">
+								<Button className="button__form" variant="contained" color="primary">
 									{' '}
 									<Typography variant="body2"> Create resource </Typography>
 								</Button>
