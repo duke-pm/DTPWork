@@ -2,6 +2,7 @@
 import React from 'react';
 import { DatePicker, Form } from 'antd';
 import * as moment from 'moment';
+import { Typography } from '@material-ui/core';
 
 const FormItem = Form.Item;
 
@@ -38,8 +39,11 @@ export default function AntDateCustom({
 		<>
 			<div className={`form-item-input ${position && 'flex flex-row justify-between '}`}>
 				{label && (
-					<div className={`flex flex-row ${position && 'mt-8'}`}>
-						<span> {label} </span>
+					<div className={`flex flex-row mb-8 `}>
+						<Typography color="primary" variant="body1" className="label--form">
+							{' '}
+							{label}{' '}
+						</Typography>
 						{hasFeedback && (
 							<p style={{ marginBottom: '-20px' }} className="text-red ml-8">
 								{' '}

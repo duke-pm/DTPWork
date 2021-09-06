@@ -1,4 +1,5 @@
 import React from 'react';
+import './index.scss';
 
 const ProjectConfig = {
 	settings: {
@@ -12,7 +13,19 @@ const ProjectConfig = {
 			component: React.lazy(() => import('./Project/index'))
 		},
 		{
-			path: '/quan-ly-du-an',
+			path: '/quan-ly-du-an-tao-moi',
+			component: React.lazy(() => import('./Projects/CreateProjects'))
+		},
+		{
+			path: '/projects/modify/:type',
+			component: React.lazy(() => import('./Projects/CreateProjects'))
+		},
+		{
+			path: '/projects/chart/:detail',
+			component: React.lazy(() => import('./Projects/ChartPageProjects'))
+		},
+		{
+			path: '/projects/view',
 			component: React.lazy(() => import('./Projects/index'))
 		}
 	]

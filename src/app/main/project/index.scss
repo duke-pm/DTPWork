@@ -1,0 +1,173 @@
+@import'../../../styles/variable';
+
+.projects{
+    height: 100vh;
+    overflow: hidden;
+    background-color: $white;
+    &__header{
+        width: 100%;
+        height: 80px;
+        display: flex;
+        background-color: $white;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        box-shadow: 0 2px 8px 0 rgba(9, 30, 66, 0.08);
+        .header--action{
+            display: flex;
+            align-items: center;
+            .input--search{
+                margin-right: 10px;
+            }
+            .ant-input-search .ant-input:hover, .ant-input-search .ant-input:focus{
+                border-color: $border-ant-input;
+                box-shadow: 0 0 5px 0 $border-ant-input!important
+            }
+            .ant-input{
+                border-radius: 4px;
+                border: 1px solid #d0d4db;
+                padding: 4px 12px;
+                color: #172b4d;
+                &:focus{
+                    border-color: $border-ant-input;
+                    box-shadow: 0 0 5px 0 $border-ant-input!important
+                }
+                &:hover{
+                    border-color: $border-ant-input;
+                    box-shadow: 0 0 5px 0 $border-ant-input!important
+                }
+        
+            }
+        }
+    }
+    &__filter{
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        .title_filter{
+            .title{
+                font-weight: 600;
+            }
+        }
+        .content_filter{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-left: 10px;
+            .control-filter{
+                display: flex;
+                background-color: $backgroud-table;
+                padding: 2px 8px;
+                border-radius: 5px;
+                margin-left: 10px;
+                .content{
+                    .value-filter{
+                        font-weight: 700;
+                    } 
+                }
+                .action{
+                    display: flex;
+                    align-items: center;
+                    .btn-icon{
+                        font-size: 15px ;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+        .action-filter{
+            display: flex;
+            align-items: center;
+            margin-left: 15px;
+        }
+
+    }
+    &__content{
+        height: calc(100vh - 175px);
+        overflow-x: hidden;
+        overflow-y: auto;
+        &--table{
+            thead[class*="ant-table-thead"] th{
+                background-color: $backgroud-table !important;
+              }
+            .ant-table-thead > tr > th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
+                width: 0px;
+            }
+            th.ant-table-cell{
+                font-size: 13px;
+                font-weight: 600;
+                color: $primary-page;
+            }
+        }
+        .createporjects{
+            padding: 24px 15px;
+            width: 692px;
+            margin: 0 auto;
+        }
+        &--chart{
+            padding: 24px 15px;
+            width: 762px;
+            margin: 0 auto;
+        }
+    }
+    .action--button{
+        display: flex;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        align-items: center;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: .4s;
+        &:hover{
+            background-color: $primary-page;
+            color: $white;
+        }
+    }
+}
+.ant-dropdown{
+    width: 200px !important;
+}
+.action__dropdown{
+    width: 200px;
+    background-color: $white;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px 0 rgba(9, 30, 66, 0.08);
+    .dropdown--list{
+        display: flex;
+        padding: 15px 20px;
+        justify-content: space-between;
+        align-items: center;
+        transition: .4s;
+        &:hover{
+            background-color: #d0d4db;
+        }
+        .btn-icon{
+            font-size: 15px ;
+            cursor: pointer;
+        }
+    }
+}
+.filter--status{
+    width: 200px;
+    background-color: $white;
+    padding: 15px 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px 0 rgba(9, 30, 66, 0.08);
+
+    .ant-checkbox-group{
+        line-height: 2.5715;
+    }
+}
+.filter--owner{
+    width: 280px;
+    height: 40vh;
+    overflow: auto;
+    background-color: $white;
+    padding: 15px 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px 0 rgba(9, 30, 66, 0.08);
+    .ant-checkbox-group{
+        line-height: 2.5715;
+    }
+}
