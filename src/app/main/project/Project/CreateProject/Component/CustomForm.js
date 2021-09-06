@@ -23,7 +23,7 @@ const file = {
 	jpge: <FileImageOutlined />
 };
 export default function CustomForm({
-	initial,
+	initialState,
 	taskSub,
 	owner,
 	entitiesEdit,
@@ -56,7 +56,7 @@ export default function CustomForm({
 		<Formik
 			validationSchema={validateSchema}
 			enableReinitialize
-			initialValues={initial}
+			initialValues={initialState}
 			onSubmit={values => {
 				handleSubmitForm(values);
 			}}
@@ -157,28 +157,27 @@ export default function CustomForm({
 						{entitiesEdit &&
 							entitiesEdit.taskID &&
 							entitiesEdit.typeName === 'TASK' &&
-							params.category !==
-								'clone'(
-									<div className="grid grid-cols-1 sm:grid-cols-2 gap-16 ">
-										<Field
-											label="Status"
-											name="status"
-											width="58.8%"
-											readOnly={entitiesEdit && !entitiesEdit.isModified}
-											position="right"
-											component={AntSelectCustom}
-											options={ArrProjectStatus}
-										/>
-										<Field
-											label="Percentage"
-											name="percentage"
-											width="58.8%"
-											readOnly={entitiesEdit && !entitiesEdit.isModified}
-											component={AntSlideCustom}
-											position="right"
-										/>
-									</div>
-								)}
+							params.category !== 'newtask' && (
+								<div className="grid grid-cols-1 sm:grid-cols-2 gap-16 ">
+									<Field
+										label="Status"
+										name="status"
+										width="58.8%"
+										readOnly={entitiesEdit && !entitiesEdit.isModified}
+										position="right"
+										component={AntSelectCustom}
+										options={ArrProjectStatus}
+									/>
+									<Field
+										label="Percentage"
+										name="percentage"
+										width="58.8%"
+										readOnly={entitiesEdit && !entitiesEdit.isModified}
+										component={AntSlideCustom}
+										position="right"
+									/>
+								</div>
+							)}
 						<div className="grid grid-cols-1 sm:grid-cols-2 gap-16 ">
 							<Field
 								label="Sector"

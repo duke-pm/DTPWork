@@ -1,9 +1,11 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Button, Icon, ListItemText, MenuItem, Typography } from '@material-ui/core';
 import React, { useEffect, useState, useContext } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import { getInformationCompany } from 'app/main/assets/Possesion/_redux/possesionActions';
-import { Dropdown, Popover, Spin } from 'antd';
+import { Dropdown, Popover, Spin, Tooltip } from 'antd';
 import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import Search from 'antd/lib/input/Search';
 import ProjectComponent from './ProjectComponent';
@@ -11,7 +13,7 @@ import { ProjectContext } from './ProjectContext';
 import {
 	fetchProjectDetail,
 	fetchOwner,
-	fetchAllSubTask,
+	setTaskEditProject,
 	getTaskDetailAll,
 	fetchProjectDetailFilter
 } from '../_redux/_projectActions';
@@ -97,9 +99,6 @@ export default function ContentProvider() {
 	const newArrOwnerFilter = owner?.filter(e => ownerFilter?.includes(e.value));
 	const newArrSector = sectorArr?.filter(e => sector?.includes(e.value));
 
-	const goback = () => {
-		history.goBack();
-	};
 	const handleFilterClear = item => {
 		const statusClear = status.filter(it => it !== item.value);
 		setStatus(statusClear);
@@ -189,7 +188,14 @@ export default function ContentProvider() {
 		);
 	};
 	const handleOpenFormProject = type => {
+		dispatch(setTaskEditProject(null));
 		history.push(`/projects/modify-task/create/${params.detail}/${type}`);
+	};
+	const ExitPage = () => {
+		history.goBack();
+	};
+	const handleChangePageChart = () => {
+		history.push(`/projects/gantt-task/${params.detail}`);
 	};
 	return (
 		<div className="container projects">
@@ -231,16 +237,22 @@ export default function ContentProvider() {
 								</>
 							)}
 						>
-							<Button className="button__create" variant="contained" color="primary">
+							<Button className="button__create mr-20" variant="contained" color="primary">
 								{' '}
-								<Typography variant="body2"> Create project </Typography>
+								<Typography variant="body2"> Create task </Typography>
 							</Button>
 						</Popover>
 					)}
-					{/* <Button onClick={handleChangeRoute} className="button__create" variant="contained" color="primary">
-						{' '}
-						<Typography variant="body2"> Create project </Typography>
-					</Button> */}
+					<Tooltip placement="bottom" title="Gantt chart" className="mr-20">
+						<span onClick={handleChangePageChart} className="action--button">
+							<Icon fontSize="small">stacked_line_chart</Icon>
+						</span>
+					</Tooltip>
+					<Tooltip placement="bottom" title="Exit">
+						<span onClick={ExitPage} className="action--button">
+							<Icon fontSize="small">close</Icon>
+						</span>
+					</Tooltip>
 				</div>
 			</div>
 			{ownerFilter?.length > 0 || status?.length > 0 || sector?.length > 0 ? (

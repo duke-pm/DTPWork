@@ -13,12 +13,14 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import * as moment from 'moment';
 import clsx from 'clsx';
+import { useHistory } from 'react-router-dom';
 import * as actions from '../../../_redux/_projectActions';
 import { ProjectContext } from '../../ProjectContext';
 import { typeColor, priorityColor, badgeText } from './ConfigTableProject';
 
 function TableProject(props) {
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.up('xl'));
 	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
@@ -60,11 +62,11 @@ function TableProject(props) {
 		return record.taskID === onClickRow ? 'clickRowStyl' : '';
 	};
 	const handleEditForm = (item, type) => {
-		setOnClickRow(item.taskID);
-		setFormProject({
-			open: true,
-			title: type
-		});
+		if (type === 'settingtask') {
+			history.push(`/projects/modify-task/settingtask/${params.detail}/modify`);
+		} else {
+			history.push(`/projects/modify-task/newtask/${params.detail}/modify`);
+		}
 		dispatch(actions.setTaskEditProject(item));
 	};
 	const updatedStatus = (item, statusTask) => {
@@ -211,7 +213,7 @@ function TableProject(props) {
 								</ListItemIcon>
 								<ListItemText primary="Overview" />
 							</MenuItem>
-							<MenuItem onClick={() => handleEditForm(item, 'Setting task')} role="button">
+							<MenuItem onClick={() => handleEditForm(item, 'settingtask')} role="button">
 								<ListItemIcon className="min-w-40">
 									<Icon> settings </Icon>
 								</ListItemIcon>
@@ -219,7 +221,7 @@ function TableProject(props) {
 							</MenuItem>
 							{item.isModified && (
 								<>
-									<MenuItem onClick={() => handleEditForm(item, 'New task')} role="button">
+									<MenuItem onClick={() => handleEditForm(item, 'newtask')} role="button">
 										<ListItemIcon className="min-w-40">
 											<Icon>file_copy</Icon>
 										</ListItemIcon>

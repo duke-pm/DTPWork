@@ -17,6 +17,14 @@ const ProjectConfig = {
 			component: React.lazy(() => import('./Project/CreateProject'))
 		},
 		{
+			path: '/projects/gantt-task/:detail',
+			component: React.lazy(() => import('./Project/ChartPageProject'))
+		},
+		{
+			path: '/projects/overview-task/:detail',
+			component: React.lazy(() => import('./Project/OverviewTask'))
+		},
+		{
 			path: '/projects/modify/:type',
 			component: React.lazy(() => import('./Projects/CreateProjects'))
 		},

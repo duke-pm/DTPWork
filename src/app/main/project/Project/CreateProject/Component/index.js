@@ -18,7 +18,7 @@ export default function FormComponent({
 	ArrTaskComponent,
 	gradeGolbal
 }) {
-	const initial = {
+	let initial = {
 		TaskID: '',
 		descr: '',
 		taskName: '',
@@ -80,16 +80,44 @@ export default function FormComponent({
 	const [listFile, setListFile] = useState(null);
 	const handleCancle = () => history.goBack();
 	useEffect(() => {
-		if (params.category === 'Settings' && !entitiesEdit) {
+		if (params.category === 'settingtask' && !entitiesEdit) {
 			history.goBack();
-		} else if (params.category === 'Clone' && !entitiesEdit) {
+		} else if (params.category === 'newtask' && !entitiesEdit) {
 			history.goBack();
 		}
 	}, [params.type]);
+	const handleCloseFormProject = () => {
+		initial = {
+			TaskID: '',
+			descr: '',
+			taskName: '',
+			startDate: moment(),
+			endDate: moment(),
+			grade: null,
+			author: '',
+			owner: null,
+			component: null,
+			originPublisher: '',
+			ownership: '',
+			project: null,
+			priority: 'N',
+			sectorID: null,
+			status: 1,
+			taskType: '',
+			prjID: '',
+			file: '',
+			fileEdit: '',
+			percentage: '',
+			version: '',
+			userInvite: []
+		};
+		setListFile(null);
+		setFileCheck(true);
+	};
 	const dispatch = useDispatch();
 	const handleSubmitForm = values => {
 		if (entitiesEdit && entitiesEdit.taskID) {
-			if (params.category === 'setting') {
+			if (params.category === 'settingtask') {
 				dispatch(actions.updatedTask(values)).then(data => {
 					if (data && !data.isError) {
 						notificationConfig(
@@ -112,6 +140,7 @@ export default function FormComponent({
 							).format('DD/MM/YYYY')} - ${moment(values.endDate).format('DD/MM/YYYY')}.`;
 						if (str !== '') dispatch(actions.addTaskActivity(entitiesEdit.taskID, str, 'type'));
 						history.goBack();
+						handleCloseFormProject();
 					}
 				});
 			} else {
@@ -128,6 +157,7 @@ export default function FormComponent({
 							notificationContent.description.project.task.createdTask
 						);
 						history.goBack();
+						handleCloseFormProject();
 					}
 				});
 			}
@@ -140,6 +170,7 @@ export default function FormComponent({
 						notificationContent.description.project.task.createdTask
 					);
 					history.goBack();
+					handleCloseFormProject();
 				}
 			});
 		}
@@ -151,7 +182,7 @@ export default function FormComponent({
 		<>
 			<CustomForm
 				handleSubmitForm={handleSubmitForm}
-				initial={entitiesEdit?.taskID ? initialEdit : initial}
+				initialState={entitiesEdit?.taskID ? initialEdit : initial}
 				role={role}
 				owner={owner}
 				taskSub={taskSub}

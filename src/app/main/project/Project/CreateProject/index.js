@@ -81,7 +81,11 @@ export default function CreateProjects() {
 		<div className="container projects">
 			<div className="projects__header px-16">
 				<Typography color="primary" variant="h6">
-					Create project
+					{params.category !== 'create'
+						? params.category === 'settingtask'
+							? 'Setting Task'
+							: 'Coppy Task'
+						: 'Create Task'}
 				</Typography>
 				<div className="projects__header--action">
 					<Tooltip placement="bottom" title="Exit">
