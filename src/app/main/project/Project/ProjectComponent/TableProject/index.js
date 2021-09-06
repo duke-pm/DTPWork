@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Badge, Dropdown, Table, Popover, Avatar, Menu, Tooltip, Progress } from 'antd';
+import { Badge, Dropdown, Table, Popover, Avatar, Menu, Tooltip, Progress, Spin, Checkbox } from 'antd';
 import React, { useContext, useState, useEffect } from 'react';
 import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
 import { MenuItem, ListItemIcon, Icon, ListItemText, Typography, Link } from '@material-ui/core';
@@ -22,7 +22,7 @@ function TableProject(props) {
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.up('xl'));
 	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
-	const { entitiesDetail, actionLoading, params } = props;
+	const { entitiesDetail, actionLoading, params, listLoading, sectorArr, owner } = props;
 	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 	const [onClickRow, setOnClickRow] = useState(null);
 	const projectContext = useContext(ProjectContext);
@@ -43,9 +43,12 @@ function TableProject(props) {
 		rowPage,
 		page,
 		ownerFilter,
+		setOwnerFilter,
 		status,
+		setStatus,
 		dateStart,
 		sector,
+		setSector,
 		search
 	} = projectContext;
 	const handleOpenVisible = item => {
@@ -144,6 +147,51 @@ function TableProject(props) {
 			}
 		});
 	};
+	const onHandleChangeOwner = value => {
+		dispatch(
+			actions.fetchProjectDetailFilter(
+				params.detail,
+				rowPage,
+				page,
+				value?.toString(),
+				status,
+				dateStart,
+				sector,
+				search
+			)
+		);
+		setOwnerFilter(value);
+	};
+	const onHandleChangeStatus = value => {
+		dispatch(
+			actions.fetchProjectDetailFilter(
+				params.detail,
+				rowPage,
+				page,
+				ownerFilter,
+				value?.toString(),
+				dateStart,
+				sector,
+				search
+			)
+		);
+		setStatus(value);
+	};
+	const onHandleChangeSector = value => {
+		dispatch(
+			actions.fetchProjectDetailFilter(
+				params.detail,
+				rowPage,
+				page,
+				ownerFilter,
+				status,
+				dateStart,
+				value?.toString(),
+				search
+			)
+		);
+		setSector(value);
+	};
 	const columns = [
 		{
 			title: <AppsIcon />,
@@ -229,7 +277,29 @@ function TableProject(props) {
 			)
 		},
 		{
-			title: 'Sector',
+			title: () => {
+				return (
+					<div className="flex items-center ">
+						Sector
+						<Dropdown
+							// visible
+							overlay={
+								<div className="filter--status">
+									<Checkbox.Group
+										options={sectorArr}
+										value={sector}
+										onChange={onHandleChangeSector}
+									/>
+								</div>
+							}
+							placement="bottomRight"
+							arrow
+						>
+							<Icon className="cursor-pointer"> arrow_drop_down </Icon>
+						</Dropdown>
+					</div>
+				);
+			},
 			dataIndex: 'sectorName',
 			key: 'sectorName',
 			width: '6%',
@@ -306,7 +376,29 @@ function TableProject(props) {
 			)
 		},
 		{
-			title: 'Status',
+			title: () => {
+				return (
+					<div className="flex items-center ">
+						Status
+						<Dropdown
+							// visible
+							overlay={
+								<div className="filter--status">
+									<Checkbox.Group
+										options={props.ArrProjectStatus}
+										value={status}
+										onChange={onHandleChangeStatus}
+									/>
+								</div>
+							}
+							placement="bottomRight"
+							arrow
+						>
+							<Icon className="cursor-pointer"> arrow_drop_down </Icon>
+						</Dropdown>
+					</div>
+				);
+			},
 			dataIndex: 'status',
 			key: 'status',
 			width: '10%',
@@ -363,7 +455,28 @@ function TableProject(props) {
 			)
 		},
 		{
-			title: 'Assign',
+			title: () => {
+				return (
+					<div className="flex items-center ">
+						Assign
+						<Dropdown
+							overlay={
+								<div className="filter--owner">
+									<Checkbox.Group
+										options={owner}
+										value={ownerFilter}
+										onChange={onHandleChangeOwner}
+									/>
+								</div>
+							}
+							placement="bottomRight"
+							arrow
+						>
+							<Icon className="cursor-pointer"> arrow_drop_down </Icon>
+						</Dropdown>
+					</div>
+				);
+			},
 			dataIndex: 'assignee',
 			key: 'assignee',
 			width: '12%',
@@ -433,6 +546,7 @@ function TableProject(props) {
 			}}
 			pagination={false}
 			columns={columns}
+			loading={listLoading && <Spin />}
 			dataSource={entitiesDetail?.listTask}
 		/>
 	);

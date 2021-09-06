@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, shallowEqual, useSelector } from 'react-redux';
 import { getDataUserLocalStorage } from '@fuse/core/DtpConfig';
+import { getInformationCompany } from 'app/main/assets/Possesion/_redux/possesionActions';
 import FormComponent from './Component';
 import * as actions from '../../_redux/_projectActions';
 
@@ -14,11 +15,44 @@ export default function CreateProjects() {
 	const [owner, setOwner] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const params = useParams();
+	useEffect(() => {
+		const paramsMasterData = 'PrjStatus,PrjComponent,PrjPriority,PrjSector,PrjGrade';
+		dispatch(getInformationCompany(paramsMasterData));
+	}, [dispatch]);
 	const { currentState, projectAll } = useSelector(
 		state => ({ currentState: state.possesion.entitiesInformation, projectAll: state.project.entitiesAll }),
 		shallowEqual
 	);
-	const projectSub = projectAll?.reduce((arr, curr) => [...arr, { label: curr.prjName, value: curr.prjID }], []);
+	const ArrProjectStatus = currentState?.projectStatus
+		? currentState.projectStatus.reduce(
+				(arr, curr) => [...arr, { label: curr.statusName, value: curr.statusID, colorCode: curr.colorCode }],
+				[]
+		  )
+		: [];
+	const taskSub = projectAll
+		? projectAll.reduce((arr, curr) => [...arr, { label: curr.taskName, value: curr.taskID }], [])
+		: [];
+	const ArrTaskPri = currentState?.projectPriority
+		? currentState.projectPriority.reduce(
+				(arr, curr) => [...arr, { label: curr.priorityName, value: curr.priority }],
+				[]
+		  )
+		: [];
+	const sectorArr = currentState?.projectSector
+		? currentState.projectSector.reduce(
+				(arr, curr) => [...arr, { label: curr.sectorName, value: curr.sectorID }],
+				[]
+		  )
+		: [];
+	const ArrTaskComponent = currentState?.projectComponent
+		? currentState.projectComponent.reduce(
+				(arr, curr) => [...arr, { label: curr.componentName, value: curr.componentID }],
+				[]
+		  )
+		: [];
+	const gradeGolbal = currentState?.projectGrade
+		? currentState.projectGrade.reduce((arr, curr) => [...arr, { label: curr.gradeName, value: curr.gradeID }], [])
+		: [];
 	useEffect(() => {
 		setLoading(true);
 		dispatch(actions.fetchOwner()).then(data => {
@@ -36,23 +70,18 @@ export default function CreateProjects() {
 		});
 	}, [dispatch]);
 	useEffect(() => {
-		dispatch(actions.fetchAllProject());
-	}, [dispatch]);
+		dispatch(actions.fetchAllSubTask(params.id));
+	}, [dispatch, params.id]);
 	const role = getDataUserLocalStorage();
 	const history = useHistory();
 	const ExitPage = () => {
 		history.goBack();
 	};
-	console.log(params);
 	return (
 		<div className="container projects">
 			<div className="projects__header px-16">
 				<Typography color="primary" variant="h6">
-					{params.type !== 'create'
-						? params.type === 'Settings'
-							? 'Setting projects'
-							: 'Clone projects'
-						: 'Create projects'}
+					Create project
 				</Typography>
 				<div className="projects__header--action">
 					<Tooltip placement="bottom" title="Exit">
@@ -65,7 +94,16 @@ export default function CreateProjects() {
 			<div className="projects__content mt-8">
 				<Spin spinning={loading}>
 					<div className="createporjects">
-						<FormComponent role={role} owner={owner} projectSub={projectSub} />
+						<FormComponent
+							ArrProjectStatus={ArrProjectStatus}
+							role={role}
+							owner={owner}
+							taskSub={taskSub}
+							ArrTaskPri={ArrTaskPri}
+							sectorArr={sectorArr}
+							ArrTaskComponent={ArrTaskComponent}
+							gradeGolbal={gradeGolbal}
+						/>
 					</div>
 				</Spin>
 			</div>

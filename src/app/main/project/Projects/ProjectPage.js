@@ -88,7 +88,6 @@ export default function ProjectPage() {
 	};
 	return (
 		<>
-			<ChartProject />
 			<div className="container projects">
 				<div className="projects__header px-16">
 					<Typography color="primary" variant="h6">

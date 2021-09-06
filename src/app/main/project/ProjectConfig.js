@@ -9,12 +9,12 @@ const ProjectConfig = {
 	},
 	routes: [
 		{
-			path: '/quan-ly-du-an/:detail',
+			path: '/projects/task/:detail',
 			component: React.lazy(() => import('./Project/index'))
 		},
 		{
-			path: '/quan-ly-du-an-tao-moi',
-			component: React.lazy(() => import('./Projects/CreateProjects'))
+			path: '/projects/modify-task/:category/:id/:type',
+			component: React.lazy(() => import('./Project/CreateProject'))
 		},
 		{
 			path: '/projects/modify/:type',

@@ -39,7 +39,7 @@ export default function AntDateCustom({
 		<>
 			<div className={`form-item-input ${position && 'flex flex-row justify-between '}`}>
 				{label && (
-					<div className={`flex flex-row mb-8 `}>
+					<div className={`flex flex-row ${position && 'mt-8'}`}>
 						<Typography color="primary" variant="body1" className="label--form">
 							{' '}
 							{label}{' '}

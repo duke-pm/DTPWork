@@ -127,22 +127,16 @@ export default function ProjectComponent({
 				params={params}
 				classes={classes}
 			/>
-			<ActionHeaderProject
-				project={project}
-				params={params}
-				sectorArr={sectorArr}
-				ArrProjectStatus={ArrProjectStatus}
-				owner={owner}
-				entitiesDetail={entitiesDetail}
-				classes={classes}
-			/>
 			<FuseAnimate animation="transition.slideUpIn" delay={200}>
 				<div className={`'grid-cols-1'}  gap-8`}>
 					{!gantt ? (
-						<div className="flex flex-col gap-8 mt-16 shadow-md  sm:border-1 sm:rounded-4 ">
+						<div className="flex flex-col">
 							<TableProject
 								ArrProjectStatus={ArrProjectStatus}
 								params={params}
+								sectorArr={sectorArr}
+								owner={owner}
+								listLoading={listLoading}
 								actionLoading={actionLoading}
 								entitiesDetail={entitiesDetail}
 							/>

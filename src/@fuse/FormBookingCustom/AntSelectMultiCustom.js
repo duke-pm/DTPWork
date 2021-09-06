@@ -15,6 +15,8 @@ export default function AntSelectMultiCustom({
 	submitCount,
 	form,
 	options,
+	width,
+	count,
 	type,
 	placeholder,
 	position,
@@ -31,7 +33,7 @@ export default function AntSelectMultiCustom({
 	};
 	return (
 		<div className={`form-item-input ${position && 'flex flex-row  justify-between'}`}>
-			<div className={`flex flex-row mb-8 `}>
+			<div className={`flex flex-row ${position && 'mt-8'}`}>
 				<Typography color="primary" variant="body1" className="label--form">
 					{' '}
 					{label}{' '}
@@ -44,6 +46,7 @@ export default function AntSelectMultiCustom({
 			</div>
 			<FormItem
 				rules={[{ required: true }]}
+				style={{ width: position ? width || '80%' : '100%' }}
 				help={submittedError || touchedError ? hasError : false}
 				validateStatus={submittedError || touchedError ? 'error' : 'success'}
 			>
@@ -52,6 +55,7 @@ export default function AntSelectMultiCustom({
 					{...props}
 					showSearch
 					allowClear
+					maxTagCount={count || null}
 					mode="multiple"
 					placeholder={placeholder || ''}
 					className={readOnly ? 'readOnly' : ''}

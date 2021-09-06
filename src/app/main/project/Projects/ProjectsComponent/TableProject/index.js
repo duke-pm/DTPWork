@@ -66,12 +66,11 @@ function TableProject(props) {
 	const handleDetail = item => {
 		if (item.countChild === 0) {
 			dispatch(actions.setTaskEditProject(item));
-			props.history.push(`/quan-ly-du-an/${item.prjID}`);
+			props.history.push(`/projects/task/${item.prjID}`);
 		}
 	};
 	const handleOpenBarChar = item => {
 		props.history.push(`/projects/chart/${item.prjID}`);
-		// dispatch(actions.getTaskDetailAll(item.prjID));
 		dispatch(actions.setTaskEditProject(item));
 	};
 	const onHandleChangeStatus = value => {
