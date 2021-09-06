@@ -11,7 +11,15 @@ import { Field, Form, Formik } from 'formik';
 import React from 'react';
 import * as Yup from 'yup';
 
-export default function CustomForm({ initial, projectSub, owner, role, handleSubmitForm, actionLoading }) {
+export default function CustomForm({
+	initial,
+	projectSub,
+	owner,
+	role,
+	handleSubmitForm,
+	actionLoading,
+	handleCancle
+}) {
 	const validateSchema = Yup.object().shape({
 		prjName: Yup.string().required(`${validateFieldEN}`),
 		owner: Yup.string().required(`${validateFieldEN}`).nullable()
@@ -81,16 +89,21 @@ export default function CustomForm({ initial, projectSub, owner, role, handleSub
 							/>
 						</div>
 					</div>
-					<div className="flex justify-end">
+					<div className="flex items-center justify-end">
 						{actionLoading ? (
-							<Spin />
+							<Spin className="ml-20" />
 						) : (
 							<Button type="submit" className="button__cancle mr-8" variant="contained" color="primary">
 								{' '}
 								<Typography variant="body2"> Save </Typography>
 							</Button>
 						)}
-						<Button className="button__cancle mr-8" variant="contained" color="secondary">
+						<Button
+							onClick={handleCancle}
+							className="button__cancle mr-8"
+							variant="contained"
+							color="secondary"
+						>
 							<Typography variant="body2"> Cancle </Typography>
 						</Button>
 					</div>

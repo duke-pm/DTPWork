@@ -28,6 +28,7 @@ export default function FormComponent({ owner, projectSub, role }) {
 	const { entitiesEdit, actionLoading } = currentState;
 	const history = useHistory();
 	const params = useParams();
+	const handleCancle = () => history.goBack();
 	useEffect(() => {
 		if (params.type === 'Settings' && !entitiesEdit) {
 			history.goBack();
@@ -97,6 +98,7 @@ export default function FormComponent({ owner, projectSub, role }) {
 				owner={owner}
 				projectSub={projectSub}
 				actionLoading={actionLoading}
+				handleCancle={handleCancle}
 			/>
 		</>
 	);
