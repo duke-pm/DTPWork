@@ -40,7 +40,6 @@ function TableProject(props) {
 	const {
 		setVisible,
 		visible,
-		setFormProject,
 		formProject,
 		rowPage,
 		page,
@@ -91,14 +90,22 @@ function TableProject(props) {
 							params.detail,
 							rowPage,
 							page,
-							ownerFilter,
-							status,
+							ownerFilter.toString(),
+							status.toString(),
 							dateStart,
-							sector,
+							sector.toString(),
 							search
 						)
 					);
-					dispatch(actions.getTaskDetailAll(params.detail, ownerFilter, status, sector, search));
+					dispatch(
+						actions.getTaskDetailAll(
+							params.detail,
+							ownerFilter.toString(),
+							status.toString(),
+							sector.toString(),
+							search
+						)
+					);
 				}
 			});
 		} else {
@@ -118,14 +125,22 @@ function TableProject(props) {
 							params.detail,
 							rowPage,
 							page,
-							ownerFilter,
-							status,
+							ownerFilter?.toString(),
+							status?.toString(),
 							dateStart,
-							sector,
+							sector?.toString(),
 							search
 						)
 					);
-					dispatch(actions.getTaskDetailAll(params.detail, ownerFilter, status, sector, search));
+					dispatch(
+						actions.getTaskDetailAll(
+							params.detail,
+							ownerFilter?.toString(),
+							status?.toString(),
+							sector?.toString(),
+							search
+						)
+					);
 				}
 			});
 		}
@@ -138,14 +153,22 @@ function TableProject(props) {
 						params.detail,
 						rowPage,
 						page,
-						ownerFilter,
-						status,
+						ownerFilter.toString(),
+						status.toString(),
 						dateStart,
-						sector,
+						sector.toString(),
 						search
 					)
 				);
-				dispatch(actions.getTaskDetailAll(params.detail, ownerFilter, status, sector, search));
+				dispatch(
+					actions.getTaskDetailAll(
+						params.detail,
+						ownerFilter.toString(),
+						status.toString(),
+						sector.toString(),
+						search
+					)
+				);
 			}
 		});
 	};
@@ -156,9 +179,9 @@ function TableProject(props) {
 				rowPage,
 				page,
 				value?.toString(),
-				status,
+				status?.toString(),
 				dateStart,
-				sector,
+				sector?.toString(),
 				search
 			)
 		);
@@ -170,10 +193,10 @@ function TableProject(props) {
 				params.detail,
 				rowPage,
 				page,
-				ownerFilter,
+				ownerFilter?.toString(),
 				value?.toString(),
 				dateStart,
-				sector,
+				sector?.toString(),
 				search
 			)
 		);
@@ -185,8 +208,8 @@ function TableProject(props) {
 				params.detail,
 				rowPage,
 				page,
-				ownerFilter,
-				status,
+				ownerFilter?.toString(),
+				status?.toString(),
 				dateStart,
 				value?.toString(),
 				search

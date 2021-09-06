@@ -107,17 +107,28 @@ export default function ContentProvider() {
 				params.detail,
 				rowPage,
 				page,
-				ownerFilter,
+				ownerFilter?.toString(),
 				statusClear?.toString(),
 				dateStart,
-				sector,
+				sector?.toString(),
 				search
 			)
 		);
 	};
 	const handleClearStatus = () => {
 		setStatus(null);
-		dispatch(fetchProjectDetailFilter(params.detail, rowPage, page, ownerFilter, null, dateStart, sector, search));
+		dispatch(
+			fetchProjectDetailFilter(
+				params.detail,
+				rowPage,
+				page,
+				ownerFilter?.toString(),
+				null,
+				dateStart,
+				sector?.toString(),
+				search
+			)
+		);
 	};
 	const handleFilterClearOwner = item => {
 		const ownerClear = ownerFilter.filter(it => it !== item.value);
@@ -128,16 +139,27 @@ export default function ContentProvider() {
 				rowPage,
 				page,
 				ownerClear?.toString(),
-				status,
+				status?.toString(),
 				dateStart,
-				sector,
+				sector?.toString(),
 				search
 			)
 		);
 	};
 	const handleClearOwner = () => {
 		setOwnerFilter(null);
-		dispatch(fetchProjectDetailFilter(params.detail, rowPage, page, null, status, dateStart, sector, search));
+		dispatch(
+			fetchProjectDetailFilter(
+				params.detail,
+				rowPage,
+				page,
+				null,
+				status?.toString(),
+				dateStart,
+				sector?.toString(),
+				search
+			)
+		);
 	};
 	const handleFilterClearSector = item => {
 		const sectorClear = sector.filter(it => it !== item.value);
@@ -147,8 +169,8 @@ export default function ContentProvider() {
 				params.detail,
 				rowPage,
 				page,
-				ownerFilter,
-				status,
+				ownerFilter?.toString(),
+				status?.toString(),
 				dateStart,
 				sectorClear?.toString(),
 				search
@@ -157,7 +179,18 @@ export default function ContentProvider() {
 	};
 	const handleClearSector = () => {
 		setSector(null);
-		dispatch(fetchProjectDetailFilter(params.detail, rowPage, page, ownerFilter, status, dateStart, null, search));
+		dispatch(
+			fetchProjectDetailFilter(
+				params.detail,
+				rowPage,
+				page,
+				ownerFilter?.toString(),
+				status?.toString(),
+				dateStart,
+				null,
+				search
+			)
+		);
 	};
 	const handleClearAll = () => {
 		setStatus(null);
@@ -173,10 +206,10 @@ export default function ContentProvider() {
 					params.detail,
 					rowPage,
 					page,
-					ownerFilter,
-					status,
+					ownerFilter?.toString(),
+					status?.toString(),
 					dateStart,
-					sector,
+					sector?.toString(),
 					e.target.value
 				)
 			);
@@ -184,7 +217,16 @@ export default function ContentProvider() {
 	};
 	const handleSearch = () => {
 		dispatch(
-			fetchProjectDetailFilter(params.detail, rowPage, page, ownerFilter, status, dateStart, sector, search)
+			fetchProjectDetailFilter(
+				params.detail,
+				rowPage,
+				page,
+				ownerFilter?.toString(),
+				status?.toString(),
+				dateStart,
+				sector?.toString(),
+				search
+			)
 		);
 	};
 	const handleOpenFormProject = type => {
