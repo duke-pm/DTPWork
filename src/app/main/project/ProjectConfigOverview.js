@@ -1,4 +1,5 @@
 import React from 'react';
+import './index.scss';
 
 const ProjectConfigOverview = {
 	settings: {
@@ -8,7 +9,7 @@ const ProjectConfigOverview = {
 	},
 	routes: [
 		{
-			path: '/tong-quan-du-an',
+			path: '/projects/projects-overview',
 			component: React.lazy(() => import('./ProjectsOverview/index'))
 		}
 	]

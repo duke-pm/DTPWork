@@ -114,6 +114,11 @@
             width: 962px;
             margin: 0 auto;
         }
+        .overview--content{
+            padding: 24px 15px;
+            width: 692px;
+            margin: 0 auto;
+        }
         .title__view{
             font-size: 17px;
             text-transform: uppercase;
@@ -191,19 +196,6 @@
     
 
 }
-.table__overview{
-    height: calc(100vh - 175px);
-    overflow-x: hidden;
-    overflow-y: auto;
-    
-}
-.content__overview{
-    height: calc(100vh - 175px);
-    overflow-x: hidden;
-    overflow-y: auto;
-    scrollbar-width: none;
-
-}
 .ant-tabs{
     width: 100%;
 }
@@ -212,4 +204,44 @@
 }
 .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
     color: $primary-page;
+}
+.control-filter{
+    .ant-picker:hover, .ant-picker-focused {
+        border-color: $border-ant-input;
+        border-right-width: 1px !important;
+        box-shadow: 0 0 5px 0 $border-ant-input!important
+    }
+    .ant-picker-cell-in-view.ant-picker-cell-today .ant-picker-cell-inner::before {
+        border-color: $border-ant-input !important;
+    }
+    .ant-picker{
+        border-radius: 4px;
+    }
+    .ant-select{
+        border: 1px solid #d0d4db;
+    }
+    .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+        border-color: $border-ant-input;
+    }
+    .ant-select:hover{
+        border-color: $border-ant-input;
+
+    }
+    .ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+        border-color: $border-ant-input;
+    }
+    .ant-select-selector {
+        border-radius: 4px !important;
+        border: 1px solid #d0d4db;
+        padding: 4px 12px;
+        color: #172b4d;
+        &:focus{
+            border-color: $border-ant-input;
+            box-shadow: 0 0 5px 0 $border-ant-input!important
+        }
+        &:hover{
+            border-color: $border-ant-input;
+            box-shadow: 0 0 5px 0 $border-ant-input!important
+        }
+    }
 }
