@@ -85,7 +85,7 @@ export default function FormComponent({
 		} else if (params.category === 'newtask' && !entitiesEdit) {
 			history.goBack();
 		}
-	}, [params.type]);
+	}, [params.category, entitiesEdit, history]);
 	const handleCloseFormProject = () => {
 		initial = {
 			TaskID: '',

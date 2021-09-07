@@ -6,7 +6,6 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import { getInformationCompany } from 'app/main/assets/Possesion/_redux/possesionActions';
 import { Dropdown, Popover, Spin, Tooltip } from 'antd';
-import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import Search from 'antd/lib/input/Search';
 import ProjectComponent from './ProjectComponent';
 import { ProjectContext } from './ProjectContext';
@@ -19,7 +18,7 @@ import {
 } from '../_redux/_projectActions';
 
 export default function ContentProvider() {
-	const { currentState, projectAll, project, listLoading } = useSelector(
+	const { currentState, project } = useSelector(
 		state => ({
 			currentState: state.possesion.entitiesInformation,
 			projectAll: state.project.entitiesAll,
@@ -44,7 +43,6 @@ export default function ContentProvider() {
 	} = projectContext;
 	const history = useHistory();
 	const params = useParams();
-	const classes = DtpCustomStyles();
 	const dispatch = useDispatch();
 	const [owner, setOwner] = useState([]);
 	useEffect(() => {

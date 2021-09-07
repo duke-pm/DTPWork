@@ -1,27 +1,27 @@
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import { Box, Typography } from '@material-ui/core';
-import React, { useContext } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+// import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import FusePageCardedTask from '@fuse/core/FusePageCarded/FusePageCardedTask';
-import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
+// import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import LevelApprovalComponent from './LevelApprovalComponent';
-import { LevelApprovalContext } from './LevelApprovalContext';
+// import { LevelApprovalContext } from './LevelApprovalContext';
 import FormLevelApproval from './LevelApprovalComponent/FormLevelApproval';
 
 export default function ContentProvider() {
-	const { currentState, project } = useSelector(
-		state => ({
-			currentState: state.possesion.entitiesInformation,
-			projectAll: state.project.entitiesAll,
-			project: state.project.entitiesDetail,
-			listLoading: state.project.listLoading
-		}),
-		shallowEqual
-	);
-	const levelApprovalContext = useContext(LevelApprovalContext);
-	const { form, setForm } = levelApprovalContext;
-	const classes = DtpCustomStyles();
-	const dispatch = useDispatch();
+	// const { currentState, project } = useSelector(
+	// 	state => ({
+	// 		currentState: state.possesion.entitiesInformation,
+	// 		projectAll: state.project.entitiesAll,
+	// 		project: state.project.entitiesDetail,
+	// 		listLoading: state.project.listLoading
+	// 	}),
+	// 	shallowEqual
+	// );
+	// const levelApprovalContext = useContext(LevelApprovalContext);
+	// const { form, setForm } = levelApprovalContext;
+	// const classes = DtpCustomStyles();
+	// const dispatch = useDispatch();
 
 	return (
 		<>

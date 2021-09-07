@@ -4,7 +4,6 @@ import React, { useContext } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import { useDispatch } from 'react-redux';
 import { DatePicker, Select } from 'antd';
-import * as moment from 'moment';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { ProjectOverviewContext } from '../../ProjectOverviewContext';
 import { fetchsProjectOverviewFilter } from '../../../_redux/_projectActions';

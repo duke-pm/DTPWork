@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Badge, Checkbox, Table, Popover, Avatar, Tooltip, Spin, Dropdown, Menu } from 'antd';
-import React, { useContext, useState } from 'react';
+import { Badge, Checkbox, Table, Popover, Avatar, Tooltip, Spin, Dropdown } from 'antd';
+import React, { useContext } from 'react';
 import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
 import { MenuItem, ListItemIcon, Icon, ListItemText, Typography, Link } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -24,15 +24,15 @@ function TableProject(props) {
 	const { entities, entitiesEdit, listLoading, ArrProjectStatus, owner } = props;
 	const projectContext = useContext(ProjectContext);
 	const {
-		setFormProject,
-		setTitle,
+		// setFormProject,
+		// setTitle,
 		rowPage,
 		page,
 		status,
 		ownerFilter,
 		dateStart,
 		search,
-		setChart,
+		// setChart,
 		setStatus,
 		setOwnerFilter
 	} = projectContext;
@@ -74,7 +74,9 @@ function TableProject(props) {
 		dispatch(actions.setTaskEditProject(item));
 	};
 	const onHandleChangeStatus = value => {
-		dispatch(actions.fetchsProjectFilter(rowPage, page, value?.toString(), ownerFilter, dateStart, search));
+		dispatch(
+			actions.fetchsProjectFilter(rowPage, page, value?.toString(), ownerFilter?.toString(), dateStart, search)
+		);
 		setStatus(value);
 	};
 	const onHandleChangeOwner = value => {

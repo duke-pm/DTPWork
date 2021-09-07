@@ -1,19 +1,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
-import { makeStyles, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import { Form, Checkbox } from 'antd';
 
 const FormItem = Form.Item;
-
-const useStyles = makeStyles(theme => ({
-	spanLabel: {
-		width: '11rem',
-		marginLeft: '16px'
-	},
-	hasFeedback: {
-		marginBottom: '20px'
-	}
-}));
 
 export default function AntdCustomCheckbox({
 	field, // { name, value, onChange, onBlur }
@@ -32,7 +22,6 @@ export default function AntdCustomCheckbox({
 	submitCount,
 	...props
 }) {
-	const classes = useStyles();
 	const touched = form.touched[field.name];
 	const submitted = submitCount > 0;
 	const hasError = form.errors[field.name];
@@ -57,7 +46,7 @@ export default function AntdCustomCheckbox({
 					)}
 				</div>{' '}
 				<FormItem
-					style={{ width: '100%', marginTop: top || '0px' }}
+					style={{ width: '100%', marginLeft: top || '0px' }}
 					rules={[{ required: true }]}
 					hasFeedback={!!((hasFeedback && submitted) || (hasFeedback && touched))}
 					help={submittedError || touchedError ? hasError : false}

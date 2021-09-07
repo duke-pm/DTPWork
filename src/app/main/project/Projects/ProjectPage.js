@@ -7,7 +7,6 @@ import { useHistory } from 'react-router-dom';
 import ProjectComponent from './ProjectsComponent';
 import * as actions from '../_redux/_projectActions';
 import { getInformationCompany } from '../../assets/Possesion/_redux/possesionActions/index';
-import ChartProject from './ProjectsComponent/ChartProject';
 import { ProjectContext } from './ProjectContext';
 
 export default function ProjectPage() {
@@ -53,20 +52,31 @@ export default function ProjectPage() {
 	const handleFilterClear = item => {
 		const statusClear = status.filter(it => it !== item.value);
 		setStatus(statusClear);
-		dispatch(actions.fetchsProjectFilter(rowPage, page, statusClear?.toString(), ownerFilter, dateStart, search));
+		dispatch(
+			actions.fetchsProjectFilter(
+				rowPage,
+				page,
+				statusClear?.toString(),
+				ownerFilter?.toString(),
+				dateStart,
+				search
+			)
+		);
 	};
 	const handleClearStatus = () => {
 		setStatus(null);
-		dispatch(actions.fetchsProjectFilter(rowPage, page, null, ownerFilter, dateStart, search));
+		dispatch(actions.fetchsProjectFilter(rowPage, page, null, ownerFilter?.toString(), dateStart, search));
 	};
 	const handleFilterClearOwner = item => {
 		const ownerClear = ownerFilter.filter(it => it !== item.value);
 		setOwnerFilter(ownerClear);
-		dispatch(actions.fetchsProjectFilter(rowPage, page, status, ownerClear.toString(), dateStart, search));
+		dispatch(
+			actions.fetchsProjectFilter(rowPage, page, status?.toString(), ownerClear.toString(), dateStart, search)
+		);
 	};
 	const handleClearOwner = () => {
 		setOwnerFilter(null);
-		dispatch(actions.fetchsProjectFilter(rowPage, page, status, null, dateStart, search));
+		dispatch(actions.fetchsProjectFilter(rowPage, page, status?.toString(), null, dateStart, search));
 	};
 	const handleClearAll = () => {
 		setStatus(null);
@@ -80,11 +90,22 @@ export default function ProjectPage() {
 	const onHandleChange = e => {
 		setSearch(e.target.value);
 		if (e.target.value.length <= 0) {
-			dispatch(actions.fetchsProjectFilter(rowPage, page, status, ownerFilter, dateStart, e.target.value));
+			dispatch(
+				actions.fetchsProjectFilter(
+					rowPage,
+					page,
+					status?.toString(),
+					ownerFilter?.toString(),
+					dateStart,
+					e.target.value
+				)
+			);
 		}
 	};
 	const handleSearch = () => {
-		dispatch(actions.fetchsProjectFilter(rowPage, page, status, ownerFilter, dateStart, search));
+		dispatch(
+			actions.fetchsProjectFilter(rowPage, page, status?.toString(), ownerFilter?.toString(), dateStart, search)
+		);
 	};
 	return (
 		<>

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import { Grid, Typography } from '@material-ui/core';
-import { Avatar, Tag } from 'antd';
+import { Avatar } from 'antd';
 import React from 'react';
 
 export default function index() {

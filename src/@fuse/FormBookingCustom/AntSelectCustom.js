@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-duplicate-props */
 import React from 'react';
-import { Form, Input, Radio, Select } from 'antd';
+import { Form, Select } from 'antd';
 import { Typography } from '@material-ui/core';
 import './index.scss';
 

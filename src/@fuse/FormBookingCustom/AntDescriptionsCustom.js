@@ -50,12 +50,11 @@ export default function AntDescriptionsCustom({
 				validateStatus={submittedError || touchedError ? 'error' : 'success'}
 			>
 				<TextArea
-					className="ant-input-dtp"
 					{...field}
 					{...props}
 					rows={row}
 					type={type || null}
-					className={`${readOnly ? 'readOnly' : ''}ant-input-dtp`}
+					className={`${readOnly ? 'readOnly' : ''}`}
 					defaultValue={field.value || ''}
 					// notFoundContent={notFoundContent || null}
 					placeholder={placeholder || ' '}

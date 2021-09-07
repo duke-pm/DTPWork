@@ -83,7 +83,7 @@
 
     }
     &__content{
-        height: calc(100vh - 175px);
+        height: calc(100vh - 148px);
         overflow-x: hidden;
         overflow-y: auto;
         &--table{
@@ -113,6 +113,10 @@
             padding: 24px 15px;
             width: 962px;
             margin: 0 auto;
+        }
+        .title__view{
+            font-size: 17px;
+            text-transform: uppercase;
         }
     }
     .action--button{
@@ -179,4 +183,33 @@
     .ant-checkbox-group{
         line-height: 2.5715;
     }
+}
+.comment__overview{
+    height: calc(70vh - 195px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    
+
+}
+.table__overview{
+    height: calc(100vh - 175px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    
+}
+.content__overview{
+    height: calc(100vh - 175px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: none;
+
+}
+.ant-tabs{
+    width: 100%;
+}
+.ant-tabs-tab-btn{
+    color: $primary-page;
+}
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: $primary-page;
 }

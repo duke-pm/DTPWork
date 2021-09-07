@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Icon, Typography } from '@material-ui/core';
-import { Avatar, Dropdown, Input, Menu, Radio, Switch, Table, Tooltip } from 'antd';
+import { Avatar, Dropdown, Menu, Table, Tooltip } from 'antd';
 import Checkbox from 'antd/lib/checkbox/Checkbox';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
@@ -116,20 +116,20 @@ const data = [
 		status: true
 	}
 ];
-const options = [
-	{ label: 'Apple', value: 'Apple' },
-	{ label: 'Pear', value: 'Pear' },
-	{ label: 'Orange', value: 'Orange' }
-];
+// const options = [
+// 	{ label: 'Apple', value: 'Apple' },
+// 	{ label: 'Pear', value: 'Pear' },
+// 	{ label: 'Orange', value: 'Orange' }
+// ];
 
 export default function TableResourceGroup() {
 	const history = useHistory();
-	const filterOwner = value => {
-		console.log(value);
-	};
-	const onChange = value => {
-		console.log(value);
-	};
+	// const filterOwner = value => {
+	// 	console.log(value);
+	// };
+	// const onChange = value => {
+	// 	console.log(value);
+	// };
 	const handChangeRouteView = () => {
 		history.push('/booking/resource-group/view/6');
 	};
@@ -233,9 +233,6 @@ export default function TableResourceGroup() {
 			)
 		}
 	];
-	function footer() {
-		return 'Here is footer';
-	}
 
 	return <Table rowKey="id" pagination={false} columns={columns} dataSource={data} />;
 }

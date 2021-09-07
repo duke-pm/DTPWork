@@ -79,13 +79,16 @@ export default function CustomForm({
 									<Field label="Priority" name="priority" type="number" component={AntInputCustom} />
 								</div>
 							)}
+						</div>
+						<div>
 							<Field
 								label="Public"
 								hasFeedback
+								position="right"
 								name="isPublic"
+								top="10px"
 								value={initial.isPublic}
 								component={AntdCustomCheckbox}
-								top="10px"
 							/>
 						</div>
 					</div>

@@ -3,7 +3,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Icon, Typography } from '@material-ui/core';
 import { Spin, Tooltip } from 'antd';
-import React, { useMemo, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import { FrappeGantt } from 'frappe-gantt-react';
@@ -14,31 +14,28 @@ import {
 	getTaskDetailAll,
 	updatedGantt,
 	fetchProjectDetailFilter,
-	addTaskActivity
+	addTaskActivity,
+	fetchProjectDetail
 } from '../../_redux/_projectActions';
 
 export default function ChartPage() {
-	const { currentState } = useSelector(state => ({ currentState: state.project }), shallowEqual);
+	const { currentState, project } = useSelector(
+		state => ({ currentState: state.project, project: state.project.entitiesDetail }),
+		shallowEqual
+	);
 	const { actionLoading, entitiesGantt } = currentState;
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const params = useParams();
-	console.log(params);
 	const ExitPage = () => {
 		history.goBack();
 	};
 	useEffect(() => {
 		dispatch(getTaskDetailAll(params.detail));
-	}, [params.detail]);
-	// const valueDuration = useMemo(() => {
-	// 	return entitiesGantt?.reduce((arr, curr) => [...arr, durationDay(curr.startDate, curr.endDate)], []);
-	// }, [entitiesGantt]);
-	// const valueName = useMemo(() => {
-	// 	return entitiesGantt?.reduce((arr, curr) => [...arr, curr.name], []);
-	// }, [entitiesGantt]);
-	// const valueColor = useMemo(() => {
-	// 	return entitiesGantt?.reduce((arr, curr) => [...arr, curr.color], []);
-	// }, [entitiesGantt]);
+	}, [params.detail, dispatch]);
+	useEffect(() => {
+		dispatch(fetchProjectDetail(params.detail));
+	}, [params.detail, dispatch]);
 	const onHandleChangeDate = (task, start, end) => {
 		const data = [];
 		const { id } = task;
@@ -77,7 +74,7 @@ export default function ChartPage() {
 		<div className="container projects">
 			<div className="projects__header px-16">
 				<Typography color="primary" variant="h6">
-					Gantt Chart
+					Gantt Chart {project?.projectName}
 				</Typography>
 				<div className="projects__header--action flex ">
 					<Tooltip placement="bottom" title="Exit">

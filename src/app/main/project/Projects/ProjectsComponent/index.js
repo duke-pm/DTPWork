@@ -3,7 +3,6 @@ import React, { useContext } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import Panigation from '@fuse/core/FusePanigate';
 import { Spin } from 'antd';
-import ActionHeaderProject from './ActionProjectComponent/ActionHeaderProject';
 import TableProject from './TableProject';
 import { ProjectContext } from '../ProjectContext';
 import { fetchsProjectFilter } from '../../_redux/_projectActions';
@@ -16,12 +15,12 @@ export default function ProjectComponent({ ArrProjectStatus, owner }) {
 	const { entities, listLoading, actionLoading, total_count, entitiesEdit } = currentState;
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
-		dispatch(fetchsProjectFilter(rowPage, newPage + 1, status, ownerFilter, year));
+		dispatch(fetchsProjectFilter(rowPage, newPage + 1, status?.toString(), ownerFilter?.toString(), year));
 	};
 	const handleRowPage = e => {
 		const rowPageParse = parseInt(e.target.value, 10);
 		setRowPage(rowPageParse);
-		dispatch(fetchsProjectFilter(rowPageParse, page, status, ownerFilter, year));
+		dispatch(fetchsProjectFilter(rowPageParse, page, status?.toString(), ownerFilter?.toString(), year));
 	};
 	return (
 		<div className="w-full flex flex-col">

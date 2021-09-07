@@ -1,22 +1,12 @@
 /* eslint-disable no-shadow */
-import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import React, { useContext } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import Panigation from '@fuse/core/FusePanigate';
 import { Spin, Tag } from 'antd';
-import * as moment from 'moment';
-import { notificationConfig } from '@fuse/core/DtpConfig';
-import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
-import DrawerComponent from './DrawerComponent';
 import TableProject from './TableProject';
 import { ProjectContext } from '../ProjectContext';
-import {
-	fetchProjectDetailFilter,
-	updatedGantt,
-	getTaskDetailAll,
-	addTaskActivity
-} from '../../_redux/_projectActions';
+import { fetchProjectDetailFilter } from '../../_redux/_projectActions';
 
 export default function ProjectComponent({ owner, ArrProjectStatus, params, sectorArr }) {
 	const dispatch = useDispatch();
@@ -31,10 +21,10 @@ export default function ProjectComponent({ owner, ArrProjectStatus, params, sect
 				params.detail,
 				rowPage,
 				newPage + 1,
-				ownerFilter,
-				status,
+				ownerFilter?.toString(),
+				status?.toString(),
 				dateStart,
-				sector,
+				sector?.toString(),
 				search
 			)
 		);
@@ -43,12 +33,20 @@ export default function ProjectComponent({ owner, ArrProjectStatus, params, sect
 		const rowPageParse = parseInt(e.target.value, 10);
 		setRowPage(rowPageParse);
 		dispatch(
-			fetchProjectDetailFilter(params.detail, rowPageParse, page, ownerFilter, status, dateStart, sector, search)
+			fetchProjectDetailFilter(
+				params.detail,
+				rowPageParse,
+				page,
+				ownerFilter?.toString(),
+				status?.toString(),
+				dateStart,
+				sector?.toString(),
+				search
+			)
 		);
 	};
 	return (
 		<div className="w-full flex flex-col">
-			<DrawerComponent ArrProjectStatus={ArrProjectStatus} params={params} />
 			<FuseAnimate animation="transition.slideUpIn" delay={200}>
 				<div className={`'grid-cols-1'}  gap-8`}>
 					<div className="flex flex-col">
@@ -73,7 +71,7 @@ export default function ProjectComponent({ owner, ArrProjectStatus, params, sect
 									<p style={{ fontWeight: '400', color: '#006565' }}>Late deadline</p>
 								</div>
 
-								<div>
+								<div className="flex flex-row items-center justify-end">
 									{actionLoading && <Spin />}
 									<Panigation
 										page={page}

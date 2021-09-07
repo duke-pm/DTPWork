@@ -1,15 +1,15 @@
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
 import { Button, IconButton, InputBase, Paper } from '@material-ui/core';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import { LevelApprovalContext } from '../../LevelApprovalContext';
 
 export default function ActionLevelApprovalLine({ classes }) {
 	// const dispatch = useDispatch();
 	const levelApprovalContext = useContext(LevelApprovalContext);
-	const { search, rowPage, page, setForm } = levelApprovalContext;
+	const { search, setForm } = levelApprovalContext;
 	const handleOpenFormLine = () => {
 		setForm(true);
 		// dispatch(setTaskEditProject(null));

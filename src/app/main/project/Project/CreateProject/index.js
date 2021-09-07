@@ -83,7 +83,7 @@ export default function CreateProjects() {
 				<Typography color="primary" variant="h6">
 					{params.category !== 'create'
 						? params.category === 'settingtask'
-							? 'Setting Task'
+							? 'Task settings'
 							: 'Coppy Task'
 						: 'Create Task'}
 				</Typography>

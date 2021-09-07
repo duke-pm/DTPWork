@@ -1,20 +1,24 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Table, Popover, Avatar, Menu, Tooltip, Progress } from 'antd';
-import React, { useContext, useState, useEffect } from 'react';
-import { MenuItem, ListItemIcon, Icon, ListItemText, Typography, Link } from '@material-ui/core';
+import {
+	Table,
+	Popover
+	// Avatar, Menu, Tooltip, Progress
+} from 'antd';
+import React from 'react';
+import { MenuItem, ListItemIcon, Icon, ListItemText, Typography } from '@material-ui/core';
 import AppsIcon from '@material-ui/icons/Apps';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { withRouter } from 'react-router';
-import { useDispatch } from 'react-redux';
-import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { SettingLineContext } from '../../SettingLineContext';
+// import { useDispatch } from 'react-redux';
+// import { useTheme } from '@material-ui/core/styles';
+// import useMediaQuery from '@material-ui/core/useMediaQuery';
+// import { SettingLineContext } from '../../SettingLineContext';
 
 function TableProject(props) {
-	const dispatch = useDispatch();
-	const theme = useTheme();
+	// const dispatch = useDispatch();
+	// const theme = useTheme();
 	// const { entitiesDetail, actionLoading, params } = props;
-	const lineContext = useContext(SettingLineContext);
+	// const lineContext = useContext(SettingLineContext);
 	// const {} = lineContext;
 	const handleEditForm = item => {};
 	const deleteTask = item => {};

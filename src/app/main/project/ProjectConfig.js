@@ -21,7 +21,7 @@ const ProjectConfig = {
 			component: React.lazy(() => import('./Project/ChartPageProject'))
 		},
 		{
-			path: '/projects/overview-task/:detail',
+			path: '/projects/overview-task/:taskID',
 			component: React.lazy(() => import('./Project/OverviewTask'))
 		},
 		{

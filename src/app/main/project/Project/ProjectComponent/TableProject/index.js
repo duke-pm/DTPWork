@@ -55,7 +55,8 @@ function TableProject(props) {
 	const handleOpenVisible = item => {
 		setVisible(true);
 		setOnClickRow(item.taskID);
-		dispatch(actions.getTaskViewDetail(item.taskID));
+		// dispatch(actions.getTaskViewDetail(item.taskID));
+		history.push(`/projects/overview-task/${item.taskID}`);
 	};
 	const setRowClassName = record => {
 		return record.taskID === onClickRow ? 'clickRowStyl' : '';
@@ -223,7 +224,7 @@ function TableProject(props) {
 			align: 'center',
 			fixed: 'left',
 			key: 'operation',
-			width: '2%',
+			width: '3%',
 			render: (_, item) => (
 				<Popover
 					overlayStyle={{ zIndex: '8', display: visible || formProject.open ? 'none' : '' }}

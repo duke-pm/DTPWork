@@ -1,7 +1,7 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import { Grid, Icon, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { Avatar, Tag, Tooltip, Tabs, Input } from 'antd';
 import React from 'react';
 

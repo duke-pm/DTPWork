@@ -27,11 +27,11 @@ export default function AntTimeCustom({
 	const hasError = form.errors[field.name];
 	const submittedError = hasError && submitted;
 	const touchedError = hasError && touched;
-	const { value } = field;
+	// const { value } = field;
 	const handleDateChange = (time, timeString) => {
 		form.setFieldValue(field.name, time);
 	};
-	const dateFormat = 'DD/MM/YYYY';
+	// const dateFormat = 'DD/MM/YYYY';
 	return (
 		<>
 			<div className={`form-item-input ${position && 'flex flex-row justify-between '}`}>

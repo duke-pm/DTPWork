@@ -1,19 +1,23 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Table, Popover, Avatar, Menu, Tooltip, Progress } from 'antd';
-import React, { useContext, useState, useEffect } from 'react';
-import { MenuItem, ListItemIcon, Icon, ListItemText, Typography, Link } from '@material-ui/core';
+import {
+	Table,
+	Popover
+	// Avatar, Menu, Tooltip, Progress
+} from 'antd';
+import React from 'react'; // useState, useEffect // useContext
+import { MenuItem, ListItemIcon, Icon, ListItemText, Typography } from '@material-ui/core';
 import AppsIcon from '@material-ui/icons/Apps';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { withRouter } from 'react-router';
-import { useDispatch } from 'react-redux';
-import { useTheme } from '@material-ui/core/styles';
-import { LevelApprovalContext } from '../../LevelApprovalContext';
+// import { useDispatch } from 'react-redux';
+// import { useTheme } from '@material-ui/core/styles';
+// import { LevelApprovalContext } from '../../LevelApprovalContext';
 
 function TableLevelApproval(props) {
-	const dispatch = useDispatch();
-	const theme = useTheme();
+	// const dispatch = useDispatch();
+	// const theme = useTheme();
 	// const { entitiesDetail, actionLoading, params } = props;
-	const levelApprovalContext = useContext(LevelApprovalContext);
+	// const levelApprovalContext = useContext(LevelApprovalContext);
 	// const {} = lineContext;
 	const handleEditForm = item => {};
 	const deleteTask = item => {};

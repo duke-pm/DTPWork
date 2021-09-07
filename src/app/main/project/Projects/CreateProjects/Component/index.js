@@ -35,7 +35,7 @@ export default function FormComponent({ owner, projectSub, role }) {
 		} else if (params.type === 'Clone' && !entitiesEdit) {
 			history.goBack();
 		}
-	}, [params.type]);
+	}, [params.type, history, entitiesEdit]);
 	if (entitiesEdit && entitiesEdit.prjID) {
 		initial = {
 			prjID: entitiesEdit?.prjID,

@@ -14,7 +14,7 @@ export default function CreateProjects() {
 	const [owner, setOwner] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const params = useParams();
-	const { currentState, projectAll } = useSelector(
+	const { projectAll } = useSelector(
 		state => ({ currentState: state.possesion.entitiesInformation, projectAll: state.project.entitiesAll }),
 		shallowEqual
 	);

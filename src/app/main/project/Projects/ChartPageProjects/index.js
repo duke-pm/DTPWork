@@ -11,7 +11,7 @@ import { getTaskDetailAll } from '../../_redux/_projectActions';
 
 export default function ChartPage() {
 	const { currentState } = useSelector(state => ({ currentState: state.project }), shallowEqual);
-	const { listLoading, actionLoading, entitiesGantt } = currentState;
+	const { actionLoading, entitiesGantt } = currentState;
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const params = useParams();
@@ -23,7 +23,7 @@ export default function ChartPage() {
 	};
 	useEffect(() => {
 		dispatch(getTaskDetailAll(params.detail));
-	}, [params.detail]);
+	}, [params.detail, dispatch]);
 	const valueDuration = useMemo(() => {
 		return entitiesGantt?.reduce((arr, curr) => [...arr, durationDay(curr.startDate, curr.endDate)], []);
 	}, [entitiesGantt]);

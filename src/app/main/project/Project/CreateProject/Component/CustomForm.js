@@ -1,7 +1,6 @@
 import { checkFile, nameFile, validateFieldEN } from '@fuse/core/DtpConfig';
 import FileCustomVersion2Eng from '@fuse/CustomForm/FileCustomVersion2Eng';
 import AntDateCustom from '@fuse/FormBookingCustom/AntDateCustom';
-import AntdCustomCheckbox from '@fuse/FormBookingCustom/AntdCustomCheckbox';
 import AntDescriptionsCustom from '@fuse/FormBookingCustom/AntDescriptionsCustom';
 import AntInputCustom from '@fuse/FormBookingCustom/AntInputCustom';
 import AntSelectCustom from '@fuse/FormBookingCustom/AntSelectCustom';
@@ -99,7 +98,7 @@ export default function CustomForm({
 						<div>
 							<Field
 								label="Assignee"
-								name="owner"
+								name={entitiesEdit && !entitiesEdit.isModified ? 'ownerName' : 'owner'}
 								readOnly={entitiesEdit && !entitiesEdit.isModified}
 								hasFeedback
 								component={entitiesEdit && !entitiesEdit.isModified ? AntInputCustom : AntSelectCustom}
@@ -329,10 +328,20 @@ export default function CustomForm({
 					<Divider className="mb-16 mt-16" />
 					<div className="flex items-center justify-end">
 						{actionLoading ? (
-							<Spin className="ml-20" />
+							<Spin />
+						) : entitiesEdit && entitiesEdit.taskID ? (
+							<Button
+								disabled={!entitiesEdit.isModified}
+								type="submit"
+								className="button__cancle mr-8"
+								variant="contained"
+								color="primary"
+							>
+								{' '}
+								<Typography variant="body2"> Save </Typography>
+							</Button>
 						) : (
 							<Button type="submit" className="button__cancle mr-8" variant="contained" color="primary">
-								{' '}
 								<Typography variant="body2"> Save </Typography>
 							</Button>
 						)}
