@@ -80,7 +80,7 @@ function TableProject(props) {
 		setStatus(value);
 	};
 	const onHandleChangeOwner = value => {
-		dispatch(actions.fetchsProjectFilter(rowPage, page, status, value?.toString(), dateStart, search));
+		dispatch(actions.fetchsProjectFilter(rowPage, page, status?.toString(), value?.toString(), dateStart, search));
 		setOwnerFilter(value);
 	};
 	const columns = [
