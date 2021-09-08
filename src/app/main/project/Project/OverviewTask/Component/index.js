@@ -1,6 +1,6 @@
 import { sliceString } from '@fuse/core/DtpConfig';
 import { Grid, Typography, Button } from '@material-ui/core';
-import { Avatar, Input, Empty, Divider, Tabs } from 'antd';
+import { Avatar, Input, Empty, Divider } from 'antd';
 import React, { useState } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import * as moment from 'moment';

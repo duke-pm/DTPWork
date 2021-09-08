@@ -362,7 +362,7 @@ export default function OverviewPage() {
 										entitiesView?.detail.statusID !== 6 &&
 										entitiesView?.detail.statusID !== 7 &&
 										entitiesView?.detail.typeName === 'TASK' && (
-											<div>
+											<>
 												<Grid item lg={6}>
 													<Typography variant="subtitle2" color="primary">
 														{' '}
@@ -370,17 +370,11 @@ export default function OverviewPage() {
 													</Typography>
 												</Grid>
 												<Grid item lg={6}>
-													<Typography
-														variant="body2"
-														style={{
-															color: priorityColor[entitiesView?.detail.priority]
-														}}
-													>
-														{' '}
-														{entitiesView?.detail.priorityName}
+													<Typography variant="body1" style={{ color: 'red' }}>
+														Expired {checkDeadline(entitiesView?.detail.endDate)} days
 													</Typography>
 												</Grid>
-											</div>
+											</>
 										)}
 									<Grid className="mb-20" item lg={12}>
 										<Typography variant="subtitle2" className="title__view" color="primary">
