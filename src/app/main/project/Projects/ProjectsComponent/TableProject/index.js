@@ -235,7 +235,7 @@ function TableProject(props) {
 			)
 		},
 		{
-			title: 'Appraisal time',
+			title: 'Inspection time',
 			align: 'center',
 			dataIndex: 'crtdDate',
 			key: 'crtdDate',
