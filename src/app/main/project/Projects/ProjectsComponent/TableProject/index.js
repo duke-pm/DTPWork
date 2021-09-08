@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Badge, Checkbox, Table, Popover, Avatar, Tooltip } from 'antd';
-import React, { useContext, useState } from 'react';
+import { Badge, Checkbox, Table, Popover, Avatar, Tooltip, Spin, Dropdown } from 'antd';
+import React, { useContext } from 'react';
 import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
 import { MenuItem, ListItemIcon, Icon, ListItemText, Typography, Link } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -11,6 +11,7 @@ import AppsIcon from '@material-ui/icons/Apps';
 import * as moment from 'moment';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useHistory } from 'react-router-dom';
 import { ProjectContext } from '../../ProjectContext';
 import * as actions from '../../../_redux/_projectActions';
 
@@ -19,14 +20,29 @@ function TableProject(props) {
 	const matches = useMediaQuery(theme.breakpoints.up('xl'));
 	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
 	const dispatch = useDispatch();
-	const { entities, entitiesEdit } = props;
+	const history = useHistory();
+	const { entities, entitiesEdit, listLoading, ArrProjectStatus, owner } = props;
 	const projectContext = useContext(ProjectContext);
-	const { setFormProject, setTitle, rowPage, page, status, ownerFilter, dateStart, search, setChart } =
-		projectContext;
+	const {
+		// setFormProject,
+		// setTitle,
+		rowPage,
+		page,
+		status,
+		ownerFilter,
+		dateStart,
+		search,
+		// setChart,
+		setStatus,
+		setOwnerFilter
+	} = projectContext;
 	const handleOpenFormProject = (item, type) => {
-		setFormProject(true);
-		setTitle(type);
 		dispatch(actions.setTaskEditProject(item));
+		if (type === 'Settings') {
+			history.push('/projects/modify/Settings');
+		} else {
+			history.push('/projects/modify/Clone');
+		}
 	};
 	const setRowClassName = record => {
 		return record.prjID === entitiesEdit?.prjID ? 'clickRowStyl' : '';
@@ -34,20 +50,38 @@ function TableProject(props) {
 	const handleDelteProject = item => {
 		dispatch(actions.deleteProject(item.prjID)).then(data => {
 			if (data && !data.isError) {
-				dispatch(actions.fetchsProjectFilter(rowPage, page, status, ownerFilter, dateStart, search));
+				dispatch(
+					actions.fetchsProjectFilter(
+						rowPage,
+						page,
+						status?.toString(),
+						ownerFilter?.toString(),
+						dateStart,
+						search
+					)
+				);
 			}
 		});
 	};
 	const handleDetail = item => {
 		if (item.countChild === 0) {
 			dispatch(actions.setTaskEditProject(item));
-			props.history.push(`/quan-ly-du-an/${item.prjID}`);
+			props.history.push(`/projects/task/${item.prjID}`);
 		}
 	};
 	const handleOpenBarChar = item => {
-		setChart(true);
-		dispatch(actions.getTaskDetailAll(item.prjID));
+		props.history.push(`/projects/chart/${item.prjID}`);
 		dispatch(actions.setTaskEditProject(item));
+	};
+	const onHandleChangeStatus = value => {
+		dispatch(
+			actions.fetchsProjectFilter(rowPage, page, value?.toString(), ownerFilter?.toString(), dateStart, search)
+		);
+		setStatus(value);
+	};
+	const onHandleChangeOwner = value => {
+		dispatch(actions.fetchsProjectFilter(rowPage, page, status, value?.toString(), dateStart, search));
+		setOwnerFilter(value);
 	};
 	const columns = [
 		{
@@ -125,7 +159,29 @@ function TableProject(props) {
 			)
 		},
 		{
-			title: 'Status',
+			title: () => {
+				return (
+					<div className="flex items-center ">
+						Status
+						<Dropdown
+							// visible
+							overlay={
+								<div className="filter--status">
+									<Checkbox.Group
+										options={ArrProjectStatus}
+										value={status}
+										onChange={onHandleChangeStatus}
+									/>
+								</div>
+							}
+							placement="bottomRight"
+							arrow
+						>
+							<Icon className="cursor-pointer"> arrow_drop_down </Icon>
+						</Dropdown>
+					</div>
+				);
+			},
 			dataIndex: 'status',
 			key: 'status',
 			width: '15%',
@@ -199,7 +255,28 @@ function TableProject(props) {
 				)
 		},
 		{
-			title: 'Project Owner',
+			title: () => {
+				return (
+					<div className="flex items-center ">
+						Project Owner
+						<Dropdown
+							overlay={
+								<div className="filter--owner">
+									<Checkbox.Group
+										options={owner}
+										value={ownerFilter}
+										onChange={onHandleChangeOwner}
+									/>
+								</div>
+							}
+							placement="bottomRight"
+							arrow
+						>
+							<Icon className="cursor-pointer"> arrow_drop_down </Icon>
+						</Dropdown>
+					</div>
+				);
+			},
 			dataIndex: 'assignee',
 			key: 'assignee',
 			width: '18%',
@@ -265,6 +342,7 @@ function TableProject(props) {
 			scroll={{ x: entities && entities.length ? (matches ? 1520 : 1540) : matchesSM ? 1540 : null }}
 			columns={columns}
 			dataSource={entities}
+			loading={listLoading && <Spin />}
 		/>
 	);
 }

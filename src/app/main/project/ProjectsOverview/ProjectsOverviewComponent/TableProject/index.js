@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Table, Avatar, Progress } from 'antd';
+import { Table, Avatar, Progress, Spin } from 'antd';
 import React, { useState, useEffect, useCallback } from 'react';
 import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
 import { Icon, Typography } from '@material-ui/core';
@@ -12,7 +12,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 function TableProject(props) {
 	const theme = useTheme();
 	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-	const { entities } = props;
+	const { entities, listLoading } = props;
 
 	const array = [];
 	const mapDataKey = useCallback(
@@ -163,6 +163,7 @@ function TableProject(props) {
 			pagination={false}
 			scroll={{ x: entities && entities.length ? (matches ? 1520 : 1540) : matchesSM ? 1540 : null }}
 			columns={columns}
+			loading={listLoading && <Spin />}
 			dataSource={entities}
 		/>
 	);

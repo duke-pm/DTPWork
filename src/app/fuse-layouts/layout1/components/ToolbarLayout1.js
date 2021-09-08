@@ -30,8 +30,8 @@ function ToolbarLayout1(props) {
 			<AppBar
 				id="fuse-toolbar"
 				className={clsx(classes.root, 'flex relative z-10 shadow-md')}
-				color="default"
-				style={{ backgroundColor: toolbarTheme.palette.background.paper }}
+				color="white"
+				style={{ backgroundColor: '#006565' }}
 			>
 				<Toolbar className="p-0 min-h-48 md:min-h-64">
 					{config.navbar.display && config.navbar.position === 'left' && (
@@ -41,7 +41,7 @@ function ToolbarLayout1(props) {
 					)}
 
 					<div className="flex  items-center px-16 flex-1">
-						<Typography component="span" className="font-bold flex text-lg	">
+						<Typography component="span" className="font-bold flex text-lg text-white	">
 							{breadcumb}
 						</Typography>
 					</div>

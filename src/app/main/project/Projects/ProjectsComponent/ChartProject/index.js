@@ -1,6 +1,6 @@
 /* eslint-disable no-shadow */
 import { AppBar, Dialog, DialogContent, IconButton, Toolbar, Typography } from '@material-ui/core';
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import CloseIcon from '@material-ui/icons/Close';
 import { useSelector, shallowEqual } from 'react-redux';
 import ApexChart from './ChartHorizal';

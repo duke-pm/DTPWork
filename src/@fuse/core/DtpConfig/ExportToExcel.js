@@ -1,10 +1,11 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable react/prefer-stateless-function */
 import React from 'react';
-import * as fs from 'file-saver';
-import ExcelJs from 'exceljs';
+// import * as fs from 'file-saver';
+// import ExcelJs from 'exceljs';
+import { getToken } from '@fuse/core/DtpConfig';
 import { Button } from '@material-ui/core';
-import moment from 'moment';
+// import moment from 'moment';
 import { GetApp } from '@material-ui/icons';
 
 class ExportToExcel extends React.Component {
@@ -188,13 +189,11 @@ class ExportToExcel extends React.Component {
 	// 	fs.saveAs(new Blob([buf]), `${fileName}.xlsx`);
 	// }
 	exportToExcel = () => {
+		const token = getToken();
 		const data = {
-			// CountryID: 1,
-			// RegionID: 2,
-			// StatusID: 'abc'
+			UserToken: token
 		};
-
-		window.location = `http://api.dtpeducation.com/api/Assets/ExportExcel?value=${JSON.stringify(data)}`;
+		window.location = `http://api.dtpeducation.com/api/Assets/ExportAsset?value=${JSON.stringify(data)}`;
 	};
 
 	render() {

@@ -1,27 +1,26 @@
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import { Box, Typography } from '@material-ui/core';
-import React, { useContext } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+// import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import FusePageCardedTask from '@fuse/core/FusePageCarded/FusePageCardedTask';
-import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import ProjectComponent from './LineComponent';
-import { SettingLineContext } from './SettingLineContext';
+// import { SettingLineContext } from './SettingLineContext';
 import FormLine from './LineComponent/FormLine';
 
 export default function ContentProvider() {
-	const { currentState, project } = useSelector(
-		state => ({
-			currentState: state.possesion.entitiesInformation,
-			projectAll: state.project.entitiesAll,
-			project: state.project.entitiesDetail,
-			listLoading: state.project.listLoading
-		}),
-		shallowEqual
-	);
-	const settingLineContext = useContext(SettingLineContext);
-	const { form, setForm } = settingLineContext;
-	const classes = DtpCustomStyles();
-	const dispatch = useDispatch();
+	// const { currentState, project } = useSelector(
+	// 	state => ({
+	// 		currentState: state.possesion.entitiesInformation,
+	// 		projectAll: state.project.entitiesAll,
+	// 		project: state.project.entitiesDetail,
+	// 		listLoading: state.project.listLoading
+	// 	}),
+	// 	shallowEqual
+	// );
+	// const settingLineContext = useContext(SettingLineContext);
+	// const { form, setForm } = settingLineContext;
+	// const classes = DtpCustomStyles();
+	// const dispatch = useDispatch();
 
 	return (
 		<>

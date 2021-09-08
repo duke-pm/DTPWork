@@ -1,17 +1,20 @@
-import FuseAnimate from '@fuse/core/FuseAnimate';
-import FusePageCarded from '@fuse/core/FusePageCarded';
-import { Box, Typography } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import { Typography } from '@material-ui/core';
+import React, { useEffect, useState, useContext } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import Search from 'antd/lib/input/Search';
 import * as actions from '../_redux/_projectActions';
 import { getInformationCompany } from '../../assets/Possesion/_redux/possesionActions/index';
 import ProjectOverviewComponent from './ProjectsOverviewComponent';
+import { fetchsProjectOverviewFilter } from '../_redux/_projectActions';
+import { ProjectOverviewContext } from './ProjectOverviewContext';
 
 export default function ProjectOverviewPage() {
 	const { currentState } = useSelector(
 		state => ({ currentState: state.possesion.entitiesInformation, projectAll: state.project.entitiesAll }),
 		shallowEqual
 	);
+	const projectContext = useContext(ProjectOverviewContext);
+	const { page, rowPage, status, ownerFilter, year, sector, dateStart, dateEnd, search, setSearch } = projectContext;
 	const [owner, setOwner] = useState([]);
 	const dispatch = useDispatch();
 	useEffect(() => {
@@ -45,40 +48,60 @@ export default function ProjectOverviewPage() {
 		(arr, curr) => [...arr, { label: curr.sectorName, value: curr.sectorID }],
 		[]
 	);
+	const handleSearch = () => {
+		dispatch(
+			fetchsProjectOverviewFilter(rowPage, page, year, ownerFilter, sector, status, dateStart, dateEnd, search)
+		);
+	};
+	const onHandleChange = e => {
+		setSearch(e.target.value);
+		if (e.target.value.length <= 0) {
+			dispatch(
+				fetchsProjectOverviewFilter(
+					rowPage,
+					page,
+					year,
+					ownerFilter,
+					sector,
+					status,
+					dateStart,
+					dateEnd,
+					e.target.value
+				)
+			);
+		}
+	};
 	return (
 		<>
-			<FusePageCarded
-				innerScroll
-				classes={{
-					// content: 'flex',
-					header: 'min-h-10 h-10	sm:h-16 sm:min-h-16'
-				}}
-				header={
-					<div className="flex flex-1 w-full items-center justify-between">
-						<div className="flex flex-1 flex-col items-center sm:items-start">
-							<FuseAnimate animation="transition.slideRightIn" delay={300}>
-								<Typography className="text-16 sm:text-20 truncate" color="inherit">
-									{/* {xhtm} */}
-								</Typography>
-							</FuseAnimate>
-						</div>
+			<div className="container projects">
+				<div className="projects__header px-16">
+					<Typography color="primary" variant="h6">
+						Projects Overview
+					</Typography>
+					<div className="header--action">
+						<Search
+							onKeyPress={event => {
+								if (event.key === 'Enter') {
+									handleSearch();
+								}
+							}}
+							onChange={e => onHandleChange(e)}
+							className="input--search"
+							placeholder="Search"
+							onSearch={handleSearch}
+						/>
 					</div>
-				}
-				contentToolbar={
-					<div className="flex items-center p-16 flex-1">
-						<Typography variant="h6">Project overview</Typography>
-					</div>
-				}
-				content={
-					<Box p={3}>
+				</div>
+				<div className="projects__content mt-8">
+					<div className="projects__content--table px-16">
 						<ProjectOverviewComponent
 							sectorArr={sectorArr}
 							ArrProjectStatus={ArrProjectStatus}
 							owner={owner}
 						/>
-					</Box>
-				}
-			/>
+					</div>
+				</div>
+			</div>
 		</>
 	);
 }

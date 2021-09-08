@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Badge, Dropdown, Table, Popover, Avatar, Menu, Tooltip, Progress } from 'antd';
+import { Badge, Dropdown, Table, Popover, Avatar, Menu, Tooltip, Progress, Spin, Checkbox } from 'antd';
 import React, { useContext, useState, useEffect } from 'react';
 import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
 import { MenuItem, ListItemIcon, Icon, ListItemText, Typography, Link } from '@material-ui/core';
@@ -13,16 +13,18 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import * as moment from 'moment';
 import clsx from 'clsx';
+import { useHistory } from 'react-router-dom';
 import * as actions from '../../../_redux/_projectActions';
 import { ProjectContext } from '../../ProjectContext';
 import { typeColor, priorityColor, badgeText } from './ConfigTableProject';
 
 function TableProject(props) {
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.up('xl'));
 	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
-	const { entitiesDetail, actionLoading, params } = props;
+	const { entitiesDetail, actionLoading, params, listLoading, sectorArr, owner } = props;
 	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 	const [onClickRow, setOnClickRow] = useState(null);
 	const projectContext = useContext(ProjectContext);
@@ -38,30 +40,33 @@ function TableProject(props) {
 	const {
 		setVisible,
 		visible,
-		setFormProject,
 		formProject,
 		rowPage,
 		page,
 		ownerFilter,
+		setOwnerFilter,
 		status,
+		setStatus,
 		dateStart,
 		sector,
+		setSector,
 		search
 	} = projectContext;
 	const handleOpenVisible = item => {
 		setVisible(true);
 		setOnClickRow(item.taskID);
-		dispatch(actions.getTaskViewDetail(item.taskID));
+		// dispatch(actions.getTaskViewDetail(item.taskID));
+		history.push(`/projects/overview-task/${item.taskID}`);
 	};
 	const setRowClassName = record => {
 		return record.taskID === onClickRow ? 'clickRowStyl' : '';
 	};
 	const handleEditForm = (item, type) => {
-		setOnClickRow(item.taskID);
-		setFormProject({
-			open: true,
-			title: type
-		});
+		if (type === 'settingtask') {
+			history.push(`/projects/modify-task/settingtask/${params.detail}/modify`);
+		} else {
+			history.push(`/projects/modify-task/newtask/${params.detail}/modify`);
+		}
 		dispatch(actions.setTaskEditProject(item));
 	};
 	const updatedStatus = (item, statusTask) => {
@@ -86,14 +91,22 @@ function TableProject(props) {
 							params.detail,
 							rowPage,
 							page,
-							ownerFilter,
-							status,
+							ownerFilter.toString(),
+							status.toString(),
 							dateStart,
-							sector,
+							sector.toString(),
 							search
 						)
 					);
-					dispatch(actions.getTaskDetailAll(params.detail, ownerFilter, status, sector, search));
+					dispatch(
+						actions.getTaskDetailAll(
+							params.detail,
+							ownerFilter.toString(),
+							status.toString(),
+							sector.toString(),
+							search
+						)
+					);
 				}
 			});
 		} else {
@@ -113,14 +126,22 @@ function TableProject(props) {
 							params.detail,
 							rowPage,
 							page,
-							ownerFilter,
-							status,
+							ownerFilter?.toString(),
+							status?.toString(),
 							dateStart,
-							sector,
+							sector?.toString(),
 							search
 						)
 					);
-					dispatch(actions.getTaskDetailAll(params.detail, ownerFilter, status, sector, search));
+					dispatch(
+						actions.getTaskDetailAll(
+							params.detail,
+							ownerFilter?.toString(),
+							status?.toString(),
+							sector?.toString(),
+							search
+						)
+					);
 				}
 			});
 		}
@@ -133,16 +154,69 @@ function TableProject(props) {
 						params.detail,
 						rowPage,
 						page,
-						ownerFilter,
-						status,
+						ownerFilter.toString(),
+						status.toString(),
 						dateStart,
-						sector,
+						sector.toString(),
 						search
 					)
 				);
-				dispatch(actions.getTaskDetailAll(params.detail, ownerFilter, status, sector, search));
+				dispatch(
+					actions.getTaskDetailAll(
+						params.detail,
+						ownerFilter.toString(),
+						status.toString(),
+						sector.toString(),
+						search
+					)
+				);
 			}
 		});
+	};
+	const onHandleChangeOwner = value => {
+		dispatch(
+			actions.fetchProjectDetailFilter(
+				params.detail,
+				rowPage,
+				page,
+				value?.toString(),
+				status?.toString(),
+				dateStart,
+				sector?.toString(),
+				search
+			)
+		);
+		setOwnerFilter(value);
+	};
+	const onHandleChangeStatus = value => {
+		dispatch(
+			actions.fetchProjectDetailFilter(
+				params.detail,
+				rowPage,
+				page,
+				ownerFilter?.toString(),
+				value?.toString(),
+				dateStart,
+				sector?.toString(),
+				search
+			)
+		);
+		setStatus(value);
+	};
+	const onHandleChangeSector = value => {
+		dispatch(
+			actions.fetchProjectDetailFilter(
+				params.detail,
+				rowPage,
+				page,
+				ownerFilter?.toString(),
+				status?.toString(),
+				dateStart,
+				value?.toString(),
+				search
+			)
+		);
+		setSector(value);
 	};
 	const columns = [
 		{
@@ -150,7 +224,7 @@ function TableProject(props) {
 			align: 'center',
 			fixed: 'left',
 			key: 'operation',
-			width: '2%',
+			width: '3%',
 			render: (_, item) => (
 				<Popover
 					overlayStyle={{ zIndex: '8', display: visible || formProject.open ? 'none' : '' }}
@@ -163,7 +237,7 @@ function TableProject(props) {
 								</ListItemIcon>
 								<ListItemText primary="Overview" />
 							</MenuItem>
-							<MenuItem onClick={() => handleEditForm(item, 'Setting task')} role="button">
+							<MenuItem onClick={() => handleEditForm(item, 'settingtask')} role="button">
 								<ListItemIcon className="min-w-40">
 									<Icon> settings </Icon>
 								</ListItemIcon>
@@ -171,7 +245,7 @@ function TableProject(props) {
 							</MenuItem>
 							{item.isModified && (
 								<>
-									<MenuItem onClick={() => handleEditForm(item, 'New task')} role="button">
+									<MenuItem onClick={() => handleEditForm(item, 'newtask')} role="button">
 										<ListItemIcon className="min-w-40">
 											<Icon>file_copy</Icon>
 										</ListItemIcon>
@@ -229,7 +303,29 @@ function TableProject(props) {
 			)
 		},
 		{
-			title: 'Sector',
+			title: () => {
+				return (
+					<div className="flex items-center ">
+						Sector
+						<Dropdown
+							// visible
+							overlay={
+								<div className="filter--status">
+									<Checkbox.Group
+										options={sectorArr}
+										value={sector}
+										onChange={onHandleChangeSector}
+									/>
+								</div>
+							}
+							placement="bottomRight"
+							arrow
+						>
+							<Icon className="cursor-pointer"> arrow_drop_down </Icon>
+						</Dropdown>
+					</div>
+				);
+			},
 			dataIndex: 'sectorName',
 			key: 'sectorName',
 			width: '6%',
@@ -306,7 +402,29 @@ function TableProject(props) {
 			)
 		},
 		{
-			title: 'Status',
+			title: () => {
+				return (
+					<div className="flex items-center ">
+						Status
+						<Dropdown
+							// visible
+							overlay={
+								<div className="filter--status">
+									<Checkbox.Group
+										options={props.ArrProjectStatus}
+										value={status}
+										onChange={onHandleChangeStatus}
+									/>
+								</div>
+							}
+							placement="bottomRight"
+							arrow
+						>
+							<Icon className="cursor-pointer"> arrow_drop_down </Icon>
+						</Dropdown>
+					</div>
+				);
+			},
 			dataIndex: 'status',
 			key: 'status',
 			width: '10%',
@@ -363,7 +481,28 @@ function TableProject(props) {
 			)
 		},
 		{
-			title: 'Assign',
+			title: () => {
+				return (
+					<div className="flex items-center ">
+						Assign
+						<Dropdown
+							overlay={
+								<div className="filter--owner">
+									<Checkbox.Group
+										options={owner}
+										value={ownerFilter}
+										onChange={onHandleChangeOwner}
+									/>
+								</div>
+							}
+							placement="bottomRight"
+							arrow
+						>
+							<Icon className="cursor-pointer"> arrow_drop_down </Icon>
+						</Dropdown>
+					</div>
+				);
+			},
 			dataIndex: 'assignee',
 			key: 'assignee',
 			width: '12%',
@@ -433,6 +572,7 @@ function TableProject(props) {
 			}}
 			pagination={false}
 			columns={columns}
+			loading={listLoading && <Spin />}
 			dataSource={entitiesDetail?.listTask}
 		/>
 	);

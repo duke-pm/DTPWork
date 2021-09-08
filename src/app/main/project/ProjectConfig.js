@@ -1,4 +1,5 @@
 import React from 'react';
+import './index.scss';
 
 const ProjectConfig = {
 	settings: {
@@ -8,11 +9,31 @@ const ProjectConfig = {
 	},
 	routes: [
 		{
-			path: '/quan-ly-du-an/:detail',
+			path: '/projects/task/:detail',
 			component: React.lazy(() => import('./Project/index'))
 		},
 		{
-			path: '/quan-ly-du-an',
+			path: '/projects/modify-task/:category/:id/:type',
+			component: React.lazy(() => import('./Project/CreateProject'))
+		},
+		{
+			path: '/projects/gantt-task/:detail',
+			component: React.lazy(() => import('./Project/ChartPageProject'))
+		},
+		{
+			path: '/projects/overview-task/:taskID',
+			component: React.lazy(() => import('./Project/OverviewTask'))
+		},
+		{
+			path: '/projects/modify/:type',
+			component: React.lazy(() => import('./Projects/CreateProjects'))
+		},
+		{
+			path: '/projects/chart/:detail',
+			component: React.lazy(() => import('./Projects/ChartPageProjects'))
+		},
+		{
+			path: '/projects/view',
 			component: React.lazy(() => import('./Projects/index'))
 		}
 	]
