@@ -16,7 +16,7 @@ export default function ChartPage() {
 	const dispatch = useDispatch();
 	const params = useParams();
 	const handleChangePageTask = () => {
-		history.push(`/quan-ly-du-an/${params.detail}`);
+		history.push(`/projects/task/${params.detail}`);
 	};
 	const ExitPage = () => {
 		history.goBack();
