@@ -1,4 +1,6 @@
-import { Button, Typography } from '@material-ui/core';
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import { Button, Icon, Typography } from '@material-ui/core';
 import Search from 'antd/lib/input/Search';
 import React from 'react';
 import { DatePicker } from 'antd';
@@ -11,6 +13,9 @@ export default function AllBookingPage() {
 	const history = useHistory();
 	const handleChangeRoute = () => {
 		history.push('/booking/create-booking');
+	};
+	const handleChangeRouteList = () => {
+		history.push('/booking/calendar-my-booking');
 	};
 	return (
 		<div className="container booking">
@@ -31,9 +36,16 @@ export default function AllBookingPage() {
 					{' '}
 					9 Booking{' '}
 				</Typography>
-				{/* <div className="booking__subcontent--action">
-					<RangePicker />
-				</div> */}
+				<div className="booking__subcontent--action">
+					<span onClick={handleChangeRouteList} className="btn__btn--action mr-16">
+						{' '}
+						<Icon fontSize="small"> border_all </Icon>{' '}
+					</span>
+					<span className="btn__btn--action active">
+						{' '}
+						<Icon fontSize="small"> list </Icon>{' '}
+					</span>
+				</div>
 			</div>
 			<div className="booking__content mt-8">
 				<div className="booking__content--table px-16">

@@ -116,12 +116,12 @@ function TableProject(props) {
 										</ListItemIcon>
 										<ListItemText primary="Open detail" />
 									</MenuItem>
-									<MenuItem onClick={() => handleOpenBarChar(item)} role="button">
+									{/* <MenuItem onClick={() => handleOpenBarChar(item)} role="button">
 										<ListItemIcon className="min-w-40">
 											<Icon>bar_chart</Icon>
 										</ListItemIcon>
 										<ListItemText primary="Project plan" />
-									</MenuItem>
+									</MenuItem> */}
 								</>
 							)}
 							{item.countChild === 0 && item.isModified && (
