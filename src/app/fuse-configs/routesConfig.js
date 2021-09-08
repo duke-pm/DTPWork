@@ -24,11 +24,13 @@ import LevelApprovalConfig from 'app/main/govern/SettingLevelApproval/LevelAppro
 import ResourceConfig from 'app/main/booking/ressource/resourceConfig';
 import ResourceGroupConfig from 'app/main/booking/resourceGroup/resourceGroupConfig';
 import AllBookingConfig from 'app/main/booking/manageBooking/AllBooking/AllBookingConfig';
+import MyBookingConfig from 'app/main/booking/manageBooking/MyBooking/MyBookingConfig';
 
 const routeConfigs = [
 	ResourceConfig,
 	ResourceGroupConfig,
 	AllBookingConfig,
+	MyBookingConfig,
 	PossesionConfig,
 	ForgotPassConfig,
 	ChangePassConfig,
