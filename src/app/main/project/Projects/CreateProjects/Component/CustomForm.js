@@ -71,7 +71,7 @@ export default function CustomForm({
 							{role?.userName === 'phucvd' && (
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
 									<Field
-										label="Appraisal time"
+										label="Inspection time"
 										name="appraisalTime"
 										placeholder="Please select time"
 										component={AntDateCustom}
