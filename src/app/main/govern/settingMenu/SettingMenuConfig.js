@@ -8,6 +8,10 @@ const SettingMenuConfig = {
 	},
 	routes: [
 		{
+			path: '/quan-tri/thiet-lap-menu/:type/:id',
+			component: React.lazy(() => import('./modifyMenuSetting'))
+		},
+		{
 			path: '/quan-tri/thiet-lap-menu',
 			component: React.lazy(() => import('./SettingMenu'))
 		}

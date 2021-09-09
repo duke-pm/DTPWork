@@ -1,23 +1,18 @@
-import { Paper, Table, TableContainer } from '@material-ui/core';
 import React, { useEffect, useContext } from 'react';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import FuseLoading from '@fuse/core/FuseLoading';
 import Panigation from '@fuse/core/FusePanigate';
-import { Empty, Spin } from 'antd';
 import FuseAnimate from '@fuse/core/FuseAnimate';
-import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
-import SettingMenuContentHeader from './SettingMenuContentHeader';
+import { Spin } from 'antd';
 import * as actions from '../../_redux/menuActions';
-import SettingMenuContentBody from './SettingMenuContentBody';
 import { SettingmenuContext } from '../../SettingMenuContext';
-import SettingMenuHeader from '../SettingMenuHeader';
+import TableSettingMenu from '../Component';
 
 export default function SettingMenuContent({ handleOpenSettingMenu, setOpenSettingMenu }) {
 	const dispatch = useDispatch();
 	const settingContext = useContext(SettingmenuContext);
 	const { page, rowPage, setPage, sort, setRowPage, setSort } = settingContext;
 	const { currentState } = useSelector(state => ({ currentState: state.govern.menu }), shallowEqual);
-	const { entities, lastErrors, listLoading, actionLoading, total_count } = currentState;
+	const { entities, listLoading, actionLoading, total_count } = currentState;
 	useEffect(() => {
 		dispatch(actions.fetchsListMenuSettings());
 		dispatch(actions.fetchsListMenuSettingAll());
@@ -25,10 +20,6 @@ export default function SettingMenuContent({ handleOpenSettingMenu, setOpenSetti
 	const handleEditMenuSetting = item => {
 		setOpenSettingMenu(true);
 		dispatch(actions.setTaskEditMenuSetting(item));
-	};
-	const handleDeleteMenuSetting = item => {
-		dispatch(actions.deletedSettingsMenu(item));
-		dispatch(actions.fetchsListMenuSettingAll());
 	};
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
@@ -52,35 +43,19 @@ export default function SettingMenuContent({ handleOpenSettingMenu, setOpenSetti
 			id
 		});
 	};
-	const classes = DtpCustomStyles();
-	if (listLoading) {
-		return <FuseLoading />;
-	}
 	return (
 		<>
 			<div className="w-full flex flex-col">
-				<SettingMenuHeader handleOpenSettingMenu={handleOpenSettingMenu} />
+				{/* <SettingMenuHeader handleOpenSettingMenu={handleOpenSettingMenu} /> */}
 				<FuseAnimate animation="transition.slideUpIn" delay={200}>
-					<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
-						<TableContainer className={`${classes.TableContainer} flex flex-1`}>
-							<Paper className={classes.rootPaper}>
-								<Table className={`${classes.tableGoverSetting}`} stickyHeader>
-									<SettingMenuContentHeader createSortHandler={createSortHandler} sort={sort} />
-									<SettingMenuContentBody
-										handleDeleteMenuSetting={handleDeleteMenuSetting}
-										handleEditMenuSetting={handleEditMenuSetting}
-										classes={classes}
-										entities={entities}
-										lastErrors={lastErrors}
-									/>
-								</Table>
-								{!entities || entities.length === 0 ? (
-									<FuseAnimate delay={300}>
-										<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-									</FuseAnimate>
-								) : null}
-							</Paper>
-						</TableContainer>
+					<div className="flex flex-col ">
+						<TableSettingMenu
+							listLoading={listLoading}
+							actionLoading={actionLoading}
+							entities={entities}
+							createSortHandler={createSortHandler}
+							handleEditMenuSetting={handleEditMenuSetting}
+						/>
 						{entities && entities.length !== 0 && (
 							<div className="flex flex-row items-center justify-end">
 								{actionLoading && <Spin />}

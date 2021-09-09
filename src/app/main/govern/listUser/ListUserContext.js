@@ -6,7 +6,7 @@ export default function ListUserContextProvider({ children }) {
 	const [rowPage, setRowPage] = useState(25);
 	const [search, setSearch] = useState('');
 	const [sort, setSort] = useState({
-		direction: 'desc',
+		direction: 'asc',
 		id: null
 	});
 	const valueMemo = useMemo(() => {

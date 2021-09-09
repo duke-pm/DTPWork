@@ -1,36 +1,25 @@
 import FuseAnimate from '@fuse/core/FuseAnimate';
-import { Paper, Table, TableContainer } from '@material-ui/core';
 import React, { useState, useEffect, useContext } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { Empty, Spin } from 'antd';
+import { Spin } from 'antd';
 import Panigation from '@fuse/core/FusePanigate';
-import FuseLoading from '@fuse/core/FuseLoading';
-import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
-import GroupUserContentBody from './GroupUserContentBody';
-import GroupUserHeader from './GroupUserHeader';
-import FormGroupUser from './FormGroupUser';
-import ActionGroupUser from './ActionGroupUser';
+import { useHistory } from 'react-router';
 import * as actions from '../_reduxGroupUser/groupUserActions';
 import { GroupUserContext } from '../GroupUserContext';
+import TableGroupUser from './Component';
 
 export default function GroupUserContent() {
-	const classes = DtpCustomStyles();
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(actions.fetchsGroupUser());
 	}, [dispatch]);
+	const history = useHistory();
 	const groupUserContext = useContext(GroupUserContext);
 	const { page, rowPage, setPage, setRowPage, sort, setSort } = groupUserContext;
-	const [formGroupUser, setFormGroupUser] = useState(false);
 	const { currentState } = useSelector(state => ({ currentState: state.govern.groupUser }), shallowEqual);
 	const { entities, listLoading, actionLoading, total_count } = currentState;
-	const handleOpenFormGroupUser = () => {
-		setFormGroupUser(true);
-		dispatch(actions.setTaskEditGroupUser(null));
-	};
-	const handleCloseFormGroupUser = () => setFormGroupUser(false);
 	const handleEditGroupUser = item => {
-		setFormGroupUser(true);
+		history.push(`/quan-tri/nhom-nguoi-dung/cap-nhat/${item.groupID}`);
 		dispatch(actions.setTaskEditGroupUser(item));
 	};
 	const handleEditGroupUserDelete = item => {
@@ -45,46 +34,25 @@ export default function GroupUserContent() {
 		setRowPage(rowPageParse);
 		dispatch(actions.filterGroupUser(rowPageParse, page, sort.id, sort.direction));
 	};
-	const createSortHandler = property => event => {
-		const id = property;
-		let direction = 'desc';
-
-		if (sort.id === property && sort.direction === 'desc') {
-			direction = 'asc';
-		}
+	const createSortHandler = (direction, id) => {
 		dispatch(actions.filterGroupUser(rowPage, page, id, direction));
 		setSort({
 			direction,
 			id
 		});
 	};
-	if (listLoading) {
-		return <FuseLoading />;
-	}
 	return (
 		<div className="w-full flex flex-col">
-			<FormGroupUser handleCloseFormGroupUser={handleCloseFormGroupUser} open={formGroupUser} />
-			<ActionGroupUser handleOpenFormGroupUser={handleOpenFormGroupUser} />
 			<FuseAnimate animation="transition.slideUpIn" delay={200}>
-				<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
-					<TableContainer className={`${classes.TableContainer} flex flex-1`}>
-						<Paper className={classes.rootPaper}>
-							<Table className={`${classes.tableGoverGroup}`} stickyHeader>
-								<GroupUserHeader createSortHandler={createSortHandler} sort={sort} />
-								<GroupUserContentBody
-									handleEditGroupUserDelete={handleEditGroupUserDelete}
-									handleEditGroupUser={handleEditGroupUser}
-									classes={classes}
-									entities={entities}
-								/>
-							</Table>
-							{!entities || entities.length === 0 ? (
-								<FuseAnimate delay={300}>
-									<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-								</FuseAnimate>
-							) : null}
-						</Paper>
-					</TableContainer>
+				<div className="flex flex-col ">
+					<TableGroupUser
+						listLoading={listLoading}
+						actionLoading={actionLoading}
+						entities={entities}
+						createSortHandler={createSortHandler}
+						handleEditGroupUser={handleEditGroupUser}
+						handleEditGroupUserDelete={handleEditGroupUserDelete}
+					/>
 					{entities?.length !== 0 && (
 						<div className="flex flex-row items-center justify-end">
 							{actionLoading && <Spin />}

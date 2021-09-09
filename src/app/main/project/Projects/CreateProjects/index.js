@@ -43,7 +43,6 @@ export default function CreateProjects() {
 	const ExitPage = () => {
 		history.goBack();
 	};
-	console.log(params);
 	return (
 		<div className="container projects">
 			<div className="projects__header px-16">

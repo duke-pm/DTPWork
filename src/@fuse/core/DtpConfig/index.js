@@ -11,6 +11,10 @@ export const checkDeadline = time => {
 	const deadline = moment().diff(time, 'days');
 	return deadline;
 };
+export const sortDirestion = {
+	ascend: 'asc',
+	descend: 'desc'
+};
 
 export const durationDay = (start, end) => {
 	const result = moment().diff(start, 'days') - moment().diff(end, 'days') + 1;

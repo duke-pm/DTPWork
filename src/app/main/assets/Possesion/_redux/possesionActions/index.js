@@ -9,7 +9,7 @@ const { actions } = possesionSlice;
 
 // =========================== Action PossesionGobale =========================== //
 export const getInformationCompany = params => dispatch => {
-	dispatch(actions.startCall({ callType: callTypes.actions }));
+	dispatch(actions.startCall({ callType: callTypes.list }));
 	const paramsReq = {
 		ListType: params
 	};

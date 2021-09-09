@@ -1,59 +1,54 @@
-import FuseAnimate from '@fuse/core/FuseAnimate';
-import FusePageCarded from '@fuse/core/FusePageCarded';
-import { Box, Typography } from '@material-ui/core';
+import Search from 'antd/lib/input/Search';
+import { Box, Button, Typography } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
 import FormMenuComponent from './SettingMenuComponent/FormMenuComponent';
 import SettingMenuContent from './SettingMenuComponent/SettingMenuContent';
 import * as actions from './_redux/menuActions';
 
 export default function SettingMenuPage() {
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const [openSettingMenu, setOpenSettingMenu] = useState(false);
 	const handleOpenSettingMenu = () => {
 		setOpenSettingMenu(true);
 		dispatch(actions.setTaskEditMenuSetting(null));
 	};
+	const onHandleChange = () => {};
+	const handleSearch = () => {};
+	const handleChangeRoute = () => {
+		history.push('/quan-tri/thiet-lap-menu/tao-moi/null');
+	};
 	return (
-		<>
-			<FormMenuComponent setOpenSettingMenu={setOpenSettingMenu} openSettingMenu={openSettingMenu} />
-			<FusePageCarded
-				classes={{
-					// content: 'flex',
-					header: 'min-h-10 h-10	sm:h-16 sm:min-h-16'
-				}}
-				header={
-					<div className="flex flex-1 w-full items-center justify-between">
-						<div className="flex flex-1 flex-col items-center sm:items-start">
-							<FuseAnimate animation="transition.slideRightIn" delay={300}>
-								<Typography
-									className="text-16 sm:text-20 truncate"
-									// component={Link}
-									// role="button"
-									// to="/apps/e-commerce/orders"
-									color="inherit"
-								>
-									{/* {xhtm} */}
-								</Typography>
-							</FuseAnimate>
-						</div>
-					</div>
-				}
-				contentToolbar={
-					<div className="flex  items-center px-16 flex-1">
-						<Typography variant="h6">Thiết lập menu</Typography>
-					</div>
-				}
-				content={
-					<Box p={3}>
-						<SettingMenuContent
-							setOpenSettingMenu={setOpenSettingMenu}
-							handleOpenSettingMenu={handleOpenSettingMenu}
-						/>
-					</Box>
-				}
-				innerScroll
-			/>
-		</>
+		<div className="container govern">
+			<div className="govern__header px-16 shadow-lg">
+				<Typography color="primary" variant="h6">
+					Thiết lập menu
+				</Typography>
+				<div className="govern__header--action">
+					<Search
+						onChange={e => onHandleChange(e)}
+						onKeyPress={event => {
+							if (event.key === 'Enter') {
+								handleSearch();
+							}
+						}}
+						className="input__search"
+						placeholder="Search"
+						onSearch={handleSearch}
+					/>
+					<Button onClick={handleChangeRoute} className="button__create" variant="contained" color="primary">
+						{' '}
+						<Typography variant="body2"> Tạo mới </Typography>
+					</Button>
+				</div>
+			</div>
+			<div className="govern__content mt-8">
+				<div className="govern__content--table px-16">
+					<SettingMenuContent />
+				</div>
+			</div>
+		</div>
 	);
 }
