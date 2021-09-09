@@ -66,11 +66,11 @@ export default function MyBookingCalendar() {
 			</div>
 			<div className="booking__content mt-8">
 				{/* <div className="booking__content--table px-16" /> */}
-				{/* <DragAndDropCalendar
+				<DragAndDropCalendar
 					className="flex flex-1 container"
 					selectable
 					localizer={localizer}
-					// events={events}
+					events={[]}
 					onEventDrop={moveEvent}
 					resizable
 					onEventResize={resizeEvent}
@@ -93,7 +93,7 @@ export default function MyBookingCalendar() {
 						openEditEventDialog(event);
 					}}
 					onSelectSlot={slotInfo => openNewEventDialog(slotInfo)}
-				/> */}
+				/>
 			</div>
 		</div>
 	);
