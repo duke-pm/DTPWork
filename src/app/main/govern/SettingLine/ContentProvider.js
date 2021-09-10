@@ -5,7 +5,6 @@ import Search from 'antd/lib/input/Search';
 import { useHistory } from 'react-router';
 import ProjectComponent from './LineComponent';
 // import { SettingLineContext } from './SettingLineContext';
-import FormLine from './LineComponent/FormLine';
 
 export default function ContentProvider() {
 	const history = useHistory();
