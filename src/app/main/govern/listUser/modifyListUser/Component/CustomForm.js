@@ -83,10 +83,8 @@ export default function CustomForm({
 			{({ handleSubmit, isSubmitting }) => (
 				<Form>
 					<div className="mt-8 px-16 sm:px-24">
-						<div>
+						<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 							<Field label="Tên đăng nhập" name="userName" hasFeedback component={AntInputCustom} />{' '}
-						</div>
-						<div>
 							<Field
 								label="Nhân viên Sales"
 								name="salesEmployee"
@@ -94,13 +92,11 @@ export default function CustomForm({
 								component={AntSelectCustom}
 							/>
 						</div>
-						<div>
+						<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 							<Field label="Họ & tên đệm" name="lastMiddleName" hasFeedback component={AntInputCustom} />
-						</div>
-						<div>
 							<Field label="Tên" name="firstName" hasFeedback component={AntInputCustom} />
 						</div>
-						<div>
+						<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 							<Field
 								label="Điện thoại"
 								name="cellPhone"
@@ -108,11 +104,9 @@ export default function CustomForm({
 								hasFeedback
 								component={AntInputCustom}
 							/>
-						</div>
-						<div>
 							<Field label="Email" name="email" hasFeedback component={AntInputCustom} />
 						</div>
-						<div>
+						<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 							<Field
 								label="Nhóm người dùng"
 								name="userGroup"
@@ -120,8 +114,6 @@ export default function CustomForm({
 								hasFeedback
 								component={AntSelectCustom}
 							/>
-						</div>
-						<div>
 							<Field
 								label="Quản lý trực tiếp"
 								name="LineManager"
@@ -130,7 +122,7 @@ export default function CustomForm({
 								component={AntSelectCustom}
 							/>
 						</div>
-						<div>
+						<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 							<Field
 								label="Công ty"
 								name="company"
@@ -138,8 +130,6 @@ export default function CustomForm({
 								hasFeedback
 								component={AntSelectMultiCustom}
 							/>
-						</div>
-						<div>
 							<Field
 								label="Biz Line"
 								name="bizLine"
@@ -148,7 +138,7 @@ export default function CustomForm({
 								component={AntSelectMultiCustom}
 							/>
 						</div>
-						<div>
+						<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 							<Field
 								label="Khu vực"
 								name="region"
@@ -156,8 +146,6 @@ export default function CustomForm({
 								hasFeedback
 								component={AntSelectMultiCustom}
 							/>
-						</div>
-						<div>
 							<Field
 								label="Mã nhân viên"
 								name="empSAP"
@@ -166,23 +154,21 @@ export default function CustomForm({
 								component={AntSelectCustom}
 							/>
 						</div>
-						<div>
-							<Field
-								label="Inactive"
-								name="inactive"
-								top="10px"
-								position="right"
-								value={initialState.isPublic}
-								component={AntdCustomCheckbox}
-							/>
-						</div>
-						<div>
+						<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 							<Field
 								label="Người dùng phải thay đổi mật khẩu ở lần đăng nhập tiếp theo"
 								name="ischangePasswrod"
 								top="10px"
 								position="right"
 								value={initialState.ischangePasswrod}
+								component={AntdCustomCheckbox}
+							/>
+							<Field
+								label="Inactive"
+								name="inactive"
+								top="20px"
+								position="right"
+								value={initialState.isPublic}
 								component={AntdCustomCheckbox}
 							/>
 						</div>

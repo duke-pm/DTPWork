@@ -48,6 +48,34 @@
                 border-color: $border-ant-input;
                 box-shadow: 0 0 5px 0 $border-ant-input!important
             }
+            .ant-select{
+                border: 1px solid #d0d4db;
+                border-radius: 4px;
+            }
+            .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+                border-color: $border-ant-input;
+            }
+            .ant-select:hover{
+                border-color: $border-ant-input;
+        
+            }
+            .ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+                border-color: $border-ant-input;
+            }
+            .ant-select-selector {
+                border-radius: 4px !important;
+                border: 1px solid #d0d4db;
+                padding: 4px 12px;
+                color: #172b4d;
+                &:focus{
+                    border-color: $border-ant-input;
+                    box-shadow: 0 0 5px 0 $border-ant-input!important
+                }
+                &:hover{
+                    border-color: $border-ant-input;
+                    box-shadow: 0 0 5px 0 $border-ant-input!important
+                }
+            }
             .ant-input{
                 border-radius: 4px;
                 border: 1px solid #d0d4db;

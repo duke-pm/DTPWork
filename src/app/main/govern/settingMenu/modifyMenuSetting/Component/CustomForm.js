@@ -1,10 +1,7 @@
-import { validateField, validateFieldEN } from '@fuse/core/DtpConfig';
-import AntDateCustom from '@fuse/FormBookingCustom/AntDateCustom';
+import { validateField } from '@fuse/core/DtpConfig';
 import AntdCustomCheckbox from '@fuse/FormBookingCustom/AntdCustomCheckbox';
-import AntDescriptionsCustom from '@fuse/FormBookingCustom/AntDescriptionsCustom';
 import AntInputCustom from '@fuse/FormBookingCustom/AntInputCustom';
 import AntSelectCustom from '@fuse/FormBookingCustom/AntSelectCustom';
-import AntSelectMultiCustom from '@fuse/FormBookingCustom/AntSelectMultiCustom';
 import { Button, Typography } from '@material-ui/core';
 import { Spin } from 'antd';
 import { Field, Form, Formik } from 'formik';
@@ -14,175 +11,106 @@ import * as Yup from 'yup';
 export default function CustomForm({
 	actionLoading,
 	handleCloseFormListUser,
-	handleSubmitFormListUser,
+	handleSubmitCreatedMenu,
 	entitiesEdit,
-	arrCompany,
-	arrSales,
-	arrManag,
-	arrSap,
-	arrRegion,
-	groupUser,
-	arrBizLine
+	menuParent
 }) {
-	let initialState = {
-		userID: '0',
-		userName: '',
-		lastMiddleName: '',
-		salesEmployee: '',
-		firstName: '',
-		cellPhone: '',
-		email: '',
-		userGroup: '',
-		LineManager: '',
-		company: [],
-		region: [],
-		bizLine: [],
-		empSAP: '',
+	const inititalState = {
+		menuID: '0',
+		menuName: '',
+		levelID: 0,
+		typeID: 1,
+		parentID: null,
+		url: '',
+		icon: '',
+		directionIcon: '',
+		mName: '',
+		mIcon: '',
 		inactive: false,
-		ischangePasswrod: false
+		isWeb: true,
+		isMobile: true,
+		visOrder: 0
 	};
 	const validationSchema = Yup.object().shape({
-		userName: Yup.string().required(`${validateField}`),
-		email: Yup.string().required(`${validateField}`),
-		lastMiddleName: Yup.string().required(`${validateField}`),
-		firstName: Yup.string().required(`${validateField}`),
-		userGroup: Yup.string().required(`${validateField}`),
-		company: Yup.array().min(1, `${validateField}`),
-		region: Yup.array().min(1, `${validateField}`),
-		bizLine: Yup.array().min(1, `${validateField}`)
+		menuName: Yup.string().required(`${validateField}`),
+		typeID: Yup.string().required(`${validateField}`)
+		// url: Yup.string().required('Url web is required.').nullable()
 	});
 
-	if (entitiesEdit && entitiesEdit.userID) {
-		initialState = {
-			userID: entitiesEdit && entitiesEdit.userID,
-			userName: entitiesEdit && entitiesEdit.userName,
-			lastMiddleName: entitiesEdit && entitiesEdit.lastName,
-			salesEmployee: entitiesEdit && entitiesEdit.slpCode === -1 ? '' : entitiesEdit.slpCode,
-			firstName: entitiesEdit && entitiesEdit.firstName,
-			cellPhone: entitiesEdit && entitiesEdit.cellPhone,
-			email: entitiesEdit && entitiesEdit.email,
-			userGroup: entitiesEdit && entitiesEdit.groupID,
-			LineManager: entitiesEdit && entitiesEdit.lineManager === -1 ? '' : entitiesEdit.lineManager,
-			company: entitiesEdit && entitiesEdit.legal ? entitiesEdit.legal.split(',').map(Number) : [],
-			region: entitiesEdit && entitiesEdit.region ? entitiesEdit.region.split(',').map(Number) : [],
-			bizLine: entitiesEdit && entitiesEdit.bizLine ? entitiesEdit.bizLine.split(',').map(Number) : [],
-			empSAP: entitiesEdit && entitiesEdit.empCode,
-			inactive: entitiesEdit && entitiesEdit.inactive,
-			ischangePasswrod: entitiesEdit && entitiesEdit.isChange
-		};
-	}
+	const initial = entitiesEdit && entitiesEdit.menuID ? entitiesEdit : inititalState;
 	return (
 		<Formik
 			validationSchema={validationSchema}
 			enableReinitialize
-			initialValues={initialState}
+			initialValues={initial}
 			onSubmit={values => {
-				handleSubmitFormListUser(values);
+				handleSubmitCreatedMenu(values);
 			}}
 		>
 			{({ handleSubmit, isSubmitting }) => (
 				<Form>
-					<div className="mt-8 px-16 sm:px-24">
-						<div>
-							<Field label="Tên đăng nhập" name="userName" hasFeedback component={AntInputCustom} />{' '}
-						</div>
-						<div>
+					<div className="px-16 sm:px-24">
+						<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+							<Field label="Menu Name" name="menuName" hasFeedback component={AntInputCustom} />{' '}
 							<Field
-								label="Nhân viên Sales"
-								name="salesEmployee"
-								options={arrSales}
+								label="Menu Type"
+								name="typeID"
+								options={[
+									{
+										label: 'Group',
+										value: 1
+									},
+									{
+										label: 'Collapse',
+										value: 2
+									},
+									{
+										label: 'Item',
+										value: 3
+									}
+								]}
 								component={AntSelectCustom}
 							/>
 						</div>
-						<div>
-							<Field label="Họ & tên đệm" name="lastMiddleName" hasFeedback component={AntInputCustom} />
-						</div>
-						<div>
-							<Field label="Tên" name="firstName" hasFeedback component={AntInputCustom} />
-						</div>
-						<div>
+						<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 							<Field
-								label="Điện thoại"
-								name="cellPhone"
+								label="Menu Parent"
+								name="parentID"
+								options={menuParent}
+								component={AntSelectCustom}
+							/>
+							<Field label="Web Url/ Action" name="url" component={AntInputCustom} />
+						</div>
+						<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+							<Field label="Web icon" name="icon" component={AntInputCustom} />
+							<Field label="Direction Web icon" name="directionIcon" component={AntInputCustom} />
+						</div>
+						<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+							<Field label="Mobile icon" name="mIcon" component={AntInputCustom} />
+							<Field label="Mobile Url/ Action" name="mName" component={AntInputCustom} />
+						</div>
+						<div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+							<Field
+								label="Order"
+								name="visOrder"
 								type="number"
-								hasFeedback
+								position="right"
 								component={AntInputCustom}
 							/>
-						</div>
-						<div>
-							<Field label="Email" name="email" hasFeedback component={AntInputCustom} />
-						</div>
-						<div>
 							<Field
-								label="Nhóm người dùng"
-								name="userGroup"
-								options={groupUser}
-								hasFeedback
-								component={AntSelectCustom}
-							/>
-						</div>
-						<div>
-							<Field
-								label="Quản lý trực tiếp"
-								name="LineManager"
-								options={arrManag}
-								hasFeedback
-								component={AntSelectCustom}
-							/>
-						</div>
-						<div>
-							<Field
-								label="Công ty"
-								name="company"
-								options={arrCompany}
-								hasFeedback
-								component={AntSelectMultiCustom}
-							/>
-						</div>
-						<div>
-							<Field
-								label="Biz Line"
-								name="bizLine"
-								options={arrBizLine}
-								hasFeedback
-								component={AntSelectMultiCustom}
-							/>
-						</div>
-						<div>
-							<Field
-								label="Khu vực"
-								name="region"
-								options={arrRegion}
-								hasFeedback
-								component={AntSelectMultiCustom}
-							/>
-						</div>
-						<div>
-							<Field
-								label="Mã nhân viên"
-								name="empSAP"
-								options={arrSap}
-								hasFeedback
-								component={AntSelectCustom}
-							/>
-						</div>
-						<div>
-							<Field
-								label="Inactive"
-								name="inactive"
+								label="Mobile"
+								name="isMobile"
 								top="10px"
 								position="right"
-								value={initialState.isPublic}
+								value={initial.isMobile}
 								component={AntdCustomCheckbox}
 							/>
-						</div>
-						<div>
 							<Field
-								label="Người dùng phải thay đổi mật khẩu ở lần đăng nhập tiếp theo"
-								name="ischangePasswrod"
+								label="Web"
+								name="isWeb"
 								top="10px"
 								position="right"
-								value={initialState.ischangePasswrod}
+								value={initial.isWeb}
 								component={AntdCustomCheckbox}
 							/>
 						</div>

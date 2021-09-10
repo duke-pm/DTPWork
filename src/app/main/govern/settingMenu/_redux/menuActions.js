@@ -27,6 +27,7 @@ export const fetchsListMenuSettings = params => dispatch => {
 		});
 };
 export const fetchsListMenuSettingAll = params => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.list }));
 	const paramsReq = {
 		PageSize: 105,
 		PageNum: 1
@@ -40,7 +41,7 @@ export const fetchsListMenuSettingAll = params => dispatch => {
 				const total_result = data.totalRow;
 				dispatch(actions.fetchsListMenuSettingALl({ dataRes, total_result }));
 			} else {
-				// dispatch(actions.catchErrors({ callType: callTypes.list }));
+				dispatch(actions.catchErrors({ callType: callTypes.list }));
 			}
 		})
 		.catch(error => {

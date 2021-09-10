@@ -11,14 +11,6 @@ export default function ActionsMenuSetting({ handleEditMenuSetting, items }) {
 				</ListItemIcon>
 				<ListItemText primary="Cập nhật menu" />
 			</MenuItem>
-			{/* <Popconfirm placement="right" title="Xác nhận xoá menu" onConfirm={() => handleDeleteMenuSetting(items)}>
-				<MenuItem role="button">
-					<ListItemIcon className="min-w-40">
-						<Icon>delete_outline_icone</Icon>
-					</ListItemIcon>
-					<ListItemText primary="Xoá menu" />
-				</MenuItem>
-			</Popconfirm> */}
 		</>
 	);
 }

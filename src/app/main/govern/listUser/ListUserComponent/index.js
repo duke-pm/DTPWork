@@ -38,29 +38,27 @@ export default function ListUserContent() {
 	};
 	return (
 		<div className="w-full flex flex-col">
-			<FuseAnimate animation="transition.slideUpIn" delay={200}>
-				<div className="flex flex-col ">
-					<TableListUser
-						listLoading={listLoading}
-						actionLoading={actionLoading}
-						entities={entities}
-						createSortHandler={createSortHandler}
-						handleEditListUser={handleEditListUser}
-					/>
-					{entities?.length !== 0 && (
-						<div className="flex flex-row items-center justify-end">
-							{actionLoading && <Spin />}
-							<Panigation
-								page={page}
-								handleChangePage={handleChangePage}
-								rowPage={rowPage}
-								handleChangeRowsPerPage={handleRowPage}
-								count={total_count}
-							/>
-						</div>
-					)}
-				</div>
-			</FuseAnimate>
+			<div className="flex flex-col ">
+				<TableListUser
+					listLoading={listLoading}
+					actionLoading={actionLoading}
+					entities={entities}
+					createSortHandler={createSortHandler}
+					handleEditListUser={handleEditListUser}
+				/>
+				{entities?.length !== 0 && (
+					<div className="flex flex-row items-center justify-end">
+						{actionLoading && <Spin />}
+						<Panigation
+							page={page}
+							handleChangePage={handleChangePage}
+							rowPage={rowPage}
+							handleChangeRowsPerPage={handleRowPage}
+							count={total_count}
+						/>
+					</div>
+				)}
+			</div>
 		</div>
 	);
 }

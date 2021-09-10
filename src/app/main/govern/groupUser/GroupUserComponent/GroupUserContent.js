@@ -1,5 +1,4 @@
-import FuseAnimate from '@fuse/core/FuseAnimate';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { Spin } from 'antd';
 import Panigation from '@fuse/core/FusePanigate';
@@ -43,30 +42,28 @@ export default function GroupUserContent() {
 	};
 	return (
 		<div className="w-full flex flex-col">
-			<FuseAnimate animation="transition.slideUpIn" delay={200}>
-				<div className="flex flex-col ">
-					<TableGroupUser
-						listLoading={listLoading}
-						actionLoading={actionLoading}
-						entities={entities}
-						createSortHandler={createSortHandler}
-						handleEditGroupUser={handleEditGroupUser}
-						handleEditGroupUserDelete={handleEditGroupUserDelete}
-					/>
-					{entities?.length !== 0 && (
-						<div className="flex flex-row items-center justify-end">
-							{actionLoading && <Spin />}
-							<Panigation
-								page={page}
-								handleChangePage={handleChangePage}
-								rowPage={rowPage}
-								handleChangeRowsPerPage={handleRowPage}
-								count={total_count}
-							/>
-						</div>
-					)}
-				</div>
-			</FuseAnimate>
+			<div className="flex flex-col ">
+				<TableGroupUser
+					listLoading={listLoading}
+					actionLoading={actionLoading}
+					entities={entities}
+					createSortHandler={createSortHandler}
+					handleEditGroupUser={handleEditGroupUser}
+					handleEditGroupUserDelete={handleEditGroupUserDelete}
+				/>
+				{entities?.length !== 0 && (
+					<div className="flex flex-row items-center justify-end">
+						{actionLoading && <Spin />}
+						<Panigation
+							page={page}
+							handleChangePage={handleChangePage}
+							rowPage={rowPage}
+							handleChangeRowsPerPage={handleRowPage}
+							count={total_count}
+						/>
+					</div>
+				)}
+			</div>
 		</div>
 	);
 }

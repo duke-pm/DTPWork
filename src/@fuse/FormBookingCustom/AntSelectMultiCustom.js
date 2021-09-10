@@ -57,6 +57,7 @@ export default function AntSelectMultiCustom({
 					allowClear
 					maxTagCount={count || null}
 					mode="multiple"
+					size="small"
 					placeholder={placeholder || ''}
 					className={readOnly ? 'readOnly' : ''}
 					optionFilterProp="children"

@@ -6,30 +6,20 @@ import { useHistory } from 'react-router';
 import CustomForm from './CustomForm';
 import * as actions from '../../_redux/menuActions';
 
-export default function FormComponent({
-	entitiesEdit,
-	actionLoading,
-	arrCompany,
-	arrSales,
-	arrManag,
-	arrSap,
-	arrRegion,
-	groupUser,
-	arrBizLine
-}) {
+export default function FormComponent({ entitiesEdit, actionLoading, menuParent }) {
 	const history = useHistory();
 	const handleCloseFormListUser = () => {
 		history.goBack();
 	};
 	const dispatch = useDispatch();
-	const handleSubmitFormListUser = values => {
-		if (entitiesEdit && entitiesEdit.userID) {
+	const handleSubmitCreatedMenu = values => {
+		if (entitiesEdit && entitiesEdit.menuID) {
 			dispatch(actions.updatedMenuSettings(values)).then(data => {
 				if (data && !data.isError) {
 					notificationConfig(
 						'success',
 						notificationContent.content.vi.success,
-						notificationContent.description.setting.listUser.updatedListUserSuccess
+						notificationContent.description.setting.menu.updatedMenuSuccess
 					);
 					history.goBack();
 				}
@@ -40,7 +30,7 @@ export default function FormComponent({
 					notificationConfig(
 						'success',
 						notificationContent.content.vi.success,
-						notificationContent.description.setting.listUser.createdListUserSuccess
+						notificationContent.description.setting.menu.createdMenuSuccess
 					);
 					history.goBack();
 				}
@@ -52,15 +42,9 @@ export default function FormComponent({
 			<CustomForm
 				entitiesEdit={entitiesEdit}
 				actionLoading={actionLoading}
+				menuParent={menuParent}
 				handleCloseFormListUser={handleCloseFormListUser}
-				handleSubmitFormListUser={handleSubmitFormListUser}
-				arrCompany={arrCompany}
-				arrSales={arrSales}
-				arrManag={arrManag}
-				arrSap={arrSap}
-				arrRegion={arrRegion}
-				groupUser={groupUser}
-				arrBizLine={arrBizLine}
+				handleSubmitCreatedMenu={handleSubmitCreatedMenu}
 			/>
 		</>
 	);

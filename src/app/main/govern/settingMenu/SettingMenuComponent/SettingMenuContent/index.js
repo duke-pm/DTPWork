@@ -1,24 +1,24 @@
 import React, { useEffect, useContext } from 'react';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import Panigation from '@fuse/core/FusePanigate';
-import FuseAnimate from '@fuse/core/FuseAnimate';
 import { Spin } from 'antd';
+import { useHistory } from 'react-router';
 import * as actions from '../../_redux/menuActions';
 import { SettingmenuContext } from '../../SettingMenuContext';
 import TableSettingMenu from '../Component';
 
-export default function SettingMenuContent({ handleOpenSettingMenu, setOpenSettingMenu }) {
+export default function SettingMenuContent() {
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const settingContext = useContext(SettingmenuContext);
 	const { page, rowPage, setPage, sort, setRowPage, setSort } = settingContext;
 	const { currentState } = useSelector(state => ({ currentState: state.govern.menu }), shallowEqual);
 	const { entities, listLoading, actionLoading, total_count } = currentState;
 	useEffect(() => {
 		dispatch(actions.fetchsListMenuSettings());
-		dispatch(actions.fetchsListMenuSettingAll());
 	}, [dispatch]);
 	const handleEditMenuSetting = item => {
-		setOpenSettingMenu(true);
+		history.push(`/quan-tri/thiet-lap-menu/cap-nhat/${item.menuID}`);
 		dispatch(actions.setTaskEditMenuSetting(item));
 	};
 	const handleChangePage = (event, newPage) => {
@@ -30,46 +30,29 @@ export default function SettingMenuContent({ handleOpenSettingMenu, setOpenSetti
 		setRowPage(rowPageParse);
 		dispatch(actions.fetchsListMenuSettingParams(rowPageParse, page, sort.direction, sort.id));
 	};
-	const createSortHandler = property => event => {
-		const id = property;
-		let direction = 'desc';
-
-		if (sort.id === property && sort.direction === 'desc') {
-			direction = 'asc';
-		}
-		dispatch(actions.fetchsListMenuSettingParams(rowPage, page, direction, id));
-		setSort({
-			direction,
-			id
-		});
-	};
 	return (
 		<>
 			<div className="w-full flex flex-col">
-				{/* <SettingMenuHeader handleOpenSettingMenu={handleOpenSettingMenu} /> */}
-				<FuseAnimate animation="transition.slideUpIn" delay={200}>
-					<div className="flex flex-col ">
-						<TableSettingMenu
-							listLoading={listLoading}
-							actionLoading={actionLoading}
-							entities={entities}
-							createSortHandler={createSortHandler}
-							handleEditMenuSetting={handleEditMenuSetting}
-						/>
-						{entities && entities.length !== 0 && (
-							<div className="flex flex-row items-center justify-end">
-								{actionLoading && <Spin />}
-								<Panigation
-									page={page}
-									handleChangePage={handleChangePage}
-									rowPage={rowPage}
-									handleChangeRowsPerPage={handleRowPage}
-									count={total_count}
-								/>
-							</div>
-						)}
-					</div>
-				</FuseAnimate>
+				<div className="flex flex-col ">
+					<TableSettingMenu
+						listLoading={listLoading}
+						actionLoading={actionLoading}
+						entities={entities}
+						handleEditMenuSetting={handleEditMenuSetting}
+					/>
+					{entities && entities.length !== 0 && (
+						<div className="flex flex-row items-center justify-end">
+							{actionLoading && <Spin />}
+							<Panigation
+								page={page}
+								handleChangePage={handleChangePage}
+								rowPage={rowPage}
+								handleChangeRowsPerPage={handleRowPage}
+								count={total_count}
+							/>
+						</div>
+					)}
+				</div>
 			</div>
 		</>
 	);

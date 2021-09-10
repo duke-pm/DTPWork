@@ -1,26 +1,20 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Icon, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import { Table, Popover, Checkbox, Spin } from 'antd';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import AppsIcon from '@material-ui/icons/Apps';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { sortDirestion } from '@fuse/core/DtpConfig';
 import ActionsMenuSetting from '../SettingMenuContent/ActionsMenuSetting';
 
-export default function TableSettingMenu({ entities, listLoading, handleEditMenuSetting, createSortHandler }) {
-	const history = useHistory();
+export default function TableSettingMenu({ entities, listLoading, handleEditMenuSetting }) {
 	// const filterOwner = value => {
 	// 	console.log(value);
 	// };
 	// const onChange = value => {
 	// 	console.log(value);
 	// };
-	const onChange = (pagination, filters, sorter, extra) => {
-		const sort = sortDirestion[sorter.order];
-		createSortHandler(sort, sorter.field);
-	};
 	const columns = [
 		{
 			title: <AppsIcon />,
@@ -91,7 +85,6 @@ export default function TableSettingMenu({ entities, listLoading, handleEditMenu
 			pagination={false}
 			columns={columns}
 			dataSource={entities}
-			onChange={onChange}
 			loading={listLoading && <Spin />}
 		/>
 	);

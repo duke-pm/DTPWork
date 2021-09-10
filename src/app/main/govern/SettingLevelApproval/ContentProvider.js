@@ -1,14 +1,16 @@
 import FuseAnimate from '@fuse/core/FuseAnimate';
-import { Box, Typography } from '@material-ui/core';
+import { Box, Button, Typography } from '@material-ui/core';
 import React from 'react';
 // import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import FusePageCardedTask from '@fuse/core/FusePageCarded/FusePageCardedTask';
 // import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
+import Search from 'antd/lib/input/Search';
+import { useHistory } from 'react-router';
 import LevelApprovalComponent from './LevelApprovalComponent';
 // import { LevelApprovalContext } from './LevelApprovalContext';
-import FormLevelApproval from './LevelApprovalComponent/FormLevelApproval';
 
 export default function ContentProvider() {
+	const history = useHistory();
 	// const { currentState, project } = useSelector(
 	// 	state => ({
 	// 		currentState: state.possesion.entitiesInformation,
@@ -22,46 +24,40 @@ export default function ContentProvider() {
 	// const { form, setForm } = levelApprovalContext;
 	// const classes = DtpCustomStyles();
 	// const dispatch = useDispatch();
-
+	const onHandleChange = e => {};
+	const handleSearch = () => {};
+	const handleChangeRoute = () => {
+		history.push('/quan-tri/cap-quyen/tao-moi/null');
+	};
 	return (
-		<>
-			<FormLevelApproval />
-			<FusePageCardedTask
-				innerScroll
-				classes={{
-					// content: 'flex',
-					header: 'min-h-10 h-10	sm:h-16 sm:min-h-16'
-				}}
-				header={
-					<div className="flex flex-1 w-full items-center justify-between">
-						<div className="flex flex-1 flex-col items-center sm:items-start">
-							<FuseAnimate animation="transition.slideRightIn" delay={300}>
-								<Typography
-									className="text-16 sm:text-20 truncate"
-									// component={Link}
-									// role="button"
-									// to="/apps/e-commerce/orders"
-									color="inherit"
-								>
-									{/* {xhtm} */}
-								</Typography>
-							</FuseAnimate>
-						</div>
-					</div>
-				}
-				contentToolbar={
-					<div className="flex items-center p-16 flex-1">
-						<Typography className="ml-16" variant="h6">
-							Level Approval
-						</Typography>
-					</div>
-				}
-				content={
-					<Box p={3}>
-						<LevelApprovalComponent />
-					</Box>
-				}
-			/>
-		</>
+		<div className="container govern">
+			<div className="govern__header px-16 shadow-lg">
+				<Typography color="primary" variant="h6">
+					Level Approval
+				</Typography>
+				<div className="govern__header--action">
+					<Search
+						onChange={e => onHandleChange(e)}
+						onKeyPress={event => {
+							if (event.key === 'Enter') {
+								handleSearch();
+							}
+						}}
+						className="input__search"
+						placeholder="Search"
+						onSearch={handleSearch}
+					/>
+					<Button onClick={handleChangeRoute} className="button__create" variant="contained" color="primary">
+						{' '}
+						<Typography variant="body2"> Tạo mới </Typography>
+					</Button>
+				</div>
+			</div>
+			<div className="govern__content mt-8">
+				<div className="govern__content--table px-16">
+					<LevelApprovalComponent />
+				</div>
+			</div>
+		</div>
 	);
 }

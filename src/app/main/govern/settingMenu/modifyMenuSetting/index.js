@@ -6,22 +6,19 @@ import { getInformationCompany } from 'app/main/assets/Possesion/_redux/possesio
 import React, { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import { fetchsListMenuSettingAll } from '../_redux/menuActions';
 import FormComponent from './Component';
 
 export default function ModifyMenuSetting() {
 	const dispatch = useDispatch();
-	const { currentState, inforCompany } = useSelector(
-		state => ({
-			currentState: state.govern.listUser,
-			inforCompany: state.possesion
-		}),
-		shallowEqual
-	);
+	const { currentState } = useSelector(state => ({ currentState: state.govern.menu }), shallowEqual);
 	useEffect(() => {
-		// dispatch(getInformationCompany(paramsInfo));
+		dispatch(fetchsListMenuSettingAll());
 	}, [dispatch]);
-	const { entitiesEdit, actionLoading } = currentState;
-	const { entitiesInformation, listloading } = inforCompany;
+	const { entities, actionLoading, listLoading, entitiesEdit } = currentState;
+	const menuParent = entities
+		? entities.reduce((arr, curr) => [...arr, { value: curr.menuID, label: curr.menuName }], [])
+		: [];
 	const params = useParams();
 	const history = useHistory();
 	const ExitPage = () => {
@@ -47,9 +44,13 @@ export default function ModifyMenuSetting() {
 				</div>
 			</div>
 			<div className="govern__content mt-8">
-				<Spin spinning={listloading}>
+				<Spin spinning={listLoading}>
 					<div className="modify-govern">
-						{/* <FormComponent entitiesEdit={entitiesEdit} actionLoading={actionLoading} /> */}
+						<FormComponent
+							menuParent={menuParent}
+							entitiesEdit={entitiesEdit}
+							actionLoading={actionLoading}
+						/>
 					</div>
 				</Spin>
 			</div>

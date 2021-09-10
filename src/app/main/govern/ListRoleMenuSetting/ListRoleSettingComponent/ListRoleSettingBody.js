@@ -1,5 +1,5 @@
 /* eslint-disable no-shadow */
-import { Table, Checkbox } from 'antd';
+import { Table, Checkbox, Spin } from 'antd';
 import React, { useState, useEffect } from 'react';
 import image from '@fuse/assets/group.png';
 import __ from 'lodash';
@@ -9,7 +9,7 @@ import { Typography } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-export default function ListRoleSettingBody({ entities, newData, setNewData, actionLoading }) {
+export default function ListRoleSettingBody({ entities, newData, setNewData, actionLoading, listLoading }) {
 	const theme = useTheme();
 	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
 	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
@@ -100,7 +100,7 @@ export default function ListRoleSettingBody({ entities, newData, setNewData, act
 				pagination={false}
 				columns={column}
 				scroll={{ x: matchesSM && 580 }}
-				loading={actionLoading}
+				loading={actionLoading && <Spin />}
 				rowKey="menuID"
 				onExpandedRowsChange={onSelectedRowKeysChange}
 				expandedRowKeys={selectedRowKeys}
