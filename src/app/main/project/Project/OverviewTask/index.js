@@ -7,7 +7,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
-import { checkDeadline, checkFile, nameFile, notificationConfig } from '@fuse/core/DtpConfig';
+import { checkDeadline, checkFile, nameFile, notificationConfig, URL } from '@fuse/core/DtpConfig';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import {
 	CaretDownOutlined,

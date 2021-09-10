@@ -12,6 +12,7 @@ import * as moment from 'moment';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useHistory } from 'react-router-dom';
+import { getToken, URL } from '@fuse/core/DtpConfig';
 import { ProjectContext } from '../../ProjectContext';
 import * as actions from '../../../_redux/_projectActions';
 
@@ -83,6 +84,14 @@ function TableProject(props) {
 		dispatch(actions.fetchsProjectFilter(rowPage, page, status?.toString(), value?.toString(), dateStart, search));
 		setOwnerFilter(value);
 	};
+	const handleExportExecl = item => {
+		const token = getToken();
+		const data = {
+			UserToken: token,
+			PrjID: item.prjID
+		};
+		window.location = `${URL}/api/Project/ExportProjectDetail?value=${JSON.stringify(data)}`;
+	};
 	const columns = [
 		{
 			title: <AppsIcon />,
@@ -122,6 +131,12 @@ function TableProject(props) {
 										</ListItemIcon>
 										<ListItemText primary="Project plan" />
 									</MenuItem> */}
+									<MenuItem onClick={() => handleExportExecl(item)} role="button">
+										<ListItemIcon className="min-w-40">
+											<Icon>get_app</Icon>
+										</ListItemIcon>
+										<ListItemText primary="Export excel" />
+									</MenuItem>
 								</>
 							)}
 							{item.countChild === 0 && item.isModified && (
