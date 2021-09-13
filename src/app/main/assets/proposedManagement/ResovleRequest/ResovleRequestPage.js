@@ -1,57 +1,159 @@
-import FuseAnimate from '@fuse/core/FuseAnimate';
-import FusePageCarded from '@fuse/core/FusePageCarded';
-import { Box, Typography } from '@material-ui/core';
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import { Box, Button, Icon, Typography } from '@material-ui/core';
 import React, { useContext } from 'react';
+import Search from 'antd/lib/input/Search';
+import { useDispatch } from 'react-redux';
+import { DatePicker } from 'antd';
+import moment from 'moment';
 import TimeLine from '../TimeLine';
 import RequestResovelTable from './ComponentResovleRequest';
 import FormAllocation from './FormControlConfirm/Allocation';
 import FormConfirmGobal from './FormControlConfirm/FormConfirmGobal';
 import FormCustomCorrupt from './FormControlConfirm/FormCustomCorrupt';
 import { ResovleContext } from './ResovleRequestContext';
+import { searchConfirms } from '../_redux/confirmAction';
 
+const requestType = {
+	0: 'Tất cả',
+	1: 'Yêu cầu cấp phát',
+	2: 'Báo hỏng',
+	3: 'Báo mất'
+};
 export default function ResovleRequestPage() {
+	const dispatch = useDispatch();
 	const ResovleContextHandle = useContext(ResovleContext);
-	const { setTimeLine, timeLine } = ResovleContextHandle;
+	const {
+		rowPage,
+		page,
+		status,
+		sort,
+		setTimeLine,
+		timeLine,
+		requestTypeId,
+		setRequestTypeId,
+		dateStart,
+		dateEnd,
+		search,
+		setDateStart,
+		setDateEnd
+	} = ResovleContextHandle;
+	const handleClearAll = () => {
+		dispatch(
+			searchConfirms(
+				true,
+				status,
+				rowPage,
+				page,
+				0,
+				sort.id,
+				sort.direction,
+				search,
+				moment().startOf('month').format('YYYY/MM/DD'),
+				moment().endOf('month').format('YYYY/MM/DD')
+			)
+		);
+		setRequestTypeId(null);
+		setDateStart(moment().startOf('month'));
+		setDateStart(moment().endOf('month'));
+	};
+	const handleClearType = () => {
+		dispatch(searchConfirms(true, status, rowPage, page, 0, sort.id, sort.direction, search, dateStart, dateEnd));
+		setRequestTypeId(null);
+	};
+	const handleChangeFilterDateStart = date => {
+		setDateStart(date);
+		dispatch(
+			searchConfirms(true, status, rowPage, page, requestTypeId, sort.id, sort.direction, search, date, dateEnd)
+		);
+	};
+	const handleChangeFilterDateEnd = date => {
+		setDateEnd(date);
+		dispatch(
+			searchConfirms(true, status, rowPage, page, requestTypeId, sort.id, sort.direction, search, dateStart, date)
+		);
+	};
+	console.log(dateStart);
 	return (
 		<>
 			<TimeLine setTimeLine={setTimeLine} timeLine={timeLine} />
 			<FormAllocation />
 			<FormConfirmGobal />
 			<FormCustomCorrupt />
-			<FusePageCarded
-				classes={{
-					// content: 'flex',
-					header: 'min-h-10 h-10	sm:h-16 sm:min-h-16'
-				}}
-				header={
-					<div className="flex flex-1 w-full items-center justify-between">
-						<div className="flex flex-1 flex-col items-center sm:items-start">
-							<FuseAnimate animation="transition.slideRightIn" delay={300}>
-								<Typography
-									className="text-16 sm:text-20 truncate"
-									// component={Link}
-									// role="button"
-									// to="/apps/e-commerce/orders"
-									color="inherit"
-								>
-									{/* {xhtm} */}
-								</Typography>
-							</FuseAnimate>
+			<div className="container proposedManagement">
+				<div className="proposedManagement__header px-16 shadow-lg">
+					<Typography color="primary" variant="h6">
+						Đề xuất cần xử lý
+					</Typography>
+					<div className="proposedManagement__header--action">
+						<Search className="input__search" placeholder="Search" />
+					</div>
+				</div>
+				<div className="proposedManagement__subcontent px-16 justify-end mt-8">
+					<div className="proposedManagement__subcontent--action">
+						<DatePicker
+							onChange={handleChangeFilterDateStart}
+							value={dateStart}
+							placeholder="Ngày bắt đầu"
+							style={{ width: '100%' }}
+						/>
+						<DatePicker
+							onChange={handleChangeFilterDateEnd}
+							value={dateEnd}
+							placeholder="Ngày kết thúc"
+							style={{ width: '100%' }}
+						/>
+					</div>
+				</div>
+				{requestTypeId ? (
+					<div className="projects__filter px-16 mt-20">
+						<div className="title_filter flex">
+							<Icon fontSize="small" color="primary">
+								tune
+							</Icon>
+							<Typography variant="body1" color="primary" className="ml-8 title">
+								{' '}
+								Filter
+							</Typography>
+						</div>
+						<div className="content_filter">
+							{requestTypeId && (
+								<div className="control-filter">
+									<div className="content flex items-center">
+										<Typography className="" color="primary">
+											Loại yêu cầu:
+										</Typography>
+										<Typography color="primary" className="ml-8 value-filter">
+											{requestType[requestTypeId]}
+										</Typography>
+										<div onClick={handleClearType} className="action">
+											<Icon className="btn-icon" color="primary">
+												clear
+											</Icon>
+										</div>
+									</div>
+								</div>
+							)}
+						</div>
+						<div className="action-filter">
+							<Typography
+								onClick={handleClearAll}
+								variant="subtitle2"
+								color="primary"
+								className="cursor-pointer"
+							>
+								{' '}
+								Delete all{' '}
+							</Typography>
 						</div>
 					</div>
-				}
-				contentToolbar={
-					<div className="flex  items-center px-16 flex-1">
-						<Typography variant="h6"> Đề xuất cần xử lý</Typography>
-					</div>
-				}
-				content={
-					<Box p={3}>
+				) : null}
+				<div className="proposedManagement__content mt-8">
+					<div className="proposedManagement__content--table px-16">
 						<RequestResovelTable />
-					</Box>
-				}
-				innerScroll
-			/>
+					</div>
+				</div>
+			</div>
 		</>
 	);
 }

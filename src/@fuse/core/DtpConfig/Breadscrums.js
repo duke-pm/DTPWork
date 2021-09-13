@@ -5,8 +5,8 @@ export function convertToVietNamese(array) {
 		switch (word) {
 			case 'trang-chu':
 				return '';
-			case 'tai-san':
-				return 'Quản lý tài sản';
+			// case 'tai-san':
+			// 	return 'Quản lý tài sản';
 			case 'xet-duyet':
 				return 'Danh sách đề xuất';
 			case 'de-xuat-can-xu-ly':

@@ -2,17 +2,11 @@
 /* eslint-disable no-shadow */
 import React, { useContext, useEffect } from 'react';
 import Panigation from '@fuse/core/FusePanigate';
-import { Paper, Table, TableContainer } from '@material-ui/core';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import FuseLoading from '@fuse/core/FuseLoading';
-import { Empty, Spin } from 'antd';
-import FuseAnimate from '@fuse/core/FuseAnimate';
-import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
-import HeaderTableResovleRequest from './HeaderTableResovleRequest';
+import { Spin } from 'antd';
 import { ResovleContext } from '../ResovleRequestContext';
 import * as action from '../../_redux/confirmAction';
-import BodyTableResovle from './BodyTableAllocation';
-import ActionComponent from './FilterActionComponent';
+import TableResovleRequest from './component/TableResource';
 
 export default function RequestResovelTable(props) {
 	const dispatch = useDispatch();
@@ -36,7 +30,6 @@ export default function RequestResovelTable(props) {
 	} = ResovleContextHandle;
 	const { currentState } = useSelector(state => ({ currentState: state.confirm }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;
-	const classes = DtpCustomStyles(props);
 	useEffect(() => {
 		dispatch(action.fetchDataConfirms(0, 0, true));
 	}, [dispatch]);
@@ -113,48 +106,25 @@ export default function RequestResovelTable(props) {
 		});
 		dispatch(action.timeLineApproval(item));
 	};
-	if (listloading) {
-		return <FuseLoading />;
-	}
 	return (
 		<>
 			<div className="w-full flex flex-col">
-				<ActionComponent />
-				<FuseAnimate animation="transition.slideUpIn" delay={200}>
-					<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
-						<TableContainer className={`${classes.TableContainer} flex flex-1`}>
-							<Paper className={classes.rootPaper}>
-								<Table className={`${classes.tableGoverGroup}`} stickyHeader>
-									<HeaderTableResovleRequest createSortHandler={createSortHandler} sort={sort} />
-									<BodyTableResovle
-										handleOpenTimeLine={handleOpenTimeLine}
-										handleOpenDialog={handleOpenDialog}
-										classes={classes}
-										entities={entities}
-										lastErrors={lastErrors}
-									/>
-								</Table>
-								{(entities && entities.length === 0) || lastErrors ? (
-									<FuseAnimate delay={300}>
-										<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-									</FuseAnimate>
-								) : null}
-							</Paper>
-						</TableContainer>
-						{entities && entities.length !== 0 && (
-							<div className="flex flex-row items-center justify-end">
-								{actionLoading && <Spin />}
-								<Panigation
-									page={page}
-									handleChangePage={handleChangePage}
-									rowPage={rowPage}
-									handleChangeRowsPerPage={handleRowChange}
-									count={total_count}
-								/>
-							</div>
-						)}
-					</div>
-				</FuseAnimate>
+				{/* <ActionComponent /> */}
+				<div className="flex flex-col ">
+					<TableResovleRequest entities={entities} listloading={listloading} />
+					{entities && entities.length !== 0 && (
+						<div className="flex flex-row items-center justify-end">
+							{actionLoading && <Spin />}
+							<Panigation
+								page={page}
+								handleChangePage={handleChangePage}
+								rowPage={rowPage}
+								handleChangeRowsPerPage={handleRowChange}
+								count={total_count}
+							/>
+						</div>
+					)}
+				</div>
 			</div>
 		</>
 	);
