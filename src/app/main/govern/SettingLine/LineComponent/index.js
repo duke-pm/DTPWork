@@ -23,33 +23,28 @@ export default function LineComponent() {
 		const rowPageParse = parseInt(e.target.value, 10);
 		setRowPage(rowPageParse);
 	};
-	if (listLoading) {
-		return <FuseLoading />;
-	}
 	return (
 		<div className="w-full flex flex-col">
-			<FuseAnimate animation="transition.slideUpIn" delay={200}>
-				<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
-					<TableProject
-						actionLoading={actionLoading}
-						classes={classes}
-						entities={entities}
-						entitiesEdit={entitiesEdit}
-					/>
-					{entities && entities.length !== 0 && (
-						<div className="flex flex-row items-center justify-end">
-							{actionLoading && <Spin />}
-							<Panigation
-								page={page}
-								handleChangePage={handleChangePage}
-								rowPage={rowPage}
-								handleChangeRowsPerPage={handleRowPage}
-								count={total_count}
-							/>
-						</div>
-					)}
-				</div>
-			</FuseAnimate>
+			<div className="flex flex-col">
+				<TableProject
+					actionLoading={actionLoading}
+					classes={classes}
+					entities={entities}
+					entitiesEdit={entitiesEdit}
+				/>
+				{entities && entities.length !== 0 && (
+					<div className="flex flex-row items-center justify-end">
+						{actionLoading && <Spin />}
+						<Panigation
+							page={page}
+							handleChangePage={handleChangePage}
+							rowPage={rowPage}
+							handleChangeRowsPerPage={handleRowPage}
+							count={total_count}
+						/>
+					</div>
+				)}
+			</div>
 		</div>
 	);
 }

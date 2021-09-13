@@ -90,16 +90,7 @@ export default function CustomForm({
 							<Field label="Mobile icon" name="mIcon" component={AntInputCustom} />
 							<Field label="Mobile Url/ Action" name="mName" component={AntInputCustom} />
 						</div>
-						<div className="grid grid-cols-3 gap-8">
-							<Field
-								label="Order"
-								name="visOrder"
-								type="number"
-								position="right"
-								component={AntInputCustom}
-							/>
-						</div>
-						<div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+						<div className="grid grid-cols-1 sm:grid-cols-4 gap-8">
 							<Field
 								label="Inactive"
 								name="inactive"
@@ -123,6 +114,14 @@ export default function CustomForm({
 								position="right"
 								value={initial.isWeb}
 								component={AntdCustomCheckbox}
+							/>
+							<Field
+								label="Order"
+								name="visOrder"
+								type="number"
+								width="70%"
+								position="right"
+								component={AntInputCustom}
 							/>
 						</div>
 					</div>

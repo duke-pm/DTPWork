@@ -21,40 +21,24 @@ export default function TableGroupUser({ entities, listLoading, handleEditGroupU
 	};
 	const columns = [
 		{
-			title: <AppsIcon />,
-			align: 'center',
-			key: 'operation',
-			fixed: 'left',
-			width: '4%',
-			render: (_, item) => (
-				<Popover
-					overlayStyle={{ zIndex: '19' }}
-					placement="rightTop"
-					content={() => <ActionsGroupUserBody items={item} handleEditGroupUser={handleEditGroupUser} />}
-					title="Hành động"
-				>
-					<MoreVertIcon className="cursor-pointer" />
-				</Popover>
-			)
-		},
-		{
 			title: 'Mã nhóm',
 			dataIndex: 'groupID',
 			key: 'groupID',
 			sorter: true,
-			defaultSortOrder: 'ascend',
 			render: (_, item) => <Typography variant="body1">{item.groupID}</Typography>
 		},
 		{
 			title: 'Tên nhóm',
 			dataIndex: 'groupName',
 			key: 'groupName',
+			sorter: true,
 			render: (_, item) => <Typography variant="body1">{item.groupName}</Typography>
 		},
 		{
 			title: 'Mô tả',
 			dataIndex: 'description',
 			key: 'description',
+			sorter: true,
 			render: (_, item) => <Typography variant="body1">{item.description}</Typography>
 		},
 		{
@@ -62,6 +46,14 @@ export default function TableGroupUser({ entities, listLoading, handleEditGroupU
 			dataIndex: 'inactive',
 			key: 'inactive',
 			render: (_, item) => <Checkbox checked={item.inactive} />
+		},
+		{
+			title: <AppsIcon />,
+			align: 'center',
+			key: 'operation',
+			fixed: 'center',
+			width: '4%',
+			render: (_, item) => <ActionsGroupUserBody items={item} handleEditGroupUser={handleEditGroupUser} />
 		}
 	];
 	return (

@@ -1,17 +1,19 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { ListItemIcon, ListItemText, MenuItem } from '@material-ui/core';
 import React from 'react';
 import Icon from '@material-ui/core/Icon';
+import { Tooltip } from 'antd';
 // import { Popconfirm } from 'antd';
 
 export default function ActionsGroupUserBody({ handleEditGroupUser, items }) {
 	return (
 		<>
-			<MenuItem onClick={() => handleEditGroupUser(items)} role="button">
-				<ListItemIcon className="min-w-40">
-					<Icon>edit</Icon>
-				</ListItemIcon>
-				<ListItemText primary="Cập nhật nhóm người dùng" />
-			</MenuItem>
+			<Tooltip placement="bottom" title="Cập nhật">
+				<span onClick={() => handleEditGroupUser(items)} className="action--button mx-auto">
+					<Icon fontSize="small">edit</Icon>
+				</span>
+			</Tooltip>
 		</>
 	);
 }

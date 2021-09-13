@@ -16,23 +16,6 @@ export default function TableSettingMenu({ entities, listLoading, handleEditMenu
 	// };
 	const columns = [
 		{
-			title: <AppsIcon />,
-			align: 'center',
-			key: 'operation',
-			fixed: 'left',
-			width: '4%',
-			render: (_, item) => (
-				<Popover
-					overlayStyle={{ zIndex: '19' }}
-					placement="rightTop"
-					content={() => <ActionsMenuSetting items={item} handleEditMenuSetting={handleEditMenuSetting} />}
-					title="Hành động"
-				>
-					<MoreVertIcon className="cursor-pointer" />
-				</Popover>
-			)
-		},
-		{
 			title: 'Menu Name',
 			dataIndex: 'menuName',
 			key: 'menuName',
@@ -56,25 +39,37 @@ export default function TableSettingMenu({ entities, listLoading, handleEditMenu
 			title: 'Inactive',
 			dataIndex: 'inactive',
 			key: 'inactive',
+			align: 'center',
 			render: (_, item) => <Checkbox checked={item.inactive} />
 		},
 		{
 			title: 'For Web',
 			dataIndex: 'isWeb',
 			key: 'isWeb',
+			align: 'center',
 			render: (_, item) => <Checkbox checked={item.isWeb} />
 		},
 		{
 			title: 'For Mobile',
 			dataIndex: 'isMobile',
 			key: 'isMobile',
+			align: 'center',
 			render: (_, item) => <Checkbox checked={item.isMobile} />
 		},
 		{
 			title: 'Order',
 			dataIndex: 'STT',
 			key: 'STT',
-			render: (_, item) => <Checkbox checked={item.visOrder} />
+			align: 'center',
+			render: (_, item) => <Typography variant="body1">{item.visOrder}</Typography>
+		},
+		{
+			title: <AppsIcon />,
+			align: 'center',
+			key: 'operation',
+			fixed: 'left',
+			width: '4%',
+			render: (_, item) => <ActionsMenuSetting items={item} handleEditMenuSetting={handleEditMenuSetting} />
 		}
 	];
 	return (

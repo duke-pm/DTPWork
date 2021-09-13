@@ -22,23 +22,6 @@ export default function TableListUser({ entities, listLoading, handleEditListUse
 	};
 	const columns = [
 		{
-			title: <AppsIcon />,
-			align: 'center',
-			key: 'operation',
-			fixed: 'left',
-			width: '4%',
-			render: (_, item) => (
-				<Popover
-					overlayStyle={{ zIndex: '19' }}
-					placement="rightTop"
-					content={() => <ActionsListUserBody items={item} handleEditListUser={handleEditListUser} />}
-					title="Hành động"
-				>
-					<MoreVertIcon className="cursor-pointer" />
-				</Popover>
-			)
-		},
-		{
 			title: 'Mã người dùng',
 			dataIndex: 'UserID',
 			key: 'UserID',
@@ -80,6 +63,14 @@ export default function TableListUser({ entities, listLoading, handleEditListUse
 			key: 'Inactive',
 			sorter: true,
 			render: (_, item) => <Checkbox checked={item.inactive} />
+		},
+		{
+			title: <AppsIcon />,
+			align: 'center',
+			key: 'operation',
+			fixed: 'left',
+			width: '4%',
+			render: (_, item) => <ActionsListUserBody items={item} handleEditListUser={handleEditListUser} />
 		}
 	];
 	return (

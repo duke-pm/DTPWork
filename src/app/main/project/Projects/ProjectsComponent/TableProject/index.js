@@ -125,18 +125,14 @@ function TableProject(props) {
 										</ListItemIcon>
 										<ListItemText primary="Open detail" />
 									</MenuItem>
-									{/* <MenuItem onClick={() => handleOpenBarChar(item)} role="button">
-										<ListItemIcon className="min-w-40">
-											<Icon>bar_chart</Icon>
-										</ListItemIcon>
-										<ListItemText primary="Project plan" />
-									</MenuItem> */}
-									<MenuItem onClick={() => handleExportExecl(item)} role="button">
-										<ListItemIcon className="min-w-40">
-											<Icon>get_app</Icon>
-										</ListItemIcon>
-										<ListItemText primary="Export excel" />
-									</MenuItem>
+									{item.countTask > 0 && (
+										<MenuItem onClick={() => handleExportExecl(item)} role="button">
+											<ListItemIcon className="min-w-40">
+												<Icon>get_app</Icon>
+											</ListItemIcon>
+											<ListItemText primary="Export excel" />
+										</MenuItem>
+									)}
 								</>
 							)}
 							{item.countChild === 0 && item.isModified && (

@@ -24,13 +24,13 @@ export default function ContentProvider() {
 	const onHandleChange = e => {};
 	const handleSearch = () => {};
 	const handleChangeRoute = () => {
-		history.push('/quan-tri/phe-duyet/tao-moi/null');
+		history.push('/quan-tri/quyen/tao-moi/null');
 	};
 	return (
 		<div className="container govern">
 			<div className="govern__header px-16 shadow-lg">
 				<Typography color="primary" variant="h6">
-					Level Approval
+					Quyền
 				</Typography>
 				<div className="govern__header--action">
 					<Search

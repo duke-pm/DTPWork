@@ -1,16 +1,17 @@
-import { ListItemIcon, ListItemText, MenuItem } from '@material-ui/core';
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import Icon from '@material-ui/core/Icon';
+import { Tooltip } from 'antd';
 
 export default function ActionsMenuSetting({ handleEditMenuSetting, items }) {
 	return (
 		<>
-			<MenuItem onClick={() => handleEditMenuSetting(items)} role="button">
-				<ListItemIcon className="min-w-40">
-					<Icon>edit</Icon>
-				</ListItemIcon>
-				<ListItemText primary="Cập nhật menu" />
-			</MenuItem>
+			<Tooltip placement="bottom" title="Cập nhật">
+				<span onClick={() => handleEditMenuSetting(items)} className="action--button mx-auto">
+					<Icon fontSize="small">edit</Icon>
+				</span>
+			</Tooltip>
 		</>
 	);
 }

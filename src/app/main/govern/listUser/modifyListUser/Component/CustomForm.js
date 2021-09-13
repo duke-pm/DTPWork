@@ -152,23 +152,30 @@ export default function CustomForm({
 								component={AntSelectCustom}
 							/>
 						</div>
-						<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-							<Field
-								label="Người dùng phải thay đổi mật khẩu ở lần đăng nhập tiếp theo"
-								name="ischangePasswrod"
-								top="10px"
-								position="right"
-								value={initialState.ischangePasswrod}
-								component={AntdCustomCheckbox}
-							/>
-							<Field
-								label="Inactive"
-								name="inactive"
-								top="20px"
-								position="right"
-								value={initialState.inactive}
-								component={AntdCustomCheckbox}
-							/>
+						<div className="flex flex-col justify-between">
+							<div className="flex flex-row items-center">
+								<Typography color="primary" variant="body1" className="label--form">
+									Inactive
+								</Typography>{' '}
+								<Field
+									name="inactive"
+									top="10px"
+									value={initialState.inactive}
+									component={AntdCustomCheckbox}
+								/>
+							</div>
+							<div className="flex flex-row items-center" style={{ marginTop: '-20px' }}>
+								<Typography color="primary" variant="body1" className="label--form">
+									Người dùng phải thay đổi mật khẩu ở lần đăng nhập tiếp theo
+								</Typography>{' '}
+								<Field
+									name="ischangePasswrod"
+									top="10px"
+									// position="right"
+									value={initialState.ischangePasswrod}
+									component={AntdCustomCheckbox}
+								/>
+							</div>
 						</div>
 					</div>
 					<div className="flex items-center justify-end">

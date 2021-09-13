@@ -47,13 +47,11 @@ export default function AntInputCustom({
 				validateStatus={submittedError || touchedError ? 'error' : 'success'}
 			>
 				<Input
-					// className="ant-input-dtp"
 					{...field}
 					{...props}
 					type={type || null}
 					className={`${readOnly ? 'readOnly' : ''}`}
 					defaultValue={field.value || ''}
-					// notFoundContent={notFoundContent || null}
 					placeholder={placeholder || ' '}
 					onChange={onInputChange}
 				/>
