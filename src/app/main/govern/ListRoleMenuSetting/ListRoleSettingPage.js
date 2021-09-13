@@ -4,8 +4,6 @@ import { Button, Typography } from '@material-ui/core';
 import { Select } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import FilterListIcon from '@material-ui/icons/FilterList';
-import UpdateIcon from '@material-ui/icons/Update';
 import * as actionsInfor from '../../assets/Possesion/_redux/possesionActions';
 import ListRoleSettingContent from './ListRoleSettingComponent';
 import * as actions from './_reduxListRoleMenu/listRoleMenuSettingActions';
@@ -45,7 +43,7 @@ export default function ListRoleSettingPage() {
 			notificationConfig('warning', 'Thất bại', 'Vui lòng chọn nhóm người dùng để cấp quyền');
 		}
 	};
-	const { entities, actionLoading, listLoading } = currentState;
+	const { actionLoading } = currentState;
 	const userGroup =
 		currentInfo &&
 		currentInfo.userGroup.reduce((arr, curr) => [...arr, { label: curr.groupName, value: curr.groupID }], []);

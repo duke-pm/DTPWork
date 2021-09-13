@@ -2,7 +2,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Icon, Typography } from '@material-ui/core';
 import { Spin, Tooltip } from 'antd';
-import { getInformationCompany } from 'app/main/assets/Possesion/_redux/possesionActions';
 import React, { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';

@@ -11,7 +11,7 @@ export default function SettingMenuContent() {
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const settingContext = useContext(SettingmenuContext);
-	const { page, rowPage, setPage, sort, setRowPage, setSort } = settingContext;
+	const { page, rowPage, setPage, sort, setRowPage } = settingContext;
 	const { currentState } = useSelector(state => ({ currentState: state.govern.menu }), shallowEqual);
 	const { entities, listLoading, actionLoading, total_count } = currentState;
 	useEffect(() => {

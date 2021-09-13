@@ -1,10 +1,10 @@
-import { validateField, validateFieldEN } from '@fuse/core/DtpConfig';
-import AntDateCustom from '@fuse/FormBookingCustom/AntDateCustom';
+import {
+	validateField
+	// validateFieldEN
+} from '@fuse/core/DtpConfig';
 import AntdCustomCheckbox from '@fuse/FormBookingCustom/AntdCustomCheckbox';
 import AntDescriptionsCustom from '@fuse/FormBookingCustom/AntDescriptionsCustom';
 import AntInputCustom from '@fuse/FormBookingCustom/AntInputCustom';
-import AntSelectCustom from '@fuse/FormBookingCustom/AntSelectCustom';
-import AntSelectMultiCustom from '@fuse/FormBookingCustom/AntSelectMultiCustom';
 import { Button, Typography } from '@material-ui/core';
 import { Spin } from 'antd';
 import { Field, Form, Formik } from 'formik';
@@ -57,7 +57,7 @@ export default function CustomForm({
 							name="inactive"
 							top="10px"
 							position="right"
-							value={initial.isPublic}
+							value={initialState.inactive}
 							component={AntdCustomCheckbox}
 						/>
 					</div>

@@ -1,9 +1,8 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Icon, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import { Table, Popover, Checkbox, Spin } from 'antd';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import AppsIcon from '@material-ui/icons/Apps';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { sortDirestion } from '@fuse/core/DtpConfig';
@@ -11,7 +10,6 @@ import ActionsListUserBody from '../ActionListUser/ActionsListUserBody';
 // import ActionsGroupUserBody from '../ActionGroupUser/ActionsGroupUserBody';
 
 export default function TableListUser({ entities, listLoading, handleEditListUser, createSortHandler }) {
-	const history = useHistory();
 	// const filterOwner = value => {
 	// 	console.log(value);
 	// };

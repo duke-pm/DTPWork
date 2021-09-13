@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import React from 'react';
 // import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import Search from 'antd/lib/input/Search';

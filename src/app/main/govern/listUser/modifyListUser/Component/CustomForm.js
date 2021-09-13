@@ -1,7 +1,5 @@
-import { validateField, validateFieldEN } from '@fuse/core/DtpConfig';
-import AntDateCustom from '@fuse/FormBookingCustom/AntDateCustom';
+import { validateField } from '@fuse/core/DtpConfig';
 import AntdCustomCheckbox from '@fuse/FormBookingCustom/AntdCustomCheckbox';
-import AntDescriptionsCustom from '@fuse/FormBookingCustom/AntDescriptionsCustom';
 import AntInputCustom from '@fuse/FormBookingCustom/AntInputCustom';
 import AntSelectCustom from '@fuse/FormBookingCustom/AntSelectCustom';
 import AntSelectMultiCustom from '@fuse/FormBookingCustom/AntSelectMultiCustom';
@@ -168,7 +166,7 @@ export default function CustomForm({
 								name="inactive"
 								top="20px"
 								position="right"
-								value={initialState.isPublic}
+								value={initialState.inactive}
 								component={AntdCustomCheckbox}
 							/>
 						</div>

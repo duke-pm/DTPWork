@@ -1,23 +1,23 @@
-import { validateField, validateFieldEN } from '@fuse/core/DtpConfig';
-import AntDateCustom from '@fuse/FormBookingCustom/AntDateCustom';
-import AntdCustomCheckbox from '@fuse/FormBookingCustom/AntdCustomCheckbox';
+// import { validateField, validateFieldEN } from '@fuse/core/DtpConfig';
+// import AntDateCustom from '@fuse/FormBookingCustom/AntDateCustom';
+// import AntdCustomCheckbox from '@fuse/FormBookingCustom/AntdCustomCheckbox';
 import AntDescriptionsCustom from '@fuse/FormBookingCustom/AntDescriptionsCustom';
 import AntInputCustom from '@fuse/FormBookingCustom/AntInputCustom';
-import AntSelectCustom from '@fuse/FormBookingCustom/AntSelectCustom';
-import AntSelectMultiCustom from '@fuse/FormBookingCustom/AntSelectMultiCustom';
+// import AntSelectCustom from '@fuse/FormBookingCustom/AntSelectCustom';
+// import AntSelectMultiCustom from '@fuse/FormBookingCustom/AntSelectMultiCustom';
 import { Button, Typography } from '@material-ui/core';
 import { Spin } from 'antd';
 import { Field, Form, Formik } from 'formik';
 import React from 'react';
-import * as Yup from 'yup';
+// import * as Yup from 'yup';
 
 export default function CustomForm({ actionLoading }) {
-	const initial = {
-		id: '',
-		code: '',
-		roleName: '',
-		description: ''
-	};
+	// const initial = {
+	// 	id: '',
+	// 	code: '',
+	// 	roleName: '',
+	// 	description: ''
+	// };
 	const handleSubmitForm = values => {
 		console.log(values);
 	};

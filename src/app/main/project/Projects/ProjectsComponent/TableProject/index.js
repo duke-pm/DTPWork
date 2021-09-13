@@ -70,10 +70,10 @@ function TableProject(props) {
 			props.history.push(`/projects/task/${item.prjID}`);
 		}
 	};
-	const handleOpenBarChar = item => {
-		props.history.push(`/projects/chart/${item.prjID}`);
-		dispatch(actions.setTaskEditProject(item));
-	};
+	// const handleOpenBarChar = item => {
+	// 	props.history.push(`/projects/chart/${item.prjID}`);
+	// 	dispatch(actions.setTaskEditProject(item));
+	// };
 	const onHandleChangeStatus = value => {
 		dispatch(
 			actions.fetchsProjectFilter(rowPage, page, value?.toString(), ownerFilter?.toString(), dateStart, search)

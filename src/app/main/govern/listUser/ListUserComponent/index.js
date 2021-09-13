@@ -1,5 +1,4 @@
-import FuseAnimate from '@fuse/core/FuseAnimate';
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { Spin } from 'antd';
 import Panigation from '@fuse/core/FusePanigate';

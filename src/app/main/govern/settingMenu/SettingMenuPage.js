@@ -1,5 +1,5 @@
 import Search from 'antd/lib/input/Search';
-import { Box, Button, Typography } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import React, { useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';

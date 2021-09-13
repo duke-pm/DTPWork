@@ -6,7 +6,6 @@ import { getInformationCompany } from 'app/main/assets/Possesion/_redux/possesio
 import React, { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { fetchsListUser } from '../_reduxListUser/listUserActions';
 import FormComponent from './Component';
 
 export default function ModifyListUser() {

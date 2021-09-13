@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { notificationConfig } from '@fuse/core/DtpConfig';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import { useHistory } from 'react-router';

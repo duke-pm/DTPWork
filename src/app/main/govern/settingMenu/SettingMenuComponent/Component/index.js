@@ -3,7 +3,6 @@
 import { Typography } from '@material-ui/core';
 import { Table, Popover, Checkbox, Spin } from 'antd';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import AppsIcon from '@material-ui/icons/Apps';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ActionsMenuSetting from '../SettingMenuContent/ActionsMenuSetting';
