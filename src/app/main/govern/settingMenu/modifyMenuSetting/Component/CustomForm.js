@@ -38,6 +38,7 @@ export default function CustomForm({
 	});
 
 	const initial = entitiesEdit && entitiesEdit.menuID ? entitiesEdit : inititalState;
+	console.log(initial);
 	return (
 		<Formik
 			validationSchema={validationSchema}
@@ -89,13 +90,23 @@ export default function CustomForm({
 							<Field label="Mobile icon" name="mIcon" component={AntInputCustom} />
 							<Field label="Mobile Url/ Action" name="mName" component={AntInputCustom} />
 						</div>
-						<div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+						<div className="grid grid-cols-3 gap-8">
 							<Field
 								label="Order"
 								name="visOrder"
 								type="number"
 								position="right"
 								component={AntInputCustom}
+							/>
+						</div>
+						<div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+							<Field
+								label="Inactive"
+								name="inactive"
+								top="10px"
+								position="right"
+								value={initial.inactive}
+								component={AntdCustomCheckbox}
 							/>
 							<Field
 								label="Mobile"
