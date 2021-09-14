@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Box, Button, Icon, Typography } from '@material-ui/core';
+import { Icon, Typography } from '@material-ui/core';
 import React, { useContext } from 'react';
 import Search from 'antd/lib/input/Search';
 import { useDispatch } from 'react-redux';
@@ -8,9 +8,6 @@ import { DatePicker } from 'antd';
 import moment from 'moment';
 import TimeLine from '../TimeLine';
 import RequestResovelTable from './ComponentResovleRequest';
-import FormAllocation from './FormControlConfirm/Allocation';
-import FormConfirmGobal from './FormControlConfirm/FormConfirmGobal';
-import FormCustomCorrupt from './FormControlConfirm/FormCustomCorrupt';
 import { ResovleContext } from './ResovleRequestContext';
 import { searchConfirms } from '../_redux/confirmAction';
 
@@ -36,7 +33,9 @@ export default function ResovleRequestPage() {
 		dateEnd,
 		search,
 		setDateStart,
-		setDateEnd
+		setDateEnd,
+		setSearch,
+		setPage
 	} = ResovleContextHandle;
 	const handleClearAll = () => {
 		dispatch(
@@ -55,7 +54,7 @@ export default function ResovleRequestPage() {
 		);
 		setRequestTypeId(null);
 		setDateStart(moment().startOf('month'));
-		setDateStart(moment().endOf('month'));
+		setDateEnd(moment().endOf('month'));
 	};
 	const handleClearType = () => {
 		dispatch(searchConfirms(true, status, rowPage, page, 0, sort.id, sort.direction, search, dateStart, dateEnd));
@@ -73,20 +72,63 @@ export default function ResovleRequestPage() {
 			searchConfirms(true, status, rowPage, page, requestTypeId, sort.id, sort.direction, search, dateStart, date)
 		);
 	};
-	console.log(dateStart);
+	const handleSearch = () => {
+		setPage(0);
+		dispatch(
+			searchConfirms(
+				true,
+				status,
+				rowPage,
+				page,
+				requestTypeId,
+				sort.id,
+				sort.direction,
+				search,
+				dateStart,
+				dateEnd
+			)
+		);
+	};
+	const onHandleChange = e => {
+		setSearch(e.target.value);
+		setPage(0);
+		if (e.target.value.length <= 0) {
+			dispatch(
+				searchConfirms(
+					true,
+					status,
+					rowPage,
+					page,
+					requestTypeId,
+					sort.id,
+					sort.direction,
+					e.target.value,
+					dateStart,
+					dateEnd
+				)
+			);
+		}
+	};
 	return (
 		<>
 			<TimeLine setTimeLine={setTimeLine} timeLine={timeLine} />
-			<FormAllocation />
-			<FormConfirmGobal />
-			<FormCustomCorrupt />
 			<div className="container proposedManagement">
 				<div className="proposedManagement__header px-16 shadow-lg">
 					<Typography color="primary" variant="h6">
 						Đề xuất cần xử lý
 					</Typography>
 					<div className="proposedManagement__header--action">
-						<Search className="input__search" placeholder="Search" />
+						<Search
+							onChange={e => onHandleChange(e)}
+							onKeyPress={event => {
+								if (event.key === 'Enter') {
+									handleSearch();
+								}
+							}}
+							onSearch={handleSearch}
+							className="input__search"
+							placeholder="Search"
+						/>
 					</div>
 				</div>
 				<div className="proposedManagement__subcontent px-16 justify-end mt-8">

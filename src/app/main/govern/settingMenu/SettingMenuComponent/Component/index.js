@@ -1,10 +1,9 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Typography } from '@material-ui/core';
-import { Table, Popover, Checkbox, Spin } from 'antd';
+import { Table, Checkbox, Spin } from 'antd';
 import React from 'react';
 import AppsIcon from '@material-ui/icons/Apps';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ActionsMenuSetting from '../SettingMenuContent/ActionsMenuSetting';
 
 export default function TableSettingMenu({ entities, listLoading, handleEditMenuSetting }) {

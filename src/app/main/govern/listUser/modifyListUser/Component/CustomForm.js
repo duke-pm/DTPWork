@@ -154,27 +154,21 @@ export default function CustomForm({
 						</div>
 						<div className="flex flex-col justify-between">
 							<div className="flex flex-row items-center">
-								<Typography color="primary" variant="body1" className="label--form">
+								<Field name="inactive" value={initialState.inactive} component={AntdCustomCheckbox} />
+								<Typography color="primary" variant="body1" className="label--form ml-16">
 									Inactive
 								</Typography>{' '}
-								<Field
-									name="inactive"
-									top="10px"
-									value={initialState.inactive}
-									component={AntdCustomCheckbox}
-								/>
 							</div>
 							<div className="flex flex-row items-center" style={{ marginTop: '-20px' }}>
-								<Typography color="primary" variant="body1" className="label--form">
-									Người dùng phải thay đổi mật khẩu ở lần đăng nhập tiếp theo
-								</Typography>{' '}
 								<Field
 									name="ischangePasswrod"
-									top="10px"
 									// position="right"
 									value={initialState.ischangePasswrod}
 									component={AntdCustomCheckbox}
 								/>
+								<Typography color="primary" variant="body1" className="label--form ml-16">
+									Người dùng phải thay đổi mật khẩu ở lần đăng nhập tiếp theo
+								</Typography>{' '}
 							</div>
 						</div>
 					</div>

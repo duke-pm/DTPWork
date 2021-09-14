@@ -11,13 +11,14 @@ import {
 } from '@material-ui/core';
 import { Form, Formik, Field } from 'formik';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
 import { notificationConfig, validateField } from '@fuse/core/DtpConfig';
 import { Spin } from 'antd';
 import CloseIcon from '@material-ui/icons/Close';
 import * as Yup from 'yup';
-import { ResovleContext } from '../../ResovleRequestContext';
-import * as actions from '../../../_redux/confirmAction';
+import { requestApproveResolve } from 'app/main/assets/proposedManagement/_redux/confirmAction';
+import AntDescriptionsCustom from '@fuse/FormBookingCustom/AntDescriptionsCustom';
+import { useHistory } from 'react-router';
+import { CustomCorruptContext } from '../PageCustomCorruptContext';
 // import FormCustomRepairEdit from './FormCustomRepairEdit';
 const initial = {
 	note: ''
@@ -26,9 +27,10 @@ export default function FormConfirmGobal() {
 	const checkValidate = Yup.object().shape({
 		note: Yup.string().required(`${validateField}`)
 	});
+	const history = useHistory();
 	const dispatch = useDispatch();
-	const ConfirmGobalContext = useContext(ResovleContext);
-	const { setDialogConfirmGobal, setDialogAllocation, setDialogCorrupt, diaglogConfirmGobal } = ConfirmGobalContext;
+	const ConfirmContextLose = useContext(CustomCorruptContext);
+	const { setDialogConfirmGobal, diaglogConfirmGobal } = ConfirmContextLose;
 	const handleClose = () => {
 		setDialogConfirmGobal(false);
 	};
@@ -41,12 +43,11 @@ export default function FormConfirmGobal() {
 	);
 	const handleSubmitApprove = values => {
 		const status = false;
-		dispatch(actions.requestApproveResolve(entitiesEdit, status, values)).then(data => {
+		dispatch(requestApproveResolve(entitiesEdit, status, values)).then(data => {
 			if (!data.isError) {
 				notificationConfig('success', 'Thành công', 'Xác nhận không phê duyệt');
 				handleClose();
-				setDialogAllocation(false);
-				setDialogCorrupt(false);
+				history.goBack();
 			}
 		});
 	};
@@ -77,13 +78,10 @@ export default function FormConfirmGobal() {
 								<div className="grid grid-cols-1 mb-16 gap-8 ">
 									<Field
 										label="Lý do không duyệt"
-										autoFocus
 										hasFeedback
 										name="note"
-										component={InputTextAreaLg}
-										className="mb-16"
-										variant="outlined"
-										row={8}
+										component={AntDescriptionsCustom}
+										row={4}
 									/>
 								</div>
 							</div>

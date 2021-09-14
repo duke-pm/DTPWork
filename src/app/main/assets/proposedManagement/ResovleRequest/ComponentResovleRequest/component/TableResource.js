@@ -1,17 +1,18 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Icon, Typography } from '@material-ui/core';
-import { Dropdown, Radio, Table } from 'antd';
+import { Dropdown, Popover, Radio, Table } from 'antd';
 import React, { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
 import * as moment from 'moment';
 import { useDispatch } from 'react-redux';
+import AppsIcon from '@material-ui/icons/Apps';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { chipColor, chipText, chipTextColor, chipTextType } from '../ResovleRequestConfig';
 import { ResovleContext } from '../../ResovleRequestContext';
 import { searchConfirms } from '../../../_redux/confirmAction';
+import ActionsResovle from '../ActionsResovle';
 
-export default function TableResovleRequest({ entities, listloading }) {
-	const history = useHistory();
+export default function TableResovleRequest({ entities, listloading, handleOpenDialog, handleOpenTimeLine }) {
 	const dispatch = useDispatch();
 	const confirmConext = useContext(ResovleContext);
 	const { search, rowPage, page, status, dateEnd, dateStart, sort, setRequestTypeId } = confirmConext;
@@ -33,10 +34,30 @@ export default function TableResovleRequest({ entities, listloading }) {
 			)
 		);
 	};
-	const handChangeRouteView = () => {
-		history.push('/booking/resource/view/6');
-	};
 	const columns = [
+		{
+			title: <AppsIcon />,
+			align: 'center',
+			key: 'operation',
+			fixed: 'left',
+			width: '4%',
+			render: (_, item) => (
+				<Popover
+					overlayStyle={{ zIndex: '19' }}
+					placement="rightTop"
+					content={() => (
+						<ActionsResovle
+							handleOpenTimeLine={handleOpenTimeLine}
+							items={item}
+							handleOpenDialog={handleOpenDialog}
+						/>
+					)}
+					title="Hành động"
+				>
+					<MoreVertIcon className="cursor-pointer" />
+				</Popover>
+			)
+		},
 		{
 			title: '#',
 			dataIndex: 'code',

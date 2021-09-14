@@ -1,7 +1,5 @@
 /* eslint-disable no-shadow */
 import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
-import FuseAnimate from '@fuse/core/FuseAnimate';
-import FuseLoading from '@fuse/core/FuseLoading';
 import React, { useContext } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import Panigation from '@fuse/core/FusePanigate';
@@ -15,7 +13,7 @@ export default function LineComponent() {
 	const lineContext = useContext(SettingLineContext);
 	const { setPage, setRowPage, rowPage, page } = lineContext;
 	const { currentState } = useSelector(state => ({ currentState: state.project }), shallowEqual);
-	const { entitiesEdit, listLoading, actionLoading, entities, total_count } = currentState;
+	const { entitiesEdit, actionLoading, entities, total_count } = currentState;
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
 	};
