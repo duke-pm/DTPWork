@@ -61,6 +61,7 @@ export default function TableListUser({ entities, listLoading, handleEditListUse
 			title: 'Inactive',
 			dataIndex: 'Inactive',
 			key: 'Inactive',
+			align: 'center',
 			sorter: true,
 			render: (_, item) => <Checkbox checked={item.inactive} />
 		},
