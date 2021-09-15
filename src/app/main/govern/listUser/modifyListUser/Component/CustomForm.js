@@ -95,13 +95,7 @@ export default function CustomForm({
 							<Field label="Tên" name="firstName" hasFeedback component={AntInputCustom} />
 						</div>
 						<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-							<Field
-								label="Điện thoại"
-								name="cellPhone"
-								type="number"
-								hasFeedback
-								component={AntInputCustom}
-							/>
+							<Field label="Điện thoại" name="cellPhone" type="number" component={AntInputCustom} />
 							<Field label="Email" name="email" hasFeedback component={AntInputCustom} />
 						</div>
 						<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
@@ -116,7 +110,6 @@ export default function CustomForm({
 								label="Quản lý trực tiếp"
 								name="LineManager"
 								options={arrManag}
-								hasFeedback
 								component={AntSelectCustom}
 							/>
 						</div>
@@ -187,7 +180,7 @@ export default function CustomForm({
 							variant="contained"
 							color="secondary"
 						>
-							<Typography variant="body2"> Cancle </Typography>
+							<Typography variant="body2"> Cancel </Typography>
 						</Button>
 					</div>
 				</Form>

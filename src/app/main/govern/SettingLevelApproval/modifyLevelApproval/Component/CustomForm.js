@@ -95,7 +95,7 @@ export default function CustomForm({ actionLoading }) {
 							</Button>
 						)}
 						<Button className="button__cancle mr-8" variant="contained" color="secondary">
-							<Typography variant="body2"> Cancle </Typography>
+							<Typography variant="body2"> Cancel </Typography>
 						</Button>
 					</div>
 				</Form>

@@ -70,7 +70,7 @@ export default function ModifyListUser() {
 		<div className="container govern">
 			<div className="govern__header px-16">
 				<Typography color="primary" variant="h6">
-					{params.type === 'cap-nhat' ? 'Cập nhật người dùng' : 'Chỉnh sửa người dùng'}
+					{params.type === 'cap-nhat' ? 'Cập nhật người dùng' : 'Tạo mới người dùng'}
 				</Typography>
 				<div className="govern__header--action">
 					<Tooltip placement="bottom" title="Exit">
