@@ -23,7 +23,7 @@ export default function FormCorrupt({ entitiesEdit, actionLoading, params }) {
 	return (
 		<Grid container item spacing={2}>
 			<Grid className="mb-8" item sm={12} md={12} lg={12}>
-				<Typography variant="subtitle2" className="title__view" color="primary">
+				<Typography color="primary" variant="body1" className="label--form--title mb-8">
 					Thông tin tài sản
 				</Typography>
 			</Grid>
@@ -108,7 +108,7 @@ export default function FormCorrupt({ entitiesEdit, actionLoading, params }) {
 				<Typography variant="body2"> {entitiesEdit?.assetStatusName} </Typography>
 			</Grid>
 			<Grid className="mb-16" item sm={12} md={12} lg={12}>
-				<Typography variant="subtitle2" className="title__view" color="primary">
+				<Typography color="primary" variant="body1" className="label--form--title mb-8">
 					Thông tin tài sản bị {params?.corrupt === 'lost' ? 'mất' : 'hỏng'}
 				</Typography>
 			</Grid>
@@ -129,7 +129,7 @@ export default function FormCorrupt({ entitiesEdit, actionLoading, params }) {
 				>
 					{({ handleSubmit, isSubmitting }) => (
 						<Form>
-							<div className="flex flex-col">
+							<div className="">
 								<Field label="Nội dung" name="note" component={AntDescriptionsCustom} row={3} />
 							</div>
 							<div className="flex justify-end">
