@@ -15,7 +15,7 @@ import ActionsResovle from '../ActionsResovle';
 export default function TableResovleRequest({ entities, listloading, handleOpenDialog, handleOpenTimeLine }) {
 	const dispatch = useDispatch();
 	const confirmConext = useContext(ResovleContext);
-	const { search, rowPage, page, status, dateEnd, dateStart, sort, setRequestTypeId } = confirmConext;
+	const { search, rowPage, page, status, dateEnd, dateStart, sort, setRequestTypeId, requestTypeId } = confirmConext;
 	const onChange = e => {
 		const { target } = e;
 		setRequestTypeId(target.value);
@@ -101,6 +101,7 @@ export default function TableResovleRequest({ entities, listloading, handleOpenD
 							overlay={
 								<div className="filter--type">
 									<Radio.Group
+										value={requestTypeId}
 										onChange={onChange}
 										options={[
 											{ value: '0', label: 'Tất cả' },

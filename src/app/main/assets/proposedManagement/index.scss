@@ -84,6 +84,24 @@
             justify-content: space-between;
         }
     }
+    &__Tab{
+        height: calc(100vh - 175px);
+        overflow-x: hidden;
+        overflow-y: auto;
+        .table--tab{
+            thead[class*="ant-table-thead"] th{
+                background-color: $backgroud-table !important;
+              }
+            .ant-table-thead > tr > th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
+                width: 0px;
+            }
+            th.ant-table-cell{
+                font-size: 13px;
+                font-weight: 600;
+                color: $primary-page;
+            }
+        }
+    }
     &__content{
         height: calc(100vh - 175px);
         overflow-x: hidden;
@@ -166,6 +184,18 @@
 .filter--type{
     width: 207px;
     height: 17vh;
+    overflow: auto;
+    background-color: $white;
+    padding: 15px 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px 0 rgba(9, 30, 66, 0.08);
+    .ant-radio-group{
+        line-height: 2.5715;
+    }
+}
+.filter--status{
+    width: 207px;
+    height: 20vh;
     overflow: auto;
     background-color: $white;
     padding: 15px 20px;

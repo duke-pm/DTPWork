@@ -1,18 +1,25 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-shadow */
 import React, { useContext, useEffect } from 'react';
-import FuseAnimate from '@fuse/core/FuseAnimate';
-import { Paper, Table, TableContainer } from '@material-ui/core';
+import { Icon, Typography } from '@material-ui/core';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import FuseLoading from '@fuse/core/FuseLoading';
 import Panigation from '@fuse/core/FusePanigate';
-import { Empty, Spin } from 'antd';
-import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
+import { DatePicker, Spin } from 'antd';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import { Link } from 'react-router-dom';
+import moment from 'moment';
 import { ConfirmContext } from '../ConfirmContext';
-import TableBodyDamaged from './DamagedComponets/TableBodyDamaged';
-import TableHeaderDamaged from './DamagedComponets/TableHeaderDamaged';
 import * as action from '../../_redux/confirmAction';
-import ActionComponent from './DamagedComponets/FilterActionComponent';
+import TableConfirDamaged from './DamagedComponets/TableConfirDamaged';
 
+const statusType = {
+	0: 'Tất cả',
+	1: 'Chờ phê duyệt',
+	2: 'Đã duyệt',
+	3: 'Hoàn thành',
+	4: 'Từ chối'
+};
 export default function ConfirmDamaged(props) {
 	const ConfirmContextDamage = useContext(ConfirmContext);
 	const {
@@ -28,11 +35,13 @@ export default function ConfirmDamaged(props) {
 		setPage,
 		sort,
 		setSort,
-		setTimeLine
+		setTimeLine,
+		setDateStart,
+		setDateEnd,
+		setStatus
 	} = ConfirmContextDamage;
 	const { currentState } = useSelector(state => ({ currentState: state.confirm }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;
-	const classes = DtpCustomStyles(props);
 	const dispatch = useDispatch();
 	const handleOpenFormEdit = items => {
 		setFormControl(true);
@@ -97,48 +106,116 @@ export default function ConfirmDamaged(props) {
 			id
 		});
 	};
-	if (listloading) {
-		return <FuseLoading />;
-	}
+	const handleChangeFilterDateStart = date => {
+		setDateStart(date);
+		dispatch(
+			action.searchConfirms(false, status, rowPage, page, 2, sort.id, sort.direction, search, date, dateEnd)
+		);
+	};
+	const handleChangeFilterDateEnd = date => {
+		setDateEnd(date);
+		dispatch(
+			action.searchConfirms(false, status, rowPage, page, 2, sort.id, sort.direction, search, dateStart, date)
+		);
+	};
+	const handleClearStatus = () => {
+		setStatus(null);
+		dispatch(
+			action.searchConfirms(false, 0, rowPage, page, 2, sort.id, sort.direction, search, dateStart, dateEnd)
+		);
+	};
+	const handleClearAll = () => {
+		setStatus(null);
+		setDateStart(moment().startOf('month'));
+		setDateEnd(moment().endOf('month'));
+		dispatch(action.fetchDataConfirms(0, 2));
+	};
 	return (
 		<>
-			<div className="flex flex-col">
-				<ActionComponent actionLoading={actionLoading} />
-				<FuseAnimate animation="transition.slideUpIn" delay={200}>
-					<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
-						<TableContainer className={`${classes.TableContainer} flex flex-1`}>
-							<Paper className={classes.rootPaper}>
-								<Table className={`${classes.tableGoverGroup}`} stickyHeader>
-									<TableHeaderDamaged createSortHandler={createSortHandler} sort={sort} />
-									<TableBodyDamaged
-										handleOpenTimeLine={handleOpenTimeLine}
-										entities={entities}
-										lastErrors={lastErrors}
-										classes={classes}
-										handleOpenForm={handleOpenFormEdit}
-									/>
-								</Table>
-								{entities?.length === 0 || lastErrors ? (
-									<FuseAnimate delay={300}>
-										<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-									</FuseAnimate>
-								) : null}
-							</Paper>
-						</TableContainer>
-						{entities?.length !== 0 && (
-							<div className="flex flex-row items-center justify-end">
-								{actionLoading && <Spin />}
-								<Panigation
-									page={page}
-									handleChangePage={handleChangePage}
-									rowPage={rowPage}
-									handleChangeRowsPerPage={handleRowChange}
-									count={total_count}
-								/>
-							</div>
-						)}
+			<div className="flex flex-col table--tab">
+				<div className="flex flex-col ">
+					<div className="proposedManagement__subcontent justify-between mb-16">
+						<div>
+							<Typography variant="subtitle1" color="inherit">
+								<AddCircleOutlineIcon style={{ color: '#1890ff' }} />
+								<Link style={{ color: '#1890ff' }} to="/tai-san/bao-mat-hong-tai-san">
+									{' '}
+									Báo hỏng tài sản{' '}
+								</Link>
+							</Typography>
+						</div>
+						<div className="proposedManagement__subcontent--action">
+							<DatePicker
+								onChange={handleChangeFilterDateStart}
+								value={dateStart}
+								placeholder="Ngày bắt đầu"
+								style={{ width: '100%' }}
+							/>
+							<DatePicker
+								onChange={handleChangeFilterDateEnd}
+								value={dateEnd}
+								placeholder="Ngày kết thúc"
+								style={{ width: '100%' }}
+							/>
+						</div>
 					</div>
-				</FuseAnimate>
+					{status ? (
+						<div className="projects__filter mt-8 mb-8">
+							<div className="title_filter flex">
+								<Icon fontSize="small" color="primary">
+									tune
+								</Icon>
+								<Typography variant="body1" color="primary" className="ml-8 title">
+									{' '}
+									Filter
+								</Typography>
+							</div>
+							<div className="content_filter">
+								{status && (
+									<div className="control-filter">
+										<div className="content flex items-center">
+											<Typography className="" color="primary">
+												Thành công
+											</Typography>
+											<Typography color="primary" className="ml-8 value-filter">
+												{statusType[status]}
+											</Typography>
+											<div onClick={handleClearStatus} className="action">
+												<Icon className="btn-icon" color="primary">
+													clear
+												</Icon>
+											</div>
+										</div>
+									</div>
+								)}
+							</div>
+							<div className="action-filter">
+								<Typography
+									onClick={handleClearAll}
+									variant="subtitle2"
+									color="primary"
+									className="cursor-pointer"
+								>
+									{' '}
+									Delete all{' '}
+								</Typography>
+							</div>
+						</div>
+					) : null}
+					<TableConfirDamaged entities={entities} listLoading={listloading} />
+					{entities?.length !== 0 && (
+						<div className="flex flex-row items-center justify-end">
+							{actionLoading && <Spin />}
+							<Panigation
+								page={page}
+								handleChangePage={handleChangePage}
+								rowPage={rowPage}
+								handleChangeRowsPerPage={handleRowChange}
+								count={total_count}
+							/>
+						</div>
+					)}
+				</div>
 			</div>
 		</>
 	);

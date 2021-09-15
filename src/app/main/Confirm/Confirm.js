@@ -57,8 +57,8 @@ function Confirm() {
 								<div className="flex flex-col items-center">
 									<p className="text-gray-400 text-center">
 										{' '}
-										A confirmation e-mail has been sent to you.
-										Check your inbox and click on the link to change your password.
+										A confirmation e-mail has been sent to you. Check your inbox and click on the
+										link to change your password.
 									</p>
 								</div>
 							</div>
