@@ -41,7 +41,7 @@ export default function CustomForm({
 	};
 	const validationSchema = Yup.object().shape({
 		userName: Yup.string().required(`${validateField}`),
-		email: Yup.string().required(`${validateField}`),
+		email: Yup.string().email('Không đúng định dạng email').required(`${validateField}`),
 		lastMiddleName: Yup.string().required(`${validateField}`),
 		firstName: Yup.string().required(`${validateField}`),
 		userGroup: Yup.string().required(`${validateField}`),
