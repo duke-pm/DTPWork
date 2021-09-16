@@ -35,13 +35,13 @@ export default function CustomForm({ actionLoading }) {
 		>
 			{({ handleSubmit, isSubmitting }) => (
 				<Form>
-					<div className="mt-8 px-16 sm:px-24">
+					<div className="mt-8">
 						<div className="flex justify-between flex-row">
-							<Typography color="primary" variant="body1" className="label--form--title mb-20">
-								Quyền{' '}
+							<Typography color="primary" variant="subtitle2" className="mb-20">
+								QUYỀN
 							</Typography>
 						</div>
-						<div className="grid grid-cols-2 gap-8">
+						<div className="grid grid-cols-1 gap-8">
 							<Field
 								position="right"
 								label="Nhóm"
@@ -59,8 +59,8 @@ export default function CustomForm({ actionLoading }) {
 							/>
 						</div>
 						<div className="flex justify-between flex-row">
-							<Typography color="primary" variant="body1" className="label--form--title mb-20">
-								Cấp độ chi tiết{' '}
+							<Typography color="primary" variant="subtitle2" className="mb-20">
+								CẤP ĐỘ CHI TIẾT
 							</Typography>
 						</div>
 						<div className="grid grid-cols-2 gap-8">
@@ -94,7 +94,7 @@ export default function CustomForm({ actionLoading }) {
 								<Typography variant="body2"> Save </Typography>
 							</Button>
 						)}
-						<Button className="button__cancle mr-8" variant="contained" color="secondary">
+						<Button className="button__cancle" variant="contained" color="secondary">
 							<Typography variant="body2"> Cancel </Typography>
 						</Button>
 					</div>

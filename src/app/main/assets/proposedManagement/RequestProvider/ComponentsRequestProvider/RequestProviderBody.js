@@ -188,8 +188,12 @@ export default function RequestProviderBody({
 							<div style={{ width: '90%' }} className="sm" id="content">
 								<div className="px-16 w-full sm:px-24">
 									<div className="flex justify-between flex-row">
-										<Typography color="primary" variant="body1" className="label--form--title mb-8">
-											Thông tin người yêu cầu.
+										<Typography
+											color="primary"
+											variant="subtitle2"
+											className="label--form--title mb-8"
+										>
+											THÔNG TIN NGƯỜI YÊU CẦU
 										</Typography>{' '}
 									</div>
 									<div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 ">
@@ -240,8 +244,8 @@ export default function RequestProviderBody({
 								</div>
 								<div className="px-16 sm:px-24 table-form">
 									<div className="flex justify-between flex-row">
-										<Typography color="primary" variant="body1" className="label--form--title mb-8">
-											Tài sản yêu cầu.
+										<Typography color="primary" variant="subtitle2" className=" mb-8">
+											THÔNG TIN NGƯỜI YÊU CẦU.
 										</Typography>{' '}
 									</div>
 									<Typography variant="subtitle2" color="inherit" className="mb-16">

@@ -27,7 +27,7 @@ html {
  font-family: Muli, Roboto, Helvetica Neue, Arial, sans-serif;
 } */
 body {
-    font-size: 1.4rem !important;
+    font-size: 1.3rem !important;
     line-height: 1.4 !important;
     font-family: sans-serif, Muli, Roboto, Helvetica Neue, Arial !important;
 }
@@ -202,7 +202,7 @@ input:-webkit-autofill {
 }
 
 .ant-input {
-    font-size: 1.4rem !important;
+    font-size: 1.3rem !important;
     /* line-height: 1.4 !important; */
     font-family: sans-serif, Muli, Roboto, Helvetica Neue, Arial !important;
 }

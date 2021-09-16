@@ -79,8 +79,8 @@ export default function FormCustomEdit({ handleSubmitForm, actionLoading, entiti
 					<Form>
 						<div className="px-16 sm:px-24">
 							<div className="flex justify-between flex-row">
-								<Typography color="primary" variant="body1" className="label--form--title mb-20">
-									Thông tin nhân viên
+								<Typography color="primary" variant="subtitle2" className="mb-20">
+									THÔNG TIN NHÂN VIÊN
 								</Typography>
 							</div>
 							<div className="grid grid-cols-1 sm:grid-cols-4 gap-8 ">
@@ -105,8 +105,8 @@ export default function FormCustomEdit({ handleSubmitForm, actionLoading, entiti
 						</div>
 						<div className="px-16 sm:px-24">
 							<div className="flex justify-between flex-row">
-								<Typography color="primary" variant="body1" className="label--form--title mb-20">
-									Tài sản yêu cầu.
+								<Typography color="primary" variant="subtitle2" className="mb-20">
+									TÀI SẢN YÊU CẦU.
 								</Typography>{' '}
 							</div>
 							<Table

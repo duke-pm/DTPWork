@@ -39,7 +39,7 @@ export default function AntDatepickerCustom({
 	return (
 		<div className={`form-item-input ${position && 'flex flex-row  justify-between'}`}>
 			<div className={`flex flex-row `}>
-				<Typography color="primary" variant="body1" className="label--form">
+				<Typography color="primary" variant="subtitle2" className="label--form">
 					{' '}
 					{label}{' '}
 				</Typography>

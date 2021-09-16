@@ -117,7 +117,7 @@
                 width: 0px;
             }
             th.ant-table-cell{
-                font-size: 13px;
+                font-size: $font-size-table;
                 font-weight: 600;
                 color: $primary-page;
             }
@@ -178,7 +178,5 @@
 }
 
 .label--form{
-    font-weight: 600;
-    font-size: 13px;
     margin-bottom: 10px;
 }

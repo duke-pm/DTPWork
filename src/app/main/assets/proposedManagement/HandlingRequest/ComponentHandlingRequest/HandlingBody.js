@@ -1,22 +1,23 @@
 /* eslint-disable no-shadow */
-import DateCustom from '@fuse/CustomForm/Date';
 import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
-import InputTextAreaRequest from '@fuse/CustomForm/InputTextAreaRequest';
 import { Formik, Form, Field } from 'formik';
 import React, { useState, useEffect } from 'react';
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import { Spin } from 'antd';
 import * as moment from 'moment';
-import RadioAntd from '@fuse/CustomForm/RadioAntd';
-import SelectAntd from '@fuse/CustomForm/SelectAntd';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { getDataUserLocalStorage, notificationConfig } from '@fuse/core/DtpConfig';
 import { useHistory } from 'react-router-dom';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
-import ContentFormReport from './ContentFormReport';
-import * as actions from '../../_redux/confirmAction';
+import AntSelectCustom from '@fuse/FormBookingCustom/AntSelectCustom';
+import AntRadioCustom from '@fuse/FormBookingCustom/AntRadioCustom';
+import AntDescriptionsCustom from '@fuse/FormBookingCustom/AntDescriptionsCustom';
+import AntDateCustom from '@fuse/FormBookingCustom/AntDateCustom';
+import AntFileCustom from '@fuse/FormBookingCustom/AntFileCustom';
 import { validateSchema } from './HandlingRequestConfig';
+import * as actions from '../../_redux/confirmAction';
+import ContentFormReport from './ContentFormReport';
 
 export default function HandlingBody({ dataAssets, setDataAssets, value }) {
 	const history = useHistory();
@@ -88,7 +89,7 @@ export default function HandlingBody({ dataAssets, setDataAssets, value }) {
 										hasFeedback
 										label="Chọn tài sản"
 										options={assetsUser || []}
-										component={SelectAntd}
+										component={AntSelectCustom}
 										handleChangeState={handleChangeAssets}
 									/>
 									<Field
@@ -96,12 +97,11 @@ export default function HandlingBody({ dataAssets, setDataAssets, value }) {
 										name="status"
 										readOnly
 										hasFeedback
-										component={RadioAntd}
+										component={AntRadioCustom}
 										options={[
 											{ label: 'Báo hỏng', value: 'Damage' },
 											{ label: 'Báo mất', value: 'Lost' }
 										]}
-										className="mt-8 mb-16"
 									/>
 								</div>
 							</div>
@@ -118,30 +118,28 @@ export default function HandlingBody({ dataAssets, setDataAssets, value }) {
 											label={`Lý do báo ${value === 1 ? 'hỏng' : 'mất'}`}
 											name="note"
 											row={4}
-											component={InputTextAreaRequest}
-											className="mb-16"
-											variant="outlined"
+											component={AntDescriptionsCustom}
 											hasFeedback
 										/>
 										<Field
 											label={`Ngày báo ${value === 1 ? 'hỏng' : 'mất'}`}
-											autoFocus
 											name="date"
 											hasFeedback
-											component={DateCustom}
-											className="mb-16"
-											variant="outlined"
+											component={AntDateCustom}
 										/>
 									</div>
-									<Field
-										label="File Đính kèm"
-										autoFocus
-										name="file"
-										style={{ height: '4.5rem' }}
-										component={FileCustomVersion2}
-										className="mb-16"
-										variant="outlined"
-									/>
+									<div>
+										<Typography variant="subtitle2" color="primary">
+											{' '}
+											File đính kèm{' '}
+										</Typography>
+										<Field
+											// label="File Đính kèm"
+											name="file"
+											style={{ height: '5.8rem' }}
+											component={AntFileCustom}
+										/>
+									</div>
 								</div>
 							</div>
 							<div className="px-16 w-full sm:px-24 mb-28 flex justify-end">

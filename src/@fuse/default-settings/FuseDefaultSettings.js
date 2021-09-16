@@ -68,6 +68,15 @@ export const mustHaveThemeOptions = {
 		},
 		body2: {
 			fontSize: '1.4rem'
+		},
+		subtitle1: {
+			fontSize: '1.4rem'
+		},
+		subtitle2: {
+			fontSize: '1.4rem'
+		},
+		h6: {
+			fontSize: '1.7rem'
 		}
 	}
 };
