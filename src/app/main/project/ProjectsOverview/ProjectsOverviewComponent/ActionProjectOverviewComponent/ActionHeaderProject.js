@@ -75,6 +75,7 @@ export default function ActionHeaderProject({ classes, ArrProjectStatus, owner, 
 						<Select
 							placeholder="Owner"
 							showSearch
+							size="middle"
 							mode="multiple"
 							allowClear
 							maxTagCount={1}
@@ -98,6 +99,7 @@ export default function ActionHeaderProject({ classes, ArrProjectStatus, owner, 
 							allowClear
 							placeholder="Status"
 							mode="multiple"
+							size="middle"
 							maxTagCount={1}
 							onChange={onHandleChangeStatus}
 							bordered={false}

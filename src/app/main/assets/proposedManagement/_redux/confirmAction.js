@@ -108,7 +108,7 @@ export const requestAssetFromUserAction = (data, assets) => dispatch => {
 			if (!data.isError) {
 				dispatch(actions.requestFromUser());
 			} else {
-				notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', data.errorMessage);
+				notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', data.systemErrorMessage);
 				dispatch(actions.catchError({ callType: callTypes.action }));
 			}
 			return data;

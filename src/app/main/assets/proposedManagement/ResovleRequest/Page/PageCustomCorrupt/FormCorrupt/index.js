@@ -60,16 +60,6 @@ export default function FormCorrupt({ entitiesEdit, actionLoading, params }) {
 			<Grid item sm={6} md={6} lg={6}>
 				<Typography variant="subtitle2" color="primary">
 					{' '}
-					Nhóm tài sản :
-				</Typography>
-			</Grid>
-			<Grid item sm={6} md={6} lg={6}>
-				{' '}
-				<Typography variant="body2"> {entitiesEdit?.groupName}</Typography>
-			</Grid>
-			<Grid item sm={6} md={6} lg={6}>
-				<Typography variant="subtitle2" color="primary">
-					{' '}
 					Quy cách tài sản :
 				</Typography>
 			</Grid>
