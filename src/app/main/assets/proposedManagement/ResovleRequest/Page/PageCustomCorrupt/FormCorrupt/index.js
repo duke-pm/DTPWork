@@ -23,7 +23,7 @@ export default function FormCorrupt({ entitiesEdit, actionLoading, params }) {
 	return (
 		<Grid container item spacing={2}>
 			<Grid className="mb-8" item sm={12} md={12} lg={12}>
-				<Typography color="primary" variant="body1" className="label--form--title mb-8">
+				<Typography color="primary" variant="body1" className="mb-8">
 					Thông tin tài sản
 				</Typography>
 			</Grid>
@@ -98,7 +98,7 @@ export default function FormCorrupt({ entitiesEdit, actionLoading, params }) {
 				<Typography variant="body2"> {entitiesEdit?.assetStatusName} </Typography>
 			</Grid>
 			<Grid className="mb-16" item sm={12} md={12} lg={12}>
-				<Typography color="primary" variant="body1" className="label--form--title mb-8">
+				<Typography color="primary" variant="body1" className="mb-8">
 					Thông tin tài sản bị {params?.corrupt === 'lost' ? 'mất' : 'hỏng'}
 				</Typography>
 			</Grid>

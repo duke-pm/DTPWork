@@ -148,7 +148,15 @@ export default function OverviewPage() {
 				<Spin spinning={actionLoading}>
 					<div className="overview--content">
 						<Tabs defaultActiveKey="0">
-							<TabPane tab="Overview" key="0">
+							<TabPane
+								tab={
+									<Typography variant="body1" color="primary">
+										{' '}
+										Overview{' '}
+									</Typography>
+								}
+								key="0"
+							>
 								<Grid container item spacing={2} className="content__overview">
 									<Grid className="" item md={12} sm={12} lg={12}>
 										<Typography variant="subtitle2" className="title__view" color="primary">
@@ -471,10 +479,24 @@ export default function OverviewPage() {
 									</Grid>
 								</Grid>
 							</TabPane>
-							<TabPane tab="Activity" key="1">
+							<TabPane
+								tab={
+									<Typography variant="body1" color="primary">
+										Activity
+									</Typography>
+								}
+								key="1"
+							>
 								<TabOverview />
 							</TabPane>
-							<TabPane tab="Watchers" key="2">
+							<TabPane
+								tab={
+									<Typography variant="body1" color="primary">
+										Watchers
+									</Typography>
+								}
+								key="2"
+							>
 								<Watchers />
 							</TabPane>
 						</Tabs>

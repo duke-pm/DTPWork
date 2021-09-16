@@ -91,7 +91,7 @@ export default function CustomForm({
 							/>
 						</div>
 						<div className="mb-20">
-							<Typography color="primary" variant="subtitle1" className="label--form--title">
+							<Typography color="primary" variant="subtitle2" className="">
 								PEOPLE & TIME
 							</Typography>
 						</div>
@@ -149,7 +149,7 @@ export default function CustomForm({
 							/>
 						</div>
 						<div className="mb-20">
-							<Typography color="primary" variant="subtitle1" className="label--form--title">
+							<Typography color="primary" variant="subtitle2" className="">
 								DETAIL
 							</Typography>
 						</div>
@@ -246,7 +246,7 @@ export default function CustomForm({
 							/>
 						</div>
 						<div className="mb-20">
-							<Typography color="primary" variant="subtitle1" className="label--form--title">
+							<Typography color="primary" variant="subtitle2" className="">
 								FILES
 							</Typography>
 						</div>

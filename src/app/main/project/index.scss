@@ -94,7 +94,7 @@
                 width: 0px;
             }
             th.ant-table-cell{
-                font-size: 13px;
+                font-size: 1.4rem;
                 font-weight: 600;
                 color: $primary-page;
             }
@@ -120,7 +120,6 @@
             margin: 0 auto;
         }
         .title__view{
-            font-size: 17px;
             text-transform: uppercase;
         }
     }
@@ -138,10 +137,6 @@
             color: $white;
         }
     }
-}
-.label--form--title{
-    font-size: 18px;
-    font-weight: 700;
 }
 .ant-dropdown{
     width: 200px !important;

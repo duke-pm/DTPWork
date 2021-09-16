@@ -148,7 +148,7 @@ export default function CustomForm({
 						<div className="flex flex-col justify-between">
 							<div className="flex flex-row items-center">
 								<Field name="inactive" value={initialState.inactive} component={AntdCustomCheckbox} />
-								<Typography color="primary" variant="body1" className="label--form ml-16">
+								<Typography color="primary" variant="subtitle2" className="label--form ml-16">
 									Inactive
 								</Typography>{' '}
 							</div>
@@ -159,7 +159,7 @@ export default function CustomForm({
 									value={initialState.ischangePasswrod}
 									component={AntdCustomCheckbox}
 								/>
-								<Typography color="primary" variant="body1" className="label--form ml-16">
+								<Typography color="primary" variant="subtitle2" className="label--form ml-16">
 									Người dùng phải thay đổi mật khẩu ở lần đăng nhập tiếp theo
 								</Typography>{' '}
 							</div>
