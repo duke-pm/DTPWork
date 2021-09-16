@@ -2,18 +2,15 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-shadow */
 import React, { useContext, useEffect } from 'react';
-import FuseAnimate from '@fuse/core/FuseAnimate';
 import { Icon, Typography } from '@material-ui/core';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import Panigation from '@fuse/core/FusePanigate';
 import { DatePicker, Spin } from 'antd';
-import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { ConfirmContext } from '../ConfirmContext';
 import * as action from '../../_redux/confirmAction';
-import ActionComponent from './Components/FilterActionComponent';
 import TableConfirLost from './Components/TableConfirLost';
 // import ActionComponent from './DamagedComponets/FilterActionComponent';
 const statusType = {
@@ -24,10 +21,9 @@ const statusType = {
 	4: 'Từ chối'
 };
 export default function ConfirmLose(props) {
+	const history = useHistory();
 	const ConfirmContextDamage = useContext(ConfirmContext);
 	const {
-		setFormControl,
-		setType,
 		page,
 		rowPage,
 		setRowPage,
@@ -44,13 +40,11 @@ export default function ConfirmLose(props) {
 		setStatus
 	} = ConfirmContextDamage;
 	const { currentState } = useSelector(state => ({ currentState: state.confirm }), shallowEqual);
-	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;
-	const classes = DtpCustomStyles(props);
+	const { listloading, entities, total_count, actionLoading } = currentState;
 	const dispatch = useDispatch();
 	const handleOpenFormEdit = items => {
 		dispatch(action.fetchDataConfirm(items));
-		setFormControl(true);
-		setType('lose');
+		history.push('/tai-san/danh-sach-de-xuat/bao-mat');
 	};
 	const handleOpenTimeLine = item => {
 		setTimeLine({
@@ -97,13 +91,7 @@ export default function ConfirmLose(props) {
 	useEffect(() => {
 		dispatch(action.fetchDataConfirms(0, 3));
 	}, [dispatch]);
-	const createSortHandler = property => event => {
-		const id = property;
-		let direction = 'desc';
-
-		if (sort.id === property && sort.direction === 'desc') {
-			direction = 'asc';
-		}
+	const createSortHandler = (direction, id) => {
 		dispatch(action.searchConfirms(false, status, rowPage, page, 3, id, direction, search, dateStart, dateEnd));
 		setSort({
 			direction,
@@ -206,7 +194,13 @@ export default function ConfirmLose(props) {
 							</div>
 						</div>
 					) : null}
-					<TableConfirLost entities={entities} listLoading={listloading} />
+					<TableConfirLost
+						handleOpenForm={handleOpenFormEdit}
+						handleOpenTimeLine={handleOpenTimeLine}
+						createSortHandler={createSortHandler}
+						entities={entities}
+						listLoading={listloading}
+					/>
 					{entities?.length !== 0 && (
 						<div className="flex flex-row items-center justify-end">
 							{actionLoading && <Spin />}

@@ -19,8 +19,13 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { useHistory } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import * as actions from '../../_redux/confirmAction';
+import AntInputCustom from '@fuse/FormBookingCustom/AntInputCustom';
+import AntSelectCustom from '@fuse/FormBookingCustom/AntSelectCustom';
+import AntDateCustom from '@fuse/FormBookingCustom/AntDateCustom';
+import AntRadioCustom from '@fuse/FormBookingCustom/AntRadioCustom';
+import AntDescriptionsCustom from '@fuse/FormBookingCustom/AntDescriptionsCustom';
 import { validateSchema } from './ConfigRequestProvider';
+import * as actions from '../../_redux/confirmAction';
 
 export default function RequestProviderBody({
 	actionLoading,
@@ -183,7 +188,9 @@ export default function RequestProviderBody({
 							<div style={{ width: '90%' }} className="sm" id="content">
 								<div className="px-16 w-full sm:px-24">
 									<div className="flex justify-between flex-row">
-										<Typography variant="subtitle2">Thông tin người yêu cầu.</Typography>
+										<Typography color="primary" variant="body1" className="label--form--title mb-8">
+											Thông tin người yêu cầu.
+										</Typography>{' '}
 									</div>
 									<div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 ">
 										<Field
@@ -192,10 +199,9 @@ export default function RequestProviderBody({
 											readOnly
 											autoFocus
 											hasFeedback
-											component={AntInput}
+											component={AntInputCustom}
 											// options={employees}
 											// handleChangeState={onHandleChangeEmployee}
-											className="mt-8 mb-16"
 										/>
 										<Field
 											label="Bộ phận"
@@ -203,7 +209,7 @@ export default function RequestProviderBody({
 											name="department"
 											readOnly
 											// value={initialState.department}
-											component={SelectAntd}
+											component={AntSelectCustom}
 											// handleChangeState={onChangeDepartment}
 											options={optionDept}
 											className="mt-8 mb-16"
@@ -214,7 +220,7 @@ export default function RequestProviderBody({
 											readOnly
 											hasFeedback
 											value={initialState.region}
-											component={SelectAntd}
+											component={AntSelectCustom}
 											// handleChangeState={onChangeRegion}
 											options={optionRegion}
 											className="mt-8 mb-16"
@@ -226,15 +232,17 @@ export default function RequestProviderBody({
 											name="dateRequest"
 											format="DD/MM/YYYY"
 											placeholder="Vui lòng chọn ngày yêu cầu"
-											component={DateCustom}
+											component={AntDateCustom}
 											className="mb-16"
 											hasFeedback
 										/>
 									</div>
 								</div>
-								<div className="px-16 sm:px-24">
+								<div className="px-16 sm:px-24 table-form">
 									<div className="flex justify-between flex-row">
-										<Typography variant="subtitle2">Tài sản yêu cầu.</Typography>
+										<Typography color="primary" variant="body1" className="label--form--title mb-8">
+											Tài sản yêu cầu.
+										</Typography>{' '}
 									</div>
 									<Typography variant="subtitle2" color="inherit" className="mb-16">
 										<AddCircleOutlineIcon style={{ color: '#1890ff' }} />
@@ -258,7 +266,7 @@ export default function RequestProviderBody({
 											label="Nơi dùng"
 											hasFeedback
 											name="locationUse"
-											component={SelectAntd}
+											component={AntSelectCustom}
 											options={optionLocation}
 											className="mt-8"
 										/>
@@ -267,7 +275,7 @@ export default function RequestProviderBody({
 												label="Loại yêu cầu "
 												hasFeedback
 												name="assetsCategory"
-												component={RadioAntd}
+												component={AntRadioCustom}
 												options={[
 													{ label: 'Mua mới', value: 'N' },
 													{ label: 'Bổ sung thêm', value: 'A' }
@@ -278,7 +286,7 @@ export default function RequestProviderBody({
 												label="Khoản mua sắm này có nằm trong kế hoạch"
 												name="plan"
 												hasFeedback
-												component={RadioAntd}
+												component={AntRadioCustom}
 												options={[
 													{ label: 'Có', value: true },
 													{ label: 'Không', value: false }
@@ -292,8 +300,7 @@ export default function RequestProviderBody({
 											label="Lý do"
 											name="reason"
 											// value={initialState.reason || ''}
-											component={InputTextAreaRequest}
-											className="mb-16"
+											component={AntDescriptionsCustom}
 											row={3}
 										/>
 										<Field
@@ -301,8 +308,7 @@ export default function RequestProviderBody({
 											// value={intialState.note}
 											name="supplier"
 											row={3}
-											component={InputTextAreaRequest}
-											className="mb-16"
+											component={AntDescriptionsCustom}
 										/>
 									</div>
 								</div>

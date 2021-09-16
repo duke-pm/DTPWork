@@ -7,7 +7,7 @@ import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import Panigation from '@fuse/core/FusePanigate';
 import { DatePicker, Spin } from 'antd';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { ConfirmContext } from '../ConfirmContext';
 import * as action from '../../_redux/confirmAction';
@@ -21,9 +21,9 @@ const statusType = {
 	4: 'Từ chối'
 };
 export default function ConfirmDamaged(props) {
+	const history = useHistory();
 	const ConfirmContextDamage = useContext(ConfirmContext);
 	const {
-		setFormControl,
 		setType,
 		page,
 		rowPage,
@@ -44,8 +44,7 @@ export default function ConfirmDamaged(props) {
 	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;
 	const dispatch = useDispatch();
 	const handleOpenFormEdit = items => {
-		setFormControl(true);
-		setType('damaged');
+		history.push('/tai-san/danh-sach-de-xuat/bao-hong');
 		dispatch(action.fetchDataConfirm(items));
 	};
 	const handleOpenTimeLine = item => {
@@ -93,13 +92,7 @@ export default function ConfirmDamaged(props) {
 	useEffect(() => {
 		dispatch(action.fetchDataConfirms(0, 2));
 	}, [dispatch]);
-	const createSortHandler = property => event => {
-		const id = property;
-		let direction = 'desc';
-
-		if (sort.id === property && sort.direction === 'desc') {
-			direction = 'asc';
-		}
+	const createSortHandler = (direction, id) => {
 		dispatch(action.searchConfirms(false, status, rowPage, page, 2, id, direction, search, dateStart, dateEnd));
 		setSort({
 			direction,
@@ -202,7 +195,13 @@ export default function ConfirmDamaged(props) {
 							</div>
 						</div>
 					) : null}
-					<TableConfirDamaged entities={entities} listLoading={listloading} />
+					<TableConfirDamaged
+						handleOpenForm={handleOpenFormEdit}
+						handleOpenTimeLine={handleOpenTimeLine}
+						createSortHandler={createSortHandler}
+						entities={entities}
+						listLoading={listloading}
+					/>
 					{entities?.length !== 0 && (
 						<div className="flex flex-row items-center justify-end">
 							{actionLoading && <Spin />}

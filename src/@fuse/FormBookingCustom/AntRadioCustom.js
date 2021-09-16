@@ -47,7 +47,7 @@ export default function AntRadioCustom({
 				help={submittedError || touchedError ? hasError : false}
 				validateStatus={submittedError || touchedError ? 'error' : 'success'}
 			>
-				<Radio.Group {...field} {...props} onChange={onChange}>
+				<Radio.Group className={`${readOnly ? 'readOnly' : ''}`} {...field} {...props} onChange={onChange}>
 					{options?.map(op => (
 						<Radio value={op.value} key={op.value}>
 							{' '}

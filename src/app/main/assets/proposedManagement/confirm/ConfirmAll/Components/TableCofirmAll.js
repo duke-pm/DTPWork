@@ -1,34 +1,29 @@
+/* eslint-disable no-shadow */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Icon, Typography } from '@material-ui/core';
-import { Table, Dropdown, Radio, Spin } from 'antd';
+import { Table, Dropdown, Radio, Spin, Popover } from 'antd';
 import React, { useContext } from 'react';
 import AppsIcon from '@material-ui/icons/Apps';
 import { sortDirestion } from '@fuse/core/DtpConfig';
-// import ActionsGroupUserBody from '../ActionGroupUser/ActionsGroupUserBody';
 import moment from 'moment';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { useDispatch } from 'react-redux';
+import ActionsAllocation from './ActionsAllocation';
 import { chipColor, chipText } from '../ConfrimAllocationConfig';
 import { ConfirmContext } from '../../ConfirmContext';
 import { searchConfirms } from '../../../_redux/confirmAction';
 
-export default function TableConfirmAll({ entities, listLoading, createSortHandler }) {
+export default function TableConfirmAll({
+	entities,
+	listLoading,
+	createSortHandler,
+	handleOpenTimeLine,
+	handleOpenForm
+}) {
 	const confirmConext = useContext(ConfirmContext);
 	const dispatch = useDispatch();
-	const {
-		search,
-		setSearch,
-		rowPage,
-		page,
-		setPage,
-		setDateEnd,
-		setDateStart,
-		setStatus,
-		status,
-		dateEnd,
-		dateStart,
-		sort
-	} = confirmConext;
+	const { search, rowPage, page, setStatus, status, dateEnd, dateStart, sort } = confirmConext;
 	const handleOnChangeStatus = e => {
 		const { target } = e;
 		setStatus(target.value);
@@ -37,8 +32,8 @@ export default function TableConfirmAll({ entities, listLoading, createSortHandl
 		);
 	};
 	const onChange = (pagination, filters, sorter, extra) => {
-		// const sort = sortDirestion[sorter.order];
-		// createSortHandler(sort, sorter.field);
+		const sort = sortDirestion[sorter.order];
+		createSortHandler(sort, sorter.field);
 	};
 	const columns = [
 		{
@@ -46,8 +41,23 @@ export default function TableConfirmAll({ entities, listLoading, createSortHandl
 			align: 'center',
 			key: 'operation',
 			fixed: 'left',
-			width: '4%'
-			// render: (_, item) => <ActionsListUserBody items={item} handleEditListUser={handleEditListUser} />
+			width: '4%',
+			render: (_, item) => (
+				<Popover
+					overlayStyle={{ zIndex: '19' }}
+					placement="rightTop"
+					content={() => (
+						<ActionsAllocation
+							handleOpenTimeLine={handleOpenTimeLine}
+							items={item}
+							handleOpenForm={handleOpenForm}
+						/>
+					)}
+					title="Hành động"
+				>
+					<MoreVertIcon className="cursor-pointer" />
+				</Popover>
+			)
 		},
 		{
 			title: '#',

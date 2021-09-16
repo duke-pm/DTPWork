@@ -46,8 +46,7 @@ export default function AntDateCustom({
 						</Typography>
 						{hasFeedback && (
 							<p style={{ marginBottom: '-20px' }} className="text-red ml-8">
-								{' '}
-								(*){' '}
+								*
 							</p>
 						)}
 					</div>

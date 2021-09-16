@@ -8,11 +8,10 @@ import { DatePicker, Spin } from 'antd';
 import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import { Icon, Typography } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { ConfirmContext } from '../ConfirmContext';
 import * as action from '../../_redux/confirmAction';
-import HistoryAllocation from './Components/HistoryAllocation';
 import TableConfirmAll from './Components/TableCofirmAll';
 
 const statusType = {
@@ -24,10 +23,9 @@ const statusType = {
 };
 export default function ConfrimAllocation(props) {
 	const dispatch = useDispatch();
-	const [history, setHistory] = useState(false);
+	const history = useHistory();
 	const AllocationContext = useContext(ConfirmContext);
 	const {
-		setFormAllocation,
 		setPage,
 		status,
 		page,
@@ -44,10 +42,7 @@ export default function ConfrimAllocation(props) {
 		setDateEnd
 	} = AllocationContext;
 	const { currentState } = useSelector(state => ({ currentState: state.confirm }), shallowEqual);
-	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;
-	const classes = DtpCustomStyles(props);
-	const handleOpenHistory = () => setHistory(true);
-	const handleCloseHistory = () => setHistory(false);
+	const { listloading, entities, total_count, actionLoading } = currentState;
 	const handleOpenTimeLine = item => {
 		setTimeLine({
 			open: true,
@@ -57,7 +52,7 @@ export default function ConfrimAllocation(props) {
 	};
 	const handleOpenForm = items => {
 		dispatch(action.fetchDataConfirm(items));
-		setFormAllocation(true);
+		history.push('/tai-san/danh-sach-de-xuat/allocation');
 	};
 	useEffect(() => {
 		dispatch(action.fetchDataConfirms(0, 1));
@@ -110,13 +105,7 @@ export default function ConfrimAllocation(props) {
 			action.searchConfirms(false, status, rowPage, page, 1, sort.id, sort.direction, search, dateStart, date)
 		);
 	};
-	const createSortHandler = property => event => {
-		const id = property;
-		let direction = 'desc';
-
-		if (sort.id === property && sort.direction === 'desc') {
-			direction = 'asc';
-		}
+	const createSortHandler = (direction, id) => {
 		dispatch(action.searchConfirms(false, status, rowPage, page, 1, id, direction, search, dateStart, dateEnd));
 		setSort({
 			direction,
@@ -137,9 +126,7 @@ export default function ConfrimAllocation(props) {
 	};
 	return (
 		<>
-			<HistoryAllocation handleCloseHistory={handleCloseHistory} open={history} />
 			<div className="flex flex-col table--tab">
-				{/* <ActionComponent actionLoading={actionLoading} /> */}
 				<div className="flex flex-col">
 					<div className="proposedManagement__subcontent justify-between mb-16">
 						<div>
@@ -209,7 +196,13 @@ export default function ConfrimAllocation(props) {
 							</div>
 						</div>
 					) : null}
-					<TableConfirmAll entities={entities} listLoading={listloading} />
+					<TableConfirmAll
+						handleOpenForm={handleOpenForm}
+						handleOpenTimeLine={handleOpenTimeLine}
+						createSortHandler={createSortHandler}
+						entities={entities}
+						listLoading={listloading}
+					/>
 					{entities?.length !== 0 && (
 						<div className="flex flex-row items-center justify-end">
 							{actionLoading && <Spin />}
