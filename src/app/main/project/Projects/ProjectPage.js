@@ -253,11 +253,11 @@ export default function ProjectPage() {
 						</div>
 					</div>
 				) : null}
-				{/* <div className="projects__content mt-8"> */}
-				<div className="mt-8 px-16 pb-96 h-full">
-					<ProjectComponent ArrProjectStatus={ArrProjectStatus} owner={owner} />
+				<div className="projects__content mt-8">
+					<div className="px-16">
+						<ProjectComponent ArrProjectStatus={ArrProjectStatus} owner={owner} />
+					</div>
 				</div>
-				{/* </div> */}
 			</div>
 		</>
 	);

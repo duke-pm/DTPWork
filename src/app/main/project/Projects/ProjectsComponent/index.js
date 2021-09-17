@@ -1,6 +1,4 @@
 import FuseAnimate from '@fuse/core/FuseAnimate';
-import FusePageCarded from '@fuse/core/FusePageCarded';
-import FuseScrollbars from '@fuse/core/FuseScrollbars';
 import React, { useContext } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import Panigation from '@fuse/core/FusePanigate';
@@ -25,25 +23,19 @@ export default function ProjectComponent({ ArrProjectStatus, owner }) {
 		dispatch(fetchsProjectFilter(rowPageParse, page, status?.toString(), ownerFilter?.toString(), year));
 	};
 	return (
-		<FusePageCarded
-			innerScroll
-			classes={{
-				content: 'flex'
-			}}
-			content={
-				<div className="w-full flex flex-col">
-					<FuseScrollbars className="flex-grow overflow-x-auto">
-						<TableProject
-							listLoading={listLoading}
-							actionLoading={actionLoading}
-							entities={entities}
-							entitiesEdit={entitiesEdit}
-							ArrProjectStatus={ArrProjectStatus}
-							owner={owner}
-						/>
-					</FuseScrollbars>
+		<div className="w-full flex flex-col">
+			<FuseAnimate animation="transition.slideUpIn" delay={200}>
+				<div className="flex flex-col">
+					<TableProject
+						listLoading={listLoading}
+						actionLoading={actionLoading}
+						entities={entities}
+						entitiesEdit={entitiesEdit}
+						ArrProjectStatus={ArrProjectStatus}
+						owner={owner}
+					/>
 					{entities && entities.length !== 0 && (
-						<div className="flex-row items-center justify-end">
+						<div className="flex flex-row items-center justify-end">
 							{actionLoading && <Spin />}
 							<Panigation
 								page={page}
@@ -55,7 +47,7 @@ export default function ProjectComponent({ ArrProjectStatus, owner }) {
 						</div>
 					)}
 				</div>
-			}
-		/>
+			</FuseAnimate>
+		</div>
 	);
 }
