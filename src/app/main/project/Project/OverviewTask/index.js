@@ -150,9 +150,8 @@ export default function OverviewPage() {
 						<Tabs defaultActiveKey="0">
 							<TabPane
 								tab={
-									<Typography variant="body1" color="primary">
-										{' '}
-										Overview{' '}
+									<Typography variant="subtitle2" color="primary">
+										Overview
 									</Typography>
 								}
 								key="0"
@@ -165,47 +164,39 @@ export default function OverviewPage() {
 										</Typography>
 										<Divider className="mt-16" />
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
+									<Grid item md={3} sm={3} lg={3}>
 										<Typography
 											style={{ color: entitiesView?.detail.typeColor }}
 											variant="subtitle2"
-											color="primary"
 										>
 											{entitiesView?.detail.typeName}
 										</Typography>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
+									<Grid item md={9} sm={9} lg={9}>
 										{' '}
-										<Typography variant="body2">{entitiesView?.detail.taskName}</Typography>
+										<Typography variant="subtitle2">{entitiesView?.detail.taskName}</Typography>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											Created by:{' '}
-										</Typography>
+									<Grid item md={3} sm={3} lg={3}>
+										<Typography variant="subtitle2"> Created by: </Typography>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
+									<Grid item md={9} sm={9} lg={9}>
 										<Typography variant="body2">{entitiesView?.detail.crtdUser}</Typography>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											Last updated on:{' '}
-										</Typography>
+									<Grid item md={3} sm={3} lg={3}>
+										<Typography variant="subtitle2"> Last updated on: </Typography>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
+									<Grid item md={9} sm={9} lg={9}>
 										<Typography variant="body2">
 											{moment(entitiesView?.detail.lUpdDate).format('DD MMM, YY')}
 										</Typography>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											Description:{' '}
-										</Typography>
+									<Grid item md={3} sm={3} lg={3}>
+										<Typography variant="subtitle2"> Description: </Typography>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="body2">{entitiesView?.detail.descr}</Typography>
+									<Grid item md={9} sm={9} lg={9}>
+										<Typography variant="body2">
+											{entitiesView?.detail.descr !== '' ? entitiesView?.detail.descr : '-'}
+										</Typography>
 									</Grid>
 									<Grid className="mt-20" item sm={12} md={12} lg={12}>
 										<Typography variant="subtitle2" className="title__view" color="primary">
@@ -213,13 +204,10 @@ export default function OverviewPage() {
 										</Typography>
 										<Divider className="mt-16" />
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											Status :{' '}
-										</Typography>
+									<Grid item md={3} sm={3} lg={3}>
+										<Typography variant="subtitle2"> Status : </Typography>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
+									<Grid item md={9} sm={9} lg={9}>
 										<Dropdown
 											// disabled={!entitiesView?.detail.isUpdated}
 											overlay={
@@ -252,13 +240,10 @@ export default function OverviewPage() {
 											</div>
 										</Dropdown>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											Progress :{' '}
-										</Typography>
+									<Grid item md={3} sm={3} lg={3}>
+										<Typography variant="subtitle2"> Progress : </Typography>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
+									<Grid item md={9} sm={9} lg={9}>
 										<Slider
 											disabled={entitiesView ? !entitiesView.detail.isUpdated : true}
 											onChange={handleChangeSlider}
@@ -267,13 +252,10 @@ export default function OverviewPage() {
 											tipFormatter={formatter}
 										/>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											Follow :{' '}
-										</Typography>
+									<Grid item md={3} sm={3} lg={3}>
+										<Typography variant="subtitle2"> Follow : </Typography>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
+									<Grid item md={9} sm={9} lg={9}>
 										<Button
 											onClick={handleTraffic}
 											type="submit"
@@ -293,75 +275,57 @@ export default function OverviewPage() {
 										<Divider className="mt-16" />
 									</Grid>
 									<Grid container spacing={2} item md={12} sm={12} lg={12}>
-										<Grid direction="row" container item md={6} sm={6} lg={6}>
-											<Typography variant="subtitle2" color="primary">
-												Start date:
-											</Typography>
+										<Grid item md={6} sm={6} lg={6} className="flex flex-row items-center">
+											<Typography variant="subtitle2">Start date:</Typography>
 											<Typography variant="body2" className="ml-20">
 												{moment(entitiesView?.detail.startDate).format('DD/MM/YYYY')}
 											</Typography>
 										</Grid>
-										<Grid direction="row" container item md={6} sm={6} lg={6}>
-											<Typography variant="subtitle2" color="primary">
-												End date:
-											</Typography>
+										<Grid item md={6} sm={6} lg={6} className="flex flex-row items-center">
+											<Typography variant="subtitle2">End date: </Typography>
 											<Typography variant="body2" className="ml-20">
 												{moment(entitiesView?.detail.endDate).format('DD/MM/YYYY')}
 											</Typography>
 										</Grid>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											Assignee :{' '}
-										</Typography>
+									<Grid item md={3} sm={3} lg={3}>
+										<Typography variant="subtitle2"> Assignee : </Typography>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
+									<Grid item md={9} sm={9} lg={9}>
 										<div className="flex flex-row items-center">
 											<Avatar
 												size={32}
 												style={{ backgroundColor: entitiesView?.detail.colorCode }}
 												icon={<UserOutlined />}
 											/>
-											<Typography className="ml-8" variant="body1">
+											<Typography className="ml-8" variant="body2">
 												{entitiesView?.detail.ownerName}
 											</Typography>
 										</div>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											Members :{' '}
-										</Typography>
+									<Grid item md={3} sm={3} lg={3}>
+										<Typography variant="subtitle2"> Members : </Typography>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
+									<Grid item md={9} sm={9} lg={9}>
 										<Avatar.Group
 											maxCount={5}
 											maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
 										>
 											{entitiesView?.detail.lstUserInvited?.map(av => (
 												<Tooltip key={av.userID} title={av.fullName} placement="top">
-													<Avatar gap={4} style={{ backgroundColor: '#87d068' }}>
-														<Typography color="inherit" variant="subtitle1">
-															{av.alphabet}
-														</Typography>
-													</Avatar>
+													<Avatar>{av.alphabet}</Avatar>
 												</Tooltip>
 											))}
 										</Avatar.Group>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											Priority :{' '}
-										</Typography>
+									<Grid item md={3} sm={3} lg={3}>
+										<Typography variant="subtitle2"> Priority : </Typography>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
+									<Grid item md={9} sm={9} lg={9}>
 										<Typography
 											variant="body2"
 											style={{ color: priorityColor[entitiesView?.detail.priority] }}
 										>
-											{' '}
 											{entitiesView?.detail.priorityName}
 										</Typography>
 									</Grid>
@@ -371,13 +335,10 @@ export default function OverviewPage() {
 										entitiesView?.detail.statusID !== 7 &&
 										entitiesView?.detail.typeName === 'TASK' && (
 											<>
-												<Grid item md={6} sm={6} lg={6}>
-													<Typography variant="subtitle2" color="primary">
-														{' '}
-														Deadline :{' '}
-													</Typography>
+												<Grid item md={3} sm={3} lg={3}>
+													<Typography variant="subtitle2"> Deadline : </Typography>
 												</Grid>
-												<Grid item md={6} sm={6} lg={6}>
+												<Grid item md={9} sm={9} lg={9}>
 													<Typography variant="body1" style={{ color: 'red' }}>
 														Expired {checkDeadline(entitiesView?.detail.endDate)} days
 													</Typography>
@@ -390,73 +351,76 @@ export default function OverviewPage() {
 										</Typography>
 										<Divider className="mt-16" />
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											Sector :{' '}
+									<Grid item md={3} sm={3} lg={3}>
+										<Typography variant="subtitle2"> Sector : </Typography>
+									</Grid>
+									<Grid item md={9} sm={9} lg={9}>
+										<Typography variant="body2">
+											{entitiesView?.detail.sectorName !== ''
+												? entitiesView?.detail.sectorName
+												: '-'}
 										</Typography>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="body2">{entitiesView?.detail.sectorName}</Typography>
+									<Grid item md={3} sm={3} lg={3}>
+										<Typography variant="subtitle2"> Grade : </Typography>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											Grade :{' '}
+									<Grid item md={9} sm={9} lg={9}>
+										<Typography variant="body2">
+											{entitiesView?.detail.gradeName !== ''
+												? entitiesView?.detail.gradeName
+												: '-'}
 										</Typography>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="body2">{entitiesView?.detail.gradeName}</Typography>
+									<Grid item md={3} sm={3} lg={3}>
+										<Typography variant="subtitle2"> Component : </Typography>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											Component :{' '}
+									<Grid item md={9} sm={9} lg={9}>
+										<Typography variant="body2">
+											{entitiesView?.detail.componentName !== ''
+												? entitiesView?.detail.componentName
+												: '-'}
 										</Typography>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="body2">{entitiesView?.detail.componentName}</Typography>
+									<Grid item md={3} sm={3} lg={3}>
+										<Typography variant="subtitle2"> Author : </Typography>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											Author :{' '}
+									<Grid item md={9} sm={9} lg={9}>
+										<Typography variant="body2">
+											{entitiesView?.detail.author !== '' ? entitiesView?.detail.author : '-'}
 										</Typography>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="body2">{entitiesView?.detail.author}</Typography>
+									<Grid item md={3} sm={3} lg={3}>
+										<Typography variant="subtitle2"> Origin Publisher : </Typography>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											Origin Publisher :{' '}
+									<Grid item md={9} sm={9} lg={9}>
+										<Typography variant="body2">
+											{entitiesView?.detail.originPublisher !== ''
+												? entitiesView?.detail.originPublisher
+												: '-'}
 										</Typography>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="body2">{entitiesView?.detail.originPublisher}</Typography>
+									<Grid item md={3} sm={3} lg={3}>
+										<Typography variant="subtitle2"> Ownership DTP : </Typography>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											Ownership DTP :{' '}
+									<Grid item md={9} sm={9} lg={9}>
+										<Typography variant="body2">
+											{entitiesView?.detail.ownershipDTP !== ''
+												? entitiesView?.detail.ownershipDTP
+												: '-'}
 										</Typography>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="body2">{entitiesView?.detail.ownershipDTP}</Typography>
-									</Grid>
-									<Grid item sm={12} md={12} lg={12}>
-										<div className="flex flex-col mt-20">
-											<Typography variant="subtitle2" className="title__view" color="primary">
-												{' '}
-												FILES{' '}
-											</Typography>
-											<Divider className="mt-16" />
-											<div className="flex flex-row justify-between mt-16">
-												{entitiesView?.detail.attachFiles && (
+									{entitiesView?.detail.attachFiles && (
+										<Grid item sm={12} md={12} lg={12}>
+											<div className="flex flex-col mt-20">
+												<Typography variant="subtitle2" className="title__view" color="primary">
+													FILES
+												</Typography>
+												<Divider className="mt-16" />
+												<div className="flex flex-row justify-between mt-16">
 													<div className="flex flex-row items-center">
 														<Avatar
 															shape="square"
-															size={54}
+															size="large"
 															style={{ backgroundColor: '#87d068' }}
 															icon={
 																entitiesView &&
@@ -473,15 +437,15 @@ export default function OverviewPage() {
 															</Typography>
 														</Button>
 													</div>
-												)}
+												</div>
 											</div>
-										</div>
-									</Grid>
+										</Grid>
+									)}
 								</Grid>
 							</TabPane>
 							<TabPane
 								tab={
-									<Typography variant="body1" color="primary">
+									<Typography variant="subtitle2" color="primary">
 										Activity
 									</Typography>
 								}
@@ -491,7 +455,7 @@ export default function OverviewPage() {
 							</TabPane>
 							<TabPane
 								tab={
-									<Typography variant="body1" color="primary">
+									<Typography variant="subtitle2" color="primary">
 										Watchers
 									</Typography>
 								}
