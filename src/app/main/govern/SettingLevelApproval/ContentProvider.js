@@ -31,7 +31,7 @@ export default function ContentProvider() {
 		<div className="container govern">
 			<div className="govern__header px-16 shadow-lg">
 				<Typography color="primary" variant="h6">
-					Level Approval
+					Cấp quyền
 				</Typography>
 				<div className="govern__header--action">
 					<Search

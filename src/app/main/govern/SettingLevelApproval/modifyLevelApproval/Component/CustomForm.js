@@ -45,14 +45,18 @@ export default function CustomForm({ actionLoading }) {
 							<Field
 								position="right"
 								label="Nhóm"
+								placeholder="Chọn nội dung"
+								width="90.1%"
 								name="group"
 								options={[]}
-								hasFeedback
 								component={AntSelectCustom}
 							/>{' '}
 							<Field
 								position="right"
 								label="Quyền"
+								placeholder="Chọn nội dung"
+								width="90.1%"
+								hasFeedback
 								name="role"
 								options={[]}
 								component={AntSelectCustom}
@@ -67,22 +71,87 @@ export default function CustomForm({ actionLoading }) {
 							<Field
 								hasFeedback
 								position="right"
+								placeholder="Chọn nội dung"
 								label="Cấp 1"
 								name="level[0].name"
 								options={[]}
 								component={AntSelectCustom}
 							/>
-							<Field position="right" name="level[0].value" component={AntSelectCustom} options={[]} />
+							<Field
+								position="right"
+								placeholder="Chọn nội dung"
+								name="level[0].value"
+								component={AntSelectCustom}
+								options={[]}
+							/>
 						</div>
 						<div className="grid grid-cols-2 gap-8">
 							<Field
 								position="right"
 								label="Cấp 2"
 								name="level[1].name"
+								placeholder="Chọn nội dung"
 								options={[]}
 								component={AntSelectCustom}
 							/>
-							<Field position="right" name="level[1].value" component={AntSelectCustom} options={[]} />
+							<Field
+								placeholder="Chọn nội dung"
+								position="right"
+								name="level[1].value"
+								component={AntSelectCustom}
+								options={[]}
+							/>
+						</div>
+						<div className="grid grid-cols-2 gap-8">
+							<Field
+								position="right"
+								label="Cấp 3"
+								placeholder="Chọn nội dung"
+								name="level[1].name"
+								options={[]}
+								component={AntSelectCustom}
+							/>
+							<Field
+								placeholder="Chọn nội dung"
+								position="right"
+								name="level[1].value"
+								component={AntSelectCustom}
+								options={[]}
+							/>
+						</div>
+						<div className="grid grid-cols-2 gap-8">
+							<Field
+								position="right"
+								label="Cấp 4"
+								placeholder="Chọn nội dung"
+								name="level[1].name"
+								options={[]}
+								component={AntSelectCustom}
+							/>
+							<Field
+								placeholder="Chọn nội dung"
+								position="right"
+								name="level[1].value"
+								component={AntSelectCustom}
+								options={[]}
+							/>
+						</div>
+						<div className="grid grid-cols-2 gap-8">
+							<Field
+								placeholder="Chọn nội dung"
+								position="right"
+								label="Cấp 5"
+								name="level[1].name"
+								options={[]}
+								component={AntSelectCustom}
+							/>
+							<Field
+								placeholder="Chọn nội dung"
+								position="right"
+								name="level[1].value"
+								component={AntSelectCustom}
+								options={[]}
+							/>
 						</div>
 					</div>
 					<div className="flex items-center justify-end">

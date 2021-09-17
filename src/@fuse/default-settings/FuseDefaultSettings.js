@@ -67,16 +67,16 @@ export const mustHaveThemeOptions = {
 	typography: {
 		htmlFontSize: 10,
 		body1: {
-			fontSize: '1.4rem'
+			fontSize: '1.3rem'
 		},
 		body2: {
-			fontSize: '1.4rem'
+			fontSize: '1.3rem'
 		},
 		subtitle1: {
-			fontSize: '1.4rem'
+			fontSize: '1.3rem'
 		},
 		subtitle2: {
-			fontSize: '1.4rem'
+			fontSize: '1.3rem'
 		},
 		h6: {
 			fontSize: '1.7rem'
