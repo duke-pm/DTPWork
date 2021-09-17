@@ -188,12 +188,8 @@ export default function RequestProviderBody({
 							<div style={{ width: '90%' }} className="sm" id="content">
 								<div className="px-16 w-full sm:px-24">
 									<div className="flex justify-between flex-row">
-										<Typography
-											color="primary"
-											variant="subtitle2"
-											className="label--form--title mb-8"
-										>
-											THÔNG TIN NGƯỜI YÊU CẦU
+										<Typography color="primary" variant="subtitle2" className="mb-8">
+											THÔNG TIN NGƯỜI YÊU CẦU.
 										</Typography>{' '}
 									</div>
 									<div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 ">
@@ -244,8 +240,8 @@ export default function RequestProviderBody({
 								</div>
 								<div className="px-16 sm:px-24 table-form">
 									<div className="flex justify-between flex-row">
-										<Typography color="primary" variant="subtitle2" className=" mb-8">
-											THÔNG TIN NGƯỜI YÊU CẦU.
+										<Typography color="primary" variant="subtitle2" className="mb-8">
+											TÀI SẢN YÊU CẦU.
 										</Typography>{' '}
 									</div>
 									<Typography variant="subtitle2" color="inherit" className="mb-16">
@@ -287,7 +283,7 @@ export default function RequestProviderBody({
 												className="mt-8 mb-16"
 											/>
 											<Field
-												label="Khoản mua sắm này có nằm trong kế hoạch"
+												label="Khoản mua này có nằm trong kế hoạch"
 												name="plan"
 												hasFeedback
 												component={AntRadioCustom}

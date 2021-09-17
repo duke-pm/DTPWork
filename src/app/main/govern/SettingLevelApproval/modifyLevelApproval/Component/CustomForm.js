@@ -84,6 +84,36 @@ export default function CustomForm({ actionLoading }) {
 							/>
 							<Field position="right" name="level[1].value" component={AntSelectCustom} options={[]} />
 						</div>
+						<div className="grid grid-cols-2 gap-8">
+							<Field
+								position="right"
+								label="Cấp 3"
+								name="level[1].name"
+								options={[]}
+								component={AntSelectCustom}
+							/>
+							<Field position="right" name="level[1].value" component={AntSelectCustom} options={[]} />
+						</div>
+						<div className="grid grid-cols-2 gap-8">
+							<Field
+								position="right"
+								label="Cấp 4"
+								name="level[1].name"
+								options={[]}
+								component={AntSelectCustom}
+							/>
+							<Field position="right" name="level[1].value" component={AntSelectCustom} options={[]} />
+						</div>
+						<div className="grid grid-cols-2 gap-8">
+							<Field
+								position="right"
+								label="Cấp 5"
+								name="level[1].name"
+								options={[]}
+								component={AntSelectCustom}
+							/>
+							<Field position="right" name="level[1].value" component={AntSelectCustom} options={[]} />
+						</div>
 					</div>
 					<div className="flex items-center justify-end">
 						{actionLoading ? (
