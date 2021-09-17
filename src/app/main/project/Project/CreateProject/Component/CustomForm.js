@@ -63,8 +63,8 @@ export default function CustomForm({
 			{({ handleSubmit, isSubmitting }) => (
 				<Form>
 					<div className="mt-8 px-16 sm:px-24">
-						<div className="mb-20">
-							<Typography color="primary" variant="h6">
+						<div className="my-20">
+							<Typography color="primary" variant="subtitle2">
 								BASIC INFORMATIONS
 							</Typography>
 						</div>
@@ -91,8 +91,8 @@ export default function CustomForm({
 							component={AntDescriptionsCustom}
 							row={4}
 						/>
-						<div className="mb-20">
-							<Typography color="primary" variant="h6">
+						<div className="my-20">
+							<Typography color="primary" variant="subtitle2">
 								PEOPLE & TIME
 							</Typography>
 						</div>
@@ -149,8 +149,8 @@ export default function CustomForm({
 								component={AntDateCustom}
 							/>
 						</div>
-						<div className="mb-20">
-							<Typography color="primary" variant="h6">
+						<div className="my-20">
+							<Typography color="primary" variant="subtitle2">
 								OTHER
 							</Typography>
 						</div>
@@ -180,90 +180,76 @@ export default function CustomForm({
 									</Grid>
 								</Grid>
 							)}
-						<Grid container spacing={4}>
-							<Grid item lg={6} md={6} sm={6} xs={12}>
-								<Field
-									label="Sector"
-									name="sectorID"
-									readOnly={entitiesEdit && !entitiesEdit.isModified}
-									position="right"
-									component={AntSelectCustom}
-									options={sectorArr}
-								/>
-							</Grid>
+						<div className="grid grid-cols-1 sm:grid-cols-2 gap-16 ">
+							<Field
+								label="Sector"
+								name="sectorID"
+								readOnly={entitiesEdit && !entitiesEdit.isModified}
+								position="right"
+								component={AntSelectCustom}
+								options={sectorArr}
+								width="58.8%"
+							/>
 
-							<Grid item lg={6} md={6} sm={6} xs={12}>
-								<Field
-									label="Priority"
-									name="priority"
-									readOnly={entitiesEdit && !entitiesEdit.isModified}
-									hasFeedback
-									component={AntSelectCustom}
-									options={ArrTaskPri}
-									position="right"
-								/>
-							</Grid>
-						</Grid>
+							<Field
+								label="Priority"
+								name="priority"
+								readOnly={entitiesEdit && !entitiesEdit.isModified}
+								hasFeedback
+								component={AntSelectCustom}
+								options={ArrTaskPri}
+								position="right"
+								width="58.8%"
+							/>
+						</div>
 
-						<Grid container spacing={4}>
-							<Grid item lg={6} md={6} sm={6} xs={12}>
-								<Field
-									label="Grade"
-									name="grade"
-									readOnly={entitiesEdit && !entitiesEdit.isModified}
-									options={gradeGolbal}
-									component={AntSelectCustom}
-									position="right"
-								/>
-							</Grid>
-							<Grid item lg={6} md={6} sm={6} xs={12}>
-								<Field
-									label="Component"
-									readOnly={entitiesEdit && !entitiesEdit.isModified}
-									name="component"
-									component={AntSelectCustom}
-									options={ArrTaskComponent}
-									position="right"
-								/>
-							</Grid>
-						</Grid>
+						<div className="grid grid-cols-1 sm:grid-cols-2 gap-16 ">
+							<Field
+								label="Grade"
+								name="grade"
+								readOnly={entitiesEdit && !entitiesEdit.isModified}
+								options={gradeGolbal}
+								component={AntSelectCustom}
+								width="58.8%"
+								position="right"
+							/>
+							<Field
+								label="Component"
+								readOnly={entitiesEdit && !entitiesEdit.isModified}
+								name="component"
+								component={AntSelectCustom}
+								options={ArrTaskComponent}
+								width="58.8%"
+								position="right"
+							/>
+						</div>
 
-						<Grid container spacing={4}>
-							<Grid item lg={6} md={6} sm={6} xs={12}>
-								<Field
-									label="Origin Publisher"
-									component={AntInputCustom}
-									name="originPublisher"
-									position="right"
-									readOnly={entitiesEdit && !entitiesEdit.isModified}
-								/>
-							</Grid>
-							<Grid item lg={6} md={6} sm={6} xs={12}>
-								<Field
-									label="Ownership DTP"
-									component={AntInputCustom}
-									readOnly={entitiesEdit && !entitiesEdit.isModified}
-									name="ownership"
-									position="right"
-								/>
-							</Grid>
-						</Grid>
+						<Field
+							label="Author"
+							name="author"
+							component={AntInputCustom}
+							readOnly={entitiesEdit && !entitiesEdit.isModified}
+							position="right"
+						/>
 
-						<Grid container spacing={4}>
-							<Grid item lg={6} md={6} sm={6} xs={12}>
-								<Field
-									label="Author"
-									name="author"
-									component={AntInputCustom}
-									readOnly={entitiesEdit && !entitiesEdit.isModified}
-									position="right"
-								/>
-							</Grid>
-							<Grid item lg={6} md={6} sm={6} xs={false} />
-						</Grid>
+						<Field
+							label="Ownership DTP"
+							component={AntInputCustom}
+							readOnly={entitiesEdit && !entitiesEdit.isModified}
+							name="ownership"
+							position="right"
+						/>
 
-						<div className="mb-20">
-							<Typography color="primary" variant="h6">
+						<Field
+							label="Origin Publisher"
+							component={AntInputCustom}
+							name="originPublisher"
+							position="right"
+							readOnly={entitiesEdit && !entitiesEdit.isModified}
+						/>
+
+						<div className="my-20">
+							<Typography color="primary" variant="subtitle2">
 								UPLOAD FILE
 							</Typography>
 						</div>
