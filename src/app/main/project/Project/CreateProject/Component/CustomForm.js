@@ -64,7 +64,7 @@ export default function CustomForm({
 				<Form>
 					<div className="mt-8 px-16 sm:px-24">
 						<div className="mb-20">
-							<Typography color="primary" variant="subtitle2">
+							<Typography color="primary" variant="h6">
 								BASIC INFORMATIONS
 							</Typography>
 						</div>
@@ -89,68 +89,68 @@ export default function CustomForm({
 							label="Description"
 							name="descr"
 							component={AntDescriptionsCustom}
-							position="right"
 							row={4}
 						/>
 						<div className="mb-20">
-							<Typography color="primary" variant="subtitle2">
+							<Typography color="primary" variant="h6">
 								PEOPLE & TIME
 							</Typography>
 						</div>
-						<Field
-							label="Assignee"
-							name={entitiesEdit && !entitiesEdit.isModified ? 'ownerName' : 'owner'}
-							readOnly={entitiesEdit && !entitiesEdit.isModified}
-							hasFeedback
-							component={entitiesEdit && !entitiesEdit.isModified ? AntInputCustom : AntSelectCustom}
-							options={entitiesEdit && !entitiesEdit.isModified ? null : owner}
-							position="right"
-						/>
-						{entitiesEdit && !entitiesEdit.isModified ? (
+						<div>
 							<Field
-								label="Add Team Member"
-								name="userInvite"
-								options={owner}
-								count={3}
-								value={entitiesEdit && !entitiesEdit.isModified ? userInviteNoPermiss : []}
-								component={AntSelectMultiCustom}
+								label="Assignee"
+								name={entitiesEdit && !entitiesEdit.isModified ? 'ownerName' : 'owner'}
 								readOnly={entitiesEdit && !entitiesEdit.isModified}
+								hasFeedback
+								component={entitiesEdit && !entitiesEdit.isModified ? AntInputCustom : AntSelectCustom}
+								options={entitiesEdit && !entitiesEdit.isModified ? null : owner}
 								position="right"
 							/>
-						) : (
+						</div>
+						<div>
+							{entitiesEdit && !entitiesEdit.isModified ? (
+								<Field
+									label="Add Team Member"
+									name="userInvite"
+									options={owner}
+									count={3}
+									value={entitiesEdit && !entitiesEdit.isModified ? userInviteNoPermiss : []}
+									component={AntSelectMultiCustom}
+									readOnly={entitiesEdit && !entitiesEdit.isModified}
+									position="right"
+								/>
+							) : (
+								<Field
+									label="Add Team Member"
+									name="userInvite"
+									options={owner}
+									count={3}
+									component={AntSelectMultiCustom}
+									readOnly={entitiesEdit && !entitiesEdit.isModified}
+									position="right"
+								/>
+							)}
+						</div>
+						<div className="grid grid-cols-1 sm:grid-cols-2 gap-16 ">
 							<Field
-								label="Add Team Member"
-								name="userInvite"
-								options={owner}
-								count={3}
-								component={AntSelectMultiCustom}
+								label="Start Date"
+								name="startDate"
+								width="58.8%"
 								readOnly={entitiesEdit && !entitiesEdit.isModified}
+								component={AntDateCustom}
 								position="right"
 							/>
-						)}
-						<Grid container spacing={2}>
-							<Grid item lg={6} md={6} sm={6} xs={12}>
-								<Field
-									label="Start Date"
-									name="startDate"
-									readOnly={entitiesEdit && !entitiesEdit.isModified}
-									component={AntDateCustom}
-									position="right"
-								/>
-							</Grid>
-							<Grid item lg={6} md={6} sm={6} xs={12}>
-								<Field
-									label="End Date"
-									position="right"
-									name="endDate"
-									readOnly={entitiesEdit && !entitiesEdit.isModified}
-									component={AntDateCustom}
-								/>
-							</Grid>
-						</Grid>
-
+							<Field
+								label="End Date"
+								width="58.8%"
+								position="right"
+								name="endDate"
+								readOnly={entitiesEdit && !entitiesEdit.isModified}
+								component={AntDateCustom}
+							/>
+						</div>
 						<div className="mb-20">
-							<Typography color="primary" variant="subtitle2">
+							<Typography color="primary" variant="h6">
 								OTHER
 							</Typography>
 						</div>
@@ -158,7 +158,7 @@ export default function CustomForm({
 							entitiesEdit.taskID &&
 							entitiesEdit.typeName === 'TASK' &&
 							params.category !== 'newtask' && (
-								<Grid container spacing={2}>
+								<Grid container spacing={6}>
 									<Grid item lg={6} md={6} sm={6} xs={12}>
 										<Field
 											label="Status"
@@ -263,7 +263,7 @@ export default function CustomForm({
 						</Grid>
 
 						<div className="mb-20">
-							<Typography color="primary" variant="subtitle2">
+							<Typography color="primary" variant="h6">
 								UPLOAD FILE
 							</Typography>
 						</div>
