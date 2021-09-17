@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-duplicate-props */
 import React from 'react';
 import { Form, Select } from 'antd';
-import { Typography } from '@material-ui/core';
+import { Typography, Grid } from '@material-ui/core';
 import './index.scss';
 
 const FormItem = Form.Item;
@@ -33,47 +33,54 @@ export default function AntSelectMultiCustom({
 	};
 	return (
 		<div className={`form-item-input ${position && 'flex flex-row  justify-between'}`}>
-			<div className={`flex flex-row ${position && 'mt-8'}`}>
-				<Typography variant="subtitle2" className="label--form">
-					{' '}
-					{label}{' '}
-				</Typography>
-				{hasFeedback && (
-					<p style={{ marginBottom: '-20px' }} className="text-red">
-						*
-					</p>
-				)}
-			</div>
-			<FormItem
-				rules={[{ required: true }]}
-				style={{ width: position ? width || '80%' : '100%' }}
-				help={submittedError || touchedError ? hasError : false}
-				validateStatus={submittedError || touchedError ? 'error' : 'success'}
-			>
-				<Select
-					{...field}
-					{...props}
-					showSearch
-					allowClear
-					maxTagCount={count || null}
-					mode="multiple"
-					size="small"
-					placeholder={placeholder || ''}
-					className={readOnly ? 'readOnly' : ''}
-					optionFilterProp="children"
-					filterOption={(input, option) =>
-						option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-					}
-					defaultValue={field.value}
-					onChange={onChange}
-				>
-					{options.map(p => (
-						<Option key={p.value} value={p.value}>
-							{p.label}
-						</Option>
-					))}
-				</Select>
-			</FormItem>
+			<Grid container spacing={2}>
+				<Grid item lg={3} md={3} sm={3} xs={12}>
+					<div className={`flex flex-row ${position && 'mt-6'}`}>
+						<Typography variant="subtitle2" className="label--form">
+							{' '}
+							{label}{' '}
+						</Typography>
+						{hasFeedback && (
+							<p style={{ marginBottom: '-20px' }} className="text-red">
+								*
+							</p>
+						)}
+					</div>
+				</Grid>
+				<Grid item lg={9} md={9} sm={9} xs={12}>
+					<FormItem
+						rules={[{ required: true }]}
+						// style={{ width: position ? width || '80%' : '100%' }}
+						className="w-full"
+						help={submittedError || touchedError ? hasError : false}
+						validateStatus={submittedError || touchedError ? 'error' : 'success'}
+					>
+						<Select
+							{...field}
+							{...props}
+							showSearch
+							allowClear
+							maxTagCount={count || null}
+							mode="multiple"
+							size="small"
+							placeholder={placeholder || ''}
+							className={readOnly ? 'readOnly' : ''}
+							optionFilterProp="children"
+							filterOption={(input, option) =>
+								option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+							}
+							defaultValue={field.value}
+							onChange={onChange}
+						>
+							{options.map(p => (
+								<Option key={p.value} value={p.value}>
+									{p.label}
+								</Option>
+							))}
+						</Select>
+					</FormItem>
+				</Grid>
+			</Grid>
 		</div>
 	);
 }

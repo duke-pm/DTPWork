@@ -3,7 +3,7 @@
 import React from 'react';
 // import { FieldFeedbackLabel } from './FieldFeedbackLabel';
 import { Input, Form } from 'antd';
-import { Typography } from '@material-ui/core';
+import { Typography, Grid } from '@material-ui/core';
 import './index.scss';
 
 const FormItem = Form.Item;
@@ -33,34 +33,40 @@ export default function AntDescriptionsCustom({
 	};
 	return (
 		<div className={`form-item-input ${position && 'flex flex-row  justify-between'}`}>
-			<div className={`flex flex-row `}>
-				<Typography variant="subtitle2" className="label--form">
-					{' '}
-					{label}{' '}
-				</Typography>
-				{hasFeedback && (
-					<p style={{ marginBottom: '-20px' }} className="text-red">
-						*
-					</p>
-				)}
-			</div>
-			<FormItem
-				rules={[{ required: true }]}
-				help={submittedError || touchedError ? hasError : false}
-				validateStatus={submittedError || touchedError ? 'error' : 'success'}
-			>
-				<TextArea
-					{...field}
-					{...props}
-					rows={row}
-					type={type || null}
-					className={`${readOnly ? 'readOnly' : ''}`}
-					defaultValue={field.value || ''}
-					// notFoundContent={notFoundContent || null}
-					placeholder={placeholder || ' '}
-					onChange={onInputChange}
-				/>
-			</FormItem>
+			<Grid container spacing={2}>
+				<Grid item lg={3} md={3} sm={3} xs={12}>
+					<div className={`flex flex-row ${position && 'mt-6'}`}>
+						<Typography variant="subtitle2" className="label--form">
+							{label}
+						</Typography>
+						{hasFeedback && (
+							<p style={{ marginBottom: '-20px' }} className="text-red">
+								*
+							</p>
+						)}
+					</div>
+				</Grid>
+				<Grid item lg={9} md={9} sm={9} xs={12}>
+					<FormItem
+						className="w-full"
+						rules={[{ required: true }]}
+						help={submittedError || touchedError ? hasError : false}
+						validateStatus={submittedError || touchedError ? 'error' : 'success'}
+					>
+						<TextArea
+							{...field}
+							{...props}
+							rows={row}
+							type={type || null}
+							className={`${readOnly ? 'readOnly' : ''}`}
+							defaultValue={field.value || ''}
+							// notFoundContent={notFoundContent || null}
+							placeholder={placeholder || ' '}
+							onChange={onInputChange}
+						/>
+					</FormItem>
+				</Grid>
+			</Grid>
 		</div>
 	);
 }

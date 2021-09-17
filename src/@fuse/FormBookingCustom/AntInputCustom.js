@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-duplicate-props */
 import React from 'react';
 import { Form, Input } from 'antd';
-import { Typography } from '@material-ui/core';
+import { Typography, Grid } from '@material-ui/core';
 import './index.scss';
 
 const FormItem = Form.Item;
@@ -29,32 +29,39 @@ export default function AntInputCustom({
 	};
 	return (
 		<div className={`form-item-input ${position && 'flex flex-row  justify-between'}`}>
-			<div className={`flex flex-row ${position && 'mt-8'}`}>
-				<Typography variant="subtitle2" className="label--form">
-					{label}
-				</Typography>
-				{hasFeedback && (
-					<p style={{ marginBottom: '-20px' }} className="text-red">
-						*
-					</p>
-				)}
-			</div>
-			<FormItem
-				rules={[{ required: true }]}
-				style={{ width: position ? width || '80%' : '100%' }}
-				help={submittedError || touchedError ? hasError : false}
-				validateStatus={submittedError || touchedError ? 'error' : 'success'}
-			>
-				<Input
-					{...field}
-					{...props}
-					type={type || null}
-					className={`${readOnly ? 'readOnly' : ''}`}
-					defaultValue={field.value || ''}
-					placeholder={placeholder || ' '}
-					onChange={onInputChange}
-				/>
-			</FormItem>
+			<Grid container spacing={2}>
+				<Grid item lg={3} md={3} sm={3} xs={12}>
+					<div className={`flex flex-row ${position && 'mt-6'}`}>
+						<Typography variant="subtitle2" className="label--form">
+							{label}
+						</Typography>
+						{hasFeedback && (
+							<p style={{ marginBottom: '-20px' }} className="text-red">
+								*
+							</p>
+						)}
+					</div>
+				</Grid>
+				<Grid item lg={9} md={9} sm={9} xs={12}>
+					<FormItem
+						rules={[{ required: true }]}
+						// style={{ width: position ? width || '80%' : '100%' }}
+						className="w-full"
+						help={submittedError || touchedError ? hasError : false}
+						validateStatus={submittedError || touchedError ? 'error' : 'success'}
+					>
+						<Input
+							{...field}
+							{...props}
+							type={type || null}
+							className={`${readOnly ? 'readOnly' : ''}`}
+							defaultValue={field.value || ''}
+							placeholder={placeholder || ' '}
+							onChange={onInputChange}
+						/>
+					</FormItem>
+				</Grid>
+			</Grid>
 		</div>
 	);
 }
