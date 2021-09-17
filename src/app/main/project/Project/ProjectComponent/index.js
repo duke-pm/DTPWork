@@ -2,6 +2,7 @@
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import React, { useContext } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
+import { Typography } from '@material-ui/core';
 import Panigation from '@fuse/core/FusePanigate';
 import { Spin, Tag } from 'antd';
 import TableProject from './TableProject';
@@ -62,13 +63,15 @@ export default function ProjectComponent({ owner, ArrProjectStatus, params, sect
 
 						{entitiesDetail?.listTask?.length !== 0 && (
 							<div className="flex flex-row items-center justify-between">
-								<div className="flex flex-row">
+								<div className="flex flex-row items-center">
 									<Tag
 										className="shadow-md"
 										style={{ width: '25px', height: '25px', marginLeft: '8px' }}
 										color="#d50000"
 									/>
-									<p style={{ fontWeight: '400', color: '#006565' }}>Late deadline</p>
+									<Typography variant="body1" style={{ color: '#d50000' }}>
+										Late deadline
+									</Typography>
 								</div>
 
 								<div className="flex flex-row items-center justify-end">

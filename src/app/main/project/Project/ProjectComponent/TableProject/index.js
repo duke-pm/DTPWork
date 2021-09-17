@@ -424,35 +424,6 @@ function TableProject(props) {
 			)
 		},
 		{
-			title: () => {
-				return (
-					<div className="flex items-center ">
-						Sector
-						<Dropdown
-							// visible
-							overlay={
-								<div className="filter--status">
-									<Checkbox.Group
-										options={sectorArr}
-										value={sector}
-										onChange={onHandleChangeSector}
-									/>
-								</div>
-							}
-							placement="bottomRight"
-							arrow
-						>
-							<Icon className="cursor-pointer"> arrow_drop_down </Icon>
-						</Dropdown>
-					</div>
-				);
-			},
-			dataIndex: 'sectorName',
-			key: 'sectorName',
-			width: '8%',
-			render: (_, item) => <Typography variant="body1">{item.sectorName}</Typography>
-		},
-		{
 			title: 'Progress',
 			align: 'center',
 			dataIndex: 'status',

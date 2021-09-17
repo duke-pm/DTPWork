@@ -44,11 +44,39 @@ function TableProject(props) {
 			dataIndex: 'prjName',
 			key: 'itemName',
 			fixed: 'left',
-			width: '15%',
+			width: '10%',
+			render: (_, item) => {
+				return (
+					<Typography variant={item.codeParentID === 'P0' ? 'subtitle2' : 'body1'} component="button">
+						{item.itemName}
+					</Typography>
+				);
+			}
+		},
+		{
+			title: 'Start Date',
+			align: 'center',
+			dataIndex: 'startDate',
+			key: 'startDate',
+			width: '4%',
 			render: (_, item) => (
-				<Typography variant={item.codeParentID === 'P0' ? 'subtitle2' : 'body1'} component="button">
-					{item.itemName}
-				</Typography>
+				<div className="flex items-center justify-center text-center px-8 py-4 bg-green-50 rounded-16">
+					<Typography variant="body1">
+						{item.startDate && moment(item.startDate).format('DD/MM/YY')}
+					</Typography>
+				</div>
+			)
+		},
+		{
+			title: 'End Date',
+			align: 'center',
+			dataIndex: 'endDate',
+			key: 'endDate',
+			width: '4%',
+			render: (_, item) => (
+				<div className="flex items-center justify-center text-center px-8 py-4 bg-green-50 rounded-16">
+					<Typography variant="body1">{item.endDate && moment(item.endDate).format('DD/MM/YY')}</Typography>
+				</div>
 			)
 		},
 		{
@@ -58,54 +86,8 @@ function TableProject(props) {
 			align: 'center',
 			width: '4%',
 			render: (_, item) => (
-				<div
-					className={clsx(
-						'flex items-center justify-center text-center px-8 py-4 mx-4 rounded-16 ',
-						'text-blue'
-					)}
-				>
-					<Icon className="text-16">check_circle</Icon>
-					<Typography className="ml-8" variant="subtitle1" component="button">
-						{item.duration} Days
-					</Typography>{' '}
-				</div>
-			)
-		},
-		{
-			title: 'Start',
-			align: 'center',
-			dataIndex: 'startDate',
-			key: 'startDate',
-			width: '4%',
-			render: (_, item) => (
-				<div
-					className={clsx(
-						'flex items-center justify-center text-center px-8 py-4 mx-4 text-white bg-green rounded-16'
-					)}
-				>
-					<Icon className="text-16">access_time</Icon>
-					<Typography className="ml-8" variant="body1">
-						{item.startDate && moment(item.startDate).format('DD/MM/YY')}
-					</Typography>
-				</div>
-			)
-		},
-		{
-			title: 'Finish',
-			align: 'center',
-			dataIndex: 'endDate',
-			key: 'endDate',
-			width: '4%',
-			render: (_, item) => (
-				<div
-					className={clsx(
-						'flex items-center justify-center text-center px-8 py-4 mx-4 text-white bg-green  rounded-16'
-					)}
-				>
-					<Icon className="text-16">access_time</Icon>
-					<Typography className="ml-8" variant="body1">
-						{item.endDate && moment(item.endDate).format('DD/MM/YY')}
-					</Typography>
+				<div className="flex items-center justify-center text-center px-8 py-4 mx-4 rounded-16 text-blue">
+					<Typography variant="body1">{item.duration} Days</Typography>
 				</div>
 			)
 		},
@@ -114,10 +96,10 @@ function TableProject(props) {
 			align: 'center',
 			dataIndex: 'public',
 			key: 'public',
-			width: '6%',
+			width: '5%',
 			render: (_, item) => (
 				<div className="flex flex-row items-center">
-					<Avatar size={32} style={{ backgroundColor: item.colorCode }} icon={<UserOutlined />} />
+					<Avatar style={{ backgroundColor: item.colorCode }} icon={<UserOutlined />} />
 					<Typography className="ml-8" variant="body1">
 						{item.ownerName}
 					</Typography>

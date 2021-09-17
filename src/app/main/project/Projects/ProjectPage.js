@@ -132,8 +132,7 @@ export default function ProjectPage() {
 							variant="contained"
 							color="primary"
 						>
-							{' '}
-							<Typography variant="body2"> Create projects </Typography>
+							<Typography variant="button">Create</Typography>
 						</Button>
 					</div>
 				</div>

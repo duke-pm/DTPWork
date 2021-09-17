@@ -278,8 +278,7 @@ export default function ContentProvider() {
 							)}
 						>
 							<Button className="button__create mr-20" variant="contained" color="primary">
-								{' '}
-								<Typography variant="body2"> Create task </Typography>
+								<Typography variant="button">Create</Typography>
 							</Button>
 						</Popover>
 					)}

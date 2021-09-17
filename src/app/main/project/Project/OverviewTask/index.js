@@ -181,30 +181,30 @@ export default function OverviewPage() {
 
 									<Grid container spacing={4}>
 										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Typography variant="subtitle2"> Created by: </Typography>
+											<Typography variant="subtitle2">Created by:</Typography>
 										</Grid>
 										<Grid item xs={9} md={9} sm={9} lg={9}>
-											<Typography variant="body2">{entitiesView?.detail.crtdUser}</Typography>
+											<Typography variant="body1">{entitiesView?.detail.crtdUser}</Typography>
 										</Grid>
 									</Grid>
 
 									<Grid container spacing={4}>
 										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Typography variant="subtitle2"> Last updated on: </Typography>
+											<Typography variant="subtitle2">Last updated:</Typography>
 										</Grid>
 										<Grid item xs={9} md={9} sm={9} lg={9}>
-											<Typography variant="body2">
+											<Typography variant="body1">
 												{moment(entitiesView?.detail.lUpdDate).format('DD MMM, YY')}
 											</Typography>
 										</Grid>
 									</Grid>
 
 									<Grid container spacing={4}>
-										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Typography variant="subtitle2"> Description: </Typography>
+										<Grid item xs={12} md={3} sm={3} lg={3}>
+											<Typography variant="subtitle2">Description:</Typography>
 										</Grid>
-										<Grid item xs={9} md={9} sm={9} lg={9}>
-											<Typography variant="body2">
+										<Grid item xs={12} md={9} sm={9} lg={9}>
+											<Typography variant="body1">
 												{entitiesView?.detail.descr !== '' ? entitiesView?.detail.descr : '-'}
 											</Typography>
 										</Grid>
@@ -219,7 +219,7 @@ export default function OverviewPage() {
 
 									<Grid container spacing={4}>
 										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Typography variant="subtitle2"> Status: </Typography>
+											<Typography variant="subtitle2">Status:</Typography>
 										</Grid>
 										<Grid item xs={9} md={9} sm={9} lg={9}>
 											<Dropdown
@@ -260,7 +260,7 @@ export default function OverviewPage() {
 
 									<Grid container spacing={4}>
 										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Typography variant="subtitle2"> Progress : </Typography>
+											<Typography variant="subtitle2">Progress:</Typography>
 										</Grid>
 										<Grid item xs={9} md={9} sm={9} lg={9}>
 											<Slider
@@ -275,7 +275,7 @@ export default function OverviewPage() {
 
 									<Grid container spacing={4}>
 										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Typography variant="subtitle2"> Follow : </Typography>
+											<Typography variant="subtitle2">Follow:</Typography>
 										</Grid>
 										<Grid item xs={9} md={9} sm={9} lg={9}>
 											<Button
@@ -304,13 +304,13 @@ export default function OverviewPage() {
 									<Grid container spacing={4}>
 										<Grid item md={6} sm={6} lg={6} className="flex flex-row items-center">
 											<Typography variant="subtitle2">Start date:</Typography>
-											<Typography variant="body2" className="ml-20">
+											<Typography variant="body1" className="ml-20">
 												{moment(entitiesView?.detail.startDate).format('DD/MM/YYYY')}
 											</Typography>
 										</Grid>
 										<Grid item md={6} sm={6} lg={6} className="flex flex-row items-center">
 											<Typography variant="subtitle2">End date: </Typography>
-											<Typography variant="body2" className="ml-20">
+											<Typography variant="body1" className="ml-20">
 												{moment(entitiesView?.detail.endDate).format('DD/MM/YYYY')}
 											</Typography>
 										</Grid>
@@ -318,7 +318,7 @@ export default function OverviewPage() {
 
 									<Grid container spacing={4}>
 										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Typography variant="subtitle2"> Assignee : </Typography>
+											<Typography variant="subtitle2">Assignee:</Typography>
 										</Grid>
 										<Grid item xs={9} md={9} sm={9} lg={9}>
 											<div className="flex flex-row items-center">
@@ -327,7 +327,7 @@ export default function OverviewPage() {
 													style={{ backgroundColor: entitiesView?.detail.colorCode }}
 													icon={<UserOutlined />}
 												/>
-												<Typography className="ml-8" variant="body2">
+												<Typography className="ml-8" variant="body1">
 													{entitiesView?.detail.ownerName}
 												</Typography>
 											</div>
@@ -336,7 +336,7 @@ export default function OverviewPage() {
 
 									<Grid container spacing={4}>
 										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Typography variant="subtitle2"> Members : </Typography>
+											<Typography variant="subtitle2">Members:</Typography>
 										</Grid>
 										<Grid item xs={9} md={9} sm={9} lg={9}>
 											<Avatar.Group
@@ -354,11 +354,11 @@ export default function OverviewPage() {
 
 									<Grid container spacing={4}>
 										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Typography variant="subtitle2"> Priority : </Typography>
+											<Typography variant="subtitle2">Priority:</Typography>
 										</Grid>
 										<Grid item xs={9} md={9} sm={9} lg={9}>
 											<Typography
-												variant="body2"
+												variant="body1"
 												style={{ color: priorityColor[entitiesView?.detail.priority] }}
 											>
 												{entitiesView?.detail.priorityName}
@@ -392,10 +392,10 @@ export default function OverviewPage() {
 
 									<Grid container spacing={4}>
 										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Typography variant="subtitle2"> Sector : </Typography>
+											<Typography variant="subtitle2">Sector:</Typography>
 										</Grid>
 										<Grid item xs={9} md={9} sm={9} lg={9}>
-											<Typography variant="body2">
+											<Typography variant="body1">
 												{entitiesView?.detail.sectorName !== ''
 													? entitiesView?.detail.sectorName
 													: '-'}
@@ -405,10 +405,10 @@ export default function OverviewPage() {
 
 									<Grid container spacing={4}>
 										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Typography variant="subtitle2"> Grade : </Typography>
+											<Typography variant="subtitle2">Grade:</Typography>
 										</Grid>
 										<Grid item xs={9} md={9} sm={9} lg={9}>
-											<Typography variant="body2">
+											<Typography variant="body1">
 												{entitiesView?.detail.gradeName !== ''
 													? entitiesView?.detail.gradeName
 													: '-'}
@@ -418,10 +418,10 @@ export default function OverviewPage() {
 
 									<Grid container spacing={4}>
 										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Typography variant="subtitle2"> Component : </Typography>
+											<Typography variant="subtitle2">Component:</Typography>
 										</Grid>
 										<Grid item xs={9} md={9} sm={9} lg={9}>
-											<Typography variant="body2">
+											<Typography variant="body1">
 												{entitiesView?.detail.componentName !== ''
 													? entitiesView?.detail.componentName
 													: '-'}
@@ -431,10 +431,10 @@ export default function OverviewPage() {
 
 									<Grid container spacing={4}>
 										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Typography variant="subtitle2"> Author : </Typography>
+											<Typography variant="subtitle2">Author:</Typography>
 										</Grid>
 										<Grid item xs={9} md={9} sm={9} lg={9}>
-											<Typography variant="body2">
+											<Typography variant="body1">
 												{entitiesView?.detail.author !== '' ? entitiesView?.detail.author : '-'}
 											</Typography>
 										</Grid>
@@ -442,10 +442,10 @@ export default function OverviewPage() {
 
 									<Grid container spacing={4}>
 										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Typography variant="subtitle2"> Origin Publisher : </Typography>
+											<Typography variant="subtitle2">Origin Publisher:</Typography>
 										</Grid>
 										<Grid item xs={9} md={9} sm={9} lg={9}>
-											<Typography variant="body2">
+											<Typography variant="body1">
 												{entitiesView?.detail.originPublisher !== ''
 													? entitiesView?.detail.originPublisher
 													: '-'}
@@ -455,10 +455,10 @@ export default function OverviewPage() {
 
 									<Grid container spacing={4}>
 										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Typography variant="subtitle2"> Ownership DTP : </Typography>
+											<Typography variant="subtitle2">Ownership DTP:</Typography>
 										</Grid>
 										<Grid item xs={9} md={9} sm={9} lg={9}>
-											<Typography variant="body2">
+											<Typography variant="body1">
 												{entitiesView?.detail.ownershipDTP !== ''
 													? entitiesView?.detail.ownershipDTP
 													: '-'}
