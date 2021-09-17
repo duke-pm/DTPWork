@@ -23,8 +23,8 @@ export default function ProjectComponent({ ArrProjectStatus, owner }) {
 		dispatch(fetchsProjectFilter(rowPageParse, page, status?.toString(), ownerFilter?.toString(), year));
 	};
 	return (
-		<div className="w-full flex flex-col">
-			<FuseAnimate animation="transition.slideUpIn" delay={200}>
+		<Spin spinning={listLoading}>
+			<div className="w-full flex flex-col">
 				<div className="flex flex-col">
 					<TableProject
 						listLoading={listLoading}
@@ -47,7 +47,7 @@ export default function ProjectComponent({ ArrProjectStatus, owner }) {
 						</div>
 					)}
 				</div>
-			</FuseAnimate>
-		</div>
+			</div>
+		</Spin>
 	);
 }

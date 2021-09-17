@@ -121,12 +121,12 @@
         }
         .proposedManagement__form{
             padding: 24px 15px;
-            width: 692px;
+            max-width: 692px;
             margin: 0 auto;
         }
         .proposedManagement__Allocation{
             padding: 24px 15px;
-            width: 782px;
+            max-width: 782px;
             margin: 0 auto;
             thead[class*="ant-table-thead"] th{
                 background-color: $backgroud-table !important;

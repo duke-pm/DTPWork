@@ -97,7 +97,7 @@ function TableProject(props) {
 			title: <AppsIcon />,
 			align: 'center',
 			key: 'operation',
-			fixed: 'left',
+			fixed: !matchesSM && 'left',
 			width: '4%',
 			render: (_, item) => (
 				<Popover
@@ -154,7 +154,7 @@ function TableProject(props) {
 		{
 			title: 'Project Name',
 			dataIndex: 'prjName',
-			fixed: 'left',
+			fixed: !matchesSM && 'left',
 			key: 'prjName',
 			width: '30%',
 			render: (_, item) => (
@@ -354,7 +354,6 @@ function TableProject(props) {
 			scroll={{ x: entities && entities.length ? (matches ? 1520 : 1540) : matchesSM ? 1540 : null }}
 			columns={columns}
 			dataSource={entities}
-			loading={listLoading && <Spin />}
 		/>
 	);
 }

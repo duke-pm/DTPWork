@@ -84,8 +84,8 @@ export default function FormCustomEditAllocation({ handleSubmitForm, entitiesEdi
 					<Form>
 						<div>
 							<div className="flex justify-between flex-row">
-								<Typography color="primary" variant="body1" className="label--form--title mb-8">
-									Thông tin nhân viên.
+								<Typography color="primary" variant="subtitle2" className="label--form--title mb-8">
+									THÔNG TIN NHÂN VIÊN.
 								</Typography>{' '}
 							</div>
 							<div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-8 ">
@@ -111,8 +111,8 @@ export default function FormCustomEditAllocation({ handleSubmitForm, entitiesEdi
 						</div>
 						<div className="table-form">
 							<div className="flex justify-between flex-row">
-								<Typography color="primary" variant="body1" className="label--form--title mb-8">
-									Tài sản yêu cầu.
+								<Typography color="primary" variant="subtitle2" className="label--form--title mb-8">
+									TÀI SẢN YÊU CẦU.
 								</Typography>{' '}
 							</div>
 							<Table

@@ -59,7 +59,7 @@ export default function RequestProviderPage() {
 					</div>
 				</div>
 				<div className="proposedManagement__content mt-8">
-					<div>
+					<div className="proposedManagement__Allocation">
 						<RequestProviderBody
 							dataSource={dataSource}
 							setDataSource={setDataSource}

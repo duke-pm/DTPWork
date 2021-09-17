@@ -46,8 +46,8 @@ export default function ProjectComponent({ owner, ArrProjectStatus, params, sect
 		);
 	};
 	return (
-		<div className="w-full flex flex-col">
-			<FuseAnimate animation="transition.slideUpIn" delay={200}>
+		<Spin spinning={listLoading}>
+			<div className="w-full flex flex-col">
 				<div className={`'grid-cols-1'}  gap-8`}>
 					<div className="flex flex-col">
 						<TableProject
@@ -85,7 +85,7 @@ export default function ProjectComponent({ owner, ArrProjectStatus, params, sect
 						)}
 					</div>
 				</div>
-			</FuseAnimate>
-		</div>
+			</div>
+		</Spin>
 	);
 }

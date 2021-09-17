@@ -222,7 +222,7 @@ function TableProject(props) {
 		{
 			title: <AppsIcon />,
 			align: 'center',
-			fixed: 'left',
+			fixed: !matchesSM && 'left',
 			key: 'operation',
 			width: '3%',
 			render: (_, item) => (
@@ -273,7 +273,7 @@ function TableProject(props) {
 			title: 'Subject',
 			dataIndex: 'subject',
 			key: 'subject',
-			fixed: 'left',
+			fixed: !matchesSM && 'left',
 			width: '20%',
 			render: (_, item) => (
 				<Link
@@ -548,7 +548,6 @@ function TableProject(props) {
 			}}
 			pagination={false}
 			columns={columns}
-			loading={listLoading && <Spin />}
 			dataSource={entitiesDetail?.listTask}
 		/>
 	);

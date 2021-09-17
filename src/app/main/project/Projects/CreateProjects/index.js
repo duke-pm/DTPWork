@@ -64,11 +64,12 @@ export default function CreateProjects() {
 			</div>
 
 			<div className="projects__content mt-8 flex flex-col items-center">
-				<Spin spinning={loading} />
 				<Grid container className="w-full p-16">
 					<Grid item lg={3} md={3} sm={false} xs={false} />
 					<Grid item lg={6} md={6} sm={12} xs={12}>
-						<FormComponent role={role} owner={owner} projectSub={projectSub} />
+						<Spin spinning={loading}>
+							<FormComponent role={role} owner={owner} projectSub={projectSub} />
+						</Spin>
 					</Grid>
 					<Grid item lg={3} md={3} sm={false} xs={false} />
 				</Grid>

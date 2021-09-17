@@ -67,7 +67,7 @@ export default function CustomForm({
 						) : (
 							<Button type="submit" className="button__cancle mr-8" variant="contained" color="primary">
 								{' '}
-								<Typography variant="body2"> Save </Typography>
+								<Typography variant="button"> Save </Typography>
 							</Button>
 						)}
 						<Button
@@ -76,7 +76,7 @@ export default function CustomForm({
 							variant="contained"
 							color="secondary"
 						>
-							<Typography variant="body2"> Cancel </Typography>
+							<Typography variant="button"> Cancel </Typography>
 						</Button>
 					</div>
 				</Form>

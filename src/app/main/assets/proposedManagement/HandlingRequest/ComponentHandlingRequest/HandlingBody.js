@@ -129,14 +129,11 @@ export default function HandlingBody({ dataAssets, setDataAssets, value }) {
 										/>
 									</div>
 									<div>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											File đính kèm{' '}
-										</Typography>
+										<Typography variant="subtitle2"> File đính kèm </Typography>
 										<Field
 											// label="File Đính kèm"
 											name="file"
-											style={{ height: '5.8rem' }}
+											style={{ height: '4.8rem' }}
 											component={AntFileCustom}
 										/>
 									</div>
@@ -147,7 +144,7 @@ export default function HandlingBody({ dataAssets, setDataAssets, value }) {
 									<Spin className="mr-23" />
 								) : (
 									<Button type="submit" className="h-26 mr-16" variant="contained" color="primary">
-										Gửi yêu cầu
+										<Typography variant="body1">Gửi yêu cầu</Typography>
 									</Button>
 								)}
 								<Button
@@ -157,7 +154,7 @@ export default function HandlingBody({ dataAssets, setDataAssets, value }) {
 									variant="contained"
 									color="secondary"
 								>
-									Quay lại
+									<Typography variant="body1">Quay lại</Typography>
 								</Button>
 							</div>
 						</div>

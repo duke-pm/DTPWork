@@ -42,7 +42,7 @@ export default function TimeLine({ timeLine, setTimeLine }) {
 					<IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
 						<CloseIcon />
 					</IconButton>
-					<Typography variant="subtitle1" color="inherit">
+					<Typography variant="subtitle2" color="inherit">
 						Quá trình phê duyệt {timeLine.title} tài sản
 					</Typography>
 				</Toolbar>

@@ -78,13 +78,8 @@ function TableProject(props) {
 			key: 'startDate',
 			width: '4%',
 			render: (_, item) => (
-				<div
-					className={clsx(
-						'flex items-center justify-center text-center px-8 py-4 mx-4 text-white bg-green rounded-16'
-					)}
-				>
-					<Icon className="text-16">access_time</Icon>
-					<Typography className="ml-8" variant="body1">
+				<div className="flex items-center justify-center text-center px-8 py-4 bg-green-50 rounded-16">
+					<Typography variant="body1">
 						{item.startDate && moment(item.startDate).format('DD/MM/YY')}
 					</Typography>
 				</div>
@@ -97,15 +92,8 @@ function TableProject(props) {
 			key: 'endDate',
 			width: '4%',
 			render: (_, item) => (
-				<div
-					className={clsx(
-						'flex items-center justify-center text-center px-8 py-4 mx-4 text-white bg-green  rounded-16'
-					)}
-				>
-					<Icon className="text-16">access_time</Icon>
-					<Typography className="ml-8" variant="body1">
-						{item.endDate && moment(item.endDate).format('DD/MM/YY')}
-					</Typography>
+				<div className="flex items-center justify-center text-center px-8 py-4 bg-green-50 rounded-16">
+					<Typography variant="body1">{item.endDate && moment(item.endDate).format('DD/MM/YY')}</Typography>
 				</div>
 			)
 		},
@@ -163,7 +151,6 @@ function TableProject(props) {
 			pagination={false}
 			scroll={{ x: entities && entities.length ? (matches ? 1520 : 1540) : matchesSM ? 1540 : null }}
 			columns={columns}
-			loading={listLoading && <Spin />}
 			dataSource={entities}
 		/>
 	);

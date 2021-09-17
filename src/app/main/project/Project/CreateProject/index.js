@@ -78,15 +78,16 @@ export default function CreateProjects() {
 	const ExitPage = () => {
 		history.goBack();
 	};
+	console.log(params);
 	return (
 		<div className="container projects">
 			<div className="projects__header px-16">
 				<Typography color="primary" variant="h6">
 					{params.category !== 'create'
 						? params.category === 'settingtask'
-							? 'Task settings'
-							: 'Coppy Task'
-						: 'Create Task'}
+							? 'Task Settings'
+							: 'Copy Task'
+						: `Create ${params.type}`}
 				</Typography>
 				<div className="projects__header--action">
 					<Tooltip placement="bottom" title="Exit">
@@ -97,22 +98,23 @@ export default function CreateProjects() {
 				</div>
 			</div>
 			<div className="projects__content mt-8 flex flex-col items-center">
-				<Spin spinning={loading} />
 				<Grid container className="w-full p-16">
-					<Grid item lg={3} md={3} sm={false} xs={false} />
-					<Grid item lg={6} md={6} sm={12} xs={12}>
-						<FormComponent
-							ArrProjectStatus={ArrProjectStatus}
-							role={role}
-							owner={owner}
-							taskSub={taskSub}
-							ArrTaskPri={ArrTaskPri}
-							sectorArr={sectorArr}
-							ArrTaskComponent={ArrTaskComponent}
-							gradeGolbal={gradeGolbal}
-						/>
+					<Grid item lg={2} md={3} sm={false} xs={false} />
+					<Grid item lg={8} md={6} sm={12} xs={12}>
+						<Spin spinning={loading}>
+							<FormComponent
+								ArrProjectStatus={ArrProjectStatus}
+								role={role}
+								owner={owner}
+								taskSub={taskSub}
+								ArrTaskPri={ArrTaskPri}
+								sectorArr={sectorArr}
+								ArrTaskComponent={ArrTaskComponent}
+								gradeGolbal={gradeGolbal}
+							/>
+						</Spin>
 					</Grid>
-					<Grid item lg={3} md={3} sm={false} xs={false} />
+					<Grid item lg={2} md={3} sm={false} xs={false} />
 				</Grid>
 			</div>
 		</div>

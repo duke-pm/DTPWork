@@ -254,7 +254,7 @@ export default function ProjectPage() {
 					</div>
 				) : null}
 				<div className="projects__content mt-8">
-					<div className="px-16">
+					<div className="projects__content--table px-16">
 						<ProjectComponent ArrProjectStatus={ArrProjectStatus} owner={owner} />
 					</div>
 				</div>

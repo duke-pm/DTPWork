@@ -9,6 +9,8 @@ import { sortDirestion } from '@fuse/core/DtpConfig';
 import moment from 'moment';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { useDispatch } from 'react-redux';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 import ActionsAllocation from './ActionsAllocation';
 import { chipColor, chipText } from '../ConfrimAllocationConfig';
 import { ConfirmContext } from '../../ConfirmContext';
@@ -23,6 +25,8 @@ export default function TableConfirmAll({
 }) {
 	const confirmConext = useContext(ConfirmContext);
 	const dispatch = useDispatch();
+	const theme = useTheme();
+	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
 	const { search, rowPage, page, setStatus, status, dateEnd, dateStart, sort } = confirmConext;
 	const handleOnChangeStatus = e => {
 		const { target } = e;
@@ -143,6 +147,10 @@ export default function TableConfirmAll({
 			rowKey="requestID"
 			pagination={false}
 			columns={columns}
+			scroll={{
+				x: matchesSM ? 900 : null,
+				y: null
+			}}
 			dataSource={entities}
 			onChange={onChange}
 			loading={listLoading && <Spin />}
