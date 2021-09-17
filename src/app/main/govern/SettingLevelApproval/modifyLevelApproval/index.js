@@ -40,7 +40,7 @@ export default function ModifyLevelApproval() {
 				</div>
 			</div>
 			<div className="govern__content mt-8">
-				<div className="modify-govern">
+				<div className="modify-level">
 					<FormComponent entitiesEdit={entitiesEdit} actionLoading={actionLoading} />
 				</div>
 			</div>
