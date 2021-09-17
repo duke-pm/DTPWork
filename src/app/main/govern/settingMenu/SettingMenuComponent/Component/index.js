@@ -4,6 +4,8 @@ import { Typography } from '@material-ui/core';
 import { Table, Checkbox, Spin } from 'antd';
 import React from 'react';
 import AppsIcon from '@material-ui/icons/Apps';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 import ActionsMenuSetting from '../SettingMenuContent/ActionsMenuSetting';
 
 export default function TableSettingMenu({ entities, listLoading, handleEditMenuSetting }) {
@@ -13,6 +15,8 @@ export default function TableSettingMenu({ entities, listLoading, handleEditMenu
 	// const onChange = value => {
 	// 	console.log(value);
 	// };
+	const theme = useTheme();
+	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
 	const columns = [
 		{
 			title: 'Menu Name',
@@ -77,6 +81,10 @@ export default function TableSettingMenu({ entities, listLoading, handleEditMenu
 			rowKey="menuID"
 			pagination={false}
 			columns={columns}
+			scroll={{
+				x: matchesSM ? 900 : null,
+				y: null
+			}}
 			dataSource={entities}
 			loading={listLoading && <Spin />}
 		/>

@@ -145,7 +145,6 @@ function TableProject(props) {
 			pagination={false}
 			scroll={{ x: entities && entities.length ? (matches ? 1520 : 1540) : matchesSM ? 1540 : null }}
 			columns={columns}
-			loading={listLoading && <Spin />}
 			dataSource={entities}
 		/>
 	);

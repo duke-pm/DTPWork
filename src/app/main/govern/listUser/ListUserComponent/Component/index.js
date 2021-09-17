@@ -5,8 +5,10 @@ import { Table, Checkbox, Spin } from 'antd';
 import React from 'react';
 import AppsIcon from '@material-ui/icons/Apps';
 import { sortDirestion } from '@fuse/core/DtpConfig';
-import ActionsListUserBody from '../ActionListUser/ActionsListUserBody';
 // import ActionsGroupUserBody from '../ActionGroupUser/ActionsGroupUserBody';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
+import ActionsListUserBody from '../ActionListUser/ActionsListUserBody';
 
 export default function TableListUser({ entities, listLoading, handleEditListUser, createSortHandler }) {
 	// const filterOwner = value => {
@@ -15,6 +17,8 @@ export default function TableListUser({ entities, listLoading, handleEditListUse
 	// const onChange = value => {
 	// 	console.log(value);
 	// };
+	const theme = useTheme();
+	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
 	const onChange = (pagination, filters, sorter, extra) => {
 		const sort = sortDirestion[sorter.order];
 		createSortHandler(sort, sorter.field);
@@ -79,6 +83,10 @@ export default function TableListUser({ entities, listLoading, handleEditListUse
 			rowKey="userID"
 			pagination={false}
 			columns={columns}
+			scroll={{
+				x: matchesSM ? 900 : null,
+				y: null
+			}}
 			dataSource={entities}
 			onChange={onChange}
 			loading={listLoading && <Spin />}

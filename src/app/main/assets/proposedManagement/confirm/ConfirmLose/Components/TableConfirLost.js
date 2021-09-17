@@ -9,6 +9,8 @@ import { sortDirestion } from '@fuse/core/DtpConfig';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 import { ConfirmContext } from '../../ConfirmContext';
 import { searchConfirms } from '../../../_redux/confirmAction';
 import { chipColor, chipText } from '../LoseConfig';
@@ -21,6 +23,8 @@ export default function TableConfirLost({
 	handleOpenTimeLine,
 	handleOpenForm
 }) {
+	const theme = useTheme();
+	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
 	const confirmConext = useContext(ConfirmContext);
 	const dispatch = useDispatch();
 	const { search, rowPage, page, setStatus, status, dateEnd, dateStart, sort } = confirmConext;
@@ -142,6 +146,10 @@ export default function TableConfirLost({
 			showSorterTooltip={false}
 			rowKey="requestID"
 			pagination={false}
+			scroll={{
+				x: matchesSM ? 900 : null,
+				y: null
+			}}
 			columns={columns}
 			dataSource={entities}
 			onChange={onChange}

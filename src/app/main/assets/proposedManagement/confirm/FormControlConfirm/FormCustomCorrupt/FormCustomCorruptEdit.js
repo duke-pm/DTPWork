@@ -41,90 +41,90 @@ export default function FormCustomCorruptEdit({ entitiesEdit, handleClose, setFo
 				{({ handleSubmit, isSubmitting }) => (
 					<Form>
 						<Grid container item spacing={2}>
-							<Grid className="mb-8" item sm={12} md={12} lg={12}>
-								<Typography color="primary" variant="body1" className="label--form--title mb-8">
-									Thông tin tài sản.
+							<Grid className="mb-8" item xs={12} sm={12} md={12} lg={12}>
+								<Typography color="primary" variant="subtitle2" className="label--form--title mb-8">
+									THÔNG TIN TÀI SẢN.
 								</Typography>
 							</Grid>
-							<Grid item sm={6} md={6} lg={6}>
+							<Grid item xs={6} sm={6} md={6} lg={6}>
 								<Typography variant="subtitle2" color="primary">
 									{' '}
 									Mã tài sản :
 								</Typography>
 							</Grid>
-							<Grid item sm={6} md={6} lg={6}>
+							<Grid item xs={6} sm={6} md={6} lg={6}>
 								{' '}
 								<Typography variant="body2"> {entitiesEdit?.assetID}</Typography>
 							</Grid>
-							<Grid item sm={6} md={6} lg={6}>
+							<Grid item xs={6} sm={6} md={6} lg={6}>
 								<Typography variant="subtitle2" color="primary">
 									{' '}
 									Tên tài sản :
 								</Typography>
 							</Grid>
-							<Grid item sm={6} md={6} lg={6}>
+							<Grid item xs={6} sm={6} md={6} lg={6}>
 								{' '}
 								<Typography variant="body2"> {entitiesEdit?.assetName}</Typography>
 							</Grid>
-							<Grid item sm={6} md={6} lg={6}>
+							<Grid item xs={6} sm={6} md={6} lg={6}>
 								<Typography variant="subtitle2" color="primary">
 									{' '}
 									Nhóm tài sản :
 								</Typography>
 							</Grid>
-							<Grid item sm={6} md={6} lg={6}>
+							<Grid item xs={6} sm={6} md={6} lg={6}>
 								{' '}
 								<Typography variant="body2"> </Typography>
 							</Grid>
-							<Grid item sm={6} md={6} lg={6}>
+							<Grid item xs={6} sm={6} md={6} lg={6}>
 								<Typography variant="subtitle2" color="primary">
 									{' '}
 									Quy cách tài sản :
 								</Typography>
 							</Grid>
-							<Grid item sm={6} md={6} lg={6}>
+							<Grid item xs={6} sm={6} md={6} lg={6}>
 								{' '}
 								<Typography variant="body2"> </Typography>
 							</Grid>
-							<Grid item sm={6} md={6} lg={6}>
+							<Grid item xs={6} sm={6} md={6} lg={6}>
 								<Typography variant="subtitle2" color="primary">
 									{' '}
 									Ngày mua :
 								</Typography>
 							</Grid>
-							<Grid item sm={6} md={6} lg={6}>
+							<Grid item xs={6} sm={6} md={6} lg={6}>
 								{' '}
 								<Typography variant="body2">
 									{' '}
 									{momemt(entitiesEdit?.purchaseDate).format('DD/MM/YYYY') || ''}{' '}
 								</Typography>
 							</Grid>
-							<Grid item sm={6} md={6} lg={6}>
+							<Grid item xs={6} sm={6} md={6} lg={6}>
 								<Typography variant="subtitle2" color="primary">
 									{' '}
 									Nguyên giá :
 								</Typography>
 							</Grid>
-							<Grid item sm={6} md={6} lg={6}>
+							<Grid item xs={6} sm={6} md={6} lg={6}>
 								<Typography variant="body2">
 									{currencyFormat(entitiesEdit?.originalPrice) || ''}{' '}
 								</Typography>
 							</Grid>
-							<Grid item sm={6} md={6} lg={6}>
+							<Grid item xs={6} sm={6} md={6} lg={6}>
 								<Typography variant="subtitle2" color="primary">
 									Tình trạng :
 								</Typography>
 							</Grid>
-							<Grid item sm={6} md={6} lg={6}>
+							<Grid item xs={6} sm={6} md={6} lg={6}>
 								<Typography variant="body2">{entitiesEdit?.assetStatusName}</Typography>
 							</Grid>
-							<Grid className="mb-8" item sm={12} md={12} lg={12}>
-								<Typography color="primary" variant="body1" className="label--form--title mb-8">
-									Thông tin tài sản bị{' '}
-									{type === 'allocation' ? null : type === 'bao-mat' ? 'mất' : 'hỏng'}.
+							<Grid className="mb-8" item xs={12} sm={12} md={12} lg={12}>
+								<Typography color="primary" variant="subtitle2" className="label--form--title mb-8">
+									THÔNG TIN TÀI SẢN BỊ{' '}
+									{type === 'allocation' ? null : type === 'bao-mat' ? 'MẤT' : 'HỎNG'}.
 								</Typography>
 							</Grid>
-							<Grid className="mb-8" item sm={12} md={12} lg={12}>
+							<Grid className="mb-8" item xs={12} sm={12} md={12} lg={12}>
 								<div className={`grid grid-cols-1 gap-8 `}>
 									<Field
 										readOnly

@@ -184,7 +184,7 @@ export default function RequestProviderBody({
 			>
 				{({ handleSubmit, isSubmitting, resetForm }) => (
 					<FuseAnimate animation="transition.slideRightIn" delay={300}>
-						<Form className="flex flex-col w-full items-center justify-between mb-28 mt-28">
+						<Form className="flex flex-col items-center justify-between mb-28">
 							<div style={{ width: '90%' }} className="sm" id="content">
 								<div className="px-16 w-full sm:px-24">
 									<div className="flex justify-between flex-row">
@@ -192,7 +192,7 @@ export default function RequestProviderBody({
 											THÔNG TIN NGƯỜI YÊU CẦU.
 										</Typography>{' '}
 									</div>
-									<div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 ">
+									<div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 ">
 										<Field
 											label="Nhân viên"
 											name="nameEmp"
@@ -261,7 +261,7 @@ export default function RequestProviderBody({
 									/>
 								</div>
 								<div className="px-16 sm:px-24 mt-16">
-									<div className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 ">
+									<div className="grid sm:grid-cols-1 md:grid-cols-1 gap-8 ">
 										<Field
 											label="Nơi dùng"
 											hasFeedback
@@ -270,32 +270,30 @@ export default function RequestProviderBody({
 											options={optionLocation}
 											className="mt-8"
 										/>
-										<div className="flex flex-row">
-											<Field
-												label="Loại yêu cầu "
-												hasFeedback
-												name="assetsCategory"
-												component={AntRadioCustom}
-												options={[
-													{ label: 'Mua mới', value: 'N' },
-													{ label: 'Bổ sung thêm', value: 'A' }
-												]}
-												className="mt-8 mb-16"
-											/>
-											<Field
-												label="Khoản mua này có nằm trong kế hoạch"
-												name="plan"
-												hasFeedback
-												component={AntRadioCustom}
-												options={[
-													{ label: 'Có', value: true },
-													{ label: 'Không', value: false }
-												]}
-												className="mt-8 mb-16"
-											/>
-										</div>
+										<Field
+											label="Loại yêu cầu "
+											hasFeedback
+											name="assetsCategory"
+											component={AntRadioCustom}
+											options={[
+												{ label: 'Mua mới', value: 'N' },
+												{ label: 'Bổ sung thêm', value: 'A' }
+											]}
+											className="mt-8 mb-16"
+										/>
+										<Field
+											label="Khoản mua này có nằm trong kế hoạch"
+											name="plan"
+											hasFeedback
+											component={AntRadioCustom}
+											options={[
+												{ label: 'Có', value: true },
+												{ label: 'Không', value: false }
+											]}
+											className="mt-8 mb-16"
+										/>
 									</div>
-									<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
+									<div className="grid grid-cols-1 gap-8 ">
 										<Field
 											label="Lý do"
 											name="reason"
@@ -317,7 +315,7 @@ export default function RequestProviderBody({
 										<Spin size="middle" style={{ marginRight: 12 }} />
 									) : (
 										<Button variant="contained" type="submit" className="mr-16" color="primary">
-											Gửi yêu cầu
+											<Typography variant="body1">Gửi yêu cầu</Typography>
 										</Button>
 									)}
 									<Button
@@ -327,7 +325,7 @@ export default function RequestProviderBody({
 										variant="contained"
 										color="secondary"
 									>
-										Quay lại
+										<Typography variant="body1">Quay lại</Typography>
 									</Button>
 								</div>
 							</div>
