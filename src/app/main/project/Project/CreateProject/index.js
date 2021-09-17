@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Icon, Typography } from '@material-ui/core';
+import { Icon, Typography, Grid } from '@material-ui/core';
+import FuseScrollbars from '@fuse/core/FuseScrollbars';
 import { Spin, Tooltip } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
@@ -95,9 +96,11 @@ export default function CreateProjects() {
 					</Tooltip>
 				</div>
 			</div>
-			<div className="projects__content mt-8">
-				<Spin spinning={loading}>
-					<div className="createporjects">
+			<div className="projects__content mt-8 flex flex-col items-center">
+				<Spin spinning={loading} />
+				<Grid container className="w-full p-16">
+					<Grid item lg={3} md={3} sm={false} xs={false} />
+					<Grid item lg={6} md={6} sm={12} xs={12}>
 						<FormComponent
 							ArrProjectStatus={ArrProjectStatus}
 							role={role}
@@ -108,8 +111,9 @@ export default function CreateProjects() {
 							ArrTaskComponent={ArrTaskComponent}
 							gradeGolbal={gradeGolbal}
 						/>
-					</div>
-				</Spin>
+					</Grid>
+					<Grid item lg={3} md={3} sm={false} xs={false} />
+				</Grid>
 			</div>
 		</div>
 	);

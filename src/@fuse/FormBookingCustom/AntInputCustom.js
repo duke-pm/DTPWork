@@ -30,9 +30,8 @@ export default function AntInputCustom({
 	return (
 		<div className={`form-item-input ${position && 'flex flex-row  justify-between'}`}>
 			<div className={`flex flex-row ${position && 'mt-8'}`}>
-				<Typography color="primary" variant="subtitle2" className="label--form">
-					{' '}
-					{label}{' '}
+				<Typography variant="subtitle2" className="label--form">
+					{label}
 				</Typography>
 				{hasFeedback && (
 					<p style={{ marginBottom: '-20px' }} className="text-red">

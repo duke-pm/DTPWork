@@ -156,7 +156,7 @@ function TableProject(props) {
 			dataIndex: 'prjName',
 			fixed: 'left',
 			key: 'prjName',
-			width: '40%',
+			width: '30%',
 			render: (_, item) => (
 				<Link
 					style={{ color: '#000000d9' }}
@@ -164,8 +164,7 @@ function TableProject(props) {
 					variant="body1"
 					onClick={() => handleDetail(item)}
 				>
-					{' '}
-					{item.prjName}{' '}
+					<Typography variant="body1">{item.prjName}</Typography>
 				</Link>
 			)
 		},
@@ -195,7 +194,7 @@ function TableProject(props) {
 			},
 			dataIndex: 'status',
 			key: 'status',
-			width: '15%',
+			width: '10%',
 			render: (_, item) => (
 				<Badge size="default" style={{ color: item.colorCode }} color={item.colorCode} text={item.statusName} />
 			)
@@ -227,21 +226,28 @@ function TableProject(props) {
 				)
 		},
 		{
-			title: 'Created on',
+			title: 'Start Date',
 			align: 'center',
-			dataIndex: 'crtdDate',
-			key: 'crtdDate',
-			width: '12%',
+			dataIndex: 'startDate',
+			key: 'startDate',
+			width: '8%',
 			render: (_, item) => (
-				<div
-					className={clsx(
-						'flex items-center justify-center text-center px-8 py-4 mx-4 text-white bg-green  rounded-16'
-					)}
-				>
-					<Icon className="text-16">access_time</Icon>
-					<Typography className="ml-8" variant="body1">
-						{item.crtdDate && moment(item.crtdDate).format('DD/MM/YY')}
+				<div className="flex items-center justify-center text-center px-8 py-4 bg-green-50 rounded-16">
+					<Typography variant="body1">
+						{item.startDate && moment(item.startDate).format('DD/MM/YY')}
 					</Typography>
+				</div>
+			)
+		},
+		{
+			title: 'End Date',
+			align: 'center',
+			dataIndex: 'endDate',
+			key: 'endDate',
+			width: '8%',
+			render: (_, item) => (
+				<div className="flex items-center justify-center text-center px-8 py-4 bg-green-50 rounded-16">
+					<Typography variant="body1">{item.endDate && moment(item.endDate).format('DD/MM/YY')}</Typography>
 				</div>
 			)
 		},
@@ -250,16 +256,15 @@ function TableProject(props) {
 			align: 'center',
 			dataIndex: 'crtdDate',
 			key: 'crtdDate',
-			width: '12%',
+			width: '10%',
 			render: (_, item) =>
 				item.appraisalTime && (
 					<div
 						className={clsx(
-							'flex items-center justify-center text-center px-8 py-4 mx-4 text-white bg-green  rounded-16'
+							'flex items-center justify-center text-center px-8 py-4 bg-green-50 rounded-16'
 						)}
 					>
-						<Icon className="text-16">access_time</Icon>
-						<Typography className="ml-8" variant="body1">
+						<Typography variant="body1">
 							{item.appraisalTime && moment(item.appraisalTime).format('DD/MM/YY')}
 						</Typography>
 					</div>
@@ -293,7 +298,7 @@ function TableProject(props) {
 			width: '18%',
 			render: (_, item) => (
 				<div className="flex flex-row items-center">
-					<Avatar size={32} style={{ backgroundColor: item.colorCode }} icon={<UserOutlined />} />
+					<Avatar style={{ backgroundColor: item.colorCode }} icon={<UserOutlined />} />
 					<Typography className="ml-8" variant="body1">
 						{item.ownerName}
 					</Typography>
@@ -310,11 +315,7 @@ function TableProject(props) {
 					<Avatar.Group maxCount={3} maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
 						{item?.lstUserInvited?.map(av => (
 							<Tooltip key={av.userID} title={av.fullName} placement="top">
-								<Avatar size={32} style={{ backgroundColor: '#87d068' }}>
-									<Typography color="inherit" variant="subtitle1">
-										{av.alphabet}
-									</Typography>
-								</Avatar>
+								<Avatar>{av.alphabet}</Avatar>
 							</Tooltip>
 						))}
 					</Avatar.Group>

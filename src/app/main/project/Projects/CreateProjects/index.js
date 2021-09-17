@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Icon, Typography } from '@material-ui/core';
+import { Grid, Icon, Typography } from '@material-ui/core';
 import { Spin, Tooltip } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
@@ -49,10 +49,11 @@ export default function CreateProjects() {
 				<Typography color="primary" variant="h6">
 					{params.type !== 'create'
 						? params.type === 'Settings'
-							? 'Setting projects'
-							: 'Clone projects'
-						: 'Create projects'}
+							? 'Setting project'
+							: 'Clone project'
+						: 'Create project'}
 				</Typography>
+
 				<div className="projects__header--action">
 					<Tooltip placement="bottom" title="Exit">
 						<span onClick={ExitPage} className="action--button">
@@ -61,12 +62,16 @@ export default function CreateProjects() {
 					</Tooltip>
 				</div>
 			</div>
-			<div className="projects__content mt-8">
-				<Spin spinning={loading}>
-					<div className="createporjects">
+
+			<div className="projects__content mt-8 flex flex-col items-center">
+				<Spin spinning={loading} />
+				<Grid container className="w-full p-16">
+					<Grid item lg={3} md={3} sm={false} xs={false} />
+					<Grid item lg={6} md={6} sm={12} xs={12}>
 						<FormComponent role={role} owner={owner} projectSub={projectSub} />
-					</div>
-				</Spin>
+					</Grid>
+					<Grid item lg={3} md={3} sm={false} xs={false} />
+				</Grid>
 			</div>
 		</div>
 	);

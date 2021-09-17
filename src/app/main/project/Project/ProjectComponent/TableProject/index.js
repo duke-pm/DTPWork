@@ -298,107 +298,20 @@ function TableProject(props) {
 					onClick={() => handleOpenVisible(item)}
 					component="button"
 				>
-					{item.taskName}
+					<Typography variant="body1">{item.taskName}</Typography>
 				</Link>
 			)
-		},
-		{
-			title: () => {
-				return (
-					<div className="flex items-center ">
-						Sector
-						<Dropdown
-							// visible
-							overlay={
-								<div className="filter--status">
-									<Checkbox.Group
-										options={sectorArr}
-										value={sector}
-										onChange={onHandleChangeSector}
-									/>
-								</div>
-							}
-							placement="bottomRight"
-							arrow
-						>
-							<Icon className="cursor-pointer"> arrow_drop_down </Icon>
-						</Dropdown>
-					</div>
-				);
-			},
-			dataIndex: 'sectorName',
-			key: 'sectorName',
-			width: '6%',
-			render: (_, item) => <Typography variant="body1">{item.sectorName}</Typography>
 		},
 		{
 			title: 'Type',
 			align: 'center',
 			dataIndex: 'type',
 			key: 'type',
-			width: '6%',
+			width: '8%',
 			render: (_, item) => (
 				<Typography variant="subtitle2" style={{ color: typeColor[item.typeName], textTransform: 'uppercase' }}>
 					{item.typeName}
 				</Typography>
-			)
-		},
-		{
-			title: 'Start',
-			align: 'center',
-			dataIndex: 'startDate',
-			key: 'startDate',
-			width: '7%',
-			render: (_, item) => (
-				<div
-					className={clsx(
-						'flex items-center justify-center text-center px-8 py-4 mx-4 text-white bg-green  rounded-16'
-					)}
-				>
-					<Icon className="text-16">access_time</Icon>
-					<Typography className="ml-8" variant="body1">
-						{item.startDate && moment(item.startDate).format('DD/MM/YY')}
-					</Typography>
-				</div>
-			)
-		},
-		{
-			title: 'Finish',
-			align: 'center',
-			dataIndex: 'endDate',
-			key: 'endDate',
-			width: '7%',
-			render: (_, item) => (
-				<div
-					className={clsx(
-						'flex items-center justify-center text-center px-8 py-4 mx-4 text-white bg-green  rounded-16'
-					)}
-				>
-					<Icon className="text-16">access_time</Icon>
-					<Typography className="ml-8" variant="body1">
-						{item.endDate && moment(item.endDate).format('DD/MM/YY')}
-					</Typography>
-				</div>
-			)
-		},
-		{
-			title: 'Duration',
-			align: 'center',
-			dataIndex: 'duration',
-			key: 'duration',
-			width: '8%',
-			render: (_, item) => (
-				<div
-					className={clsx(
-						'flex items-center justify-center text-center px-8 py-4 mx-4 rounded-16 ',
-						'text-blue'
-					)}
-				>
-					<Icon className="text-16">check_circle</Icon>
-					<Typography className="ml-8" variant="subtitle1" component="button">
-						{durationDay(item.startDate, item.endDate)} Days
-					</Typography>{' '}
-				</div>
 			)
 		},
 		{
@@ -461,14 +374,6 @@ function TableProject(props) {
 				)
 		},
 		{
-			title: 'Progress',
-			align: 'center',
-			dataIndex: 'status',
-			key: 'status',
-			width: '10%',
-			render: (_, item) => <Progress percent={item.percentage} strokeColor={typeColor[item.typeName]} />
-		},
-		{
 			title: 'Priority',
 			align: 'center',
 			dataIndex: 'priority',
@@ -479,6 +384,81 @@ function TableProject(props) {
 					{item.priorityName}
 				</Typography>
 			)
+		},
+		{
+			title: 'Start',
+			align: 'center',
+			dataIndex: 'startDate',
+			key: 'startDate',
+			width: '8%',
+			render: (_, item) => (
+				<div className="flex items-center justify-center text-center px-8 py-4 bg-green-50 rounded-16">
+					<Typography variant="body1">
+						{item.startDate && moment(item.startDate).format('DD/MM/YY')}
+					</Typography>
+				</div>
+			)
+		},
+		{
+			title: 'Finish',
+			align: 'center',
+			dataIndex: 'endDate',
+			key: 'endDate',
+			width: '8%',
+			render: (_, item) => (
+				<div className="flex items-center justify-center text-center px-8 py-4 bg-green-50 rounded-16">
+					<Typography variant="body1">{item.endDate && moment(item.endDate).format('DD/MM/YY')}</Typography>
+				</div>
+			)
+		},
+		{
+			title: 'Duration',
+			align: 'center',
+			dataIndex: 'duration',
+			key: 'duration',
+			width: '6%',
+			render: (_, item) => (
+				<div className="flex items-center justify-center text-center px-8 py-4 mx-4 rounded-16 text-blue">
+					<Typography variant="body1">{durationDay(item.startDate, item.endDate)} Days</Typography>{' '}
+				</div>
+			)
+		},
+		{
+			title: () => {
+				return (
+					<div className="flex items-center ">
+						Sector
+						<Dropdown
+							// visible
+							overlay={
+								<div className="filter--status">
+									<Checkbox.Group
+										options={sectorArr}
+										value={sector}
+										onChange={onHandleChangeSector}
+									/>
+								</div>
+							}
+							placement="bottomRight"
+							arrow
+						>
+							<Icon className="cursor-pointer"> arrow_drop_down </Icon>
+						</Dropdown>
+					</div>
+				);
+			},
+			dataIndex: 'sectorName',
+			key: 'sectorName',
+			width: '8%',
+			render: (_, item) => <Typography variant="body1">{item.sectorName}</Typography>
+		},
+		{
+			title: 'Progress',
+			align: 'center',
+			dataIndex: 'status',
+			key: 'status',
+			width: '10%',
+			render: (_, item) => <Progress percent={item.percentage} strokeColor={typeColor[item.typeName]} />
 		},
 		{
 			title: () => {
@@ -508,7 +488,7 @@ function TableProject(props) {
 			width: '12%',
 			render: (_, item) => (
 				<div className="flex flex-row items-center">
-					<Avatar size={32} style={{ backgroundColor: item.colorCode }} icon={<UserOutlined />} />
+					<Avatar style={{ backgroundColor: item.colorCode }} icon={<UserOutlined />} />
 					<Typography className="ml-8" variant="body1">
 						{item.ownerName}
 					</Typography>
@@ -525,11 +505,7 @@ function TableProject(props) {
 					<Avatar.Group maxCount={3} maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
 						{item?.lstUserInvited?.map(av => (
 							<Tooltip key={av.userID} title={av.fullName} placement="top">
-								<Avatar size={32} style={{ backgroundColor: '#87d068' }}>
-									<Typography color="inherit" variant="subtitle1">
-										{av.alphabet}
-									</Typography>
-								</Avatar>
+								<Avatar size="default">{av.alphabet}</Avatar>
 							</Tooltip>
 						))}
 					</Avatar.Group>

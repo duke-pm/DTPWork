@@ -44,7 +44,10 @@ export const defaultThemeOptions = {
 		fontWeightRegular: 400,
 		fontWeightMedium: 600,
 		useNextVariants: true,
-		suppressDeprecationWarnings: true
+		suppressDeprecationWarnings: true,
+		button: {
+			textTransform: 'none'
+		}
 	},
 	overrides: {
 		MuiButton: {

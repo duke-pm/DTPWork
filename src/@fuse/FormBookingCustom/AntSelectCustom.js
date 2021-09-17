@@ -32,8 +32,8 @@ export default function AntSelectCustom({
 	};
 	return (
 		<div className={`form-item-input ${position && 'flex flex-row  justify-between'}`}>
-			<div className={`flex flex-row ${position && 'mt-8'}`}>
-				<Typography color="primary" variant="subtitle2" className="label--form">
+			<div className={`flex flex-row mr-10 ${position && 'mt-8'}`}>
+				<Typography variant="subtitle2" className="label--form">
 					{' '}
 					{label}{' '}
 				</Typography>

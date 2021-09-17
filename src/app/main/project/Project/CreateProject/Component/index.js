@@ -179,28 +179,26 @@ export default function FormComponent({
 		? entitiesEdit.lstUserInvited?.reduce((arr, curr) => [...arr, curr.fullName], [])
 		: [];
 	return (
-		<>
-			<CustomForm
-				handleSubmitForm={handleSubmitForm}
-				initialState={entitiesEdit?.taskID ? initialEdit : initial}
-				role={role}
-				owner={owner}
-				taskSub={taskSub}
-				ArrProjectStatus={ArrProjectStatus}
-				actionLoading={actionLoading}
-				handleCancle={handleCancle}
-				sectorArr={sectorArr}
-				ArrTaskPri={ArrTaskPri}
-				ArrTaskComponent={ArrTaskComponent}
-				userInviteNoPermiss={userInviteNoPermiss}
-				gradeGolbal={gradeGolbal}
-				listFile={listFile}
-				setListFile={setListFile}
-				fileCheck={fileCheck}
-				setFileCheck={setFileCheck}
-				entitiesEdit={entitiesEdit}
-				params={params}
-			/>
-		</>
+		<CustomForm
+			handleSubmitForm={handleSubmitForm}
+			initialState={entitiesEdit?.taskID ? initialEdit : initial}
+			role={role}
+			owner={owner}
+			taskSub={taskSub}
+			ArrProjectStatus={ArrProjectStatus}
+			actionLoading={actionLoading}
+			handleCancle={handleCancle}
+			sectorArr={sectorArr}
+			ArrTaskPri={ArrTaskPri}
+			ArrTaskComponent={ArrTaskComponent}
+			userInviteNoPermiss={userInviteNoPermiss}
+			gradeGolbal={gradeGolbal}
+			listFile={listFile}
+			setListFile={setListFile}
+			fileCheck={fileCheck}
+			setFileCheck={setFileCheck}
+			entitiesEdit={entitiesEdit}
+			params={params}
+		/>
 	);
 }

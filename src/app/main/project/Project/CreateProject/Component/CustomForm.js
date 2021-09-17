@@ -6,7 +6,7 @@ import AntInputCustom from '@fuse/FormBookingCustom/AntInputCustom';
 import AntSelectCustom from '@fuse/FormBookingCustom/AntSelectCustom';
 import AntSelectMultiCustom from '@fuse/FormBookingCustom/AntSelectMultiCustom';
 import AntSlideCustom from '@fuse/FormBookingCustom/AntSlideCustom';
-import { Button, IconButton, Typography } from '@material-ui/core';
+import { Button, IconButton, Typography, Grid } from '@material-ui/core';
 import { Avatar, Divider, Spin } from 'antd';
 import { Field, Form, Formik } from 'formik';
 import React from 'react';
@@ -63,35 +63,36 @@ export default function CustomForm({
 			{({ handleSubmit, isSubmitting }) => (
 				<Form>
 					<div className="mt-8 px-16 sm:px-24">
-						<div>
-							<Field
-								readOnly={entitiesEdit && !entitiesEdit.isModified}
-								label="Name"
-								hasFeedback
-								name="taskName"
-								component={AntInputCustom}
-							/>
-						</div>
-						<div>
-							<Field
-								readOnly={entitiesEdit && !entitiesEdit.isModified}
-								label="Description"
-								name="descr"
-								component={AntDescriptionsCustom}
-								row={4}
-							/>
-						</div>
-						<div>
-							<Field
-								readOnly={entitiesEdit && !entitiesEdit.isModified}
-								label="Subtask of"
-								name="project"
-								component={AntSelectCustom}
-								options={taskSub}
-							/>
-						</div>
 						<div className="mb-20">
-							<Typography color="primary" variant="subtitle2" className="">
+							<Typography color="primary" variant="h6">
+								BASIC INFORMATIONS
+							</Typography>
+						</div>
+						<Field
+							readOnly={entitiesEdit && !entitiesEdit.isModified}
+							label="Name"
+							hasFeedback
+							name="taskName"
+							position="right"
+							component={AntInputCustom}
+						/>
+						<Field
+							readOnly={entitiesEdit && !entitiesEdit.isModified}
+							label="Subtask of"
+							name="project"
+							component={AntSelectCustom}
+							options={taskSub}
+							position="right"
+						/>
+						<Field
+							readOnly={entitiesEdit && !entitiesEdit.isModified}
+							label="Description"
+							name="descr"
+							component={AntDescriptionsCustom}
+							row={4}
+						/>
+						<div className="mb-20">
+							<Typography color="primary" variant="h6">
 								PEOPLE & TIME
 							</Typography>
 						</div>
@@ -149,105 +150,121 @@ export default function CustomForm({
 							/>
 						</div>
 						<div className="mb-20">
-							<Typography color="primary" variant="subtitle2" className="">
-								DETAIL
+							<Typography color="primary" variant="h6">
+								OTHER
 							</Typography>
 						</div>
 						{entitiesEdit &&
 							entitiesEdit.taskID &&
 							entitiesEdit.typeName === 'TASK' &&
 							params.category !== 'newtask' && (
-								<div className="grid grid-cols-1 sm:grid-cols-2 gap-16 ">
-									<Field
-										label="Status"
-										name="status"
-										width="58.8%"
-										readOnly={entitiesEdit && !entitiesEdit.isModified}
-										position="right"
-										component={AntSelectCustom}
-										options={ArrProjectStatus}
-									/>
-									<Field
-										label="Percentage"
-										name="percentage"
-										width="58.8%"
-										readOnly={entitiesEdit && !entitiesEdit.isModified}
-										component={AntSlideCustom}
-										position="right"
-									/>
-								</div>
+								<Grid container spacing={6}>
+									<Grid item lg={6} md={6} sm={6} xs={12}>
+										<Field
+											label="Status"
+											name="status"
+											readOnly={entitiesEdit && !entitiesEdit.isModified}
+											position="right"
+											component={AntSelectCustom}
+											options={ArrProjectStatus}
+										/>
+									</Grid>
+									<Grid item lg={6} md={6} sm={6} xs={12}>
+										<Field
+											label="Percentage"
+											name="percentage"
+											readOnly={entitiesEdit && !entitiesEdit.isModified}
+											component={AntSlideCustom}
+											position="right"
+										/>
+									</Grid>
+								</Grid>
 							)}
-						<div className="grid grid-cols-1 sm:grid-cols-2 gap-16 ">
-							<Field
-								label="Sector"
-								name="sectorID"
-								width="58.8%"
-								readOnly={entitiesEdit && !entitiesEdit.isModified}
-								position="right"
-								component={AntSelectCustom}
-								options={sectorArr}
-							/>
-							<Field
-								label="Priority"
-								name="priority"
-								readOnly={entitiesEdit && !entitiesEdit.isModified}
-								hasFeedback
-								component={AntSelectCustom}
-								options={ArrTaskPri}
-								position="right"
-								width="58.8%"
-							/>
-						</div>
-						<div className="grid grid-cols-1 sm:grid-cols-2 gap-16 ">
-							<Field
-								label="Grade"
-								name="grade"
-								width="58.8%"
-								readOnly={entitiesEdit && !entitiesEdit.isModified}
-								options={gradeGolbal}
-								component={AntSelectCustom}
-								position="right"
-							/>
-							<Field
-								label="Component"
-								width="58.8%"
-								readOnly={entitiesEdit && !entitiesEdit.isModified}
-								name="component"
-								component={AntSelectCustom}
-								options={ArrTaskComponent}
-								position="right"
-							/>
-						</div>
-						<div className="grid grid-cols-1 gap-8 ">
-							<Field
-								label="Author"
-								name="author"
-								component={AntInputCustom}
-								readOnly={entitiesEdit && !entitiesEdit.isModified}
-								position="right"
-							/>
-						</div>
-						<div className="grid grid-cols-1 gap-8 ">
-							<Field
-								label="Origin Publisher"
-								component={AntInputCustom}
-								name="originPublisher"
-								position="right"
-								readOnly={entitiesEdit && !entitiesEdit.isModified}
-							/>
-						</div>
-						<div className="grid grid-cols-1 gap-8 ">
-							<Field
-								label="Ownership DTP"
-								component={AntInputCustom}
-								readOnly={entitiesEdit && !entitiesEdit.isModified}
-								name="ownership"
-								position="right"
-							/>
-						</div>
+						<Grid container spacing={4}>
+							<Grid item lg={6} md={6} sm={6} xs={12}>
+								<Field
+									label="Sector"
+									name="sectorID"
+									readOnly={entitiesEdit && !entitiesEdit.isModified}
+									position="right"
+									component={AntSelectCustom}
+									options={sectorArr}
+								/>
+							</Grid>
+
+							<Grid item lg={6} md={6} sm={6} xs={12}>
+								<Field
+									label="Priority"
+									name="priority"
+									readOnly={entitiesEdit && !entitiesEdit.isModified}
+									hasFeedback
+									component={AntSelectCustom}
+									options={ArrTaskPri}
+									position="right"
+								/>
+							</Grid>
+						</Grid>
+
+						<Grid container spacing={4}>
+							<Grid item lg={6} md={6} sm={6} xs={12}>
+								<Field
+									label="Grade"
+									name="grade"
+									readOnly={entitiesEdit && !entitiesEdit.isModified}
+									options={gradeGolbal}
+									component={AntSelectCustom}
+									position="right"
+								/>
+							</Grid>
+							<Grid item lg={6} md={6} sm={6} xs={12}>
+								<Field
+									label="Component"
+									readOnly={entitiesEdit && !entitiesEdit.isModified}
+									name="component"
+									component={AntSelectCustom}
+									options={ArrTaskComponent}
+									position="right"
+								/>
+							</Grid>
+						</Grid>
+
+						<Grid container spacing={4}>
+							<Grid item lg={6} md={6} sm={6} xs={12}>
+								<Field
+									label="Origin Publisher"
+									component={AntInputCustom}
+									name="originPublisher"
+									position="right"
+									readOnly={entitiesEdit && !entitiesEdit.isModified}
+								/>
+							</Grid>
+							<Grid item lg={6} md={6} sm={6} xs={12}>
+								<Field
+									label="Ownership DTP"
+									component={AntInputCustom}
+									readOnly={entitiesEdit && !entitiesEdit.isModified}
+									name="ownership"
+									position="right"
+								/>
+							</Grid>
+						</Grid>
+
+						<Grid container spacing={4}>
+							<Grid item lg={6} md={6} sm={6} xs={12}>
+								<Field
+									label="Author"
+									name="author"
+									component={AntInputCustom}
+									readOnly={entitiesEdit && !entitiesEdit.isModified}
+									position="right"
+								/>
+							</Grid>
+							<Grid item lg={6} md={6} sm={6} xs={false} />
+						</Grid>
+
 						<div className="mb-20">
-							<Typography color="primary" variant="subtitle2" className="">
-								FILES
+							<Typography color="primary" variant="h6">
+								UPLOAD FILE
 							</Typography>
 						</div>
 						<div className="grid grid-cols-1 gap-8 ">
@@ -338,11 +355,11 @@ export default function CustomForm({
 								color="primary"
 							>
 								{' '}
-								<Typography variant="body2"> Save </Typography>
+								<Typography variant="button"> Save </Typography>
 							</Button>
 						) : (
 							<Button type="submit" className="button__cancle mr-8" variant="contained" color="primary">
-								<Typography variant="body2"> Save </Typography>
+								<Typography variant="button"> Save </Typography>
 							</Button>
 						)}
 						<Button
@@ -351,7 +368,7 @@ export default function CustomForm({
 							variant="contained"
 							color="secondary"
 						>
-							<Typography variant="body2"> Cancel </Typography>
+							<Typography variant="button"> Cancel </Typography>
 						</Button>
 					</div>
 				</Form>

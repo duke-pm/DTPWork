@@ -35,7 +35,7 @@ export default function CustomForm({
 		>
 			{({ handleSubmit, isSubmitting }) => (
 				<Form>
-					<div className="mt-8 px-16 sm:px-24">
+					<div className="mt-8">
 						<div>
 							<Field label="Project Name" hasFeedback name="prjName" component={AntInputCustom} />
 						</div>
@@ -83,7 +83,6 @@ export default function CustomForm({
 						<div>
 							<Field
 								label="Public"
-								hasFeedback
 								position="right"
 								name="isPublic"
 								top="10px"
@@ -92,22 +91,17 @@ export default function CustomForm({
 							/>
 						</div>
 					</div>
+
 					<div className="flex items-center justify-end">
 						{actionLoading ? (
 							<Spin className="ml-20" />
 						) : (
 							<Button type="submit" className="button__cancle mr-8" variant="contained" color="primary">
-								{' '}
-								<Typography variant="body2"> Save </Typography>
+								<Typography variant="button"> Save </Typography>
 							</Button>
 						)}
-						<Button
-							onClick={handleCancle}
-							className="button__cancle mr-8"
-							variant="contained"
-							color="secondary"
-						>
-							<Typography variant="body2"> Cancel </Typography>
+						<Button onClick={handleCancle} className="button__cancle" variant="contained" color="secondary">
+							<Typography variant="button"> Cancel </Typography>
 						</Button>
 					</div>
 				</Form>

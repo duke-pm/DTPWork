@@ -90,16 +90,14 @@ export default function FormComponent({ owner, projectSub, role }) {
 		}
 	};
 	return (
-		<>
-			<CustomForm
-				handleSubmitForm={handleSubmitForm}
-				initial={initial}
-				role={role}
-				owner={owner}
-				projectSub={projectSub}
-				actionLoading={actionLoading}
-				handleCancle={handleCancle}
-			/>
-		</>
+		<CustomForm
+			handleSubmitForm={handleSubmitForm}
+			initial={initial}
+			role={role}
+			owner={owner}
+			projectSub={projectSub}
+			actionLoading={actionLoading}
+			handleCancle={handleCancle}
+		/>
 	);
 }
