@@ -104,10 +104,10 @@ export default function ListRoleSettingPage() {
 							))}
 					</Select>
 					<Button onClick={handleFiler} className="button__create mr-16" variant="contained" color="primary">
-						<Typography variant="body2">Filter</Typography>
+						<Typography variant="button">Filter</Typography>
 					</Button>
 					<Button onClick={handleUpdatedRole} className="button__create" variant="contained" color="primary">
-						<Typography variant="body2">Update</Typography>
+						<Typography variant="button">Update</Typography>
 					</Button>{' '}
 				</div>
 			</div>

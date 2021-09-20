@@ -144,7 +144,7 @@ export default function HandlingBody({ dataAssets, setDataAssets, value }) {
 									<Spin className="mr-23" />
 								) : (
 									<Button type="submit" className="h-26 mr-16" variant="contained" color="primary">
-										<Typography variant="body1">Gửi yêu cầu</Typography>
+										<Typography variant="button">Gửi yêu cầu</Typography>
 									</Button>
 								)}
 								<Button
@@ -154,7 +154,7 @@ export default function HandlingBody({ dataAssets, setDataAssets, value }) {
 									variant="contained"
 									color="secondary"
 								>
-									<Typography variant="body1">Quay lại</Typography>
+									<Typography variant="button">Quay lại</Typography>
 								</Button>
 							</div>
 						</div>

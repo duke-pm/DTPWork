@@ -46,7 +46,7 @@ export default function ContentProvider() {
 					/>
 					<Button onClick={handleChangeRoute} className="button__create" variant="contained" color="primary">
 						{' '}
-						<Typography variant="body2"> Tạo mới </Typography>
+						<Typography variant="button"> Tạo mới </Typography>
 					</Button>
 				</div>
 			</div>

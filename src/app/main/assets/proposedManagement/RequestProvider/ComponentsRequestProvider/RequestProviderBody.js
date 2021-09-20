@@ -315,7 +315,7 @@ export default function RequestProviderBody({
 										<Spin size="middle" style={{ marginRight: 12 }} />
 									) : (
 										<Button variant="contained" type="submit" className="mr-16" color="primary">
-											<Typography variant="body1">Gửi yêu cầu</Typography>
+											<Typography variant="button">Gửi yêu cầu</Typography>
 										</Button>
 									)}
 									<Button
@@ -325,7 +325,7 @@ export default function RequestProviderBody({
 										variant="contained"
 										color="secondary"
 									>
-										<Typography variant="body1">Quay lại</Typography>
+										<Typography variant="button">Quay lại</Typography>
 									</Button>
 								</div>
 							</div>
