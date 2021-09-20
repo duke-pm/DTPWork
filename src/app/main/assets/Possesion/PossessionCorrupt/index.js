@@ -13,6 +13,7 @@ import * as actions from '../_redux/possesionActions';
 import TableHeaderCorrupt from './Component/TableHeaderCorrupt';
 import TableBodyCorrupt from './Component/TableBodyCorrupt';
 import ActionComponent from './Component/ActionComponentFilter';
+import TableAssetCorrupt from './Component/TableAssetCorrupt';
 
 export default function PossessionCorrupt(props) {
 	const { value } = props;
@@ -51,20 +52,14 @@ export default function PossessionCorrupt(props) {
 		setRowPage(parseInt(e.target.value, 10));
 		setPage(0);
 		const rowPageParse = parseInt(e.target.value, 10);
-		dispatch(actions.fetchPossesionAllPanigate(value, rowPageParse, 1, search, sort.id, sort.direction));
+		dispatch(actions.fetchPossesionAllPanigate(4, rowPageParse, 1, search, sort.id, sort.direction));
 	};
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
-		dispatch(actions.fetchPossesionAllPanigate(value, rowPage, newPage + 1, search, sort.id, sort.direction));
+		dispatch(actions.fetchPossesionAllPanigate(4, rowPage, newPage + 1, search, sort.id, sort.direction));
 	};
-	const createSortHandler = property => event => {
-		const id = property;
-		let direction = 'desc';
-
-		if (sort.id === property && sort.direction === 'desc') {
-			direction = 'asc';
-		}
-		dispatch(actions.fetchPossesionAllPanigate(value, rowPage, 1, search, id, direction));
+	const createSortHandler = (direction, id) => {
+		dispatch(actions.fetchPossesionAllPanigate(4, rowPage, 1, search, id, direction));
 		setSort({
 			direction,
 			id
@@ -73,47 +68,26 @@ export default function PossessionCorrupt(props) {
 	useEffect(() => {
 		dispatch(actions.fetchPossesionAll(4));
 	}, [dispatch]);
-	const classes = DtpCustomStyles(props);
-	if (listloading) {
-		return <FuseLoading />;
-	}
 	return (
 		<>
 			<FormCustomCorrupt open={open} handleClose={handleClose} />
-			<div className="flex flex-col">
-				<ActionComponent value={props.value} />
-				<FuseAnimate animation="transition.slideUpIn" delay={200}>
-					<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
-						<TableContainer className={`${classes.TableContainer} flex flex-1`}>
-							<Paper className={classes.rootPaper}>
-								<Table className={classes.table} stickyHeader>
-									<TableHeaderCorrupt createSortHandler={createSortHandler} sort={sort} />
-									<TableBodyCorrupt
-										entities={entities}
-										lastErrors={lastErrors}
-										classes={classes}
-										handleOpenFormService={handleOpenFormService}
-										handleOpenFormLiquiAsset={handleOpenFormLiquiAsset}
-									/>
-								</Table>
-								{entities?.length === 0 || lastErrors ? (
-									<FuseAnimate delay={300}>
-										<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-									</FuseAnimate>
-								) : null}
-							</Paper>
-						</TableContainer>
-						{entities?.length !== 0 && (
-							<Panigation
-								page={page}
-								handleChangePage={handleChangePage}
-								rowPage={rowPage}
-								handleChangeRowsPerPage={handleRowChange}
-								count={total_count}
-							/>
-						)}
-					</div>
-				</FuseAnimate>
+			<div className="flex flex-col table--tab">
+				<div className="flex flex-col">
+					<TableAssetCorrupt
+						createSortHandler={createSortHandler}
+						entities={entities}
+						listLoading={listloading}
+					/>
+					{entities?.length !== 0 && (
+						<Panigation
+							page={page}
+							handleChangePage={handleChangePage}
+							rowPage={rowPage}
+							handleChangeRowsPerPage={handleRowChange}
+							count={total_count}
+						/>
+					)}
+				</div>
 			</div>
 		</>
 	);

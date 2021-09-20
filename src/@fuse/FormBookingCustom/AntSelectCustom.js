@@ -14,6 +14,7 @@ export default function AntSelectCustom({
 	field,
 	submitCount,
 	form,
+	handleChangeState,
 	width,
 	options,
 	type,
@@ -28,7 +29,7 @@ export default function AntSelectCustom({
 	const touchedError = hasError && touched;
 	const onChange = value => {
 		form.setFieldValue(field.name, value);
-		// return handleInputChange ? handleInputChange(target) : null;
+		return handleChangeState ? handleChangeState(value) : null;
 	};
 	return (
 		<div className={`form-item-input ${position && 'flex flex-row  justify-between'}`}>

@@ -3,6 +3,7 @@ import i18next from 'i18next';
 import en from './i18n/en';
 import tr from './i18n/tr';
 import ar from './i18n/ar';
+import './index.scss';
 
 i18next.addResourceBundle('en', 'examplePage', en);
 i18next.addResourceBundle('tr', 'examplePage', tr);
@@ -16,9 +17,19 @@ const PossesionConfig = {
 	},
 	routes: [
 		{
-			path: '/tai-san/quan-ly-tai-san',
+			path: '/tai-san/quan-ly-tai-san/danh-sach',
 			exact: true,
 			component: React.lazy(() => import('./index'))
+		},
+		{
+			path: '/tai-san/quan-ly-tai-san/qua-trinh-su-dung',
+			exact: true,
+			component: React.lazy(() => import('./PossessionAll/Component/ProcessingUseAsset/index'))
+		},
+		{
+			path: '/tai-san/quan-ly-tai-san/modify',
+			exact: true,
+			component: React.lazy(() => import('./PossessionAll/FormCustomAll/index'))
 		}
 	]
 };

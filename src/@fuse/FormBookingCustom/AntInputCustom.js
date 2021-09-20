@@ -13,6 +13,7 @@ export default function AntInputCustom({
 	submitCount,
 	form,
 	type,
+	handleInputChange,
 	width,
 	placeholder,
 	position,
@@ -25,7 +26,7 @@ export default function AntInputCustom({
 	const touchedError = hasError && touched;
 	const onInputChange = ({ target }) => {
 		form.setFieldValue(field.name, target.value);
-		// return handleInputChange ? handleInputChange(target) : null;
+		return handleInputChange ? handleInputChange(target) : null;
 	};
 	return (
 		<div className={`form-item-input ${position && 'flex flex-row  justify-between'}`}>
