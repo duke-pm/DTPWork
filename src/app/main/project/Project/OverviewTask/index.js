@@ -209,13 +209,19 @@ export default function OverviewPage() {
 										ACTION
 									</Text>
 
-									<Grid container spacing={4}>
+									<Grid container spacing={4} className="flex flex-row items-center justify-between">
 										<Grid item xs={3} md={3} sm={3} lg={3}>
 											<Text type="body">Status:</Text>
 										</Grid>
-										<Grid item xs={9} md={9} sm={9} lg={9}>
+										<Grid
+											item
+											xs={9}
+											md={9}
+											sm={9}
+											lg={9}
+											className="flex flex-row items-center justify-between"
+										>
 											<Dropdown
-												// disabled={!entitiesView?.detail.isUpdated}
 												overlay={
 													<Menu>
 														{ArrProjectStatus?.map(itemStatus => (
@@ -247,6 +253,22 @@ export default function OverviewPage() {
 													/>
 												</div>
 											</Dropdown>
+
+											<Button
+												onClick={handleTraffic}
+												type="submit"
+												style={{ width: '15rem' }}
+												className="h-26"
+												variant="contained"
+												color="primary"
+												startIcon={
+													!isWatcherOverView ? <VisibilityIcon /> : <VisibilityOffIcon />
+												}
+											>
+												<Text type="button" color="white">
+													{!isWatcherOverView ? 'Follow' : 'Unfollow'}
+												</Text>
+											</Button>
 										</Grid>
 									</Grid>
 
@@ -265,39 +287,18 @@ export default function OverviewPage() {
 										</Grid>
 									</Grid>
 
-									<Grid container spacing={4}>
-										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Text type="body">Follow:</Text>
-										</Grid>
-										<Grid item xs={9} md={9} sm={9} lg={9}>
-											<Button
-												onClick={handleTraffic}
-												type="submit"
-												style={{ width: '15rem' }}
-												className="h-26"
-												variant="contained"
-												color="primary"
-												startIcon={
-													!isWatcherOverView ? <VisibilityIcon /> : <VisibilityOffIcon />
-												}
-											>
-												{!isWatcherOverView ? 'Follow' : 'Unfollow'}
-											</Button>
-										</Grid>
-									</Grid>
-
 									<Text className="mt-20" type="subTitle" color="primary" borderBottom>
 										PEOPLE & TIME
 									</Text>
 
 									<Grid container spacing={4}>
-										<Grid item md={6} sm={6} lg={6} className="flex flex-row items-center">
+										<Grid item xs={12} md={6} sm={6} lg={6} className="flex flex-row items-center">
 											<Text type="body">Start date:</Text>
 											<Text type="body" className="ml-20">
 												{moment(entitiesView?.detail.startDate).format('DD/MM/YYYY')}
 											</Text>
 										</Grid>
-										<Grid item md={6} sm={6} lg={6} className="flex flex-row items-center">
+										<Grid item xs={12} md={6} sm={6} lg={6} className="flex flex-row items-center">
 											<Text type="body">End date: </Text>
 											<Text type="body" className="ml-20">
 												{moment(entitiesView?.detail.endDate).format('DD/MM/YYYY')}
@@ -306,11 +307,9 @@ export default function OverviewPage() {
 									</Grid>
 
 									<Grid container spacing={4}>
-										<Grid item xs={3} md={3} sm={3} lg={3}>
+										<Grid item xs={12} md={6} sm={6} lg={6} className="flex flex-row items-center">
 											<Text type="body">Assignee:</Text>
-										</Grid>
-										<Grid item xs={9} md={9} sm={9} lg={9}>
-											<div className="flex flex-row items-center">
+											<div className="flex flex-row items-center ml-20">
 												<Avatar
 													size={32}
 													style={{ backgroundColor: entitiesView?.detail.colorCode }}
@@ -321,14 +320,10 @@ export default function OverviewPage() {
 												</Text>
 											</div>
 										</Grid>
-									</Grid>
-
-									<Grid container spacing={4}>
-										<Grid item xs={3} md={3} sm={3} lg={3}>
+										<Grid item xs={12} md={6} sm={6} lg={6} className="flex flex-row items-center">
 											<Text type="body">Members:</Text>
-										</Grid>
-										<Grid item xs={9} md={9} sm={9} lg={9}>
 											<Avatar.Group
+												className="ml-20"
 												maxCount={5}
 												maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
 											>
@@ -338,20 +333,6 @@ export default function OverviewPage() {
 													</Tooltip>
 												))}
 											</Avatar.Group>
-										</Grid>
-									</Grid>
-
-									<Grid container spacing={4}>
-										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Text type="body">Priority:</Text>
-										</Grid>
-										<Grid item xs={9} md={9} sm={9} lg={9}>
-											<Text
-												type="body"
-												style={{ color: priorityColor[entitiesView?.detail.priority] }}
-											>
-												{entitiesView?.detail.priorityName}
-											</Text>
 										</Grid>
 									</Grid>
 
@@ -375,6 +356,20 @@ export default function OverviewPage() {
 									<Text className="mt-20" type="subTitle" color="primary" borderBottom>
 										DETAIL
 									</Text>
+
+									<Grid container spacing={4}>
+										<Grid item xs={3} md={3} sm={3} lg={3}>
+											<Text type="body">Priority:</Text>
+										</Grid>
+										<Grid item xs={9} md={9} sm={9} lg={9}>
+											<Text
+												type="body"
+												style={{ color: priorityColor[entitiesView?.detail.priority] }}
+											>
+												{entitiesView?.detail.priorityName}
+											</Text>
+										</Grid>
+									</Grid>
 
 									<Grid container spacing={4}>
 										<Grid item xs={3} md={3} sm={3} lg={3}>
