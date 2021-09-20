@@ -3,6 +3,8 @@ import React from 'react';
 import { Form, Slider } from 'antd';
 import { Typography } from '@material-ui/core';
 
+import Text from 'app/components/Text';
+
 const FormItem = Form.Item;
 function formatter(value) {
 	return `${value}%`;
@@ -36,16 +38,9 @@ export default function AntSlideCustom({
 		<>
 			<div className={`form-item-input ${position && 'flex flex-row  justify-between'}`}>
 				<div className={`flex flex-row ${position && 'mt-8'}`}>
-					<Typography color="primary" variant="subtitle2" className="label--form">
-						{' '}
-						{label}{' '}
-					</Typography>
-					{hasFeedback && (
-						<p style={{ marginBottom: '-20px' }} className="text-red ml-8">
-							{' '}
-							(*){' '}
-						</p>
-					)}
+					<Text required={hasFeedback} type="subTitle">
+						{label}
+					</Text>
 				</div>
 				<FormItem
 					style={{ width: position ? width || '80%' : '100%' }}

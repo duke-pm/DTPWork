@@ -3,8 +3,9 @@
 import React from 'react';
 // import { FieldFeedbackLabel } from './FieldFeedbackLabel';
 import { Input, Form } from 'antd';
-import { Typography } from '@material-ui/core';
 import './index.scss';
+
+import Text from 'app/components/Text';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -34,15 +35,9 @@ export default function AntDescriptionsCustom({
 	return (
 		<div className={`form-item-input ${position && 'flex flex-row  justify-between'}`}>
 			<div className={`flex flex-row `}>
-				<Typography variant="subtitle2" className="label--form">
-					{' '}
-					{label}{' '}
-				</Typography>
-				{hasFeedback && (
-					<p style={{ marginBottom: '-20px' }} className="text-red">
-						*
-					</p>
-				)}
+				<Text required={hasFeedback} type="subTitle">
+					{label}
+				</Text>
 			</div>
 			<FormItem
 				rules={[{ required: true }]}

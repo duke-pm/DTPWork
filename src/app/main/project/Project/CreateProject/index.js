@@ -8,6 +8,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, shallowEqual, useSelector } from 'react-redux';
 import { getDataUserLocalStorage } from '@fuse/core/DtpConfig';
 import { getInformationCompany } from 'app/main/assets/Possesion/_redux/possesionActions';
+import Text from 'app/components/Text';
 import FormComponent from './Component';
 import * as actions from '../../_redux/_projectActions';
 
@@ -82,13 +83,18 @@ export default function CreateProjects() {
 	return (
 		<div className="container projects">
 			<div className="projects__header px-16">
-				<Typography color="primary" variant="h6">
-					{params.category !== 'create'
-						? params.category === 'settingtask'
-							? 'Task Settings'
-							: 'Copy Task'
-						: `Create ${params.type}`}
-				</Typography>
+				<Text
+					type="title"
+					color="primary"
+					label={
+						params.category !== 'create'
+							? params.category === 'settingtask'
+								? 'Task Settings'
+								: 'Copy Task'
+							: `Create ${params.type}`
+					}
+				/>
+
 				<div className="projects__header--action">
 					<Tooltip placement="bottom" title="Exit">
 						<span onClick={ExitPage} className="action--button">
@@ -97,6 +103,7 @@ export default function CreateProjects() {
 					</Tooltip>
 				</div>
 			</div>
+
 			<div className="projects__content mt-8 flex flex-col items-center">
 				<Grid container className="w-full p-16">
 					<Grid item lg={2} md={3} sm={false} xs={false} />
