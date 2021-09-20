@@ -1,8 +1,9 @@
 /* eslint-disable react/jsx-no-duplicate-props */
 import React from 'react';
 import { Form, Input, Radio, Space } from 'antd';
-import { Typography } from '@material-ui/core';
 import './index.scss';
+
+import Text from 'app/components/Text';
 
 const FormItem = Form.Item;
 export default function AntRadioVerticalCustom({
@@ -30,15 +31,9 @@ export default function AntRadioVerticalCustom({
 	return (
 		<div className={`form-item-input ${position && 'flex flex-row  justify-between'}`}>
 			<div className={`flex flex-row mb-8 `}>
-				<Typography color="primary" variant="subtitle2" className="label--form">
-					{' '}
-					{label}{' '}
-				</Typography>
-				{hasFeedback && (
-					<p style={{ marginBottom: '-20px' }} className="text-red">
-						*
-					</p>
-				)}
+				<Text required={hasFeedback} type="body">
+					{label}
+				</Text>
 			</div>
 			<FormItem
 				rules={[{ required: true }]}
@@ -50,14 +45,12 @@ export default function AntRadioVerticalCustom({
 						{options?.map(op => (
 							<Radio value={op.value} key={op.value}>
 								<div>
-									<Typography className="label--radio-button" color="primary" variant="body2">
-										{' '}
-										{op.label}{' '}
-									</Typography>
-									<Typography color="primary" variant="caption">
-										{' '}
-										{op.description}{' '}
-									</Typography>
+									<Text type="body" color="primary">
+										{op.label}
+									</Text>
+									<Text type="caption" color="primary">
+										{op.description}
+									</Text>
 								</div>
 							</Radio>
 						))}

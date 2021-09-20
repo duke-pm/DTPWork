@@ -2,7 +2,7 @@
 import { Badge, Dropdown, Table, Popover, Avatar, Menu, Tooltip, Progress, Spin, Checkbox } from 'antd';
 import React, { useContext, useState, useEffect } from 'react';
 import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
-import { MenuItem, ListItemIcon, Icon, ListItemText, Typography, Link } from '@material-ui/core';
+import { MenuItem, ListItemIcon, Icon, ListItemText, Link } from '@material-ui/core';
 import AppsIcon from '@material-ui/icons/Apps';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { withRouter } from 'react-router';
@@ -14,6 +14,7 @@ import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import * as moment from 'moment';
 import clsx from 'clsx';
 import { useHistory } from 'react-router-dom';
+import Text from 'app/components/Text';
 import * as actions from '../../../_redux/_projectActions';
 import { ProjectContext } from '../../ProjectContext';
 import { typeColor, priorityColor, badgeText } from './ConfigTableProject';
@@ -298,7 +299,7 @@ function TableProject(props) {
 					onClick={() => handleOpenVisible(item)}
 					component="button"
 				>
-					<Typography variant="body1">{item.taskName}</Typography>
+					<Text>{item.taskName}</Text>
 				</Link>
 			)
 		},
@@ -309,9 +310,9 @@ function TableProject(props) {
 			key: 'type',
 			width: '8%',
 			render: (_, item) => (
-				<Typography variant="subtitle2" style={{ color: typeColor[item.typeName], textTransform: 'uppercase' }}>
+				<Text type="subTitle" style={{ color: typeColor[item.typeName], textTransform: 'uppercase' }}>
 					{item.typeName}
-				</Typography>
+				</Text>
 			)
 		},
 		{
@@ -353,7 +354,7 @@ function TableProject(props) {
 										onClick={() => updatedStatus(item, itemStatus.value)}
 										style={{ color: itemStatus.colorCode }}
 									>
-										<Typography variant="body1">{itemStatus.label}</Typography>
+										<Text>{itemStatus.label}</Text>
 									</Menu.Item>
 								))}
 							</Menu>
@@ -379,11 +380,7 @@ function TableProject(props) {
 			dataIndex: 'priority',
 			key: 'priority',
 			width: '6%',
-			render: (_, item) => (
-				<Typography variant="body1" style={{ color: priorityColor[item.priority] }}>
-					{item.priorityName}
-				</Typography>
-			)
+			render: (_, item) => <Text style={{ color: priorityColor[item.priority] }}>{item.priorityName}</Text>
 		},
 		{
 			title: 'Start',
@@ -393,9 +390,7 @@ function TableProject(props) {
 			width: '8%',
 			render: (_, item) => (
 				<div className="flex items-center justify-center text-center px-8 py-4 bg-green-50 rounded-16">
-					<Typography variant="body1">
-						{item.startDate && moment(item.startDate).format('DD/MM/YY')}
-					</Typography>
+					<Text>{item.startDate && moment(item.startDate).format('DD/MM/YY')}</Text>
 				</div>
 			)
 		},
@@ -407,7 +402,7 @@ function TableProject(props) {
 			width: '8%',
 			render: (_, item) => (
 				<div className="flex items-center justify-center text-center px-8 py-4 bg-green-50 rounded-16">
-					<Typography variant="body1">{item.endDate && moment(item.endDate).format('DD/MM/YY')}</Typography>
+					<Text>{item.endDate && moment(item.endDate).format('DD/MM/YY')}</Text>
 				</div>
 			)
 		},
@@ -419,7 +414,7 @@ function TableProject(props) {
 			width: '6%',
 			render: (_, item) => (
 				<div className="flex items-center justify-center text-center px-8 py-4 mx-4 rounded-16 text-blue">
-					<Typography variant="body1">{durationDay(item.startDate, item.endDate)} Days</Typography>{' '}
+					<Text>{durationDay(item.startDate, item.endDate)} Days</Text>
 				</div>
 			)
 		},
@@ -460,9 +455,7 @@ function TableProject(props) {
 			render: (_, item) => (
 				<div className="flex flex-row items-center">
 					<Avatar style={{ backgroundColor: item.colorCode }} icon={<UserOutlined />} />
-					<Typography className="ml-8" variant="body1">
-						{item.ownerName}
-					</Typography>
+					<Text className="ml-8">{item.ownerName}</Text>
 				</div>
 			)
 		},

@@ -1,9 +1,10 @@
 import { sliceString } from '@fuse/core/DtpConfig';
-import { Grid, Typography, Button } from '@material-ui/core';
+import { Grid, Button } from '@material-ui/core';
 import { Avatar, Input, Empty, Divider } from 'antd';
 import React, { useState } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import * as moment from 'moment';
+import Text from 'app/components/Text';
 import { addTaskActivity } from '../../../_redux/_projectActions';
 
 const { TextArea } = Input;
@@ -25,9 +26,9 @@ export default function TabOverview() {
 						{entitiesActivity?.map(item => (
 							<div key={item.date} className="flex flex-col">
 								<Divider>
-									<Typography variant="caption">
+									<Text type="caption">
 										{moment(item.date, 'DD/MM/YYYY - HH:mm').format('dddd - DD/MM/YYYY')}
-									</Typography>
+									</Text>
 								</Divider>
 								{item?.data.map((it, index) => {
 									return (
@@ -36,22 +37,10 @@ export default function TabOverview() {
 												{((item?.data[index - 1] &&
 													item?.data[index - 1].userName !== it.userName) ||
 													item?.data[index - 1] === undefined) && (
-													<Avatar
-														style={{
-															backgroundColor: '#87d068',
-															verticalAlign: 'middle'
-														}}
-														size="large"
-													>
-														<Typography className="uppercase" variant="inherit">
-															{sliceString(it.userName)}
-														</Typography>
-													</Avatar>
+													<Avatar>{sliceString(it.userName).toUpperCase()}</Avatar>
 												)}
 												<div className="flex-none mt-8">
-													<Typography variant="caption">
-														{it.timeUpdate.split('-')[1]}
-													</Typography>
+													<Text type="caption">{it.timeUpdate.split('-')[1]}</Text>
 												</div>
 											</div>
 
@@ -60,12 +49,10 @@ export default function TabOverview() {
 												style={{ backgroundColor: 'rgba(160,174,192,0.2)' }}
 											>
 												<div className="flex-none">
-													<Typography className="font-bold" variant="body1">
-														{it.fullName}
-													</Typography>
+													<Text className="font-bold">{it.fullName}</Text>
 												</div>
 												<div className="mt-8">
-													<Typography variant="body1">{it.comments}</Typography>
+													<Text>{it.comments}</Text>
 												</div>
 											</div>
 										</div>
@@ -88,7 +75,9 @@ export default function TabOverview() {
 					/>
 					<div className="flex flex-1" style={{ backgroundColor: 'white' }}>
 						<Button className="mx-16" onClick={submitComment} variant="contained" color="primary">
-							<Typography variant="inherit">Save</Typography>
+							<Text type="button" color="white">
+								Save
+							</Text>
 						</Button>
 					</div>
 				</div>

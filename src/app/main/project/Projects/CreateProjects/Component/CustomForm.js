@@ -11,6 +11,8 @@ import { Field, Form, Formik } from 'formik';
 import React from 'react';
 import * as Yup from 'yup';
 
+import Text from 'app/components/Text';
+
 export default function CustomForm({
 	initial,
 	projectSub,
@@ -108,11 +110,15 @@ export default function CustomForm({
 							<Spin className="ml-20" />
 						) : (
 							<Button type="submit" className="button__cancle mr-8" variant="contained" color="primary">
-								<Typography variant="button">Save</Typography>
+								<Text color="white" type="button">
+									Save
+								</Text>
 							</Button>
 						)}
 						<Button onClick={handleCancle} className="button__cancle" variant="contained" color="secondary">
-							<Typography variant="button">Cancel</Typography>
+							<Text color="white" type="button">
+								Cancel
+							</Text>
 						</Button>
 					</div>
 				</Form>

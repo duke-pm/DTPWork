@@ -1,13 +1,14 @@
 /* eslint-disable no-shadow */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Icon, Typography } from '@material-ui/core';
+import { Icon } from '@material-ui/core';
 import { Spin, Tooltip } from 'antd';
 import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import { FrappeGantt } from 'frappe-gantt-react';
 import moment from 'moment';
+import Text from 'app/components/Text';
 import { notificationConfig } from '@fuse/core/DtpConfig';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import {
@@ -73,9 +74,9 @@ export default function ChartPage() {
 	return (
 		<div className="container projects">
 			<div className="projects__header px-16">
-				<Typography color="primary" variant="h6">
+				<Text color="primary" type="title">
 					Gantt Chart {project?.projectName}
-				</Typography>
+				</Text>
 				<div className="projects__header--action flex ">
 					<Tooltip placement="bottom" title="Exit">
 						<span onClick={ExitPage} className="action--button">

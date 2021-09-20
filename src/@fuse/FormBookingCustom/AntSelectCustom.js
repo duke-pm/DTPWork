@@ -32,9 +32,9 @@ export default function AntSelectCustom({
 		// return handleInputChange ? handleInputChange(target) : null;
 	};
 	return (
-		<div className={`form-item-input ${position && 'flex flex-row  justify-between'}`}>
+		<div className={`form-item-input ${position && 'flex flex-row justify-between'}`}>
 			<div className={`flex flex-row mr-10 ${position && 'mt-8'}`}>
-				<Text required={hasFeedback} type="subTitle">
+				<Text required={hasFeedback} type="body">
 					{label}
 				</Text>
 			</div>

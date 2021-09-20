@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Button, Divider, Grid, Icon, Typography } from '@material-ui/core';
+import { Button, Grid, Icon } from '@material-ui/core';
 import { Avatar, Badge, Dropdown, Menu, Slider, Spin, Tabs, Tooltip } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
@@ -19,6 +19,7 @@ import {
 import { getInformationCompany } from 'app/main/assets/Possesion/_redux/possesionActions';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import Text from 'app/components/Text';
 import { updatedTaskStatus, addTaskActivity, getTaskViewDetail, addTaskWatcher } from '../../_redux/_projectActions';
 import { badgeText } from '../../ProjectsOverview/ProjectsOverviewComponent/ConfigTableProject';
 import { priorityColor } from '../ProjectComponent/TableProject/ConfigTableProject';
@@ -133,9 +134,9 @@ export default function OverviewPage() {
 	return (
 		<div className="container projects">
 			<div className="projects__header px-16">
-				<Typography color="primary" variant="h6">
-					Overview
-				</Typography>
+				<Text color="primary" type="title">
+					Detail
+				</Text>
 				<div className="projects__header--action flex ">
 					<Tooltip placement="bottom" title="Exit">
 						<span onClick={ExitPage} className="action--button">
@@ -153,73 +154,64 @@ export default function OverviewPage() {
 							<Tabs defaultActiveKey="0">
 								<TabPane
 									tab={
-										<Typography variant="subtitle2" color="primary">
+										<Text type="title" color="primary">
 											Overview
-										</Typography>
+										</Text>
 									}
 									key="0"
 								>
-									<div className="mt-20">
-										<Typography variant="subtitle2" className="title__view" color="primary">
-											Information
-										</Typography>
-										<Divider className="mb-16 mt10" />
-									</div>
+									<Text type="subTitle" color="primary" borderBottom>
+										BASIC INFORMATIONS
+									</Text>
 									<Grid container spacing={4}>
 										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Typography
-												style={{ color: entitiesView?.detail.typeColor }}
-												variant="subtitle2"
-											>
+											<Text style={{ color: entitiesView?.detail.typeColor }} type="subTitle">
 												{entitiesView?.detail.typeName}
-											</Typography>
+											</Text>
 										</Grid>
 										<Grid item xs={9} md={9} sm={9} lg={9}>
-											<Typography variant="subtitle2">{entitiesView?.detail.taskName}</Typography>
+											<Text type="subTitle">{entitiesView?.detail.taskName}</Text>
 										</Grid>
 									</Grid>
 
 									<Grid container spacing={4}>
 										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Typography variant="subtitle2">Created by:</Typography>
+											<Text type="body">Created by:</Text>
 										</Grid>
 										<Grid item xs={9} md={9} sm={9} lg={9}>
-											<Typography variant="body1">{entitiesView?.detail.crtdUser}</Typography>
+											<Text type="body">{entitiesView?.detail.crtdUser}</Text>
 										</Grid>
 									</Grid>
 
 									<Grid container spacing={4}>
 										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Typography variant="subtitle2">Last updated:</Typography>
+											<Text type="body">Last updated:</Text>
 										</Grid>
 										<Grid item xs={9} md={9} sm={9} lg={9}>
-											<Typography variant="body1">
+											<Text type="body">
 												{moment(entitiesView?.detail.lUpdDate).format('DD MMM, YY')}
-											</Typography>
+											</Text>
 										</Grid>
 									</Grid>
 
 									<Grid container spacing={4}>
 										<Grid item xs={12} md={3} sm={3} lg={3}>
-											<Typography variant="subtitle2">Description:</Typography>
+											<Text type="body">Description:</Text>
 										</Grid>
 										<Grid item xs={12} md={9} sm={9} lg={9}>
-											<Typography variant="body1">
+											<Text type="body">
 												{entitiesView?.detail.descr !== '' ? entitiesView?.detail.descr : '-'}
-											</Typography>
+											</Text>
 										</Grid>
 									</Grid>
 
-									<div className="mt-20">
-										<Typography variant="subtitle2" className="title__view" color="primary">
-											action
-										</Typography>
-										<Divider className="mb-16 mt10" />
-									</div>
+									<Text className="mt-20" type="subTitle" color="primary" borderBottom>
+										ACTION
+									</Text>
 
 									<Grid container spacing={4}>
 										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Typography variant="subtitle2">Status:</Typography>
+											<Text type="body">Status:</Text>
 										</Grid>
 										<Grid item xs={9} md={9} sm={9} lg={9}>
 											<Dropdown
@@ -260,7 +252,7 @@ export default function OverviewPage() {
 
 									<Grid container spacing={4}>
 										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Typography variant="subtitle2">Progress:</Typography>
+											<Text type="body">Progress:</Text>
 										</Grid>
 										<Grid item xs={9} md={9} sm={9} lg={9}>
 											<Slider
@@ -275,7 +267,7 @@ export default function OverviewPage() {
 
 									<Grid container spacing={4}>
 										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Typography variant="subtitle2">Follow:</Typography>
+											<Text type="body">Follow:</Text>
 										</Grid>
 										<Grid item xs={9} md={9} sm={9} lg={9}>
 											<Button
@@ -294,31 +286,28 @@ export default function OverviewPage() {
 										</Grid>
 									</Grid>
 
-									<div className="mt-20">
-										<Typography variant="subtitle2" className="title__view" color="primary">
-											PEOPLE & TIME
-										</Typography>
-										<Divider className="mb-16 mt10" />
-									</div>
+									<Text className="mt-20" type="subTitle" color="primary" borderBottom>
+										PEOPLE & TIME
+									</Text>
 
 									<Grid container spacing={4}>
 										<Grid item md={6} sm={6} lg={6} className="flex flex-row items-center">
-											<Typography variant="subtitle2">Start date:</Typography>
-											<Typography variant="body1" className="ml-20">
+											<Text type="body">Start date:</Text>
+											<Text type="body" className="ml-20">
 												{moment(entitiesView?.detail.startDate).format('DD/MM/YYYY')}
-											</Typography>
+											</Text>
 										</Grid>
 										<Grid item md={6} sm={6} lg={6} className="flex flex-row items-center">
-											<Typography variant="subtitle2">End date: </Typography>
-											<Typography variant="body1" className="ml-20">
+											<Text type="body">End date: </Text>
+											<Text type="body" className="ml-20">
 												{moment(entitiesView?.detail.endDate).format('DD/MM/YYYY')}
-											</Typography>
+											</Text>
 										</Grid>
 									</Grid>
 
 									<Grid container spacing={4}>
 										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Typography variant="subtitle2">Assignee:</Typography>
+											<Text type="body">Assignee:</Text>
 										</Grid>
 										<Grid item xs={9} md={9} sm={9} lg={9}>
 											<div className="flex flex-row items-center">
@@ -327,16 +316,16 @@ export default function OverviewPage() {
 													style={{ backgroundColor: entitiesView?.detail.colorCode }}
 													icon={<UserOutlined />}
 												/>
-												<Typography className="ml-8" variant="body1">
+												<Text className="ml-8" type="body">
 													{entitiesView?.detail.ownerName}
-												</Typography>
+												</Text>
 											</div>
 										</Grid>
 									</Grid>
 
 									<Grid container spacing={4}>
 										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Typography variant="subtitle2">Members:</Typography>
+											<Text type="body">Members:</Text>
 										</Grid>
 										<Grid item xs={9} md={9} sm={9} lg={9}>
 											<Avatar.Group
@@ -354,15 +343,15 @@ export default function OverviewPage() {
 
 									<Grid container spacing={4}>
 										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Typography variant="subtitle2">Priority:</Typography>
+											<Text type="body">Priority:</Text>
 										</Grid>
 										<Grid item xs={9} md={9} sm={9} lg={9}>
-											<Typography
-												variant="body1"
+											<Text
+												type="body"
 												style={{ color: priorityColor[entitiesView?.detail.priority] }}
 											>
 												{entitiesView?.detail.priorityName}
-											</Typography>
+											</Text>
 										</Grid>
 									</Grid>
 
@@ -373,107 +362,101 @@ export default function OverviewPage() {
 										entitiesView?.detail.typeName === 'TASK' && (
 											<Grid container spacing={2}>
 												<Grid item xs={3} md={3} sm={3} lg={3}>
-													<Typography variant="subtitle2"> Deadline : </Typography>
+													<Text type="body"> Deadline : </Text>
 												</Grid>
 												<Grid item xs={9} md={9} sm={9} lg={9}>
-													<Typography variant="body1" style={{ color: 'red' }}>
+													<Text type="body" color="error">
 														Expired {checkDeadline(entitiesView?.detail.endDate)} days
-													</Typography>
+													</Text>
 												</Grid>
 											</Grid>
 										)}
 
-									<div className="mt-20">
-										<Typography variant="subtitle2" className="title__view" color="primary">
-											DETAIL
-										</Typography>
-										<Divider className="mb-16 mt10" />
-									</div>
+									<Text className="mt-20" type="subTitle" color="primary" borderBottom>
+										DETAIL
+									</Text>
 
 									<Grid container spacing={4}>
 										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Typography variant="subtitle2">Sector:</Typography>
+											<Text type="body">Sector:</Text>
 										</Grid>
 										<Grid item xs={9} md={9} sm={9} lg={9}>
-											<Typography variant="body1">
+											<Text type="body">
 												{entitiesView?.detail.sectorName !== ''
 													? entitiesView?.detail.sectorName
 													: '-'}
-											</Typography>
+											</Text>
 										</Grid>
 									</Grid>
 
 									<Grid container spacing={4}>
 										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Typography variant="subtitle2">Grade:</Typography>
+											<Text type="body">Grade:</Text>
 										</Grid>
 										<Grid item xs={9} md={9} sm={9} lg={9}>
-											<Typography variant="body1">
+											<Text type="body">
 												{entitiesView?.detail.gradeName !== ''
 													? entitiesView?.detail.gradeName
 													: '-'}
-											</Typography>
+											</Text>
 										</Grid>
 									</Grid>
 
 									<Grid container spacing={4}>
 										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Typography variant="subtitle2">Component:</Typography>
+											<Text type="body">Component:</Text>
 										</Grid>
 										<Grid item xs={9} md={9} sm={9} lg={9}>
-											<Typography variant="body1">
+											<Text type="body">
 												{entitiesView?.detail.componentName !== ''
 													? entitiesView?.detail.componentName
 													: '-'}
-											</Typography>
+											</Text>
 										</Grid>
 									</Grid>
 
 									<Grid container spacing={4}>
 										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Typography variant="subtitle2">Author:</Typography>
+											<Text type="body">Author:</Text>
 										</Grid>
 										<Grid item xs={9} md={9} sm={9} lg={9}>
-											<Typography variant="body1">
+											<Text type="body">
 												{entitiesView?.detail.author !== '' ? entitiesView?.detail.author : '-'}
-											</Typography>
+											</Text>
 										</Grid>
 									</Grid>
 
 									<Grid container spacing={4}>
 										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Typography variant="subtitle2">Origin Publisher:</Typography>
+											<Text type="body">Origin Publisher:</Text>
 										</Grid>
 										<Grid item xs={9} md={9} sm={9} lg={9}>
-											<Typography variant="body1">
+											<Text type="body">
 												{entitiesView?.detail.originPublisher !== ''
 													? entitiesView?.detail.originPublisher
 													: '-'}
-											</Typography>
+											</Text>
 										</Grid>
 									</Grid>
 
 									<Grid container spacing={4}>
 										<Grid item xs={3} md={3} sm={3} lg={3}>
-											<Typography variant="subtitle2">Ownership DTP:</Typography>
+											<Text type="body">Ownership DTP:</Text>
 										</Grid>
 										<Grid item xs={9} md={9} sm={9} lg={9}>
-											<Typography variant="body1">
+											<Text type="body">
 												{entitiesView?.detail.ownershipDTP !== ''
 													? entitiesView?.detail.ownershipDTP
 													: '-'}
-											</Typography>
+											</Text>
 										</Grid>
 									</Grid>
 
 									{entitiesView?.detail.attachFiles && (
 										<>
-											<div className="mt-20">
-												<Typography variant="subtitle2" className="title__view" color="primary">
-													FILES
-												</Typography>
-												<Divider className="mb-16 mt10" />
-											</div>
+											<Text className="mt-20" type="subTitle" color="primary" borderBottom>
+												FILES
+											</Text>
 											<Grid container spacing={2}>
 												<Grid item sm={12} md={12} lg={12}>
 													<div className="flex flex-row justify-between mt-16">
@@ -494,10 +477,10 @@ export default function OverviewPage() {
 																}}
 																href={`${URL}/${entitiesView?.detail.attachFiles}`}
 															>
-																<Typography variant="button">
+																<Text type="button">
 																	{entitiesView &&
 																		nameFile(entitiesView?.detail.attachFiles)}
-																</Typography>
+																</Text>
 															</Button>
 														</div>
 													</div>
@@ -508,9 +491,9 @@ export default function OverviewPage() {
 								</TabPane>
 								<TabPane
 									tab={
-										<Typography variant="subtitle2" color="primary">
+										<Text type="title" color="primary">
 											Activity
-										</Typography>
+										</Text>
 									}
 									key="1"
 								>
@@ -518,9 +501,9 @@ export default function OverviewPage() {
 								</TabPane>
 								<TabPane
 									tab={
-										<Typography variant="subtitle2" color="primary">
+										<Text type="title" color="primary">
 											Watchers
-										</Typography>
+										</Text>
 									}
 									key="2"
 								>

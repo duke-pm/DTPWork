@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
-import { Typography } from '@material-ui/core';
 import { Form, Checkbox } from 'antd';
+
+import Text from 'app/components/Text';
 
 const FormItem = Form.Item;
 
@@ -35,16 +36,10 @@ export default function AntdCustomCheckbox({
 		<>
 			<div className={`form-item-input ${position && 'flex flex-row justify-between '}`}>
 				<div className={`flex flex-row ${position && 'mt-8'}`}>
-					<Typography variant="subtitle2" className="label--form">
-						{' '}
-						{label}{' '}
-					</Typography>{' '}
-					{hasFeedback && (
-						<p style={{ marginBottom: '-20px' }} className="text-red">
-							*
-						</p>
-					)}
-				</div>{' '}
+					<Text required={hasFeedback} type="body">
+						{label}
+					</Text>
+				</div>
 				<FormItem
 					style={{ width: '100%', marginLeft: top || '0px' }}
 					rules={[{ required: true }]}

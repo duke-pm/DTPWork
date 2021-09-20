@@ -1,9 +1,10 @@
-import { Button, Icon, Typography } from '@material-ui/core';
+import { Button, Icon } from '@material-ui/core';
 import React, { useEffect, useState, useContext } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import Search from 'antd/lib/input/Search';
 import { Dropdown } from 'antd';
 import { useHistory } from 'react-router-dom';
+import Text from 'app/components/Text';
 import ProjectComponent from './ProjectsComponent';
 import * as actions from '../_redux/_projectActions';
 import { getInformationCompany } from '../../assets/Possesion/_redux/possesionActions/index';
@@ -111,9 +112,9 @@ export default function ProjectPage() {
 		<>
 			<div className="container projects">
 				<div className="projects__header px-16">
-					<Typography color="primary" variant="h6">
+					<Text type="title" color="primary">
 						Projects
-					</Typography>
+					</Text>
 					<div className="header--action">
 						<Search
 							onKeyPress={event => {
@@ -132,7 +133,9 @@ export default function ProjectPage() {
 							variant="contained"
 							color="primary"
 						>
-							<Typography variant="button">Create</Typography>
+							<Text type="button" color="white">
+								Create
+							</Text>
 						</Button>
 					</div>
 				</div>
@@ -142,21 +145,15 @@ export default function ProjectPage() {
 							<Icon fontSize="small" color="primary">
 								tune
 							</Icon>
-							<Typography variant="body1" color="primary" className="ml-8 title">
-								{' '}
-								Filter
-							</Typography>
 						</div>
 						<div className="content_filter">
 							{status?.length > 0 && (
 								<div className="control-filter">
 									<div className="content flex items-center">
-										<Typography className="" color="primary">
-											Status:
-										</Typography>
-										<Typography color="primary" className="ml-8 value-filter">
+										<Text color="primary">Status:</Text>
+										<Text className="ml-8" color="primary">
 											{newArrayStatus?.[0].label}
-										</Typography>
+										</Text>
 									</div>
 									<div className="action">
 										<Dropdown
@@ -164,9 +161,7 @@ export default function ProjectPage() {
 												<div className="action__dropdown">
 													{newArrayStatus?.map(item => (
 														<div key={item.value} className="dropdown--list">
-															<Typography variant="body1" color="primary">
-																{item.label}
-															</Typography>
+															<Text color="primary">{item.label}</Text>
 															<Icon
 																onClick={() => handleFilterClear(item)}
 																className="btn-icon"
@@ -196,12 +191,10 @@ export default function ProjectPage() {
 							{ownerFilter?.length > 0 && (
 								<div className="control-filter">
 									<div className="content flex items-center">
-										<Typography className="" color="primary">
-											Project owner:
-										</Typography>
-										<Typography color="primary" className="ml-8 value-filter">
+										<Text color="primary">Project owner:</Text>
+										<Text className="ml-8" color="primary">
 											{newArrOwnerFilter?.[0].label}
-										</Typography>
+										</Text>
 									</div>
 									<div className="action">
 										<Dropdown
@@ -209,9 +202,7 @@ export default function ProjectPage() {
 												<div className="action__dropdown">
 													{newArrOwnerFilter?.map(item => (
 														<div key={item.value} className="dropdown--list">
-															<Typography variant="body1" color="primary">
-																{item.label}
-															</Typography>
+															<Text color="primary">{item.label}</Text>
 															<Icon
 																onClick={() => handleFilterClearOwner(item)}
 																className="btn-icon"
@@ -240,15 +231,9 @@ export default function ProjectPage() {
 							)}
 						</div>
 						<div className="action-filter">
-							<Typography
-								onClick={handleClearAll}
-								variant="subtitle2"
-								color="primary"
-								className="cursor-pointer"
-							>
-								{' '}
-								Delete all{' '}
-							</Typography>
+							<Text className="cursor-pointer" onClick={handleClearAll}>
+								Delete all
+							</Text>
 						</div>
 					</div>
 				) : null}

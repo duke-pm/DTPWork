@@ -35,7 +35,7 @@ export default function AntSelectMultiCustom({
 	return (
 		<div className={`form-item-input ${position && 'flex flex-row  justify-between'}`}>
 			<div className={`flex flex-row ${position && 'mt-8'}`}>
-				<Text required={hasFeedback} type="subTitle">
+				<Text required={hasFeedback} type="body">
 					{label}
 				</Text>
 			</div>

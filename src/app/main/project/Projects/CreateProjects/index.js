@@ -1,11 +1,12 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Grid, Icon, Typography } from '@material-ui/core';
+import { Grid, Icon } from '@material-ui/core';
 import { Spin, Tooltip } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, shallowEqual, useSelector } from 'react-redux';
 import { getDataUserLocalStorage } from '@fuse/core/DtpConfig';
+import Text from 'app/components/Text';
 import FormComponent from './Component';
 import * as actions from '../../_redux/_projectActions';
 
@@ -46,13 +47,13 @@ export default function CreateProjects() {
 	return (
 		<div className="container projects">
 			<div className="projects__header px-16">
-				<Typography color="primary" variant="h6">
+				<Text color="primary" type="title">
 					{params.type !== 'create'
 						? params.type === 'Settings'
 							? 'Setting project'
 							: 'Clone project'
 						: 'Create project'}
-				</Typography>
+				</Text>
 
 				<div className="projects__header--action">
 					<Tooltip placement="bottom" title="Exit">

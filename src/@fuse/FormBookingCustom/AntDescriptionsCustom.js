@@ -19,6 +19,7 @@ export default function AntDescriptionsCustom({
 	row,
 	form,
 	type,
+	width,
 	placeholder,
 	position,
 	...props
@@ -33,14 +34,15 @@ export default function AntDescriptionsCustom({
 		// return handleInputChange ? handleInputChange(target) : null;
 	};
 	return (
-		<div className={`form-item-input ${position && 'flex flex-row  justify-between'}`}>
+		<div className={`form-item-input ${position && 'flex flex-row justify-between'}`}>
 			<div className={`flex flex-row `}>
-				<Text required={hasFeedback} type="subTitle">
+				<Text required={hasFeedback} type="body">
 					{label}
 				</Text>
 			</div>
 			<FormItem
 				rules={[{ required: true }]}
+				style={{ width: position ? width || '80%' : '100%' }}
 				help={submittedError || touchedError ? hasError : false}
 				validateStatus={submittedError || touchedError ? 'error' : 'success'}
 			>

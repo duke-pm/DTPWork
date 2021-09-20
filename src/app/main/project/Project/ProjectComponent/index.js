@@ -1,10 +1,9 @@
 /* eslint-disable no-shadow */
-import FuseAnimate from '@fuse/core/FuseAnimate';
 import React, { useContext } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
-import { Typography } from '@material-ui/core';
 import Panigation from '@fuse/core/FusePanigate';
 import { Spin, Tag } from 'antd';
+import Text from 'app/components/Text';
 import TableProject from './TableProject';
 import { ProjectContext } from '../ProjectContext';
 import { fetchProjectDetailFilter } from '../../_redux/_projectActions';
@@ -69,9 +68,7 @@ export default function ProjectComponent({ owner, ArrProjectStatus, params, sect
 										style={{ width: '25px', height: '25px', marginLeft: '8px' }}
 										color="#d50000"
 									/>
-									<Typography variant="body1" style={{ color: '#d50000' }}>
-										Late deadline
-									</Typography>
+									<Text color="error">Late deadline</Text>
 								</div>
 
 								<div className="flex flex-row items-center justify-end">

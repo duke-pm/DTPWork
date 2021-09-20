@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Badge, Checkbox, Table, Popover, Avatar, Tooltip, Spin, Dropdown } from 'antd';
+import { Badge, Checkbox, Table, Popover, Avatar, Tooltip, Dropdown } from 'antd';
 import React, { useContext } from 'react';
 import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
-import { MenuItem, ListItemIcon, Icon, ListItemText, Typography, Link } from '@material-ui/core';
+import { MenuItem, ListItemIcon, Icon, ListItemText, Link } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { withRouter } from 'react-router';
 import { useDispatch } from 'react-redux';
@@ -13,6 +13,7 @@ import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useHistory } from 'react-router-dom';
 import { getToken, URL } from '@fuse/core/DtpConfig';
+import Text from 'app/components/Text';
 import { ProjectContext } from '../../ProjectContext';
 import * as actions from '../../../_redux/_projectActions';
 
@@ -164,7 +165,7 @@ function TableProject(props) {
 					variant="body1"
 					onClick={() => handleDetail(item)}
 				>
-					<Typography variant="body1">{item.prjName}</Typography>
+					<Text>{item.prjName}</Text>
 				</Link>
 			)
 		},
@@ -233,9 +234,7 @@ function TableProject(props) {
 			width: '8%',
 			render: (_, item) => (
 				<div className="flex items-center justify-center text-center px-8 py-4 bg-green-50 rounded-16">
-					<Typography variant="body1">
-						{item.startDate && moment(item.startDate).format('DD/MM/YY')}
-					</Typography>
+					<Text>{item.startDate && moment(item.startDate).format('DD/MM/YY')}</Text>
 				</div>
 			)
 		},
@@ -247,7 +246,7 @@ function TableProject(props) {
 			width: '8%',
 			render: (_, item) => (
 				<div className="flex items-center justify-center text-center px-8 py-4 bg-green-50 rounded-16">
-					<Typography variant="body1">{item.endDate && moment(item.endDate).format('DD/MM/YY')}</Typography>
+					<Text>{item.endDate && moment(item.endDate).format('DD/MM/YY')}</Text>
 				</div>
 			)
 		},
@@ -264,9 +263,7 @@ function TableProject(props) {
 							'flex items-center justify-center text-center px-8 py-4 bg-green-50 rounded-16'
 						)}
 					>
-						<Typography variant="body1">
-							{item.appraisalTime && moment(item.appraisalTime).format('DD/MM/YY')}
-						</Typography>
+						<Text>{item.appraisalTime && moment(item.appraisalTime).format('DD/MM/YY')}</Text>
 					</div>
 				)
 		},
@@ -299,9 +296,7 @@ function TableProject(props) {
 			render: (_, item) => (
 				<div className="flex flex-row items-center">
 					<Avatar style={{ backgroundColor: item.colorCode }} icon={<UserOutlined />} />
-					<Typography className="ml-8" variant="body1">
-						{item.ownerName}
-					</Typography>
+					<Text className="ml-8">{item.ownerName}</Text>
 				</div>
 			)
 		},

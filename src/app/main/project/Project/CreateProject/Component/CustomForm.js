@@ -6,7 +6,7 @@ import AntInputCustom from '@fuse/FormBookingCustom/AntInputCustom';
 import AntSelectCustom from '@fuse/FormBookingCustom/AntSelectCustom';
 import AntSelectMultiCustom from '@fuse/FormBookingCustom/AntSelectMultiCustom';
 import AntSlideCustom from '@fuse/FormBookingCustom/AntSlideCustom';
-import { Button, IconButton, Typography, Grid } from '@material-ui/core';
+import { Button, IconButton, Grid } from '@material-ui/core';
 import { Avatar, Divider, Spin } from 'antd';
 import { Field, Form, Formik } from 'formik';
 import React from 'react';
@@ -91,6 +91,7 @@ export default function CustomForm({
 							name="descr"
 							component={AntDescriptionsCustom}
 							row={4}
+							position="right"
 						/>
 
 						{/** PEOPLE & TIME */}
@@ -340,11 +341,15 @@ export default function CustomForm({
 								variant="contained"
 								color="primary"
 							>
-								<Text type="button">Save</Text>
+								<Text color="white" type="button">
+									Save
+								</Text>
 							</Button>
 						) : (
 							<Button type="submit" className="button__cancle mr-8" variant="contained" color="primary">
-								<Text type="button">Save</Text>
+								<Text color="white" type="button">
+									Save
+								</Text>
 							</Button>
 						)}
 						<Button

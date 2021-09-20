@@ -4,12 +4,15 @@ import { Typography, Divider } from '@material-ui/core';
 
 function Text(props) {
 	const {
+		style = {},
 		className = '',
 		borderBottom = false,
 		required = false,
+		click = false,
 		type = 'body',
-		color = undefined,
-		children = ''
+		color = 'textPrimary',
+		children = '',
+		onClick = undefined
 	} = props;
 
 	let variant = 'body1';
@@ -28,7 +31,14 @@ function Text(props) {
 
 	return (
 		<div className={`${className}`}>
-			<Typography color={color} variant={variant} className="flex flex-1 flex-row items-start">
+			<Typography
+				style={style}
+				color={color}
+				variant={variant}
+				className="flex flex-1 flex-row items-start"
+				component={click ? 'button' : undefined}
+				onClick={onClick}
+			>
 				{children}
 				{required && (
 					<Typography className="ml-4" color="error">
@@ -42,12 +52,15 @@ function Text(props) {
 }
 
 Text.propTypes = {
+	style: PropTypes.object,
 	className: PropTypes.string,
 	borderBottom: PropTypes.bool,
 	required: PropTypes.bool,
+	click: PropTypes.bool,
 	type: PropTypes.oneOf(['title', 'subTitle', 'body', 'caption', 'button']),
 	color: PropTypes.string,
-	children: PropTypes.string
+	children: PropTypes.string,
+	onClick: PropTypes.func
 };
 
 export default Text;

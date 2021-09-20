@@ -3,7 +3,8 @@
 import React from 'react';
 import { Upload } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
-import { FormGroup, Typography } from '@material-ui/core';
+
+import Text from 'app/components/Text';
 
 const { Dragger } = Upload;
 
@@ -26,16 +27,9 @@ export default function AntFileCustom({
 	return (
 		<div className="form-item-input">
 			<div className="flex flex-row mt-8">
-				<Typography variant="subtitle2" color="primary">
-					{' '}
-					{label}{' '}
-				</Typography>
-				{hasFeedback && (
-					<p style={{ marginBottom: '-20px' }} className="text-red ml-8">
-						{' '}
-						(*){' '}
-					</p>
-				)}
+				<Text required={hasFeedback} type="body">
+					{label}
+				</Text>
 			</div>
 			<Dragger {...field} {...props} onChange={handleChangeFile}>
 				<p className="ant-upload-drag-icon">
