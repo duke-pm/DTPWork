@@ -1,12 +1,13 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Icon, Typography } from '@material-ui/core';
+import { Icon } from '@material-ui/core';
 import { Spin, Tooltip } from 'antd';
 import React, { useMemo, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import Chart from 'react-apexcharts';
 import { durationDay } from '@fuse/core/DtpConfig';
+import Text from 'app/components/Text';
 import { getTaskDetailAll } from '../../_redux/_projectActions';
 
 export default function ChartPage() {
@@ -36,9 +37,9 @@ export default function ChartPage() {
 	return (
 		<div className="container projects">
 			<div className="projects__header px-16">
-				<Typography color="primary" variant="h6">
-					Statistical
-				</Typography>
+				<Text color="primary" type="title">
+					Text
+				</Text>
 				<div className="projects__header--action flex ">
 					<Tooltip placement="bottom" title="Open detail">
 						<span onClick={handleChangePageTask} className="action--button">

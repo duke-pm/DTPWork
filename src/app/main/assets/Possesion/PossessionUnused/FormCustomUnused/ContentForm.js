@@ -2,53 +2,54 @@ import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import React from 'react';
 import * as moment from 'moment';
 import { Grid, Typography } from '@material-ui/core';
+import Text from 'app/components/Text';
 
 export default function ContentForm({ entitiesEdit }) {
 	return (
 		<Grid alignItems="flex-start" container item spacing={2}>
 			<Grid item xs={6} md={6} lg={4}>
-				<Typography variant="subtitle2">Mã tài sản</Typography>
+				<Text type="body">Mã tài sản:</Text>
 			</Grid>
 			<Grid item xs={6} md={6} lg={8}>
-				<Typography variant="body1">{entitiesEdit?.assetCode}</Typography>
+				<Text type="body">{entitiesEdit?.assetCode}</Text>
 			</Grid>
 			<Grid item xs={6} md={6} lg={4}>
-				<Typography variant="subtitle2">Tên tài sản</Typography>
+				<Text type="body">Tên tài sản:</Text>
 			</Grid>
 			<Grid item xs={6} md={6} lg={8}>
-				<Typography variant="body1">{entitiesEdit?.assetName}</Typography>
+				<Text type="body">{entitiesEdit?.assetName}</Text>
 			</Grid>
 			<Grid item xs={6} md={6} lg={4}>
-				<Typography variant="subtitle2">Nhóm tài sản</Typography>
+				<Text type="body">Nhóm tài sản:</Text>
 			</Grid>
 			<Grid item xs={6} md={6} lg={8}>
-				<Typography variant="body1">{entitiesEdit?.groupName}</Typography>
+				<Text type="body">{entitiesEdit?.groupName}</Text>
 			</Grid>
 			<Grid item xs={6} md={6} lg={4}>
-				<Typography variant="subtitle2">Mô tả</Typography>
+				<Text type="body">Mô tả:</Text>
 			</Grid>
 			<Grid item xs={6} md={6} lg={8}>
-				<Typography variant="body1">{entitiesEdit?.descr}</Typography>
+				<Text type="body">{entitiesEdit?.descr}</Text>
 			</Grid>
 			<Grid item xs={6} md={6} lg={4}>
-				<Typography variant="subtitle2">Ngày mua</Typography>
+				<Text type="body">Ngày mua:</Text>
 			</Grid>
 			<Grid item xs={6} md={6} lg={8}>
-				<Typography variant="body1">
+				<Text type="body">
 					{entitiesEdit?.purchaseDate ? moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY') : ''}
-				</Typography>
+				</Text>
 			</Grid>
 			<Grid item xs={6} md={6} lg={4}>
-				<Typography variant="subtitle2">Nguyên giá</Typography>
+				<Text type="body">Nguyên giá:</Text>
 			</Grid>
 			<Grid item xs={6} md={6} lg={8}>
-				<Typography variant="body1">{entitiesEdit && currencyFormat(entitiesEdit.originalPrice)}</Typography>
+				<Text type="body">{entitiesEdit && currencyFormat(entitiesEdit.originalPrice)}</Text>
 			</Grid>
 			<Grid item xs={6} md={6} lg={4}>
-				<Typography variant="subtitle2">Tình trạng</Typography>
+				<Text type="body">Tình trạng:</Text>
 			</Grid>
 			<Grid item xs={6} md={6} lg={8}>
-				<Typography variant="body1">Chưa sử dụng</Typography>
+				<Text type="body">Chưa sử dụng:</Text>
 			</Grid>
 		</Grid>
 	);

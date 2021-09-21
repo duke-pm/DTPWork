@@ -5,11 +5,13 @@ import AntDescriptionsCustom from '@fuse/FormBookingCustom/AntDescriptionsCustom
 import AntInputCustom from '@fuse/FormBookingCustom/AntInputCustom';
 import AntSelectCustom from '@fuse/FormBookingCustom/AntSelectCustom';
 import AntSelectMultiCustom from '@fuse/FormBookingCustom/AntSelectMultiCustom';
-import { Button, Typography } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import { Spin } from 'antd';
 import { Field, Form, Formik } from 'formik';
 import React from 'react';
 import * as Yup from 'yup';
+
+import Text from 'app/components/Text';
 
 export default function CustomForm({
 	initial,
@@ -67,29 +69,40 @@ export default function CustomForm({
 								options={owner}
 							/>
 						</div>
-						<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
+						<Grid container spacing={2} className="flex flex-1 flex-row items-end">
 							{role?.userName === 'phucvd' && (
-								<div className="grid grid-cols-1 sm:grid-cols-2 gap-8 ">
-									<Field
-										label="Inspection time"
-										name="appraisalTime"
-										placeholder="Please select time"
-										component={AntDateCustom}
-									/>
-									<Field label="Priority" name="priority" type="number" component={AntInputCustom} />
-								</div>
+								<Grid item xs={12} sm={8} md={8} lg={8}>
+									<Grid container spacing={4}>
+										<Grid item xs={6} sm={6} md={6} lg={6}>
+											<Field
+												label="Inspection time"
+												name="appraisalTime"
+												placeholder="Please select time"
+												component={AntDateCustom}
+											/>
+										</Grid>
+										<Grid item xs={6} sm={6} md={6} lg={6}>
+											<Field
+												label="Priority"
+												name="priority"
+												type="number"
+												component={AntInputCustom}
+											/>
+										</Grid>
+									</Grid>
+								</Grid>
 							)}
-						</div>
-						<div>
-							<Field
-								label="Public"
-								position="right"
-								name="isPublic"
-								top="10px"
-								value={initial.isPublic}
-								component={AntdCustomCheckbox}
-							/>
-						</div>
+							<Grid item xs={12} sm={4} md={4} lg={4}>
+								<Field
+									label="Public"
+									position="right"
+									name="isPublic"
+									top="10px"
+									value={initial.isPublic}
+									component={AntdCustomCheckbox}
+								/>
+							</Grid>
+						</Grid>
 					</div>
 
 					<div className="flex items-center justify-end">
@@ -97,11 +110,15 @@ export default function CustomForm({
 							<Spin className="ml-20" />
 						) : (
 							<Button type="submit" className="button__cancle mr-8" variant="contained" color="primary">
-								<Typography variant="button"> Save </Typography>
+								<Text color="white" type="button">
+									Save
+								</Text>
 							</Button>
 						)}
 						<Button onClick={handleCancle} className="button__cancle" variant="contained" color="secondary">
-							<Typography variant="button"> Cancel </Typography>
+							<Text color="white" type="button">
+								Cancel
+							</Text>
 						</Button>
 					</div>
 				</Form>

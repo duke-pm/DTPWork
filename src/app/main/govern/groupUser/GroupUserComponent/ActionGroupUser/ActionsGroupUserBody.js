@@ -7,12 +7,10 @@ import { Tooltip } from 'antd';
 
 export default function ActionsGroupUserBody({ handleEditGroupUser, items }) {
 	return (
-		<>
-			<Tooltip placement="bottom" title="Cập nhật">
-				<span onClick={() => handleEditGroupUser(items)} className="action--button mx-auto">
-					<Icon fontSize="small">edit</Icon>
-				</span>
-			</Tooltip>
-		</>
+		<Tooltip placement="bottom" title="Cập nhật">
+			<span onClick={() => handleEditGroupUser(items)} className="action--button mx-auto">
+				<Icon fontSize="small">edit</Icon>
+			</span>
+		</Tooltip>
 	);
 }

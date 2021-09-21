@@ -10,6 +10,7 @@ import AntInputCustom from '@fuse/FormBookingCustom/AntInputCustom';
 import AntFileCustom from '@fuse/FormBookingCustom/AntFileCustom';
 import AntDateCustom from '@fuse/FormBookingCustom/AntDateCustom';
 import AntDescriptionsCustom from '@fuse/FormBookingCustom/AntDescriptionsCustom';
+import Text from 'app/components/Text';
 import ContentForm from './ContentForm';
 import { checkValidateForm } from '../ConfigPossessionUnused';
 
@@ -108,18 +109,18 @@ export default function FormCustomUnusedEdit({
 				{({ handleSubmit, isSubmitting }) => (
 					<Form>
 						<div className="mb-20">
-							<div className="flex justify-between flex-row">
-								<Typography variant="subtitle2" color="primary" className="mb-8">
+							<div>
+								<Text type="subTitle" color="primary" borderBottom>
 									THÔNG TIN TÀI SẢN.
-								</Typography>
+								</Text>
 							</div>
 							<ContentForm entitiesEdit={entitiesEdit} />
 						</div>
 						<div>
-							<div className="flex justify-between flex-row">
-								<Typography variant="subtitle2" color="primary" className="mb-8">
+							<div>
+								<Text type="subTitle" color="primary" borderBottom>
 									THÔNG TIN CẤP PHÁT TÀI SẢN.
-								</Typography>
+								</Text>
 							</div>
 							<div className="grid lg:grid-cols-2  md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1 gap-8 ">
 								<Field

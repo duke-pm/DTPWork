@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Typography } from '@material-ui/core';
 import { Table, Checkbox, Spin } from 'antd';
 import React from 'react';
+import Text from 'app/components/Text';
 import AppsIcon from '@material-ui/icons/Apps';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
@@ -22,21 +22,19 @@ export default function TableSettingMenu({ entities, listLoading, handleEditMenu
 			title: 'Menu Name',
 			dataIndex: 'menuName',
 			key: 'menuName',
-			// defaultSortOrder: 'ascend',
-			render: (_, item) => <Typography variant="body1">{item.menuName}</Typography>
+			render: (_, item) => <Text>{item.menuName}</Text>
 		},
 		{
 			title: 'Menu Type',
 			dataIndex: 'MenuType',
 			key: 'MenuType',
-			// defaultSortOrder: 'ascend',
-			render: (_, item) => <Typography variant="body1">{item.typeName}</Typography>
+			render: (_, item) => <Text>{item.typeName}</Text>
 		},
 		{
 			title: 'Url/ Action',
 			dataIndex: 'url',
 			key: 'url',
-			render: (_, item) => <Typography variant="body1">{item.url}</Typography>
+			render: (_, item) => <Text>{item.url}</Text>
 		},
 		{
 			title: 'Inactive',
@@ -64,7 +62,7 @@ export default function TableSettingMenu({ entities, listLoading, handleEditMenu
 			dataIndex: 'STT',
 			key: 'STT',
 			align: 'center',
-			render: (_, item) => <Typography variant="body1">{item.visOrder}</Typography>
+			render: (_, item) => <Text>{item.visOrder}</Text>
 		},
 		{
 			title: <AppsIcon />,

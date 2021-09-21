@@ -1,12 +1,13 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Button, Icon, ListItemText, MenuItem, Typography } from '@material-ui/core';
+import { Button, Icon, ListItemText, MenuItem } from '@material-ui/core';
 import React, { useEffect, useState, useContext } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import { getInformationCompany } from 'app/main/assets/Possesion/_redux/possesionActions';
 import { Dropdown, Popover, Spin, Tooltip } from 'antd';
 import Search from 'antd/lib/input/Search';
+import Text from 'app/components/Text';
 import ProjectComponent from './ProjectComponent';
 import { ProjectContext } from './ProjectContext';
 import {
@@ -39,7 +40,8 @@ export default function ContentProvider() {
 		sector,
 		search,
 		setSector,
-		setSearch
+		setSearch,
+		sort
 	} = projectContext;
 	const history = useHistory();
 	const params = useParams();
@@ -109,6 +111,8 @@ export default function ContentProvider() {
 				statusClear?.toString(),
 				dateStart,
 				sector?.toString(),
+				sort.id,
+				sort.direction,
 				search
 			)
 		);
@@ -124,6 +128,8 @@ export default function ContentProvider() {
 				null,
 				dateStart,
 				sector?.toString(),
+				sort.id,
+				sort.direction,
 				search
 			)
 		);
@@ -140,6 +146,8 @@ export default function ContentProvider() {
 				status?.toString(),
 				dateStart,
 				sector?.toString(),
+				sort.id,
+				sort.direction,
 				search
 			)
 		);
@@ -155,6 +163,8 @@ export default function ContentProvider() {
 				status?.toString(),
 				dateStart,
 				sector?.toString(),
+				sort.id,
+				sort.direction,
 				search
 			)
 		);
@@ -171,6 +181,8 @@ export default function ContentProvider() {
 				status?.toString(),
 				dateStart,
 				sectorClear?.toString(),
+				sort.id,
+				sort.direction,
 				search
 			)
 		);
@@ -186,6 +198,8 @@ export default function ContentProvider() {
 				status?.toString(),
 				dateStart,
 				null,
+				sort.id,
+				sort.direction,
 				search
 			)
 		);
@@ -208,6 +222,8 @@ export default function ContentProvider() {
 					status?.toString(),
 					dateStart,
 					sector?.toString(),
+					sort.id,
+					sort.direction,
 					e.target.value
 				)
 			);
@@ -223,6 +239,8 @@ export default function ContentProvider() {
 				status?.toString(),
 				dateStart,
 				sector?.toString(),
+				sort.id,
+				sort.direction,
 				search
 			)
 		);
@@ -241,9 +259,9 @@ export default function ContentProvider() {
 		<div className="container projects">
 			<div className="projects__header px-16">
 				{project ? (
-					<Typography color="primary" variant="h6">
+					<Text color="primary" type="title">
 						{project?.projectName}
-					</Typography>
+					</Text>
 				) : (
 					<Spin />
 				)}
@@ -278,7 +296,9 @@ export default function ContentProvider() {
 							)}
 						>
 							<Button className="button__create mr-20" variant="contained" color="primary">
-								<Typography variant="button">Create</Typography>
+								<Text type="button" color="white">
+									Create
+								</Text>
 							</Button>
 						</Popover>
 					)}
@@ -300,21 +320,15 @@ export default function ContentProvider() {
 						<Icon fontSize="small" color="primary">
 							tune
 						</Icon>
-						<Typography variant="body1" color="primary" className="ml-8 title">
-							{' '}
-							Filter
-						</Typography>
 					</div>
 					<div className="content_filter">
 						{status?.length > 0 && (
 							<div className="control-filter">
 								<div className="content flex items-center">
-									<Typography className="" color="primary">
-										Status:
-									</Typography>
-									<Typography color="primary" className="ml-8 value-filter">
+									<Text color="primary">Status:</Text>
+									<Text color="primary" className="ml-8">
 										{newArrayStatus?.[0].label}
-									</Typography>
+									</Text>
 								</div>
 								<div className="action">
 									<Dropdown
@@ -322,9 +336,7 @@ export default function ContentProvider() {
 											<div className="action__dropdown">
 												{newArrayStatus?.map(item => (
 													<div key={item.value} className="dropdown--list">
-														<Typography variant="body1" color="primary">
-															{item.label}
-														</Typography>
+														<Text color="primary">{item.label}</Text>
 														<Icon
 															onClick={() => handleFilterClear(item)}
 															className="btn-icon"
@@ -354,12 +366,10 @@ export default function ContentProvider() {
 						{ownerFilter?.length > 0 && (
 							<div className="control-filter">
 								<div className="content flex items-center">
-									<Typography className="" color="primary">
-										Project owner:
-									</Typography>
-									<Typography color="primary" className="ml-8 value-filter">
+									<Text color="primary">Project owner:</Text>
+									<Text color="primary" className="ml-8">
 										{newArrOwnerFilter?.[0].label}
-									</Typography>
+									</Text>
 								</div>
 								<div className="action">
 									<Dropdown
@@ -367,9 +377,7 @@ export default function ContentProvider() {
 											<div className="action__dropdown">
 												{newArrOwnerFilter?.map(item => (
 													<div key={item.value} className="dropdown--list">
-														<Typography variant="body1" color="primary">
-															{item.label}
-														</Typography>
+														<Text color="primary">{item.label}</Text>
 														<Icon
 															onClick={() => handleFilterClearOwner(item)}
 															className="btn-icon"
@@ -386,8 +394,7 @@ export default function ContentProvider() {
 										arrow
 									>
 										<Icon className="cursor-pointer btn-icon" color="primary">
-											{' '}
-											arrow_drop_down{' '}
+											arrow_drop_down
 										</Icon>
 									</Dropdown>
 									<Icon onClick={handleClearOwner} className="btn-icon" color="primary">
@@ -399,12 +406,10 @@ export default function ContentProvider() {
 						{sector?.length > 0 && (
 							<div className="control-filter">
 								<div className="content flex items-center">
-									<Typography className="" color="primary">
-										Sector:
-									</Typography>
-									<Typography color="primary" className="ml-8 value-filter">
+									<Text color="primary">Sector:</Text>
+									<Text color="primary" className="ml-8">
 										{newArrSector?.[0].label}
-									</Typography>
+									</Text>
 								</div>
 								<div className="action">
 									<Dropdown
@@ -412,9 +417,7 @@ export default function ContentProvider() {
 											<div className="action__dropdown">
 												{newArrSector?.map(item => (
 													<div key={item.value} className="dropdown--list">
-														<Typography variant="body1" color="primary">
-															{item.label}
-														</Typography>
+														<Text color="primary">{item.label}</Text>
 														<Icon
 															onClick={() => handleFilterClearSector(item)}
 															className="btn-icon"
@@ -431,8 +434,7 @@ export default function ContentProvider() {
 										arrow
 									>
 										<Icon className="cursor-pointer btn-icon" color="primary">
-											{' '}
-											arrow_drop_down{' '}
+											arrow_drop_down
 										</Icon>
 									</Dropdown>
 									<Icon onClick={handleClearSector} className="btn-icon" color="primary">
@@ -443,15 +445,9 @@ export default function ContentProvider() {
 						)}
 					</div>
 					<div className="action-filter">
-						<Typography
-							onClick={handleClearAll}
-							variant="subtitle2"
-							color="primary"
-							className="cursor-pointer"
-						>
-							{' '}
-							Delete all{' '}
-						</Typography>
+						<Text onClick={handleClearAll} type="caption" className="cursor-pointer">
+							Delete all
+						</Text>
 					</div>
 				</div>
 			) : null}

@@ -130,7 +130,7 @@ export default function ConfirmLose(props) {
 						<div>
 							<Typography variant="subtitle1" color="inherit">
 								<AddCircleOutlineIcon style={{ color: '#1890ff' }} />
-								<Link style={{ color: '#1890ff' }} to="/tai-san/bao-mat-hong-tai-san">
+								<Link style={{ color: '#1890ff' }} to="/tai-san/bao-mat-hong-tai-san?type=bao-mat">
 									{' '}
 									Báo mất tài sản{' '}
 								</Link>

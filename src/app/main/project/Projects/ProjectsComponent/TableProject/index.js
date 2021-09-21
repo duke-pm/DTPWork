@@ -1,8 +1,9 @@
+/* eslint-disable no-shadow */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Badge, Checkbox, Table, Popover, Avatar, Tooltip, Spin, Dropdown } from 'antd';
+import { Badge, Checkbox, Table, Popover, Avatar, Tooltip, Dropdown } from 'antd';
 import React, { useContext } from 'react';
 import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
-import { MenuItem, ListItemIcon, Icon, ListItemText, Typography, Link } from '@material-ui/core';
+import { MenuItem, ListItemIcon, Icon, ListItemText, Link } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { withRouter } from 'react-router';
 import { useDispatch } from 'react-redux';
@@ -12,7 +13,8 @@ import * as moment from 'moment';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useHistory } from 'react-router-dom';
-import { getToken, URL } from '@fuse/core/DtpConfig';
+import { getToken, sortDirestion, URL } from '@fuse/core/DtpConfig';
+import Text from 'app/components/Text';
 import { ProjectContext } from '../../ProjectContext';
 import * as actions from '../../../_redux/_projectActions';
 
@@ -22,7 +24,7 @@ function TableProject(props) {
 	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
 	const dispatch = useDispatch();
 	const history = useHistory();
-	const { entities, entitiesEdit, listLoading, ArrProjectStatus, owner } = props;
+	const { entities, entitiesEdit, createSortHandler, ArrProjectStatus, owner } = props;
 	const projectContext = useContext(ProjectContext);
 	const {
 		// setFormProject,
@@ -34,8 +36,10 @@ function TableProject(props) {
 		dateStart,
 		search,
 		// setChart,
+		sort,
 		setStatus,
-		setOwnerFilter
+		setOwnerFilter,
+		setSort
 	} = projectContext;
 	const handleOpenFormProject = (item, type) => {
 		dispatch(actions.setTaskEditProject(item));
@@ -58,6 +62,8 @@ function TableProject(props) {
 						status?.toString(),
 						ownerFilter?.toString(),
 						dateStart,
+						sort.id,
+						sort.direction,
 						search
 					)
 				);
@@ -76,12 +82,32 @@ function TableProject(props) {
 	// };
 	const onHandleChangeStatus = value => {
 		dispatch(
-			actions.fetchsProjectFilter(rowPage, page, value?.toString(), ownerFilter?.toString(), dateStart, search)
+			actions.fetchsProjectFilter(
+				rowPage,
+				page,
+				value?.toString(),
+				ownerFilter?.toString(),
+				dateStart,
+				sort.id,
+				sort.direction,
+				search
+			)
 		);
 		setStatus(value);
 	};
 	const onHandleChangeOwner = value => {
-		dispatch(actions.fetchsProjectFilter(rowPage, page, status?.toString(), value?.toString(), dateStart, search));
+		dispatch(
+			actions.fetchsProjectFilter(
+				rowPage,
+				page,
+				status?.toString(),
+				value?.toString(),
+				dateStart,
+				sort.id,
+				sort.direction,
+				search
+			)
+		);
 		setOwnerFilter(value);
 	};
 	const handleExportExecl = item => {
@@ -91,6 +117,10 @@ function TableProject(props) {
 			PrjID: item.prjID
 		};
 		window.location = `${URL}/api/Project/ExportProjectDetail?value=${JSON.stringify(data)}`;
+	};
+	const onChangeSort = (pagination, filters, sorter, extra) => {
+		const sort = sortDirestion[sorter.order];
+		createSortHandler(sort, sorter.field);
 	};
 	const columns = [
 		{
@@ -164,7 +194,7 @@ function TableProject(props) {
 					variant="body1"
 					onClick={() => handleDetail(item)}
 				>
-					<Typography variant="body1">{item.prjName}</Typography>
+					<Text>{item.prjName}</Text>
 				</Link>
 			)
 		},
@@ -172,7 +202,9 @@ function TableProject(props) {
 			title: () => {
 				return (
 					<div className="flex items-center ">
-						Status
+						<Text type="subTitle" color="primary">
+							Status
+						</Text>
 						<Dropdown
 							// visible
 							overlay={
@@ -204,7 +236,7 @@ function TableProject(props) {
 			align: 'center',
 			dataIndex: 'public',
 			key: 'public',
-			width: '8%',
+			width: '6%',
 			render: (_, item) =>
 				item.isPublic ? (
 					<Icon className="text-green text-20">check_circle</Icon>
@@ -217,7 +249,7 @@ function TableProject(props) {
 			align: 'center',
 			dataIndex: 'public',
 			key: 'public',
-			width: '8%',
+			width: '6%',
 			render: (_, item) =>
 				item.priorityLevel !== 0 && (
 					<Badge count={item.priorityLevel} size="small">
@@ -230,12 +262,11 @@ function TableProject(props) {
 			align: 'center',
 			dataIndex: 'startDate',
 			key: 'startDate',
+			sorter: true,
 			width: '8%',
 			render: (_, item) => (
 				<div className="flex items-center justify-center text-center px-8 py-4 bg-green-50 rounded-16">
-					<Typography variant="body1">
-						{item.startDate && moment(item.startDate).format('DD/MM/YY')}
-					</Typography>
+					<Text>{item.startDate && moment(item.startDate).format('DD/MM/YY')}</Text>
 				</div>
 			)
 		},
@@ -244,10 +275,11 @@ function TableProject(props) {
 			align: 'center',
 			dataIndex: 'endDate',
 			key: 'endDate',
+			sorter: true,
 			width: '8%',
 			render: (_, item) => (
 				<div className="flex items-center justify-center text-center px-8 py-4 bg-green-50 rounded-16">
-					<Typography variant="body1">{item.endDate && moment(item.endDate).format('DD/MM/YY')}</Typography>
+					<Text>{item.endDate && moment(item.endDate).format('DD/MM/YY')}</Text>
 				</div>
 			)
 		},
@@ -256,7 +288,8 @@ function TableProject(props) {
 			align: 'center',
 			dataIndex: 'crtdDate',
 			key: 'crtdDate',
-			width: '10%',
+			sorter: true,
+			width: '8%',
 			render: (_, item) =>
 				item.appraisalTime && (
 					<div
@@ -264,9 +297,7 @@ function TableProject(props) {
 							'flex items-center justify-center text-center px-8 py-4 bg-green-50 rounded-16'
 						)}
 					>
-						<Typography variant="body1">
-							{item.appraisalTime && moment(item.appraisalTime).format('DD/MM/YY')}
-						</Typography>
+						<Text>{item.appraisalTime && moment(item.appraisalTime).format('DD/MM/YY')}</Text>
 					</div>
 				)
 		},
@@ -299,9 +330,7 @@ function TableProject(props) {
 			render: (_, item) => (
 				<div className="flex flex-row items-center">
 					<Avatar style={{ backgroundColor: item.colorCode }} icon={<UserOutlined />} />
-					<Typography className="ml-8" variant="body1">
-						{item.ownerName}
-					</Typography>
+					<Text className="ml-8">{item.ownerName}</Text>
 				</div>
 			)
 		},
@@ -325,6 +354,7 @@ function TableProject(props) {
 	];
 	return (
 		<Table
+			showSorterTooltip={false}
 			rowKey="prjID"
 			rowClassName={record => setRowClassName(record)}
 			expandable={{
@@ -353,6 +383,7 @@ function TableProject(props) {
 			pagination={false}
 			scroll={{ x: entities && entities.length ? (matches ? 1520 : 1540) : matchesSM ? 1540 : null }}
 			columns={columns}
+			onChange={onChangeSort}
 			dataSource={entities}
 		/>
 	);

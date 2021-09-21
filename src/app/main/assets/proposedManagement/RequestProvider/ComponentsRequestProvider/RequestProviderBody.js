@@ -8,12 +8,7 @@ import { DeleteOutlined } from '@ant-design/icons';
 import { Table, Input, Tooltip, Spin } from 'antd';
 import NumberFormat from 'react-number-format';
 import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
-import { AntInput } from '@fuse/CustomForm/CreateAntField';
-import SelectAntd from '@fuse/CustomForm/SelectAntd';
-import DateCustom from '@fuse/CustomForm/Date';
-import RadioAntd from '@fuse/CustomForm/RadioAntd';
 import { notificationConfig } from '@fuse/core/DtpConfig';
-import InputTextAreaRequest from '@fuse/CustomForm/InputTextAreaRequest';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { useHistory } from 'react-router-dom';
@@ -24,6 +19,7 @@ import AntSelectCustom from '@fuse/FormBookingCustom/AntSelectCustom';
 import AntDateCustom from '@fuse/FormBookingCustom/AntDateCustom';
 import AntRadioCustom from '@fuse/FormBookingCustom/AntRadioCustom';
 import AntDescriptionsCustom from '@fuse/FormBookingCustom/AntDescriptionsCustom';
+import Text from 'app/components/Text';
 import { validateSchema } from './ConfigRequestProvider';
 import * as actions from '../../_redux/confirmAction';
 
@@ -186,11 +182,11 @@ export default function RequestProviderBody({
 					<FuseAnimate animation="transition.slideRightIn" delay={300}>
 						<Form className="flex flex-col items-center justify-between mb-28">
 							<div style={{ width: '90%' }} className="sm" id="content">
-								<div className="px-16 w-full sm:px-24">
-									<div className="flex justify-between flex-row">
-										<Typography color="primary" variant="subtitle2" className="mb-8">
+								<div className="">
+									<div>
+										<Text type="subTitle" color="primary" borderBottom>
 											THÔNG TIN NGƯỜI YÊU CẦU.
-										</Typography>{' '}
+										</Text>{' '}
 									</div>
 									<div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 ">
 										<Field
@@ -238,11 +234,11 @@ export default function RequestProviderBody({
 										/>
 									</div>
 								</div>
-								<div className="px-16 sm:px-24 table-form">
-									<div className="flex justify-between flex-row">
-										<Typography color="primary" variant="subtitle2" className="mb-8">
+								<div className="table-form">
+									<div>
+										<Text type="subTitle" color="primary" borderBottom>
 											TÀI SẢN YÊU CẦU.
-										</Typography>{' '}
+										</Text>{' '}
 									</div>
 									<Typography variant="subtitle2" color="inherit" className="mb-16">
 										<AddCircleOutlineIcon style={{ color: '#1890ff' }} />
@@ -260,7 +256,7 @@ export default function RequestProviderBody({
 										dataSource={dataSource}
 									/>
 								</div>
-								<div className="px-16 sm:px-24 mt-16">
+								<div className="mt-16">
 									<div className="grid sm:grid-cols-1 md:grid-cols-1 gap-8 ">
 										<Field
 											label="Nơi dùng"
@@ -310,7 +306,7 @@ export default function RequestProviderBody({
 										/>
 									</div>
 								</div>
-								<div className="px-16 w-full sm:px-24 mb-28 flex justify-end">
+								<div className="w-full flex justify-end">
 									{actionLoading ? (
 										<Spin size="middle" style={{ marginRight: 12 }} />
 									) : (

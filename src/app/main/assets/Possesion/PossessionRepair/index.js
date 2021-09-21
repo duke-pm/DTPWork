@@ -12,8 +12,7 @@ import TableAssetRepair from './Component/TableAssetRepair';
 export default function PossessionRepair(props) {
 	const dispatch = useDispatch();
 	const possessionContext = useContext(PossessionContext);
-	const { handleOpenFormCycle, rowPage, setRowPage, page, setPage, search, setTypeLiquiAsset, sort, setSort } =
-		possessionContext;
+	const { rowPage, setRowPage, page, setPage, search, setTypeLiquiAsset, sort, setSort } = possessionContext;
 	const history = useHistory();
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count } = currentState;

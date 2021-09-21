@@ -35,9 +35,11 @@ export default function ProcessingUseAsset() {
 				</div>
 			</div>
 			<div className="assets__content mt-8">
-				<Spin spinning={actionLoading}>
-					<InformationProceeUseAsset actionLoading={actionLoading} entitiesEdit={entitiesEdit} />
-				</Spin>
+				<div className="assets__history">
+					<Spin spinning={actionLoading}>
+						<InformationProceeUseAsset actionLoading={actionLoading} entitiesEdit={entitiesEdit} />
+					</Spin>
+				</div>
 			</div>
 		</div>
 	);

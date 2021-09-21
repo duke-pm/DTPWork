@@ -13,6 +13,7 @@ import AntDescriptionsCustom from '@fuse/FormBookingCustom/AntDescriptionsCustom
 import AntRadioCustom from '@fuse/FormBookingCustom/AntRadioCustom';
 import AntInputCustom from '@fuse/FormBookingCustom/AntInputCustom';
 import AntDateCustom from '@fuse/FormBookingCustom/AntDateCustom';
+import Text from 'app/components/Text';
 
 export default function FormCustomEditAllocation({ handleSubmitForm, entitiesEdit, newEntitiesEdit }) {
 	let initialState = {
@@ -83,10 +84,10 @@ export default function FormCustomEditAllocation({ handleSubmitForm, entitiesEdi
 				{({ handleSubmit, isSubmitting }) => (
 					<Form>
 						<div>
-							<div className="flex justify-between flex-row">
-								<Typography color="primary" variant="subtitle2" className="label--form--title mb-8">
+							<div>
+								<Text type="subTitle" color="primary" borderBottom>
 									THÔNG TIN NHÂN VIÊN.
-								</Typography>{' '}
+								</Text>{' '}
 							</div>
 							<div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-8 ">
 								<Field readOnly label="Nhân viên" hasFeedback name="name" component={AntInputCustom} />
@@ -110,10 +111,10 @@ export default function FormCustomEditAllocation({ handleSubmitForm, entitiesEdi
 							</div>
 						</div>
 						<div className="table-form">
-							<div className="flex justify-between flex-row">
-								<Typography color="primary" variant="subtitle2" className="label--form--title mb-8">
+							<div>
+								<Text type="subTitle" color="primary" borderBottom>
 									TÀI SẢN YÊU CẦU.
-								</Typography>{' '}
+								</Text>{' '}
 							</div>
 							<Table
 								scroll={{ x: matchesSM && 720 }}

@@ -1,5 +1,5 @@
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
-import { Button, IconButton, InputBase, Paper, Typography, Grid } from '@material-ui/core';
+import { Button, IconButton, InputBase, Paper, Grid } from '@material-ui/core';
 import React, { useContext } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import { useDispatch } from 'react-redux';
@@ -7,6 +7,7 @@ import { DatePicker, Select } from 'antd';
 import * as moment from 'moment';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
+import Text from 'app/components/Text';
 import { ProjectContext } from '../../ProjectContext';
 import { setTaskEditProject, fetchsProjectFilter } from '../../../_redux/_projectActions';
 
@@ -65,7 +66,7 @@ export default function ActionHeaderProject({ classes, ArrProjectStatus, owner }
 				}}
 			>
 				<div className="flex flex-col sm:flex-row justify-between">
-					<Typography variant="subtitle2">Filter </Typography>
+					<Text type="subTitle">Filter </Text>
 				</div>
 				<Grid className="mb-16" container spacing={2}>
 					<Grid item xs={12} sm={6} md={2} lg={2}>
@@ -132,7 +133,7 @@ export default function ActionHeaderProject({ classes, ArrProjectStatus, owner }
 							className="sm:mb-0 mb-9"
 							startIcon={<FilterListIcon />}
 						>
-							<Typography variant="inherit">Filter</Typography>
+							<Text type="button">Filter</Text>
 						</Button>
 					</Grid>
 				</Grid>
@@ -145,7 +146,7 @@ export default function ActionHeaderProject({ classes, ArrProjectStatus, owner }
 							color="primary"
 							startIcon={<AddCircleOutline />}
 						>
-							<Typography variant="inherit">Project</Typography>
+							<Text type="button">Project</Text>
 						</Button>
 					</div>
 					<Paper className="flex justify-between">

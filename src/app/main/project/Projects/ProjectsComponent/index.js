@@ -10,23 +10,55 @@ import { fetchsProjectFilter } from '../../_redux/_projectActions';
 export default function ProjectComponent({ ArrProjectStatus, owner }) {
 	const projectContext = useContext(ProjectContext);
 	const dispatch = useDispatch();
-	const { page, rowPage, setPage, setRowPage, status, ownerFilter, year } = projectContext;
+	const { page, rowPage, setPage, setRowPage, status, ownerFilter, year, setSort, sort, search } = projectContext;
 	const { currentState } = useSelector(state => ({ currentState: state.project }), shallowEqual);
 	const { entities, listLoading, actionLoading, total_count, entitiesEdit } = currentState;
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
-		dispatch(fetchsProjectFilter(rowPage, newPage + 1, status?.toString(), ownerFilter?.toString(), year));
+		dispatch(
+			fetchsProjectFilter(
+				rowPage,
+				newPage + 1,
+				status?.toString(),
+				ownerFilter?.toString(),
+				year,
+				sort.id,
+				sort.direction,
+				search
+			)
+		);
 	};
 	const handleRowPage = e => {
 		const rowPageParse = parseInt(e.target.value, 10);
 		setRowPage(rowPageParse);
-		dispatch(fetchsProjectFilter(rowPageParse, page, status?.toString(), ownerFilter?.toString(), year));
+		dispatch(
+			fetchsProjectFilter(
+				rowPageParse,
+				page,
+				status?.toString(),
+				ownerFilter?.toString(),
+				year,
+				sort.id,
+				sort.direction,
+				search
+			)
+		);
+	};
+	const createSortHandler = (direction, id) => {
+		dispatch(
+			fetchsProjectFilter(rowPage, page, status?.toString(), ownerFilter?.toString(), year, id, direction, search)
+		);
+		setSort({
+			direction,
+			id
+		});
 	};
 	return (
 		<Spin spinning={listLoading}>
 			<div className="w-full flex flex-col">
 				<div className="flex flex-col">
 					<TableProject
+						createSortHandler={createSortHandler}
 						listLoading={listLoading}
 						actionLoading={actionLoading}
 						entities={entities}

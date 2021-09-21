@@ -2,12 +2,12 @@
 import { Table, Avatar, Progress, Spin } from 'antd';
 import React, { useState, useEffect, useCallback } from 'react';
 import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
-import { Icon, Typography } from '@material-ui/core';
-import clsx from 'clsx';
+import { Typography } from '@material-ui/core';
 import { withRouter } from 'react-router';
 import * as moment from 'moment';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Text from 'app/components/Text';
 
 function TableProject(props) {
 	const theme = useTheme();
@@ -44,7 +44,7 @@ function TableProject(props) {
 			dataIndex: 'prjName',
 			key: 'itemName',
 			fixed: 'left',
-			width: '10%',
+			width: '8%',
 			render: (_, item) => {
 				return (
 					<Typography variant={item.codeParentID === 'P0' ? 'subtitle2' : 'body1'} component="button">
@@ -58,12 +58,10 @@ function TableProject(props) {
 			align: 'center',
 			dataIndex: 'startDate',
 			key: 'startDate',
-			width: '4%',
+			width: '2%',
 			render: (_, item) => (
 				<div className="flex items-center justify-center text-center px-8 py-4 bg-green-50 rounded-16">
-					<Typography variant="body1">
-						{item.startDate && moment(item.startDate).format('DD/MM/YY')}
-					</Typography>
+					<Text>{item.startDate && moment(item.startDate).format('DD/MM/YY')}</Text>
 				</div>
 			)
 		},
@@ -72,10 +70,10 @@ function TableProject(props) {
 			align: 'center',
 			dataIndex: 'endDate',
 			key: 'endDate',
-			width: '4%',
+			width: '2%',
 			render: (_, item) => (
 				<div className="flex items-center justify-center text-center px-8 py-4 bg-green-50 rounded-16">
-					<Typography variant="body1">{item.endDate && moment(item.endDate).format('DD/MM/YY')}</Typography>
+					<Text>{item.endDate && moment(item.endDate).format('DD/MM/YY')}</Text>
 				</div>
 			)
 		},
@@ -84,10 +82,10 @@ function TableProject(props) {
 			dataIndex: 'duration',
 			key: 'duration',
 			align: 'center',
-			width: '4%',
+			width: '2%',
 			render: (_, item) => (
 				<div className="flex items-center justify-center text-center px-8 py-4 mx-4 rounded-16 text-blue">
-					<Typography variant="body1">{item.duration} Days</Typography>
+					<Text>{item.duration} Days</Text>
 				</div>
 			)
 		},
@@ -96,13 +94,11 @@ function TableProject(props) {
 			align: 'center',
 			dataIndex: 'public',
 			key: 'public',
-			width: '5%',
+			width: '3%',
 			render: (_, item) => (
 				<div className="flex flex-row items-center">
 					<Avatar style={{ backgroundColor: item.colorCode }} icon={<UserOutlined />} />
-					<Typography className="ml-8" variant="body1">
-						{item.ownerName}
-					</Typography>
+					<Text className="ml-8">{item.ownerName}</Text>
 				</div>
 			)
 		},
@@ -111,7 +107,7 @@ function TableProject(props) {
 			align: 'center',
 			dataIndex: 'completedPercent',
 			key: 'completedPercent',
-			width: '7%',
+			width: '4%',
 			render: (_, item) => <Progress percent={item.completedPercent} strokeColor={item.colorCode} />
 		}
 	];
@@ -125,19 +121,11 @@ function TableProject(props) {
 				expandedRowKeys: selectedRowKeys,
 				expandIcon: ({ expanded, onExpand, record, expandable }) =>
 					expandable.length === 0 ? (
-						<CaretUpOutlined className="w-40" style={{ color: 'white' }} />
+						<CaretUpOutlined className="w-20" style={{ color: 'white' }} />
 					) : expanded ? (
-						<CaretUpOutlined
-							className="w-40"
-							onClick={e => onExpand(record, e)}
-							style={{ fontSize: '10pt' }}
-						/>
+						<CaretUpOutlined className="w-20" onClick={e => onExpand(record, e)} />
 					) : (
-						<CaretDownOutlined
-							className="w-40"
-							onClick={e => onExpand(record, e)}
-							style={{ fontSize: '10pt' }}
-						/>
+						<CaretDownOutlined className="w-20" onClick={e => onExpand(record, e)} />
 					),
 				onExpandedRowsChange: onSelectedRowKeysChange
 			}}

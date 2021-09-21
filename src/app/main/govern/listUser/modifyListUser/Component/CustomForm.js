@@ -3,8 +3,9 @@ import AntdCustomCheckbox from '@fuse/FormBookingCustom/AntdCustomCheckbox';
 import AntInputCustom from '@fuse/FormBookingCustom/AntInputCustom';
 import AntSelectCustom from '@fuse/FormBookingCustom/AntSelectCustom';
 import AntSelectMultiCustom from '@fuse/FormBookingCustom/AntSelectMultiCustom';
-import { Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { Spin } from 'antd';
+import Text from 'app/components/Text';
 import { Field, Form, Formik } from 'formik';
 import React from 'react';
 import * as Yup from 'yup';
@@ -145,24 +146,23 @@ export default function CustomForm({
 								component={AntSelectCustom}
 							/>
 						</div>
-						<div className="flex flex-col justify-between">
-							<div className="flex flex-row items-center">
-								<Field name="inactive" value={initialState.inactive} component={AntdCustomCheckbox} />
-								<Typography variant="subtitle2" className="label--form ml-16">
-									Inactive
-								</Typography>{' '}
-							</div>
-							<div className="flex flex-row items-center" style={{ marginTop: '-20px' }}>
-								<Field
-									name="ischangePasswrod"
-									// position="right"
-									value={initialState.ischangePasswrod}
-									component={AntdCustomCheckbox}
-								/>
-								<Typography variant="subtitle2" className="label--form ml-16">
-									Người dùng phải thay đổi mật khẩu ở lần đăng nhập tiếp theo
-								</Typography>{' '}
-							</div>
+						<div className="flex flex-row items-center">
+							<Field
+								name="inactive"
+								value={initialState.inactive}
+								component={AntdCustomCheckbox}
+								label="Inactive"
+								position
+							/>
+						</div>
+						<div className="flex flex-row items-center">
+							<Field
+								name="ischangePasswrod"
+								value={initialState.ischangePasswrod}
+								component={AntdCustomCheckbox}
+								label="Người dùng phải thay đổi mật khẩu ở lần đăng nhập tiếp theo"
+								position
+							/>
 						</div>
 					</div>
 					<div className="flex items-center justify-end">
@@ -170,8 +170,9 @@ export default function CustomForm({
 							<Spin className="ml-20" />
 						) : (
 							<Button type="submit" className="button__cancle mr-8" variant="contained" color="primary">
-								{' '}
-								<Typography variant="button"> Save </Typography>
+								<Text variant="button" color="white">
+									Save
+								</Text>
 							</Button>
 						)}
 						<Button
@@ -180,7 +181,7 @@ export default function CustomForm({
 							variant="contained"
 							color="secondary"
 						>
-							<Typography variant="button"> Cancel </Typography>
+							<Text variant="button">Cancel</Text>
 						</Button>
 					</div>
 				</Form>

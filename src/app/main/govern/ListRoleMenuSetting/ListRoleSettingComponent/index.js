@@ -17,7 +17,7 @@ export default function ListRoleSettingContent({ setNewData, newData }) {
 	return (
 		<div className="w-full flex flex-col">
 			<FuseAnimate animation="transition.slideUpIn" delay={200}>
-				<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
+				<div className="flex flex-col">
 					<ListRoleSettingBody
 						actionLoading={actionLoading}
 						newData={newData}

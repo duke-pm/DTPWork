@@ -9,6 +9,7 @@ import AntDescriptionsCustom from '@fuse/FormBookingCustom/AntDescriptionsCustom
 import AntDateCustom from '@fuse/FormBookingCustom/AntDateCustom';
 import AntInputCurrency from '@fuse/FormBookingCustom/AntInputCurrency';
 import AntSelectCustom from '@fuse/FormBookingCustom/AntSelectCustom';
+import Text from 'app/components/Text';
 import { checkValidateFormConfig, checkValidateFormConfigUpdate } from '../ConfigPossessionAll';
 import FormSupplier from './FormSupplier';
 
@@ -99,10 +100,10 @@ function FormCustomEdit({
 				{({ handleSubmit, isSubmitting }) => (
 					<Form>
 						<div>
-							<div className="flex justify-between flex-row">
-								<Typography variant="subtitle2" color="primary" className="mb-8">
+							<div>
+								<Text type="subTitle" color="primary" borderBottom>
 									THÔNG TIN TÀI SẢN
-								</Typography>{' '}
+								</Text>{' '}
 							</div>
 							{!initialValue.assetID && (
 								<div className="grid grid-cols-1 sm:grid-cols-3  gap-8 ">
@@ -206,10 +207,11 @@ function FormCustomEdit({
 						</div>
 						{!initialValue.assetID ? (
 							<div>
-								<div className="flex justify-between flex-row">
-									<Typography variant="subtitle2" color="primary" className="mb-8">
+								<div>
+									<Text type="subTitle" color="primary" borderBottom>
+										{' '}
 										QUY TẮC ĐÁNH MÃ TÀI SẢN
-									</Typography>
+									</Text>
 								</div>
 								<div className="grid xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-8">
 									<Field

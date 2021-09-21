@@ -2,7 +2,8 @@ import { validateField } from '@fuse/core/DtpConfig';
 import AntdCustomCheckbox from '@fuse/FormBookingCustom/AntdCustomCheckbox';
 import AntInputCustom from '@fuse/FormBookingCustom/AntInputCustom';
 import AntSelectCustom from '@fuse/FormBookingCustom/AntSelectCustom';
-import { Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
+import Text from 'app/components/Text';
 import { Spin } from 'antd';
 import { Field, Form, Formik } from 'formik';
 import React from 'react';
@@ -130,8 +131,9 @@ export default function CustomForm({
 							<Spin className="ml-20" />
 						) : (
 							<Button type="submit" className="button__cancle mr-8" variant="contained" color="primary">
-								{' '}
-								<Typography variant="button"> Save </Typography>
+								<Text variant="button" color="white">
+									Save
+								</Text>
 							</Button>
 						)}
 						<Button
@@ -140,7 +142,7 @@ export default function CustomForm({
 							variant="contained"
 							color="secondary"
 						>
-							<Typography variant="button"> Cancel </Typography>
+							<Text variant="button">Cancel</Text>
 						</Button>
 					</div>
 				</Form>

@@ -18,8 +18,8 @@ export default function TableAssetCorrupt({
 	entities,
 	listLoading,
 	createSortHandler,
-	handleOpenTimeLine,
-	handleOpenForm
+	handleOpenFormLiquiAsset,
+	handleOpenFormService
 }) {
 	const dispatch = useDispatch();
 	const theme = useTheme();
@@ -39,7 +39,13 @@ export default function TableAssetCorrupt({
 				<Popover
 					overlayStyle={{ zIndex: '19' }}
 					placement="rightTop"
-					content={() => <ActionHandleFunc />}
+					content={() => (
+						<ActionHandleFunc
+							handleOpenFormLiquiAsset={handleOpenFormLiquiAsset}
+							handleOpenFormService={handleOpenFormService}
+							items={item}
+						/>
+					)}
 					title="Hành động"
 				>
 					<MoreVertIcon className="cursor-pointer" />

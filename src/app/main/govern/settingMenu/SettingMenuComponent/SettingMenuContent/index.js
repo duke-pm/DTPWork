@@ -31,29 +31,27 @@ export default function SettingMenuContent() {
 		dispatch(actions.fetchsListMenuSettingParams(rowPageParse, page, sort.direction, sort.id));
 	};
 	return (
-		<>
-			<div className="w-full flex flex-col">
-				<div className="flex flex-col ">
-					<TableSettingMenu
-						listLoading={listLoading}
-						actionLoading={actionLoading}
-						entities={entities}
-						handleEditMenuSetting={handleEditMenuSetting}
-					/>
-					{entities && entities.length !== 0 && (
-						<div className="flex flex-row items-center justify-end">
-							{actionLoading && <Spin />}
-							<Panigation
-								page={page}
-								handleChangePage={handleChangePage}
-								rowPage={rowPage}
-								handleChangeRowsPerPage={handleRowPage}
-								count={total_count}
-							/>
-						</div>
-					)}
-				</div>
+		<div className="w-full flex flex-col">
+			<div className="flex flex-col ">
+				<TableSettingMenu
+					listLoading={listLoading}
+					actionLoading={actionLoading}
+					entities={entities}
+					handleEditMenuSetting={handleEditMenuSetting}
+				/>
+				{entities && entities.length !== 0 && (
+					<div className="flex flex-row items-center justify-end">
+						{actionLoading && <Spin />}
+						<Panigation
+							page={page}
+							handleChangePage={handleChangePage}
+							rowPage={rowPage}
+							handleChangeRowsPerPage={handleRowPage}
+							count={total_count}
+						/>
+					</div>
+				)}
 			</div>
-		</>
+		</div>
 	);
 }

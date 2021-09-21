@@ -2,18 +2,19 @@
 import { Badge, Dropdown, Table, Popover, Avatar, Menu, Tooltip, Progress, Spin, Checkbox } from 'antd';
 import React, { useContext, useState, useEffect } from 'react';
 import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
-import { MenuItem, ListItemIcon, Icon, ListItemText, Typography, Link } from '@material-ui/core';
+import { MenuItem, ListItemIcon, Icon, ListItemText, Link } from '@material-ui/core';
 import AppsIcon from '@material-ui/icons/Apps';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { withRouter } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { checkDeadline, durationDay, notificationConfig } from '@fuse/core/DtpConfig';
+import { checkDeadline, durationDay, notificationConfig, sortDirestion } from '@fuse/core/DtpConfig';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import * as moment from 'moment';
 import clsx from 'clsx';
 import { useHistory } from 'react-router-dom';
+import Text from 'app/components/Text';
 import * as actions from '../../../_redux/_projectActions';
 import { ProjectContext } from '../../ProjectContext';
 import { typeColor, priorityColor, badgeText } from './ConfigTableProject';
@@ -24,7 +25,7 @@ function TableProject(props) {
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.up('xl'));
 	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
-	const { entitiesDetail, actionLoading, params, listLoading, sectorArr, owner } = props;
+	const { entitiesDetail, actionLoading, params, createSortHandler, owner } = props;
 	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 	const [onClickRow, setOnClickRow] = useState(null);
 	const projectContext = useContext(ProjectContext);
@@ -36,6 +37,10 @@ function TableProject(props) {
 	}, [entitiesDetail?.listTask]);
 	const onSelectedRowKeysChange = selectedRowKey => {
 		setSelectedRowKeys(selectedRowKey);
+	};
+	const onChangeSort = (pagination, filters, sorter, extra) => {
+		const sort = sortDirestion[sorter.order];
+		createSortHandler(sort, sorter.field);
 	};
 	const {
 		setVisible,
@@ -50,7 +55,8 @@ function TableProject(props) {
 		dateStart,
 		sector,
 		setSector,
-		search
+		search,
+		sort
 	} = projectContext;
 	const handleOpenVisible = item => {
 		setVisible(true);
@@ -95,6 +101,8 @@ function TableProject(props) {
 							status.toString(),
 							dateStart,
 							sector.toString(),
+							sort.id,
+							sort.direction,
 							search
 						)
 					);
@@ -130,6 +138,8 @@ function TableProject(props) {
 							status?.toString(),
 							dateStart,
 							sector?.toString(),
+							sort.id,
+							sort.direction,
 							search
 						)
 					);
@@ -158,6 +168,8 @@ function TableProject(props) {
 						status.toString(),
 						dateStart,
 						sector.toString(),
+						sort.id,
+						sort.direction,
 						search
 					)
 				);
@@ -183,6 +195,8 @@ function TableProject(props) {
 				status?.toString(),
 				dateStart,
 				sector?.toString(),
+				sort.id,
+				sort.direction,
 				search
 			)
 		);
@@ -198,6 +212,8 @@ function TableProject(props) {
 				value?.toString(),
 				dateStart,
 				sector?.toString(),
+				sort.id,
+				sort.direction,
 				search
 			)
 		);
@@ -213,6 +229,8 @@ function TableProject(props) {
 				status?.toString(),
 				dateStart,
 				value?.toString(),
+				sort.id,
+				sort.direction,
 				search
 			)
 		);
@@ -298,27 +316,28 @@ function TableProject(props) {
 					onClick={() => handleOpenVisible(item)}
 					component="button"
 				>
-					<Typography variant="body1">{item.taskName}</Typography>
+					<Text>{item.taskName}</Text>
 				</Link>
 			)
 		},
 		{
 			title: 'Type',
-			align: 'center',
 			dataIndex: 'type',
 			key: 'type',
-			width: '8%',
+			width: '6%',
 			render: (_, item) => (
-				<Typography variant="subtitle2" style={{ color: typeColor[item.typeName], textTransform: 'uppercase' }}>
+				<Text type="subTitle" style={{ color: typeColor[item.typeName], textTransform: 'uppercase' }}>
 					{item.typeName}
-				</Typography>
+				</Text>
 			)
 		},
 		{
 			title: () => {
 				return (
 					<div className="flex items-center ">
-						Status
+						<Text type="subTitle" color="primary">
+							Status
+						</Text>
 						<Dropdown
 							// visible
 							overlay={
@@ -353,7 +372,7 @@ function TableProject(props) {
 										onClick={() => updatedStatus(item, itemStatus.value)}
 										style={{ color: itemStatus.colorCode }}
 									>
-										<Typography variant="body1">{itemStatus.label}</Typography>
+										<Text>{itemStatus.label}</Text>
 									</Menu.Item>
 								))}
 							</Menu>
@@ -375,39 +394,34 @@ function TableProject(props) {
 		},
 		{
 			title: 'Priority',
-			align: 'center',
 			dataIndex: 'priority',
 			key: 'priority',
 			width: '6%',
-			render: (_, item) => (
-				<Typography variant="body1" style={{ color: priorityColor[item.priority] }}>
-					{item.priorityName}
-				</Typography>
-			)
+			render: (_, item) => <Text style={{ color: priorityColor[item.priority] }}>{item.priorityName}</Text>
 		},
 		{
 			title: 'Start',
 			align: 'center',
-			dataIndex: 'startDate',
+			dataIndex: 'StartDate',
 			key: 'startDate',
+			sorter: true,
 			width: '8%',
 			render: (_, item) => (
 				<div className="flex items-center justify-center text-center px-8 py-4 bg-green-50 rounded-16">
-					<Typography variant="body1">
-						{item.startDate && moment(item.startDate).format('DD/MM/YY')}
-					</Typography>
+					<Text>{item.startDate && moment(item.startDate).format('DD/MM/YY')}</Text>
 				</div>
 			)
 		},
 		{
 			title: 'Finish',
 			align: 'center',
-			dataIndex: 'endDate',
+			dataIndex: 'EndDate',
 			key: 'endDate',
+			sorter: true,
 			width: '8%',
 			render: (_, item) => (
 				<div className="flex items-center justify-center text-center px-8 py-4 bg-green-50 rounded-16">
-					<Typography variant="body1">{item.endDate && moment(item.endDate).format('DD/MM/YY')}</Typography>
+					<Text>{item.endDate && moment(item.endDate).format('DD/MM/YY')}</Text>
 				</div>
 			)
 		},
@@ -419,7 +433,7 @@ function TableProject(props) {
 			width: '6%',
 			render: (_, item) => (
 				<div className="flex items-center justify-center text-center px-8 py-4 mx-4 rounded-16 text-blue">
-					<Typography variant="body1">{durationDay(item.startDate, item.endDate)} Days</Typography>{' '}
+					<Text>{durationDay(item.startDate, item.endDate)} Days</Text>
 				</div>
 			)
 		},
@@ -460,9 +474,7 @@ function TableProject(props) {
 			render: (_, item) => (
 				<div className="flex flex-row items-center">
 					<Avatar style={{ backgroundColor: item.colorCode }} icon={<UserOutlined />} />
-					<Typography className="ml-8" variant="body1">
-						{item.ownerName}
-					</Typography>
+					<Text className="ml-8">{item.ownerName}</Text>
 				</div>
 			)
 		},
@@ -517,8 +529,10 @@ function TableProject(props) {
 				x: entitiesDetail?.listTask?.length > 0 ? (matches ? 1900 : 1800) : matchesSM ? 1800 : null,
 				y: null
 			}}
+			showSorterTooltip={false}
 			pagination={false}
 			columns={columns}
+			onChange={onChangeSort}
 			dataSource={entitiesDetail?.listTask}
 		/>
 	);

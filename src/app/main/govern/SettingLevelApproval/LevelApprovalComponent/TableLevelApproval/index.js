@@ -5,10 +5,11 @@ import {
 	// Avatar, Menu, Tooltip, Progress
 } from 'antd';
 import React from 'react'; // useState, useEffect // useContext
-import { MenuItem, ListItemIcon, Icon, ListItemText, Typography } from '@material-ui/core';
+import { MenuItem, ListItemIcon, Icon, ListItemText } from '@material-ui/core';
 import AppsIcon from '@material-ui/icons/Apps';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { withRouter } from 'react-router';
+import Text from 'app/components/Text';
 // import { useDispatch } from 'react-redux';
 // import { useTheme } from '@material-ui/core/styles';
 // import { LevelApprovalContext } from '../../LevelApprovalContext';
@@ -57,49 +58,49 @@ function TableLevelApproval(props) {
 			align: 'center',
 			dataIndex: 'roleCode',
 			key: 'roleCode',
-			render: (_, item) => <Typography variant="body1">{item.roleCodde}</Typography>
+			render: (_, item) => <Text>{item.roleCodde}</Text>
 		},
 		{
 			title: 'Tên quyền',
 			align: 'center',
 			dataIndex: 'roleName',
 			key: 'roleName',
-			render: (_, item) => <Typography variant="body1">{item.roleName}</Typography>
+			render: (_, item) => <Text>{item.roleName}</Text>
 		},
 		{
 			title: 'Cấp 1',
 			align: 'center',
 			dataIndex: 'level1',
 			key: 'level1',
-			render: (_, item) => <Typography variant="body1">{item.level1}</Typography>
+			render: (_, item) => <Text>{item.level1}</Text>
 		},
 		{
 			title: 'Cấp 2',
 			align: 'center',
 			dataIndex: 'level2',
 			key: 'level2',
-			render: (_, item) => <Typography variant="body1">{item.level2}</Typography>
+			render: (_, item) => <Text>{item.level2}</Text>
 		},
 		{
 			title: 'Cấp 3',
 			align: 'center',
 			dataIndex: 'level3',
 			key: 'level3',
-			render: (_, item) => <Typography variant="body1">{item.level3}</Typography>
+			render: (_, item) => <Text>{item.level3}</Text>
 		},
 		{
 			title: 'Cấp 4',
 			align: 'center',
 			dataIndex: 'level4',
 			key: 'level4',
-			render: (_, item) => <Typography variant="body1">{item.level4}</Typography>
+			render: (_, item) => <Text>{item.level4}</Text>
 		},
 		{
 			title: 'Cấp 5',
 			align: 'center',
 			dataIndex: 'level5',
 			key: 'level5',
-			render: (_, item) => <Typography variant="body1">{item.level5}</Typography>
+			render: (_, item) => <Text>{item.level5}</Text>
 		}
 	];
 	return <Table rowKey="taskID" className="virtual-table" pagination={false} columns={columns} dataSource={[]} />;

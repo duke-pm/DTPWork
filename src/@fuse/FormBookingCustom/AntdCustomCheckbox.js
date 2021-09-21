@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
-import { Typography } from '@material-ui/core';
 import { Form, Checkbox } from 'antd';
+
+import Text from 'app/components/Text';
 
 const FormItem = Form.Item;
 
@@ -32,29 +33,18 @@ export default function AntdCustomCheckbox({
 		return handleChangeState ? handleChangeState(e) : null;
 	};
 	return (
-		<>
-			<div className={`form-item-input ${position && 'flex flex-row justify-between '}`}>
-				<div className={`flex flex-row ${position && 'mt-8'}`}>
-					<Typography variant="subtitle2" className="label--form">
-						{' '}
-						{label}{' '}
-					</Typography>{' '}
-					{hasFeedback && (
-						<p style={{ marginBottom: '-20px' }} className="text-red">
-							*
-						</p>
-					)}
-				</div>{' '}
-				<FormItem
-					style={{ width: '100%', marginLeft: top || '0px' }}
-					rules={[{ required: true }]}
-					hasFeedback={!!((hasFeedback && submitted) || (hasFeedback && touched))}
-					help={submittedError || touchedError ? hasError : false}
-					validateStatus={submittedError || touchedError ? 'error' : hasFeedback && 'success'}
-				>
-					<Checkbox className={readOnly ? 'readOnly' : ''} defaultChecked={value} onChange={onChange} />
-				</FormItem>
-			</div>
-		</>
+		<div className={`${position && 'flex flex-row'}`}>
+			<FormItem
+				rules={[{ required: true }]}
+				hasFeedback={!!((hasFeedback && submitted) || (hasFeedback && touched))}
+				help={submittedError || touchedError ? hasError : false}
+				validateStatus={submittedError || touchedError ? 'error' : hasFeedback && 'success'}
+			>
+				<Checkbox className={readOnly ? 'readOnly' : ''} defaultChecked={value} onChange={onChange} />
+			</FormItem>
+			<Text required={hasFeedback} className="ml-10 mt-6">
+				{label}
+			</Text>
+		</div>
 	);
 }

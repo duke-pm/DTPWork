@@ -40,34 +40,37 @@ export const fetchsProject = () => dispatch => {
 			notificationConfig('warning', 'Warning', 'Server error');
 		});
 };
-export const fetchsProjectFilter = (limit, page, status, owner, year, search) => dispatch => {
-	dispatch(actions.startCall({ callType: callTypes.action }));
-	const paramsReq = {
-		Lang: 'en',
-		pageSize: limit || 25,
-		pageNum: page || 1,
-		StatusID: status || null,
-		OwnerID: owner || null,
-		Year: year || null,
-		Search: search || null
-	};
-	return requestFrom
-		.fetchsProject(paramsReq)
-		.then(res => {
-			const { data } = res;
-			if (!data.isError) {
-				const dataRes = data.data;
-				const total_count = data.totalRow;
-				dispatch(actions.projectsFetch({ dataRes, total_count }));
-			} else {
-				notificationConfig('warning', 'Warning', data.errorMessage);
+export const fetchsProjectFilter =
+	(limit, page, status, owner, year, sortColumn, sortDirection, search) => dispatch => {
+		dispatch(actions.startCall({ callType: callTypes.action }));
+		const paramsReq = {
+			Lang: 'en',
+			pageSize: limit || 25,
+			pageNum: page || 1,
+			StatusID: status || null,
+			OwnerID: owner || null,
+			Year: year || null,
+			Search: search || null,
+			SortColumn: sortColumn || null,
+			SortDirection: sortDirection || null
+		};
+		return requestFrom
+			.fetchsProject(paramsReq)
+			.then(res => {
+				const { data } = res;
+				if (!data.isError) {
+					const dataRes = data.data;
+					const total_count = data.totalRow;
+					dispatch(actions.projectsFetch({ dataRes, total_count }));
+				} else {
+					notificationConfig('warning', 'Warning', data.errorMessage);
+					dispatch(actions.catchErros({ callType: callTypes.action }));
+				}
+			})
+			.catch(error => {
 				dispatch(actions.catchErros({ callType: callTypes.action }));
-			}
-		})
-		.catch(error => {
-			dispatch(actions.catchErros({ callType: callTypes.action }));
-		});
-};
+			});
+	};
 
 export const createdProject = values => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
@@ -247,7 +250,7 @@ export const fetchProjectDetail = params => dispatch => {
 		});
 };
 export const fetchProjectDetailFilter =
-	(params, pageSize, pageNum, owner, status, year, sector, search) => dispatch => {
+	(params, pageSize, pageNum, owner, status, year, sector, sortColumn, sortDirection, search) => dispatch => {
 		dispatch(actions.startCall({ callType: callTypes.action }));
 		const paramsReq = {
 			PrjID: params,
@@ -258,7 +261,9 @@ export const fetchProjectDetailFilter =
 			Year: null,
 			Search: search || null,
 			Lang: 'en',
-			SectorID: sector || null
+			SectorID: sector || null,
+			SortColumn: sortColumn || null,
+			SortDirection: sortDirection || null
 		};
 		return requestFrom
 			.fetchProjectDetail(paramsReq)

@@ -1,11 +1,6 @@
 import React from 'react';
-import { DialogContent, DialogActions, Button, Grid, Typography } from '@material-ui/core';
+import { Button, Grid, Typography } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
-import DateCustom from '@fuse/CustomForm/Date';
-import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
-import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
-import InputCurrency from '@fuse/CustomForm/InputCurrency';
-import { AntInput } from '@fuse/CustomForm/CreateAntField';
 import * as moment from 'moment';
 import * as Yup from 'yup';
 import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
@@ -16,6 +11,7 @@ import AntInputCurrency from '@fuse/FormBookingCustom/AntInputCurrency';
 import AntFileCustom from '@fuse/FormBookingCustom/AntFileCustom';
 import AntDateCustom from '@fuse/FormBookingCustom/AntDateCustom';
 import AntDescriptionsCustom from '@fuse/FormBookingCustom/AntDescriptionsCustom';
+import Text from 'app/components/Text';
 
 const initial = {
 	date: moment(Date.now()),
@@ -44,64 +40,62 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 					<Form>
 						<Grid container item spacing={2}>
 							<Grid item xs={12} md={12} lg={12}>
-								<Typography variant="subtitle2" color="primary">
+								<Text type="subTitle" color="primary" borderBottom>
 									THÔNG TIN TÀI SẢN.
-								</Typography>
+								</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={4}>
-								<Typography variant="subtitle2">Mã tài sản</Typography>
+								<Text type="body">Mã tài sản:</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={8}>
-								<Typography variant="body1">{entitiesEdit?.assetCode}</Typography>
+								<Text type="body">{entitiesEdit?.assetCode}</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={4}>
-								<Typography variant="subtitle2">Tên tài sản</Typography>
+								<Text type="body">Tên tài sản:</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={8}>
-								<Typography variant="body1">{entitiesEdit?.assetName}</Typography>
+								<Text type="body">{entitiesEdit?.assetName}</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={4}>
-								<Typography variant="subtitle2">Nhóm tài sản</Typography>
+								<Text type="body">Nhóm tài sản:</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={8}>
-								<Typography variant="body1">{entitiesEdit?.groupName}</Typography>
+								<Text type="body">{entitiesEdit?.groupName}</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={4}>
-								<Typography variant="subtitle2">Mô tả</Typography>
+								<Text type="body">Mô tả:</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={8}>
-								<Typography variant="body1">{entitiesEdit?.descr}</Typography>
+								<Text type="body">{entitiesEdit?.descr}</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={4}>
-								<Typography variant="subtitle2">Ngày mua</Typography>
+								<Text type="body">Ngày mua:</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={8}>
-								<Typography variant="body1">
+								<Text type="body">
 									{entitiesEdit?.purchaseDate
 										? moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY')
 										: ' '}
-								</Typography>
+								</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={4}>
-								<Typography variant="subtitle2">Nguyên giá</Typography>
+								<Text type="body">Nguyên giá:</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={8}>
-								<Typography variant="body1">
-									{currencyFormat(entitiesEdit?.originalPrice) || ''}
-								</Typography>
+								<Text type="body">{currencyFormat(entitiesEdit?.originalPrice) || ''}</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={4}>
-								<Typography variant="subtitle2">Tình trạng</Typography>
+								<Text type="body">Tình trạng:</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={8}>
-								<Typography variant="body1">{entitiesEdit?.statusName}</Typography>
+								<Text type="body">{entitiesEdit?.statusName}</Text>
 							</Grid>
 						</Grid>
-						<div>
-							<div className="flex justify-between flex-row mt-8 mb-8">
-								<Typography variant="subtitle2" color="primary">
+						<div className="mt-16">
+							<div>
+								<Text type="subTitle" color="primary" borderBottom>
 									THÔNG TIN SỬA CHỮA BẢO HÀNH.
-								</Typography>
+								</Text>
 							</div>
 							<div className="grid lg:grid-cols-2 md:grid-cols-2 xs:grid-cols-1 sm:grid-cols-2 gap-8 ">
 								<Field

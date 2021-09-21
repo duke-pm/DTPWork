@@ -3,6 +3,7 @@ import React from 'react';
 import NumberFormat from 'react-number-format';
 import { FormGroup, Typography } from '@material-ui/core';
 import { Input, Form } from 'antd';
+import Text from 'app/components/Text';
 
 const FormItem = Form.Item;
 
@@ -29,9 +30,7 @@ export default function AntInputCurrency({
 		<>
 			<div className={`form-item-input ${position && 'flex flex-row  justify-between'}`}>
 				<div className={`flex flex-row ${position && 'mt-8'}`}>
-					<Typography variant="subtitle2" className="label--form">
-						{label}
-					</Typography>{' '}
+					<Text type="body">{label}</Text>{' '}
 					{hasFeedback && (
 						<p style={{ marginBottom: '-20px' }} className="text-red">
 							*

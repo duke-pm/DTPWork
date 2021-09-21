@@ -6,6 +6,7 @@ import React from 'react';
 import { Divider, FormGroup, Link, Typography } from '@material-ui/core';
 import { Form, Select } from 'antd';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import Text from 'app/components/Text';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -43,10 +44,7 @@ export default function AntSelectDropdown({
 		<>
 			<div className={`form-item-input ${position && 'flex flex-row  justify-between'}`}>
 				<div className={`flex flex-row mr-10 ${position && 'mt-8'}`}>
-					<Typography variant="subtitle2" className="label--form">
-						{' '}
-						{label}{' '}
-					</Typography>{' '}
+					<Text type="body"> {label} </Text>{' '}
 					{hasFeedback && (
 						<p style={{ marginBottom: '-20px' }} className="text-red">
 							*

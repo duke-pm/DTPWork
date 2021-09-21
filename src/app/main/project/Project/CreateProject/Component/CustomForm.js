@@ -6,13 +6,15 @@ import AntInputCustom from '@fuse/FormBookingCustom/AntInputCustom';
 import AntSelectCustom from '@fuse/FormBookingCustom/AntSelectCustom';
 import AntSelectMultiCustom from '@fuse/FormBookingCustom/AntSelectMultiCustom';
 import AntSlideCustom from '@fuse/FormBookingCustom/AntSlideCustom';
-import { Button, IconButton, Typography, Grid } from '@material-ui/core';
+import { Button, IconButton, Grid } from '@material-ui/core';
 import { Avatar, Divider, Spin } from 'antd';
 import { Field, Form, Formik } from 'formik';
 import React from 'react';
 import * as Yup from 'yup';
 import { FileExcelOutlined, FileImageOutlined, FileWordOutlined } from '@ant-design/icons';
 import CloseIcon from '@material-ui/icons/Close';
+
+import Text from 'app/components/Text';
 
 const file = {
 	docx: <FileWordOutlined />,
@@ -63,11 +65,10 @@ export default function CustomForm({
 			{({ handleSubmit, isSubmitting }) => (
 				<Form>
 					<div className="mt-8 px-16 sm:px-24">
-						<div className="my-20">
-							<Typography color="primary" variant="subtitle2">
-								BASIC INFORMATIONS
-							</Typography>
-						</div>
+						{/** INFORMATION */}
+						<Text borderBottom type="subTitle" color="primary">
+							BASIC INFORMATIONS
+						</Text>
 						<Field
 							readOnly={entitiesEdit && !entitiesEdit.isModified}
 							label="Name"
@@ -90,12 +91,13 @@ export default function CustomForm({
 							name="descr"
 							component={AntDescriptionsCustom}
 							row={4}
+							position="right"
 						/>
-						<div className="my-20">
-							<Typography color="primary" variant="subtitle2">
-								PEOPLE & TIME
-							</Typography>
-						</div>
+
+						{/** PEOPLE & TIME */}
+						<Text className="mt-20" borderBottom type="subTitle" color="primary">
+							PEOPLE & TIME
+						</Text>
 						<div>
 							<Field
 								label="Assignee"
@@ -114,6 +116,7 @@ export default function CustomForm({
 									name="userInvite"
 									options={owner}
 									count={3}
+									width="85.2%"
 									value={entitiesEdit && !entitiesEdit.isModified ? userInviteNoPermiss : []}
 									component={AntSelectMultiCustom}
 									readOnly={entitiesEdit && !entitiesEdit.isModified}
@@ -123,6 +126,7 @@ export default function CustomForm({
 								<Field
 									label="Add Team Member"
 									name="userInvite"
+									width="85%"
 									options={owner}
 									count={3}
 									component={AntSelectMultiCustom}
@@ -149,11 +153,11 @@ export default function CustomForm({
 								component={AntDateCustom}
 							/>
 						</div>
-						<div className="my-20">
-							<Typography color="primary" variant="subtitle2">
-								OTHER
-							</Typography>
-						</div>
+
+						{/** OTHER */}
+						<Text className="mt-20" borderBottom type="subTitle" color="primary">
+							OTHER
+						</Text>
 						{entitiesEdit &&
 							entitiesEdit.taskID &&
 							entitiesEdit.typeName === 'TASK' &&
@@ -248,11 +252,10 @@ export default function CustomForm({
 							readOnly={entitiesEdit && !entitiesEdit.isModified}
 						/>
 
-						<div className="my-20">
-							<Typography color="primary" variant="subtitle2">
-								UPLOAD FILE
-							</Typography>
-						</div>
+						{/** OTHER */}
+						<Text className="mt-20" borderBottom type="subTitle" color="primary">
+							UPLOAD FILE
+						</Text>
 						<div className="grid grid-cols-1 gap-8 ">
 							{entitiesEdit &&
 							entitiesEdit.attachFiles &&
@@ -340,12 +343,15 @@ export default function CustomForm({
 								variant="contained"
 								color="primary"
 							>
-								{' '}
-								<Typography variant="button"> Save </Typography>
+								<Text color="white" type="button">
+									Save
+								</Text>
 							</Button>
 						) : (
 							<Button type="submit" className="button__cancle mr-8" variant="contained" color="primary">
-								<Typography variant="button"> Save </Typography>
+								<Text color="white" type="button">
+									Save
+								</Text>
 							</Button>
 						)}
 						<Button
@@ -354,7 +360,7 @@ export default function CustomForm({
 							variant="contained"
 							color="secondary"
 						>
-							<Typography variant="button"> Cancel </Typography>
+							<Text type="button">Cancel</Text>
 						</Button>
 					</div>
 				</Form>

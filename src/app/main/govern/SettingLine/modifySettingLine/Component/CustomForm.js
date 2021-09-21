@@ -5,7 +5,8 @@ import AntDescriptionsCustom from '@fuse/FormBookingCustom/AntDescriptionsCustom
 import AntInputCustom from '@fuse/FormBookingCustom/AntInputCustom';
 // import AntSelectCustom from '@fuse/FormBookingCustom/AntSelectCustom';
 // import AntSelectMultiCustom from '@fuse/FormBookingCustom/AntSelectMultiCustom';
-import { Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
+import Text from 'app/components/Text';
 import { Spin } from 'antd';
 import { Field, Form, Formik } from 'formik';
 import React from 'react';
@@ -54,12 +55,13 @@ export default function CustomForm({ actionLoading }) {
 							<Spin className="ml-20" />
 						) : (
 							<Button type="submit" className="button__cancle mr-8" variant="contained" color="primary">
-								{' '}
-								<Typography variant="button"> Save </Typography>
+								<Text type="button" color="white">
+									Save
+								</Text>
 							</Button>
 						)}
 						<Button className="button__cancle mr-8" variant="contained" color="secondary">
-							<Typography variant="button"> Cancel </Typography>
+							<Text type="button">Cancel</Text>
 						</Button>
 					</div>
 				</Form>

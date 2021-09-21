@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react';
 import { Tabs, Tab, Box, makeStyles, Drawer, AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
 import { shallowEqual, useSelector } from 'react-redux';
 import CloseIcon from '@material-ui/icons/Close';
+import Text from 'app/components/Text';
 import { ProjectContext } from '../../ProjectContext';
 import DrawerActivity from './DrawerActivity';
 import DrawerWatchers from './DrawerWatchers';
@@ -77,9 +78,7 @@ export default function DrawerComponent({ ArrProjectStatus }) {
 					<IconButton edge="start" color="inherit" onClick={closeVisible} aria-label="close">
 						<CloseIcon />
 					</IconButton>
-					<Typography variant="subtitle1" color="inherit">
-						Overview
-					</Typography>
+					<Text type="subTitle">Overview</Text>
 				</Toolbar>
 			</AppBar>
 			<div className={classes.toolbar}>

@@ -6,21 +6,17 @@ import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { Spin } from 'antd';
 import { useHistory } from 'react-router';
 import * as actions from '../_redux/possesionActions';
-import FormCustomUsed from './FormCustomUsed';
 import { PossessionContext } from '../PossessionContext';
 import TableAssetUsed from './Component/TableAssetUsed';
 
 export default function PossessionUsed(props) {
 	const dispatch = useDispatch();
 	const history = useHistory();
-	const [open, setOpen] = React.useState(false);
 	const possessionContext = useContext(PossessionContext);
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
-	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;
+	const { listloading, entities, total_count, actionLoading } = currentState;
 	const { rowPage, setRowPage, page, setPage, search, value, sort, setSort, setFormService, typeSetFormService } =
 		possessionContext;
-	const handleOpenFormRequest = () => setFormRequest(true);
-	const handleClose = () => setOpen(false);
 	useEffect(() => {
 		dispatch(actions.fetchPossesionAll(2));
 	}, [dispatch]);

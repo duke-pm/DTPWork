@@ -1,12 +1,12 @@
 import React from 'react';
-import { DialogContent, Grid, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
 import { useDispatch } from 'react-redux';
 import * as momemt from 'moment';
 import { notificationConfig } from '@fuse/core/DtpConfig';
 import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
-import InputTextArea from '@fuse/CustomForm/InputTextArea';
 import AntDescriptionsCustom from '@fuse/FormBookingCustom/AntDescriptionsCustom';
+import Text from 'app/components/Text';
 import * as actions from '../../../_redux/confirmAction';
 
 export default function FormCustomCorruptEdit({ entitiesEdit, handleClose, setFormControl, type }) {
@@ -41,88 +41,66 @@ export default function FormCustomCorruptEdit({ entitiesEdit, handleClose, setFo
 				{({ handleSubmit, isSubmitting }) => (
 					<Form>
 						<Grid container item spacing={2}>
-							<Grid className="mb-8" item xs={12} sm={12} md={12} lg={12}>
-								<Typography color="primary" variant="subtitle2" className="label--form--title mb-8">
+							<Grid item xs={12} sm={12} md={12} lg={12}>
+								<Text type="subTitle" color="primary" borderBottom>
 									THÔNG TIN TÀI SẢN.
-								</Typography>
+								</Text>
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
-								<Typography variant="subtitle2" color="primary">
-									{' '}
-									Mã tài sản :
-								</Typography>
+								<Text type="body"> Mã tài sản :</Text>
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
 								{' '}
-								<Typography variant="body2"> {entitiesEdit?.assetID}</Typography>
+								<Text type="body"> {entitiesEdit?.assetID}</Text>
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
-								<Typography variant="subtitle2" color="primary">
-									{' '}
-									Tên tài sản :
-								</Typography>
+								<Text type="body"> Tên tài sản :</Text>
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
 								{' '}
-								<Typography variant="body2"> {entitiesEdit?.assetName}</Typography>
+								<Text type="body"> {entitiesEdit?.assetName}</Text>
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
-								<Typography variant="subtitle2" color="primary">
-									{' '}
-									Nhóm tài sản :
-								</Typography>
+								<Text type="body"> Nhóm tài sản :</Text>
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
 								{' '}
-								<Typography variant="body2"> </Typography>
+								<Text type="body"> </Text>
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
-								<Typography variant="subtitle2" color="primary">
-									{' '}
-									Quy cách tài sản :
-								</Typography>
+								<Text type="body"> Quy cách tài sản :</Text>
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
 								{' '}
-								<Typography variant="body2"> </Typography>
+								<Text type="body"> </Text>
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
-								<Typography variant="subtitle2" color="primary">
-									{' '}
-									Ngày mua :
-								</Typography>
+								<Text type="body"> Ngày mua :</Text>
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
 								{' '}
-								<Typography variant="body2">
+								<Text type="body">
 									{' '}
 									{momemt(entitiesEdit?.purchaseDate).format('DD/MM/YYYY') || ''}{' '}
-								</Typography>
+								</Text>
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
-								<Typography variant="subtitle2" color="primary">
-									{' '}
-									Nguyên giá :
-								</Typography>
+								<Text type="body"> Nguyên giá :</Text>
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
-								<Typography variant="body2">
-									{currencyFormat(entitiesEdit?.originalPrice) || ''}{' '}
-								</Typography>
+								<Text type="body">{currencyFormat(entitiesEdit?.originalPrice) || ''} </Text>
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
-								<Typography variant="subtitle2" color="primary">
-									Tình trạng :
-								</Typography>
+								<Text type="body">Tình trạng :</Text>
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
-								<Typography variant="body2">{entitiesEdit?.assetStatusName}</Typography>
+								<Text type="body">{entitiesEdit?.assetStatusName}</Text>
 							</Grid>
-							<Grid className="mb-8" item xs={12} sm={12} md={12} lg={12}>
-								<Typography color="primary" variant="subtitle2" className="label--form--title mb-8">
+							<Grid item xs={12} sm={12} md={12} lg={12}>
+								<Text type="subTitle" color="primary" borderBottom>
 									THÔNG TIN TÀI SẢN BỊ{' '}
 									{type === 'allocation' ? null : type === 'bao-mat' ? 'MẤT' : 'HỎNG'}.
-								</Typography>
+								</Text>
 							</Grid>
 							<Grid className="mb-8" item xs={12} sm={12} md={12} lg={12}>
 								<div className={`grid grid-cols-1 gap-8 `}>
@@ -131,7 +109,6 @@ export default function FormCustomCorruptEdit({ entitiesEdit, handleClose, setFo
 										label="Lý do"
 										name="reason"
 										component={AntDescriptionsCustom}
-										className="mt-8 mb-16"
 										row={2}
 									/>
 									{entitiesEdit && entitiesEdit.statusID === 4 && (

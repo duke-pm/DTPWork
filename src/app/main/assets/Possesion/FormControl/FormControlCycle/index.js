@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useContext } from 'react';
+import React, { useEffect } from 'react';
 import { Typography, Icon } from '@material-ui/core';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { notificationConfig } from '@fuse/core/DtpConfig';
@@ -21,6 +21,9 @@ export default function FormControlCycle() {
 		}),
 		shallowEqual
 	);
+	useEffect(() => {
+		if (!entitiesEdit) history.goBack();
+	}, [entitiesEdit]);
 	const handleSubmitCycle = values => {
 		dispatch(actions.assetReuse(values, entitiesEdit)).then(data => {
 			if (data && !data.isError) {

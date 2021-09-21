@@ -11,6 +11,7 @@ import { validateField } from '@fuse/core/DtpConfig';
 import AntDescriptionsCustom from '@fuse/FormBookingCustom/AntDescriptionsCustom';
 import AntDateCustom from '@fuse/FormBookingCustom/AntDateCustom';
 import AntFileCustom from '@fuse/FormBookingCustom/AntFileCustom';
+import Text from 'app/components/Text';
 
 const initial = {
 	date: moment(),
@@ -38,86 +39,86 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 						<div className="mb-20">
 							<Grid container item spacing={2}>
 								<Grid item xs={12} md={12} lg={12}>
-									<Typography variant="subtitle2" color="primary">
+									<Text type="subTitle" color="primary" borderBottom>
 										THÔNG TIN TÀI SẢN.
-									</Typography>
+									</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={4}>
-									<Typography variant="subtitle2">Mã tài sản</Typography>
+									<Text type="body">Mã tài sản:</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={8}>
-									<Typography variant="body1">{entitiesEdit?.assetCode}</Typography>
+									<Text type="body">{entitiesEdit?.assetCode}</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={4}>
-									<Typography variant="subtitle2">Tên tài sản</Typography>
+									<Text type="body">Tên tài sản:</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={8}>
-									<Typography variant="body1">{entitiesEdit?.assetName}</Typography>
+									<Text type="body">{entitiesEdit?.assetName}</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={4}>
-									<Typography variant="subtitle2">Nhóm tài sản</Typography>
+									<Text type="body">Nhóm tài sản:</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={8}>
-									<Typography variant="body1">{entitiesEdit?.groupName}</Typography>
+									<Text type="body">{entitiesEdit?.groupName}</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={4}>
-									<Typography variant="subtitle2">Ngày mua</Typography>
+									<Text type="body">Ngày mua:</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={8}>
-									<Typography variant="body1">
+									<Text type="body">
 										{entitiesEdit?.purchaseDate
 											? moment(entitiesEdit.purchaseDate).format('DD-MM-YYYY')
 											: ''}{' '}
-									</Typography>
+									</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={4}>
-									<Typography variant="subtitle2">Tình trạng</Typography>
+									<Text type="body">Tình trạng:</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={8}>
-									<Typography variant="body1">{entitiesEdit?.statusName}</Typography>
+									<Text type="body">{entitiesEdit?.statusName}</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={4}>
-									<Typography variant="subtitle2">Mô tả</Typography>
+									<Text type="body">Mô tả:</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={8}>
-									<Typography variant="body1">{entitiesEdit?.descr}</Typography>
+									<Text type="body">{entitiesEdit?.descr}</Text>
 								</Grid>
 								<Grid item xs={12} md={12} lg={12}>
-									<Typography variant="subtitle2" color="primary">
+									<Text type="subTitle" color="primary" borderBottom>
 										THÔNG TIN NHÂN VIÊN SỬ DỤNG.
-									</Typography>
+									</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={4}>
-									<Typography variant="subtitle2">Nhân viên</Typography>
+									<Text type="body">Nhân viên:</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={8}>
-									<Typography variant="body1">{entitiesEdit?.empName}</Typography>
+									<Text type="body">{entitiesEdit?.empName}</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={4}>
-									<Typography variant="subtitle2">Chức vụ</Typography>
+									<Text type="body">Chức vụ:</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={8}>
-									<Typography variant="body1">{entitiesEdit?.jobTitle}</Typography>
+									<Text type="body">{entitiesEdit?.jobTitle}</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={4}>
-									<Typography variant="subtitle2">Bộ phận</Typography>
+									<Text type="body">Bộ phận:</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={8}>
-									<Typography variant="body1">{entitiesEdit?.deptNameManager}</Typography>
+									<Text type="body">{entitiesEdit?.deptNameManager}</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={4}>
-									<Typography variant="subtitle2">Khu vực</Typography>
+									<Text type="body">Khu vực:</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={8}>
-									<Typography variant="body1">{entitiesEdit?.regionName}</Typography>
+									<Text type="body">{entitiesEdit?.regionName}</Text>
 								</Grid>
 							</Grid>
 						</div>
 						<div>
-							<div className="flex flex-row">
-								<Typography variant="subtitle2" color="primary">
+							<div>
+								<Text type="subTitle" color="primary" borderBottom>
 									THÔNG TIN THU HỒI.
-								</Typography>
+								</Text>
 							</div>
 							<div className="grid grid-cols-3 mt-8">
 								<Field label="Ngày thu hồi " name="date" hasFeedback component={AntDateCustom} />

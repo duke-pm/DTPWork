@@ -3,49 +3,30 @@ import React, { useContext, useEffect } from 'react';
 import { Paper, Table, TableContainer } from '@material-ui/core';
 import Panigation from '@fuse/core/FusePanigate';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import FuseAnimate from '@fuse/core/FuseAnimate';
-import FuseLoading from '@fuse/core/FuseLoading';
-import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
-import { Empty } from 'antd';
+import { useHistory } from 'react-router';
 import FormCustomCorrupt from './FormCorrupt';
 import { PossessionContext } from '../PossessionContext';
 import * as actions from '../_redux/possesionActions';
-import TableHeaderCorrupt from './Component/TableHeaderCorrupt';
-import TableBodyCorrupt from './Component/TableBodyCorrupt';
-import ActionComponent from './Component/ActionComponentFilter';
 import TableAssetCorrupt from './Component/TableAssetCorrupt';
 
 export default function PossessionCorrupt(props) {
-	const { value } = props;
+	const history = useHistory();
 	const dispatch = useDispatch();
 	const [open, setOpen] = React.useState(false);
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
-	const { listloading, entities, lastErrors, total_count } = currentState;
+	const { listloading, entities, total_count } = currentState;
 	const possessionContext = useContext(PossessionContext);
-	const {
-		rowPage,
-		setRowPage,
-		page,
-		setPage,
-		search,
-		setLiquiAsset,
-		setFormService,
-		setTypeLiquiAsset,
-		typeSetFormService,
-		sort,
-		setSort
-	} = possessionContext;
+	const { rowPage, setRowPage, page, setPage, search, setFormService, sort, setSort } = possessionContext;
 	const handleClose = () => {
 		setOpen(false);
 	};
 	const handleOpenFormLiquiAsset = item => {
-		setLiquiAsset(true);
-		setTypeLiquiAsset('damage');
+		history.push('/tai-san/quan-ly-tai-san/thanh-ly?type=damage');
 		dispatch(actions.setTaskEditPossesionAll(item));
 	};
 	const handleOpenFormService = item => {
 		setFormService(true);
-		typeSetFormService('damage');
+		history.push('/tai-san/quan-ly-tai-san/sua-chua-bao-hanh?type=damage');
 		dispatch(actions.setTaskEditPossesionAll(item));
 	};
 	const handleRowChange = e => {
@@ -74,6 +55,8 @@ export default function PossessionCorrupt(props) {
 			<div className="flex flex-col table--tab">
 				<div className="flex flex-col">
 					<TableAssetCorrupt
+						handleOpenFormLiquiAsset={handleOpenFormLiquiAsset}
+						handleOpenFormService={handleOpenFormService}
 						createSortHandler={createSortHandler}
 						entities={entities}
 						listLoading={listloading}

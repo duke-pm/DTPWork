@@ -9,6 +9,7 @@ import { notificationConfig } from '@fuse/core/DtpConfig';
 import AntDescriptionsCustom from '@fuse/FormBookingCustom/AntDescriptionsCustom';
 import { Spin } from 'antd';
 import { useHistory } from 'react-router';
+import Text from 'app/components/Text';
 import { CustomCorruptContext } from '../PageCustomCorruptContext';
 
 const initial = {
@@ -23,84 +24,63 @@ export default function FormCorrupt({ entitiesEdit, actionLoading, params }) {
 	return (
 		<Grid container item spacing={2}>
 			<Grid className="mb-8" item sm={12} md={12} lg={12}>
-				<Typography color="primary" variant="body1" className="mb-8">
-					Thông tin tài sản
-				</Typography>
+				<Text color="primary" type="subTitle" borderBottom>
+					THÔNG TIN TÀI SẢN
+				</Text>
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
-				<Typography variant="subtitle2" color="primary">
-					{' '}
-					Mã tài sản :
-				</Typography>
+				<Text type="body"> Mã tài sản:</Text>
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
 				{' '}
-				<Typography variant="body2"> {entitiesEdit?.assetID}</Typography>
+				<Text variant="body"> {entitiesEdit?.assetID}</Text>
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
-				<Typography variant="subtitle2" color="primary">
-					{' '}
-					Tên tài sản :
-				</Typography>
+				<Text type="body"> Tên tài sản:</Text>
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
 				{' '}
-				<Typography variant="body2"> {entitiesEdit?.assetName}</Typography>
+				<Text type="body"> {entitiesEdit?.assetName}</Text>
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
-				<Typography variant="subtitle2" color="primary">
-					{' '}
-					Nhóm tài sản :
-				</Typography>
+				<Text type="body"> Nhóm tài sản :</Text>
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
 				{' '}
-				<Typography variant="body2"> {entitiesEdit?.groupName}</Typography>
+				<Text type="body"> {entitiesEdit?.groupName}</Text>
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
-				<Typography variant="subtitle2" color="primary">
-					{' '}
-					Quy cách tài sản :
-				</Typography>
+				<Text type="body"> Quy cách tài sản :</Text>
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
 				{' '}
-				<Typography variant="body2"> </Typography>
+				<Text type="body"> </Text>
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
-				<Typography variant="subtitle2" color="primary">
-					{' '}
-					Ngày mua :
-				</Typography>
+				<Text type="body"> Ngày mua :</Text>
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
 				{' '}
-				<Typography variant="body2"> {moment(entitiesEdit?.purchaseDate).format('DD/MM/YYYY')} </Typography>
+				<Text type="body"> {moment(entitiesEdit?.purchaseDate).format('DD/MM/YYYY')} </Text>
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
-				<Typography variant="subtitle2" color="primary">
-					{' '}
-					Nguyên giá :
-				</Typography>
+				<Text type="body"> Nguyên giá :</Text>
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
 				{' '}
-				<Typography variant="body2"> {currencyFormat(entitiesEdit?.originalPrice) || ''} </Typography>
+				<Text type="body"> {currencyFormat(entitiesEdit?.originalPrice) || ''} </Text>
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
-				<Typography variant="subtitle2" color="primary">
-					{' '}
-					Tình trạng :
-				</Typography>
+				<Text type="body"> Tình trạng :</Text>
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
 				{' '}
-				<Typography variant="body2"> {entitiesEdit?.assetStatusName} </Typography>
+				<Text type="body"> {entitiesEdit?.assetStatusName} </Text>
 			</Grid>
-			<Grid className="mb-16" item sm={12} md={12} lg={12}>
-				<Typography color="primary" variant="body1" className="mb-8">
-					Thông tin tài sản bị {params?.corrupt === 'lost' ? 'mất' : 'hỏng'}
-				</Typography>
+			<Grid item sm={12} md={12} lg={12}>
+				<Text color="primary" type="subTitle" borderBottom>
+					THÔNG TIN TÀI SẢN BỊ {params?.corrupt === 'lost' ? 'MẤT' : 'HỎNG'}
+				</Text>
 			</Grid>
 			<Grid item sm={12} md={12} lg={12}>
 				<Formik
@@ -134,7 +114,7 @@ export default function FormCorrupt({ entitiesEdit, actionLoading, params }) {
 											color="primary"
 										>
 											{' '}
-											<Typography variant="body2"> Duyệt </Typography>
+											<Typography variant="button"> Duyệt </Typography>
 										</Button>
 										<Button
 											onClick={handleOpenFormReject}
@@ -143,7 +123,7 @@ export default function FormCorrupt({ entitiesEdit, actionLoading, params }) {
 											variant="contained"
 											color="secondary"
 										>
-											<Typography variant="body2"> Không duyệt </Typography>
+											<Typography variant="button"> Không duyệt </Typography>
 										</Button>
 									</>
 								)}

@@ -38,14 +38,12 @@ export default function FormComponent({ entitiesEdit, actionLoading, menuParent 
 		}
 	};
 	return (
-		<>
-			<CustomForm
-				entitiesEdit={entitiesEdit}
-				actionLoading={actionLoading}
-				menuParent={menuParent}
-				handleCloseFormListUser={handleCloseFormListUser}
-				handleSubmitCreatedMenu={handleSubmitCreatedMenu}
-			/>
-		</>
+		<CustomForm
+			entitiesEdit={entitiesEdit}
+			actionLoading={actionLoading}
+			menuParent={menuParent}
+			handleCloseFormListUser={handleCloseFormListUser}
+			handleSubmitCreatedMenu={handleSubmitCreatedMenu}
+		/>
 	);
 }

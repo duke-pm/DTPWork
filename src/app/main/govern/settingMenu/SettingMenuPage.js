@@ -1,8 +1,9 @@
 import Search from 'antd/lib/input/Search';
-import { Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import React, { useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
+import Text from 'app/components/Text';
 import SettingMenuContent from './SettingMenuComponent/SettingMenuContent';
 import * as actions from './_redux/menuActions';
 import { SettingmenuContext } from './SettingMenuContext';
@@ -31,12 +32,12 @@ export default function SettingMenuPage() {
 	return (
 		<div className="container govern">
 			<div className="govern__header px-16 shadow-lg">
-				<Typography color="primary" variant="h6">
+				<Text color="primary" type="title">
 					Thiết lập menu
-				</Typography>
+				</Text>
 				<div className="govern__header--action">
 					<Search
-						onChange={e => onHandleChange(e)}
+						onChange={onHandleChange}
 						onKeyPress={event => {
 							if (event.key === 'Enter') {
 								handleSearch();
@@ -47,8 +48,9 @@ export default function SettingMenuPage() {
 						onSearch={handleSearch}
 					/>
 					<Button onClick={handleChangeRoute} className="button__create" variant="contained" color="primary">
-						{' '}
-						<Typography variant="button"> Tạo mới </Typography>
+						<Text variant="button" color="white">
+							Tạo mới
+						</Text>
 					</Button>
 				</div>
 			</div>
