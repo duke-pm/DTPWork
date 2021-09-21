@@ -255,7 +255,7 @@ function TableProject(props) {
 			align: 'center',
 			dataIndex: 'crtdDate',
 			key: 'crtdDate',
-			width: '10%',
+			width: '8%',
 			render: (_, item) =>
 				item.appraisalTime && (
 					<div

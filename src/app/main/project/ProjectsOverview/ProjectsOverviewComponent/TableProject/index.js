@@ -44,7 +44,7 @@ function TableProject(props) {
 			dataIndex: 'prjName',
 			key: 'itemName',
 			fixed: 'left',
-			width: '10%',
+			width: '8%',
 			render: (_, item) => {
 				return (
 					<Typography variant={item.codeParentID === 'P0' ? 'subtitle2' : 'body1'} component="button">
@@ -58,7 +58,7 @@ function TableProject(props) {
 			align: 'center',
 			dataIndex: 'startDate',
 			key: 'startDate',
-			width: '4%',
+			width: '2%',
 			render: (_, item) => (
 				<div className="flex items-center justify-center text-center px-8 py-4 bg-green-50 rounded-16">
 					<Text>{item.startDate && moment(item.startDate).format('DD/MM/YY')}</Text>
@@ -70,7 +70,7 @@ function TableProject(props) {
 			align: 'center',
 			dataIndex: 'endDate',
 			key: 'endDate',
-			width: '4%',
+			width: '2%',
 			render: (_, item) => (
 				<div className="flex items-center justify-center text-center px-8 py-4 bg-green-50 rounded-16">
 					<Text>{item.endDate && moment(item.endDate).format('DD/MM/YY')}</Text>
@@ -82,7 +82,7 @@ function TableProject(props) {
 			dataIndex: 'duration',
 			key: 'duration',
 			align: 'center',
-			width: '4%',
+			width: '2%',
 			render: (_, item) => (
 				<div className="flex items-center justify-center text-center px-8 py-4 mx-4 rounded-16 text-blue">
 					<Text>{item.duration} Days</Text>
@@ -94,7 +94,7 @@ function TableProject(props) {
 			align: 'center',
 			dataIndex: 'public',
 			key: 'public',
-			width: '5%',
+			width: '3%',
 			render: (_, item) => (
 				<div className="flex flex-row items-center">
 					<Avatar style={{ backgroundColor: item.colorCode }} icon={<UserOutlined />} />
@@ -107,7 +107,7 @@ function TableProject(props) {
 			align: 'center',
 			dataIndex: 'completedPercent',
 			key: 'completedPercent',
-			width: '7%',
+			width: '4%',
 			render: (_, item) => <Progress percent={item.completedPercent} strokeColor={item.colorCode} />
 		}
 	];
