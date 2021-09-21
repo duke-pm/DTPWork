@@ -15,6 +15,10 @@ export default function ProjectContextProvider({ children }) {
 	const [chart, setChart] = useState(false);
 	const [page, setPage] = useState(0);
 	const [rowPage, setRowPage] = useState(25);
+	const [sort, setSort] = useState({
+		direction: 'asc',
+		id: null
+	});
 	const valueMemo = useMemo(() => {
 		return {
 			title,
@@ -38,7 +42,9 @@ export default function ProjectContextProvider({ children }) {
 			rowPage,
 			setRowPage,
 			chart,
-			setChart
+			setChart,
+			sort,
+			setSort
 		};
 	}, [
 		formProject,
@@ -62,7 +68,9 @@ export default function ProjectContextProvider({ children }) {
 		rowPage,
 		setRowPage,
 		chart,
-		setChart
+		setChart,
+		sort,
+		setSort
 	]);
 	return <ProjectContext.Provider value={valueMemo}> {children} </ProjectContext.Provider>;
 }

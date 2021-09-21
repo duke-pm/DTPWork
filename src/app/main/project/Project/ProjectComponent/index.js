@@ -11,7 +11,8 @@ import { fetchProjectDetailFilter } from '../../_redux/_projectActions';
 export default function ProjectComponent({ owner, ArrProjectStatus, params, sectorArr }) {
 	const dispatch = useDispatch();
 	const projectContext = useContext(ProjectContext);
-	const { sector, setPage, setRowPage, rowPage, page, status, ownerFilter, dateStart, search } = projectContext;
+	const { sector, setPage, setRowPage, rowPage, page, status, ownerFilter, dateStart, search, setSort, sort } =
+		projectContext;
 	const { currentState } = useSelector(state => ({ currentState: state.project }), shallowEqual);
 	const { entitiesDetail, listLoading, actionLoading, total_count } = currentState;
 	const handleChangePage = (event, newPage) => {
@@ -25,6 +26,8 @@ export default function ProjectComponent({ owner, ArrProjectStatus, params, sect
 				status?.toString(),
 				dateStart,
 				sector?.toString(),
+				sort.id,
+				sort.direction,
 				search
 			)
 		);
@@ -41,9 +44,31 @@ export default function ProjectComponent({ owner, ArrProjectStatus, params, sect
 				status?.toString(),
 				dateStart,
 				sector?.toString(),
+				sort.id,
+				sort.direction,
 				search
 			)
 		);
+	};
+	const createSortHandler = (direction, id) => {
+		dispatch(
+			fetchProjectDetailFilter(
+				params.detail,
+				rowPage,
+				page,
+				ownerFilter?.toString(),
+				status?.toString(),
+				dateStart,
+				sector?.toString(),
+				id,
+				direction,
+				search
+			)
+		);
+		setSort({
+			direction,
+			id
+		});
 	};
 	return (
 		<Spin spinning={listLoading}>
@@ -51,6 +76,7 @@ export default function ProjectComponent({ owner, ArrProjectStatus, params, sect
 				<div className={`'grid-cols-1'}  gap-8`}>
 					<div className="flex flex-col">
 						<TableProject
+							createSortHandler={createSortHandler}
 							ArrProjectStatus={ArrProjectStatus}
 							params={params}
 							sectorArr={sectorArr}

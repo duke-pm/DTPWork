@@ -116,6 +116,7 @@ export default function CustomForm({
 									name="userInvite"
 									options={owner}
 									count={3}
+									width="85.2%"
 									value={entitiesEdit && !entitiesEdit.isModified ? userInviteNoPermiss : []}
 									component={AntSelectMultiCustom}
 									readOnly={entitiesEdit && !entitiesEdit.isModified}
@@ -125,6 +126,7 @@ export default function CustomForm({
 								<Field
 									label="Add Team Member"
 									name="userInvite"
+									width="85%"
 									options={owner}
 									count={3}
 									component={AntSelectMultiCustom}

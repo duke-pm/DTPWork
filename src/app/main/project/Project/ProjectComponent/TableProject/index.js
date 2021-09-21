@@ -7,7 +7,7 @@ import AppsIcon from '@material-ui/icons/Apps';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { withRouter } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { checkDeadline, durationDay, notificationConfig } from '@fuse/core/DtpConfig';
+import { checkDeadline, durationDay, notificationConfig, sortDirestion } from '@fuse/core/DtpConfig';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
@@ -25,7 +25,7 @@ function TableProject(props) {
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.up('xl'));
 	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
-	const { entitiesDetail, actionLoading, params, listLoading, sectorArr, owner } = props;
+	const { entitiesDetail, actionLoading, params, createSortHandler, owner } = props;
 	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 	const [onClickRow, setOnClickRow] = useState(null);
 	const projectContext = useContext(ProjectContext);
@@ -37,6 +37,10 @@ function TableProject(props) {
 	}, [entitiesDetail?.listTask]);
 	const onSelectedRowKeysChange = selectedRowKey => {
 		setSelectedRowKeys(selectedRowKey);
+	};
+	const onChangeSort = (pagination, filters, sorter, extra) => {
+		const sort = sortDirestion[sorter.order];
+		createSortHandler(sort, sorter.field);
 	};
 	const {
 		setVisible,
@@ -51,7 +55,8 @@ function TableProject(props) {
 		dateStart,
 		sector,
 		setSector,
-		search
+		search,
+		sort
 	} = projectContext;
 	const handleOpenVisible = item => {
 		setVisible(true);
@@ -96,6 +101,8 @@ function TableProject(props) {
 							status.toString(),
 							dateStart,
 							sector.toString(),
+							sort.id,
+							sort.direction,
 							search
 						)
 					);
@@ -131,6 +138,8 @@ function TableProject(props) {
 							status?.toString(),
 							dateStart,
 							sector?.toString(),
+							sort.id,
+							sort.direction,
 							search
 						)
 					);
@@ -159,6 +168,8 @@ function TableProject(props) {
 						status.toString(),
 						dateStart,
 						sector.toString(),
+						sort.id,
+						sort.direction,
 						search
 					)
 				);
@@ -184,6 +195,8 @@ function TableProject(props) {
 				status?.toString(),
 				dateStart,
 				sector?.toString(),
+				sort.id,
+				sort.direction,
 				search
 			)
 		);
@@ -199,6 +212,8 @@ function TableProject(props) {
 				value?.toString(),
 				dateStart,
 				sector?.toString(),
+				sort.id,
+				sort.direction,
 				search
 			)
 		);
@@ -214,6 +229,8 @@ function TableProject(props) {
 				status?.toString(),
 				dateStart,
 				value?.toString(),
+				sort.id,
+				sort.direction,
 				search
 			)
 		);
@@ -385,8 +402,9 @@ function TableProject(props) {
 		{
 			title: 'Start',
 			align: 'center',
-			dataIndex: 'startDate',
+			dataIndex: 'StartDate',
 			key: 'startDate',
+			sorter: true,
 			width: '8%',
 			render: (_, item) => (
 				<div className="flex items-center justify-center text-center px-8 py-4 bg-green-50 rounded-16">
@@ -397,8 +415,9 @@ function TableProject(props) {
 		{
 			title: 'Finish',
 			align: 'center',
-			dataIndex: 'endDate',
+			dataIndex: 'EndDate',
 			key: 'endDate',
+			sorter: true,
 			width: '8%',
 			render: (_, item) => (
 				<div className="flex items-center justify-center text-center px-8 py-4 bg-green-50 rounded-16">
@@ -510,8 +529,10 @@ function TableProject(props) {
 				x: entitiesDetail?.listTask?.length > 0 ? (matches ? 1900 : 1800) : matchesSM ? 1800 : null,
 				y: null
 			}}
+			showSorterTooltip={false}
 			pagination={false}
 			columns={columns}
+			onChange={onChangeSort}
 			dataSource={entitiesDetail?.listTask}
 		/>
 	);

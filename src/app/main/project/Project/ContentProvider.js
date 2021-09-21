@@ -40,7 +40,8 @@ export default function ContentProvider() {
 		sector,
 		search,
 		setSector,
-		setSearch
+		setSearch,
+		sort
 	} = projectContext;
 	const history = useHistory();
 	const params = useParams();
@@ -110,6 +111,8 @@ export default function ContentProvider() {
 				statusClear?.toString(),
 				dateStart,
 				sector?.toString(),
+				sort.id,
+				sort.direction,
 				search
 			)
 		);
@@ -125,6 +128,8 @@ export default function ContentProvider() {
 				null,
 				dateStart,
 				sector?.toString(),
+				sort.id,
+				sort.direction,
 				search
 			)
 		);
@@ -141,6 +146,8 @@ export default function ContentProvider() {
 				status?.toString(),
 				dateStart,
 				sector?.toString(),
+				sort.id,
+				sort.direction,
 				search
 			)
 		);
@@ -156,6 +163,8 @@ export default function ContentProvider() {
 				status?.toString(),
 				dateStart,
 				sector?.toString(),
+				sort.id,
+				sort.direction,
 				search
 			)
 		);
@@ -172,6 +181,8 @@ export default function ContentProvider() {
 				status?.toString(),
 				dateStart,
 				sectorClear?.toString(),
+				sort.id,
+				sort.direction,
 				search
 			)
 		);
@@ -187,6 +198,8 @@ export default function ContentProvider() {
 				status?.toString(),
 				dateStart,
 				null,
+				sort.id,
+				sort.direction,
 				search
 			)
 		);
@@ -209,6 +222,8 @@ export default function ContentProvider() {
 					status?.toString(),
 					dateStart,
 					sector?.toString(),
+					sort.id,
+					sort.direction,
 					e.target.value
 				)
 			);
@@ -224,6 +239,8 @@ export default function ContentProvider() {
 				status?.toString(),
 				dateStart,
 				sector?.toString(),
+				sort.id,
+				sort.direction,
 				search
 			)
 		);

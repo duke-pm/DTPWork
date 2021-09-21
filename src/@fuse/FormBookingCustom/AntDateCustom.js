@@ -57,7 +57,7 @@ export default function AntDateCustom({
 						style={{ width: '100%' }}
 						// placeholder={placeholder || 'Vui lòng chọn ngày'}
 						margin="normal"
-						disabledDate={disabledDate}
+						// disabledDate={disabledDate}
 						format={dateFormat}
 						value={value ? moment(moment(value), dateFormat) : null}
 						onChange={handleDateChange}

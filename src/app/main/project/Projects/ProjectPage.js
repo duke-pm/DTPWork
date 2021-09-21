@@ -17,7 +17,7 @@ export default function ProjectPage() {
 		shallowEqual
 	);
 	const projectContext = useContext(ProjectContext);
-	const { status, ownerFilter, setStatus, setOwnerFilter, rowPage, page, dateStart, search, setSearch } =
+	const { status, ownerFilter, setStatus, setOwnerFilter, rowPage, page, dateStart, search, setSearch, sort } =
 		projectContext;
 	const [owner, setOwner] = useState([]);
 	const dispatch = useDispatch();
@@ -60,24 +60,57 @@ export default function ProjectPage() {
 				statusClear?.toString(),
 				ownerFilter?.toString(),
 				dateStart,
+				sort.id,
+				sort.direction,
 				search
 			)
 		);
 	};
 	const handleClearStatus = () => {
 		setStatus(null);
-		dispatch(actions.fetchsProjectFilter(rowPage, page, null, ownerFilter?.toString(), dateStart, search));
+		dispatch(
+			actions.fetchsProjectFilter(
+				rowPage,
+				page,
+				null,
+				ownerFilter?.toString(),
+				dateStart,
+				sort.id,
+				sort.direction,
+				search
+			)
+		);
 	};
 	const handleFilterClearOwner = item => {
 		const ownerClear = ownerFilter.filter(it => it !== item.value);
 		setOwnerFilter(ownerClear);
 		dispatch(
-			actions.fetchsProjectFilter(rowPage, page, status?.toString(), ownerClear.toString(), dateStart, search)
+			actions.fetchsProjectFilter(
+				rowPage,
+				page,
+				status?.toString(),
+				ownerClear.toString(),
+				dateStart,
+				sort.id,
+				sort.direction,
+				search
+			)
 		);
 	};
 	const handleClearOwner = () => {
 		setOwnerFilter(null);
-		dispatch(actions.fetchsProjectFilter(rowPage, page, status?.toString(), null, dateStart, search));
+		dispatch(
+			actions.fetchsProjectFilter(
+				rowPage,
+				page,
+				status?.toString(),
+				null,
+				dateStart,
+				sort.id,
+				sort.direction,
+				search
+			)
+		);
 	};
 	const handleClearAll = () => {
 		setStatus(null);
@@ -98,6 +131,8 @@ export default function ProjectPage() {
 					status?.toString(),
 					ownerFilter?.toString(),
 					dateStart,
+					sort.id,
+					sort.direction,
 					e.target.value
 				)
 			);
@@ -105,7 +140,16 @@ export default function ProjectPage() {
 	};
 	const handleSearch = () => {
 		dispatch(
-			actions.fetchsProjectFilter(rowPage, page, status?.toString(), ownerFilter?.toString(), dateStart, search)
+			actions.fetchsProjectFilter(
+				rowPage,
+				page,
+				status?.toString(),
+				ownerFilter?.toString(),
+				dateStart,
+				sort.id,
+				sort.direction,
+				search
+			)
 		);
 	};
 	return (

@@ -41,8 +41,8 @@ function Text(props) {
 			>
 				{children}
 				{required && (
-					<Typography className="ml-4" color="error">
-						(*)
+					<Typography className="" color="error">
+						*
 					</Typography>
 				)}
 			</Typography>
