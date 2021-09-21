@@ -52,7 +52,7 @@ export default function InformationProceeUseAsset({ entitiesEdit, actionLoading 
 						<Text type="body">Mô tả:</Text>
 					</Grid>
 					<Grid item xs={7} md={8} lg={9}>
-						<Text type="body">{entitiesEdit?.descr}</Text>
+						<Text type="body">{entitiesEdit?.descr ? entitiesEdit.descr : '-'}</Text>
 					</Grid>
 					<Grid item xs={5} md={4} lg={3}>
 						<Text type="body">Ngày mua:</Text>

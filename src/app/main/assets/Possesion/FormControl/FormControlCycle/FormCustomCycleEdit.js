@@ -55,25 +55,25 @@ export default function FormCustomCycleEdit({ handleClose, entitiesEdit, handleS
 								<Text type="body">Mã tài sản:</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={8}>
-								<Text type="body">{entitiesEdit?.assetCode}</Text>
+								<Text type="body">{entitiesEdit?.assetCode ? entitiesEdit?.assetCode : '-'}</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={4}>
 								<Text type="body">Tên tài sản:</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={8}>
-								<Text type="body">{entitiesEdit?.assetName}</Text>
+								<Text type="body">{entitiesEdit?.assetName ? entitiesEdit.assetName : '-'}</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={4}>
 								<Text type="body">Nhóm tài sản:</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={8}>
-								<Text type="body">{entitiesEdit?.groupName}</Text>
+								<Text type="body">{entitiesEdit?.groupName ? entitiesEdit.groupName : '-'}</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={4}>
 								<Text type="body">Mô tả:</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={8}>
-								<Text type="body">{entitiesEdit?.descr}</Text>
+								<Text type="body">{entitiesEdit?.descr ? entitiesEdit.descr : '-'}</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={4}>
 								<Text type="body">Ngày mua:</Text>
@@ -95,7 +95,7 @@ export default function FormCustomCycleEdit({ handleClose, entitiesEdit, handleS
 								<Text type="body">Tình trạng:</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={8}>
-								<Text type="body">{entitiesEdit?.statusName}</Text>
+								<Text type="body">{entitiesEdit?.statusName ? entitiesEdit.statusName : '-'}</Text>
 							</Grid>
 						</Grid>
 						<div className="mt-16">
