@@ -18,8 +18,8 @@ export default function TableAssetRepair({
 	entities,
 	listLoading,
 	createSortHandler,
-	handleOpenTimeLine,
-	handleOpenForm
+	handleOpenFormCycleView,
+	handleOpenFormLiquiAsset
 }) {
 	const dispatch = useDispatch();
 	const theme = useTheme();
@@ -39,7 +39,13 @@ export default function TableAssetRepair({
 				<Popover
 					overlayStyle={{ zIndex: '19' }}
 					placement="rightTop"
-					content={() => <ActionHandleFunc />}
+					content={() => (
+						<ActionHandleFunc
+							items={item}
+							handleOpenFormCycleView={handleOpenFormCycleView}
+							handleOpenFormLiquiAsset={handleOpenFormLiquiAsset}
+						/>
+					)}
 					title="Hành động"
 				>
 					<MoreVertIcon className="cursor-pointer" />

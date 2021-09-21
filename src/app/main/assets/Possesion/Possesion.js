@@ -127,9 +127,6 @@ function PossesionPage(props) {
 	console.log(type);
 	return (
 		<>
-			<FormAssetLiquidation />
-			<FormCustomService />
-			<FormControlCycle />
 			<div className="container assets">
 				<div className="assets__header px-16 shadow-lg">
 					<Typography color="primary" variant="h6">

@@ -187,30 +187,6 @@ function FormCustomAll({ rowPage }) {
 				</Spin>
 			</div>
 		</div>
-		// <Dialog style={{ zIndex: 20 }} fullWidth maxWidth="md" aria-labelledby="customized-dialog-title" open={open}>
-		// 	<AppBar position="static" className="shadow-md">
-		// 		<Toolbar className="flex w-full">
-		// 			<IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
-		// 				<CloseIcon />
-		// 			</IconButton>
-		// 			<Typography variant="subtitle1" color="inherit">
-		// 				{entitiesEdit?.assetID ? 'Cập nhật tài sản' : 'Tạo mới tài sản'}
-		// 			</Typography>
-		// 		</Toolbar>
-		// 	</AppBar>
-		// 	<FormCustomEdit
-		// 		assetDetail={assetDetail}
-		// 		group={group}
-		// 		category={category}
-		// 		company={company}
-		// 		department={department}
-		// 		suppiler={suppiler}
-		// 		actionLoading={actionLoading}
-		// 		saveAsset={saveAsset}
-		// 		initialValue={entitiesEdit?.assetID ? newIntialState : initial}
-		// 		handleClose={handleClose}
-		// 	/>
-		// </Dialog>
 	);
 }
 export default React.memo(FormCustomAll);

@@ -18,7 +18,7 @@ export default function TableAssetUsed({
 	entities,
 	listLoading,
 	createSortHandler,
-	handleOpenTimeLine,
+	handleOpenFromService,
 	handleOpenForm
 }) {
 	const dispatch = useDispatch();
@@ -39,7 +39,13 @@ export default function TableAssetUsed({
 				<Popover
 					overlayStyle={{ zIndex: '19' }}
 					placement="rightTop"
-					content={() => <PossesionActionUsed />}
+					content={() => (
+						<PossesionActionUsed
+							items={item}
+							handleOpenFromService={handleOpenFromService}
+							handleOpenForm={handleOpenForm}
+						/>
+					)}
 					title="Hành động"
 				>
 					<MoreVertIcon className="cursor-pointer" />

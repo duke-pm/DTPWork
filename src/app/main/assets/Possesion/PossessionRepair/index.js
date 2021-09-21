@@ -1,17 +1,10 @@
 /* eslint-disable no-shadow */
 import React, { useContext, useEffect } from 'react';
-import { Paper, Table, TableContainer } from '@material-ui/core';
-import FuseAnimate from '@fuse/core/FuseAnimate';
 import Panigation from '@fuse/core/FusePanigate';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import FuseLoading from '@fuse/core/FuseLoading';
-import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
-import { Empty } from 'antd';
+import { useHistory } from 'react-router';
 import { PossessionContext } from '../PossessionContext';
-import ActionComponent from './Component/ActionComponent';
 import * as actions from '../_redux/possesionActions';
-import TableBodyRepair from './Component/TableBodyRepair';
-import TableHeaderRepair from './Component/TableHeaderRepair';
 import TableAssetRepair from './Component/TableAssetRepair';
 
 // import FormCustomUsed from './FormCustomUsed';
@@ -19,27 +12,17 @@ import TableAssetRepair from './Component/TableAssetRepair';
 export default function PossessionRepair(props) {
 	const dispatch = useDispatch();
 	const possessionContext = useContext(PossessionContext);
-	const {
-		handleOpenFormCycle,
-		rowPage,
-		setRowPage,
-		page,
-		setPage,
-		search,
-		setLiquiAsset,
-		setTypeLiquiAsset,
-		sort,
-		setSort
-	} = possessionContext;
+	const { handleOpenFormCycle, rowPage, setRowPage, page, setPage, search, setTypeLiquiAsset, sort, setSort } =
+		possessionContext;
+	const history = useHistory();
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
 	const { listloading, entities, lastErrors, total_count } = currentState;
 	const handleOpenFormLiquiAsset = items => {
-		setLiquiAsset(true);
-		setTypeLiquiAsset('repair');
+		history.push('/tai-san/quan-ly-tai-san/thanh-ly?type=repair');
 		dispatch(actions.setTaskEditPossesionAll(items));
 	};
 	const handleOpenFormCycleView = type => {
-		handleOpenFormCycle(type);
+		history.push('/tai-san/quan-ly-tai-san/dua-vao-su-dung-lai');
 		dispatch(actions.setTaskEditPossesionAll(type));
 	};
 	const handleRowChange = e => {
@@ -67,6 +50,8 @@ export default function PossessionRepair(props) {
 			<div className="flex flex-col table--tab">
 				<div className="flex flex-col">
 					<TableAssetRepair
+						handleOpenFormCycleView={handleOpenFormCycleView}
+						handleOpenFormLiquiAsset={handleOpenFormLiquiAsset}
 						createSortHandler={createSortHandler}
 						entities={entities}
 						listLoading={listloading}

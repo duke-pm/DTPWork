@@ -1,25 +1,15 @@
 /* eslint-disable no-shadow */
-import React, { useContext, useState, useEffect } from 'react';
-import { Table, TableContainer, Paper } from '@material-ui/core';
-import { Empty, Spin } from 'antd';
+import React, { useContext, useEffect } from 'react';
+import { Spin } from 'antd';
 import Panigation from '@fuse/core/FusePanigate';
-import FuseLoading from '@fuse/core/FuseLoading';
-import FuseAnimate from '@fuse/core/FuseAnimate';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import { useHistory } from 'react-router';
-import FormCustomUnused from './FormCustomUnused';
 import { PossessionContext } from '../PossessionContext';
-import ActionComponent from './Component/ActionComponent';
 import * as actions from '../_redux/possesionActions';
-import PossessionAll from '../PossessionAll/FormCustomAll';
-import TableHeaderUnUsed from './Component/TableHeaderUnUsed';
-import TableBodyUnUsed from './Component/TableBodyUnUsed';
 import TableAssetUnUsed from './Component/TableAssetUnUsed';
 
 function PossessionUnused(props) {
 	const history = useHistory();
-	const [open, setOpen] = React.useState(false);
 	const dispatch = useDispatch();
 	const possessionContext = useContext(PossessionContext);
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
@@ -28,11 +18,8 @@ function PossessionUnused(props) {
 	useEffect(() => {
 		dispatch(actions.fetchPossesionAll(1));
 	}, [dispatch]);
-	const handleClose = () => {
-		setOpen(false);
-	};
 	const handleOpenForm = items => {
-		setOpen(true);
+		history.push('/tai-san/quan-ly-tai-san/cap-phat');
 		dispatch(actions.setTaskEditPossesionAll(items));
 	};
 	const handleRowChange = e => {
@@ -58,9 +45,7 @@ function PossessionUnused(props) {
 	};
 	return (
 		<>
-			<FormCustomUnused open={open} handleClose={handleClose} />
 			<div className="flex flex-col table--tab">
-				{/* <ActionComponent entities={entities} value={value} /> */}
 				<div className="flex flex-col ">
 					<TableAssetUnUsed
 						handleOpenFormEdit={handleOpenFormEdit}

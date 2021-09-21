@@ -8,6 +8,9 @@ import * as moment from 'moment';
 import { Spin } from 'antd';
 import * as Yup from 'yup';
 import { validateField } from '@fuse/core/DtpConfig';
+import AntDescriptionsCustom from '@fuse/FormBookingCustom/AntDescriptionsCustom';
+import AntDateCustom from '@fuse/FormBookingCustom/AntDateCustom';
+import AntFileCustom from '@fuse/FormBookingCustom/AntFileCustom';
 
 const initial = {
 	date: moment(Date.now()),
@@ -31,168 +34,110 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 			>
 				{({ handleSubmit, isSubmitting }) => (
 					<Form>
-						<DialogContent dividers>
-							<div className="px-16 sm:px-24">
-								<Grid alignItems="flex-start" container item>
-									<Grid container item xs={12} sm={6} md={6} lg={6}>
-										<div className="flex flex-row">
-											<Typography variant="subtitle2">Thông tin tài sản.</Typography>
-										</div>
-										<Grid container item>
-											<Grid item xs={5} md={4} lg={3}>
-												<Typography className="p-6 text-left truncate" variant="body1">
-													Mã tài sản
-												</Typography>
-											</Grid>
-											<Grid item xs={7} md={8} lg={9}>
-												<Typography className="p-6" variant="subtitle2">
-													{entitiesEdit?.assetCode}
-												</Typography>
-											</Grid>
-											<Grid item xs={5} md={4} lg={3}>
-												<Typography className="p-6 text-left truncate" variant="body1">
-													Tên tài sản
-												</Typography>
-											</Grid>
-											<Grid item xs={7} md={8} lg={9}>
-												<Typography className="p-6" variant="subtitle2">
-													{entitiesEdit?.assetName}
-												</Typography>
-											</Grid>
-											<Grid item xs={5} md={4} lg={3}>
-												<Typography className="p-6 text-left truncate" variant="body1">
-													Nhóm tài sản
-												</Typography>
-											</Grid>
-											<Grid item xs={7} md={8} lg={9}>
-												<Typography className="p-6" variant="subtitle2">
-													{entitiesEdit?.groupName}
-												</Typography>
-											</Grid>
-											<Grid item xs={5} md={4} lg={3}>
-												<Typography className="p-6 text-left truncate" variant="body1">
-													Ngày mua
-												</Typography>
-											</Grid>
-											<Grid item xs={7} md={8} lg={9}>
-												<Typography className="p-6" variant="subtitle2">
-													{entitiesEdit?.purchaseDate
-														? moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY')
-														: ''}{' '}
-												</Typography>
-											</Grid>
-											<Grid item xs={5} md={4} lg={3}>
-												<Typography className="p-6 text-left truncate" variant="body1">
-													Tình trạng
-												</Typography>
-											</Grid>
-											<Grid item xs={7} md={8} lg={9}>
-												<Typography className="p-6" variant="subtitle2">
-													{entitiesEdit?.statusName}
-												</Typography>
-											</Grid>
-											<Grid item xs={5} md={4} lg={3}>
-												<Typography className="p-6 text-left truncate" variant="body1">
-													Mô tả
-												</Typography>
-											</Grid>
-											<Grid item xs={7} md={8} lg={9}>
-												<Typography className="p-6" variant="subtitle2">
-													{entitiesEdit?.descr}
-												</Typography>
-											</Grid>
-										</Grid>
-									</Grid>
-									<Grid container item xs={12} sm={6} md={6} lg={6}>
-										<div className="flex flex-row">
-											<Typography variant="subtitle2">Thông tin nhân viên sử dụng.</Typography>
-										</div>
-										<Grid container item>
-											<Grid item xs={5} md={4} lg={3}>
-												<Typography className="p-6 text-left truncate" variant="body1">
-													Nhân viên
-												</Typography>
-											</Grid>
-											<Grid item xs={7} md={8} lg={9}>
-												<Typography className="p-6" variant="subtitle2">
-													{entitiesEdit?.empName}
-												</Typography>
-											</Grid>
-											<Grid item xs={5} md={4} lg={3}>
-												<Typography className="p-6 text-left truncate" variant="body1">
-													Chức vụ
-												</Typography>
-											</Grid>
-											<Grid item xs={7} md={8} lg={9}>
-												<Typography className="p-6" variant="subtitle2">
-													{entitiesEdit?.jobTitle}
-												</Typography>
-											</Grid>
-											<Grid item xs={5} md={4} lg={3}>
-												<Typography className="p-6 text-left truncate" variant="body1">
-													Bộ phận
-												</Typography>
-											</Grid>
-											<Grid item xs={7} md={8} lg={9}>
-												<Typography className="p-6" variant="subtitle2">
-													{entitiesEdit?.deptNameManager}
-												</Typography>
-											</Grid>
-											<Grid item xs={5} md={4} lg={3}>
-												<Typography className="p-6 text-left truncate" variant="body1">
-													Khu vực
-												</Typography>
-											</Grid>
-											<Grid item xs={7} md={8} lg={9}>
-												<Typography className="p-6" variant="subtitle2">
-													{entitiesEdit?.regionName}
-												</Typography>
-											</Grid>
-										</Grid>
-									</Grid>
+						<div className="mt-8">
+							<Grid spacing={2} container item>
+								<Grid item xs={12} md={12} lg={12}>
+									<Typography variant="subtitle2" color="primary">
+										THÔNG TIN TÀI SẢN.
+									</Typography>
 								</Grid>
+								<Grid item xs={6} md={6} lg={4}>
+									<Typography variant="subtitle2">Mã tài sản</Typography>
+								</Grid>
+								<Grid item xs={6} md={6} lg={8}>
+									<Typography variant="body1">{entitiesEdit?.assetCode}</Typography>
+								</Grid>
+								<Grid item xs={6} md={6} lg={4}>
+									<Typography variant="subtitle2">Tên tài sản</Typography>
+								</Grid>
+								<Grid item xs={6} md={6} lg={8}>
+									<Typography variant="body1">{entitiesEdit?.assetName}</Typography>
+								</Grid>
+								<Grid item xs={6} md={6} lg={4}>
+									<Typography variant="subtitle2">Nhóm tài sản</Typography>
+								</Grid>
+								<Grid item xs={6} md={6} lg={8}>
+									<Typography variant="body1">{entitiesEdit?.groupName}</Typography>
+								</Grid>
+								<Grid item xs={6} md={6} lg={4}>
+									<Typography variant="subtitle2">Ngày mua</Typography>
+								</Grid>
+								<Grid item xs={6} md={6} lg={8}>
+									<Typography variant="body1">
+										{entitiesEdit?.purchaseDate
+											? moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY')
+											: ''}{' '}
+									</Typography>
+								</Grid>
+								<Grid item xs={6} md={6} lg={4}>
+									<Typography variant="subtitle2">Tình trạng</Typography>
+								</Grid>
+								<Grid item xs={6} md={6} lg={8}>
+									<Typography variant="body1">{entitiesEdit?.statusName}</Typography>
+								</Grid>
+								<Grid item xs={6} md={6} lg={4}>
+									<Typography variant="subtitle2">Mô tả</Typography>
+								</Grid>
+								<Grid item xs={6} md={6} lg={8}>
+									<Typography variant="body1">{entitiesEdit?.descr}</Typography>
+								</Grid>
+								<Grid item xs={12} md={12} lg={12}>
+									<Typography variant="subtitle2" color="primary">
+										THÔNG TIN NHÂN VIÊN SỬ DỤNG.
+									</Typography>
+								</Grid>
+								<Grid item xs={6} md={6} lg={4}>
+									<Typography variant="subtitle2">Nhân viên</Typography>
+								</Grid>
+								<Grid item xs={6} md={6} lg={8}>
+									<Typography variant="body1">{entitiesEdit?.empName}</Typography>
+								</Grid>
+								<Grid item xs={6} md={6} lg={4}>
+									<Typography variant="subtitle2">Chức vụ</Typography>
+								</Grid>
+								<Grid item xs={6} md={6} lg={8}>
+									<Typography variant="body1">{entitiesEdit?.jobTitle}</Typography>
+								</Grid>
+								<Grid item xs={6} md={6} lg={4}>
+									<Typography variant="subtitle2">Bộ phận</Typography>
+								</Grid>
+								<Grid item xs={6} md={6} lg={8}>
+									<Typography variant="body1">{entitiesEdit?.deptNameManager}</Typography>
+								</Grid>
+								<Grid item xs={6} md={6} lg={4}>
+									<Typography variant="subtitle2">Khu vực</Typography>
+								</Grid>
+								<Grid item xs={6} md={6} lg={8}>
+									<Typography variant="body1">{entitiesEdit?.regionName}</Typography>
+								</Grid>
+							</Grid>
+						</div>
+						<div>
+							<div className="flex flex-row mb-8 mt-8">
+								<Typography variant="subtitle2" color="primary">
+									THÔNG TIN THANH LÝ.
+								</Typography>
 							</div>
-							<div className="px-16 sm:px-24">
-								<div className="flex flex-row">
-									<Typography variant="subtitle2">Thông tin thanh lý.</Typography>
-								</div>
-								<div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 mb-16 gap-8 ">
-									<div className="flex flex-col">
-										<Field
-											label="Lý do "
-											autoFocus
-											name="note"
-											row={4}
-											component={InputTextAreaLg}
-											className="mb-16"
-											variant="outlined"
-										/>
-										<Field
-											label="Ngày thanh lý "
-											name="date"
-											hasFeedback
-											format="DD/MM/YYYY"
-											component={DateCustom}
-											className="mb-16"
-										/>
-									</div>
-									<Field
-										label="File đính kèm"
-										style={{ height: '4.5rem' }}
-										name="file"
-										component={FileCustomVersion2}
-										className="mb-16"
-										variant="outlined"
-									/>
-								</div>
+							<div className="grid grid-cols-2  gap-8 ">
+								<Field
+									label="Ngày thanh lý "
+									name="date"
+									hasFeedback
+									format="DD/MM/YYYY"
+									component={AntDateCustom}
+								/>
 							</div>
-						</DialogContent>
-						<DialogActions>
+							<div className="grid  gap-8 ">
+								<Field label="Lý do " name="note" row={3} component={AntDescriptionsCustom} />
+								<Field label="File đính kèm" name="file" component={AntFileCustom} />
+							</div>
+						</div>
+						<div className="flex justify-end">
 							{actionLoading ? (
 								<Spin size="middle" />
 							) : (
-								<Button type="submit" className="h-26" variant="contained" color="primary">
-									Lưu
+								<Button type="submit" className="mr-8" variant="contained" color="primary">
+									<Typography variant="button">Lưu</Typography>
 								</Button>
 							)}
 							<Button
@@ -202,9 +147,9 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 								variant="contained"
 								color="secondary"
 							>
-								Hủy
+								<Typography variant="button">Huỷ</Typography>
 							</Button>
-						</DialogActions>
+						</div>
 					</Form>
 				)}
 			</Formik>

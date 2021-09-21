@@ -1,11 +1,13 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
-import { Upload } from 'antd';
+import { Upload, Form } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
-import { FormGroup, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 
 const { Dragger } = Upload;
+
+const FormItem = Form.Item;
 
 export default function AntFileCustom({
 	field, // { name, value, onChange, onBlur }
@@ -25,11 +27,8 @@ export default function AntFileCustom({
 	};
 	return (
 		<div className="form-item-input">
-			<div className="flex flex-row mt-8">
-				<Typography variant="subtitle2" color="primary">
-					{' '}
-					{label}{' '}
-				</Typography>
+			<div className="flex flex-row mt-8 mb-8">
+				<Typography variant="subtitle2"> {label} </Typography>
 				{hasFeedback && (
 					<p style={{ marginBottom: '-20px' }} className="text-red ml-8">
 						{' '}
@@ -37,15 +36,17 @@ export default function AntFileCustom({
 					</p>
 				)}
 			</div>
-			<Dragger {...field} {...props} onChange={handleChangeFile}>
-				<p className="ant-upload-drag-icon">
-					<InboxOutlined />
-				</p>
-				<p style={style} className="ant-upload-text">
-					Chọn hoặc kéo thả vào khu vực này
-				</p>
-				<p className="ant-upload-hint">Hỗ trợ tải lên một lần hoặc hàng loạt.</p>
-			</Dragger>
+			<FormItem>
+				<Dragger {...field} {...props} onChange={handleChangeFile}>
+					<p className="ant-upload-drag-icon">
+						<InboxOutlined />
+					</p>
+					<p style={style} className="ant-upload-text">
+						Chọn hoặc kéo thả vào khu vực này
+					</p>
+					<p className="ant-upload-hint">Hỗ trợ tải lên một lần hoặc hàng loạt.</p>
+				</Dragger>
+			</FormItem>
 		</div>
 	);
 }
