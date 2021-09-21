@@ -162,27 +162,25 @@ export default function CustomForm({
 							entitiesEdit.taskID &&
 							entitiesEdit.typeName === 'TASK' &&
 							params.category !== 'newtask' && (
-								<Grid container spacing={6}>
-									<Grid item lg={6} md={6} sm={6} xs={12}>
-										<Field
-											label="Status"
-											name="status"
-											readOnly={entitiesEdit && !entitiesEdit.isModified}
-											position="right"
-											component={AntSelectCustom}
-											options={ArrProjectStatus}
-										/>
-									</Grid>
-									<Grid item lg={6} md={6} sm={6} xs={12}>
-										<Field
-											label="Percentage"
-											name="percentage"
-											readOnly={entitiesEdit && !entitiesEdit.isModified}
-											component={AntSlideCustom}
-											position="right"
-										/>
-									</Grid>
-								</Grid>
+								<div className="grid grid-cols-1 sm:grid-cols-2 gap-16 ">
+									<Field
+										label="Status"
+										name="status"
+										readOnly={entitiesEdit && !entitiesEdit.isModified}
+										position="right"
+										width="58.8%"
+										component={AntSelectCustom}
+										options={ArrProjectStatus}
+									/>
+									<Field
+										label="Percentage"
+										name="percentage"
+										width="58.8%"
+										readOnly={entitiesEdit && !entitiesEdit.isModified}
+										component={AntSlideCustom}
+										position="right"
+									/>
+								</div>
 							)}
 						<div className="grid grid-cols-1 sm:grid-cols-2 gap-16 ">
 							<Field
