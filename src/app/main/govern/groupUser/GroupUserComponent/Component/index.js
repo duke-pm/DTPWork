@@ -1,19 +1,13 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Typography } from '@material-ui/core';
 import { Table, Checkbox, Spin } from 'antd';
 import React from 'react';
 import AppsIcon from '@material-ui/icons/Apps';
 import { sortDirestion } from '@fuse/core/DtpConfig';
+import Text from 'app/components/Text';
 import ActionsGroupUserBody from '../ActionGroupUser/ActionsGroupUserBody';
 
 export default function TableGroupUser({ entities, listLoading, handleEditGroupUser, createSortHandler }) {
-	// const filterOwner = value => {
-	// 	console.log(value);
-	// };
-	// const onChange = value => {
-	// 	console.log(value);
-	// };
 	const onChange = (pagination, filters, sorter, extra) => {
 		const sort = sortDirestion[sorter.order];
 		createSortHandler(sort, sorter.field);
@@ -24,21 +18,21 @@ export default function TableGroupUser({ entities, listLoading, handleEditGroupU
 			dataIndex: 'groupID',
 			key: 'groupID',
 			sorter: true,
-			render: (_, item) => <Typography variant="body1">{item.groupID}</Typography>
+			render: (_, item) => <Text>{item.groupID}</Text>
 		},
 		{
 			title: 'Tên nhóm',
 			dataIndex: 'groupName',
 			key: 'groupName',
 			sorter: true,
-			render: (_, item) => <Typography variant="body1">{item.groupName}</Typography>
+			render: (_, item) => <Text>{item.groupName}</Text>
 		},
 		{
 			title: 'Mô tả',
 			dataIndex: 'description',
 			key: 'description',
 			sorter: true,
-			render: (_, item) => <Typography variant="body1">{item.description}</Typography>
+			render: (_, item) => <Text>{item.description}</Text>
 		},
 		{
 			title: 'Inactive',

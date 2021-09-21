@@ -1,10 +1,11 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Icon, Typography } from '@material-ui/core';
+import { Icon } from '@material-ui/core';
 import { Tooltip } from 'antd';
 import React, { useEffect } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import Text from 'app/components/Text';
 import FormComponent from './Component';
 
 export default function ModifyGroupUser() {
@@ -28,9 +29,9 @@ export default function ModifyGroupUser() {
 	return (
 		<div className="container govern">
 			<div className="govern__header px-16">
-				<Typography color="primary" variant="h6">
+				<Text color="primary" type="title">
 					{params.type === 'cap-nhat' ? 'Chỉnh sửa nhóm người dùng' : 'Tạo mới nhóm người dùng'}
-				</Typography>
+				</Text>
 				<div className="govern__header--action">
 					<Tooltip placement="bottom" title="Exit">
 						<span onClick={ExitPage} className="action--button">

@@ -1,9 +1,10 @@
-import { Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import React from 'react';
 // import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 // import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import Search from 'antd/lib/input/Search';
 import { useHistory } from 'react-router';
+import Text from 'app/components/Text';
 import LevelApprovalComponent from './LevelApprovalComponent';
 // import { LevelApprovalContext } from './LevelApprovalContext';
 
@@ -30,9 +31,9 @@ export default function ContentProvider() {
 	return (
 		<div className="container govern">
 			<div className="govern__header px-16 shadow-lg">
-				<Typography color="primary" variant="h6">
+				<Text color="primary" type="title">
 					Cấp quyền
-				</Typography>
+				</Text>
 				<div className="govern__header--action">
 					<Search
 						onChange={e => onHandleChange(e)}
@@ -46,8 +47,9 @@ export default function ContentProvider() {
 						onSearch={handleSearch}
 					/>
 					<Button onClick={handleChangeRoute} className="button__create" variant="contained" color="primary">
-						{' '}
-						<Typography variant="button"> Tạo mới </Typography>
+						<Text type="button" color="white">
+							Tạo mới
+						</Text>
 					</Button>
 				</div>
 			</div>

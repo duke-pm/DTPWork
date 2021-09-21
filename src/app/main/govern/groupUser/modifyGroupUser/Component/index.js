@@ -38,13 +38,11 @@ export default function FormComponent({ entitiesEdit, actionLoading }) {
 		}
 	};
 	return (
-		<>
-			<CustomForm
-				entitiesEdit={entitiesEdit}
-				actionLoading={actionLoading}
-				handleCloseFormGroupUser={handleCloseFormGroupUser}
-				handleSubmitFormGroupUser={handleSubmitFormGroupUser}
-			/>
-		</>
+		<CustomForm
+			entitiesEdit={entitiesEdit}
+			actionLoading={actionLoading}
+			handleCloseFormGroupUser={handleCloseFormGroupUser}
+			handleSubmitFormGroupUser={handleSubmitFormGroupUser}
+		/>
 	);
 }

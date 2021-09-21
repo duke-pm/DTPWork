@@ -1,9 +1,10 @@
 import { notificationConfig } from '@fuse/core/DtpConfig';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
-import { Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { Select } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import Text from 'app/components/Text';
 import * as actionsInfor from '../../assets/Possesion/_redux/possesionActions';
 import ListRoleSettingContent from './ListRoleSettingComponent';
 import * as actions from './_reduxListRoleMenu/listRoleMenuSettingActions';
@@ -68,9 +69,9 @@ export default function ListRoleSettingPage() {
 	return (
 		<div className="container govern">
 			<div className="govern__header px-16 shadow-lg">
-				<Typography color="primary" variant="h6">
+				<Text color="primary" type="title">
 					Phân quyền chức năng
-				</Typography>
+				</Text>
 				<div className="govern__header--action">
 					<Select
 						allowClear
@@ -104,11 +105,15 @@ export default function ListRoleSettingPage() {
 							))}
 					</Select>
 					<Button onClick={handleFiler} className="button__create mr-16" variant="contained" color="primary">
-						<Typography variant="button">Filter</Typography>
+						<Text type="button" color="white">
+							Filter
+						</Text>
 					</Button>
 					<Button onClick={handleUpdatedRole} className="button__create" variant="contained" color="primary">
-						<Typography variant="button">Update</Typography>
-					</Button>{' '}
+						<Text type="button" color="white">
+							Update
+						</Text>
+					</Button>
 				</div>
 			</div>
 			<div className="govern__content mt-8">

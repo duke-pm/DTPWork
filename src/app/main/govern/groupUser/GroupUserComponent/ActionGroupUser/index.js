@@ -8,8 +8,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import { useDispatch } from 'react-redux';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import { AddCircleOutline } from '@material-ui/icons';
+import Text from 'app/components/Text';
 import * as actions from '../../_reduxGroupUser/groupUserActions';
-
 import { GroupUserContext } from '../../GroupUserContext';
 
 export default function ActionGroupUser({ handleOpenFormGroupUser }) {
@@ -38,7 +38,9 @@ export default function ActionGroupUser({ handleOpenFormGroupUser }) {
 						color="primary"
 						startIcon={<AddCircleOutline />}
 					>
-						Thêm mới
+						<Text type="button" color="white">
+							Thêm mới
+						</Text>
 					</Button>
 					<Paper className="flex justify-between">
 						<InputBase
@@ -56,7 +58,6 @@ export default function ActionGroupUser({ handleOpenFormGroupUser }) {
 						<IconButton onClick={handleSearch} type="button">
 							<SearchIcon />
 						</IconButton>
-						{/* <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} /> */}
 					</Paper>
 				</div>
 			</FuseAnimate>

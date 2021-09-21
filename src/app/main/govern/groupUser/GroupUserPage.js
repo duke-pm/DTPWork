@@ -1,8 +1,9 @@
-import { Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import Search from 'antd/lib/input/Search';
 import React, { useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import Text from 'app/components/Text';
 import GroupUserContent from './GroupUserComponent/GroupUserContent';
 import { GroupUserContext } from './GroupUserContext';
 import { setTaskEditGroupUser, filterGroupUser } from './_reduxGroupUser/groupUserActions';
@@ -30,25 +31,24 @@ export default function GroupUserPage() {
 	return (
 		<div className="container govern">
 			<div className="govern__header px-16 shadow-lg">
-				<Typography color="primary" variant="h6">
-					{' '}
-					Nhóm người dùng{' '}
-				</Typography>
+				<Text color="primary" type="title">
+					Nhóm người dùng
+				</Text>
+
 				<div className="govern__header--action">
 					<Search
-						onChange={e => onHandleChange(e)}
-						onKeyPress={event => {
-							if (event.key === 'Enter') {
-								handleSearch();
-							}
-						}}
 						className="input__search"
 						placeholder="Search"
 						onSearch={handleSearch}
+						onChange={onHandleChange}
+						onKeyPress={event => {
+							if (event.key === 'Enter') handleSearch();
+						}}
 					/>
 					<Button onClick={handleChangeRoute} className="button__create" variant="contained" color="primary">
-						{' '}
-						<Typography variant="button"> Tạo mới </Typography>
+						<Text type="button" color="white">
+							Tạo mới
+						</Text>
 					</Button>
 				</div>
 			</div>

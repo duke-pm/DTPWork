@@ -33,23 +33,18 @@ export default function AntdCustomCheckbox({
 		return handleChangeState ? handleChangeState(e) : null;
 	};
 	return (
-		<>
-			<div className={`form-item-input ${position && 'flex flex-row justify-between '}`}>
-				<div className={`flex flex-row ${position && 'mt-8'}`}>
-					<Text required={hasFeedback} type="body">
-						{label}
-					</Text>
-				</div>
-				<FormItem
-					style={{ width: '100%', marginLeft: top || '0px' }}
-					rules={[{ required: true }]}
-					hasFeedback={!!((hasFeedback && submitted) || (hasFeedback && touched))}
-					help={submittedError || touchedError ? hasError : false}
-					validateStatus={submittedError || touchedError ? 'error' : hasFeedback && 'success'}
-				>
-					<Checkbox className={readOnly ? 'readOnly' : ''} defaultChecked={value} onChange={onChange} />
-				</FormItem>
-			</div>
-		</>
+		<div className={`${position && 'flex flex-row'}`}>
+			<FormItem
+				rules={[{ required: true }]}
+				hasFeedback={!!((hasFeedback && submitted) || (hasFeedback && touched))}
+				help={submittedError || touchedError ? hasError : false}
+				validateStatus={submittedError || touchedError ? 'error' : hasFeedback && 'success'}
+			>
+				<Checkbox className={readOnly ? 'readOnly' : ''} defaultChecked={value} onChange={onChange} />
+			</FormItem>
+			<Text required={hasFeedback} className="ml-10 mt-6">
+				{label}
+			</Text>
+		</div>
 	);
 }

@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Icon, Typography } from '@material-ui/core';
+import { Icon, Grid } from '@material-ui/core';
 import { Tooltip } from 'antd';
 import React, { useEffect } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
+import Text from 'app/components/Text';
 import { useHistory, useParams } from 'react-router-dom';
 import FormComponent from './Component';
 
@@ -28,9 +29,9 @@ export default function ModifySettingLine() {
 	return (
 		<div className="container govern">
 			<div className="govern__header px-16">
-				<Typography color="primary" variant="h6">
+				<Text color="primary" type="title">
 					{params.type === 'cap-nhat' ? 'Chỉnh sửa quyền' : 'Tạo quyền mới'}
-				</Typography>
+				</Text>
 				<div className="govern__header--action">
 					<Tooltip placement="bottom" title="Exit">
 						<span onClick={ExitPage} className="action--button">
@@ -40,9 +41,13 @@ export default function ModifySettingLine() {
 				</div>
 			</div>
 			<div className="govern__content mt-8">
-				<div className="modify-govern">
-					<FormComponent entitiesEdit={entitiesEdit} actionLoading={actionLoading} />
-				</div>
+				<Grid container className="w-full p-16">
+					<Grid item lg={3} md={3} sm={false} xs={false} />
+					<Grid item lg={6} md={6} sm={12} xs={12}>
+						<FormComponent entitiesEdit={entitiesEdit} actionLoading={actionLoading} />
+					</Grid>
+					<Grid item lg={3} md={3} sm={false} xs={false} />
+				</Grid>
 			</div>
 		</div>
 	);

@@ -173,7 +173,9 @@ function TableProject(props) {
 			title: () => {
 				return (
 					<div className="flex items-center ">
-						Status
+						<Text type="subTitle" color="primary">
+							Status
+						</Text>
 						<Dropdown
 							// visible
 							overlay={
@@ -205,7 +207,7 @@ function TableProject(props) {
 			align: 'center',
 			dataIndex: 'public',
 			key: 'public',
-			width: '8%',
+			width: '6%',
 			render: (_, item) =>
 				item.isPublic ? (
 					<Icon className="text-green text-20">check_circle</Icon>
@@ -218,7 +220,7 @@ function TableProject(props) {
 			align: 'center',
 			dataIndex: 'public',
 			key: 'public',
-			width: '8%',
+			width: '6%',
 			render: (_, item) =>
 				item.priorityLevel !== 0 && (
 					<Badge count={item.priorityLevel} size="small">

@@ -1,11 +1,9 @@
-import {
-	validateField
-	// validateFieldEN
-} from '@fuse/core/DtpConfig';
+import { validateField } from '@fuse/core/DtpConfig';
 import AntdCustomCheckbox from '@fuse/FormBookingCustom/AntdCustomCheckbox';
 import AntDescriptionsCustom from '@fuse/FormBookingCustom/AntDescriptionsCustom';
 import AntInputCustom from '@fuse/FormBookingCustom/AntInputCustom';
-import { Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
+import Text from 'app/components/Text';
 import { Spin } from 'antd';
 import { Field, Form, Formik } from 'formik';
 import React from 'react';
@@ -39,19 +37,8 @@ export default function CustomForm({
 			{({ handleSubmit, isSubmitting }) => (
 				<Form>
 					<div className="mt-8 px-16 sm:px-24">
-						<div>
-							<Field label="Tên nhóm" name="groupName" hasFeedback component={AntInputCustom} />{' '}
-						</div>
-						<div>
-							<Field
-								label="Mô tả"
-								name="description"
-								type="text"
-								component={AntDescriptionsCustom}
-								row={4}
-							/>
-						</div>
-
+						<Field label="Tên nhóm" name="groupName" hasFeedback component={AntInputCustom} />
+						<Field label="Mô tả" name="description" type="text" component={AntDescriptionsCustom} row={4} />
 						<Field
 							label="Inactive"
 							name="inactive"
@@ -66,8 +53,9 @@ export default function CustomForm({
 							<Spin className="ml-20" />
 						) : (
 							<Button type="submit" className="button__cancle mr-8" variant="contained" color="primary">
-								{' '}
-								<Typography variant="button"> Save </Typography>
+								<Text type="button" color="white">
+									Save
+								</Text>
 							</Button>
 						)}
 						<Button
@@ -76,7 +64,7 @@ export default function CustomForm({
 							variant="contained"
 							color="secondary"
 						>
-							<Typography variant="button"> Cancel </Typography>
+							<Text type="button">Cancel</Text>
 						</Button>
 					</div>
 				</Form>

@@ -5,9 +5,10 @@ import {
 	// Avatar, Menu, Tooltip, Progress
 } from 'antd';
 import React from 'react';
-import { MenuItem, ListItemIcon, Icon, ListItemText, Typography } from '@material-ui/core';
+import { MenuItem, ListItemIcon, Icon, ListItemText } from '@material-ui/core';
 import AppsIcon from '@material-ui/icons/Apps';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Text from 'app/components/Text';
 import { withRouter } from 'react-router';
 // import { useDispatch } from 'react-redux';
 // import { useTheme } from '@material-ui/core/styles';
@@ -58,14 +59,14 @@ function TableProject(props) {
 			align: 'center',
 			dataIndex: 'roleCode',
 			key: 'roleCode',
-			render: (_, item) => <Typography variant="body1">{item.roleCodde}</Typography>
+			render: (_, item) => <Text>{item.roleCodde}</Text>
 		},
 		{
 			title: 'Tên quyền',
 			align: 'center',
 			dataIndex: 'roleName',
 			key: 'roleName',
-			render: (_, item) => <Typography variant="body1">{item.roleName}</Typography>
+			render: (_, item) => <Text>{item.roleName}</Text>
 		}
 	];
 	return <Table rowKey="taskID" className="virtual-table" pagination={false} columns={columns} dataSource={[]} />;

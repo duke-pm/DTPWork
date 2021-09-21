@@ -3,6 +3,7 @@ import { Button, IconButton, InputBase, Paper } from '@material-ui/core';
 import React, { useContext } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
+import Text from 'app/components/Text';
 // import { useDispatch } from 'react-redux';
 import { LevelApprovalContext } from '../../LevelApprovalContext';
 
@@ -54,7 +55,9 @@ export default function ActionLevelApprovalLine({ classes }) {
 							color="primary"
 							startIcon={<AddCircleOutline />}
 						>
-							Tạo mới
+							<Text type="button" color="white">
+								Tạo mới
+							</Text>
 						</Button>
 					</div>
 

@@ -305,10 +305,9 @@ function TableProject(props) {
 		},
 		{
 			title: 'Type',
-			align: 'center',
 			dataIndex: 'type',
 			key: 'type',
-			width: '8%',
+			width: '6%',
 			render: (_, item) => (
 				<Text type="subTitle" style={{ color: typeColor[item.typeName], textTransform: 'uppercase' }}>
 					{item.typeName}
@@ -319,7 +318,9 @@ function TableProject(props) {
 			title: () => {
 				return (
 					<div className="flex items-center ">
-						Status
+						<Text type="subTitle" color="primary">
+							Status
+						</Text>
 						<Dropdown
 							// visible
 							overlay={
@@ -376,7 +377,6 @@ function TableProject(props) {
 		},
 		{
 			title: 'Priority',
-			align: 'center',
 			dataIndex: 'priority',
 			key: 'priority',
 			width: '6%',

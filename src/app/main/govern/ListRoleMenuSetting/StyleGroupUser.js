@@ -13,10 +13,6 @@ const useStyles = makeStyles(theme => ({
 	tableHead: {
 		backgroundColor: 'red'
 	},
-	// table: {
-	// 	minWidth: 1300,
-	// 	overflowX: 'auto'
-	// },
 	cellTabel: {
 		width: 340
 	},
@@ -30,7 +26,6 @@ const useStyles = makeStyles(theme => ({
 	modal: {
 		display: 'flex',
 		alignItems: 'start',
-		// marginTop: 80,
 		justifyContent: 'center'
 	},
 	paper: {

@@ -7,9 +7,5 @@ export default function FormComponent({ entitiesEdit, actionLoading }) {
 	// const handleCloseFormGroupUser = () => {
 	// 	history.goBack();
 	// };
-	return (
-		<>
-			<CustomForm entitiesEdit={entitiesEdit} actionLoading={actionLoading} />
-		</>
-	);
+	return <CustomForm entitiesEdit={entitiesEdit} actionLoading={actionLoading} />;
 }
