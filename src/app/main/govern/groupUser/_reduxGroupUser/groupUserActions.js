@@ -33,7 +33,7 @@ export const filterGroupUser = (limit, page, sortColumn, sortDirection, search) 
 		PageNum: page || 1,
 		PageSize: limit || 25,
 		SortColumn: sortColumn || '',
-		SortDirection: sortDirection || 'desc',
+		SortDirection: sortDirection || 'asc',
 		Search: search || ''
 	};
 	return requestFrom

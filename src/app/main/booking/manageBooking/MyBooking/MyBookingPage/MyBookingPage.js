@@ -3,11 +3,10 @@
 import { Button, Icon, Typography } from '@material-ui/core';
 import Search from 'antd/lib/input/Search';
 import React from 'react';
-import { DatePicker } from 'antd';
 import { useHistory } from 'react-router-dom';
 import TableAllBooking from './component/TableAllBooking';
 
-const { RangePicker } = DatePicker;
+// const { RangePicker } = DatePicker;
 
 export default function AllBookingPage() {
 	const history = useHistory();

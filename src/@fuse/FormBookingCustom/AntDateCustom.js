@@ -2,7 +2,8 @@
 import React from 'react';
 import { DatePicker, Form } from 'antd';
 import * as moment from 'moment';
-import { Typography } from '@material-ui/core';
+
+import Text from 'app/components/Text';
 
 const FormItem = Form.Item;
 
@@ -30,26 +31,19 @@ export default function AntDateCustom({
 	const handleDateChange = (date, dateString) => {
 		form.setFieldValue(field.name, date);
 	};
-	function disabledDate(current) {
-		// Can not select days before today and today
-		return current && current < moment().subtract(1, 'days');
-	}
+	// function disabledDate(current) {
+	// 	// Can not select days before today and today
+	// 	return current && current < moment().subtract(1, 'days');
+	// }
 	const dateFormat = 'DD/MM/YYYY';
 	return (
 		<>
 			<div className={`form-item-input ${position && 'flex flex-row justify-between '}`}>
 				{label && (
 					<div className={`flex flex-row ${position && 'mt-8'}`}>
-						<Typography color="primary" variant="body1" className="label--form">
-							{' '}
-							{label}{' '}
-						</Typography>
-						{hasFeedback && (
-							<p style={{ marginBottom: '-20px' }} className="text-red ml-8">
-								{' '}
-								(*){' '}
-							</p>
-						)}
+						<Text required={hasFeedback} type="body">
+							{label}
+						</Text>
 					</div>
 				)}
 				<FormItem
@@ -63,7 +57,7 @@ export default function AntDateCustom({
 						style={{ width: '100%' }}
 						// placeholder={placeholder || 'Vui lòng chọn ngày'}
 						margin="normal"
-						disabledDate={disabledDate}
+						// disabledDate={disabledDate}
 						format={dateFormat}
 						value={value ? moment(moment(value), dateFormat) : null}
 						onChange={handleDateChange}

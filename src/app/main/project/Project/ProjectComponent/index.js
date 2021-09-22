@@ -1,9 +1,9 @@
 /* eslint-disable no-shadow */
-import FuseAnimate from '@fuse/core/FuseAnimate';
 import React, { useContext } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import Panigation from '@fuse/core/FusePanigate';
 import { Spin, Tag } from 'antd';
+import Text from 'app/components/Text';
 import TableProject from './TableProject';
 import { ProjectContext } from '../ProjectContext';
 import { fetchProjectDetailFilter } from '../../_redux/_projectActions';
@@ -11,7 +11,8 @@ import { fetchProjectDetailFilter } from '../../_redux/_projectActions';
 export default function ProjectComponent({ owner, ArrProjectStatus, params, sectorArr }) {
 	const dispatch = useDispatch();
 	const projectContext = useContext(ProjectContext);
-	const { sector, setPage, setRowPage, rowPage, page, status, ownerFilter, dateStart, search } = projectContext;
+	const { sector, setPage, setRowPage, rowPage, page, status, ownerFilter, dateStart, search, setSort, sort } =
+		projectContext;
 	const { currentState } = useSelector(state => ({ currentState: state.project }), shallowEqual);
 	const { entitiesDetail, listLoading, actionLoading, total_count } = currentState;
 	const handleChangePage = (event, newPage) => {
@@ -25,6 +26,8 @@ export default function ProjectComponent({ owner, ArrProjectStatus, params, sect
 				status?.toString(),
 				dateStart,
 				sector?.toString(),
+				sort.id,
+				sort.direction,
 				search
 			)
 		);
@@ -41,16 +44,39 @@ export default function ProjectComponent({ owner, ArrProjectStatus, params, sect
 				status?.toString(),
 				dateStart,
 				sector?.toString(),
+				sort.id,
+				sort.direction,
 				search
 			)
 		);
 	};
+	const createSortHandler = (direction, id) => {
+		dispatch(
+			fetchProjectDetailFilter(
+				params.detail,
+				rowPage,
+				page,
+				ownerFilter?.toString(),
+				status?.toString(),
+				dateStart,
+				sector?.toString(),
+				id,
+				direction,
+				search
+			)
+		);
+		setSort({
+			direction,
+			id
+		});
+	};
 	return (
-		<div className="w-full flex flex-col">
-			<FuseAnimate animation="transition.slideUpIn" delay={200}>
+		<Spin spinning={listLoading}>
+			<div className="w-full flex flex-col">
 				<div className={`'grid-cols-1'}  gap-8`}>
 					<div className="flex flex-col">
 						<TableProject
+							createSortHandler={createSortHandler}
 							ArrProjectStatus={ArrProjectStatus}
 							params={params}
 							sectorArr={sectorArr}
@@ -62,13 +88,13 @@ export default function ProjectComponent({ owner, ArrProjectStatus, params, sect
 
 						{entitiesDetail?.listTask?.length !== 0 && (
 							<div className="flex flex-row items-center justify-between">
-								<div className="flex flex-row">
+								<div className="flex flex-row items-center">
 									<Tag
 										className="shadow-md"
 										style={{ width: '25px', height: '25px', marginLeft: '8px' }}
 										color="#d50000"
 									/>
-									<p style={{ fontWeight: '400', color: '#006565' }}>Late deadline</p>
+									<Text color="error">Late deadline</Text>
 								</div>
 
 								<div className="flex flex-row items-center justify-end">
@@ -85,7 +111,7 @@ export default function ProjectComponent({ owner, ArrProjectStatus, params, sect
 						)}
 					</div>
 				</div>
-			</FuseAnimate>
-		</div>
+			</div>
+		</Spin>
 	);
 }

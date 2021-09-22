@@ -1,18 +1,9 @@
-import {
-	AppBar,
-	Button,
-	Dialog,
-	DialogActions,
-	DialogContent,
-	IconButton,
-	Paper,
-	Toolbar,
-	Typography
-} from '@material-ui/core';
+import { AppBar, Button, Dialog, DialogActions, DialogContent, IconButton, Paper, Toolbar } from '@material-ui/core';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import React from 'react';
 import CloseIcon from '@material-ui/icons/Close';
 import { DatePicker, Select } from 'antd';
+import Text from 'app/components/Text';
 import moment from 'moment';
 
 export default function ModalListControlFilter({
@@ -41,9 +32,9 @@ export default function ModalListControlFilter({
 					<IconButton onClick={handleCloseFilter} edge="start" color="inherit" aria-label="close">
 						<CloseIcon />
 					</IconButton>
-					<Typography variant="subtitle1" color="inherit">
+					<Text type="subTitle" color="primary">
 						Filter
-					</Typography>
+					</Text>
 				</Toolbar>
 			</AppBar>
 			<DialogContent>

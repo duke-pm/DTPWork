@@ -1,8 +1,9 @@
 /* eslint-disable react/jsx-no-duplicate-props */
 import React from 'react';
 import { Form, Radio } from 'antd';
-import { Typography } from '@material-ui/core';
 import './index.scss';
+
+import Text from 'app/components/Text';
 
 const FormItem = Form.Item;
 export default function AntRadioCustom({
@@ -31,15 +32,9 @@ export default function AntRadioCustom({
 		<div className={`form-item-input ${position && 'flex flex-row  justify-between'}`}>
 			{label ? (
 				<div className={`flex flex-row `}>
-					<Typography color="primary" variant="body1" className="label--form">
-						{' '}
-						{label}{' '}
-					</Typography>
-					{hasFeedback && (
-						<p style={{ marginBottom: '-20px' }} className="text-red">
-							*
-						</p>
-					)}
+					<Text required={hasFeedback} type="body">
+						{label}
+					</Text>
 				</div>
 			) : null}
 			<FormItem
@@ -47,7 +42,7 @@ export default function AntRadioCustom({
 				help={submittedError || touchedError ? hasError : false}
 				validateStatus={submittedError || touchedError ? 'error' : 'success'}
 			>
-				<Radio.Group {...field} {...props} onChange={onChange}>
+				<Radio.Group className={`${readOnly ? 'readOnly' : ''}`} {...field} {...props} onChange={onChange}>
 					{options?.map(op => (
 						<Radio value={op.value} key={op.value}>
 							{' '}

@@ -1,5 +1,5 @@
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
-import { Button, IconButton, InputBase, ListItemText, MenuItem, Paper, Typography, Grid } from '@material-ui/core';
+import { Button, IconButton, InputBase, ListItemText, MenuItem, Paper, Grid } from '@material-ui/core';
 import React, { useContext, useState } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline';
@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { Popover, Select } from 'antd';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import Text from 'app/components/Text';
 import { ProjectContext } from '../../ProjectContext';
 import { setTaskEditProject, fetchProjectDetailFilter, getTaskDetailAll } from '../../../_redux/_projectActions';
 import ModalListControlFilter from './ModalListControlFilter';
@@ -109,7 +110,7 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 				}}
 			>
 				<div className="flex flex-col sm:flex-row justify-between">
-					<Typography variant="subtitle2">Filter </Typography>
+					<Text type="subTitle">Filter </Text>
 				</div>
 				<Grid className="mb-16" container spacing={2}>
 					<Grid item xs={12} sm={6} md={6} lg={2}>
@@ -180,7 +181,7 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 							color="primary"
 							startIcon={<FilterListIcon />}
 						>
-							<Typography variant="inherit">Filter</Typography>
+							<Text type="button">Filter</Text>
 						</Button>
 						<Button
 							onClick={handleOpenGant}
@@ -190,7 +191,7 @@ export default function ActionHeaderProject({ classes, sectorArr, ArrProjectStat
 							className="ml-16"
 							startIcon={<EqualizerIcon />}
 						>
-							<Typography variant="inherit">Gantt chart</Typography>
+							<Text type="button">Gantt chart</Text>
 						</Button>
 					</Grid>
 				</Grid>

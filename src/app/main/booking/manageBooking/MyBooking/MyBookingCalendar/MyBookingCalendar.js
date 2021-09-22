@@ -3,7 +3,6 @@
 import { Button, Icon, Typography } from '@material-ui/core';
 import Search from 'antd/lib/input/Search';
 import React from 'react';
-import { DatePicker } from 'antd';
 import { useHistory } from 'react-router-dom';
 import { Calendar, momentLocalizer, Views } from 'react-big-calendar';
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
@@ -13,7 +12,7 @@ import moment from 'moment';
 
 const allViews = Object.keys(Views).map(k => Views[k]);
 
-const { RangePicker } = DatePicker;
+// const { RangePicker } = DatePicker;
 
 const DragAndDropCalendar = withDragAndDrop(Calendar);
 const localizer = momentLocalizer(moment);

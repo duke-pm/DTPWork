@@ -41,7 +41,7 @@ export const searchConfirms =
 			PageNum: page || 1,
 			FromDate: FromDate ? moment(FromDate).format('YYYY/MM/DD') : null,
 			ToDate: ToDate ? moment(ToDate).format('YYYY/MM/DD') : null,
-			RequestTypeID: typeID,
+			RequestTypeID: 0 || typeID,
 			SortColumn: id || null,
 			SortDirection: direction || null,
 			IsResolveRequest: typeResovle || false
@@ -55,7 +55,7 @@ export const searchConfirms =
 				}
 			})
 			.catch(err => {
-				dispatch(actions.catchError({ callType: callTypes.list }));
+				dispatch(actions.catchError({ callType: callTypes.action }));
 				notificationConfig('warning', 'Thất bại', 'Đã có lỗi xảy ra  vui lòng thử lại sau');
 			});
 	};
@@ -108,7 +108,7 @@ export const requestAssetFromUserAction = (data, assets) => dispatch => {
 			if (!data.isError) {
 				dispatch(actions.requestFromUser());
 			} else {
-				notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', data.errorMessage);
+				notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', data.systemErrorMessage);
 				dispatch(actions.catchError({ callType: callTypes.action }));
 			}
 			return data;

@@ -8,6 +8,10 @@ const ListUserConfig = {
 	},
 	routes: [
 		{
+			path: '/quan-tri/danh-sach-nguoi-dung/:type/:id',
+			component: React.lazy(() => import('./modifyListUser'))
+		},
+		{
 			path: '/quan-tri/danh-sach-nguoi-dung',
 			component: React.lazy(() => import('./index'))
 		}

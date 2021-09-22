@@ -1,12 +1,15 @@
-import { AppBar, Dialog, IconButton, Toolbar, DialogContent } from '@material-ui/core';
-import React from 'react';
-import CloseIcon from '@material-ui/icons/Close';
-import { Typography } from 'antd';
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import { Icon } from '@material-ui/core';
+import React, { useEffect } from 'react';
+import { Spin, Tooltip } from 'antd';
 import { useSelector, shallowEqual } from 'react-redux';
-import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
+import Text from 'app/components/Text';
+import { useHistory } from 'react-router';
 import InformationProceeUseAsset from './InformationProceeUseAsset';
 
-export default function ProcessingUseAsset({ openHistory, setOpenHistory }) {
+export default function ProcessingUseAsset() {
+	const history = useHistory();
 	const { entitiesEdit, actionLoading } = useSelector(
 		state => ({
 			entitiesEdit: state.possesion.entitiesEdit,
@@ -14,34 +17,31 @@ export default function ProcessingUseAsset({ openHistory, setOpenHistory }) {
 		}),
 		shallowEqual
 	);
-	const classes = DtpCustomStyles();
-	const handleClose = () => setOpenHistory(false);
+	const ExitPage = () => history.goBack();
+	useEffect(() => {
+		if (!entitiesEdit) history.goBack();
+	}, [entitiesEdit, history]);
 	return (
-		<Dialog
-			style={{ zIndex: 20 }}
-			fullWidth
-			classes={{ scrollPaper: classes.scrollPaper }}
-			maxWidth="md"
-			open={openHistory}
-			aria-labelledby="customized-dialog-title"
-		>
-			<AppBar position="static" className="shadow-md">
-				<Toolbar className="flex w-full">
-					<IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
-						<CloseIcon />
-					</IconButton>
-					<Typography
-						variant="subtitle1"
-						style={{ color: 'white', fontWeight: '400', fontSize: '1.6rem' }}
-						color="inherit"
-					>
-						Quá trình sử dụng tài sản
-					</Typography>
-				</Toolbar>
-			</AppBar>
-			<DialogContent style={{ height: '85vh' }}>
-				<InformationProceeUseAsset actionLoading={actionLoading} entitiesEdit={entitiesEdit} />
-			</DialogContent>
-		</Dialog>
+		<div className="container assets">
+			<div className="assets__header px-16 shadow-lg">
+				<Text color="primary" type="title">
+					Qúa trình sử dụng tài sản
+				</Text>
+				<div className="assets__header--action">
+					<Tooltip placement="bottom" title="Exit">
+						<span onClick={ExitPage} className="action--button">
+							<Icon fontSize="small">close</Icon>
+						</span>
+					</Tooltip>
+				</div>
+			</div>
+			<div className="assets__content mt-8">
+				<div className="assets__history">
+					<Spin spinning={actionLoading}>
+						<InformationProceeUseAsset actionLoading={actionLoading} entitiesEdit={entitiesEdit} />
+					</Spin>
+				</div>
+			</div>
+		</div>
 	);
 }

@@ -1,44 +1,68 @@
-import React, { useContext } from 'react';
-import { Dialog, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import React, { useEffect } from 'react';
+import { Typography, Icon } from '@material-ui/core';
 import { useSelector, shallowEqual } from 'react-redux';
+import { Tooltip } from 'antd';
+import { useHistory, useParams } from 'react-router';
 import FormCustomCorruptEdit from './FormCustomCorruptEdit';
-import { ConfirmContext } from '../../ConfirmContext';
+import FormCustomEditAllocation from './FormCustomEditAllocation';
 
-export default function FormCustomCorrupt({ handleClose, open }) {
-	const ConfirmContextLose = useContext(ConfirmContext);
-	const { type, setReasonReject, setTypeReasonReject, setFormControl } = ConfirmContextLose;
-	const { actionLoading, entitiesEdit } = useSelector(
+export default function FormCustomCorrupt() {
+	const params = useParams();
+	const history = useHistory();
+	const { actionLoading, entitiesEdit, newEntitiesDetail } = useSelector(
 		state => ({
 			entitiesEdit: state.confirm.entitiesEdit,
-			actionLoading: state.confirm.actionLoading
+			actionLoading: state.confirm.actionLoading,
+			newEntitiesDetail: state.confirm.newEntitiesDetail
 		}),
 		shallowEqual
 	);
-	const handleOpenFormReject = () => {
-		setReasonReject(true);
-		setTypeReasonReject(type);
-	};
+	useEffect(() => {
+		if (!entitiesEdit) history.goBack();
+	}, [entitiesEdit, history]);
+	const ExitPage = () => history.goBack();
 	return (
-		<Dialog style={{ zIndex: 20 }} fullWidth maxWidth="md" aria-labelledby="customized-dialog-title" open={open}>
-			<AppBar position="static" className="shadow-md">
-				<Toolbar className="flex w-full">
-					<IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
-						<CloseIcon />
-					</IconButton>
-					<Typography variant="subtitle1" color="inherit">
-						{type === 'lose' ? 'Báo mất tài sản' : 'Báo hỏng tài sản'}
-					</Typography>
-				</Toolbar>
-			</AppBar>
-			<FormCustomCorruptEdit
-				type={type}
-				actionLoading={actionLoading}
-				setFormControl={setFormControl}
-				entitiesEdit={entitiesEdit}
-				handleOpenFormReject={handleOpenFormReject}
-				handleClose={handleClose}
-			/>
-		</Dialog>
+		<div className="container proposedManagement">
+			<div className="proposedManagement__header px-16 shadow-lg">
+				<Typography color="primary" variant="h6">
+					{params.type === 'allocation'
+						? 'Thông tin yêu cầu cấp phát tài sản'
+						: params.type === 'bao-mat'
+						? 'Báo mất tài sản'
+						: 'Báo hỏng tài sản'}
+				</Typography>
+				<div className="projects__header--action">
+					<Tooltip placement="bottom" title="Exit">
+						<span onClick={ExitPage} className="action--button">
+							<Icon fontSize="small">close</Icon>
+						</span>
+					</Tooltip>
+				</div>
+			</div>
+			<div className="proposedManagement__content mt-8">
+				{/* <Spin spinning={loading}> */}
+				<div className="proposedManagement__form">
+					{params.type === 'allocation' ? (
+						<FormCustomEditAllocation
+							actionLoading={actionLoading}
+							entitiesEdit={entitiesEdit}
+							newEntitiesEdit={newEntitiesDetail}
+						/>
+					) : (
+						<FormCustomCorruptEdit
+							type={params.type}
+							actionLoading={actionLoading}
+							// setFormControl={setFormControl}
+							entitiesEdit={entitiesEdit}
+							// handleOpenFormReject={handleOpenFormReject}
+							handleClose={ExitPage}
+						/>
+					)}
+				</div>
+				{/* </Spin> */}
+			</div>
+		</div>
 	);
 }

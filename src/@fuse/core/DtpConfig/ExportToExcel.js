@@ -3,7 +3,7 @@
 import React from 'react';
 // import * as fs from 'file-saver';
 // import ExcelJs from 'exceljs';
-import { getToken } from '@fuse/core/DtpConfig';
+import { getToken, URL } from '@fuse/core/DtpConfig';
 import { Button } from '@material-ui/core';
 // import moment from 'moment';
 import { GetApp } from '@material-ui/icons';
@@ -193,7 +193,7 @@ class ExportToExcel extends React.Component {
 		const data = {
 			UserToken: token
 		};
-		window.location = `http://api.dtpeducation.com/api/Assets/ExportAsset?value=${JSON.stringify(data)}`;
+		window.location = `${URL}/api/Assets/ExportAsset?value=${JSON.stringify(data)}`;
 	};
 
 	render() {

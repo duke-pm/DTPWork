@@ -1,19 +1,19 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Badge, Dropdown, Table, Popover, Avatar, Menu, Tooltip, Progress, Spin, Checkbox } from 'antd';
+import { Badge, Dropdown, Table, Popover, Avatar, Menu, Tooltip, Progress, Checkbox } from 'antd';
 import React, { useContext, useState, useEffect } from 'react';
 import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
-import { MenuItem, ListItemIcon, Icon, ListItemText, Typography, Link } from '@material-ui/core';
+import { MenuItem, ListItemIcon, Icon, ListItemText, Link } from '@material-ui/core';
 import AppsIcon from '@material-ui/icons/Apps';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { withRouter } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { checkDeadline, durationDay, notificationConfig } from '@fuse/core/DtpConfig';
+import { checkDeadline, durationDay, notificationConfig, sortDirestion } from '@fuse/core/DtpConfig';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import * as moment from 'moment';
-import clsx from 'clsx';
 import { useHistory } from 'react-router-dom';
+import Text from 'app/components/Text';
 import * as actions from '../../../_redux/_projectActions';
 import { ProjectContext } from '../../ProjectContext';
 import { typeColor, priorityColor, badgeText } from './ConfigTableProject';
@@ -24,7 +24,7 @@ function TableProject(props) {
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.up('xl'));
 	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
-	const { entitiesDetail, actionLoading, params, listLoading, sectorArr, owner } = props;
+	const { entitiesDetail, actionLoading, params, createSortHandler, owner } = props;
 	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 	const [onClickRow, setOnClickRow] = useState(null);
 	const projectContext = useContext(ProjectContext);
@@ -36,6 +36,10 @@ function TableProject(props) {
 	}, [entitiesDetail?.listTask]);
 	const onSelectedRowKeysChange = selectedRowKey => {
 		setSelectedRowKeys(selectedRowKey);
+	};
+	const onChangeSort = (pagination, filters, sorter, extra) => {
+		const sort = sortDirestion[sorter.order];
+		createSortHandler(sort, sorter.field);
 	};
 	const {
 		setVisible,
@@ -50,7 +54,8 @@ function TableProject(props) {
 		dateStart,
 		sector,
 		setSector,
-		search
+		search,
+		sort
 	} = projectContext;
 	const handleOpenVisible = item => {
 		setVisible(true);
@@ -95,6 +100,8 @@ function TableProject(props) {
 							status.toString(),
 							dateStart,
 							sector.toString(),
+							sort.id,
+							sort.direction,
 							search
 						)
 					);
@@ -130,6 +137,8 @@ function TableProject(props) {
 							status?.toString(),
 							dateStart,
 							sector?.toString(),
+							sort.id,
+							sort.direction,
 							search
 						)
 					);
@@ -158,6 +167,8 @@ function TableProject(props) {
 						status.toString(),
 						dateStart,
 						sector.toString(),
+						sort.id,
+						sort.direction,
 						search
 					)
 				);
@@ -183,6 +194,8 @@ function TableProject(props) {
 				status?.toString(),
 				dateStart,
 				sector?.toString(),
+				sort.id,
+				sort.direction,
 				search
 			)
 		);
@@ -198,6 +211,8 @@ function TableProject(props) {
 				value?.toString(),
 				dateStart,
 				sector?.toString(),
+				sort.id,
+				sort.direction,
 				search
 			)
 		);
@@ -213,6 +228,8 @@ function TableProject(props) {
 				status?.toString(),
 				dateStart,
 				value?.toString(),
+				sort.id,
+				sort.direction,
 				search
 			)
 		);
@@ -222,7 +239,7 @@ function TableProject(props) {
 		{
 			title: <AppsIcon />,
 			align: 'center',
-			fixed: 'left',
+			fixed: !matchesSM && 'left',
 			key: 'operation',
 			width: '3%',
 			render: (_, item) => (
@@ -273,7 +290,8 @@ function TableProject(props) {
 			title: 'Subject',
 			dataIndex: 'subject',
 			key: 'subject',
-			fixed: 'left',
+			sorter: true,
+			fixed: !matchesSM && 'left',
 			width: '20%',
 			render: (_, item) => (
 				<Link
@@ -298,114 +316,28 @@ function TableProject(props) {
 					onClick={() => handleOpenVisible(item)}
 					component="button"
 				>
-					{item.taskName}
+					<Text>{item.taskName}</Text>
 				</Link>
 			)
 		},
 		{
-			title: () => {
-				return (
-					<div className="flex items-center ">
-						Sector
-						<Dropdown
-							// visible
-							overlay={
-								<div className="filter--status">
-									<Checkbox.Group
-										options={sectorArr}
-										value={sector}
-										onChange={onHandleChangeSector}
-									/>
-								</div>
-							}
-							placement="bottomRight"
-							arrow
-						>
-							<Icon className="cursor-pointer"> arrow_drop_down </Icon>
-						</Dropdown>
-					</div>
-				);
-			},
-			dataIndex: 'sectorName',
-			key: 'sectorName',
-			width: '6%',
-			render: (_, item) => <Typography variant="body1">{item.sectorName}</Typography>
-		},
-		{
 			title: 'Type',
-			align: 'center',
 			dataIndex: 'type',
 			key: 'type',
 			width: '6%',
 			render: (_, item) => (
-				<Typography variant="subtitle2" style={{ color: typeColor[item.typeName], textTransform: 'uppercase' }}>
+				<Text type="subTitle" style={{ color: typeColor[item.typeName], textTransform: 'uppercase' }}>
 					{item.typeName}
-				</Typography>
-			)
-		},
-		{
-			title: 'Start',
-			align: 'center',
-			dataIndex: 'startDate',
-			key: 'startDate',
-			width: '7%',
-			render: (_, item) => (
-				<div
-					className={clsx(
-						'flex items-center justify-center text-center px-8 py-4 mx-4 text-white bg-green  rounded-16'
-					)}
-				>
-					<Icon className="text-16">access_time</Icon>
-					<Typography className="ml-8" variant="body1">
-						{item.startDate && moment(item.startDate).format('DD/MM/YY')}
-					</Typography>
-				</div>
-			)
-		},
-		{
-			title: 'Finish',
-			align: 'center',
-			dataIndex: 'endDate',
-			key: 'endDate',
-			width: '7%',
-			render: (_, item) => (
-				<div
-					className={clsx(
-						'flex items-center justify-center text-center px-8 py-4 mx-4 text-white bg-green  rounded-16'
-					)}
-				>
-					<Icon className="text-16">access_time</Icon>
-					<Typography className="ml-8" variant="body1">
-						{item.endDate && moment(item.endDate).format('DD/MM/YY')}
-					</Typography>
-				</div>
-			)
-		},
-		{
-			title: 'Duration',
-			align: 'center',
-			dataIndex: 'duration',
-			key: 'duration',
-			width: '8%',
-			render: (_, item) => (
-				<div
-					className={clsx(
-						'flex items-center justify-center text-center px-8 py-4 mx-4 rounded-16 ',
-						'text-blue'
-					)}
-				>
-					<Icon className="text-16">check_circle</Icon>
-					<Typography className="ml-8" variant="subtitle1" component="button">
-						{durationDay(item.startDate, item.endDate)} Days
-					</Typography>{' '}
-				</div>
+				</Text>
 			)
 		},
 		{
 			title: () => {
 				return (
 					<div className="flex items-center ">
-						Status
+						<Text type="subTitle" color="primary">
+							Status
+						</Text>
 						<Dropdown
 							// visible
 							overlay={
@@ -440,7 +372,7 @@ function TableProject(props) {
 										onClick={() => updatedStatus(item, itemStatus.value)}
 										style={{ color: itemStatus.colorCode }}
 									>
-										<Typography variant="body1">{itemStatus.label}</Typography>
+										<Text>{itemStatus.label}</Text>
 									</Menu.Item>
 								))}
 							</Menu>
@@ -461,24 +393,57 @@ function TableProject(props) {
 				)
 		},
 		{
+			title: 'Priority',
+			dataIndex: 'priority',
+			key: 'priority',
+			width: '6%',
+			render: (_, item) => <Text style={{ color: priorityColor[item.priority] }}>{item.priorityName}</Text>
+		},
+		{
+			title: 'Start',
+			align: 'center',
+			dataIndex: 'StartDate',
+			key: 'startDate',
+			sorter: true,
+			width: '8%',
+			render: (_, item) => (
+				<div className="flex items-center justify-center text-center px-8 py-4 bg-green-50 rounded-16">
+					<Text>{item.startDate && moment(item.startDate).format('DD/MM/YY')}</Text>
+				</div>
+			)
+		},
+		{
+			title: 'Finish',
+			align: 'center',
+			dataIndex: 'EndDate',
+			key: 'endDate',
+			sorter: true,
+			width: '8%',
+			render: (_, item) => (
+				<div className="flex items-center justify-center text-center px-8 py-4 bg-green-50 rounded-16">
+					<Text>{item.endDate && moment(item.endDate).format('DD/MM/YY')}</Text>
+				</div>
+			)
+		},
+		{
+			title: 'Duration',
+			align: 'center',
+			dataIndex: 'duration',
+			key: 'duration',
+			width: '6%',
+			render: (_, item) => (
+				<div className="flex items-center justify-center text-center px-8 py-4 mx-4 rounded-16 text-blue">
+					<Text>{durationDay(item.startDate, item.endDate)} Days</Text>
+				</div>
+			)
+		},
+		{
 			title: 'Progress',
 			align: 'center',
 			dataIndex: 'status',
 			key: 'status',
 			width: '10%',
 			render: (_, item) => <Progress percent={item.percentage} strokeColor={typeColor[item.typeName]} />
-		},
-		{
-			title: 'Priority',
-			align: 'center',
-			dataIndex: 'priority',
-			key: 'priority',
-			width: '6%',
-			render: (_, item) => (
-				<Typography variant="body1" style={{ color: priorityColor[item.priority] }}>
-					{item.priorityName}
-				</Typography>
-			)
 		},
 		{
 			title: () => {
@@ -508,10 +473,8 @@ function TableProject(props) {
 			width: '12%',
 			render: (_, item) => (
 				<div className="flex flex-row items-center">
-					<Avatar size={32} style={{ backgroundColor: item.colorCode }} icon={<UserOutlined />} />
-					<Typography className="ml-8" variant="body1">
-						{item.ownerName}
-					</Typography>
+					<Avatar style={{ backgroundColor: item.colorCode }} icon={<UserOutlined />} />
+					<Text className="ml-8">{item.ownerName}</Text>
 				</div>
 			)
 		},
@@ -525,11 +488,7 @@ function TableProject(props) {
 					<Avatar.Group maxCount={3} maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
 						{item?.lstUserInvited?.map(av => (
 							<Tooltip key={av.userID} title={av.fullName} placement="top">
-								<Avatar size={32} style={{ backgroundColor: '#87d068' }}>
-									<Typography color="inherit" variant="subtitle1">
-										{av.alphabet}
-									</Typography>
-								</Avatar>
+								<Avatar size="default">{av.alphabet}</Avatar>
 							</Tooltip>
 						))}
 					</Avatar.Group>
@@ -570,9 +529,10 @@ function TableProject(props) {
 				x: entitiesDetail?.listTask?.length > 0 ? (matches ? 1900 : 1800) : matchesSM ? 1800 : null,
 				y: null
 			}}
+			showSorterTooltip={false}
 			pagination={false}
 			columns={columns}
-			loading={listLoading && <Spin />}
+			onChange={onChangeSort}
 			dataSource={entitiesDetail?.listTask}
 		/>
 	);

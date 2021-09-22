@@ -1,16 +1,16 @@
 import request from 'app/store/setupAxios';
 
-const url = '/api';
+const url = '/api/LevelApproval';
 export const fetchLevels = params => {
-	return request(`${url}`, { params });
+	return request(`${url}/GetList`, { params });
 };
 export const levelModify = data => {
 	return request({
-		method: 'POST',
+		method: 'PUT',
 		data,
-		url: `${url}`
+		url: `${url}/Modify`
 	});
 };
 export const deletedLevel = params => {
-	return request.get(`${url}/remove`, { params });
+	return request.get(`${url}/Remove`, { params });
 };

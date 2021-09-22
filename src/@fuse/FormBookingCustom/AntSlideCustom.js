@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import { Form, Slider } from 'antd';
-import { Typography } from '@material-ui/core';
+
+import Text from 'app/components/Text';
 
 const FormItem = Form.Item;
 function formatter(value) {
@@ -36,16 +37,9 @@ export default function AntSlideCustom({
 		<>
 			<div className={`form-item-input ${position && 'flex flex-row  justify-between'}`}>
 				<div className={`flex flex-row ${position && 'mt-8'}`}>
-					<Typography color="primary" variant="body1" className="label--form">
-						{' '}
-						{label}{' '}
-					</Typography>
-					{hasFeedback && (
-						<p style={{ marginBottom: '-20px' }} className="text-red ml-8">
-							{' '}
-							(*){' '}
-						</p>
-					)}
+					<Text required={hasFeedback} type="body">
+						{label}
+					</Text>
 				</div>
 				<FormItem
 					style={{ width: position ? width || '80%' : '100%' }}

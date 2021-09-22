@@ -1,9 +1,10 @@
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
-import { Button, Typography, Grid } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import React, { useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { DatePicker, Select } from 'antd';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import Text from 'app/components/Text';
 import { ProjectOverviewContext } from '../../ProjectOverviewContext';
 import { fetchsProjectOverviewFilter } from '../../../_redux/_projectActions';
 
@@ -58,9 +59,11 @@ export default function ActionHeaderProject({ classes, ArrProjectStatus, owner, 
 				}}
 			>
 				<div className="flex flex-col sm:flex-row justify-between">
-					<Typography variant="subtitle2">Filter </Typography>
+					<Text type="subTitle" color="primary">
+						Filter
+					</Text>
 				</div>
-				<Grid className="mb-16 control-filter" container spacing={2}>
+				<Grid className="mb-16 mt-10 control-filter" container spacing={2}>
 					<Grid item xs={12} sm={6} md={4} lg={3}>
 						<DatePicker
 							onChange={handleChangeFilterYear}
@@ -75,6 +78,7 @@ export default function ActionHeaderProject({ classes, ArrProjectStatus, owner, 
 						<Select
 							placeholder="Owner"
 							showSearch
+							size="middle"
 							mode="multiple"
 							allowClear
 							maxTagCount={1}
@@ -98,6 +102,7 @@ export default function ActionHeaderProject({ classes, ArrProjectStatus, owner, 
 							allowClear
 							placeholder="Status"
 							mode="multiple"
+							size="middle"
 							maxTagCount={1}
 							onChange={onHandleChangeStatus}
 							bordered={false}
@@ -153,7 +158,9 @@ export default function ActionHeaderProject({ classes, ArrProjectStatus, owner, 
 							className="sm:mb-0 mb-9"
 							startIcon={<FilterListIcon />}
 						>
-							<Typography variant="inherit">Filter</Typography>
+							<Text type="button" color="white">
+								Filter
+							</Text>
 						</Button>
 					</Grid>
 				</Grid>

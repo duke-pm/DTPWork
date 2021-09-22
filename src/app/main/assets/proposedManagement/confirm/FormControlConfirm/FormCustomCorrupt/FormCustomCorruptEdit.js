@@ -1,11 +1,12 @@
 import React from 'react';
-import { DialogContent, Typography } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
 import { useDispatch } from 'react-redux';
 import * as momemt from 'moment';
 import { notificationConfig } from '@fuse/core/DtpConfig';
 import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
-import InputTextArea from '@fuse/CustomForm/InputTextArea';
+import AntDescriptionsCustom from '@fuse/FormBookingCustom/AntDescriptionsCustom';
+import Text from 'app/components/Text';
 import * as actions from '../../../_redux/confirmAction';
 
 export default function FormCustomCorruptEdit({ entitiesEdit, handleClose, setFormControl, type }) {
@@ -39,86 +40,89 @@ export default function FormCustomCorruptEdit({ entitiesEdit, handleClose, setFo
 			>
 				{({ handleSubmit, isSubmitting }) => (
 					<Form>
-						<DialogContent dividers>
-							<div className="px-16 sm:px-24">
-								<div className="flex justify-between flex-row">
-									<Typography variant="subtitle2">Thông tin tài sản.</Typography>
-								</div>
-								<div className=" grid grid-cols-1 sm:grid-cols-2 gap-8">
-									<div className="flex-row  flex ">
-										<div className="flex flex-col">
-											<p className="p-2.5	"> Mã tài sản </p>
-											<p className="p-2.5	"> Tên tài sản </p>
-											<p className="p-2.5	"> Nhóm tài sản </p>
-											<p className="p-2.5	">Quy cách tài sản</p>
-										</div>
-										<div className="flex flex-col">
-											<p className="p-2.5 font-extrabold"> {entitiesEdit.assetID || ''} </p>
-											<p className="p-2.5 font-extrabold"> {entitiesEdit.assetName || ''} </p>
-											<p className="p-2.5 font-extrabold"> Nhóm tài sản </p>
-											<p className="font-extrabold p-2.5"> </p>
-										</div>
-									</div>
-									<div className="flex-row justify-around flex ">
-										<div className="flex flex-col">
-											<p className="p-2.5">Ngày mua </p>
-											{/* <p className="p-2.5">Số seri </p> */}
-											<p className="p-2.5"> Nguyên giá </p>
-											<p className="p-2.5"> Tình trạng </p>
-										</div>
-										<div className="flex mr-auto sm:mr-98 flex-col">
-											<p className="p-2.5 font-extrabold">
-												{momemt(entitiesEdit.purchaseDate).format('DD/MM/YYYY') || ''}{' '}
-											</p>
-											{/* <p className="p-2.5 font-extrabold"> </p> */}
-											<p className="p-2.5 font-extrabold">
-												{' '}
-												{currencyFormat(entitiesEdit.originalPrice) || ''}{' '}
-											</p>
-											<p className="p-2.5 font-extrabold">
-												{' '}
-												{entitiesEdit.assetStatusName || ''}{' '}
-											</p>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div className="px-16 sm:px-24">
-								<div className="flex justify-between flex-row">
-									<Typography variant="subtitle2">
-										Thông tin tài sản bị {type === 'lose' ? ' mất' : 'hỏng'}
-									</Typography>
-								</div>
-								<div
-									className={`grid grid-cols-1 ${
-										entitiesEdit && entitiesEdit.statusID === 4
-											? 'sm:grid-cols-2'
-											: ' sm:grid-cols-1'
-									} gap-8 `}
-								>
+						<Grid container item spacing={2}>
+							<Grid item xs={12} sm={12} md={12} lg={12}>
+								<Text type="subTitle" color="primary" borderBottom>
+									THÔNG TIN TÀI SẢN.
+								</Text>
+							</Grid>
+							<Grid item xs={6} sm={6} md={6} lg={6}>
+								<Text type="body"> Mã tài sản :</Text>
+							</Grid>
+							<Grid item xs={6} sm={6} md={6} lg={6}>
+								{' '}
+								<Text type="body"> {entitiesEdit?.assetID}</Text>
+							</Grid>
+							<Grid item xs={6} sm={6} md={6} lg={6}>
+								<Text type="body"> Tên tài sản :</Text>
+							</Grid>
+							<Grid item xs={6} sm={6} md={6} lg={6}>
+								{' '}
+								<Text type="body"> {entitiesEdit?.assetName}</Text>
+							</Grid>
+							<Grid item xs={6} sm={6} md={6} lg={6}>
+								<Text type="body"> Nhóm tài sản :</Text>
+							</Grid>
+							<Grid item xs={6} sm={6} md={6} lg={6}>
+								{' '}
+								<Text type="body"> </Text>
+							</Grid>
+							<Grid item xs={6} sm={6} md={6} lg={6}>
+								<Text type="body"> Quy cách tài sản :</Text>
+							</Grid>
+							<Grid item xs={6} sm={6} md={6} lg={6}>
+								{' '}
+								<Text type="body"> </Text>
+							</Grid>
+							<Grid item xs={6} sm={6} md={6} lg={6}>
+								<Text type="body"> Ngày mua :</Text>
+							</Grid>
+							<Grid item xs={6} sm={6} md={6} lg={6}>
+								{' '}
+								<Text type="body">
+									{' '}
+									{momemt(entitiesEdit?.purchaseDate).format('DD/MM/YYYY') || ''}{' '}
+								</Text>
+							</Grid>
+							<Grid item xs={6} sm={6} md={6} lg={6}>
+								<Text type="body"> Nguyên giá :</Text>
+							</Grid>
+							<Grid item xs={6} sm={6} md={6} lg={6}>
+								<Text type="body">{currencyFormat(entitiesEdit?.originalPrice) || ''} </Text>
+							</Grid>
+							<Grid item xs={6} sm={6} md={6} lg={6}>
+								<Text type="body">Tình trạng :</Text>
+							</Grid>
+							<Grid item xs={6} sm={6} md={6} lg={6}>
+								<Text type="body">{entitiesEdit?.assetStatusName}</Text>
+							</Grid>
+							<Grid item xs={12} sm={12} md={12} lg={12}>
+								<Text type="subTitle" color="primary" borderBottom>
+									THÔNG TIN TÀI SẢN BỊ{' '}
+									{type === 'allocation' ? null : type === 'bao-mat' ? 'MẤT' : 'HỎNG'}.
+								</Text>
+							</Grid>
+							<Grid className="mb-8" item xs={12} sm={12} md={12} lg={12}>
+								<div className={`grid grid-cols-1 gap-8 `}>
 									<Field
 										readOnly
 										label="Lý do"
-										hasFeedback
 										name="reason"
-										component={InputTextArea}
-										className="mt-8 mb-16"
+										component={AntDescriptionsCustom}
 										row={2}
 									/>
 									{entitiesEdit && entitiesEdit.statusID === 4 && (
 										<Field
 											readOnly
 											label="Lý do từ chối "
-											hasFeedback
 											name="reasonReject"
-											component={InputTextArea}
-											className="mt-8 mb-16"
+											component={AntDescriptionsCustom}
 											row={2}
 										/>
 									)}
 								</div>
-							</div>
-						</DialogContent>
+							</Grid>
+						</Grid>
 						{/* <DialogActions>
 							{actionLoading ? (
 								<Spin size="middle" />

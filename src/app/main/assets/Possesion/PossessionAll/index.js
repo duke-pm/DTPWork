@@ -1,110 +1,69 @@
 /* eslint-disable no-shadow */
-import React, { useContext, useState, useEffect } from 'react';
-import FuseAnimate from '@fuse/core/FuseAnimate';
-import { Paper, Table, TableContainer } from '@material-ui/core';
+import React, { useContext, useEffect } from 'react';
 import Panigation from '@fuse/core/FusePanigate';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import FuseLoading from '@fuse/core/FuseLoading';
-import { Empty, Spin } from 'antd';
-import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
-import PossessionAll from './FormCustomAll';
-import ActionComponent from './Component/ActionComponent/ActionFilterComponent';
+import { Spin } from 'antd';
+import { useHistory } from 'react-router';
 import * as actions from '../_redux/possesionActions';
 import { PossessionContext } from '../PossessionContext';
-import TableHeader from './Component/TableHeader';
-import TableBodyAssetAll from './Component/TableBody';
-import ProcessingUseAsset from './Component/ProcessingUseAsset';
+import TableAssetAll from './Component/TableAssetAll';
 
 function PossessionAllPage(props) {
-	const { value } = props;
+	const history = useHistory();
 	const dispatch = useDispatch();
-	const classes = DtpCustomStyles(props);
 	const possesionContext = useContext(PossessionContext);
 	const { rowPage, setRowPage, page, setPage, search, sort, setSort } = possesionContext;
-	const [open, setOpen] = useState(false);
-	const [openHistory, setOpenHistory] = useState(false);
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
-	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;
-	const handleClose = React.useCallback(() => {
-		setOpen(false);
-	}, []);
+	const { listloading, entities, total_count, actionLoading } = currentState;
 	useEffect(() => {
 		dispatch(actions.fetchPossesionAll(0));
 	}, [dispatch]);
-	const handleOpenForm = () => {
-		dispatch(actions.setTaskEditPossesionAll(null));
-		setOpen(true);
-	};
 	const HandleOpenHistory = items => {
-		setOpenHistory(true);
+		history.push('/tai-san/quan-ly-tai-san/qua-trinh-su-dung');
 		dispatch(actions.setTaskEditPossesionAll(items));
 	};
 	const handleRowChange = e => {
 		setRowPage(parseInt(e.target.value, 10));
 		setPage(0);
 		const rowPageParse = parseInt(e.target.value, 10);
-		dispatch(actions.fetchPossesionAllPanigate(value, rowPageParse, 1, search, sort.id, sort.direction));
+		dispatch(actions.fetchPossesionAllPanigate(0, rowPageParse, 1, search, sort.id, sort.direction));
 	};
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
-		dispatch(actions.fetchPossesionAllPanigate(value, rowPage, newPage + 1, search, sort.id, sort.direction));
+		dispatch(actions.fetchPossesionAllPanigate(0, rowPage, newPage + 1, search, sort.id, sort.direction));
 	};
-	const createSortHandler = property => event => {
-		const id = property;
-		let direction = 'desc';
-
-		if (sort.id === property && sort.direction === 'desc') {
-			direction = 'asc';
-		}
-		dispatch(actions.fetchPossesionAllPanigate(value, rowPage, 1, search, id, direction));
+	const createSortHandler = (direction, id) => {
+		dispatch(actions.fetchPossesionAllPanigate(0, rowPage, 1, search, id, direction));
 		setSort({
 			direction,
 			id
 		});
 	};
-	if (listloading) {
-		return <FuseLoading />;
-	}
 	return (
 		<>
-			<ProcessingUseAsset setOpenHistory={setOpenHistory} openHistory={openHistory} />
-			<PossessionAll rowPage={rowPage} open={open} handleClose={handleClose} />
-			<div className="flex flex-col">
-				<ActionComponent value={value} handleOpenForm={handleOpenForm} />
-				<FuseAnimate animation="transition.slideUpIn" delay={200}>
-					<div className="flex flex-col mt-16 min-h-full shadow-md  sm:border-1 sm:rounded-4 overflow-hidden">
-						<TableContainer className={`${classes.TableContainer} flex flex-1`}>
-							<Paper className={classes.rootPaper}>
-								<Table className={`${classes.table}`} stickyHeader>
-									<TableHeader createSortHandler={createSortHandler} sort={sort} />
-									<TableBodyAssetAll
-										HandleOpenHistory={HandleOpenHistory}
-										entities={entities}
-										lastErrors={lastErrors}
-										classes={classes}
-									/>
-								</Table>
-								{entities?.length === 0 || lastErrors ? (
-									<FuseAnimate delay={300}>
-										<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-									</FuseAnimate>
-								) : null}
-							</Paper>
-						</TableContainer>
-						{entities?.length !== 0 && (
-							<div className="flex flex-row items-center justify-end">
-								{actionLoading && <Spin />}
-								<Panigation
-									page={page}
-									handleChangePage={handleChangePage}
-									rowPage={rowPage}
-									handleChangeRowsPerPage={handleRowChange}
-									count={total_count}
-								/>
-							</div>
-						)}
-					</div>
-				</FuseAnimate>
+			{/* <ProcessingUseAsset setOpenHistory={setOpenHistory} openHistory={openHistory} /> */}
+			{/* <PossessionAll rowPage={rowPage} open={props.open} /> */}
+			<div className="flex flex-col table--tab">
+				<div className="flex flex-col">
+					<TableAssetAll
+						HandleOpenHistory={HandleOpenHistory}
+						createSortHandler={createSortHandler}
+						entities={entities}
+						listLoading={listloading}
+					/>
+					{entities?.length !== 0 && (
+						<div className="flex flex-row items-center justify-end">
+							{actionLoading && <Spin />}
+							<Panigation
+								page={page}
+								handleChangePage={handleChangePage}
+								rowPage={rowPage}
+								handleChangeRowsPerPage={handleRowChange}
+								count={total_count}
+							/>
+						</div>
+					)}
+				</div>
 			</div>
 		</>
 	);

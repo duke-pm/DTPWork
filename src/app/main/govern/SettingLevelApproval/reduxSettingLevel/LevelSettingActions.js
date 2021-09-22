@@ -15,7 +15,7 @@ export const fetchListLevels = (limit, page) => dispatch => {
 			const { data } = res;
 			if (!data.isError) {
 				const dataRes = data.data;
-				const total_count = data.totalPage;
+				const total_count = data.totalRow;
 				dispatch(actions.fetchListLevels({ dataRes, total_count }));
 			} else {
 				notificationConfig('warning', 'Fail', data.errorMessage);
@@ -28,11 +28,12 @@ export const fetchListLevels = (limit, page) => dispatch => {
 		});
 };
 
-export const fetchListLevelsFilter = (limit, page) => dispatch => {
+export const fetchListLevelsFilter = (limit, page, search) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const paramsRequest = {
 		PageSize: limit || 25,
-		PageNum: page || 1
+		PageNum: page || 1,
+		Search: search || ''
 	};
 	return requestFrom
 		.fetchLevels(paramsRequest)
@@ -55,21 +56,25 @@ export const fetchListLevelsFilter = (limit, page) => dispatch => {
 export const createdLevel = values => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const dataReq = {
-		CodeID: '0',
-		CodeName: values.codeName,
-		Description: values.description
+		AbsID: '0',
+		GroupID: values.groupID,
+		RoleID: values.roleID,
+		Notes: values.notes,
+		IsChanged: values.isChanged,
+		Levels: values.levels
 	};
 	return requestFrom
 		.levelModify(dataReq)
 		.then(res => {
 			const { data } = res;
 			if (!data.isError) {
-				const dataRes = data.data;
-				dispatch(actions.createdLevel({ dataRes }));
+				// const dataRes = data.data;
+				// dispatch(actions.createdLevel({ dataRes }));
 			} else {
 				notificationConfig('warning', 'Fail', data.errorMessage);
 				dispatch(actions.catchErrors({ callType: callTypes.action }));
 			}
+			return data;
 		})
 		.catch(err => {
 			dispatch(actions.catchErrors({ callType: callTypes.action }));
@@ -77,12 +82,15 @@ export const createdLevel = values => dispatch => {
 		});
 };
 
-export const updatedLevel = values => dispatch => {
+export const updatedLevel = (values, isChanged) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const dataReq = {
-		CodeID: values.codeID,
-		CodeName: values.codeName,
-		Description: values.description
+		AbsID: values.id,
+		GroupID: values.groupID,
+		RoleID: values.roleID,
+		Notes: values.notes,
+		IsChanged: isChanged,
+		Levels: values.levels
 	};
 	return requestFrom
 		.levelModify(dataReq)
@@ -95,6 +103,7 @@ export const updatedLevel = values => dispatch => {
 				notificationConfig('warning', 'Fail', data.errorMessage);
 				dispatch(actions.catchErrors({ callType: callTypes.action }));
 			}
+			return data;
 		})
 		.catch(err => {
 			dispatch(actions.catchErrors({ callType: callTypes.action }));
@@ -105,20 +114,21 @@ export const updatedLevel = values => dispatch => {
 export const setTaskEditLevel = value => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	dispatch(actions.fetchLevel({ value }));
+	console.log(value);
 };
 export const deletedLevel = item => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const dataReq = {
-		CodeId: item.codeId
+		AbsID: item.absID,
+		Lang: 'vi'
 	};
 	return requestFrom
 		.deletedLevel(dataReq)
 		.then(res => {
-			// console.log(res);
 			const { data } = res;
 			if (!data.isError) {
 				dispatch(actions.deleteLevel({ dataReq }));
-				notificationConfig('success', 'Success', 'Delete success');
+				notificationConfig('success', 'Success', 'Xoá thành công');
 			} else {
 				dispatch(actions.catchErrors({ callType: callTypes.action }));
 				notificationConfig('warning', 'Fail', `${data.errorMessage}`);

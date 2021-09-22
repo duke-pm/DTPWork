@@ -1,59 +1,59 @@
-import FuseAnimate from '@fuse/core/FuseAnimate';
-import FusePageCarded from '@fuse/core/FusePageCarded';
-import { Box, Typography } from '@material-ui/core';
-import React, { useState } from 'react';
+import Search from 'antd/lib/input/Search';
+import { Button } from '@material-ui/core';
+import React, { useContext } from 'react';
 import { useDispatch } from 'react-redux';
-import FormMenuComponent from './SettingMenuComponent/FormMenuComponent';
+import { useHistory } from 'react-router';
+import Text from 'app/components/Text';
 import SettingMenuContent from './SettingMenuComponent/SettingMenuContent';
 import * as actions from './_redux/menuActions';
+import { SettingmenuContext } from './SettingMenuContext';
 
 export default function SettingMenuPage() {
 	const dispatch = useDispatch();
-	const [openSettingMenu, setOpenSettingMenu] = useState(false);
-	const handleOpenSettingMenu = () => {
-		setOpenSettingMenu(true);
+	const history = useHistory();
+	const SettingMenuHeaderContext = useContext(SettingmenuContext);
+	const { setPage, setSearch, page, rowPage, sort, search } = SettingMenuHeaderContext;
+
+	const handleSearch = () => {
+		setPage(0);
+		dispatch(actions.fetchsListMenuSettingParams(rowPage, page, sort.direction, sort.id, search));
+	};
+	const onHandleChange = e => {
+		setSearch(e.target.value);
+		setPage(0);
+		if (e.target.value.length <= 0) {
+			dispatch(actions.fetchsListMenuSettingParams(rowPage, page, sort.direction, sort.id, e.target.value));
+		}
+	};
+	const handleChangeRoute = () => {
 		dispatch(actions.setTaskEditMenuSetting(null));
+		history.push('/quan-tri/thiet-lap-menu/tao-moi/null');
 	};
 	return (
-		<>
-			<FormMenuComponent setOpenSettingMenu={setOpenSettingMenu} openSettingMenu={openSettingMenu} />
-			<FusePageCarded
-				classes={{
-					// content: 'flex',
-					header: 'min-h-10 h-10	sm:h-16 sm:min-h-16'
-				}}
-				header={
-					<div className="flex flex-1 w-full items-center justify-between">
-						<div className="flex flex-1 flex-col items-center sm:items-start">
-							<FuseAnimate animation="transition.slideRightIn" delay={300}>
-								<Typography
-									className="text-16 sm:text-20 truncate"
-									// component={Link}
-									// role="button"
-									// to="/apps/e-commerce/orders"
-									color="inherit"
-								>
-									{/* {xhtm} */}
-								</Typography>
-							</FuseAnimate>
-						</div>
-					</div>
-				}
-				contentToolbar={
-					<div className="flex  items-center px-16 flex-1">
-						<Typography variant="h6">Thiết lập menu</Typography>
-					</div>
-				}
-				content={
-					<Box p={3}>
-						<SettingMenuContent
-							setOpenSettingMenu={setOpenSettingMenu}
-							handleOpenSettingMenu={handleOpenSettingMenu}
-						/>
-					</Box>
-				}
-				innerScroll
-			/>
-		</>
+		<div className="container govern">
+			<div className="govern__header px-16 shadow-lg">
+				<Text color="primary" type="title">
+					Thiết lập menu
+				</Text>
+				<div className="govern__header--action">
+					<Search
+						onChange={onHandleChange}
+						className="input__search"
+						placeholder="Search"
+						onSearch={handleSearch}
+					/>
+					<Button onClick={handleChangeRoute} className="button__create" variant="contained" color="primary">
+						<Text variant="button" color="white">
+							Tạo mới
+						</Text>
+					</Button>
+				</div>
+			</div>
+			<div className="govern__content mt-8">
+				<div className="govern__content--table px-16">
+					<SettingMenuContent />
+				</div>
+			</div>
+		</div>
 	);
 }

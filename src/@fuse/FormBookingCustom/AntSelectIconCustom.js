@@ -1,8 +1,10 @@
 /* eslint-disable react/jsx-no-duplicate-props */
 import React from 'react';
 import { Form, Select } from 'antd';
-import { Icon, Typography } from '@material-ui/core';
+import { Icon } from '@material-ui/core';
 import './index.scss';
+
+import Text from 'app/components/Text';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -32,15 +34,9 @@ export default function AntSelectIconCustom({
 	return (
 		<div className={`form-item-input ${position && 'flex flex-row  justify-between'}`}>
 			<div className={`flex flex-row `}>
-				<Typography color="primary" variant="body1" className="label--form">
-					{' '}
-					{label}{' '}
-				</Typography>
-				{hasFeedback && (
-					<p style={{ marginBottom: '-20px' }} className="text-red">
-						*
-					</p>
-				)}
+				<Text required={hasFeedback} type="body">
+					{label}
+				</Text>
 			</div>
 			<FormItem
 				rules={[{ required: true }]}
@@ -59,13 +55,11 @@ export default function AntSelectIconCustom({
 						<Option key={p.value} value={p.value}>
 							<div className="flex items-center">
 								<Icon color="primary" fontSize="small">
-									{' '}
-									{p.icon}{' '}
+									{p.icon}
 								</Icon>
-								<Typography variant="body1" className="ml-8" color="primary">
-									{' '}
-									{p.label}{' '}
-								</Typography>
+								<Text className="ml-8" color="primary" type="body">
+									{p.label}
+								</Text>
 							</div>
 						</Option>
 					))}

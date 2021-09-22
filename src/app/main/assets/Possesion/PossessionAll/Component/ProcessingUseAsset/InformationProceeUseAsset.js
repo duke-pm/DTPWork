@@ -2,136 +2,81 @@ import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import React, { useEffect, useState } from 'react';
 import * as moment from 'moment';
 import { useDispatch } from 'react-redux';
-import image from '@fuse/assets/group.png';
-import { TableContainer, Paper, Table, Grid, Typography } from '@material-ui/core';
-import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
+import { Grid } from '@material-ui/core';
 import { Spin } from 'antd';
-import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
+import Text from 'app/components/Text';
 import * as actions from '../../../_redux/possesionActions';
-import TableHeaderProcessing from './TableProcessingUseAsset/TableHeaderProcessing';
 import TableBodyProcessing from './TableProcessingUseAsset/TableBodyProcessing';
 
 export default function InformationProceeUseAsset({ entitiesEdit, actionLoading }) {
 	const dispatch = useDispatch();
-	const classes = DtpCustomStyles();
 	const [history, setHistory] = useState([]);
 	useEffect(() => {
-		dispatch(actions.getAssetHistory(entitiesEdit.assetID)).then(data => {
-			setHistory(data.data.listTransHistory);
+		dispatch(actions.getAssetHistory(entitiesEdit?.assetID)).then(data => {
+			setHistory(data?.data.listTransHistory);
 		});
-	}, [dispatch, entitiesEdit.assetID]);
+	}, [dispatch, entitiesEdit]);
 	return (
 		<>
 			<div className="px-16 sm:px-24">
-				<div className="flex justify-between flex-row">
-					<Typography variant="subtitle2">Thông tin tài sản.</Typography>
-				</div>
-				<Grid alignItems="flex-start" container item>
-					<Grid container item xs={12} sm={6} md={6} lg={6}>
-						<Grid item xs={5} md={4} lg={3}>
-							<Typography className="p-6 text-left truncate" variant="body1">
-								Mã tài sản
-							</Typography>
-						</Grid>
-						<Grid item xs={7} md={8} lg={9}>
-							<Typography className="p-6" variant="subtitle2">
-								{entitiesEdit?.assetCode}
-							</Typography>
-						</Grid>
-						<Grid item xs={5} md={4} lg={3}>
-							<Typography className="p-6 truncate" variant="body1">
-								Tên tài sản
-							</Typography>
-						</Grid>
-						<Grid item xs={7} md={8} lg={9}>
-							<Typography className="p-6 " variant="subtitle2">
-								{entitiesEdit?.assetName}
-							</Typography>
-						</Grid>
-						<Grid item xs={5} md={4} lg={3}>
-							<Typography className="p-6 truncate" variant="body1">
-								Nhóm tài sản
-							</Typography>
-						</Grid>
-						<Grid item xs={7} md={8} lg={9}>
-							<Typography className="p-6 " variant="subtitle2">
-								{entitiesEdit?.groupName}
-							</Typography>
-						</Grid>
-						<Grid item xs={5} md={4} lg={3}>
-							<Typography className="p-6 truncate" variant="body1">
-								Mô tả
-							</Typography>
-						</Grid>
-						<Grid item xs={7} md={8} lg={9}>
-							<Typography className="p-6" variant="subtitle2">
-								{entitiesEdit?.descr}
-							</Typography>
-						</Grid>
+				<Text type="subTitle" color="primary" borderBottom>
+					THÔNG TIN TÀI SẢN
+				</Text>
+				<Grid container item spacing={2} className="mb-16">
+					<Grid item xs={5} md={4} lg={3}>
+						<Text>Mã tài sản:</Text>
 					</Grid>
-					<Grid container item xs={12} sm={6} md={6} lg={6}>
-						<Grid item xs={5} md={4} lg={3}>
-							<Typography className="p-6 truncate" variant="body1">
-								Ngày mua
-							</Typography>
-						</Grid>
-						<Grid item xs={7} md={8} lg={9}>
-							<Typography className="p-6" variant="subtitle2">
-								{entitiesEdit?.purchaseDate
-									? moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY')
-									: ''}
-							</Typography>
-						</Grid>
-						<Grid item xs={5} md={4} lg={3}>
-							<Typography className="p-6 truncate" variant="body1">
-								Nguyên giá
-							</Typography>
-						</Grid>
-						<Grid item xs={7} md={8} lg={9}>
-							<Typography className="p-6" variant="subtitle2">
-								{entitiesEdit && currencyFormat(entitiesEdit.originalPrice)}
-							</Typography>
-						</Grid>
-						<Grid item xs={5} md={4} lg={3}>
-							<Typography className="p-6 truncate" variant="body1">
-								Tình trạng
-							</Typography>
-						</Grid>
-						<Grid item xs={7} md={8} lg={9}>
-							<Typography className="p-6" variant="subtitle2">
-								{entitiesEdit?.statusName}
-							</Typography>
-						</Grid>
+					<Grid item xs={7} md={8} lg={9}>
+						<Text>{entitiesEdit?.assetCode}</Text>
+					</Grid>
+					<Grid item xs={5} md={4} lg={3}>
+						<Text>Tên tài sản:</Text>
+					</Grid>
+					<Grid item xs={7} md={8} lg={9}>
+						<Text variant="body1">{entitiesEdit?.assetName}</Text>
+					</Grid>
+					<Grid item xs={5} md={4} lg={3}>
+						<Text>Nhóm tài sản:</Text>
+					</Grid>
+					<Grid item xs={7} md={8} lg={9}>
+						<Text variant="body1">{entitiesEdit?.groupName}</Text>
+					</Grid>
+					<Grid item xs={5} md={4} lg={3}>
+						<Text>Mô tả:</Text>
+					</Grid>
+					<Grid item xs={7} md={8} lg={9}>
+						<Text>{entitiesEdit?.descr ? entitiesEdit.descr : '-'}</Text>
+					</Grid>
+					<Grid item xs={5} md={4} lg={3}>
+						<Text>Ngày mua:</Text>
+					</Grid>
+					<Grid item xs={7} md={8} lg={9}>
+						<Text>
+							{entitiesEdit?.purchaseDate ? moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY') : ''}
+						</Text>
+					</Grid>
+					<Grid item xs={5} md={4} lg={3}>
+						<Text>Nguyên giá:</Text>
+					</Grid>
+					<Grid item xs={7} md={8} lg={9}>
+						<Text>{entitiesEdit && currencyFormat(entitiesEdit.originalPrice)}</Text>
+					</Grid>
+					<Grid item xs={5} md={4} lg={3}>
+						<Text>Tình trạng:</Text>
+					</Grid>
+					<Grid item xs={7} md={8} lg={9}>
+						<Text>{entitiesEdit?.statusName}</Text>
 					</Grid>
 				</Grid>
 			</div>
 			<div className="px-16 sm:px-24">
-				<div className="flex flex-row">
-					<Typography variant="subtitle2">Quá trình sử dụng.</Typography>
-					{actionLoading && <Spin className="mr-18" />}
+				<Text color="primary" type="subTitle" borderBottom>
+					QUÁ TRÌNH SỬ DỤNG
+				</Text>
+				{actionLoading && <Spin className="mr-18" />}
+				<div className="table-form">
+					<TableBodyProcessing history={history} />
 				</div>
-				<FuseAnimateGroup
-					enter={{
-						animation: 'transition.expandIn'
-					}}
-				>
-					<Paper>
-						<TableContainer>
-							<Table
-								className={history.length === 0 ? classes.tableHistoryNoData : classes.tableHistroy}
-								stickyHeader
-							>
-								<TableHeaderProcessing />
-								<TableBodyProcessing history={history} />
-							</Table>
-							{history && history.length === 0 ? (
-								<div className="flex items-center justify-center h-auto">
-									<img className="rounded-full mx-auto" src={image} alt="" width="484" height="512" />
-								</div>
-							) : null}
-						</TableContainer>
-					</Paper>
-				</FuseAnimateGroup>
 			</div>
 		</>
 	);

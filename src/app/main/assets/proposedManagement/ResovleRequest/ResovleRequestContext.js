@@ -6,11 +6,11 @@ export const ResovleContext = createContext();
 export default function ResovleRequestContext({ children }) {
 	const [page, setPage] = useState(0);
 	const [rowPage, setRowPage] = React.useState(25);
-	const [dateStart, setDateStart] = useState(moment().startOf('month').format('YYYY/MM/DD'));
-	const [dateEnd, setDateEnd] = useState(moment().endOf('month').format('YYYY/MM/DD'));
+	const [dateStart, setDateStart] = useState(moment().startOf('month'));
+	const [dateEnd, setDateEnd] = useState(moment().endOf('month'));
 	const [status, setStatus] = useState(0);
 	const [search, setSearch] = useState('');
-	const [requestTypeId, setRequestTypeId] = useState(0);
+	const [requestTypeId, setRequestTypeId] = useState(null);
 	const [timeLine, setTimeLine] = useState({
 		open: false,
 		title: ''

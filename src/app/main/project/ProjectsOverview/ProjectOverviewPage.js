@@ -1,7 +1,7 @@
-import { Typography } from '@material-ui/core';
 import React, { useEffect, useState, useContext } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import Search from 'antd/lib/input/Search';
+import Text from 'app/components/Text';
 import * as actions from '../_redux/_projectActions';
 import { getInformationCompany } from '../../assets/Possesion/_redux/possesionActions/index';
 import ProjectOverviewComponent from './ProjectsOverviewComponent';
@@ -75,9 +75,9 @@ export default function ProjectOverviewPage() {
 		<>
 			<div className="container projects">
 				<div className="projects__header px-16">
-					<Typography color="primary" variant="h6">
+					<Text type="title" color="primary">
 						Projects Overview
-					</Typography>
+					</Text>
 					<div className="header--action">
 						<Search
 							onKeyPress={event => {

@@ -1,67 +1,63 @@
-import FuseAnimate from '@fuse/core/FuseAnimate';
-import { Box, Typography } from '@material-ui/core';
-import React from 'react';
+import { Button } from '@material-ui/core';
+import React, { useEffect, useContext } from 'react';
 // import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import FusePageCardedTask from '@fuse/core/FusePageCarded/FusePageCardedTask';
 // import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
+import Search from 'antd/lib/input/Search';
+import { useHistory } from 'react-router';
+import Text from 'app/components/Text';
+import { useDispatch } from 'react-redux';
 import LevelApprovalComponent from './LevelApprovalComponent';
-// import { LevelApprovalContext } from './LevelApprovalContext';
-import FormLevelApproval from './LevelApprovalComponent/FormLevelApproval';
+import { fetchListLevels, setTaskEditLevel, fetchListLevelsFilter } from './reduxSettingLevel/LevelSettingActions';
+import { LevelApprovalContext } from './LevelApprovalContext';
 
 export default function ContentProvider() {
-	// const { currentState, project } = useSelector(
-	// 	state => ({
-	// 		currentState: state.possesion.entitiesInformation,
-	// 		projectAll: state.project.entitiesAll,
-	// 		project: state.project.entitiesDetail,
-	// 		listLoading: state.project.listLoading
-	// 	}),
-	// 	shallowEqual
-	// );
-	// const levelApprovalContext = useContext(LevelApprovalContext);
-	// const { form, setForm } = levelApprovalContext;
-	// const classes = DtpCustomStyles();
-	// const dispatch = useDispatch();
-
+	const history = useHistory();
+	const dispatch = useDispatch();
+	const levelApprovalContext = useContext(LevelApprovalContext);
+	const { setPage, rowPage, page, search, setSearch } = levelApprovalContext;
+	const onHandleChange = e => {
+		setPage(0);
+		setSearch(e.target.value);
+		if (e.target.value.length <= 0) {
+			dispatch(fetchListLevelsFilter(rowPage, page, e.target.value));
+		}
+	};
+	const handleSearch = () => {
+		setPage(0);
+		dispatch(fetchListLevelsFilter(rowPage, page, search));
+	};
+	const handleChangeRoute = () => {
+		dispatch(setTaskEditLevel(null));
+		history.push('/quan-tri/cap-quyen/tao-moi/null');
+	};
+	useEffect(() => {
+		dispatch(fetchListLevels());
+	}, [dispatch]);
 	return (
-		<>
-			<FormLevelApproval />
-			<FusePageCardedTask
-				innerScroll
-				classes={{
-					// content: 'flex',
-					header: 'min-h-10 h-10	sm:h-16 sm:min-h-16'
-				}}
-				header={
-					<div className="flex flex-1 w-full items-center justify-between">
-						<div className="flex flex-1 flex-col items-center sm:items-start">
-							<FuseAnimate animation="transition.slideRightIn" delay={300}>
-								<Typography
-									className="text-16 sm:text-20 truncate"
-									// component={Link}
-									// role="button"
-									// to="/apps/e-commerce/orders"
-									color="inherit"
-								>
-									{/* {xhtm} */}
-								</Typography>
-							</FuseAnimate>
-						</div>
-					</div>
-				}
-				contentToolbar={
-					<div className="flex items-center p-16 flex-1">
-						<Typography className="ml-16" variant="h6">
-							Level Approval
-						</Typography>
-					</div>
-				}
-				content={
-					<Box p={3}>
-						<LevelApprovalComponent />
-					</Box>
-				}
-			/>
-		</>
+		<div className="container govern">
+			<div className="govern__header px-16 shadow-lg">
+				<Text color="primary" type="title">
+					Cấp quyền
+				</Text>
+				<div className="govern__header--action">
+					<Search
+						onChange={e => onHandleChange(e)}
+						className="input__search"
+						placeholder="Search"
+						onSearch={handleSearch}
+					/>
+					<Button onClick={handleChangeRoute} className="button__create" variant="contained" color="primary">
+						<Text type="button" color="white">
+							Tạo mới
+						</Text>
+					</Button>
+				</div>
+			</div>
+			<div className="govern__content mt-8">
+				<div className="govern__content--table px-16">
+					<LevelApprovalComponent />
+				</div>
+			</div>
+		</div>
 	);
 }

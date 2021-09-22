@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-no-duplicate-props */
 import React from 'react';
 import { DatePicker, Form } from 'antd';
-import { Typography } from '@material-ui/core';
 import './index.scss';
 import * as moment from 'moment';
+
+import Text from 'app/components/Text';
 
 const FormItem = Form.Item;
 const { RangePicker } = DatePicker;
@@ -39,15 +40,9 @@ export default function AntDatepickerCustom({
 	return (
 		<div className={`form-item-input ${position && 'flex flex-row  justify-between'}`}>
 			<div className={`flex flex-row `}>
-				<Typography color="primary" variant="body1" className="label--form">
-					{' '}
-					{label}{' '}
-				</Typography>
-				{hasFeedback && (
-					<p style={{ marginBottom: '-20px' }} className="text-red">
-						*
-					</p>
-				)}
+				<Text required={hasFeedback} type="body">
+					{label}
+				</Text>
 			</div>
 			<FormItem
 				rules={[{ required: true }]}

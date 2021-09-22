@@ -1,8 +1,9 @@
 /* eslint-disable react/jsx-no-duplicate-props */
 import React from 'react';
 import { Form, Select } from 'antd';
-import { Typography } from '@material-ui/core';
 import './index.scss';
+
+import Text from 'app/components/Text';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -14,6 +15,7 @@ export default function AntSelectCustom({
 	field,
 	submitCount,
 	form,
+	handleChangeState,
 	width,
 	options,
 	type,
@@ -28,20 +30,14 @@ export default function AntSelectCustom({
 	const touchedError = hasError && touched;
 	const onChange = value => {
 		form.setFieldValue(field.name, value);
-		// return handleInputChange ? handleInputChange(target) : null;
+		return handleChangeState ? handleChangeState(value) : null;
 	};
 	return (
-		<div className={`form-item-input ${position && 'flex flex-row  justify-between'}`}>
-			<div className={`flex flex-row ${position && 'mt-8'}`}>
-				<Typography color="primary" variant="body1" className="label--form">
-					{' '}
-					{label}{' '}
-				</Typography>
-				{hasFeedback && (
-					<p style={{ marginBottom: '-20px' }} className="text-red">
-						*
-					</p>
-				)}
+		<div className={`form-item-input ${position && 'flex flex-row justify-between'}`}>
+			<div className={`flex flex-row mr-10 ${position && 'mt-8'}`}>
+				<Text required={hasFeedback} type="body">
+					{label}
+				</Text>
 			</div>
 			<FormItem
 				rules={[{ required: true }]}

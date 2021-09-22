@@ -1,13 +1,13 @@
 /* eslint-disable no-shadow */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Button, Divider, Grid, Icon, Typography } from '@material-ui/core';
+import { Button, Grid, Icon } from '@material-ui/core';
 import { Avatar, Badge, Dropdown, Menu, Slider, Spin, Tabs, Tooltip } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
-import { checkDeadline, checkFile, nameFile, notificationConfig } from '@fuse/core/DtpConfig';
+import { checkDeadline, checkFile, nameFile, notificationConfig, URL } from '@fuse/core/DtpConfig';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import {
 	CaretDownOutlined,
@@ -19,6 +19,7 @@ import {
 import { getInformationCompany } from 'app/main/assets/Possesion/_redux/possesionActions';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import Text from 'app/components/Text';
 import { updatedTaskStatus, addTaskActivity, getTaskViewDetail, addTaskWatcher } from '../../_redux/_projectActions';
 import { badgeText } from '../../ProjectsOverview/ProjectsOverviewComponent/ConfigTableProject';
 import { priorityColor } from '../ProjectComponent/TableProject/ConfigTableProject';
@@ -133,9 +134,9 @@ export default function OverviewPage() {
 	return (
 		<div className="container projects">
 			<div className="projects__header px-16">
-				<Typography color="primary" variant="h6">
-					Overview
-				</Typography>
+				<Text color="primary" type="title">
+					Detail
+				</Text>
 				<div className="projects__header--action flex ">
 					<Tooltip placement="bottom" title="Exit">
 						<span onClick={ExitPage} className="action--button">
@@ -146,339 +147,347 @@ export default function OverviewPage() {
 			</div>
 			<div className="projects__content">
 				<Spin spinning={actionLoading}>
-					<div className="overview--content">
-						<Tabs defaultActiveKey="0">
-							<TabPane tab="Overview" key="0">
-								<Grid container item spacing={2} className="content__overview">
-									<Grid className="" item md={12} sm={12} lg={12}>
-										<Typography variant="subtitle2" className="title__view" color="primary">
-											{' '}
-											Information{' '}
-										</Typography>
-										<Divider className="mt-16" />
-									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography
-											style={{ color: entitiesView?.detail.typeColor }}
-											variant="subtitle2"
-											color="primary"
-										>
-											{entitiesView?.detail.typeName}
-										</Typography>
-									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										{' '}
-										<Typography variant="body2">{entitiesView?.detail.taskName}</Typography>
-									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											Created by:{' '}
-										</Typography>
-									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="body2">{entitiesView?.detail.crtdUser}</Typography>
-									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											Last updated on:{' '}
-										</Typography>
-									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="body2">
-											{moment(entitiesView?.detail.lUpdDate).format('DD MMM, YY')}
-										</Typography>
-									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											Description:{' '}
-										</Typography>
-									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="body2">{entitiesView?.detail.descr}</Typography>
-									</Grid>
-									<Grid className="mt-20" item sm={12} md={12} lg={12}>
-										<Typography variant="subtitle2" className="title__view" color="primary">
-											action
-										</Typography>
-										<Divider className="mt-16" />
-									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											Status :{' '}
-										</Typography>
-									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Dropdown
-											// disabled={!entitiesView?.detail.isUpdated}
-											overlay={
-												<Menu>
-													{ArrProjectStatus?.map(itemStatus => (
-														<Menu.Item
-															key={itemStatus.value}
-															onClick={() => updatedStatus(itemStatus.value)}
-															style={{ color: itemStatus.colorCode }}
-														>
-															{itemStatus.label}
-														</Menu.Item>
-													))}
-												</Menu>
-											}
-											placement="bottomLeft"
-											arrow
-										>
-											<div className="flex flex-row items-center">
-												<Badge
-													size="default"
-													style={{
-														color: entitiesView?.detail.colorCode,
-														cursor: 'pointer'
-													}}
-													color={entitiesView?.detail.colorCode}
-													text={entitiesView?.detail.statusName}
-												/>
-												<CaretDownOutlined style={{ cursor: 'pointer', marginLeft: '10px' }} />
-											</div>
-										</Dropdown>
-									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											Progress :{' '}
-										</Typography>
-									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Slider
-											disabled={entitiesView ? !entitiesView.detail.isUpdated : true}
-											onChange={handleChangeSlider}
-											onAfterChange={handleChangeSliderAfter}
-											value={process}
-											tipFormatter={formatter}
-										/>
-									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											Follow :{' '}
-										</Typography>
-									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Button
-											onClick={handleTraffic}
-											type="submit"
-											style={{ width: '15rem' }}
-											className="h-26"
-											variant="contained"
-											color="primary"
-											startIcon={!isWatcherOverView ? <VisibilityIcon /> : <VisibilityOffIcon />}
-										>
-											{!isWatcherOverView ? 'Follow' : 'Unfollow'}
-										</Button>
-									</Grid>
-									<Grid className="mt-20" item md={12} sm={12} lg={12}>
-										<Typography variant="subtitle2" className="title__view" color="primary">
-											PEOPLE & TIME
-										</Typography>
-										<Divider className="mt-16" />
-									</Grid>
-									<Grid container spacing={2} item md={12} sm={12} lg={12}>
-										<Grid direction="row" container item md={6} sm={6} lg={6}>
-											<Typography variant="subtitle2" color="primary">
-												Start date:
-											</Typography>
-											<Typography variant="body2" className="ml-20">
-												{moment(entitiesView?.detail.startDate).format('DD/MM/YYYY')}
-											</Typography>
+					<Grid container className="w-full p-16">
+						<Grid item lg={3} md={3} sm={false} xs={false} />
+						<Grid item lg={6} md={6} sm={12} xs={12}>
+							{/* <div className="overview--content"> */}
+							<Tabs defaultActiveKey="0">
+								<TabPane tab={<Text type="subTitle">Overview</Text>} key="0">
+									<Text type="subTitle" color="primary" borderBottom>
+										BASIC INFORMATIONS
+									</Text>
+									<Grid container spacing={4}>
+										<Grid item xs={3} md={3} sm={3} lg={3}>
+											<Text style={{ color: entitiesView?.detail.typeColor }} type="subTitle">
+												{entitiesView?.detail.typeName}
+											</Text>
 										</Grid>
-										<Grid direction="row" container item md={6} sm={6} lg={6}>
-											<Typography variant="subtitle2" color="primary">
-												End date:
-											</Typography>
-											<Typography variant="body2" className="ml-20">
-												{moment(entitiesView?.detail.endDate).format('DD/MM/YYYY')}
-											</Typography>
+										<Grid item xs={9} md={9} sm={9} lg={9}>
+											<Text type="subTitle">{entitiesView?.detail.taskName}</Text>
 										</Grid>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											Assignee :{' '}
-										</Typography>
+
+									<Grid container spacing={4}>
+										<Grid item xs={3} md={3} sm={3} lg={3}>
+											<Text type="body">Created by:</Text>
+										</Grid>
+										<Grid item xs={9} md={9} sm={9} lg={9}>
+											<Text type="body">{entitiesView?.detail.crtdUser}</Text>
+										</Grid>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<div className="flex flex-row items-center">
-											<Avatar
-												size={32}
-												style={{ backgroundColor: entitiesView?.detail.colorCode }}
-												icon={<UserOutlined />}
+
+									<Grid container spacing={4}>
+										<Grid item xs={3} md={3} sm={3} lg={3}>
+											<Text type="body">Last updated:</Text>
+										</Grid>
+										<Grid item xs={9} md={9} sm={9} lg={9}>
+											<Text type="body">
+												{moment(entitiesView?.detail.lUpdDate).format('DD MMM, YY')}
+											</Text>
+										</Grid>
+									</Grid>
+
+									<Grid container spacing={4}>
+										<Grid item xs={12} md={3} sm={3} lg={3}>
+											<Text type="body">Description:</Text>
+										</Grid>
+										<Grid item xs={12} md={9} sm={9} lg={9}>
+											<Text type="body">
+												{entitiesView?.detail.descr !== '' ? entitiesView?.detail.descr : '-'}
+											</Text>
+										</Grid>
+									</Grid>
+
+									<Text className="mt-20" type="subTitle" color="primary" borderBottom>
+										ACTION
+									</Text>
+
+									<Grid container spacing={4} className="flex flex-row items-center justify-between">
+										<Grid item xs={3} md={3} sm={3} lg={3}>
+											<Text type="body">Status:</Text>
+										</Grid>
+										<Grid
+											item
+											xs={9}
+											md={9}
+											sm={9}
+											lg={9}
+											className="flex flex-row items-center justify-between"
+										>
+											<Dropdown
+												overlay={
+													<Menu>
+														{ArrProjectStatus?.map(itemStatus => (
+															<Menu.Item
+																key={itemStatus.value}
+																onClick={() => updatedStatus(itemStatus.value)}
+																style={{ color: itemStatus.colorCode }}
+															>
+																{itemStatus.label}
+															</Menu.Item>
+														))}
+													</Menu>
+												}
+												placement="bottomLeft"
+												arrow
+											>
+												<div className="flex flex-row items-center">
+													<Badge
+														size="default"
+														style={{
+															color: entitiesView?.detail.colorCode,
+															cursor: 'pointer'
+														}}
+														color={entitiesView?.detail.colorCode}
+														text={entitiesView?.detail.statusName}
+													/>
+													<CaretDownOutlined
+														style={{ cursor: 'pointer', marginLeft: '10px' }}
+													/>
+												</div>
+											</Dropdown>
+
+											<Button
+												onClick={handleTraffic}
+												type="submit"
+												style={{ width: '15rem' }}
+												className="h-26"
+												variant="contained"
+												color="primary"
+												startIcon={
+													!isWatcherOverView ? <VisibilityIcon /> : <VisibilityOffIcon />
+												}
+											>
+												<Text type="button" color="white">
+													{!isWatcherOverView ? 'Follow' : 'Unfollow'}
+												</Text>
+											</Button>
+										</Grid>
+									</Grid>
+
+									<Grid container spacing={4}>
+										<Grid item xs={3} md={3} sm={3} lg={3}>
+											<Text type="body">Progress:</Text>
+										</Grid>
+										<Grid item xs={9} md={9} sm={9} lg={9}>
+											<Slider
+												disabled={entitiesView ? !entitiesView.detail.isUpdated : true}
+												onChange={handleChangeSlider}
+												onAfterChange={handleChangeSliderAfter}
+												value={process}
+												tipFormatter={formatter}
 											/>
-											<Typography className="ml-8" variant="body1">
-												{entitiesView?.detail.ownerName}
-											</Typography>
-										</div>
+										</Grid>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											Members :{' '}
-										</Typography>
+
+									<Text className="mt-20" type="subTitle" color="primary" borderBottom>
+										PEOPLE & TIME
+									</Text>
+
+									<Grid container spacing={4}>
+										<Grid item xs={12} md={6} sm={6} lg={6} className="flex flex-row items-center">
+											<Text type="body">Start date:</Text>
+											<Text type="body" className="ml-20">
+												{moment(entitiesView?.detail.startDate).format('DD/MM/YYYY')}
+											</Text>
+										</Grid>
+										<Grid item xs={12} md={6} sm={6} lg={6} className="flex flex-row items-center">
+											<Text type="body">End date: </Text>
+											<Text type="body" className="ml-20">
+												{moment(entitiesView?.detail.endDate).format('DD/MM/YYYY')}
+											</Text>
+										</Grid>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Avatar.Group
-											maxCount={5}
-											maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
-										>
-											{entitiesView?.detail.lstUserInvited?.map(av => (
-												<Tooltip key={av.userID} title={av.fullName} placement="top">
-													<Avatar gap={4} style={{ backgroundColor: '#87d068' }}>
-														<Typography color="inherit" variant="subtitle1">
-															{av.alphabet}
-														</Typography>
-													</Avatar>
-												</Tooltip>
-											))}
-										</Avatar.Group>
+
+									<Grid container spacing={4}>
+										<Grid item xs={12} md={6} sm={6} lg={6} className="flex flex-row items-center">
+											<Text type="body">Assignee:</Text>
+											<div className="flex flex-row items-center ml-20">
+												<Avatar
+													size={32}
+													style={{ backgroundColor: entitiesView?.detail.colorCode }}
+													icon={<UserOutlined />}
+												/>
+												<Text className="ml-8" type="body">
+													{entitiesView?.detail.ownerName}
+												</Text>
+											</div>
+										</Grid>
+										<Grid item xs={12} md={6} sm={6} lg={6} className="flex flex-row items-center">
+											<Text type="body">Members:</Text>
+											<Avatar.Group
+												className="ml-20"
+												maxCount={5}
+												maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
+											>
+												{entitiesView?.detail.lstUserInvited?.map(av => (
+													<Tooltip key={av.userID} title={av.fullName} placement="top">
+														<Avatar>{av.alphabet}</Avatar>
+													</Tooltip>
+												))}
+											</Avatar.Group>
+										</Grid>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											Priority :{' '}
-										</Typography>
-									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography
-											variant="body2"
-											style={{ color: priorityColor[entitiesView?.detail.priority] }}
-										>
-											{' '}
-											{entitiesView?.detail.priorityName}
-										</Typography>
-									</Grid>
+
 									{checkDeadline(entitiesView?.detail.endDate) > 0 &&
 										entitiesView?.detail.statusID !== 5 &&
 										entitiesView?.detail.statusID !== 6 &&
 										entitiesView?.detail.statusID !== 7 &&
 										entitiesView?.detail.typeName === 'TASK' && (
-											<>
-												<Grid item md={6} sm={6} lg={6}>
-													<Typography variant="subtitle2" color="primary">
-														{' '}
-														Deadline :{' '}
-													</Typography>
+											<Grid container spacing={2}>
+												<Grid item xs={3} md={3} sm={3} lg={3}>
+													<Text type="body"> Deadline : </Text>
 												</Grid>
-												<Grid item md={6} sm={6} lg={6}>
-													<Typography variant="body1" style={{ color: 'red' }}>
+												<Grid item xs={9} md={9} sm={9} lg={9}>
+													<Text type="body" color="error">
 														Expired {checkDeadline(entitiesView?.detail.endDate)} days
-													</Typography>
+													</Text>
 												</Grid>
-											</>
+											</Grid>
 										)}
-									<Grid className="mt-20" item md={12} sm={12} lg={12}>
-										<Typography variant="subtitle2" className="title__view" color="primary">
-											DETAIL
-										</Typography>
-										<Divider className="mt-16" />
+
+									<Text className="mt-20" type="subTitle" color="primary" borderBottom>
+										DETAIL
+									</Text>
+
+									<Grid container spacing={4}>
+										<Grid item xs={3} md={3} sm={3} lg={3}>
+											<Text type="body">Priority:</Text>
+										</Grid>
+										<Grid item xs={9} md={9} sm={9} lg={9}>
+											<Text
+												type="body"
+												style={{ color: priorityColor[entitiesView?.detail.priority] }}
+											>
+												{entitiesView?.detail.priorityName}
+											</Text>
+										</Grid>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											Sector :{' '}
-										</Typography>
+
+									<Grid container spacing={4}>
+										<Grid item xs={3} md={3} sm={3} lg={3}>
+											<Text type="body">Sector:</Text>
+										</Grid>
+										<Grid item xs={9} md={9} sm={9} lg={9}>
+											<Text type="body">
+												{entitiesView?.detail.sectorName !== ''
+													? entitiesView?.detail.sectorName
+													: '-'}
+											</Text>
+										</Grid>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="body2">{entitiesView?.detail.sectorName}</Typography>
+
+									<Grid container spacing={4}>
+										<Grid item xs={3} md={3} sm={3} lg={3}>
+											<Text type="body">Grade:</Text>
+										</Grid>
+										<Grid item xs={9} md={9} sm={9} lg={9}>
+											<Text type="body">
+												{entitiesView?.detail.gradeName !== ''
+													? entitiesView?.detail.gradeName
+													: '-'}
+											</Text>
+										</Grid>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											Grade :{' '}
-										</Typography>
+
+									<Grid container spacing={4}>
+										<Grid item xs={3} md={3} sm={3} lg={3}>
+											<Text type="body">Component:</Text>
+										</Grid>
+										<Grid item xs={9} md={9} sm={9} lg={9}>
+											<Text type="body">
+												{entitiesView?.detail.componentName !== ''
+													? entitiesView?.detail.componentName
+													: '-'}
+											</Text>
+										</Grid>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="body2">{entitiesView?.detail.gradeName}</Typography>
+
+									<Grid container spacing={4}>
+										<Grid item xs={3} md={3} sm={3} lg={3}>
+											<Text type="body">Author:</Text>
+										</Grid>
+										<Grid item xs={9} md={9} sm={9} lg={9}>
+											<Text type="body">
+												{entitiesView?.detail.author !== '' ? entitiesView?.detail.author : '-'}
+											</Text>
+										</Grid>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											Component :{' '}
-										</Typography>
+
+									<Grid container spacing={4}>
+										<Grid item xs={3} md={3} sm={3} lg={3}>
+											<Text type="body">Origin Publisher:</Text>
+										</Grid>
+										<Grid item xs={9} md={9} sm={9} lg={9}>
+											<Text type="body">
+												{entitiesView?.detail.originPublisher !== ''
+													? entitiesView?.detail.originPublisher
+													: '-'}
+											</Text>
+										</Grid>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="body2">{entitiesView?.detail.componentName}</Typography>
+
+									<Grid container spacing={4}>
+										<Grid item xs={3} md={3} sm={3} lg={3}>
+											<Text type="body">Ownership DTP:</Text>
+										</Grid>
+										<Grid item xs={9} md={9} sm={9} lg={9}>
+											<Text type="body">
+												{entitiesView?.detail.ownershipDTP !== ''
+													? entitiesView?.detail.ownershipDTP
+													: '-'}
+											</Text>
+										</Grid>
 									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											Author :{' '}
-										</Typography>
-									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="body2">{entitiesView?.detail.author}</Typography>
-									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											Origin Publisher :{' '}
-										</Typography>
-									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="body2">{entitiesView?.detail.originPublisher}</Typography>
-									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="subtitle2" color="primary">
-											{' '}
-											Ownership DTP :{' '}
-										</Typography>
-									</Grid>
-									<Grid item md={6} sm={6} lg={6}>
-										<Typography variant="body2">{entitiesView?.detail.ownershipDTP}</Typography>
-									</Grid>
-									<Grid item sm={12} md={12} lg={12}>
-										<div className="flex flex-col mt-20">
-											<Typography variant="subtitle2" className="title__view" color="primary">
-												{' '}
-												FILES{' '}
-											</Typography>
-											<Divider className="mt-16" />
-											<div className="flex flex-row justify-between mt-16">
-												{entitiesView?.detail.attachFiles && (
-													<div className="flex flex-row items-center">
-														<Avatar
-															shape="square"
-															size={54}
-															style={{ backgroundColor: '#87d068' }}
-															icon={
-																entitiesView &&
-																file[checkFile(entitiesView?.detail.attachFiles)]
-															}
-														/>
-														<Button
-															style={{ backgroundColor: 'none', marginLeft: '10px' }}
-															href={`${URL}/${entitiesView?.detail.attachFiles}`}
-														>
-															<Typography variant="button">
-																{entitiesView &&
-																	nameFile(entitiesView?.detail.attachFiles)}
-															</Typography>
-														</Button>
+
+									{entitiesView?.detail.attachFiles && (
+										<>
+											<Text className="mt-20" type="subTitle" color="primary" borderBottom>
+												FILES
+											</Text>
+											<Grid container spacing={2}>
+												<Grid item sm={12} md={12} lg={12}>
+													<div className="flex flex-row justify-between mt-16">
+														<div className="flex flex-row items-center">
+															<Avatar
+																shape="square"
+																size="large"
+																style={{ backgroundColor: '#87d068' }}
+																icon={
+																	entitiesView &&
+																	file[checkFile(entitiesView?.detail.attachFiles)]
+																}
+															/>
+															<Button
+																style={{
+																	backgroundColor: 'none',
+																	marginLeft: '10px'
+																}}
+																href={`${URL}/${entitiesView?.detail.attachFiles}`}
+															>
+																<Text type="button">
+																	{entitiesView &&
+																		nameFile(entitiesView?.detail.attachFiles)}
+																</Text>
+															</Button>
+														</div>
 													</div>
-												)}
-											</div>
-										</div>
-									</Grid>
-								</Grid>
-							</TabPane>
-							<TabPane tab="Activity" key="1">
-								<TabOverview />
-							</TabPane>
-							<TabPane tab="Watchers" key="2">
-								<Watchers />
-							</TabPane>
-						</Tabs>
-					</div>
+												</Grid>
+											</Grid>
+										</>
+									)}
+								</TabPane>
+								<TabPane tab={<Text type="subTitle">Activity</Text>} key="1">
+									<TabOverview />
+								</TabPane>
+								<TabPane tab={<Text type="subTitle">Watchers</Text>} key="2">
+									<Watchers />
+								</TabPane>
+							</Tabs>
+							{/* </div> */}
+						</Grid>
+						<Grid item lg={3} md={3} sm={false} xs={false} />
+					</Grid>
 				</Spin>
 			</div>
 		</div>

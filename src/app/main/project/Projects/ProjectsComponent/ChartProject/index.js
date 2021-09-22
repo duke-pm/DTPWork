@@ -1,8 +1,9 @@
 /* eslint-disable no-shadow */
-import { AppBar, Dialog, DialogContent, IconButton, Toolbar, Typography } from '@material-ui/core';
-import React, { useContext, useMemo } from 'react';
+import { AppBar, Dialog, IconButton, Toolbar } from '@material-ui/core';
+import React, { useContext } from 'react';
 import CloseIcon from '@material-ui/icons/Close';
 import { useSelector, shallowEqual } from 'react-redux';
+import Text from 'app/components/Text';
 import ApexChart from './ChartHorizal';
 import { ProjectContext } from '../../ProjectContext';
 
@@ -19,9 +20,7 @@ export default function ChartProject() {
 					<IconButton onClick={handleCloseChart} edge="start" color="inherit" aria-label="close">
 						<CloseIcon />
 					</IconButton>
-					<Typography variant="subtitle1" color="inherit">
-						Project plan of {entitiesEdit?.prjName}
-					</Typography>
+					<Text type="subTitle">Project plan of {entitiesEdit?.prjName}</Text>
 				</Toolbar>
 			</AppBar>
 			<ApexChart entitiesGantt={entitiesGantt} />

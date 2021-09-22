@@ -27,7 +27,7 @@ html {
  font-family: Muli, Roboto, Helvetica Neue, Arial, sans-serif;
 } */
 body {
-    font-size: 1.4rem !important;
+    font-size: 1.3rem !important;
     line-height: 1.4 !important;
     font-family: sans-serif, Muli, Roboto, Helvetica Neue, Arial !important;
 }
@@ -202,11 +202,13 @@ input:-webkit-autofill {
 }
 
 .ant-input {
-    font-size: 1.4rem !important;
+    font-size: 1.3rem !important;
     /* line-height: 1.4 !important; */
     font-family: sans-serif, Muli, Roboto, Helvetica Neue, Arial !important;
 }
-
+.ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
+    height: 30px !important;
+}
 @import 'print.css';
 
 @import 'tables.css';

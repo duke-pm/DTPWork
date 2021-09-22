@@ -1,17 +1,23 @@
-import React, { useContext } from 'react';
-import { Dialog, AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import React, { useEffect } from 'react';
+import { Icon } from '@material-ui/core';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { notificationConfig } from '@fuse/core/DtpConfig';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
+import { Tooltip } from 'antd';
+import Text from 'app/components/Text';
+import { useHistory, useLocation } from 'react-router';
+import queryString from 'query-string';
 import FormCustomRepairEdit from './FormCustomRepairEdit';
-import { PossessionContext } from '../../PossessionContext';
 import * as actions from '../../_redux/possesionActions';
 
 export default function FormCustomService() {
 	const dispatch = useDispatch();
-	const assetSContext = useContext(PossessionContext);
-	const { formService, setFormService, typeFormService } = assetSContext;
+	const history = useHistory();
+	const location = useLocation();
+	const category = queryString.parse(location.search);
+	const ExitPage = () => history.goBack();
 	const { entitiesEdit, actionLoading } = useSelector(
 		state => ({
 			entitiesEdit: state.possesion.entitiesEdit,
@@ -19,43 +25,45 @@ export default function FormCustomService() {
 		}),
 		shallowEqual
 	);
-	const handleClose = () => setFormService(false);
+	useEffect(() => {
+		if (!entitiesEdit) history.goBack();
+	}, [entitiesEdit, history]);
 	const handleSubmitRepairService = values => {
-		dispatch(actions.repairPossesion(values, entitiesEdit, typeFormService)).then(data => {
+		dispatch(actions.repairPossesion(values, entitiesEdit, category.type)).then(data => {
 			if (data && !data.isError) {
 				notificationConfig(
 					'success',
 					notificationContent.content.vi.success,
 					notificationContent.description.assets.repairAssetsSuccess
 				);
-				handleClose();
+				history.goBack();
 			}
 		});
 	};
 	return (
-		<Dialog
-			style={{ zIndex: 20 }}
-			fullWidth
-			maxWidth="md"
-			open={formService}
-			aria-labelledby="customized-dialog-title"
-		>
-			<AppBar position="static" className="shadow-md">
-				<Toolbar className="flex w-full">
-					<IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
-						<CloseIcon />
-					</IconButton>
-					<Typography variant="subtitle1" color="inherit">
-						Sửa chữa bảo hành tài sản
-					</Typography>
-				</Toolbar>
-			</AppBar>
-			<FormCustomRepairEdit
-				handleClose={handleClose}
-				actionLoading={actionLoading}
-				handleSubmitRepairService={handleSubmitRepairService}
-				entitiesEdit={entitiesEdit}
-			/>
-		</Dialog>
+		<div className="container assets">
+			<div className="assets__header px-16 shadow-lg">
+				<Text color="primary" type="title">
+					Sửa chữa bảo hành tài sản.
+				</Text>
+				<div className="assets__header--action">
+					<Tooltip placement="bottom" title="Exit">
+						<span onClick={ExitPage} className="action--button">
+							<Icon fontSize="small">close</Icon>
+						</span>
+					</Tooltip>
+				</div>
+			</div>
+			<div className="assets__content mt-8">
+				<div className="assets__form">
+					<FormCustomRepairEdit
+						handleClose={ExitPage}
+						actionLoading={actionLoading}
+						handleSubmitRepairService={handleSubmitRepairService}
+						entitiesEdit={entitiesEdit}
+					/>
+				</div>
+			</div>
+		</div>
 	);
 }

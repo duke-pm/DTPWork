@@ -1,4 +1,5 @@
 import React from 'react';
+import '../index.scss';
 
 const GroupUserConfig = {
 	settings: {
@@ -7,6 +8,10 @@ const GroupUserConfig = {
 		}
 	},
 	routes: [
+		{
+			path: '/quan-tri/nhom-nguoi-dung/:type/:id',
+			component: React.lazy(() => import('./modifyGroupUser'))
+		},
 		{
 			path: '/quan-tri/nhom-nguoi-dung',
 			component: React.lazy(() => import('./index'))

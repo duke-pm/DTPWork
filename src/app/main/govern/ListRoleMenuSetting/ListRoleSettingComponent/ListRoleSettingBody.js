@@ -1,13 +1,13 @@
 /* eslint-disable no-shadow */
-import { Table, Checkbox } from 'antd';
+import { Table, Checkbox, Spin } from 'antd';
 import React, { useState, useEffect } from 'react';
 import image from '@fuse/assets/group.png';
 import __ from 'lodash';
 import { findIndexMultiple, findIndexMultipleAsset } from '@fuse/core/DtpConfig';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
-import { Typography } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { Typography } from '@material-ui/core';
 
 export default function ListRoleSettingBody({ entities, newData, setNewData, actionLoading }) {
 	const theme = useTheme();
@@ -28,9 +28,8 @@ export default function ListRoleSettingBody({ entities, newData, setNewData, act
 			title: 'Menu Name',
 			dataIndex: 'menuName',
 			render: (_, item) => (
-				<Typography style={{ marginLeft: '20px', cursor: 'default' }} component="button">
-					{' '}
-					{item.menuName}{' '}
+				<Typography variant="body1" component="button">
+					{item.menuName}
 				</Typography>
 			)
 		},
@@ -100,7 +99,7 @@ export default function ListRoleSettingBody({ entities, newData, setNewData, act
 				pagination={false}
 				columns={column}
 				scroll={{ x: matchesSM && 580 }}
-				loading={actionLoading}
+				loading={actionLoading && <Spin />}
 				rowKey="menuID"
 				onExpandedRowsChange={onSelectedRowKeysChange}
 				expandedRowKeys={selectedRowKeys}
@@ -111,15 +110,9 @@ export default function ListRoleSettingBody({ entities, newData, setNewData, act
 					expandIconColumnIndex: 0,
 					expandIcon: ({ expanded, onExpand, record, expandable }) =>
 						expandable.length === 0 ? null : expanded ? (
-							<CaretUpOutlined
-								onClick={e => onExpand(record, e)}
-								style={{ marginRight: '8px !important', fontSize: '10pt' }}
-							/>
+							<CaretUpOutlined onClick={e => onExpand(record, e)} style={{ fontSize: '10pt' }} />
 						) : (
-							<CaretDownOutlined
-								onClick={e => onExpand(record, e)}
-								style={{ marginRight: '8px !important', fontSize: '10pt' }}
-							/>
+							<CaretDownOutlined onClick={e => onExpand(record, e)} style={{ fontSize: '10pt' }} />
 						)
 				}}
 				// rowSelection={{ ...rowSelection, checkStrictly }}

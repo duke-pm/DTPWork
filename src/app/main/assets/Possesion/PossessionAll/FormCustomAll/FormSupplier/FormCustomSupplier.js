@@ -1,10 +1,11 @@
-import { AntInput } from '@fuse/CustomForm/CreateAntField';
 import { Button, DialogActions, DialogContent } from '@material-ui/core';
 import { Spin } from 'antd';
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import React from 'react';
+import Text from 'app/components/Text';
 import { validateField } from '@fuse/core/DtpConfig';
+import AntInputCustom from '@fuse/FormBookingCustom/AntInputCustom';
 
 const inititalState = {
 	supplierID: 1,
@@ -40,33 +41,31 @@ export default function FormCustomSupplier({ actionLoading, handleSaveFormSuppli
 								<div className="grid grid-cols-1  p-4 gap-8 ">
 									<Field
 										label="Tên nhà cung cấp"
-										type="text"
 										name="nameSupplier"
-										component={AntInput}
+										component={AntInputCustom}
 										hasFeedback
 									/>
 								</div>
 								<div className="grid grid-cols-1 p-4 gap-8 ">
+									<Field label="Địa chỉ" name="address" component={AntInputCustom} hasFeedback />
+								</div>
+								<div className="grid grid-cols-1 sm:grid-cols-2 p-4 gap-8 ">
+									<Field label="Email" name="email" type="email" component={AntInputCustom} />
+									<Field label="Điện thoại" name="phone" component={AntInputCustom} type="number" />
+								</div>
+								<div className="grid grid-cols-1 sm:grid-cols-2 p-4 gap-8 ">
 									<Field
-										label="Địa chỉ"
+										label="Người liên hệ"
 										type="text"
-										name="address"
-										component={AntInput}
-										hasFeedback
+										name="contact"
+										component={AntInputCustom}
 									/>
-								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 p-4 gap-8 ">
-									<Field label="Email" name="email" type="email" component={AntInput} />
-									<Field label="Điện thoại" name="phone" component={AntInput} type="number" />
-								</div>
-								<div className="grid grid-cols-1 sm:grid-cols-2 p-4 gap-8 ">
-									<Field label="Người liên hệ" type="text" name="contact" component={AntInput} />{' '}
 									<Field
 										label="ĐT người liên hệ"
 										name="phoneContact"
 										type="number"
-										component={AntInput}
-									/>{' '}
+										component={AntInputCustom}
+									/>
 								</div>
 								{/* <div className="grid grid-cols-1 sm:grid-cols-2 p-4 gap-8 ">
 									<Field label="Inactive" name="inactive" component={CheckboxAntd} />
@@ -78,7 +77,9 @@ export default function FormCustomSupplier({ actionLoading, handleSaveFormSuppli
 								<Spin size="middle" />
 							) : (
 								<Button type="submit" className="h-26" variant="contained" color="primary">
-									Lưu
+									<Text type="button" color="white">
+										Lưu
+									</Text>
 								</Button>
 							)}
 							<Button
@@ -88,7 +89,7 @@ export default function FormCustomSupplier({ actionLoading, handleSaveFormSuppli
 								variant="contained"
 								color="secondary"
 							>
-								Hủy
+								<Text type="button">Hủy</Text>
 							</Button>
 						</DialogActions>
 					</Form>

@@ -1,74 +1,70 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {
-	Table,
-	Popover
-	// Avatar, Menu, Tooltip, Progress
-} from 'antd';
+import { Table, Tooltip, Checkbox } from 'antd';
 import React from 'react';
-import { MenuItem, ListItemIcon, Icon, ListItemText, Typography } from '@material-ui/core';
+import { Icon } from '@material-ui/core';
 import AppsIcon from '@material-ui/icons/Apps';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Text from 'app/components/Text';
 import { withRouter } from 'react-router';
-// import { useDispatch } from 'react-redux';
-// import { useTheme } from '@material-ui/core/styles';
-// import useMediaQuery from '@material-ui/core/useMediaQuery';
-// import { SettingLineContext } from '../../SettingLineContext';
 
 function TableProject(props) {
-	// const dispatch = useDispatch();
-	// const theme = useTheme();
-	// const { entitiesDetail, actionLoading, params } = props;
-	// const lineContext = useContext(SettingLineContext);
-	// const {} = lineContext;
-	const handleEditForm = item => {};
-	const deleteTask = item => {};
+	const { setEditLine, entities, listLoading, deleteItem } = props;
+	const handleEditForm = item => setEditLine(item);
+	const deleteTask = item => deleteItem(item);
 	const columns = [
+		{
+			title: 'Mã quyền',
+			align: 'left',
+			dataIndex: 'roleCode',
+			key: 'roleCode',
+			render: (_, item) => <Text>{item.roleCode}</Text>
+		},
+		{
+			title: 'Tên quyền',
+			align: 'left',
+			dataIndex: 'roleName',
+			key: 'roleName',
+			render: (_, item) => <Text>{item.roleName}</Text>
+		},
+		{
+			title: 'Inactive',
+			align: 'center',
+			dataIndex: 'inactive',
+			key: 'inactive',
+			render: (_, item) => <Checkbox checked={item.inactive}> </Checkbox>
+		},
 		{
 			title: <AppsIcon />,
 			align: 'center',
 			key: 'operation',
 			width: '2%',
 			render: (_, item) => (
-				<Popover
-					placement="rightTop"
-					content={() => (
-						<>
-							<MenuItem onClick={() => handleEditForm(item, 'Setting task')} role="button">
-								<ListItemIcon className="min-w-40">
-									<Icon> settings </Icon>
-								</ListItemIcon>
-								<ListItemText primary="Edit" />
-							</MenuItem>
-							<MenuItem onClick={() => deleteTask(item)} role="button">
-								<ListItemIcon className="min-w-40">
-									<Icon>delete</Icon>
-								</ListItemIcon>
-								<ListItemText primary="Delete" />
-							</MenuItem>
-						</>
-					)}
-					title="Action"
-				>
-					<MoreVertIcon className="cursor-pointer" />
-				</Popover>
+				<div className="flex justify-between">
+					<Tooltip className="mr-8" placement="bottom" title="Cập nhật">
+						<span onClick={() => handleEditForm(item)} className="action--button mx-auto">
+							<Icon fontSize="small">edit</Icon>
+						</span>
+					</Tooltip>
+					<Tooltip placement="bottom" title="Xoá">
+						<span onClick={() => deleteTask(item)} className="action--button mx-auto">
+							<Icon fontSize="small">delete</Icon>
+						</span>
+					</Tooltip>
+				</div>
 			)
-		},
-		{
-			title: 'Mã quyền',
-			align: 'center',
-			dataIndex: 'roleCode',
-			key: 'roleCode',
-			render: (_, item) => <Typography variant="body1">{item.roleCodde}</Typography>
-		},
-		{
-			title: 'Tên quyền',
-			align: 'center',
-			dataIndex: 'roleName',
-			key: 'roleName',
-			render: (_, item) => <Typography variant="body1">{item.roleName}</Typography>
 		}
 	];
-	return <Table rowKey="taskID" className="virtual-table" pagination={false} columns={columns} dataSource={[]} />;
+	return (
+		<Table
+			rowKey="roleID"
+			className="virtual-table"
+			pagination={false}
+			columns={columns}
+			dataSource={entities}
+			loading={listLoading}
+		/>
+	);
 }
 
 export default withRouter(TableProject);

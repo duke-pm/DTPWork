@@ -1,16 +1,17 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
-import { DialogContent, DialogActions, Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
-import DateCustom from '@fuse/CustomForm/Date';
-import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
-import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
 import * as moment from 'moment';
-import { AntInput } from '@fuse/CustomForm/CreateAntField';
 import { Spin } from 'antd';
-import SelectAntd from '@fuse/CustomForm/SelectAntd';
-import { checkValidateForm } from '../ConfigPossessionUnused';
+import AntSelectCustom from '@fuse/FormBookingCustom/AntSelectCustom';
+import AntInputCustom from '@fuse/FormBookingCustom/AntInputCustom';
+import AntFileCustom from '@fuse/FormBookingCustom/AntFileCustom';
+import AntDateCustom from '@fuse/FormBookingCustom/AntDateCustom';
+import AntDescriptionsCustom from '@fuse/FormBookingCustom/AntDescriptionsCustom';
+import Text from 'app/components/Text';
 import ContentForm from './ContentForm';
+import { checkValidateForm } from '../ConfigPossessionUnused';
 
 export default function FormCustomUnusedEdit({
 	entitiesEdit,
@@ -106,112 +107,101 @@ export default function FormCustomUnusedEdit({
 			>
 				{({ handleSubmit, isSubmitting }) => (
 					<Form>
-						<DialogContent dividers>
-							<div className="px-16 sm:px-24">
-								<div className="flex justify-between flex-row">
-									<Typography variant="subtitle2">Thông tin tài sản.</Typography>
-								</div>
-								<ContentForm entitiesEdit={entitiesEdit} />
+						<div className="mb-20">
+							<div>
+								<Text type="subTitle" color="primary" borderBottom>
+									THÔNG TIN TÀI SẢN
+								</Text>
 							</div>
-							<div className="px-16 sm:px-24">
-								<div className="flex justify-between flex-row">
-									<Typography variant="subtitle2">Thông tin cấp phát tài sản.</Typography>
-								</div>
-								<div className="grid lg:grid-cols-2  md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1 gap-8 ">
-									<Field
-										label="Cấp phát cho"
-										name="customer"
-										hasFeedback
-										component={SelectAntd}
-										options={employees}
-										handleChangeState={onHandleChangeEmployee}
-										className="mt-8 mb-16"
-									/>
-									<Field
-										label="Vị trí công việc"
-										readOnly
-										type="text"
-										// value={intialState.position}
-										name="position"
-										// handleInputChange={handleInputChangePostion}
-										component={AntInput}
-										className="mb-16"
-									/>
-								</div>
-								<div className="grid lg:grid-cols-2  md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1 gap-8 ">
-									<Field
-										label="Bộ phận"
-										name="department"
-										hasFeedback
-										readOnly
-										value={intialState.department}
-										component={SelectAntd}
-										handleChangeState={onChangeDepartment}
-										options={department}
-										className="mt-8 mb-16"
-									/>
-									<Field
-										label="Khu vực"
-										readOnly
-										hasFeedback
-										name="location"
-										component={SelectAntd}
-										value={intialState.location}
-										options={regionEmployee}
-										handleChangeState={onChangeRegion}
-										className="mb-16"
-									/>
-								</div>
-								<div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 gap-8 ">
-									<div className="flex flex-col">
-										<Field
-											label="Ngày cấp"
-											defaultValue={intialState.date}
-											name="date"
-											hasFeedback
-											format="DD-MM-YYYY"
-											placeholder="Vui lòng chọn ngày mua"
-											component={DateCustom}
-											className="mb-16"
-										/>
-										<Field
-											label="Lý do cấp phát"
-											// value={intialState.note}
-											name="note"
-											row={3}
-											handleInputChangeNote={handleInputChangeNote}
-											component={InputTextAreaLg}
-											className="mb-16"
-										/>
-									</div>
-									<Field
-										label="File đính kèm"
-										name="file"
-										component={FileCustomVersion2}
-										className="mb-16"
-										handleChangeImage={handleChangeImage}
-									/>
-								</div>
+							<ContentForm entitiesEdit={entitiesEdit} />
+						</div>
+						<div>
+							<div>
+								<Text type="subTitle" color="primary" borderBottom>
+									THÔNG TIN CẤP PHÁT TÀI SẢN
+								</Text>
 							</div>
-						</DialogContent>
-						<DialogActions>
+							<div className="grid lg:grid-cols-2  md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1 gap-8 ">
+								<Field
+									label="Cấp phát cho"
+									name="customer"
+									hasFeedback
+									component={AntSelectCustom}
+									options={employees}
+									handleChangeState={onHandleChangeEmployee}
+								/>
+								<Field
+									label="Vị trí công việc"
+									readOnly
+									// value={intialState.position}
+									name="position"
+									// handleInputChange={handleInputChangePostion}
+									component={AntInputCustom}
+								/>
+							</div>
+							<div className="grid lg:grid-cols-2  md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1 gap-8 ">
+								<Field
+									label="Bộ phận"
+									name="department"
+									hasFeedback
+									readOnly
+									value={intialState.department}
+									component={AntSelectCustom}
+									handleChangeState={onChangeDepartment}
+									options={department}
+								/>
+								<Field
+									label="Khu vực"
+									readOnly
+									hasFeedback
+									name="location"
+									component={AntSelectCustom}
+									value={intialState.location}
+									options={regionEmployee}
+									handleChangeState={onChangeRegion}
+								/>
+							</div>
+							<div className="grid grid-cols-2">
+								<Field
+									label="Ngày cấp"
+									defaultValue={intialState.date}
+									name="date"
+									format="DD/MM/YYYY"
+									placeholder="Vui lòng chọn ngày mua"
+									component={AntDateCustom}
+								/>
+							</div>
+							<div className="grid lg:grid-cols-1 gap-8 ">
+								<Field
+									label="Lý do cấp phát"
+									// value={intialState.note}
+									name="note"
+									row={3}
+									handleInputChangeNote={handleInputChangeNote}
+									component={AntDescriptionsCustom}
+								/>
+								<Field
+									label="File đính kèm"
+									name="file"
+									component={AntFileCustom}
+									handleChangeImage={handleChangeImage}
+								/>
+							</div>
+						</div>
+						<div className="flex justify-end">
 							{actionLoading ? (
 								<Spin size="middle" />
 							) : (
-								<Button type="submit" className="h-26" variant="contained" color="primary">
-									Lưu
+								<Button type="submit" className="mr-8" variant="contained" color="primary">
+									<Text type="button" color="white">
+										Lưu
+									</Text>
 								</Button>
 							)}
-							<Button
-								onClick={() => handleClose()}
-								type="button"
-								className="h-26"
-								variant="contained"
-								color="secondary"
-							>
-								Hủy
+							<Button onClick={handleClose} type="button" variant="contained" color="secondary">
+								<Text type="button">Hủy</Text>
 							</Button>
-						</DialogActions>
+						</div>
 					</Form>
 				)}
 			</Formik>

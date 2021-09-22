@@ -8,7 +8,11 @@ const ListConfig = {
 	},
 	routes: [
 		{
-			path: '/quan-tri/phe-duyet',
+			path: '/quan-tri/quyen/:type/:id',
+			component: React.lazy(() => import('./modifySettingLine'))
+		},
+		{
+			path: '/quan-tri/quyen',
 			component: React.lazy(() => import('./index'))
 		}
 	]

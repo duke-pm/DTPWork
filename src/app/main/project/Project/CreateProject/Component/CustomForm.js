@@ -6,13 +6,15 @@ import AntInputCustom from '@fuse/FormBookingCustom/AntInputCustom';
 import AntSelectCustom from '@fuse/FormBookingCustom/AntSelectCustom';
 import AntSelectMultiCustom from '@fuse/FormBookingCustom/AntSelectMultiCustom';
 import AntSlideCustom from '@fuse/FormBookingCustom/AntSlideCustom';
-import { Button, IconButton, Typography } from '@material-ui/core';
+import { Button, IconButton } from '@material-ui/core';
 import { Avatar, Divider, Spin } from 'antd';
 import { Field, Form, Formik } from 'formik';
 import React from 'react';
 import * as Yup from 'yup';
 import { FileExcelOutlined, FileImageOutlined, FileWordOutlined } from '@ant-design/icons';
 import CloseIcon from '@material-ui/icons/Close';
+
+import Text from 'app/components/Text';
 
 const file = {
 	docx: <FileWordOutlined />,
@@ -63,38 +65,39 @@ export default function CustomForm({
 			{({ handleSubmit, isSubmitting }) => (
 				<Form>
 					<div className="mt-8 px-16 sm:px-24">
-						<div>
-							<Field
-								readOnly={entitiesEdit && !entitiesEdit.isModified}
-								label="Name"
-								hasFeedback
-								name="taskName"
-								component={AntInputCustom}
-							/>
-						</div>
-						<div>
-							<Field
-								readOnly={entitiesEdit && !entitiesEdit.isModified}
-								label="Description"
-								name="descr"
-								component={AntDescriptionsCustom}
-								row={4}
-							/>
-						</div>
-						<div>
-							<Field
-								readOnly={entitiesEdit && !entitiesEdit.isModified}
-								label="Subtask of"
-								name="project"
-								component={AntSelectCustom}
-								options={taskSub}
-							/>
-						</div>
-						<div className="mb-20">
-							<Typography color="primary" variant="subtitle1" className="label--form--title">
-								PEOPLE & TIME
-							</Typography>
-						</div>
+						{/** INFORMATION */}
+						<Text borderBottom type="subTitle" color="primary">
+							BASIC INFORMATIONS
+						</Text>
+						<Field
+							readOnly={entitiesEdit && !entitiesEdit.isModified}
+							label="Name"
+							hasFeedback
+							name="taskName"
+							position="right"
+							component={AntInputCustom}
+						/>
+						<Field
+							readOnly={entitiesEdit && !entitiesEdit.isModified}
+							label="Subtask of"
+							name="project"
+							component={AntSelectCustom}
+							options={taskSub}
+							position="right"
+						/>
+						<Field
+							readOnly={entitiesEdit && !entitiesEdit.isModified}
+							label="Description"
+							name="descr"
+							component={AntDescriptionsCustom}
+							row={4}
+							position="right"
+						/>
+
+						{/** PEOPLE & TIME */}
+						<Text className="mt-20" borderBottom type="subTitle" color="primary">
+							PEOPLE & TIME
+						</Text>
 						<div>
 							<Field
 								label="Assignee"
@@ -113,6 +116,7 @@ export default function CustomForm({
 									name="userInvite"
 									options={owner}
 									count={3}
+									width="85.2%"
 									value={entitiesEdit && !entitiesEdit.isModified ? userInviteNoPermiss : []}
 									component={AntSelectMultiCustom}
 									readOnly={entitiesEdit && !entitiesEdit.isModified}
@@ -122,6 +126,7 @@ export default function CustomForm({
 								<Field
 									label="Add Team Member"
 									name="userInvite"
+									width="85%"
 									options={owner}
 									count={3}
 									component={AntSelectMultiCustom}
@@ -148,11 +153,11 @@ export default function CustomForm({
 								component={AntDateCustom}
 							/>
 						</div>
-						<div className="mb-20">
-							<Typography color="primary" variant="subtitle1" className="label--form--title">
-								DETAIL
-							</Typography>
-						</div>
+
+						{/** OTHER */}
+						<Text className="mt-20" borderBottom type="subTitle" color="primary">
+							OTHER
+						</Text>
 						{entitiesEdit &&
 							entitiesEdit.taskID &&
 							entitiesEdit.typeName === 'TASK' &&
@@ -161,9 +166,9 @@ export default function CustomForm({
 									<Field
 										label="Status"
 										name="status"
-										width="58.8%"
 										readOnly={entitiesEdit && !entitiesEdit.isModified}
 										position="right"
+										width="58.8%"
 										component={AntSelectCustom}
 										options={ArrProjectStatus}
 									/>
@@ -181,12 +186,13 @@ export default function CustomForm({
 							<Field
 								label="Sector"
 								name="sectorID"
-								width="58.8%"
 								readOnly={entitiesEdit && !entitiesEdit.isModified}
 								position="right"
 								component={AntSelectCustom}
 								options={sectorArr}
+								width="58.8%"
 							/>
+
 							<Field
 								label="Priority"
 								name="priority"
@@ -198,58 +204,56 @@ export default function CustomForm({
 								width="58.8%"
 							/>
 						</div>
+
 						<div className="grid grid-cols-1 sm:grid-cols-2 gap-16 ">
 							<Field
 								label="Grade"
 								name="grade"
-								width="58.8%"
 								readOnly={entitiesEdit && !entitiesEdit.isModified}
 								options={gradeGolbal}
 								component={AntSelectCustom}
+								width="58.8%"
 								position="right"
 							/>
 							<Field
 								label="Component"
-								width="58.8%"
 								readOnly={entitiesEdit && !entitiesEdit.isModified}
 								name="component"
 								component={AntSelectCustom}
 								options={ArrTaskComponent}
+								width="58.8%"
 								position="right"
 							/>
 						</div>
-						<div className="grid grid-cols-1 gap-8 ">
-							<Field
-								label="Author"
-								name="author"
-								component={AntInputCustom}
-								readOnly={entitiesEdit && !entitiesEdit.isModified}
-								position="right"
-							/>
-						</div>
-						<div className="grid grid-cols-1 gap-8 ">
-							<Field
-								label="Origin Publisher"
-								component={AntInputCustom}
-								name="originPublisher"
-								position="right"
-								readOnly={entitiesEdit && !entitiesEdit.isModified}
-							/>
-						</div>
-						<div className="grid grid-cols-1 gap-8 ">
-							<Field
-								label="Ownership DTP"
-								component={AntInputCustom}
-								readOnly={entitiesEdit && !entitiesEdit.isModified}
-								name="ownership"
-								position="right"
-							/>
-						</div>
-						<div className="mb-20">
-							<Typography color="primary" variant="subtitle1" className="label--form--title">
-								FILES
-							</Typography>
-						</div>
+
+						<Field
+							label="Author"
+							name="author"
+							component={AntInputCustom}
+							readOnly={entitiesEdit && !entitiesEdit.isModified}
+							position="right"
+						/>
+
+						<Field
+							label="Ownership DTP"
+							component={AntInputCustom}
+							readOnly={entitiesEdit && !entitiesEdit.isModified}
+							name="ownership"
+							position="right"
+						/>
+
+						<Field
+							label="Origin Publisher"
+							component={AntInputCustom}
+							name="originPublisher"
+							position="right"
+							readOnly={entitiesEdit && !entitiesEdit.isModified}
+						/>
+
+						{/** OTHER */}
+						<Text className="mt-20" borderBottom type="subTitle" color="primary">
+							UPLOAD FILE
+						</Text>
 						<div className="grid grid-cols-1 gap-8 ">
 							{entitiesEdit &&
 							entitiesEdit.attachFiles &&
@@ -337,12 +341,15 @@ export default function CustomForm({
 								variant="contained"
 								color="primary"
 							>
-								{' '}
-								<Typography variant="body2"> Save </Typography>
+								<Text color="white" type="button">
+									Save
+								</Text>
 							</Button>
 						) : (
 							<Button type="submit" className="button__cancle mr-8" variant="contained" color="primary">
-								<Typography variant="body2"> Save </Typography>
+								<Text color="white" type="button">
+									Save
+								</Text>
 							</Button>
 						)}
 						<Button
@@ -351,7 +358,7 @@ export default function CustomForm({
 							variant="contained"
 							color="secondary"
 						>
-							<Typography variant="body2"> Cancle </Typography>
+							<Text type="button">Cancel</Text>
 						</Button>
 					</div>
 				</Form>

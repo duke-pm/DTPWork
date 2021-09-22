@@ -15,7 +15,7 @@ export const fetchListLines = (limit, page) => dispatch => {
 			const { data } = res;
 			if (!data.isError) {
 				const dataRes = data.data;
-				const total_count = data.totalPage;
+				const total_count = data.totalRow;
 				dispatch(actions.fetchListLines({ dataRes, total_count }));
 			} else {
 				notificationConfig('warning', 'Fail', data.errorMessage);
@@ -28,11 +28,12 @@ export const fetchListLines = (limit, page) => dispatch => {
 		});
 };
 
-export const fetchListLinesFilter = (limit, page) => dispatch => {
+export const fetchListLinesFilter = (limit, page, search) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const paramsRequest = {
 		PageSize: limit || 25,
-		PageNum: page || 1
+		PageNum: page || 1,
+		Search: search || ''
 	};
 	return requestFrom
 		.fetchLines(paramsRequest)
@@ -55,9 +56,12 @@ export const fetchListLinesFilter = (limit, page) => dispatch => {
 export const createdLine = values => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const dataReq = {
-		CodeID: '0',
-		CodeName: values.codeName,
-		Description: values.description
+		RoleID: '0',
+		RoleCode: values.roleCode,
+		RoleName: values.roleName,
+		Inactive: values.inactive,
+		Lang: 'vi'
+		// Description: values.description
 	};
 	return requestFrom
 		.lineModify(dataReq)
@@ -70,6 +74,7 @@ export const createdLine = values => dispatch => {
 				notificationConfig('warning', 'Fail', data.errorMessage);
 				dispatch(actions.catchErrors({ callType: callTypes.action }));
 			}
+			return data;
 		})
 		.catch(err => {
 			dispatch(actions.catchErrors({ callType: callTypes.action }));
@@ -80,9 +85,11 @@ export const createdLine = values => dispatch => {
 export const updatedLine = values => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const dataReq = {
-		CodeID: values.codeID,
-		CodeName: values.codeName,
-		Description: values.description
+		RoleID: values.id,
+		RoleCode: values.roleCode,
+		RoleName: values.roleName,
+		Inactive: values.inactive,
+		Lang: 'vi'
 	};
 	return requestFrom
 		.lineModify(dataReq)
@@ -95,6 +102,7 @@ export const updatedLine = values => dispatch => {
 				notificationConfig('warning', 'Fail', data.errorMessage);
 				dispatch(actions.catchErrors({ callType: callTypes.action }));
 			}
+			return data;
 		})
 		.catch(err => {
 			dispatch(actions.catchErrors({ callType: callTypes.action }));
@@ -109,16 +117,15 @@ export const setTaskEditLine = value => dispatch => {
 export const deletedLine = item => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const dataReq = {
-		CodeId: item.codeId
+		RoleID: item.roleID
 	};
 	return requestFrom
 		.deletedLine(dataReq)
 		.then(res => {
-			// console.log(res);
 			const { data } = res;
 			if (!data.isError) {
-				dispatch(actions.deletedGroupUser({ dataReq }));
-				notificationConfig('success', 'Success', 'Delete success');
+				dispatch(actions.deleteLine({ dataReq }));
+				notificationConfig('success', 'Success', 'Xoá thành công');
 			} else {
 				dispatch(actions.catchErrors({ callType: callTypes.action }));
 				notificationConfig('warning', 'Fail', `${data.errorMessage}`);

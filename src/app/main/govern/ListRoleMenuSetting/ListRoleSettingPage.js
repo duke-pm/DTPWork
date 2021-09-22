@@ -1,55 +1,126 @@
-import FuseAnimate from '@fuse/core/FuseAnimate';
-import FusePageCarded from '@fuse/core/FusePageCarded';
-import { Box, Typography } from '@material-ui/core';
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { notificationConfig } from '@fuse/core/DtpConfig';
+import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
+import { Button } from '@material-ui/core';
+import { Select } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import Text from 'app/components/Text';
 import * as actionsInfor from '../../assets/Possesion/_redux/possesionActions';
 import ListRoleSettingContent from './ListRoleSettingComponent';
 import * as actions from './_reduxListRoleMenu/listRoleMenuSettingActions';
 
 export default function ListRoleSettingPage() {
 	const dispatch = useDispatch();
+	const [userID, setUserID] = useState(null);
+	const [UserOption, setUserOption] = useState([]);
+	const [groupUser, setGroupUser] = useState(0);
+	const [newData, setNewData] = useState([]);
+	const { currentState, currentInfo } = useSelector(
+		state => ({
+			currentState: state.govern.listRole,
+			currentInfo: state.possesion.entitiesInformation
+		}),
+		shallowEqual
+	);
 	const params = 'UserGroups,Users';
 	useEffect(() => {
 		dispatch(actionsInfor.getInformationCompany(params));
 		dispatch(actions.fetchsListRoleSettings());
 	}, [dispatch]);
+	const handleUpdatedRole = () => {
+		if (groupUser) {
+			dispatch(actions.updatedRoleUser(newData, userID, groupUser)).then(data => {
+				if (data && !data.isError) {
+					notificationConfig(
+						'success',
+						notificationContent.content.vi.success,
+						notificationContent.description.gobal.vi.updatedSuccess
+					);
+				} else {
+					dispatch(actions.fetchsListFilterRole(groupUser, userID));
+				}
+			});
+		} else {
+			notificationConfig('warning', 'Thất bại', 'Vui lòng chọn nhóm người dùng để cấp quyền');
+		}
+	};
+	const { actionLoading } = currentState;
+	const userGroup =
+		currentInfo &&
+		currentInfo.userGroup.reduce((arr, curr) => [...arr, { label: curr.groupName, value: curr.groupID }], []);
+	const Use =
+		currentInfo &&
+		currentInfo.users.reduce(
+			(arr, curr) => [...arr, { label: curr.empName, value: curr.empID, groupID: curr.groupID }],
+			[]
+		);
+	const onHandleChangeGroupID = value => {
+		setGroupUser(value);
+		setUserID(null);
+		const newUser = Use.filter(item => item.groupID === value);
+		setUserOption(newUser);
+	};
+	const onHandleChangeUserID = value => {
+		setUserID(value);
+	};
+	const handleFiler = () => {
+		dispatch(actions.fetchsListFilterRole(groupUser, userID));
+	};
 	return (
-		<>
-			<FusePageCarded
-				innerScroll
-				classes={{
-					// content: 'flex',
-					header: 'min-h-10 h-10	sm:h-16 sm:min-h-16'
-				}}
-				header={
-					<div className="flex flex-1 w-full items-center justify-between">
-						<div className="flex flex-1 flex-col items-center sm:items-start">
-							<FuseAnimate animation="transition.slideRightIn" delay={300}>
-								<Typography
-									className="text-16 sm:text-20 truncate"
-									// component={Link}
-									// role="button"
-									// to="/apps/e-commerce/orders"
-									color="inherit"
-								>
-									{/* {xhtm} */}
-								</Typography>
-							</FuseAnimate>
-						</div>
-					</div>
-				}
-				contentToolbar={
-					<div className="flex  items-center px-16 flex-1">
-						<Typography variant="h6">Phân quyền chức năng</Typography>
-					</div>
-				}
-				content={
-					<Box p={3}>
-						<ListRoleSettingContent />
-					</Box>
-				}
-			/>
-		</>
+		<div className="container govern">
+			<div className="govern__header px-16 shadow-lg">
+				<Text color="primary" type="title">
+					Phân quyền chức năng
+				</Text>
+				<div className="govern__header--action">
+					<Select
+						allowClear
+						loading={!!actionLoading}
+						placeholder="Nhóm người dùng"
+						onChange={onHandleChangeGroupID}
+						bordered={false}
+						style={{ width: '100%', marginRight: '15px' }}
+					>
+						{userGroup &&
+							userGroup.map(item => (
+								<Select.Option key={item.value} value={item.value}>
+									{item.label}
+								</Select.Option>
+							))}
+					</Select>
+					<Select
+						allowClear
+						loading={!!actionLoading}
+						placeholder="Người dùng"
+						onChange={onHandleChangeUserID}
+						bordered={false}
+						value={userID}
+						style={{ width: '100%', marginRight: '15px' }}
+					>
+						{UserOption &&
+							UserOption.map(item => (
+								<Select.Option key={item.value} value={item.value}>
+									{item.label}
+								</Select.Option>
+							))}
+					</Select>
+					<Button onClick={handleFiler} className="button__create mr-16" variant="contained" color="primary">
+						<Text type="button" color="white">
+							Filter
+						</Text>
+					</Button>
+					<Button onClick={handleUpdatedRole} className="button__create" variant="contained" color="primary">
+						<Text type="button" color="white">
+							Update
+						</Text>
+					</Button>
+				</div>
+			</div>
+			<div className="govern__content mt-8">
+				<div className="govern__content--table px-16">
+					<ListRoleSettingContent newData={newData} setNewData={setNewData} />
+				</div>
+			</div>
+		</div>
 	);
 }

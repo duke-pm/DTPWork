@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable import/no-extraneous-dependencies */
-import { Button, Grid, Paper, Typography } from '@material-ui/core';
+import { Button, Grid, Paper } from '@material-ui/core';
 import React from 'react';
 import 'antd/dist/antd.css';
 import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
@@ -9,6 +9,7 @@ import { Select } from 'antd';
 import { useDispatch } from 'react-redux';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import UpdateIcon from '@material-ui/icons/Update';
+import Text from 'app/components/Text';
 import * as action from '../../_reduxListRoleMenu/listRoleMenuSettingActions';
 
 export default function ActionListRoleSetting({
@@ -51,9 +52,7 @@ export default function ActionListRoleSetting({
 					animation: 'transition.slideUpBigIn'
 				}}
 			>
-				<div className="flex flex-col sm:flex-row justify-between">
-					<Typography variant="subtitle2">Filter</Typography>
-				</div>
+				<Text type="subTitle">Filter</Text>
 				<Grid className="mb-16" container spacing={2}>
 					<Grid item xs={12} sm={6} md={4} lg={3}>
 						<Paper>
@@ -116,32 +115,6 @@ export default function ActionListRoleSetting({
 						</Button>{' '}
 					</Grid>
 				</Grid>
-				<div>
-					{/* <div className="flex flex-col sm:flex-row justify-end mt-16">
-						<Paper className="w-full sm:w-1/4 flex justify-between ">
-							<InputBase
-								// onKeyPress={event => {
-								// 	if (event.key === 'Enter') {
-								// 		handleSearch();
-								// 	}
-								// }}
-								// onChange={e => onHandleChange(e)}
-								className={classes.input}
-								// value={search}
-								placeholder="Tìm kiếm"
-								inputProps={{ 'aria-label': 'search google maps' }}
-							/>
-							<IconButton
-								// onClick={handleSearch}
-								type="button"
-								className={classes.iconButton}
-								aria-label="search"
-							>
-								<SearchIcon />
-							</IconButton>
-						</Paper>
-					</div> */}
-				</div>
 			</FuseAnimateGroup>
 		</div>
 	);

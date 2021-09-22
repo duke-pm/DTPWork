@@ -1,5 +1,6 @@
 import React from 'react';
-import { Dialog, AppBar, Toolbar, Typography } from '@material-ui/core';
+import { Dialog, AppBar, Toolbar } from '@material-ui/core';
+import Text from 'app/components/Text';
 import FormCustomCorruptEdit from './FormCustomCorruptEdit';
 
 export default function FormCustomCorrupt({ handleClose, open }) {
@@ -14,9 +15,9 @@ export default function FormCustomCorrupt({ handleClose, open }) {
 		>
 			<AppBar position="static" className="shadow-md">
 				<Toolbar className="flex w-full">
-					<Typography variant="subtitle1" color="inherit">
+					<Text type="subTitle" color="primary">
 						Báo hỏng tài sản
-					</Typography>
+					</Text>
 				</Toolbar>
 			</AppBar>
 			<FormCustomCorruptEdit handleClose={handleClose} />

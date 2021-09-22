@@ -1,47 +1,46 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import FusePageCarded from '@fuse/core/FusePageCarded';
-import FuseAnimate from '@fuse/core/FuseAnimate';
-import { Typography } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
+import { Icon, Typography } from '@material-ui/core';
+import { Tooltip } from 'antd';
+import { useHistory, useLocation } from 'react-router';
+import queryString from 'query-string';
 import HandlingBody from './ComponentHandlingRequest/HandlingBody';
 
 export default function HandlingPage() {
 	const [dataAssets, setDataAssets] = useState();
+	const location = useLocation();
+	const type = queryString.parse(location.search);
 	const dispatch = useDispatch();
-	const { currentState } = useSelector(state => ({ currentState: state.tabs }), shallowEqual);
-	const { value } = currentState;
+	const history = useHistory();
+	const ExitPage = () => history.goBack();
 	return (
-		<FusePageCarded
-			classes={{
-				// content: 'flex',
-				header: 'min-h-10 h-10	sm:h-16 sm:min-h-16'
-			}}
-			header={
-				<div className="flex flex-1 w-full items-center justify-between">
-					<div className="flex flex-1 flex-col items-center sm:items-start">
-						<FuseAnimate animation="transition.slideRightIn" delay={300}>
-							<Typography
-								className="text-16 sm:text-20 truncate"
-								// component={Link}
-								// role="button"
-								// to="/apps/e-commerce/orders"
-								color="inherit"
-							>
-								{/* {xhtm} */}
-							</Typography>
-						</FuseAnimate>
+		<>
+			<div className="container proposedManagement">
+				<div className="proposedManagement__header px-16 shadow-lg">
+					<Typography color="primary" variant="h6">
+						Báo {type?.type === 'bao-hong' ? 'hỏng' : 'mất'} tài sản
+					</Typography>
+					<div className="projects__header--action">
+						<Tooltip placement="bottom" title="Exit">
+							<span onClick={ExitPage} className="action--button">
+								<Icon fontSize="small">close</Icon>
+							</span>
+						</Tooltip>
 					</div>
 				</div>
-			}
-			contentToolbar={
-				<div className="flex  items-center px-16 flex-1">
-					<Typography variant="h6"> Báo {value === 1 ? 'hỏng' : 'mất'} tài sản</Typography>
+				<div className="proposedManagement__content mt-8">
+					<div className="proposedManagement__form">
+						<HandlingBody
+							value={type?.type}
+							dispatch={dispatch}
+							setDataAssets={setDataAssets}
+							dataAssets={dataAssets}
+						/>
+					</div>
 				</div>
-			}
-			content={
-				<HandlingBody value={value} dispatch={dispatch} setDataAssets={setDataAssets} dataAssets={dataAssets} />
-			}
-			innerScroll
-		/>
+			</div>
+		</>
 	);
 }

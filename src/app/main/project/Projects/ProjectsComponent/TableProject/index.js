@@ -1,8 +1,9 @@
+/* eslint-disable no-shadow */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Badge, Checkbox, Table, Popover, Avatar, Tooltip, Spin, Dropdown } from 'antd';
+import { Badge, Checkbox, Table, Popover, Avatar, Tooltip, Dropdown } from 'antd';
 import React, { useContext } from 'react';
 import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
-import { MenuItem, ListItemIcon, Icon, ListItemText, Typography, Link } from '@material-ui/core';
+import { MenuItem, ListItemIcon, Icon, ListItemText, Link } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { withRouter } from 'react-router';
 import { useDispatch } from 'react-redux';
@@ -12,6 +13,8 @@ import * as moment from 'moment';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useHistory } from 'react-router-dom';
+import { getToken, sortDirestion, URL } from '@fuse/core/DtpConfig';
+import Text from 'app/components/Text';
 import { ProjectContext } from '../../ProjectContext';
 import * as actions from '../../../_redux/_projectActions';
 
@@ -21,21 +24,9 @@ function TableProject(props) {
 	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
 	const dispatch = useDispatch();
 	const history = useHistory();
-	const { entities, entitiesEdit, listLoading, ArrProjectStatus, owner } = props;
+	const { entities, entitiesEdit, createSortHandler, ArrProjectStatus, owner } = props;
 	const projectContext = useContext(ProjectContext);
-	const {
-		// setFormProject,
-		// setTitle,
-		rowPage,
-		page,
-		status,
-		ownerFilter,
-		dateStart,
-		search,
-		// setChart,
-		setStatus,
-		setOwnerFilter
-	} = projectContext;
+	const { rowPage, page, status, ownerFilter, dateStart, search, sort, setStatus, setOwnerFilter } = projectContext;
 	const handleOpenFormProject = (item, type) => {
 		dispatch(actions.setTaskEditProject(item));
 		if (type === 'Settings') {
@@ -57,6 +48,8 @@ function TableProject(props) {
 						status?.toString(),
 						ownerFilter?.toString(),
 						dateStart,
+						sort.id,
+						sort.direction,
 						search
 					)
 				);
@@ -69,26 +62,58 @@ function TableProject(props) {
 			props.history.push(`/projects/task/${item.prjID}`);
 		}
 	};
-	const handleOpenBarChar = item => {
-		props.history.push(`/projects/chart/${item.prjID}`);
-		dispatch(actions.setTaskEditProject(item));
-	};
+	// const handleOpenBarChar = item => {
+	// 	props.history.push(`/projects/chart/${item.prjID}`);
+	// 	dispatch(actions.setTaskEditProject(item));
+	// };
 	const onHandleChangeStatus = value => {
 		dispatch(
-			actions.fetchsProjectFilter(rowPage, page, value?.toString(), ownerFilter?.toString(), dateStart, search)
+			actions.fetchsProjectFilter(
+				rowPage,
+				page,
+				value?.toString(),
+				ownerFilter?.toString(),
+				dateStart,
+				sort.id,
+				sort.direction,
+				search
+			)
 		);
 		setStatus(value);
 	};
 	const onHandleChangeOwner = value => {
-		dispatch(actions.fetchsProjectFilter(rowPage, page, status?.toString(), value?.toString(), dateStart, search));
+		dispatch(
+			actions.fetchsProjectFilter(
+				rowPage,
+				page,
+				status?.toString(),
+				value?.toString(),
+				dateStart,
+				sort.id,
+				sort.direction,
+				search
+			)
+		);
 		setOwnerFilter(value);
+	};
+	const handleExportExecl = item => {
+		const token = getToken();
+		const data = {
+			UserToken: token,
+			PrjID: item.prjID
+		};
+		window.location = `${URL}/api/Project/ExportProjectDetail?value=${JSON.stringify(data)}`;
+	};
+	const onChangeSort = (pagination, filters, sorter, extra) => {
+		const sort = sortDirestion[sorter.order];
+		createSortHandler(sort, sorter.field);
 	};
 	const columns = [
 		{
 			title: <AppsIcon />,
 			align: 'center',
 			key: 'operation',
-			fixed: 'left',
+			fixed: !matchesSM && 'left',
 			width: '4%',
 			render: (_, item) => (
 				<Popover
@@ -116,12 +141,14 @@ function TableProject(props) {
 										</ListItemIcon>
 										<ListItemText primary="Open detail" />
 									</MenuItem>
-									{/* <MenuItem onClick={() => handleOpenBarChar(item)} role="button">
-										<ListItemIcon className="min-w-40">
-											<Icon>bar_chart</Icon>
-										</ListItemIcon>
-										<ListItemText primary="Project plan" />
-									</MenuItem> */}
+									{item.countTask > 0 && (
+										<MenuItem onClick={() => handleExportExecl(item)} role="button">
+											<ListItemIcon className="min-w-40">
+												<Icon>get_app</Icon>
+											</ListItemIcon>
+											<ListItemText primary="Export excel" />
+										</MenuItem>
+									)}
 								</>
 							)}
 							{item.countChild === 0 && item.isModified && (
@@ -143,9 +170,10 @@ function TableProject(props) {
 		{
 			title: 'Project Name',
 			dataIndex: 'prjName',
-			fixed: 'left',
+			fixed: !matchesSM && 'left',
 			key: 'prjName',
-			width: '40%',
+			sorter: true,
+			width: '30%',
 			render: (_, item) => (
 				<Link
 					style={{ color: '#000000d9' }}
@@ -153,8 +181,7 @@ function TableProject(props) {
 					variant="body1"
 					onClick={() => handleDetail(item)}
 				>
-					{' '}
-					{item.prjName}{' '}
+					<Text>{item.prjName}</Text>
 				</Link>
 			)
 		},
@@ -162,7 +189,9 @@ function TableProject(props) {
 			title: () => {
 				return (
 					<div className="flex items-center ">
-						Status
+						<Text type="subTitle" color="primary">
+							Status
+						</Text>
 						<Dropdown
 							// visible
 							overlay={
@@ -184,7 +213,7 @@ function TableProject(props) {
 			},
 			dataIndex: 'status',
 			key: 'status',
-			width: '15%',
+			width: '10%',
 			render: (_, item) => (
 				<Badge size="default" style={{ color: item.colorCode }} color={item.colorCode} text={item.statusName} />
 			)
@@ -194,7 +223,7 @@ function TableProject(props) {
 			align: 'center',
 			dataIndex: 'public',
 			key: 'public',
-			width: '8%',
+			width: '6%',
 			render: (_, item) =>
 				item.isPublic ? (
 					<Icon className="text-green text-20">check_circle</Icon>
@@ -205,9 +234,10 @@ function TableProject(props) {
 		{
 			title: 'Priority',
 			align: 'center',
-			dataIndex: 'public',
-			key: 'public',
-			width: '8%',
+			dataIndex: 'priorityLevel',
+			key: 'priorityLevel',
+			sorter: true,
+			width: '6%',
 			render: (_, item) =>
 				item.priorityLevel !== 0 && (
 					<Badge count={item.priorityLevel} size="small">
@@ -216,41 +246,46 @@ function TableProject(props) {
 				)
 		},
 		{
-			title: 'Created on',
+			title: 'Start Date',
 			align: 'center',
-			dataIndex: 'crtdDate',
-			key: 'crtdDate',
-			width: '12%',
+			dataIndex: 'startDate',
+			key: 'startDate',
+			sorter: true,
+			width: '8%',
 			render: (_, item) => (
-				<div
-					className={clsx(
-						'flex items-center justify-center text-center px-8 py-4 mx-4 text-white bg-green  rounded-16'
-					)}
-				>
-					<Icon className="text-16">access_time</Icon>
-					<Typography className="ml-8" variant="body1">
-						{item.crtdDate && moment(item.crtdDate).format('DD/MM/YY')}
-					</Typography>
+				<div className="flex items-center justify-center text-center px-8 py-4 bg-green-50 rounded-16">
+					<Text>{item.startDate && moment(item.startDate).format('DD/MM/YY')}</Text>
+				</div>
+			)
+		},
+		{
+			title: 'End Date',
+			align: 'center',
+			dataIndex: 'endDate',
+			key: 'endDate',
+			sorter: true,
+			width: '8%',
+			render: (_, item) => (
+				<div className="flex items-center justify-center text-center px-8 py-4 bg-green-50 rounded-16">
+					<Text>{item.endDate && moment(item.endDate).format('DD/MM/YY')}</Text>
 				</div>
 			)
 		},
 		{
 			title: 'Inspection time',
 			align: 'center',
-			dataIndex: 'crtdDate',
-			key: 'crtdDate',
-			width: '12%',
+			dataIndex: 'appraisalTime',
+			key: 'appraisalTime',
+			sorter: true,
+			width: '8%',
 			render: (_, item) =>
 				item.appraisalTime && (
 					<div
 						className={clsx(
-							'flex items-center justify-center text-center px-8 py-4 mx-4 text-white bg-green  rounded-16'
+							'flex items-center justify-center text-center px-8 py-4 bg-green-50 rounded-16'
 						)}
 					>
-						<Icon className="text-16">access_time</Icon>
-						<Typography className="ml-8" variant="body1">
-							{item.appraisalTime && moment(item.appraisalTime).format('DD/MM/YY')}
-						</Typography>
+						<Text>{item.appraisalTime && moment(item.appraisalTime).format('DD/MM/YY')}</Text>
 					</div>
 				)
 		},
@@ -282,10 +317,8 @@ function TableProject(props) {
 			width: '18%',
 			render: (_, item) => (
 				<div className="flex flex-row items-center">
-					<Avatar size={32} style={{ backgroundColor: item.colorCode }} icon={<UserOutlined />} />
-					<Typography className="ml-8" variant="body1">
-						{item.ownerName}
-					</Typography>
+					<Avatar style={{ backgroundColor: item.colorCode }} icon={<UserOutlined />} />
+					<Text className="ml-8">{item.ownerName}</Text>
 				</div>
 			)
 		},
@@ -299,11 +332,7 @@ function TableProject(props) {
 					<Avatar.Group maxCount={3} maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
 						{item?.lstUserInvited?.map(av => (
 							<Tooltip key={av.userID} title={av.fullName} placement="top">
-								<Avatar size={32} style={{ backgroundColor: '#87d068' }}>
-									<Typography color="inherit" variant="subtitle1">
-										{av.alphabet}
-									</Typography>
-								</Avatar>
+								<Avatar>{av.alphabet}</Avatar>
 							</Tooltip>
 						))}
 					</Avatar.Group>
@@ -313,6 +342,7 @@ function TableProject(props) {
 	];
 	return (
 		<Table
+			showSorterTooltip={false}
 			rowKey="prjID"
 			rowClassName={record => setRowClassName(record)}
 			expandable={{
@@ -341,8 +371,8 @@ function TableProject(props) {
 			pagination={false}
 			scroll={{ x: entities && entities.length ? (matches ? 1520 : 1540) : matchesSM ? 1540 : null }}
 			columns={columns}
+			onChange={onChangeSort}
 			dataSource={entities}
-			loading={listLoading && <Spin />}
 		/>
 	);
 }
