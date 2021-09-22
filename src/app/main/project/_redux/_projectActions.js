@@ -52,7 +52,7 @@ export const fetchsProjectFilter =
 			Year: year || null,
 			Search: search || null,
 			SortColumn: sortColumn || null,
-			SortDirection: sortDirection || null
+			SortDirection: sortDirection || 'asc'
 		};
 		return requestFrom
 			.fetchsProject(paramsReq)
@@ -263,7 +263,7 @@ export const fetchProjectDetailFilter =
 			Lang: 'en',
 			SectorID: sector || null,
 			SortColumn: sortColumn || null,
-			SortDirection: sortDirection || null
+			SortDirection: sortDirection || 'asc'
 		};
 		return requestFrom
 			.fetchProjectDetail(paramsReq)

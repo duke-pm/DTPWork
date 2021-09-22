@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Table, Avatar, Progress, Spin } from 'antd';
+import { Table, Avatar, Progress } from 'antd';
 import React, { useState, useEffect, useCallback } from 'react';
 import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
 import { Typography } from '@material-ui/core';
@@ -12,7 +12,7 @@ import Text from 'app/components/Text';
 function TableProject(props) {
 	const theme = useTheme();
 	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-	const { entities, listLoading } = props;
+	const { entities } = props;
 
 	const array = [];
 	const mapDataKey = useCallback(

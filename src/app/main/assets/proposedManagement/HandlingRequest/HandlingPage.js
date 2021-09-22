@@ -2,8 +2,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import FusePageCarded from '@fuse/core/FusePageCarded';
-import FuseAnimate from '@fuse/core/FuseAnimate';
 import { Icon, Typography } from '@material-ui/core';
 import { Tooltip } from 'antd';
 import { useHistory } from 'react-router';

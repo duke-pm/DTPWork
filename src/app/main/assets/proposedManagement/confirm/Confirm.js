@@ -1,4 +1,4 @@
-import { Box, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import React, { useContext } from 'react';
 import Search from 'antd/lib/input/Search';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
@@ -9,7 +9,6 @@ import ConfirmDamaged from './ConfirmDamaged';
 import ConfirmLose from './ConfirmLose';
 import FormAllocation from './FormControlConfirm/Allocation';
 import FormConfirmGobal from './FormControlConfirm/ConfirmCorrupt';
-import FormCustomCorrupt from './FormControlConfirm/FormCustomCorrupt';
 import TimeLine from '../TimeLine';
 import * as actions from '../../../../store/Tabs/actionsTab';
 import { fetchDataConfirms, searchConfirms } from '../_redux/confirmAction';
@@ -18,8 +17,6 @@ const { TabPane } = Tabs;
 function PossesionPage(props) {
 	const confirmContext = useContext(ConfirmContext);
 	const {
-		formControl,
-		setFormControl,
 		formAllocation,
 		setFormAllocation,
 		typeReasonReject,
@@ -75,7 +72,6 @@ function PossesionPage(props) {
 				dispatch(fetchDataConfirms(0, 1));
 		}
 	};
-	const handleCloseForm = () => setFormControl(false);
 	const handleCloseFormAllocation = () => setFormAllocation(false);
 	const hanleCancle = () => setReasonReject(false);
 	const handleSearch = () => {

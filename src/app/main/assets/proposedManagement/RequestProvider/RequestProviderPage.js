@@ -4,13 +4,10 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import * as moment from 'moment';
 import { getDataUserLocalStorage } from '@fuse/core/DtpConfig';
-import FusePageCarded from '@fuse/core/FusePageCarded';
-import FuseAnimate from '@fuse/core/FuseAnimate';
 import { Icon, Typography } from '@material-ui/core';
 import { Tooltip } from 'antd';
 import { useHistory } from 'react-router';
 import RequestProviderBody from './ComponentsRequestProvider/RequestProviderBody';
-// import RequestProviderHeader from './ComponentsRequestProvider/RequestProviderHeader';
 import * as actions from '../_redux/confirmAction';
 
 export default function RequestProviderPage() {

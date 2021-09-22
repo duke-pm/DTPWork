@@ -1,11 +1,10 @@
 import React from 'react';
-import { DialogContent, Grid, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
 import { useDispatch } from 'react-redux';
 import * as momemt from 'moment';
 import { notificationConfig } from '@fuse/core/DtpConfig';
 import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
-import InputTextArea from '@fuse/CustomForm/InputTextArea';
 import AntDescriptionsCustom from '@fuse/FormBookingCustom/AntDescriptionsCustom';
 import * as actions from '../../../_redux/confirmAction';
 

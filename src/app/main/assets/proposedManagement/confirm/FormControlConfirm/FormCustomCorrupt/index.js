@@ -1,8 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect } from 'react';
-import { Typography, IconButton, Icon } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
+import { Typography, Icon } from '@material-ui/core';
 import { useSelector, shallowEqual } from 'react-redux';
 import { Tooltip } from 'antd';
 import { useHistory, useParams } from 'react-router';

@@ -161,11 +161,6 @@ export default function ProjectPage() {
 					</Text>
 					<div className="header--action">
 						<Search
-							onKeyPress={event => {
-								if (event.key === 'Enter') {
-									handleSearch();
-								}
-							}}
 							onChange={e => onHandleChange(e)}
 							className="input--search"
 							placeholder="Search"

@@ -1,5 +1,4 @@
 /* eslint-disable no-shadow */
-import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
 import { Formik, Form, Field } from 'formik';
 import React, { useState, useEffect } from 'react';
 import { Button, Typography } from '@material-ui/core';

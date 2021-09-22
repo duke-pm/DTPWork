@@ -267,11 +267,6 @@ export default function ContentProvider() {
 				)}
 				<div className="header--action">
 					<Search
-						onKeyPress={event => {
-							if (event.key === 'Enter') {
-								handleSearch();
-							}
-						}}
 						onChange={e => onHandleChange(e)}
 						className="input--search"
 						placeholder="Search"

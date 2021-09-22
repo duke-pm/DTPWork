@@ -38,8 +38,7 @@ function TableProject(props) {
 		// setChart,
 		sort,
 		setStatus,
-		setOwnerFilter,
-		setSort
+		setOwnerFilter
 	} = projectContext;
 	const handleOpenFormProject = (item, type) => {
 		dispatch(actions.setTaskEditProject(item));
@@ -186,6 +185,7 @@ function TableProject(props) {
 			dataIndex: 'prjName',
 			fixed: !matchesSM && 'left',
 			key: 'prjName',
+			sorter: true,
 			width: '30%',
 			render: (_, item) => (
 				<Link
@@ -249,6 +249,7 @@ function TableProject(props) {
 			align: 'center',
 			dataIndex: 'public',
 			key: 'public',
+			sorter: true,
 			width: '6%',
 			render: (_, item) =>
 				item.priorityLevel !== 0 && (
