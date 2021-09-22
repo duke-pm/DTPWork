@@ -189,11 +189,6 @@ function PossesionPage(props) {
 					</Text>
 					<div className="proposedManagement__header--action">
 						<Search
-							onKeyPress={event => {
-								if (event.key === 'Enter') {
-									handleSearch();
-								}
-							}}
 							onSearch={handleSearch}
 							onChange={e => onHandleChange(e)}
 							className="input__search"

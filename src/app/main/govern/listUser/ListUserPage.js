@@ -40,11 +40,6 @@ export default function ListUserPage() {
 				<div className="govern__header--action">
 					<Search
 						onChange={onHandleChange}
-						onKeyPress={event => {
-							if (event.key === 'Enter') {
-								handleSearch();
-							}
-						}}
 						className="input__search"
 						placeholder="Search"
 						onSearch={handleSearch}

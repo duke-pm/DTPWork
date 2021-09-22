@@ -8,7 +8,6 @@ import { Icon, Typography } from '@material-ui/core';
 import { Tooltip } from 'antd';
 import { useHistory } from 'react-router';
 import RequestProviderBody from './ComponentsRequestProvider/RequestProviderBody';
-// import RequestProviderHeader from './ComponentsRequestProvider/RequestProviderHeader';
 import * as actions from '../_redux/confirmAction';
 
 export default function RequestProviderPage() {

@@ -120,11 +120,6 @@ export default function ResovleRequestPage() {
 					<div className="proposedManagement__header--action">
 						<Search
 							onChange={e => onHandleChange(e)}
-							onKeyPress={event => {
-								if (event.key === 'Enter') {
-									handleSearch();
-								}
-							}}
 							onSearch={handleSearch}
 							className="input__search"
 							placeholder="Search"

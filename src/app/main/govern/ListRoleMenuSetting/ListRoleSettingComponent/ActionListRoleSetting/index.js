@@ -115,32 +115,6 @@ export default function ActionListRoleSetting({
 						</Button>{' '}
 					</Grid>
 				</Grid>
-				<div>
-					{/* <div className="flex flex-col sm:flex-row justify-end mt-16">
-						<Paper className="w-full sm:w-1/4 flex justify-between ">
-							<InputBase
-								// onKeyPress={event => {
-								// 	if (event.key === 'Enter') {
-								// 		handleSearch();
-								// 	}
-								// }}
-								// onChange={e => onHandleChange(e)}
-								className={classes.input}
-								// value={search}
-								placeholder="Tìm kiếm"
-								inputProps={{ 'aria-label': 'search google maps' }}
-							/>
-							<IconButton
-								// onClick={handleSearch}
-								type="button"
-								className={classes.iconButton}
-								aria-label="search"
-							>
-								<SearchIcon />
-							</IconButton>
-						</Paper>
-					</div> */}
-				</div>
 			</FuseAnimateGroup>
 		</div>
 	);

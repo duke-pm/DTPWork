@@ -41,9 +41,6 @@ export default function GroupUserPage() {
 						placeholder="Search"
 						onSearch={handleSearch}
 						onChange={onHandleChange}
-						onKeyPress={event => {
-							if (event.key === 'Enter') handleSearch();
-						}}
 					/>
 					<Button onClick={handleChangeRoute} className="button__create" variant="contained" color="primary">
 						<Text type="button" color="white">

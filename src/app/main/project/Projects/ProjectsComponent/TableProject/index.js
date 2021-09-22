@@ -172,6 +172,7 @@ function TableProject(props) {
 			dataIndex: 'prjName',
 			fixed: !matchesSM && 'left',
 			key: 'prjName',
+			sorter: true,
 			width: '30%',
 			render: (_, item) => (
 				<Link
@@ -233,8 +234,9 @@ function TableProject(props) {
 		{
 			title: 'Priority',
 			align: 'center',
-			dataIndex: 'public',
-			key: 'public',
+			dataIndex: 'priorityLevel',
+			key: 'priorityLevel',
+			sorter: true,
 			width: '6%',
 			render: (_, item) =>
 				item.priorityLevel !== 0 && (
@@ -272,8 +274,8 @@ function TableProject(props) {
 		{
 			title: 'Inspection time',
 			align: 'center',
-			dataIndex: 'crtdDate',
-			key: 'crtdDate',
+			dataIndex: 'appraisalTime',
+			key: 'appraisalTime',
 			sorter: true,
 			width: '8%',
 			render: (_, item) =>

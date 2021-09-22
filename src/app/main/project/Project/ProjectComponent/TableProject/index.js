@@ -290,6 +290,7 @@ function TableProject(props) {
 			title: 'Subject',
 			dataIndex: 'subject',
 			key: 'subject',
+			sorter: true,
 			fixed: !matchesSM && 'left',
 			width: '20%',
 			render: (_, item) => (
