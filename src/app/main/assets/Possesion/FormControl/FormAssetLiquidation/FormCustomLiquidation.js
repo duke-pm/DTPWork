@@ -39,86 +39,84 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 							<Grid spacing={2} container item>
 								<Grid item xs={12} md={12} lg={12}>
 									<Text type="subTitle" color="primary" borderBottom>
-										THÔNG TIN TÀI SẢN.
+										THÔNG TIN TÀI SẢN
 									</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={4}>
-									<Text type="body">Mã tài sản:</Text>
+									<Text>Mã tài sản:</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={8}>
-									<Text type="body">{entitiesEdit?.assetCode ? entitiesEdit?.assetCode : '-'}</Text>
+									<Text>{entitiesEdit?.assetCode ? entitiesEdit?.assetCode : '-'}</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={4}>
-									<Text type="body">Tên tài sản:</Text>
+									<Text>Tên tài sản:</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={8}>
-									<Text type="body">{entitiesEdit?.assetName ? entitiesEdit.assetName : '-'}</Text>
+									<Text>{entitiesEdit?.assetName ? entitiesEdit.assetName : '-'}</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={4}>
-									<Text type="body">Nhóm tài sản:</Text>
+									<Text>Nhóm tài sản:</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={8}>
-									<Text type="body">{entitiesEdit?.groupName ? entitiesEdit.groupName : '-'}</Text>
+									<Text>{entitiesEdit?.groupName ? entitiesEdit.groupName : '-'}</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={4}>
-									<Text type="body">Ngày mua:</Text>
+									<Text>Ngày mua:</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={8}>
-									<Text type="body">
+									<Text>
 										{entitiesEdit?.purchaseDate
 											? moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY')
-											: ''}{' '}
+											: '-'}
 									</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={4}>
-									<Text type="body">Tình trạng:</Text>
+									<Text>Tình trạng:</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={8}>
-									<Text type="body">{entitiesEdit?.statusName ? entitiesEdit.statusName : '-'}</Text>
+									<Text>{entitiesEdit?.statusName ? entitiesEdit.statusName : '-'}</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={4}>
-									<Text type="body">Mô tả:</Text>
+									<Text>Mô tả:</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={8}>
-									<Text type="body">{entitiesEdit?.descr ? entitiesEdit.descr : '-'}</Text>
+									<Text>{entitiesEdit?.descr ? entitiesEdit.descr : '-'}</Text>
 								</Grid>
 								<Grid item xs={12} md={12} lg={12}>
 									<Text type="subTitle" color="primary" borderBottom>
-										THÔNG TIN NHÂN VIÊN SỬ DỤNG.
+										THÔNG TIN NHÂN VIÊN SỬ DỤNG
 									</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={4}>
-									<Text type="body">Nhân viên:</Text>
+									<Text>Nhân viên:</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={8}>
-									<Text type="body">{entitiesEdit?.empName ? entitiesEdit.empName : '-'}</Text>
+									<Text>{entitiesEdit?.empName ? entitiesEdit.empName : '-'}</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={4}>
-									<Text type="body">Chức vụ:</Text>
+									<Text>Chức vụ:</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={8}>
-									<Text type="body">{entitiesEdit?.jobTitle ? entitiesEdit.jobTitle : '-'}</Text>
+									<Text>{entitiesEdit?.jobTitle ? entitiesEdit.jobTitle : '-'}</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={4}>
-									<Text type="body">Bộ phận:</Text>
+									<Text>Bộ phận:</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={8}>
-									<Text type="body">
-										{entitiesEdit?.deptNameManager ? entitiesEdit.deptNameManager : '-'}
-									</Text>
+									<Text>{entitiesEdit?.deptNameManager ? entitiesEdit.deptNameManager : '-'}</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={4}>
-									<Text type="body">Khu vực:</Text>
+									<Text>Khu vực:</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={8}>
-									<Text type="body">{entitiesEdit?.regionName ? entitiesEdit.regionName : '-'}</Text>
+									<Text>{entitiesEdit?.regionName ? entitiesEdit.regionName : '-'}</Text>
 								</Grid>
 							</Grid>
 						</div>
 						<div>
 							<div className="mt-16">
 								<Text type="subTitle" color="primary" borderBottom>
-									THÔNG TIN THANH LÝ.
+									THÔNG TIN THANH LÝ
 								</Text>
 							</div>
 							<div className="grid grid-cols-2  gap-8 ">
@@ -140,7 +138,9 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 								<Spin size="middle" />
 							) : (
 								<Button type="submit" className="mr-8" variant="contained" color="primary">
-									<Typography variant="button">Lưu</Typography>
+									<Text type="button" color="white">
+										Lưu
+									</Text>
 								</Button>
 							)}
 							<Button
@@ -150,7 +150,7 @@ export default function FormCustomLiquidation({ entitiesEdit, saveWithDraw, acti
 								variant="contained"
 								color="secondary"
 							>
-								<Typography variant="button">Huỷ</Typography>
+								<Text type="button">Huỷ</Text>
 							</Button>
 						</div>
 					</Form>

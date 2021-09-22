@@ -1,8 +1,9 @@
-import { TableCell, TableRow, TableBody, Typography } from '@material-ui/core';
+import { TableCell, TableRow, TableBody } from '@material-ui/core';
 import { Popover } from 'antd';
 import React from 'react';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import * as moment from 'moment';
+import Text from 'app/components/Text';
 import PossessionAction from './ActionComponent/PossessionAction';
 import { chipColor, chipText } from '../ConfigPossessionAll';
 
@@ -24,41 +25,36 @@ const TableBodyAssetAll = ({ entities, lastErrors, classes, HandleOpenHistory })
 							</Popover>
 						</TableCell>
 						<TableCell align="left">
-							<Typography variant="body1">{items.assetCode}</Typography>
+							<Text>{items.assetCode}</Text>
 						</TableCell>
 						<TableCell align="left">
-							<Typography variant="body1">{items.assetName}</Typography>
+							<Text>{items.assetName}</Text>
 						</TableCell>
 						<TableCell align="left">
-							<Typography variant="body1">{items.groupName}</Typography>
+							<Text>{items.groupName}</Text>
 						</TableCell>
 						<TableCell align="left">
-							<Typography variant="body1">{items.groupDetailName}</Typography>
+							<Text>{items.groupDetailName}</Text>
 						</TableCell>
 						<TableCell align="center">
-							<Typography
-								variant="body1"
-								className={`rounded-full inline px-10 py-4 ${chipColor[items.statusID]}`}
-							>
+							<Text className={`rounded-full inline px-10 py-4 ${chipColor[items.statusID]}`}>
 								{chipText[items.statusID]}
-							</Typography>
+							</Text>
 						</TableCell>
 						<TableCell align="center">
-							<Typography variant="body1">
-								{items.purchaseDate ? moment(items.purchaseDate).format('DD-MM-YYYY') : ''}
-							</Typography>
+							<Text>{items.purchaseDate ? moment(items.purchaseDate).format('DD/MM/YYYY') : '-'}</Text>
 						</TableCell>
 						<TableCell align="left">
-							<Typography variant="body1">{items.deptNameManager}</Typography>
+							<Text>{items.deptNameManager}</Text>
 						</TableCell>
 						<TableCell align="left">
-							<Typography variant="body1">{items && items.empName ? items.empName : null}</Typography>
+							<Text>{items && items.empName ? items.empName : '-'}</Text>
 						</TableCell>
 						<TableCell align="left">
-							<Typography variant="body1">{items.regionName}</Typography>
+							<Text>{items.regionName}</Text>
 						</TableCell>
 						<TableCell align="left">
-							<Typography variant="body1">{items.remarks}</Typography>
+							<Text>{items.remarks}</Text>
 						</TableCell>
 					</TableRow>
 				))}

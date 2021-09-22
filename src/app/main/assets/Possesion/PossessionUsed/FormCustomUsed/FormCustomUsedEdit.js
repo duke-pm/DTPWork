@@ -1,9 +1,6 @@
 import React from 'react';
-import { DialogContent, DialogActions, Button, Grid, Typography } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
-import DateCustom from '@fuse/CustomForm/Date';
-import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
-import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
 import * as moment from 'moment';
 import { Spin } from 'antd';
 import * as Yup from 'yup';
@@ -40,86 +37,84 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 							<Grid container item spacing={2}>
 								<Grid item xs={12} md={12} lg={12}>
 									<Text type="subTitle" color="primary" borderBottom>
-										THÔNG TIN TÀI SẢN.
+										THÔNG TIN TÀI SẢN
 									</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={4}>
-									<Text type="body">Mã tài sản:</Text>
+									<Text>Mã tài sản:</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={8}>
-									<Text type="body">{entitiesEdit?.assetCode ? entitiesEdit.assetCode : '-'}</Text>
+									<Text>{entitiesEdit?.assetCode ? entitiesEdit.assetCode : '-'}</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={4}>
-									<Text type="body">Tên tài sản:</Text>
+									<Text>Tên tài sản:</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={8}>
-									<Text type="body">{entitiesEdit?.assetName ? entitiesEdit.assetName : '-'}</Text>
+									<Text>{entitiesEdit?.assetName ? entitiesEdit.assetName : '-'}</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={4}>
-									<Text type="body">Nhóm tài sản:</Text>
+									<Text>Nhóm tài sản:</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={8}>
-									<Text type="body">{entitiesEdit?.groupName ? entitiesEdit.groupName : '-'}</Text>
+									<Text>{entitiesEdit?.groupName ? entitiesEdit.groupName : '-'}</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={4}>
-									<Text type="body">Ngày mua:</Text>
+									<Text>Ngày mua:</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={8}>
-									<Text type="body">
+									<Text>
 										{entitiesEdit?.purchaseDate
-											? moment(entitiesEdit.purchaseDate).format('DD-MM-YYYY')
-											: ''}{' '}
+											? moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY')
+											: '-'}
 									</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={4}>
-									<Text type="body">Tình trạng:</Text>
+									<Text>Tình trạng:</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={8}>
-									<Text type="body">{entitiesEdit?.statusName ? entitiesEdit.statusName : '-'}</Text>
+									<Text>{entitiesEdit?.statusName ? entitiesEdit.statusName : '-'}</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={4}>
-									<Text type="body">Mô tả:</Text>
+									<Text>Mô tả:</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={8}>
-									<Text type="body">{entitiesEdit?.descr ? entitiesEdit.descr : '-'}</Text>
+									<Text>{entitiesEdit?.descr ? entitiesEdit.descr : '-'}</Text>
 								</Grid>
 								<Grid item xs={12} md={12} lg={12}>
 									<Text type="subTitle" color="primary" borderBottom>
-										THÔNG TIN NHÂN VIÊN SỬ DỤNG.
+										THÔNG TIN NHÂN VIÊN SỬ DỤNG
 									</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={4}>
-									<Text type="body">Nhân viên:</Text>
+									<Text>Nhân viên:</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={8}>
-									<Text type="body">{entitiesEdit?.empName ? entitiesEdit.empName : '-'}</Text>
+									<Text>{entitiesEdit?.empName ? entitiesEdit.empName : '-'}</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={4}>
-									<Text type="body">Chức vụ:</Text>
+									<Text>Chức vụ:</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={8}>
-									<Text type="body">{entitiesEdit?.jobTitle ? entitiesEdit.jobTitle : '-'}</Text>
+									<Text>{entitiesEdit?.jobTitle ? entitiesEdit.jobTitle : '-'}</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={4}>
-									<Text type="body">Bộ phận:</Text>
+									<Text>Bộ phận:</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={8}>
-									<Text type="body">
-										{entitiesEdit?.deptNameManager ? entitiesEdit.deptNameManager : '-'}
-									</Text>
+									<Text>{entitiesEdit?.deptNameManager ? entitiesEdit.deptNameManager : '-'}</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={4}>
-									<Text type="body">Khu vực:</Text>
+									<Text>Khu vực:</Text>
 								</Grid>
 								<Grid item xs={6} md={6} lg={8}>
-									<Text type="body">{entitiesEdit?.regionName ? entitiesEdit.regionName : '-'}</Text>
+									<Text>{entitiesEdit?.regionName ? entitiesEdit.regionName : '-'}</Text>
 								</Grid>
 							</Grid>
 						</div>
 						<div>
 							<div>
 								<Text type="subTitle" color="primary" borderBottom>
-									THÔNG TIN THU HỒI.
+									THÔNG TIN THU HỒI
 								</Text>
 							</div>
 							<div className="grid grid-cols-3 mt-8">
@@ -135,11 +130,13 @@ export default function FormCustomUsedEdit({ entitiesEdit, saveWithDraw, actionL
 								<Spin size="middle" />
 							) : (
 								<Button type="submit" variant="contained" className="mr-8" color="primary">
-									<Typography variant="button">Lưu</Typography>
+									<Text type="button" color="white">
+										Lưu
+									</Text>
 								</Button>
 							)}
 							<Button type="button" onClick={handleClose} variant="contained" color="secondary">
-								<Typography variant="button">Huỷ</Typography>
+								<Text type="button">Huỷ</Text>
 							</Button>
 						</div>
 					</Form>

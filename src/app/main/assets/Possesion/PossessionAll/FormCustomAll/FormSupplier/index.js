@@ -1,9 +1,10 @@
-import { AppBar, Dialog, IconButton, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Dialog, IconButton, Toolbar } from '@material-ui/core';
 import React from 'react';
 import CloseIcon from '@material-ui/icons/Close';
 import { useDispatch } from 'react-redux';
 import { notificationConfig } from '@fuse/core/DtpConfig';
 import FormCustomSupplier from './FormCustomSupplier';
+import Text from 'app/components/Text';
 import * as action from '../../../_redux/possesionActions';
 
 export default function FormSupplier({ open, handleCloseFormSupplier }) {
@@ -23,9 +24,9 @@ export default function FormSupplier({ open, handleCloseFormSupplier }) {
 					<IconButton onClick={handleCloseFormSupplier} edge="start" color="inherit" aria-label="close">
 						<CloseIcon />
 					</IconButton>
-					<Typography variant="subtitle1" color="inherit">
+					<Text type="subTitle" color="primary">
 						Tạo mới nhà cung cấp
-					</Typography>
+					</Text>
 				</Toolbar>
 			</AppBar>
 			<FormCustomSupplier

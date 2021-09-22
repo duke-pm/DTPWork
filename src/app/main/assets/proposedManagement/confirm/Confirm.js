@@ -1,15 +1,14 @@
-import { Box, Typography } from '@material-ui/core';
 import React, { useContext } from 'react';
 import Search from 'antd/lib/input/Search';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { Tabs } from 'antd';
+import Text from 'app/components/Text';
 import { ConfirmContext } from './ConfirmContext';
 import ConfirmAll from './ConfirmAll';
 import ConfirmDamaged from './ConfirmDamaged';
 import ConfirmLose from './ConfirmLose';
 import FormAllocation from './FormControlConfirm/Allocation';
 import FormConfirmGobal from './FormControlConfirm/ConfirmCorrupt';
-import FormCustomCorrupt from './FormControlConfirm/FormCustomCorrupt';
 import TimeLine from '../TimeLine';
 import * as actions from '../../../../store/Tabs/actionsTab';
 import { fetchDataConfirms, searchConfirms } from '../_redux/confirmAction';
@@ -188,9 +187,9 @@ function PossesionPage(props) {
 			{/* <FormCustomCorrupt open={formControl} handleClose={handleCloseForm} /> */}
 			<div className="container proposedManagement">
 				<div className="proposedManagement__header px-16 shadow-lg">
-					<Typography color="primary" variant="h6">
+					<Text color="primary" type="title">
 						Danh sách đề xuất
-					</Typography>
+					</Text>
 					<div className="proposedManagement__header--action">
 						<Search
 							onKeyPress={event => {
@@ -209,9 +208,9 @@ function PossesionPage(props) {
 					<Tabs onChange={handleChange} defaultActiveKey={value}>
 						<TabPane
 							tab={
-								<Typography variant="body1">
-									Cấp phát ({(total_Record && total_Record.countAllocation) || 0}){' '}
-								</Typography>
+								<Text type="subTitle">
+									Cấp phát ({(total_Record && total_Record.countAllocation) || 0})
+								</Text>
 							}
 							key="0"
 						>
@@ -219,20 +218,16 @@ function PossesionPage(props) {
 						</TabPane>
 						<TabPane
 							tab={
-								<Typography variant="body1">
+								<Text type="subTitle">
 									Báo hỏng ({(total_Record && total_Record.countDamage) || 0})
-								</Typography>
+								</Text>
 							}
 							key="1"
 						>
 							<ConfirmDamaged />
 						</TabPane>
 						<TabPane
-							tab={
-								<Typography variant="body1">
-									Báo mất ({(total_Record && total_Record.countLost) || 0})
-								</Typography>
-							}
+							tab={<Text type="subTitle">Báo mất ({(total_Record && total_Record.countLost) || 0})</Text>}
 							key="2"
 						>
 							<ConfirmLose />

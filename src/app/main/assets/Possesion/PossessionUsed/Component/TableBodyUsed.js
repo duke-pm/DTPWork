@@ -48,7 +48,7 @@ export default function TableBodyUsed({ entities, handleOpenForm, handleOpenFrom
 							</Typography>
 						</TableCell>
 						<TableCell align="center">
-							{items.purchaseDate ? moment(items.purchaseDate).format('DD-MM-YYYY') : ''}
+							{items.purchaseDate ? moment(items.purchaseDate).format('DD/MM/YYYY') : '-'}
 						</TableCell>
 						<TableCell align="left">{items.deptNameManager}</TableCell>
 						<TableCell align="left">{items && items.empName ? items.empName : null}</TableCell>

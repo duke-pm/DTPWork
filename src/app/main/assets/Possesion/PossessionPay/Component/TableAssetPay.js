@@ -1,17 +1,15 @@
 /* eslint-disable no-shadow */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Typography } from '@material-ui/core';
 import { Table, Spin } from 'antd';
-import React, { useContext } from 'react';
+import React from 'react';
 import { sortDirestion } from '@fuse/core/DtpConfig';
 import moment from 'moment';
-import { useDispatch } from 'react-redux';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Text from 'app/components/Text';
 import { useTheme } from '@material-ui/core/styles';
 
 export default function TableAssetPay({ entities, listLoading, createSortHandler }) {
-	const dispatch = useDispatch();
 	const theme = useTheme();
 	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
 	const onChange = (pagination, filters, sorter, extra) => {
@@ -25,54 +23,46 @@ export default function TableAssetPay({ entities, listLoading, createSortHandler
 			key: 'AssetCode',
 			sorter: true,
 			// defaultSortOrder: 'ascend',
-			render: (_, item) => <Typography variant="body1">{item.assetCode}</Typography>
+			render: (_, item) => <Text>{item.assetCode}</Text>
 		},
 		{
 			title: 'Tên tài sản',
 			dataIndex: 'assetName',
 			key: 'AssetName',
 			sorter: true,
-			render: (_, item) => <Typography variant="body1">{item.assetName}</Typography>
+			render: (_, item) => <Text>{item.assetName}</Text>
 		},
 		{
 			title: 'Nhóm tài sản',
 			dataIndex: 'groupName',
 			key: 'GroupName',
 			sorter: true,
-			render: (_, item) => <Typography variant="body1">{item.groupName}</Typography>
+			render: (_, item) => <Text>{item.groupName}</Text>
 		},
 		{
 			title: 'Loại tài sản',
 			dataIndex: 'groupDetailName',
 			key: 'GroupDetailName',
 			sorter: true,
-			render: (_, item) => <Typography variant="body1">{item.groupDetailName}</Typography>
+			render: (_, item) => <Text>{item.groupDetailName}</Text>
 		},
 		{
 			title: 'Ngày mua',
 			dataIndex: 'purchaseDate',
 			key: 'PurchaseDate',
-			render: (_, item) => (
-				<Typography variant="body1">
-					{item.purchaseDate ? moment(item.purchaseDate).format('DD-MM-YYYY') : ''}
-				</Typography>
-			)
+			render: (_, item) => <Text>{item.purchaseDate ? moment(item.purchaseDate).format('DD/MM/YYYY') : '-'}</Text>
 		},
 		{
 			title: 'Ngày thanh lý',
 			dataIndex: 'transDate',
 			key: 'TransDate',
-			render: (_, item) => (
-				<Typography variant="body1">
-					{item.transDate ? moment(item.transDate).format('DD-MM-YYYY') : ''}
-				</Typography>
-			)
+			render: (_, item) => <Text>{item.transDate ? moment(item.transDate).format('DD/MM/YYYY') : '-'}</Text>
 		},
 		{
 			title: 'Mã tham chiếu',
 			dataIndex: 'remarks',
 			key: 'Remark',
-			render: (_, item) => <Typography variant="body1">{item.remarks}</Typography>
+			render: (_, item) => <Text>{item.remarks}</Text>
 		}
 	];
 	return (

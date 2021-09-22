@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect } from 'react';
-import { Dialog, AppBar, Toolbar, Typography, IconButton, Icon } from '@material-ui/core';
+import { Icon } from '@material-ui/core';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import * as moment from 'moment';
 import { getDataUserLocalStorage, notificationConfig } from '@fuse/core/DtpConfig';
-import CloseIcon from '@material-ui/icons/Close';
+import Text from 'app/components/Text';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import { Spin, Tooltip } from 'antd';
 import { useHistory } from 'react-router';
@@ -157,9 +157,9 @@ function FormCustomAll({ rowPage }) {
 	return (
 		<div className="container assets">
 			<div className="assets__header px-16 shadow-lg">
-				<Typography color="primary" variant="h6">
+				<Text color="primary" type="title">
 					{entitiesEdit?.assetID ? 'Cập nhật tài sản' : 'Tạo mới tài sản'}
-				</Typography>
+				</Text>
 				<div className="assets__header--action">
 					<Tooltip placement="bottom" title="Exit">
 						<span onClick={ExitPage} className="action--button">
@@ -182,7 +182,7 @@ function FormCustomAll({ rowPage }) {
 							saveAsset={saveAsset}
 							initialValue={entitiesEdit?.assetID ? newIntialState : initial}
 							handleClose={ExitPage}
-						/>{' '}
+						/>
 					</div>
 				</Spin>
 			</div>

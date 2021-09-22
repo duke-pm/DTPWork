@@ -98,7 +98,7 @@ export default function TableAssetCorrupt({
 			key: 'PurchaseDate',
 			render: (_, item) => (
 				<Typography variant="body1" className={`rounded-full inline px-10 py-4 ${chipColor[item.statusID]}`}>
-					{item.purchaseDate ? moment(item.purchaseDate).format('DD-MM-YYYY') : ''}
+					{item.purchaseDate ? moment(item.purchaseDate).format('DD/MM/YYYY') : ''}
 				</Typography>
 			)
 		},

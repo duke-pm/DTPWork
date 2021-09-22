@@ -3,6 +3,7 @@ import { Spin } from 'antd';
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import React from 'react';
+import Text from 'app/components/Text';
 import { validateField } from '@fuse/core/DtpConfig';
 import AntInputCustom from '@fuse/FormBookingCustom/AntInputCustom';
 
@@ -58,13 +59,13 @@ export default function FormCustomSupplier({ actionLoading, handleSaveFormSuppli
 										type="text"
 										name="contact"
 										component={AntInputCustom}
-									/>{' '}
+									/>
 									<Field
 										label="ĐT người liên hệ"
 										name="phoneContact"
 										type="number"
 										component={AntInputCustom}
-									/>{' '}
+									/>
 								</div>
 								{/* <div className="grid grid-cols-1 sm:grid-cols-2 p-4 gap-8 ">
 									<Field label="Inactive" name="inactive" component={CheckboxAntd} />
@@ -76,7 +77,9 @@ export default function FormCustomSupplier({ actionLoading, handleSaveFormSuppli
 								<Spin size="middle" />
 							) : (
 								<Button type="submit" className="h-26" variant="contained" color="primary">
-									Lưu
+									<Text type="button" color="white">
+										Lưu
+									</Text>
 								</Button>
 							)}
 							<Button
@@ -86,7 +89,7 @@ export default function FormCustomSupplier({ actionLoading, handleSaveFormSuppli
 								variant="contained"
 								color="secondary"
 							>
-								Hủy
+								<Text type="button">Hủy</Text>
 							</Button>
 						</DialogActions>
 					</Form>

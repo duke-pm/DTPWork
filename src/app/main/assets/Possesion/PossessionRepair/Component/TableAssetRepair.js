@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
+import Text from 'app/components/Text';
 import ActionHandleFunc from './ActionHandleFunc';
 
 export default function TableAssetRepair({
@@ -58,56 +59,52 @@ export default function TableAssetRepair({
 			key: 'AssetCode',
 			sorter: true,
 			// defaultSortOrder: 'ascend',
-			render: (_, item) => <Typography variant="body1">{item.assetCode}</Typography>
+			render: (_, item) => <Text>{item.assetCode}</Text>
 		},
 		{
 			title: 'Tên tài sản',
 			dataIndex: 'assetName',
 			key: 'AssetName',
 			sorter: true,
-			render: (_, item) => <Typography variant="body1">{item.assetName}</Typography>
+			render: (_, item) => <Text>{item.assetName}</Text>
 		},
 		{
 			title: 'Nhóm tài sản',
 			dataIndex: 'groupName',
 			key: 'GroupName',
 			sorter: true,
-			render: (_, item) => <Typography variant="body1">{item.groupName}</Typography>
+			render: (_, item) => <Text>{item.groupName}</Text>
 		},
 		{
 			title: 'Loại tài sản',
 			dataIndex: 'groupDetailName',
 			key: 'GroupDetailName',
 			sorter: true,
-			render: (_, item) => <Typography variant="body1">{item.groupDetailName}</Typography>
+			render: (_, item) => <Text>{item.groupDetailName}</Text>
 		},
 		{
 			title: 'Ngày mua',
 			dataIndex: 'purchaseDate',
 			key: 'PurchaseDate',
-			render: (_, item) => (
-				<Typography variant="body1">
-					{item.purchaseDate ? moment(item.purchaseDate).format('DD-MM-YYYY') : ''}
-				</Typography>
-			)
+			render: (_, item) => <Text>{item.purchaseDate ? moment(item.purchaseDate).format('DD/MM/YYYY') : '-'}</Text>
 		},
 		{
 			title: 'Nguyên giá',
 			dataIndex: 'purchaseDate',
 			key: 'OriginalPrice',
-			render: (_, item) => <Typography variant="body1">{currencyFormat(item.originalPrice)}</Typography>
+			render: (_, item) => <Text>{currencyFormat(item.originalPrice)}</Text>
 		},
 		{
 			title: 'BP Quản lý',
 			dataIndex: 'deptNameManager',
 			key: 'DeptNameManager',
-			render: (_, item) => <Typography variant="body1">{item.deptNameManager}</Typography>
+			render: (_, item) => <Text>{item.deptNameManager}</Text>
 		},
 		{
 			title: 'Mã tham chiếu',
 			dataIndex: 'remarks',
 			key: 'Remark',
-			render: (_, item) => <Typography variant="body1">{item.remarks}</Typography>
+			render: (_, item) => <Text>{item.remarks}</Text>
 		}
 	];
 	return (

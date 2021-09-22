@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Typography, Icon } from '@material-ui/core';
+import { Icon } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import { Spin, Tooltip } from 'antd';
 import { useSelector, shallowEqual } from 'react-redux';
+import Text from 'app/components/Text';
 import { useHistory } from 'react-router';
 import InformationProceeUseAsset from './InformationProceeUseAsset';
 
@@ -23,9 +24,9 @@ export default function ProcessingUseAsset() {
 	return (
 		<div className="container assets">
 			<div className="assets__header px-16 shadow-lg">
-				<Typography color="primary" variant="h6">
+				<Text color="primary" type="title">
 					Qúa trình sử dụng tài sản
-				</Typography>
+				</Text>
 				<div className="assets__header--action">
 					<Tooltip placement="bottom" title="Exit">
 						<span onClick={ExitPage} className="action--button">

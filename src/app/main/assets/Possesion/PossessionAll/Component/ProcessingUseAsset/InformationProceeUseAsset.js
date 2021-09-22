@@ -24,65 +24,61 @@ export default function InformationProceeUseAsset({ entitiesEdit, actionLoading 
 	return (
 		<>
 			<div className="px-16 sm:px-24">
-				<div>
-					<Text type="subTitle" color="primary" borderBottom>
-						THÔNG TIN TÀI SẢN.
-					</Text>
-				</div>
+				<Text type="subTitle" color="primary" borderBottom>
+					THÔNG TIN TÀI SẢN
+				</Text>
 				<Grid container item spacing={2} className="mb-16">
 					<Grid item xs={5} md={4} lg={3}>
-						<Text type="body">Mã tài sản:</Text>
+						<Text>Mã tài sản:</Text>
 					</Grid>
 					<Grid item xs={7} md={8} lg={9}>
-						<Text type="body">{entitiesEdit?.assetCode}</Text>
+						<Text>{entitiesEdit?.assetCode}</Text>
 					</Grid>
 					<Grid item xs={5} md={4} lg={3}>
-						<Text type="body">Tên tài sản:</Text>
+						<Text>Tên tài sản:</Text>
 					</Grid>
 					<Grid item xs={7} md={8} lg={9}>
 						<Text variant="body1">{entitiesEdit?.assetName}</Text>
 					</Grid>
 					<Grid item xs={5} md={4} lg={3}>
-						<Text type="body">Nhóm tài sản:</Text>
+						<Text>Nhóm tài sản:</Text>
 					</Grid>
 					<Grid item xs={7} md={8} lg={9}>
 						<Text variant="body1">{entitiesEdit?.groupName}</Text>
 					</Grid>
 					<Grid item xs={5} md={4} lg={3}>
-						<Text type="body">Mô tả:</Text>
+						<Text>Mô tả:</Text>
 					</Grid>
 					<Grid item xs={7} md={8} lg={9}>
-						<Text type="body">{entitiesEdit?.descr ? entitiesEdit.descr : '-'}</Text>
+						<Text>{entitiesEdit?.descr ? entitiesEdit.descr : '-'}</Text>
 					</Grid>
 					<Grid item xs={5} md={4} lg={3}>
-						<Text type="body">Ngày mua:</Text>
+						<Text>Ngày mua:</Text>
 					</Grid>
 					<Grid item xs={7} md={8} lg={9}>
-						<Text type="body">
+						<Text>
 							{entitiesEdit?.purchaseDate ? moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY') : ''}
 						</Text>
 					</Grid>
 					<Grid item xs={5} md={4} lg={3}>
-						<Text type="body">Nguyên giá:</Text>
+						<Text>Nguyên giá:</Text>
 					</Grid>
 					<Grid item xs={7} md={8} lg={9}>
-						<Text type="body">{entitiesEdit && currencyFormat(entitiesEdit.originalPrice)}</Text>
+						<Text>{entitiesEdit && currencyFormat(entitiesEdit.originalPrice)}</Text>
 					</Grid>
 					<Grid item xs={5} md={4} lg={3}>
-						<Text type="body">Tình trạng:</Text>
+						<Text>Tình trạng:</Text>
 					</Grid>
 					<Grid item xs={7} md={8} lg={9}>
-						<Text type="body">{entitiesEdit?.statusName}</Text>
+						<Text>{entitiesEdit?.statusName}</Text>
 					</Grid>
 				</Grid>
 			</div>
 			<div className="px-16 sm:px-24">
-				<div>
-					<Text color="primary" type="subTitle" borderBottom>
-						QUÁ TRÌNH SỬ DỤNG.
-					</Text>
-					{actionLoading && <Spin className="mr-18" />}
-				</div>
+				<Text color="primary" type="subTitle" borderBottom>
+					QUÁ TRÌNH SỬ DỤNG
+				</Text>
+				{actionLoading && <Spin className="mr-18" />}
 				<div className="table-form">
 					<TableBodyProcessing history={history} />
 				</div>

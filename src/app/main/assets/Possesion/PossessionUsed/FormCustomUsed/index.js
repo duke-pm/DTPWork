@@ -1,12 +1,13 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect } from 'react';
-import { Typography, Icon } from '@material-ui/core';
+import { Icon } from '@material-ui/core';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { notificationConfig } from '@fuse/core/DtpConfig';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import { Tooltip } from 'antd';
 import { useHistory } from 'react-router';
+import Text from 'app/components/Text';
 import FormCustomUsedEdit from './FormCustomUsedEdit';
 import * as action from '../../_redux/possesionActions';
 
@@ -45,9 +46,9 @@ export default function FormCustomUsed() {
 	return (
 		<div className="container assets">
 			<div className="assets__header px-16 shadow-lg">
-				<Typography color="primary" variant="h6">
+				<Text color="primary" type="title">
 					Thu hồi tài sản.
-				</Typography>
+				</Text>
 				<div className="assets__header--action">
 					<Tooltip placement="bottom" title="Exit">
 						<span onClick={ExitPage} className="action--button">

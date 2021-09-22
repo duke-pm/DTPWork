@@ -152,14 +152,7 @@ export default function OverviewPage() {
 						<Grid item lg={6} md={6} sm={12} xs={12}>
 							{/* <div className="overview--content"> */}
 							<Tabs defaultActiveKey="0">
-								<TabPane
-									tab={
-										<Text type="title" color="primary">
-											Overview
-										</Text>
-									}
-									key="0"
-								>
+								<TabPane tab={<Text type="subTitle">Overview</Text>} key="0">
 									<Text type="subTitle" color="primary" borderBottom>
 										BASIC INFORMATIONS
 									</Text>
@@ -484,24 +477,10 @@ export default function OverviewPage() {
 										</>
 									)}
 								</TabPane>
-								<TabPane
-									tab={
-										<Text type="title" color="primary">
-											Activity
-										</Text>
-									}
-									key="1"
-								>
+								<TabPane tab={<Text type="subTitle">Activity</Text>} key="1">
 									<TabOverview />
 								</TabPane>
-								<TabPane
-									tab={
-										<Text type="title" color="primary">
-											Watchers
-										</Text>
-									}
-									key="2"
-								>
+								<TabPane tab={<Text type="subTitle">Watchers</Text>} key="2">
 									<Watchers />
 								</TabPane>
 							</Tabs>

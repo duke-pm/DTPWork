@@ -1,11 +1,12 @@
 /* eslint-disable no-shadow */
-import { Button, Typography } from '@material-ui/core';
-import React, { useEffect, useContext, useState } from 'react';
+import { Button } from '@material-ui/core';
+import React, { useContext, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import Search from 'antd/lib/input/Search';
 import { Tabs } from 'antd';
 import { useHistory, useLocation } from 'react-router';
 import queryString from 'query-string';
+import Text from 'app/components/Text';
 import PossessionAll from './PossessionAll';
 import PossessionUnused from './PossessionUnused';
 import PossessionUsed from './PossessionUsed';
@@ -13,10 +14,7 @@ import PossessionRepair from './PossessionRepair';
 import PossessionCorrupt from './PossessionCorrupt';
 import PossessionPay from './PossessionPay';
 import { PossessionContext } from './PossessionContext';
-import FormControlCycle from './FormControl/FormControlCycle';
 import * as actions from './_redux/possesionActions';
-import FormAssetLiquidation from './FormControl/FormAssetLiquidation';
-import FormCustomService from './FormControl/FormCustomRepair';
 
 const { TabPane } = Tabs;
 
@@ -129,9 +127,9 @@ function PossesionPage(props) {
 		<>
 			<div className="container assets">
 				<div className="assets__header px-16 shadow-lg">
-					<Typography color="primary" variant="h6">
+					<Text color="primary" type="title">
 						Tài sản
-					</Typography>
+					</Text>
 					<div className="assets__header--action">
 						<Search
 							onKeyPress={event => {
@@ -152,7 +150,9 @@ function PossesionPage(props) {
 								className="button__create"
 								color="primary"
 							>
-								<Typography variant="button"> Thêm mới </Typography>
+								<Text type="button" color="white">
+									Thêm mới
+								</Text>
 							</Button>
 						) : (
 							''
@@ -162,20 +162,16 @@ function PossesionPage(props) {
 				<div className="assets__Tab px-16">
 					<Tabs onChange={handleChange} defaultActiveKey={type?.loai || '0'}>
 						<TabPane
-							tab={
-								<Typography variant="body1">
-									Tất cả ({(total_Record && total_Record.countAll) || 0})
-								</Typography>
-							}
+							tab={<Text type="subTitle">Tất cả ({(total_Record && total_Record.countAll) || 0})</Text>}
 							key="tat-ca"
 						>
 							<PossessionAll open={open} />
 						</TabPane>
 						<TabPane
 							tab={
-								<Typography variant="body1">
-									Chưa sử dụng ({(total_Record && total_Record.countNoUseYet) || 0}){' '}
-								</Typography>
+								<Text type="subTitle">
+									Chưa sử dụng ({(total_Record && total_Record.countNoUseYet) || 0})
+								</Text>
 							}
 							key="chua-su-dung"
 						>
@@ -183,9 +179,9 @@ function PossesionPage(props) {
 						</TabPane>
 						<TabPane
 							tab={
-								<Typography variant="body1">
-									Đang sử dụng ({(total_Record && total_Record.countUsing) || 0}){' '}
-								</Typography>
+								<Text type="subTitle">
+									Đang sử dụng ({(total_Record && total_Record.countUsing) || 0})
+								</Text>
 							}
 							key="dang-su-dung"
 						>
@@ -193,9 +189,9 @@ function PossesionPage(props) {
 						</TabPane>
 						<TabPane
 							tab={
-								<Typography variant="body1">
+								<Text type="subTitle">
 									Sửa chữa - bảo hành ({(total_Record && total_Record.countWarrantyRepair) || 0})
-								</Typography>
+								</Text>
 							}
 							key="sua-chua-bao-hanh"
 						>
@@ -203,10 +199,10 @@ function PossesionPage(props) {
 						</TabPane>
 						<TabPane
 							tab={
-								<Typography variant="body1">
-									Hư hỏng - mất ({(total_Record && total_Record.countDamaged) || 0} -{' '}
-									{(total_Record && total_Record.countLost) || 0} ){' '}
-								</Typography>
+								<Text type="subTitle">
+									{`Hư hỏng - mất (${(total_Record && total_Record.countDamaged) || 0} -
+									${(total_Record && total_Record.countLost) || 0})`}
+								</Text>
 							}
 							key="hu-hong-mat"
 						>
@@ -214,9 +210,9 @@ function PossesionPage(props) {
 						</TabPane>
 						<TabPane
 							tab={
-								<Typography variant="body1">
+								<Text type="subTitle">
 									Thanh lý ({(total_Record && total_Record.countLiquidation) || 0})
-								</Typography>
+								</Text>
 							}
 							key="thanh-ly"
 						>

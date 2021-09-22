@@ -41,60 +41,60 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 						<Grid container item spacing={2}>
 							<Grid item xs={12} md={12} lg={12}>
 								<Text type="subTitle" color="primary" borderBottom>
-									THÔNG TIN TÀI SẢN.
+									THÔNG TIN TÀI SẢN
 								</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={4}>
-								<Text type="body">Mã tài sản:</Text>
+								<Text>Mã tài sản:</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={8}>
-								<Text type="body">{entitiesEdit?.assetCode ? entitiesEdit?.assetCode : '-'}</Text>
+								<Text>{entitiesEdit?.assetCode ? entitiesEdit?.assetCode : '-'}</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={4}>
-								<Text type="body">Tên tài sản:</Text>
+								<Text>Tên tài sản:</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={8}>
-								<Text type="body">{entitiesEdit?.assetName ? entitiesEdit.assetName : '-'}</Text>
+								<Text>{entitiesEdit?.assetName ? entitiesEdit.assetName : '-'}</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={4}>
-								<Text type="body">Nhóm tài sản:</Text>
+								<Text>Nhóm tài sản:</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={8}>
-								<Text type="body">{entitiesEdit?.groupName ? entitiesEdit.groupName : '-'}</Text>
+								<Text>{entitiesEdit?.groupName ? entitiesEdit.groupName : '-'}</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={4}>
-								<Text type="body">Mô tả:</Text>
+								<Text>Mô tả:</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={8}>
-								<Text type="body">{entitiesEdit?.descr ? entitiesEdit.descr : '-'}</Text>
+								<Text>{entitiesEdit?.descr ? entitiesEdit.descr : '-'}</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={4}>
-								<Text type="body">Ngày mua:</Text>
+								<Text>Ngày mua:</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={8}>
-								<Text type="body">
+								<Text>
 									{entitiesEdit?.purchaseDate
 										? moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY')
 										: '-'}
 								</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={4}>
-								<Text type="body">Nguyên giá:</Text>
+								<Text>Nguyên giá:</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={8}>
-								<Text type="body">{currencyFormat(entitiesEdit?.originalPrice) || ''}</Text>
+								<Text>{currencyFormat(entitiesEdit?.originalPrice) || '-'}</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={4}>
-								<Text type="body">Tình trạng:</Text>
+								<Text>Tình trạng:</Text>
 							</Grid>
 							<Grid item xs={6} md={6} lg={8}>
-								<Text type="body">{entitiesEdit?.statusName ? entitiesEdit.statusName : '-'}</Text>
+								<Text>{entitiesEdit?.statusName ? entitiesEdit.statusName : '-'}</Text>
 							</Grid>
 						</Grid>
 						<div className="mt-16">
 							<div>
 								<Text type="subTitle" color="primary" borderBottom>
-									THÔNG TIN SỬA CHỮA BẢO HÀNH.
+									THÔNG TIN SỬA CHỮA BẢO HÀNH
 								</Text>
 							</div>
 							<div className="grid lg:grid-cols-2 md:grid-cols-2 xs:grid-cols-1 sm:grid-cols-2 gap-8 ">
@@ -131,7 +131,9 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 								<Spin />
 							) : (
 								<Button type="submit" className="mr-8" variant="contained" color="primary">
-									Lưu
+									<Text type="button" color="white">
+										Lưu
+									</Text>
 								</Button>
 							)}
 							<Button
@@ -141,7 +143,7 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 								variant="contained"
 								color="secondary"
 							>
-								Hủy
+								<Text type="button">Hủy</Text>
 							</Button>
 						</div>
 					</Form>

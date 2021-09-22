@@ -1,11 +1,12 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect } from 'react';
-import { Typography, Icon } from '@material-ui/core';
+import { Icon } from '@material-ui/core';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { notificationConfig } from '@fuse/core/DtpConfig';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import { Tooltip } from 'antd';
+import Text from 'app/components/Text';
 import { useHistory } from 'react-router';
 import FormCustomCycleEdit from './FormCustomCycleEdit';
 import * as actions from '../../_redux/possesionActions';
@@ -39,9 +40,9 @@ export default function FormControlCycle() {
 	return (
 		<div className="container assets">
 			<div className="assets__header px-16 shadow-lg">
-				<Typography color="primary" variant="h6">
+				<Text color="primary" type="title">
 					Đưa vào sử dụng lại.
-				</Typography>
+				</Text>
 				<div className="assets__header--action">
 					<Tooltip placement="bottom" title="Exit">
 						<span onClick={ExitPage} className="action--button">

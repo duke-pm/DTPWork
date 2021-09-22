@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Typography } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
 import { Spin } from 'antd';
 import CheckboxAntd from '@fuse/CustomForm/CheckboxAntd';
@@ -100,31 +100,32 @@ function FormCustomEdit({
 				{({ handleSubmit, isSubmitting }) => (
 					<Form>
 						<div>
-							<div>
-								<Text type="subTitle" color="primary" borderBottom>
-									THÔNG TIN TÀI SẢN
-								</Text>{' '}
-							</div>
-							{!initialValue.assetID && (
-								<div className="grid grid-cols-1 sm:grid-cols-3  gap-8 ">
-									<Field
-										label="Số lượng"
-										name="qty"
-										type="number"
-										placeholder="Vui lòng nhập số lượng tài sản cần tạo"
-										hasFeedback
-										component={AntInputCustom}
-									/>
-								</div>
-							)}
-							<div className="grid grid-cols-1 gap-8 ">
-								<Field
-									label="Tên tài sản"
-									name="assetName"
-									component={AntInputCustom}
-									hasFeedback
-									placeholder="Vui lòng điền tên tài sản"
-								/>
+							<Text type="subTitle" color="primary" borderBottom>
+								THÔNG TIN TÀI SẢN
+							</Text>
+							<div className="grid grid-cols-1 gap-8">
+								<Grid container spacing={2}>
+									<Grid item xs={9} sm={9} md={9} lg={9}>
+										<Field
+											label="Tên tài sản"
+											name="assetName"
+											component={AntInputCustom}
+											hasFeedback
+											placeholder="Vui lòng điền tên tài sản"
+										/>
+									</Grid>
+									<Grid item xs={3} sm={3} md={3} lg={3}>
+										{!initialValue.assetID && (
+											<Field
+												label="Số lượng"
+												name="qty"
+												type="number"
+												placeholder="Vui lòng nhập số lượng tài sản cần tạo"
+												component={AntInputCustom}
+											/>
+										)}
+									</Grid>
+								</Grid>
 								<Field
 									label="Nhà cung cấp"
 									name="suppiler"
@@ -148,16 +149,15 @@ function FormCustomEdit({
 									label="Ngày mua"
 									defaultValue={initialValue.purchaseDate}
 									name="purchaseDate"
-									format="DD-MM-YYYY"
+									format="DD/MM/YYYY"
 									placeholder="Vui lòng chọn ngày mua"
 									component={AntDateCustom}
-									hasFeedback
 								/>
 								<Field
 									label="Thời gian hiệu lực"
 									defaultValue={initialValue.effectiveDate}
 									name="effectiveDate"
-									format="DD-MM-YYYY"
+									format="DD/MM/YYYY"
 									className="mx-4"
 									component={AntDateCustom}
 								/>
@@ -207,12 +207,9 @@ function FormCustomEdit({
 						</div>
 						{!initialValue.assetID ? (
 							<div>
-								<div>
-									<Text type="subTitle" color="primary" borderBottom>
-										{' '}
-										QUY TẮC ĐÁNH MÃ TÀI SẢN
-									</Text>
-								</div>
+								<Text type="subTitle" color="primary" borderBottom>
+									QUY TẮC ĐÁNH MÃ TÀI SẢN
+								</Text>
 								<div className="grid xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-8">
 									<Field
 										label="Công ty"
@@ -273,14 +270,13 @@ function FormCustomEdit({
 								<Spin size="middle" />
 							) : (
 								<Button variant="contained" type="submit" color="primary" className="mr-8">
-									<Typography variant="button">
-										{' '}
-										{initialValue.assetID ? 'Cập nhật' : 'Thêm mới'}{' '}
-									</Typography>
+									<Text type="button" color="white">
+										{initialValue.assetID ? 'Cập nhật' : 'Thêm mới'}
+									</Text>
 								</Button>
 							)}
 							<Button type="button" onClick={handleClose} variant="contained" color="secondary">
-								<Typography variant="button">Huỷ</Typography>
+								<Text type="button">Huỷ</Text>
 							</Button>
 						</div>
 					</Form>

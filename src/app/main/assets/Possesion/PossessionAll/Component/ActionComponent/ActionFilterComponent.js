@@ -7,6 +7,7 @@ import FuseAnimate from '@fuse/core/FuseAnimate';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import { useDispatch } from 'react-redux';
+import Text from 'app/components/Text';
 import { AddCircleOutline } from '@material-ui/icons';
 import * as actions from '../../../_redux/possesionActions';
 import { PossessionContext } from '../../../PossessionContext';
@@ -51,7 +52,9 @@ export default function ActionComponent({ value, handleOpenForm }) {
 					color="primary"
 					startIcon={<AddCircleOutline />}
 				>
-					Thêm mới
+					<Text type="button" color="white">
+						Thêm mới
+					</Text>
 				</Button>
 				<Paper className="flex justify-between">
 					<InputBase

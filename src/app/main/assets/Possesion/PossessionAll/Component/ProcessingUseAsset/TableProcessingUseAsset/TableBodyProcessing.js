@@ -2,6 +2,7 @@ import { Typography } from '@material-ui/core';
 import React from 'react';
 import * as moment from 'moment';
 import { Table } from 'antd';
+import Text from 'app/components/Text';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import { chipColor } from './TableConfigProcessing';
@@ -16,40 +17,40 @@ export default function TableBodyProcessing({ history }) {
 			key: 'Date',
 			sorter: true,
 			// defaultSortOrder: 'ascend',
-			render: (_, item) => <Typography variant="body1">{moment(item.transDate).format('DD-MM-YYYY')}</Typography>
+			render: (_, item) => <Text>{moment(item.transDate).format('DD/MM/YYYY')}</Text>
 		},
 		{
 			title: 'Mã NV',
 			dataIndex: 'empCode',
 			key: 'empCode',
 			sorter: true,
-			render: (_, item) => <Typography variant="body1">{item.empCode}</Typography>
+			render: (_, item) => <Text>{item.empCode}</Text>
 		},
 		{
 			title: 'Tên NV',
 			dataIndex: 'empName',
 			key: 'empName',
 			sorter: true,
-			render: (_, item) => <Typography variant="body1">{item.empName}</Typography>
+			render: (_, item) => <Text>{item.empName}</Text>
 		},
 		{
 			title: 'Vị trí công việc',
 			dataIndex: 'obTitle',
 			key: 'obTitle',
 			sorter: true,
-			render: (_, item) => <Typography variant="body1">{item.jobTitle}</Typography>
+			render: (_, item) => <Text>{item.jobTitle}</Text>
 		},
 		{
 			title: 'Bộ phận',
 			dataIndex: 'deptName',
 			key: 'deptName',
-			render: (_, item) => <Typography variant="body1">{item.deptName}</Typography>
+			render: (_, item) => <Text>{item.deptName}</Text>
 		},
 		{
 			title: 'Khu vực',
 			dataIndex: 'Region',
 			key: 'Region',
-			render: (_, item) => <Typography variant="body1">{item.regionName}</Typography>
+			render: (_, item) => <Text>{item.regionName}</Text>
 		},
 		{
 			title: 'Trạng thái',

@@ -3,6 +3,7 @@ import React from 'react';
 import * as moment from 'moment';
 import { Popover } from 'antd';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Text from 'app/components/Text';
 import ActionHandleFunc from './ActionHandleFunc';
 import { chipColor, chipText } from '../PossesionRepairConfig';
 
@@ -39,22 +40,41 @@ export default function TableBodyCorrupt({
 								</Popover>
 							)}
 						</TableCell>
-						<TableCell align="left"> {items.assetCode} </TableCell>
-						<TableCell align="left">{items.assetName} </TableCell>
-						<TableCell align="left">{items.groupName}</TableCell>
-						<TableCell align="left">{items.groupDetailName}</TableCell>
 						<TableCell align="left">
-							<div className={`inline text-12 p-4 rounded-full truncate ${chipColor[items.statusID]}`}>
+							<Text>{items.assetCode}</Text>
+						</TableCell>
+						<TableCell align="left">
+							<Text>{items.assetName}</Text>
+						</TableCell>
+						<TableCell align="left">
+							<Text>{items.groupName}</Text>
+						</TableCell>
+						<TableCell align="left">
+							<Text>{items.groupDetailName}</Text>
+						</TableCell>
+						<TableCell align="left">
+							<Text
+								className={`inline-flex rounded-32 px-10 py-4 ${chipColor[items.statusID]}`}
+								color="white"
+							>
 								{chipText[items.statusID]}
-							</div>
+							</Text>
 						</TableCell>
 						<TableCell align="left">
-							{items.purchaseDate ? moment(items.purchaseDate).format('DD-MM-YYYY') : ''}{' '}
+							<Text>{items.purchaseDate ? moment(items.purchaseDate).format('DD/MM/YYYY') : '-'}</Text>
 						</TableCell>
-						<TableCell align="left">{items.deptNameManager}</TableCell>
-						<TableCell align="left">{items?.empName ? items.empName : null}</TableCell>
-						<TableCell align="left">{items.regionName}</TableCell>
-						<TableCell align="left"> {items.remarks} </TableCell>
+						<TableCell align="left">
+							<Text>{items.deptNameManager}</Text>
+						</TableCell>
+						<TableCell align="left">
+							<Text>{items?.empName ? items.empName : null}</Text>
+						</TableCell>
+						<TableCell align="left">
+							<Text>{items.regionName}</Text>
+						</TableCell>
+						<TableCell align="left">
+							<Text>{items.remarks}</Text>
+						</TableCell>
 					</TableRow>
 				))}
 		</TableBody>

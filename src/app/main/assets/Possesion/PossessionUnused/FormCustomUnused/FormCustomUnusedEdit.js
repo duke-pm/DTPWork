@@ -1,8 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
-import { Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
-import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
 import * as moment from 'moment';
 import { Spin } from 'antd';
 import AntSelectCustom from '@fuse/FormBookingCustom/AntSelectCustom';
@@ -111,7 +110,7 @@ export default function FormCustomUnusedEdit({
 						<div className="mb-20">
 							<div>
 								<Text type="subTitle" color="primary" borderBottom>
-									THÔNG TIN TÀI SẢN.
+									THÔNG TIN TÀI SẢN
 								</Text>
 							</div>
 							<ContentForm entitiesEdit={entitiesEdit} />
@@ -119,7 +118,7 @@ export default function FormCustomUnusedEdit({
 						<div>
 							<div>
 								<Text type="subTitle" color="primary" borderBottom>
-									THÔNG TIN CẤP PHÁT TÀI SẢN.
+									THÔNG TIN CẤP PHÁT TÀI SẢN
 								</Text>
 							</div>
 							<div className="grid lg:grid-cols-2  md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1 gap-8 ">
@@ -167,8 +166,7 @@ export default function FormCustomUnusedEdit({
 									label="Ngày cấp"
 									defaultValue={intialState.date}
 									name="date"
-									hasFeedback
-									format="DD-MM-YYYY"
+									format="DD/MM/YYYY"
 									placeholder="Vui lòng chọn ngày mua"
 									component={AntDateCustom}
 								/>
@@ -195,11 +193,13 @@ export default function FormCustomUnusedEdit({
 								<Spin size="middle" />
 							) : (
 								<Button type="submit" className="mr-8" variant="contained" color="primary">
-									<Typography variant="button">Lưu</Typography>
+									<Text type="button" color="white">
+										Lưu
+									</Text>
 								</Button>
 							)}
 							<Button onClick={handleClose} type="button" variant="contained" color="secondary">
-								<Typography variant="button">Hủy</Typography>
+								<Text type="button">Hủy</Text>
 							</Button>
 						</div>
 					</Form>
