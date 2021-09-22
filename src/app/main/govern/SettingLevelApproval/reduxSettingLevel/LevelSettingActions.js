@@ -15,7 +15,7 @@ export const fetchListLevels = (limit, page) => dispatch => {
 			const { data } = res;
 			if (!data.isError) {
 				const dataRes = data.data;
-				const total_count = data.totalPage;
+				const total_count = data.totalRow;
 				dispatch(actions.fetchListLevels({ dataRes, total_count }));
 			} else {
 				notificationConfig('warning', 'Fail', data.errorMessage);

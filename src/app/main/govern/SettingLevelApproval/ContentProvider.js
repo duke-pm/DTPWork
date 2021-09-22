@@ -1,33 +1,26 @@
 import { Button } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
 // import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 // import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import Search from 'antd/lib/input/Search';
 import { useHistory } from 'react-router';
 import Text from 'app/components/Text';
+import { useDispatch } from 'react-redux';
 import LevelApprovalComponent from './LevelApprovalComponent';
+import { fetchListLevels } from './reduxSettingLevel/LevelSettingActions';
 // import { LevelApprovalContext } from './LevelApprovalContext';
 
 export default function ContentProvider() {
 	const history = useHistory();
-	// const { currentState, project } = useSelector(
-	// 	state => ({
-	// 		currentState: state.possesion.entitiesInformation,
-	// 		projectAll: state.project.entitiesAll,
-	// 		project: state.project.entitiesDetail,
-	// 		listLoading: state.project.listLoading
-	// 	}),
-	// 	shallowEqual
-	// );
-	// const levelApprovalContext = useContext(LevelApprovalContext);
-	// const { form, setForm } = levelApprovalContext;
-	// const classes = DtpCustomStyles();
-	// const dispatch = useDispatch();
+	const dispatch = useDispatch();
 	const onHandleChange = e => {};
 	const handleSearch = () => {};
 	const handleChangeRoute = () => {
 		history.push('/quan-tri/cap-quyen/tao-moi/null');
 	};
+	useEffect(() => {
+		dispatch(fetchListLevels());
+	}, [dispatch]);
 	return (
 		<div className="container govern">
 			<div className="govern__header px-16 shadow-lg">

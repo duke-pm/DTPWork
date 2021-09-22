@@ -17,7 +17,7 @@ import Text from 'app/components/Text';
 function TableLevelApproval(props) {
 	// const dispatch = useDispatch();
 	// const theme = useTheme();
-	// const { entitiesDetail, actionLoading, params } = props;
+	const { entities, listLoading } = props;
 	// const levelApprovalContext = useContext(LevelApprovalContext);
 	// const {} = lineContext;
 	const handleEditForm = item => {};
@@ -56,9 +56,9 @@ function TableLevelApproval(props) {
 		{
 			title: 'Mã quyền',
 			align: 'center',
-			dataIndex: 'roleCode',
-			key: 'roleCode',
-			render: (_, item) => <Text>{item.roleCodde}</Text>
+			dataIndex: 'roleID',
+			key: 'roleID',
+			render: (_, item) => <Text>{item.roleID}</Text>
 		},
 		{
 			title: 'Tên quyền',
@@ -103,7 +103,16 @@ function TableLevelApproval(props) {
 			render: (_, item) => <Text>{item.level5}</Text>
 		}
 	];
-	return <Table rowKey="taskID" className="virtual-table" pagination={false} columns={columns} dataSource={[]} />;
+	return (
+		<Table
+			rowKey="absID"
+			className="virtual-table"
+			pagination={false}
+			columns={columns}
+			dataSource={entities}
+			loading={listLoading}
+		/>
+	);
 }
 
 export default withRouter(TableLevelApproval);

@@ -1,30 +1,34 @@
 import { Button } from '@material-ui/core';
-import React from 'react';
-// import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useContext } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import Search from 'antd/lib/input/Search';
 import { useHistory } from 'react-router';
 import Text from 'app/components/Text';
 import ProjectComponent from './LineComponent';
-// import { SettingLineContext } from './SettingLineContext';
+import { fetchListLines, fetchListLinesFilter, setTaskEditLine } from './reduxSettingLine/LineSettingActions';
+import { SettingLineContext } from './SettingLineContext';
 
 export default function ContentProvider() {
 	const history = useHistory();
-	// const { currentState, project } = useSelector(
-	// 	state => ({
-	// 		currentState: state.possesion.entitiesInformation,
-	// 		projectAll: state.project.entitiesAll,
-	// 		project: state.project.entitiesDetail,
-	// 		listLoading: state.project.listLoading
-	// 	}),
-	// 	shallowEqual
-	// );
-	// const settingLineContext = useContext(SettingLineContext);
-	// const { form, setForm } = settingLineContext;
-	// const classes = DtpCustomStyles();
-	// const dispatch = useDispatch();
-	const onHandleChange = e => {};
-	const handleSearch = () => {};
+	const dispatch = useDispatch();
+	const lineContext = useContext(SettingLineContext);
+	const { setPage, rowPage, page, search, setSearch } = lineContext;
+	useEffect(() => {
+		dispatch(fetchListLines());
+	}, [dispatch]);
+	const onHandleChange = e => {
+		setPage(0);
+		setSearch(e.target.value);
+		if (e.target.value.length <= 0) {
+			dispatch(fetchListLinesFilter(rowPage, page, e.target.value));
+		}
+	};
+	const handleSearch = () => {
+		setPage(0);
+		dispatch(fetchListLinesFilter(rowPage, page, search));
+	};
 	const handleChangeRoute = () => {
+		dispatch(setTaskEditLine(null));
 		history.push('/quan-tri/quyen/tao-moi/null');
 	};
 	return (
@@ -36,11 +40,6 @@ export default function ContentProvider() {
 				<div className="govern__header--action">
 					<Search
 						onChange={onHandleChange}
-						onKeyPress={event => {
-							if (event.key === 'Enter') {
-								handleSearch();
-							}
-						}}
 						className="input__search"
 						placeholder="Search"
 						onSearch={handleSearch}

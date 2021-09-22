@@ -47,6 +47,10 @@ export const notificationContent = {
 			menu: {
 				updatedMenuSuccess: 'Cập nhật menu thành công.',
 				createdMenuSuccess: 'Thêm menu mới thành công.'
+			},
+			lines: {
+				updatedMenuSuccess: 'Cập nhật quyền thành công.',
+				createdMenuSuccess: 'Thêm quyền mới thành công.'
 			}
 		},
 		project: {

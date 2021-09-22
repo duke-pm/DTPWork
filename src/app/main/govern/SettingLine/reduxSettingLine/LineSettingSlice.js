@@ -55,9 +55,9 @@ export const lineSettingSlice = createSlice({
 			});
 		},
 		fetchLine: (state, action) => {
-			const { item } = action.payload;
+			const { value } = action.payload;
 			state.actionLoading = false;
-			state.entitiesEdit = item;
+			state.entitiesEdit = value;
 		},
 		deleteLine: (state, action) => {
 			const { dataRes } = action.payload;
