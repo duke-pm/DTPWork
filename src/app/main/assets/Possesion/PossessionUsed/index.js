@@ -15,7 +15,7 @@ export default function PossessionUsed(props) {
 	const possessionContext = useContext(PossessionContext);
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
 	const { listloading, entities, total_count, actionLoading } = currentState;
-	const { rowPage, setRowPage, page, setPage, search, value, sort, setSort, setFormService, typeSetFormService } =
+	const { rowPage, setRowPage, page, setPage, search, sort, setSort, setFormService, typeSetFormService } =
 		possessionContext;
 	useEffect(() => {
 		dispatch(actions.fetchPossesionAll(2));

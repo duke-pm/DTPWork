@@ -31,10 +31,10 @@ export default function AntDateCustom({
 	const handleDateChange = (date, dateString) => {
 		form.setFieldValue(field.name, date);
 	};
-	function disabledDate(current) {
-		// Can not select days before today and today
-		return current && current < moment().subtract(1, 'days');
-	}
+	// function disabledDate(current) {
+	// 	// Can not select days before today and today
+	// 	return current && current < moment().subtract(1, 'days');
+	// }
 	const dateFormat = 'DD/MM/YYYY';
 	return (
 		<>

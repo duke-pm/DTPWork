@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Icon, Typography } from '@material-ui/core';
 import { Tooltip } from 'antd';
 import { useHistory, useLocation } from 'react-router';

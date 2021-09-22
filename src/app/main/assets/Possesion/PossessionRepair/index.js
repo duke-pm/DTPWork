@@ -12,10 +12,10 @@ import TableAssetRepair from './Component/TableAssetRepair';
 export default function PossessionRepair(props) {
 	const dispatch = useDispatch();
 	const possessionContext = useContext(PossessionContext);
-	const { rowPage, setRowPage, page, setPage, search, setTypeLiquiAsset, sort, setSort } = possessionContext;
+	const { rowPage, setRowPage, page, setPage, search, sort, setSort } = possessionContext;
 	const history = useHistory();
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
-	const { listloading, entities, lastErrors, total_count } = currentState;
+	const { listloading, entities, total_count } = currentState;
 	const handleOpenFormLiquiAsset = items => {
 		history.push('/tai-san/quan-ly-tai-san/thanh-ly?type=repair');
 		dispatch(actions.setTaskEditPossesionAll(items));

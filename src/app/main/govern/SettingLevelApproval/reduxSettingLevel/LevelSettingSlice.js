@@ -55,15 +55,15 @@ export const levelSettingSlice = createSlice({
 			});
 		},
 		fetchLevel: (state, action) => {
-			const { item } = action.payload;
+			const { value } = action.payload;
 			state.actionLoading = false;
-			state.entitiesEdit = item;
+			state.entitiesEdit = value;
 		},
 		deleteLevel: (state, action) => {
-			const { dataRes } = action.payload;
+			const { dataReq } = action.payload;
 			state.actionLoading = false;
 			const { entities } = state;
-			const newEntities = entities.filter(item => item.lineId !== dataRes.lineId);
+			const newEntities = entities.filter(item => item.absID !== dataReq.AbsID);
 			state.entities = newEntities;
 		}
 	}

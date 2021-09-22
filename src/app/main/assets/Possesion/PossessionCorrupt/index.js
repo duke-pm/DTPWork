@@ -1,6 +1,5 @@
 /* eslint-disable no-shadow */
 import React, { useContext, useEffect } from 'react';
-import { Paper, Table, TableContainer } from '@material-ui/core';
 import Panigation from '@fuse/core/FusePanigate';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';

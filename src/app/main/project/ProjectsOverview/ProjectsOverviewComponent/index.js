@@ -1,4 +1,3 @@
-import FuseAnimate from '@fuse/core/FuseAnimate';
 import React, { useContext } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';

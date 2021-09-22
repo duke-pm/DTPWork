@@ -19,8 +19,8 @@ export default function ProcessingUseAsset() {
 	);
 	const ExitPage = () => history.goBack();
 	useEffect(() => {
-		if (!entitiesEdit) ExitPage();
-	}, [entitiesEdit]);
+		if (!entitiesEdit) history.goBack();
+	}, [entitiesEdit, history]);
 	return (
 		<div className="container assets">
 			<div className="assets__header px-16 shadow-lg">

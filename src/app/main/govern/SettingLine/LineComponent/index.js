@@ -1,5 +1,4 @@
 /* eslint-disable no-shadow */
-import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import React, { useContext } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import Panigation from '@fuse/core/FusePanigate';
@@ -7,7 +6,7 @@ import { Spin } from 'antd';
 import { useHistory } from 'react-router';
 import TableProject from './TableLine';
 import { SettingLineContext } from '../SettingLineContext';
-import { fetchListLinesFilter, setTaskEditLine } from '../reduxSettingLine/LineSettingActions';
+import { fetchListLinesFilter, setTaskEditLine, deletedLine } from '../reduxSettingLine/LineSettingActions';
 
 export default function LineComponent() {
 	const dispatch = useDispatch();
@@ -34,10 +33,16 @@ export default function LineComponent() {
 		dispatch(setTaskEditLine(item));
 		history.push(`/quan-tri/quyen/cap-nhat/${item.roleID}`);
 	};
+	const deleteItem = item => dispatch(deletedLine(item));
 	return (
 		<div className="w-full flex flex-col">
 			<div className="flex flex-col">
-				<TableProject setEditLine={setEditLine} listLoading={listLoading} entities={entities} />
+				<TableProject
+					deleteItem={deleteItem}
+					setEditLine={setEditLine}
+					listLoading={listLoading}
+					entities={entities}
+				/>
 				{entities && entities.length !== 0 && (
 					<div className="flex flex-row items-center justify-end">
 						{actionLoading && <Spin />}

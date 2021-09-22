@@ -3,7 +3,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
-import { Typography } from '@material-ui/core';
 import { Formik, Field, Form } from 'formik';
 import { Table } from 'antd';
 import { currencyFormat } from '@fuse/core/FuseFormatCurrency';

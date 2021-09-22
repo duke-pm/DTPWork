@@ -3,7 +3,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
-import { Divider, FormGroup, Link, Typography } from '@material-ui/core';
+import { Divider, Link, Typography } from '@material-ui/core';
 import { Form, Select } from 'antd';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Text from 'app/components/Text';

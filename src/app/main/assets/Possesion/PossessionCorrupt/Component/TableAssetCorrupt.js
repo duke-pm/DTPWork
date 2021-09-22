@@ -1,14 +1,13 @@
 /* eslint-disable no-shadow */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Icon, Typography } from '@material-ui/core';
-import { Table, Dropdown, Radio, Spin, Popover } from 'antd';
-import React, { useContext } from 'react';
+import { Typography } from '@material-ui/core';
+import { Table, Spin, Popover } from 'antd';
+import React from 'react';
 import AppsIcon from '@material-ui/icons/Apps';
 import { sortDirestion } from '@fuse/core/DtpConfig';
 import moment from 'moment';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { useDispatch } from 'react-redux';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import ActionHandleFunc from './ActionHandleFunc';
@@ -21,7 +20,6 @@ export default function TableAssetCorrupt({
 	handleOpenFormLiquiAsset,
 	handleOpenFormService
 }) {
-	const dispatch = useDispatch();
 	const theme = useTheme();
 	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
 	const onChange = (pagination, filters, sorter, extra) => {

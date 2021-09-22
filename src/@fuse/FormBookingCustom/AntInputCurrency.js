@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import NumberFormat from 'react-number-format';
-import { FormGroup, Typography } from '@material-ui/core';
 import { Input, Form } from 'antd';
 import Text from 'app/components/Text';
 

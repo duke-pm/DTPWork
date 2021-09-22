@@ -23,8 +23,8 @@ export default function FormCustomUsed() {
 	);
 	const ExitPage = () => history.goBack();
 	useEffect(() => {
-		if (!entitiesEdit) ExitPage();
-	}, [entitiesEdit]);
+		if (!entitiesEdit) history.goBack();
+	}, [entitiesEdit, history]);
 	const saveWithDraw = values => {
 		dispatch(action.withdrawPossesion(values, entitiesEdit)).then(data => {
 			if (data && !data.isError) {

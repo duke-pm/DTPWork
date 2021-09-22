@@ -29,8 +29,8 @@ export default function FormCustomUnused({ handleClose, open }) {
 		shallowEqual
 	);
 	useEffect(() => {
-		if (!entitiesEdit) ExitPage();
-	}, [entitiesEdit]);
+		if (!entitiesEdit) history.goBack();
+	}, [entitiesEdit, history]);
 	const saveAddAsset = values => {
 		dispatch(actions.addPersonalPossesion(values, entitiesEdit.assetID)).then(data => {
 			if (data && !data.isError) {

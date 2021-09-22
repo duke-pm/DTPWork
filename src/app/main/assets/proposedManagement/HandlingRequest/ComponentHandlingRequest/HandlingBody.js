@@ -1,5 +1,4 @@
 /* eslint-disable no-shadow */
-import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
 import { Formik, Form, Field } from 'formik';
 import React, { useState, useEffect } from 'react';
 import { Button, Typography } from '@material-ui/core';
@@ -15,7 +14,6 @@ import AntRadioCustom from '@fuse/FormBookingCustom/AntRadioCustom';
 import AntDescriptionsCustom from '@fuse/FormBookingCustom/AntDescriptionsCustom';
 import AntDateCustom from '@fuse/FormBookingCustom/AntDateCustom';
 import AntFileCustom from '@fuse/FormBookingCustom/AntFileCustom';
-import Text from 'app/components/Text';
 import { validateSchema } from './HandlingRequestConfig';
 import * as actions from '../../_redux/confirmAction';
 import ContentFormReport from './ContentFormReport';

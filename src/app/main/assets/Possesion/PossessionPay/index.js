@@ -1,26 +1,17 @@
 /* eslint-disable no-shadow */
 import React, { useContext, useEffect } from 'react';
-import { Paper, Table, TableContainer } from '@material-ui/core';
-import FuseAnimate from '@fuse/core/FuseAnimate';
 import Panigation from '@fuse/core/FusePanigate';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import FuseLoading from '@fuse/core/FuseLoading';
-import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
-import { Empty } from 'antd';
 import { PossessionContext } from '../PossessionContext';
 import * as actions from '../_redux/possesionActions';
-import TableHeaderPay from './Component/TableHeaderPay';
-import TableBodyPay from './Component/TableBodyPay';
-import ActionComponent from './Component/ActionFliterComponent';
 import TableAssetPay from './Component/TableAssetPay';
 
 export default function PossessionPay(props) {
-	const { value } = props;
 	const dispatch = useDispatch();
 	const possessionContext = useContext(PossessionContext);
 	const { rowPage, setRowPage, page, setPage, search, sort, setSort } = possessionContext;
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
-	const { listloading, entities, lastErrors, total_count } = currentState;
+	const { listloading, entities, total_count } = currentState;
 
 	const handleRowChange = e => {
 		setRowPage(parseInt(e.target.value, 10));

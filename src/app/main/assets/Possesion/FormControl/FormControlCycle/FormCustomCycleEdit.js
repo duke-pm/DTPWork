@@ -1,11 +1,6 @@
 import React from 'react';
-import { DialogContent, DialogActions, Button, Grid, Typography } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
-import DateCustom from '@fuse/CustomForm/Date';
-import FileCustomVersion2 from '@fuse/CustomForm/FileCustomVersion2';
-import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
-import InputCurrency from '@fuse/CustomForm/InputCurrency';
-import { AntInput } from '@fuse/CustomForm/CreateAntField';
 import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import * as Yup from 'yup';
 import * as moment from 'moment';

@@ -1,5 +1,5 @@
 import { Button } from '@material-ui/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 // import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 // import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import Search from 'antd/lib/input/Search';
@@ -7,15 +7,27 @@ import { useHistory } from 'react-router';
 import Text from 'app/components/Text';
 import { useDispatch } from 'react-redux';
 import LevelApprovalComponent from './LevelApprovalComponent';
-import { fetchListLevels } from './reduxSettingLevel/LevelSettingActions';
-// import { LevelApprovalContext } from './LevelApprovalContext';
+import { fetchListLevels, setTaskEditLevel, fetchListLevelsFilter } from './reduxSettingLevel/LevelSettingActions';
+import { LevelApprovalContext } from './LevelApprovalContext';
 
 export default function ContentProvider() {
 	const history = useHistory();
 	const dispatch = useDispatch();
-	const onHandleChange = e => {};
-	const handleSearch = () => {};
+	const levelApprovalContext = useContext(LevelApprovalContext);
+	const { setPage, rowPage, page, search, setSearch } = levelApprovalContext;
+	const onHandleChange = e => {
+		setPage(0);
+		setSearch(e.target.value);
+		if (e.target.value.length <= 0) {
+			dispatch(fetchListLevelsFilter(rowPage, page, e.target.value));
+		}
+	};
+	const handleSearch = () => {
+		setPage(0);
+		dispatch(fetchListLevelsFilter(rowPage, page, search));
+	};
 	const handleChangeRoute = () => {
+		dispatch(setTaskEditLevel(null));
 		history.push('/quan-tri/cap-quyen/tao-moi/null');
 	};
 	useEffect(() => {
@@ -30,11 +42,6 @@ export default function ContentProvider() {
 				<div className="govern__header--action">
 					<Search
 						onChange={e => onHandleChange(e)}
-						onKeyPress={event => {
-							if (event.key === 'Enter') {
-								handleSearch();
-							}
-						}}
 						className="input__search"
 						placeholder="Search"
 						onSearch={handleSearch}

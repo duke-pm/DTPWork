@@ -6,11 +6,11 @@ export const fetchLevels = params => {
 };
 export const levelModify = data => {
 	return request({
-		method: 'POST',
+		method: 'PUT',
 		data,
-		url: `${url}`
+		url: `${url}/Modify`
 	});
 };
 export const deletedLevel = params => {
-	return request.get(`${url}/remove`, { params });
+	return request.get(`${url}/Remove`, { params });
 };

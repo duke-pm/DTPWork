@@ -24,7 +24,6 @@ export default function ConfirmDamaged(props) {
 	const history = useHistory();
 	const ConfirmContextDamage = useContext(ConfirmContext);
 	const {
-		setType,
 		page,
 		rowPage,
 		setRowPage,
@@ -41,7 +40,7 @@ export default function ConfirmDamaged(props) {
 		setStatus
 	} = ConfirmContextDamage;
 	const { currentState } = useSelector(state => ({ currentState: state.confirm }), shallowEqual);
-	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;
+	const { listloading, entities, total_count, actionLoading } = currentState;
 	const dispatch = useDispatch();
 	const handleOpenFormEdit = items => {
 		history.push('/tai-san/danh-sach-de-xuat/bao-hong');

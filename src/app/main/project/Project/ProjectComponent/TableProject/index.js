@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Badge, Dropdown, Table, Popover, Avatar, Menu, Tooltip, Progress, Spin, Checkbox } from 'antd';
+import { Badge, Dropdown, Table, Popover, Avatar, Menu, Tooltip, Progress, Checkbox } from 'antd';
 import React, { useContext, useState, useEffect } from 'react';
 import { CaretDownOutlined, CaretUpOutlined, UserOutlined } from '@ant-design/icons';
 import { MenuItem, ListItemIcon, Icon, ListItemText, Link } from '@material-ui/core';
@@ -12,7 +12,6 @@ import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import * as moment from 'moment';
-import clsx from 'clsx';
 import { useHistory } from 'react-router-dom';
 import Text from 'app/components/Text';
 import * as actions from '../../../_redux/_projectActions';

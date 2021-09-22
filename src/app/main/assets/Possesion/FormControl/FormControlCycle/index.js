@@ -24,7 +24,7 @@ export default function FormControlCycle() {
 	);
 	useEffect(() => {
 		if (!entitiesEdit) history.goBack();
-	}, [entitiesEdit]);
+	}, [entitiesEdit, history]);
 	const handleSubmitCycle = values => {
 		dispatch(actions.assetReuse(values, entitiesEdit)).then(data => {
 			if (data && !data.isError) {

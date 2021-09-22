@@ -2,25 +2,20 @@ import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import React, { useEffect, useState } from 'react';
 import * as moment from 'moment';
 import { useDispatch } from 'react-redux';
-import image from '@fuse/assets/group.png';
-import { TableContainer, Paper, Table, Grid, Typography } from '@material-ui/core';
-import FuseAnimateGroup from '@fuse/core/FuseAnimateGroup';
+import { Grid } from '@material-ui/core';
 import { Spin } from 'antd';
-import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import Text from 'app/components/Text';
 import * as actions from '../../../_redux/possesionActions';
-import TableHeaderProcessing from './TableProcessingUseAsset/TableHeaderProcessing';
 import TableBodyProcessing from './TableProcessingUseAsset/TableBodyProcessing';
 
 export default function InformationProceeUseAsset({ entitiesEdit, actionLoading }) {
 	const dispatch = useDispatch();
-	const classes = DtpCustomStyles();
 	const [history, setHistory] = useState([]);
 	useEffect(() => {
 		dispatch(actions.getAssetHistory(entitiesEdit?.assetID)).then(data => {
 			setHistory(data?.data.listTransHistory);
 		});
-	}, [dispatch, entitiesEdit?.assetID]);
+	}, [dispatch, entitiesEdit]);
 	return (
 		<>
 			<div className="px-16 sm:px-24">

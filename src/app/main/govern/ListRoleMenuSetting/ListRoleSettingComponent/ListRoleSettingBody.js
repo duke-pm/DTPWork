@@ -5,12 +5,11 @@ import image from '@fuse/assets/group.png';
 import __ from 'lodash';
 import { findIndexMultiple, findIndexMultipleAsset } from '@fuse/core/DtpConfig';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
-import Text from 'app/components/Text';
 import { useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Typography } from '@material-ui/core';
 
-export default function ListRoleSettingBody({ entities, newData, setNewData, actionLoading, listLoading }) {
+export default function ListRoleSettingBody({ entities, newData, setNewData, actionLoading }) {
 	const theme = useTheme();
 	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
 	const [selectedRowKeys, setSelectedRowKeys] = useState([]);

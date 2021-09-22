@@ -1,10 +1,4 @@
-// import { validateField, validateFieldEN } from '@fuse/core/DtpConfig';
-// import AntDateCustom from '@fuse/FormBookingCustom/AntDateCustom';
-// import AntdCustomCheckbox from '@fuse/FormBookingCustom/AntdCustomCheckbox';
-import AntDescriptionsCustom from '@fuse/FormBookingCustom/AntDescriptionsCustom';
 import AntInputCustom from '@fuse/FormBookingCustom/AntInputCustom';
-// import AntSelectCustom from '@fuse/FormBookingCustom/AntSelectCustom';
-// import AntSelectMultiCustom from '@fuse/FormBookingCustom/AntSelectMultiCustom';
 import { Button } from '@material-ui/core';
 import Text from 'app/components/Text';
 import { Spin } from 'antd';

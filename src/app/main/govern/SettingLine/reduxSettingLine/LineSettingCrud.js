@@ -12,5 +12,5 @@ export const lineModify = data => {
 	});
 };
 export const deletedLine = params => {
-	return request.get(`${url}/remove`, { params });
+	return request.get(`${url}/Remove`, { params });
 };

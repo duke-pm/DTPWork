@@ -1,25 +1,20 @@
 /* eslint-disable no-shadow */
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Panigation from '@fuse/core/FusePanigate';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import FuseLoading from '@fuse/core/FuseLoading';
 import { Spin } from 'antd';
-import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
 import { useHistory } from 'react-router';
-import PossessionAll from './FormCustomAll';
 import * as actions from '../_redux/possesionActions';
 import { PossessionContext } from '../PossessionContext';
 import TableAssetAll from './Component/TableAssetAll';
-import ProcessingUseAsset from './Component/ProcessingUseAsset';
 
 function PossessionAllPage(props) {
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const possesionContext = useContext(PossessionContext);
 	const { rowPage, setRowPage, page, setPage, search, sort, setSort } = possesionContext;
-	const [openHistory, setOpenHistory] = useState(false);
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
-	const { listloading, entities, lastErrors, total_count, actionLoading } = currentState;
+	const { listloading, entities, total_count, actionLoading } = currentState;
 	useEffect(() => {
 		dispatch(actions.fetchPossesionAll(0));
 	}, [dispatch]);

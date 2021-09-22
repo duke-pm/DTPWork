@@ -117,16 +117,15 @@ export const setTaskEditLine = value => dispatch => {
 export const deletedLine = item => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const dataReq = {
-		CodeId: item.codeId
+		RoleID: item.roleID
 	};
 	return requestFrom
 		.deletedLine(dataReq)
 		.then(res => {
-			// console.log(res);
 			const { data } = res;
 			if (!data.isError) {
-				dispatch(actions.deletedGroupUser({ dataReq }));
-				notificationConfig('success', 'Success', 'Delete success');
+				dispatch(actions.deleteLine({ dataReq }));
+				notificationConfig('success', 'Success', 'Xoá thành công');
 			} else {
 				dispatch(actions.catchErrors({ callType: callTypes.action }));
 				notificationConfig('warning', 'Fail', `${data.errorMessage}`);

@@ -27,7 +27,7 @@ export default function FormCustomService() {
 	);
 	useEffect(() => {
 		if (!entitiesEdit) history.goBack();
-	}, [entitiesEdit]);
+	}, [entitiesEdit, history]);
 	const handleSubmitRepairService = values => {
 		dispatch(actions.repairPossesion(values, entitiesEdit, category.type)).then(data => {
 			if (data && !data.isError) {

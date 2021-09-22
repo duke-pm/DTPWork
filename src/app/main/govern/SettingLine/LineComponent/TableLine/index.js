@@ -1,19 +1,17 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Table, Popover, Tooltip, Checkbox } from 'antd';
+import { Table, Tooltip, Checkbox } from 'antd';
 import React from 'react';
-import { MenuItem, ListItemIcon, Icon, ListItemText } from '@material-ui/core';
+import { Icon } from '@material-ui/core';
 import AppsIcon from '@material-ui/icons/Apps';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Text from 'app/components/Text';
 import { withRouter } from 'react-router';
 
 function TableProject(props) {
-	const { setEditLine, entities, listLoading } = props;
-	const handleEditForm = item => {
-		setEditLine(item);
-	};
+	const { setEditLine, entities, listLoading, deleteItem } = props;
+	const handleEditForm = item => setEditLine(item);
+	const deleteTask = item => deleteItem(item);
 	const columns = [
 		{
 			title: 'Mã quyền',
@@ -42,10 +40,15 @@ function TableProject(props) {
 			key: 'operation',
 			width: '2%',
 			render: (_, item) => (
-				<div>
-					<Tooltip placement="bottom" title="Cập nhật">
+				<div className="flex justify-between">
+					<Tooltip className="mr-8" placement="bottom" title="Cập nhật">
 						<span onClick={() => handleEditForm(item)} className="action--button mx-auto">
 							<Icon fontSize="small">edit</Icon>
+						</span>
+					</Tooltip>
+					<Tooltip placement="bottom" title="Xoá">
+						<span onClick={() => deleteTask(item)} className="action--button mx-auto">
+							<Icon fontSize="small">delete</Icon>
 						</span>
 					</Tooltip>
 				</div>

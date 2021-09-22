@@ -26,21 +26,7 @@ function TableProject(props) {
 	const history = useHistory();
 	const { entities, entitiesEdit, createSortHandler, ArrProjectStatus, owner } = props;
 	const projectContext = useContext(ProjectContext);
-	const {
-		// setFormProject,
-		// setTitle,
-		rowPage,
-		page,
-		status,
-		ownerFilter,
-		dateStart,
-		search,
-		// setChart,
-		sort,
-		setStatus,
-		setOwnerFilter,
-		setSort
-	} = projectContext;
+	const { rowPage, page, status, ownerFilter, dateStart, search, sort, setStatus, setOwnerFilter } = projectContext;
 	const handleOpenFormProject = (item, type) => {
 		dispatch(actions.setTaskEditProject(item));
 		if (type === 'Settings') {

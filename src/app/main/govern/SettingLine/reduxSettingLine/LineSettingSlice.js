@@ -60,10 +60,10 @@ export const lineSettingSlice = createSlice({
 			state.entitiesEdit = value;
 		},
 		deleteLine: (state, action) => {
-			const { dataRes } = action.payload;
+			const { dataReq } = action.payload;
 			state.actionLoading = false;
 			const { entities } = state;
-			const newEntities = entities.filter(item => item.lineId !== dataRes.lineId);
+			const newEntities = entities.filter(item => item.roleID !== dataReq.RoleID);
 			state.entities = newEntities;
 		}
 	}

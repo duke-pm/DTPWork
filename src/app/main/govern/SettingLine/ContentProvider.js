@@ -1,6 +1,6 @@
 import { Button } from '@material-ui/core';
 import React, { useEffect, useContext } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Search from 'antd/lib/input/Search';
 import { useHistory } from 'react-router';
 import Text from 'app/components/Text';

@@ -17,8 +17,6 @@ const { TabPane } = Tabs;
 function PossesionPage(props) {
 	const confirmContext = useContext(ConfirmContext);
 	const {
-		formControl,
-		setFormControl,
 		formAllocation,
 		setFormAllocation,
 		typeReasonReject,
@@ -74,7 +72,6 @@ function PossesionPage(props) {
 				dispatch(fetchDataConfirms(0, 1));
 		}
 	};
-	const handleCloseForm = () => setFormControl(false);
 	const handleCloseFormAllocation = () => setFormAllocation(false);
 	const hanleCancle = () => setReasonReject(false);
 	const handleSearch = () => {

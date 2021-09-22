@@ -26,8 +26,8 @@ export default function FormAssetLiquidation() {
 		shallowEqual
 	);
 	useEffect(() => {
-		if (!entitiesEdit) ExitPage();
-	}, [entitiesEdit]);
+		if (!entitiesEdit) history.goBack();
+	}, [entitiesEdit, history]);
 	const saveWithDraw = values => {
 		dispatch(action.liquidationAsset(values, entitiesEdit, category.type)).then(data => {
 			if (data && !data.isError) {
