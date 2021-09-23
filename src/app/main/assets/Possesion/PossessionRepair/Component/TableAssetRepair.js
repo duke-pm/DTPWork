@@ -111,7 +111,7 @@ export default function TableAssetRepair({
 			pagination={false}
 			columns={columns}
 			scroll={{
-				x: matchesSM ? 900 : 1900,
+				x: matchesSM ? 1500 : 1900,
 				y: null
 			}}
 			dataSource={entities}

@@ -7,6 +7,8 @@ import * as moment from 'moment';
 import { useDispatch } from 'react-redux';
 import AppsIcon from '@material-ui/icons/Apps';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 import { chipColor, chipText, chipTextColor, chipTextType } from '../ResovleRequestConfig';
 import { ResovleContext } from '../../ResovleRequestContext';
 import { searchConfirms } from '../../../_redux/confirmAction';
@@ -14,6 +16,8 @@ import ActionsResovle from '../ActionsResovle';
 
 export default function TableResovleRequest({ entities, listloading, handleOpenDialog, handleOpenTimeLine }) {
 	const dispatch = useDispatch();
+	const theme = useTheme();
+	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
 	const confirmConext = useContext(ResovleContext);
 	const { search, rowPage, page, status, dateEnd, dateStart, sort, setRequestTypeId, requestTypeId } = confirmConext;
 	const onChange = e => {
@@ -140,6 +144,16 @@ export default function TableResovleRequest({ entities, listloading, handleOpenD
 		}
 	];
 	return (
-		<Table rowKey="requestID" pagination={false} columns={columns} dataSource={entities} loading={listloading} />
+		<Table
+			scroll={{
+				x: matchesSM ? 1200 : null,
+				y: null
+			}}
+			rowKey="requestID"
+			pagination={false}
+			columns={columns}
+			dataSource={entities}
+			loading={listloading}
+		/>
 	);
 }
