@@ -116,7 +116,7 @@ export default function TableAssetAll({ entities, listLoading, createSortHandler
 			pagination={false}
 			columns={columns}
 			scroll={{
-				x: matchesSM ? 900 : 1900,
+				x: matchesSM ? 1800 : 1900,
 				y: null
 			}}
 			dataSource={entities}
