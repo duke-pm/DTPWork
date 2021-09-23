@@ -126,7 +126,7 @@ function PossesionPage(props) {
 	return (
 		<>
 			<div className="container assets">
-				<div className="assets__header px-16 shadow-lg">
+				<div className="assets__header px-16">
 					<Text color="primary" type="title">
 						Tài sản
 					</Text>

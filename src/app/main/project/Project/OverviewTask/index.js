@@ -128,9 +128,7 @@ export default function OverviewPage() {
 			}
 		});
 	};
-	const ExitPage = () => {
-		history.goBack();
-	};
+	const ExitPage = () => history.goBack();
 	return (
 		<div className="container projects">
 			<div className="projects__header px-16">

@@ -71,7 +71,7 @@ export default function ModifyListUser() {
 		<div className="container govern">
 			<div className="govern__header px-16">
 				<Text color="primary" type="title">
-					{params.type === 'cap-nhat' ? 'Cập nhật người dùng' : 'Tạo mới người dùng'}
+					{params.type === 'cap-nhat' ? 'Chỉnh sửa người dùng' : 'Tạo mới người dùng'}
 				</Text>
 				<div className="govern__header--action">
 					<Tooltip placement="bottom" title="Exit">

@@ -107,6 +107,7 @@
         height: calc(100vh - 175px);
         overflow-x: hidden;
         overflow-y: auto;
+        -webkit-overflow-scrolling: 'touch';
         &--table{
             thead[class*="ant-table-thead"] th{
                 background-color: $backgroud-table !important;

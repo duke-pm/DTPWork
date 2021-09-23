@@ -34,7 +34,7 @@ export default function ContentProvider() {
 	return (
 		<div className="container govern">
 			<div className="govern__header px-16 shadow-lg">
-				<Text color="primary" type="button">
+				<Text color="primary" type="title">
 					Quyền
 				</Text>
 				<div className="govern__header--action">

@@ -43,7 +43,7 @@ export default function SettingMenuPage() {
 						onSearch={handleSearch}
 					/>
 					<Button onClick={handleChangeRoute} className="button__create" variant="contained" color="primary">
-						<Text variant="button" color="white">
+						<Text type="button" color="white">
 							Tạo mới
 						</Text>
 					</Button>
