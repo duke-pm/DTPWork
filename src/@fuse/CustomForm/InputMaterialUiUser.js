@@ -8,7 +8,7 @@ import clsx from 'clsx';
 const useStyles = makeStyles(theme => ({
 	root: {
 		'& .MuiFormLabel-root': {
-			color: '#006565',
+			color: '#172b4d',
 			fontWeight: 'bold'
 		},
 		'& .MuiInputBase-input': {
