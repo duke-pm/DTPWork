@@ -31,7 +31,7 @@ function ToolbarLayout1(props) {
 				id="fuse-toolbar"
 				className={clsx(classes.root, 'flex relative z-10 shadow-md')}
 				color="white"
-				style={{ backgroundColor: '#006565' }}
+				style={{ backgroundColor: toolbarTheme.palette.primary.main }}
 			>
 				<Toolbar className="p-0 min-h-48 md:min-h-64">
 					{config.navbar.display && config.navbar.position === 'left' && (

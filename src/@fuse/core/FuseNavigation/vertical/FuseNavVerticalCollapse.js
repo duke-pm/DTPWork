@@ -27,12 +27,15 @@ const useStyles = makeStyles(theme => ({
 		borderRadius: '0 20px 20px 0',
 		paddingRight: 12,
 		paddingLeft: props.itemPadding > 80 ? 80 : props.itemPadding,
-		color: theme.palette.text.primary,
+		color: theme.palette.text.secondary,
 		'&.active > .list-item-text > span': {
 			fontWeight: 600
 		},
 		'& .list-item-icon': {
 			marginRight: 16
+		},
+		'& .icon-dropdown': {
+			color: theme.palette.text.secondary
 		}
 	})
 }));
@@ -98,11 +101,7 @@ function FuseNavVerticalCollapse(props) {
 				to={item.url}
 				role="button"
 			>
-				{item.icon && (
-					<Icon color="action" className="list-item-icon text-14 flex-shrink-0">
-						{item.icon}
-					</Icon>
-				)}
+				{item.icon && <Icon className="list-item-icon text-14 flex-shrink-0">{item.icon}</Icon>}
 
 				<ListItemText className="list-item-text" primary={item.menuName} classes={{ primary: 'text-14' }} />
 
@@ -113,9 +112,7 @@ function FuseNavVerticalCollapse(props) {
 					className="w-40 h-40 -mx-12 p-0 focus:bg-transparent hover:bg-transparent"
 					onClick={ev => ev.preventDefault()}
 				>
-					<Icon className="text-14 arrow-icon" color="inherit">
-						{open ? 'expand_less' : 'expand_more'}
-					</Icon>
+					<Icon className="text-14 arrow-icon icon-dropdown">{open ? 'expand_less' : 'expand_more'}</Icon>
 				</IconButton>
 			</ListItem>
 

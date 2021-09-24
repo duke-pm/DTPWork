@@ -64,8 +64,8 @@ const themesConfig = {
 			type: 'light',
 			primary: {
 				light: '#b3d1d1',
-				main: '#006565',
-				dark: '#003737'
+				main: '#303f9f',
+				dark: '#2b2f41'
 			},
 			secondary: {
 				light: '#ffecc0',
@@ -75,7 +75,13 @@ const themesConfig = {
 			},
 			background: {
 				paper: '#FFFFFF',
-				default: '#F0F7F7'
+				active: '#bfbfbf',
+				default: '#2b2f41'
+			},
+			text: {
+				primary: '#172b4d',
+				secondary: '#8a94a5',
+				menuAive: '#fff'
 			},
 			error: red
 		},

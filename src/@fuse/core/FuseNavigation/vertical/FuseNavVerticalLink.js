@@ -25,17 +25,17 @@ const useStyles = makeStyles(theme => ({
 			pointerEvents: 'none',
 			transition: 'border-radius .15s cubic-bezier(0.4,0.0,0.2,1)',
 			'& .list-item-text-primary': {
-				color: 'inherit'
+				color: theme.palette.text.secondary
 			},
 			'& .list-item-icon': {
-				color: 'inherit'
+				color: theme.palette.text.secondary
 			}
 		},
 		'& .list-item-icon': {
 			marginRight: 16
 		},
 		'& .list-item-text': {},
-		color: theme.palette.text.primary,
+		color: theme.palette.text.secondary,
 		textDecoration: 'none!important'
 	})
 }));
@@ -67,11 +67,7 @@ function FuseNavVerticalLink(props) {
 			onClick={ev => mdDown && dispatch(navbarCloseMobile())}
 			role="button"
 		>
-			{item.icon && (
-				<Icon className="list-item-icon text-15 flex-shrink-0" color="action">
-					{item.icon}
-				</Icon>
-			)}
+			{item.icon && <Icon className="list-item-icon text-15 flex-shrink-0">{item.icon}</Icon>}
 
 			<ListItemText
 				className="list-item-text"

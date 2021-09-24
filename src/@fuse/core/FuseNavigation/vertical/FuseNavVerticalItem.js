@@ -21,22 +21,22 @@ const useStyles = makeStyles(theme => ({
 		paddingRight: 12,
 		paddingLeft: props.itemPadding > 80 ? 80 : props.itemPadding,
 		'&.active': {
-			backgroundColor: `${theme.palette.secondary.main}!important`,
-			color: `${theme.palette.secondary.contrastText}!important`,
+			backgroundColor: `${theme.palette.background.active} !important`,
+			color: `${theme.palette.text.menuAive} !important`,
 			pointerEvents: 'none',
 			transition: 'border-radius .15s cubic-bezier(0.4,0.0,0.2,1)',
 			'& .list-item-text-primary': {
-				color: 'inherit'
+				color: theme.palette.text.menuAive
 			},
 			'& .list-item-icon': {
-				color: 'inherit'
+				color: theme.palette.text.menuAive
 			}
 		},
 		'& .list-item-icon': {
 			marginRight: 16
 		},
 		'& .list-item-text': {},
-		color: theme.palette.text.primary,
+		color: theme.palette.text.secondary,
 		cursor: 'pointer',
 		textDecoration: 'none!important'
 	})
@@ -64,15 +64,11 @@ function FuseNavVerticalItem(props) {
 			component={NavLinkAdapter}
 			to={item.url}
 			activeClassName="active"
-			className={clsx(classes.item, 'list-item')}
+			className={clsx(classes.item, 'list-item ')}
 			onClick={ev => mdDown && dispatch(navbarCloseMobile())}
 			exact
 		>
-			{item.icon && (
-				<Icon className="list-item-icon text-14 flex-shrink-0" color="action">
-					{item.icon}
-				</Icon>
-			)}
+			{item.icon && <Icon className="list-item-icon text-14 flex-shrink-0">{item.icon}</Icon>}
 
 			<ListItemText
 				className="list-item-text"

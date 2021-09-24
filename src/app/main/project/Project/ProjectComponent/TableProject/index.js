@@ -335,9 +335,7 @@ function TableProject(props) {
 			title: () => {
 				return (
 					<div className="flex items-center ">
-						<Text type="subTitle" color="primary">
-							Status
-						</Text>
+						<Text type="subTitle">Status</Text>
 						<Dropdown
 							// visible
 							overlay={

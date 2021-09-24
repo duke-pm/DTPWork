@@ -12,5 +12,5 @@ export default function Home() {
 			dispatch(logoutUser());
 		}
 	}, [token, roles, dispatch]);
-	return <div />;
+	return <div className="home w-full h-full" style={{ backgroundColor: '#fff' }} />;
 }
