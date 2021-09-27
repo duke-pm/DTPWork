@@ -35,6 +35,7 @@ export default function TableResource({ entities, listLoading, createSortHandler
 			dataIndex: 'resourceID',
 			key: 'resourceID',
 			align: 'left',
+			sorter: true,
 			render: (_, item) => <Text type="body">{item.resourceID}</Text>
 		},
 		{
@@ -42,6 +43,7 @@ export default function TableResource({ entities, listLoading, createSortHandler
 			dataIndex: 'resourceName',
 			key: 'resourceName',
 			align: 'left',
+			sorter: true,
 			render: (_, item) => (
 				<div onClick={() => handChangeRouteView(item)} className="flex items-center cursor-pointer">
 					<div className="resource__radio--button" style={{ backgroundColor: item.color }} />
@@ -55,6 +57,7 @@ export default function TableResource({ entities, listLoading, createSortHandler
 			title: 'Resource group',
 			dataIndex: 'groupName',
 			key: 'groupName',
+			sorter: true,
 			align: 'left',
 			render: (_, item) => (
 				<Text className="ml-8" type="body">
@@ -82,6 +85,7 @@ export default function TableResource({ entities, listLoading, createSortHandler
 			title: 'Last modifide',
 			dataIndex: 'strCrtdDate',
 			key: 'strCrtdDate',
+			sorter: true,
 			render: (_, item) => <Text type="body">{item.strCrtdDate}</Text>
 		},
 		{

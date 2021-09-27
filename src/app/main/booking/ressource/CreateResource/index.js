@@ -56,6 +56,7 @@ export default function CreateResource() {
 				<Spin spinning={listloading}>
 					<div className="createresource">
 						<Form
+							ExitPage={ExitPage}
 							params={params}
 							actionLoading={actionLoading}
 							entitiesEdit={entitiesEdit}

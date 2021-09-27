@@ -7,7 +7,7 @@ import { Form, Formik, Field } from 'formik';
 import React, { useState } from 'react';
 import * as Yup from 'yup';
 
-export default function CustomForm({ initital, bkIcon, handleSubmitForm, actionLoading }) {
+export default function CustomForm({ initital, bkIcon, handleSubmitForm, actionLoading, ExitPage }) {
 	const validationSchema = Yup.object().shape({
 		name: Yup.string().required(`${validateFieldEN}`),
 		icon: Yup.string().required(`${validateFieldEN}`)
@@ -146,7 +146,13 @@ export default function CustomForm({ initital, bkIcon, handleSubmitForm, actionL
 										<Typography variant="button"> Save </Typography>
 									</Button>
 								)}
-								<Button type="submit" className="button__cancle" variant="contained" color="secondary">
+								<Button
+									type="button"
+									onClick={ExitPage}
+									className="button__cancle"
+									variant="contained"
+									color="secondary"
+								>
 									{' '}
 									<Typography variant="button"> Cancel </Typography>
 								</Button>

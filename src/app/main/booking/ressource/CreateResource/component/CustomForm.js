@@ -8,7 +8,14 @@ import * as Yup from 'yup';
 import { validateFieldEN } from '@fuse/core/DtpConfig';
 import { Spin } from 'antd';
 
-export default function CustomForm({ initital, groupBkColor, bkResourceGroup, handleSubmitForm, actionLoading }) {
+export default function CustomForm({
+	initital,
+	groupBkColor,
+	bkResourceGroup,
+	handleSubmitForm,
+	actionLoading,
+	ExitPage
+}) {
 	const validationSchema = Yup.object().shape({
 		name: Yup.string().required(`${validateFieldEN}`),
 		resourceGroup: Yup.string().required(`${validateFieldEN}`),
@@ -167,7 +174,13 @@ export default function CustomForm({ initital, groupBkColor, bkResourceGroup, ha
 										<Typography variant="button"> Save </Typography>
 									</Button>
 								)}
-								<Button type="submit" className="button__cancle" variant="contained" color="secondary">
+								<Button
+									type="button"
+									onClick={ExitPage}
+									className="button__cancle"
+									variant="contained"
+									color="secondary"
+								>
 									{' '}
 									<Typography variant="button"> Cancel </Typography>
 								</Button>

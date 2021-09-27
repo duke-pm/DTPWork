@@ -37,7 +37,7 @@ export default function CreateResourceGroup() {
 			<div className="resource__header px-16 shadow-lg">
 				<Typography color="primary" variant="h6">
 					{' '}
-					{params.type === 'updates' ? 'Update resource group' : 'Created resource group'}
+					{params.type === 'updates' ? 'Update resource group' : 'Create resource group'}
 				</Typography>
 				<div className="resource__header--action">
 					<Tooltip placement="bottom" title="Exit">
@@ -51,6 +51,7 @@ export default function CreateResourceGroup() {
 				<Spin spinning={listloading}>
 					<div className="createresource">
 						<Form
+							ExitPage={ExitPage}
 							params={params}
 							entitiesEdit={entitiesEdit}
 							actionLoading={actionLoading}

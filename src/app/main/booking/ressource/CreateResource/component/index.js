@@ -6,7 +6,7 @@ import { useHistory, useParams } from 'react-router';
 import { createResouce, updateResouce } from '../../_reduxResourceBooking/resourceBookingActions';
 import CustomForm from './CustomForm';
 
-export default function From({ groupBkColor, bkResourceGroup, entitiesEdit, actionLoading, params }) {
+export default function From({ groupBkColor, bkResourceGroup, entitiesEdit, actionLoading, params, ExitPage }) {
 	const dispatch = useDispatch();
 	const history = useHistory();
 	let initital = {
@@ -61,6 +61,7 @@ export default function From({ groupBkColor, bkResourceGroup, entitiesEdit, acti
 	return (
 		<>
 			<CustomForm
+				ExitPage={ExitPage}
 				handleSubmitForm={handleSubmitForm}
 				groupBkColor={groupBkColor}
 				bkResourceGroup={bkResourceGroup}
