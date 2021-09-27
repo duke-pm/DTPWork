@@ -36,7 +36,7 @@ export default function CustomForm({
 		>
 			{({ handleSubmit, isSubmitting }) => (
 				<Form>
-					<div className="mt-8 px-16 sm:px-24">
+					<div className="mt-8">
 						<Field label="Tên nhóm" name="groupName" hasFeedback component={AntInputCustom} />
 						<Field label="Mô tả" name="description" type="text" component={AntDescriptionsCustom} row={4} />
 						<Field
@@ -60,7 +60,7 @@ export default function CustomForm({
 						)}
 						<Button
 							onClick={handleCloseFormGroupUser}
-							className="button__cancle mr-8"
+							className="button__cancle"
 							variant="contained"
 							color="secondary"
 						>

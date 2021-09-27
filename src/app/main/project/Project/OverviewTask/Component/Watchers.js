@@ -43,7 +43,8 @@ export default function Watchers() {
 			title: 'Full name',
 			dataIndex: 'fullName',
 			key: 'fullName',
-			width: '30%'
+			width: '30%',
+			render: (_, item) => <Text type="body">{item.fullName}</Text>
 		},
 		{
 			title: 'Receive Email',
@@ -56,7 +57,8 @@ export default function Watchers() {
 			title: 'Date view',
 			dataIndex: 'timeUpdate',
 			key: 'timeUpdate',
-			width: '20%'
+			width: '20%',
+			render: (_, item) => <Text type="body">{item.timeUpdate}</Text>
 		}
 	];
 	return (

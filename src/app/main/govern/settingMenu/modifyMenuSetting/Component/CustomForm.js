@@ -51,7 +51,7 @@ export default function CustomForm({
 		>
 			{({ handleSubmit, isSubmitting }) => (
 				<Form>
-					<div className="px-16 sm:px-24">
+					<div>
 						<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 							<Field label="Menu Name" name="menuName" hasFeedback component={AntInputCustom} />{' '}
 							<Field
@@ -138,7 +138,7 @@ export default function CustomForm({
 						)}
 						<Button
 							onClick={handleCloseFormListUser}
-							className="button__cancle mr-8"
+							className="button__cancle"
 							variant="contained"
 							color="secondary"
 						>
