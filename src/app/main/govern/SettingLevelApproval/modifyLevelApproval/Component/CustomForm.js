@@ -19,6 +19,7 @@ export default function CustomForm({
 	roles,
 	titleApproval,
 	users,
+	ExitPage,
 	handleSubmitApproval,
 	entitiesEdit,
 	setIsChange
@@ -268,7 +269,7 @@ export default function CustomForm({
 								</Text>
 							</Button>
 						)}
-						<Button className="button__cancle" variant="contained" color="secondary">
+						<Button onClick={ExitPage} className="button__cancle" variant="contained" color="secondary">
 							<Text type="button">Cancel</Text>
 						</Button>
 					</div>

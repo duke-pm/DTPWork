@@ -73,6 +73,7 @@ export default function ModifySettingLine() {
 							handleSubmitLine={handleSubmitLine}
 							entitiesEdit={entitiesEdit}
 							actionLoading={actionLoading}
+							ExitPage={ExitPage}
 						/>
 					</Grid>
 					<Grid item lg={3} md={3} sm={false} xs={false} />

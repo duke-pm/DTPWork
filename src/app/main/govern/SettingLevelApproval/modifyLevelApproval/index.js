@@ -30,9 +30,7 @@ export default function ModifyLevelApproval() {
 	const { entitiesInformation, listloading } = inforCompany;
 	const params = useParams();
 	const history = useHistory();
-	const ExitPage = () => {
-		history.goBack();
-	};
+	const ExitPage = () => history.goBack();
 	useEffect(() => {
 		if (params.type === 'cap-nhat' && !entitiesEdit) {
 			history.goBack();
@@ -109,6 +107,7 @@ export default function ModifyLevelApproval() {
 								roles={roles}
 								titleApproval={titleApproval}
 								users={users}
+								ExitPage={ExitPage}
 								entitiesEdit={entitiesEdit}
 								actionLoading={actionLoading}
 							/>
