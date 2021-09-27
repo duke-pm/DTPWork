@@ -13,7 +13,7 @@ const ResourceConfig = {
 			component: React.lazy(() => import('./ResourcePage/index'))
 		},
 		{
-			path: '/booking/resource/create-resource',
+			path: '/booking/resource/modify-resource/:type',
 			component: React.lazy(() => import('./CreateResource/index'))
 		},
 		{

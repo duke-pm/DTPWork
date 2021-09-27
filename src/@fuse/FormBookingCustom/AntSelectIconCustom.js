@@ -15,6 +15,7 @@ export default function AntSelectIconCustom({
 	hasFeedback,
 	field,
 	submitCount,
+	handleInputChange,
 	form,
 	options,
 	type,
@@ -29,7 +30,7 @@ export default function AntSelectIconCustom({
 	const touchedError = hasError && touched;
 	const onChange = value => {
 		form.setFieldValue(field.name, value);
-		// return handleInputChange ? handleInputChange(target) : null;
+		return handleInputChange ? handleInputChange(value) : null;
 	};
 	return (
 		<div className={`form-item-input ${position && 'flex flex-row  justify-between'}`}>
@@ -48,12 +49,12 @@ export default function AntSelectIconCustom({
 					{...props}
 					placeholder={placeholder || ''}
 					className={readOnly ? 'readOnly' : ''}
-					defaultValue={field.value}
+					// defaultValue={field.value}
 					onChange={onChange}
 				>
 					{options.map(p => (
 						<Option key={p.value} value={p.value}>
-							<div className="flex items-center">
+							<div className="flex items-center mt-8">
 								<Icon color="primary" fontSize="small">
 									{p.icon}
 								</Icon>

@@ -1,168 +1,60 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Icon, Typography } from '@material-ui/core';
-import { Avatar, Dropdown, Menu, Table, Tooltip } from 'antd';
-import Checkbox from 'antd/lib/checkbox/Checkbox';
+import { Icon } from '@material-ui/core';
+import { Avatar, Table, Tooltip } from 'antd';
+import Text from 'app/components/Text';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { sliceString, sortDirestion } from '@fuse/core/DtpConfig/index';
+import { useDispatch } from 'react-redux';
+import {
+	deleteResourceGroup,
+	setTaskEditResourceGroup
+} from '../../_reduxResourceBookingGroup/resourceBookingGroupActions';
 
-const data = [
-	{
-		id: 1,
-		code: 'BKEV-14',
-		name: 'Đào tạo',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 2,
-		code: 'BKEV-14',
-		name: 'Đào tạo',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 3,
-		code: 'BKEV-14',
-		name: 'Đào tạo',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 4,
-		code: 'BKEV-14',
-		name: 'Đào tạo',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 5,
-		code: 'BKEV-14',
-		name: 'Đào tạo',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 6,
-		code: 'BKEV-14',
-		name: 'Đào tạo',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 7,
-		code: 'BKEV-14',
-		name: 'Đào tạo',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 8,
-		code: 'BKEV-14',
-		name: 'Đào tạo',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 9,
-		code: 'BKEV-14',
-		name: 'Đào tạo',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 10,
-		code: 'BKEV-14',
-		name: 'Đào tạo',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 11,
-		code: 'BKEV-14',
-		name: 'Đào tạo',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 12,
-		code: 'BKEV-14',
-		name: 'Đào tạo',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	}
-];
-// const options = [
-// 	{ label: 'Apple', value: 'Apple' },
-// 	{ label: 'Pear', value: 'Pear' },
-// 	{ label: 'Orange', value: 'Orange' }
-// ];
-
-export default function TableResourceGroup() {
+export default function TableResourceGroup({ entities, listLoading, createSortHandler }) {
+	const dispatch = useDispatch();
 	const history = useHistory();
-	// const filterOwner = value => {
-	// 	console.log(value);
-	// };
-	// const onChange = value => {
-	// 	console.log(value);
-	// };
-	const handChangeRouteView = () => {
+	const handChangeRouteView = item => {
+		dispatch(setTaskEditResourceGroup(item));
 		history.push('/booking/resource-group/view/6');
+	};
+	const onChange = (pagination, filters, sorter, extra) => {
+		const sort = sortDirestion[sorter.order];
+		createSortHandler(sort, sorter.field);
+	};
+	const handleEdit = item => {
+		dispatch(setTaskEditResourceGroup(item));
+		history.push('/booking/resource-group/modify-resource-group/updates');
+	};
+	const handleDelete = item => {
+		dispatch(deleteResourceGroup(item.groupID));
 	};
 	const columns = [
 		{
 			title: 'Code',
-			dataIndex: 'code',
-			key: 'code',
-			render: (_, item) => <Typography variant="body1">{item.code}</Typography>
+			dataIndex: 'groupID',
+			sorter: true,
+			key: 'groupID',
+			render: (_, item) => <Text type="body">{item.groupID}</Text>
 		},
 		{
-			title: () => {
-				return (
-					<div className="flex items-center ">
-						Name
-						<Icon className="cursor-pointer"> arrow_drop_down </Icon>
-					</div>
-				);
-			},
-			dataIndex: 'name',
+			title: 'Name',
+			dataIndex: 'groupName',
 			align: 'left',
-			key: 'name',
+			key: 'groupName',
+			sorter: true,
 			render: (_, item) => (
-				<div onClick={handChangeRouteView} className="flex items-center cursor-pointer">
+				<div onClick={() => handChangeRouteView(item)} className="flex items-center cursor-pointer">
 					<div className="">
 						{' '}
 						<Icon color="primary" fontSize="small">
-							ad_units
+							{item.icon}
 						</Icon>{' '}
 					</div>
-					<Typography variant="name" className="ml-8 ">
-						{item.name}
-					</Typography>
+					<Text type="body" className="ml-8 ">
+						{item.groupName}
+					</Text>
 				</div>
 			)
 		},
@@ -170,48 +62,30 @@ export default function TableResourceGroup() {
 			title: 'Descriptions',
 			dataIndex: 'description',
 			key: 'description',
-			render: (_, item) => <Typography variant="body1">{item.description}</Typography>
+			render: (_, item) => <Text type="body">{item.descr}</Text>
 		},
 		{
-			title: () => {
-				return (
-					<div className="flex items-center ">
-						Created by
-						<Dropdown
-							overlay={
-								<Menu overlaystyle={{ width: '200px' }}>
-									<Menu.Item>
-										<Checkbox>User1</Checkbox>
-									</Menu.Item>
-								</Menu>
-							}
-							placement="bottomRight"
-							arrow
-						>
-							<Icon className="cursor-pointer"> arrow_drop_down </Icon>
-						</Dropdown>
-					</div>
-				);
-			},
-			dataIndex: 'owner',
-			key: 'owner',
+			title: 'Created by',
+			dataIndex: 'crtdName',
+			key: 'crtdName',
 			align: 'left',
 			render: (_, item) => (
 				<div className="flex items-center">
 					<Avatar size="small" style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
-						L
+						{sliceString(item.crtdName)}
 					</Avatar>{' '}
-					<Typography className="ml-8" variant="body1">
-						{item.owner}
-					</Typography>
+					<Text className="ml-8" type="body">
+						{item.crtdName}
+					</Text>
 				</div>
 			)
 		},
 		{
 			title: 'Last modifide',
-			dataIndex: 'lastModifide',
-			key: 'lastModifide',
-			render: (_, item) => <Typography variant="body1">{item.lastModifide}</Typography>
+			dataIndex: 'strCrtdDate',
+			sorter: true,
+			key: 'strCrtdDate',
+			render: (_, item) => <Text type="body">{item.strCrtdDate}</Text>
 		},
 		{
 			title: '',
@@ -220,12 +94,12 @@ export default function TableResourceGroup() {
 			render: (_, item) => (
 				<div className="flex justify-end">
 					<Tooltip placement="bottom" title="Edit">
-						<span className="action--button mr-14">
+						<span onClick={() => handleEdit(item)} className="action--button mr-14">
 							<Icon fontSize="small">edit</Icon>
 						</span>
 					</Tooltip>
 					<Tooltip placement="bottom" title="Delete">
-						<span className="action--button ">
+						<span onClick={() => handleDelete(item)} className="action--button ">
 							<Icon fontSize="small">delete</Icon>
 						</span>
 					</Tooltip>
@@ -234,5 +108,15 @@ export default function TableResourceGroup() {
 		}
 	];
 
-	return <Table rowKey="id" pagination={false} columns={columns} dataSource={data} />;
+	return (
+		<Table
+			showSorterTooltip={false}
+			onChange={onChange}
+			rowKey="groupID"
+			pagination={false}
+			columns={columns}
+			dataSource={entities}
+			loading={listLoading}
+		/>
+	);
 }

@@ -1,19 +1,27 @@
-// import { AntInput } from '@fuse/CustomForm/CreateAntField';
+import { validateFieldEN } from '@fuse/core/DtpConfig';
 import AntInputCustom from '@fuse/FormBookingCustom/AntInputCustom';
-// import AntRadioColorCustom from '@fuse/FormBookingCustom/AntRadioColorCustom';
-// import AntRadioCustom from '@fuse/FormBookingCustom/AntRadioCustom';
-// import AntRadioVerticalCustom from '@fuse/FormBookingCustom/AntRadioVerticalCustom';
-// import AntSelectCustom from '@fuse/FormBookingCustom/AntSelectCustom';
 import AntSelectIconCustom from '@fuse/FormBookingCustom/AntSelectIconCustom';
-// import AntSelectMultiCustom from '@fuse/FormBookingCustom/AntSelectMultiCustom';
-import { Button, Typography } from '@material-ui/core';
+import { Button, Icon, Typography } from '@material-ui/core';
+import { Spin } from 'antd';
 import { Form, Formik, Field } from 'formik';
-import React from 'react';
+import React, { useState } from 'react';
+import * as Yup from 'yup';
 
-export default function CustomForm({ initital }) {
+export default function CustomForm({ initital, bkIcon, handleSubmitForm, actionLoading }) {
+	const validationSchema = Yup.object().shape({
+		name: Yup.string().required(`${validateFieldEN}`),
+		icon: Yup.string().required(`${validateFieldEN}`)
+	});
 	return (
 		<>
-			<Formik enableReinitialize initialValues={initital}>
+			<Formik
+				enableReinitialize
+				validationSchema={validationSchema}
+				initialValues={initital}
+				onSubmit={values => {
+					handleSubmitForm(values);
+				}}
+			>
 				{({ handleSubmit, isSubmitting }) => (
 					<Form>
 						<div className=" mt-8 px-16 sm:px-24">
@@ -43,17 +51,10 @@ export default function CustomForm({ initital }) {
 							</div> */}
 							<div className="grid grid-cols-3">
 								<Field
-									options={[
-										{ value: 'ad_units', label: 'ad_units', icon: 'ad_units' },
-										{ value: 'drive_eta', label: 'drive_eta', icon: 'drive_eta' },
-										{ value: 'credit_card', label: 'credit_card', icon: 'credit_card' },
-										{ value: 'favorite', label: 'favorite', icon: 'favorite' },
-										{ value: 'border_all', label: 'border_all', icon: 'border_all' },
-										{ value: 'tv', label: 'tv', icon: 'tv' },
-										{ value: 'star', label: 'star', icon: 'star' }
-									]}
+									options={bkIcon}
 									label="Group icon"
 									hasFeedback
+									handleChan
 									name="icon"
 									component={AntSelectIconCustom}
 								/>
@@ -132,13 +133,22 @@ export default function CustomForm({ initital }) {
 								/>
 							</div> */}
 							<div className="flex justify-end">
-								<Button className="button__cancle mr-8" variant="contained" color="secondary">
+								{actionLoading ? (
+									<Spin style={{ marginRight: '20px' }} />
+								) : (
+									<Button
+										type="submit"
+										className="button__cancle mr-8"
+										variant="contained"
+										color="primary"
+									>
+										{' '}
+										<Typography variant="button"> Save </Typography>
+									</Button>
+								)}
+								<Button type="submit" className="button__cancle" variant="contained" color="secondary">
 									{' '}
 									<Typography variant="button"> Cancel </Typography>
-								</Button>
-								<Button className="button__form" variant="contained" color="primary">
-									{' '}
-									<Typography variant="button"> Create resource </Typography>
 								</Button>
 							</div>
 						</div>

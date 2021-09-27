@@ -1,150 +1,131 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import { Grid, Icon, Typography } from '@material-ui/core';
+import { sliceString } from '@fuse/core/DtpConfig';
+import { Grid, Icon } from '@material-ui/core';
 import { Avatar } from 'antd';
+import Text from 'app/components/Text';
 import React from 'react';
 
-export default function index() {
+export default function index({ entitiesEdit }) {
 	return (
 		<Grid container item spacing={2}>
 			<Grid className="mb-20" item lg={12}>
-				<Typography variant="subtitle2" className="title__view" color="primary">
+				<Text borderBottom type="subTitle" color="primary">
 					{' '}
 					INFORMATION{' '}
-				</Typography>
+				</Text>
 			</Grid>
 			<Grid item lg={6}>
-				<Typography variant="subtitle2" color="primary">
-					{' '}
-					Group Code :
-				</Typography>
+				<Text type="body"> Group Code :</Text>
 			</Grid>
 			<Grid item lg={6}>
 				{' '}
-				<Typography variant="body2"> BKRS-1</Typography>
+				<Text type="body"> {entitiesEdit?.groupID}</Text>
 			</Grid>
 			<Grid item lg={6}>
-				<Typography variant="subtitle2" color="primary">
-					{' '}
-					Name :
-				</Typography>
+				<Text type="body"> Name :</Text>
 			</Grid>
 			<Grid item lg={6}>
 				{' '}
-				<Typography variant="body2">Đào tạo</Typography>
+				<Text type="body">{entitiesEdit?.groupName}</Text>
 			</Grid>
 			<Grid item lg={6}>
-				<Typography variant="subtitle2" color="primary">
-					{' '}
-					Description :
-				</Typography>
+				<Text type="body"> Description :</Text>
 			</Grid>
 			<Grid item lg={6}>
 				{' '}
-				<Typography variant="body2"> Meeting room 303</Typography>
+				<Text type="body"> {entitiesEdit?.descr ? entitiesEdit.descr : '-'}</Text>
 			</Grid>
 			<Grid item lg={6}>
-				<Typography variant="subtitle2" color="primary">
-					{' '}
-					Resource group icons :
-				</Typography>
+				<Text type="body"> Resource group icons :</Text>
 			</Grid>
 			<Grid item lg={6}>
 				<Icon fontSize="small" color="primary">
 					{' '}
-					directions_car{' '}
+					{entitiesEdit?.icon}
 				</Icon>
 			</Grid>
 			{/* <Grid item lg={6}>
-				<Typography variant="subtitle2" color="primary">
+				<Text type="body" >
 					{' '}
 					Recurrence :
-				</Typography>
+				</Text>
 			</Grid>
 			<Grid item lg={6}>
-				<Typography variant="body2"> Không</Typography>
+				<Text type="body"> Không</Text>
 			</Grid> */}
 			{/* <Grid item lg={6}>
-				<Typography variant="subtitle2" color="primary">
+				<Text type="body" >
 					{' '}
 					Extra services :
-				</Typography>
+				</Text>
 			</Grid> */}
 			{/* <Grid item lg={6}>
-				<Typography variant="body2" color="primary" />
+				<Text type="body"  />
 			</Grid> */}
 			<Grid item lg={6}>
-				<Typography variant="subtitle2" color="primary">
-					{' '}
-					Created by :
-				</Typography>
+				<Text type="body"> Created by :</Text>
 			</Grid>
 			<Grid item lg={6}>
 				<div className="flex items-center">
 					<Avatar size="small" style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
-						L
+						{entitiesEdit && sliceString(entitiesEdit?.crtdName)}
 					</Avatar>{' '}
-					<Typography className="ml-8" variant="body2">
-						The Linh
-					</Typography>
+					<Text className="ml-8" type="body">
+						{entitiesEdit?.crtdName}
+					</Text>
 				</div>
 			</Grid>
 			<Grid item lg={6}>
-				<Typography variant="subtitle2" color="primary">
-					{' '}
-					Date of creation :
-				</Typography>
+				<Text type="body"> Date of creation :</Text>
 			</Grid>
 			<Grid item lg={6}>
-				<Typography variant="body2">25/08/2021 14:03</Typography>
+				<Text type="body">-</Text>
 			</Grid>
 			<Grid item lg={6}>
-				<Typography variant="subtitle2" color="primary">
-					{' '}
-					Last modified :
-				</Typography>
+				<Text type="body"> Last modified :</Text>
 			</Grid>
 			<Grid item lg={6}>
-				<Typography variant="body2">25/08/2021 14:03</Typography>
+				<Text type="body">{entitiesEdit?.strCrtdDate}</Text>
 			</Grid>
 			{/* <Grid item lg={12}>
-				<Typography variant="subtitle2" className="title__view" color="primary">
+				<Text type="body" className="title__view" >
 					Approval process
-				</Typography>
+				</Text>
 			</Grid> */}
 			{/* <Grid item lg={6}>
-				<Typography variant="subtitle2" color="primary">
+				<Text type="body" >
 					{' '}
 					Approval process :
-				</Typography>
+				</Text>
 			</Grid> */}
 			{/* <Grid item lg={6}>
-				<Typography variant="body2">Booking created - Complete</Typography>
+				<Text type="body">Booking created - Complete</Text>
 			</Grid> */}
 			{/* <Grid item lg={12}>
-				<Typography variant="subtitle2" className="title__view" color="primary">
+				<Text type="body" className="title__view" >
 					Notifications
-				</Typography>
+				</Text>
 			</Grid> */}
 			{/* <Grid item lg={6}>
-				<Typography variant="subtitle2" color="primary">
+				<Text type="body" >
 					{' '}
 					Notification scenario :
-				</Typography>
+				</Text>
 			</Grid> */}
 			{/* <Grid item lg={6}>
-				<Typography variant="body2">Kịch bản thông báo mặc định</Typography>
+				<Text type="body">Kịch bản thông báo mặc định</Text>
 			</Grid> */}
 			{/* <Grid item lg={12}>
-				<Typography variant="subtitle2" className="title__view" color="primary">
+				<Text type="body" className="title__view" >
 					Authorization
-				</Typography>
+				</Text>
 			</Grid> */}
 			{/* <Grid item lg={6}>
-				<Typography variant="subtitle2" color="primary">
+				<Text type="body" >
 					{' '}
 					Department :
-				</Typography>
+				</Text>
 			</Grid>
 			<Grid item lg={6}>
 				<Tag>DTP</Tag>

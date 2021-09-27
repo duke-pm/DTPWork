@@ -1,217 +1,88 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+import { sliceString, sortDirestion } from '@fuse/core/DtpConfig';
 import { Icon, Typography } from '@material-ui/core';
 import { Avatar, Dropdown, Menu, Table, Tooltip } from 'antd';
 import Checkbox from 'antd/lib/checkbox/Checkbox';
+import Text from 'app/components/Text';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { deleteResource, setTaskEditResource } from '../../_reduxResourceBooking/resourceBookingActions';
 
-const data = [
-	{
-		id: 1,
-		code: 'BKEV-14',
-		name: 'Phong hop',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 2,
-		code: 'BKEV-14',
-		name: 'Phong hop',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 3,
-		code: 'BKEV-14',
-		name: 'Phong hop',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 4,
-		code: 'BKEV-14',
-		name: 'Phong hop',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 5,
-		code: 'BKEV-14',
-		name: 'Phong hop',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 6,
-		code: 'BKEV-14',
-		name: 'Phong hop',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 7,
-		code: 'BKEV-14',
-		name: 'Phong hop',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 8,
-		code: 'BKEV-14',
-		name: 'Phong hop',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 9,
-		code: 'BKEV-14',
-		name: 'Phong hop',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 10,
-		code: 'BKEV-14',
-		name: 'Phong hop',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 11,
-		code: 'BKEV-14',
-		name: 'Phong hop',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 12,
-		code: 'BKEV-14',
-		name: 'Phong hop',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	}
-];
-export default function TableResource() {
+export default function TableResource({ entities, listLoading, createSortHandler }) {
 	const history = useHistory();
-	// const filterOwner = value => {
-	// 	console.log(value);
-	// };
-	// const onChange = value => {
-	// 	console.log(value);
-	// };
-	const handChangeRouteView = () => {
-		history.push('/booking/resource/view/6');
+	const dispatch = useDispatch();
+
+	const onChange = (pagination, filters, sorter, extra) => {
+		const sort = sortDirestion[sorter.order];
+		createSortHandler(sort, sorter.field);
+	};
+	const handChangeRouteView = item => {
+		dispatch(setTaskEditResource(item));
+		history.push(`/booking/resource/view/${item.resourceID}`);
+	};
+	const handleEdit = item => {
+		dispatch(setTaskEditResource(item));
+		history.push('/booking/resource/modify-resource/updated');
+	};
+	const handleDelete = item => {
+		dispatch(deleteResource(item.groupID));
 	};
 	const columns = [
 		{
 			title: 'Code',
-			dataIndex: 'code',
-			key: 'code',
-			render: (_, item) => <Typography variant="body1">{item.code}</Typography>
+			dataIndex: 'resourceID',
+			key: 'resourceID',
+			align: 'left',
+			render: (_, item) => <Text type="body">{item.resourceID}</Text>
 		},
 		{
-			title: () => {
-				return (
-					<div className="flex items-center ">
-						Name
-						<Dropdown
-							overlay={
-								<Menu overlaystyle={{ width: '200px' }}>
-									<Menu.Item>
-										<Checkbox>User1</Checkbox>
-									</Menu.Item>
-								</Menu>
-							}
-							placement="bottomRight"
-							arrow
-						>
-							<Icon className="cursor-pointer"> arrow_drop_down </Icon>
-						</Dropdown>
-					</div>
-				);
-			},
-			dataIndex: 'name',
-			key: 'name',
+			title: 'Name',
+			dataIndex: 'resourceName',
+			key: 'resourceName',
+			align: 'left',
 			render: (_, item) => (
-				<div onClick={handChangeRouteView} className="flex items-center cursor-pointer">
-					<div className="resource__radio--button" style={{ backgroundColor: '#006565' }} />
+				<div onClick={() => handChangeRouteView(item)} className="flex items-center cursor-pointer">
+					<div className="resource__radio--button" style={{ backgroundColor: item.color }} />
 					<Typography variant="name" className="ml-8">
-						{item.name}
+						{item.resourceName}
 					</Typography>
 				</div>
 			)
 		},
 		{
 			title: 'Resource group',
-			dataIndex: 'resource',
-			key: 'resource',
-			render: (_, item) => <Typography variant="body1">{item.resource}</Typography>
+			dataIndex: 'groupName',
+			key: 'groupName',
+			align: 'left',
+			render: (_, item) => (
+				<Text className="ml-8" type="body">
+					{item.groupName}
+				</Text>
+			)
 		},
 		{
-			title: () => {
-				return (
-					<div className="flex items-center ">
-						Created by
-						<Dropdown
-							overlay={
-								<Menu overlaystyle={{ width: '200px' }}>
-									<Menu.Item>
-										<Checkbox>User1</Checkbox>
-									</Menu.Item>
-								</Menu>
-							}
-							placement="bottomRight"
-							arrow
-						>
-							<Icon className="cursor-pointer"> arrow_drop_down </Icon>
-						</Dropdown>
-					</div>
-				);
-			},
-			dataIndex: 'owner',
-			key: 'owner',
-			align: 'center',
+			title: 'Created by',
+			dataIndex: 'crtdName',
+			key: 'crtdName',
+			align: 'left',
 			render: (_, item) => (
 				<div className="flex items-center">
 					<Avatar size="small" style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
-						L
+						{sliceString(item.crtdName)}
 					</Avatar>{' '}
-					<Typography className="ml-8" variant="body1">
-						{item.owner}
-					</Typography>
+					<Text className="ml-8" type="body">
+						{item.crtdName}
+					</Text>
 				</div>
 			)
 		},
 		{
 			title: 'Last modifide',
-			dataIndex: 'lastModifide',
-			key: 'lastModifide',
-			render: (_, item) => <Typography variant="body1">{item.lastModifide}</Typography>
+			dataIndex: 'strCrtdDate',
+			key: 'strCrtdDate',
+			render: (_, item) => <Text type="body">{item.strCrtdDate}</Text>
 		},
 		{
 			title: '',
@@ -220,12 +91,12 @@ export default function TableResource() {
 			render: (_, item) => (
 				<div className="flex justify-end">
 					<Tooltip placement="bottom" title="Edit">
-						<span className="action--button mr-14">
+						<span onClick={() => handleEdit(item)} className="action--button mr-14">
 							<Icon fontSize="small">edit</Icon>
 						</span>
 					</Tooltip>
 					<Tooltip placement="bottom" title="Delete">
-						<span className="action--button ">
+						<span onClick={() => handleDelete(item)} className="action--button ">
 							<Icon fontSize="small">delete</Icon>
 						</span>
 					</Tooltip>
@@ -233,5 +104,15 @@ export default function TableResource() {
 			)
 		}
 	];
-	return <Table rowKey="id" pagination={false} columns={columns} dataSource={data} />;
+	return (
+		<Table
+			showSorterTooltip={false}
+			onChange={onChange}
+			rowKey="resourceID"
+			pagination={false}
+			columns={columns}
+			dataSource={entities}
+			loading={listLoading}
+		/>
+	);
 }

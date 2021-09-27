@@ -13,7 +13,7 @@ const ResourceGroupConfig = {
 			component: React.lazy(() => import('./ResourceGroupPage'))
 		},
 		{
-			path: '/booking/resource-group/create-resource-group',
+			path: '/booking/resource-group/modify-resource-group/:type',
 			component: React.lazy(() => import('./CreateResourceGroup'))
 		},
 		{

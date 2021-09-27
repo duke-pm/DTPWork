@@ -68,6 +68,16 @@ export const notificationContent = {
 				updateProcessingTask: 'Updated processing successfully.',
 				updateFailDate: 'Cannot update because the status project was closed or reject'
 			}
+		},
+		booking: {
+			resourcesGroup: {
+				edit: 'Updated resource group successfully.',
+				create: 'Created resource group successfully.'
+			},
+			resource: {
+				edit: 'Updated resource successfully.',
+				create: 'Created resource successfully.'
+			}
 		}
 	}
 };

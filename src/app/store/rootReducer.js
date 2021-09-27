@@ -2,6 +2,7 @@ import { combineReducers } from '@reduxjs/toolkit';
 import auth from 'app/auth/store';
 import { confirmSlice } from 'app/main/assets/proposedManagement/_redux/confirmSlice';
 import govern from 'app/main/govern/_redux/index';
+import booking from 'app/main/booking/_redux';
 import { projectSlice } from 'app/main/project/_redux/_projectSlice';
 import fuse from './fuse';
 import i18n from './i18nSlice';
@@ -15,6 +16,7 @@ const createReducer = asyncReducers => (state, action) => {
 		fuse,
 		i18n,
 		govern,
+		booking,
 		tabs: tabsSlice.reducer,
 		possesion: possesionSlice.reducer,
 		memberships,

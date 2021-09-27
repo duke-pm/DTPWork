@@ -2,30 +2,47 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import { Icon, Typography } from '@material-ui/core';
-import { Tooltip } from 'antd';
-import React from 'react';
+import { Spin, Tooltip } from 'antd';
+import Text from 'app/components/Text';
+import React, { useEffect } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+import { deleteResource } from '../_reduxResourceBooking/resourceBookingActions';
 import Content from './component/index';
 
 export default function ResourceView() {
 	const histroy = useHistory();
-	const ExitPage = () => {
-		histroy.goBack();
+	const dispatch = useDispatch();
+	const ExitPage = () => histroy.goBack();
+	const { currentState } = useSelector(
+		state => ({
+			currentState: state.booking.resource
+		}),
+		shallowEqual
+	);
+	const { actionLoading, entitiesEdit } = currentState;
+	useEffect(() => {
+		if (!entitiesEdit) histroy.goBack();
+	}, [entitiesEdit, histroy]);
+	const handleEditPage = () => histroy.push('/booking/resource/modify-resource/updated');
+	const handleDeletePage = () => {
+		dispatch(deleteResource(entitiesEdit.resourceID));
+		ExitPage();
 	};
 	return (
 		<div className="container resource">
 			<div className="resource__header px-16 shadow-lg">
-				<Typography color="primary" variant="h6">
-					Phòng họp
-				</Typography>
+				<Text color="primary" type="title">
+					{entitiesEdit?.resourceName}
+				</Text>
 				<div className="resource__header--action">
 					<Tooltip placement="bottom" title="Edit">
-						<span className="action--button mr-20">
+						<span onClick={handleEditPage} className="action--button mr-20">
 							<Icon fontSize="small">edit</Icon>
 						</span>
 					</Tooltip>
 					<Tooltip placement="bottom" title="Delete">
-						<span className="action--button mr-20">
+						<span onClick={handleDeletePage} className="action--button mr-20">
 							<Icon fontSize="small">delete</Icon>
 						</span>
 					</Tooltip>
@@ -37,9 +54,11 @@ export default function ResourceView() {
 				</div>
 			</div>
 			<div className="resource__content mt-8">
-				<div className="resource__content--view">
-					<Content />
-				</div>
+				<Spin spinning={actionLoading}>
+					<div className="resource__content--view">
+						<Content entitiesEdit={entitiesEdit} />
+					</div>
+				</Spin>
 			</div>
 		</div>
 	);

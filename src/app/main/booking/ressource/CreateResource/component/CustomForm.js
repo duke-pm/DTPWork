@@ -1,30 +1,29 @@
-// import { AntInput } from '@fuse/CustomForm/CreateAntField';
 import AntInputCustom from '@fuse/FormBookingCustom/AntInputCustom';
 import AntRadioColorCustom from '@fuse/FormBookingCustom/AntRadioColorCustom';
-// import AntRadioCustom from '@fuse/FormBookingCustom/AntRadioCustom';
-// import AntRadioVerticalCustom from '@fuse/FormBookingCustom/AntRadioVerticalCustom';
 import AntSelectCustom from '@fuse/FormBookingCustom/AntSelectCustom';
-// import AntSelectMultiCustom from '@fuse/FormBookingCustom/AntSelectMultiCustom';
 import { Button, Typography } from '@material-ui/core';
 import { Form, Formik, Field } from 'formik';
 import React from 'react';
+import * as Yup from 'yup';
+import { validateFieldEN } from '@fuse/core/DtpConfig';
+import { Spin } from 'antd';
 
-export default function CustomForm({ initital }) {
-	const colors = [
-		{ value: '#ffe0b2', color: '#ffe0b2' },
-		{ value: '#ffcdd2', color: '#ffcdd2' },
-		{ value: '#f8bbd0', color: '#f8bbd0' },
-		{ value: '#fff0b6', color: '#fff0b6' },
-		{ value: '#c8e6c9', color: '#c8e6c9' },
-		{ value: '#b2dfdb', color: '#b2dfdb' },
-		{ value: '#b2ebf2', color: '#b2ebf2' },
-		{ value: '#bbdffb', color: '#bbdffb' },
-		{ value: '#c5cae9', color: '#c5cae9' },
-		{ value: '#c1d4e9', color: '#c1d4e9' }
-	];
+export default function CustomForm({ initital, groupBkColor, bkResourceGroup, handleSubmitForm, actionLoading }) {
+	const validationSchema = Yup.object().shape({
+		name: Yup.string().required(`${validateFieldEN}`),
+		resourceGroup: Yup.string().required(`${validateFieldEN}`),
+		color: Yup.string().required(`${validateFieldEN}`)
+	});
 	return (
 		<>
-			<Formik enableReinitialize initialValues={initital}>
+			<Formik
+				validationSchema={validationSchema}
+				enableReinitialize
+				initialValues={initital}
+				onSubmit={values => {
+					handleSubmitForm(values);
+				}}
+			>
 				{({ handleSubmit, isSubmitting }) => (
 					<Form>
 						<div className=" mt-8 px-16 sm:px-24">
@@ -49,7 +48,7 @@ export default function CustomForm({ initital }) {
 							</div>
 							<div>
 								<Field
-									options={[]}
+									options={bkResourceGroup}
 									label="Resource group"
 									name="resourceGroup"
 									hasFeedback
@@ -60,7 +59,7 @@ export default function CustomForm({ initital }) {
 								<Field
 									label="Color"
 									name="color"
-									options={colors}
+									options={groupBkColor}
 									hasFeedback
 									component={AntRadioColorCustom}
 								/>
@@ -155,13 +154,22 @@ export default function CustomForm({ initital }) {
 								/>
 							</div> */}
 							<div className="flex justify-end">
-								<Button className="button__cancle mr-8" variant="contained" color="secondary">
+								{actionLoading ? (
+									<Spin style={{ marginRight: '20px' }} />
+								) : (
+									<Button
+										type="submit"
+										className="button__cancle mr-8"
+										variant="contained"
+										color="primary"
+									>
+										{' '}
+										<Typography variant="button"> Save </Typography>
+									</Button>
+								)}
+								<Button type="submit" className="button__cancle" variant="contained" color="secondary">
 									{' '}
 									<Typography variant="button"> Cancel </Typography>
-								</Button>
-								<Button className="button__form" variant="contained" color="primary">
-									{' '}
-									<Typography variant="button"> Create resource </Typography>
 								</Button>
 							</div>
 						</div>

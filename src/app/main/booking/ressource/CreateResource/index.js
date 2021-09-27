@@ -1,22 +1,48 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Icon, Typography } from '@material-ui/core';
-import { Tooltip } from 'antd';
-import React from 'react';
-import { useHistory } from 'react-router';
+import { Spin, Tooltip } from 'antd';
+import { getInformationCompany } from 'app/main/assets/Possesion/_redux/possesionActions';
+import React, { useEffect } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useHistory, useParams } from 'react-router';
 import Form from './component/index';
 
 export default function CreateResource() {
 	const histroy = useHistory();
-	const ExitPage = () => {
-		histroy.goBack();
-	};
+	const dispatch = useDispatch();
+	const params = useParams();
+	const paramsReq = 'BKResourceGroup,BKColor';
+	const ExitPage = () => histroy.goBack();
+	useEffect(() => {
+		dispatch(getInformationCompany(paramsReq));
+	}, [dispatch, paramsReq]);
+	const { currentState, inforCompany } = useSelector(
+		state => ({
+			currentState: state.booking.resource,
+			inforCompany: state.possesion
+		}),
+		shallowEqual
+	);
+	const { actionLoading, entitiesEdit } = currentState;
+	const { listloading, entitiesInformation } = inforCompany;
+	const groupBkColor = entitiesInformation?.bkColor
+		? entitiesInformation.bkColor.reduce(
+				(arr, curr) => [...arr, { value: curr.colorID, label: curr.label, color: curr.color }],
+				[]
+		  )
+		: [];
+	const bkResourceGroup = entitiesInformation?.bkResourceGroup
+		? entitiesInformation.bkResourceGroup.reduce(
+				(arr, curr) => [...arr, { value: curr.groupID, label: curr.groupName }],
+				[]
+		  )
+		: [];
 	return (
 		<div className="container resource">
 			<div className="resource__header px-16 shadow-lg">
 				<Typography color="primary" variant="h6">
-					{' '}
-					Create resource{' '}
+					{params.type === 'updated' ? 'Update resource' : 'Create resource'}
 				</Typography>
 				<div className="resource__header--action">
 					<Tooltip placement="bottom" title="Exit">
@@ -27,9 +53,17 @@ export default function CreateResource() {
 				</div>
 			</div>
 			<div className="resource__content mt-8">
-				<div className="createresource">
-					<Form />
-				</div>
+				<Spin spinning={listloading}>
+					<div className="createresource">
+						<Form
+							params={params}
+							actionLoading={actionLoading}
+							entitiesEdit={entitiesEdit}
+							groupBkColor={groupBkColor}
+							bkResourceGroup={bkResourceGroup}
+						/>
+					</div>
+				</Spin>
 			</div>
 		</div>
 	);
