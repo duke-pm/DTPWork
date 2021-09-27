@@ -131,7 +131,7 @@ export default function CustomForm({
 							<Spin className="ml-20" />
 						) : (
 							<Button type="submit" className="button__cancle mr-8" variant="contained" color="primary">
-								<Text variant="button" color="white">
+								<Text type="button" color="white">
 									Save
 								</Text>
 							</Button>
@@ -142,7 +142,7 @@ export default function CustomForm({
 							variant="contained"
 							color="secondary"
 						>
-							<Text variant="button">Cancel</Text>
+							<Text type="button">Cancel</Text>
 						</Button>
 					</div>
 				</Form>

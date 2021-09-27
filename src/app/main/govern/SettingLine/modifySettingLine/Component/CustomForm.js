@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 import { validateField } from '@fuse/core/DtpConfig';
 import AntdCustomCheckbox from '@fuse/FormBookingCustom/AntdCustomCheckbox';
 
-export default function CustomForm({ actionLoading, entitiesEdit, handleSubmitLine }) {
+export default function CustomForm({ actionLoading, entitiesEdit, handleSubmitLine, ExitPage }) {
 	let initial = {
 		id: '',
 		roleCode: '',
@@ -82,7 +82,12 @@ export default function CustomForm({ actionLoading, entitiesEdit, handleSubmitLi
 								</Text>
 							</Button>
 						)}
-						<Button className="button__cancle mr-8" variant="contained" color="secondary">
+						<Button
+							onClick={ExitPage}
+							className="button__cancle mr-8"
+							variant="contained"
+							color="secondary"
+						>
 							<Text type="button">Cancel</Text>
 						</Button>
 					</div>

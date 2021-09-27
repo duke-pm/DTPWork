@@ -30,9 +30,7 @@ export default function ModifyLevelApproval() {
 	const { entitiesInformation, listloading } = inforCompany;
 	const params = useParams();
 	const history = useHistory();
-	const ExitPage = () => {
-		history.goBack();
-	};
+	const ExitPage = () => history.goBack();
 	useEffect(() => {
 		if (params.type === 'cap-nhat' && !entitiesEdit) {
 			history.goBack();
@@ -87,7 +85,7 @@ export default function ModifyLevelApproval() {
 		<div className="container govern">
 			<div className="govern__header px-16">
 				<Text color="primary" type="title">
-					{params.type === 'cap-nhat' ? 'Chỉnh sửa quyền' : 'Tạo quyền mới'}
+					{params.type === 'cap-nhat' ? 'Chỉnh sửa cấp quyền' : 'Tạo cấp quyền mới'}
 				</Text>
 				<div className="govern__header--action">
 					<Tooltip placement="bottom" title="Exit">
@@ -109,6 +107,7 @@ export default function ModifyLevelApproval() {
 								roles={roles}
 								titleApproval={titleApproval}
 								users={users}
+								ExitPage={ExitPage}
 								entitiesEdit={entitiesEdit}
 								actionLoading={actionLoading}
 							/>

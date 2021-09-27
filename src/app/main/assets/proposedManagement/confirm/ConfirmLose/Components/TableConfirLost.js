@@ -147,7 +147,7 @@ export default function TableConfirLost({
 			rowKey="requestID"
 			pagination={false}
 			scroll={{
-				x: matchesSM ? 900 : null,
+				x: matchesSM ? 1200 : null,
 				y: null
 			}}
 			columns={columns}

@@ -148,7 +148,7 @@ export default function TableConfirDamaged({
 			pagination={false}
 			columns={columns}
 			scroll={{
-				x: matchesSM ? 900 : null,
+				x: matchesSM ? 1200 : null,
 				y: null
 			}}
 			dataSource={entities}

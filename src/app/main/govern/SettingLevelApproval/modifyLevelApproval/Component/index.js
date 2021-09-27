@@ -9,6 +9,7 @@ export default function FormComponent({
 	roles,
 	titleApproval,
 	users,
+	ExitPage,
 	setIsChange,
 	handleSubmitApproval
 }) {
@@ -22,6 +23,7 @@ export default function FormComponent({
 			handleSubmitApproval={handleSubmitApproval}
 			groupUser={groupUser}
 			roles={roles}
+			ExitPage={ExitPage}
 			titleApproval={titleApproval}
 			users={users}
 			entitiesEdit={entitiesEdit}
