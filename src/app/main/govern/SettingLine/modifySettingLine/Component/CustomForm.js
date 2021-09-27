@@ -42,7 +42,7 @@ export default function CustomForm({ actionLoading, entitiesEdit, handleSubmitLi
 		>
 			{({ handleSubmit, isSubmitting }) => (
 				<Form>
-					<div className="mt-8 px-16 sm:px-24">
+					<div className="mt-8">
 						<div>
 							<Field
 								hasFeedback
@@ -82,12 +82,7 @@ export default function CustomForm({ actionLoading, entitiesEdit, handleSubmitLi
 								</Text>
 							</Button>
 						)}
-						<Button
-							onClick={ExitPage}
-							className="button__cancle mr-8"
-							variant="contained"
-							color="secondary"
-						>
+						<Button onClick={ExitPage} className="button__cancle" variant="contained" color="secondary">
 							<Text type="button">Cancel</Text>
 						</Button>
 					</div>
