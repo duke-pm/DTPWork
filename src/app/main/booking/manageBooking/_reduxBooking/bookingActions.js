@@ -1,0 +1,161 @@
+import { notificationConfig, parseIntTime } from '@fuse/core/DtpConfig';
+import moment from 'moment';
+import * as requestFrom from './bookingCrud';
+import { callTypes, bookingSlice } from './bookingSlice';
+
+const { actions } = bookingSlice;
+export const fetchsBooking = (isMyBooking, limit, page) => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.list }));
+	const paramReq = {
+		page: page || 1,
+		limit: limit || 25,
+		IsMyBooking: isMyBooking || false
+	};
+	return requestFrom
+		.fetchsBooking(paramReq)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				const dataRes = data.data;
+				const total_count = data.totalRow;
+				dispatch(actions.fetchsBooking({ dataRes, total_count }));
+			} else {
+				dispatch(actions.catchErrors({ callType: callTypes.action }));
+				notificationConfig('warning', 'Faild', data.errorMessage);
+			}
+		})
+		.catch(err => {
+			dispatch(actions.catchErrors({ callType: callTypes.list }));
+			notificationConfig('warning', 'Thất bại', 'Server error');
+		});
+};
+export const fetchsBookingFilter =
+	(isMyBooking, limit, page, SortColumn, SortDirection, search, fromDate, toDate) => dispatch => {
+		dispatch(actions.startCall({ callType: callTypes.action }));
+		const paramReq = {
+			page: page || 1,
+			limit: limit || 25,
+			Search: search,
+			SortColumn: SortColumn || null,
+			SortDirection: SortDirection || 'asc',
+			IsMyBooking: isMyBooking || false,
+			FromDate: fromDate || null,
+			ToDate: toDate || null
+		};
+		return requestFrom
+			.fetchsBooking(paramReq)
+			.then(res => {
+				const { data } = res;
+				if (!data.isError) {
+					const dataRes = data.data;
+					const total_count = data.totalRow;
+					dispatch(actions.fetchsBooking({ dataRes, total_count }));
+				} else {
+					dispatch(actions.catchErrors({ callType: callTypes.action }));
+					notificationConfig('warning', 'Faild', data.errorMessage);
+				}
+			})
+			.catch(err => {
+				dispatch(actions.catchErrors({ callType: callTypes.action }));
+				notificationConfig('warning', 'Thất bại', 'Server error');
+			});
+	};
+
+export const setTaskEditBooking = task => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.action }));
+	dispatch(actions.fetchBooking({ task }));
+};
+
+export const createBooking = value => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.action }));
+	const StartTime = moment(value.timeStart).format('HH:mm');
+	const EndTime = moment(value.timeEnd).format('HH:mm');
+	const dataReq = {
+		BookID: '0',
+		ResourceID: value.resource,
+		Purpose: value.purpose,
+		Remarks: value.description,
+		StartDate: moment(value.startDate).format('YYYY/MM/DD'),
+		EndDate: moment(value.endDate).format('YYYY/MM/DD'),
+		StartTime: parseIntTime(StartTime),
+		EndTime: parseIntTime(EndTime),
+		ListParticipant: value.participants.length > 0 ? value.participants.toString() : null,
+		Lang: 'en'
+	};
+	return requestFrom
+		.bookingModify(dataReq)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				dispatch(actions.modifyBooking());
+			} else {
+				dispatch(actions.catchErrors({ callType: callTypes.action }));
+				notificationConfig('warning', 'Faild!!!', data.systemErrorMessage);
+			}
+			return data;
+		})
+		.catch(err => {
+			dispatch(actions.catchErrors({ callType: callTypes.action }));
+			notificationConfig('warning', 'Thất bại', 'Server error');
+		});
+};
+export const updateBooking = value => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.action }));
+	const StartTime = moment(value.timeStart).format('HH:mm');
+	const EndTime = moment(value.timeEnd).format('HH:mm');
+	const timeStartUpdate = parseIntTime(value.timeStartUpdate);
+	const timeEndUpdate = parseIntTime(value.timeEndUpdate);
+	const dataReq = {
+		BookID: value.id,
+		ResourceID: value.resource,
+		Purpose: value.purpose,
+		Remarks: value.description,
+		StartDate: moment(value.startDate).format('YYYY/MM/DD'),
+		EndDate: moment(value.endDate).format('YYYY/MM/DD'),
+		StartTime: !parseIntTime(StartTime) ? timeStartUpdate : parseIntTime(StartTime),
+		EndTime: !parseIntTime(EndTime) ? timeEndUpdate : parseIntTime(EndTime),
+		ListParticipant: value.participants.length > 0 ? value.participants.toString() : null,
+		Lang: 'en'
+	};
+	return requestFrom
+		.bookingModify(dataReq)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				const dataRes = data.data[0];
+				dispatch(actions.modifyBookingEdit({ dataRes }));
+			} else {
+				dispatch(actions.catchErrors({ callType: callTypes.action }));
+				notificationConfig('warning', 'Faild!!!', data.systemErrorMessage);
+			}
+			return data;
+		})
+		.catch(err => {
+			dispatch(actions.catchErrors({ callType: callTypes.action }));
+			notificationConfig('warning', 'Thất bại', 'Server error');
+		});
+};
+
+export const deleteBooking = bookingID => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.action }));
+	const paramReq = {
+		BookID: bookingID,
+		Lang: 'en'
+	};
+	return requestFrom
+		.removeBooking(paramReq)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				dispatch(actions.removeBooking({ bookingID }));
+				notificationConfig('success', 'Success!!!', 'Remove resource group success.');
+			} else {
+				dispatch(actions.catchErrors({ callType: callTypes.action }));
+				notificationConfig('warning', 'Faild!!!', data.systemErrorMessage);
+			}
+		})
+		.catch(err => {
+			dispatch(actions.catchErrors({ callType: callTypes.action }));
+			notificationConfig('warning', 'Fail', `Serrver error`);
+		});
+};

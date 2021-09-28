@@ -1,4 +1,4 @@
-import { Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import Search from 'antd/lib/input/Search';
 import React, { useContext, useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
@@ -6,7 +6,11 @@ import { useHistory } from 'react-router-dom';
 import Text from 'app/components/Text';
 import { Spin } from 'antd';
 import Panigation from '@fuse/core/FusePanigate';
-import { fetchResouceBooking, fetchResouceBookingFilter } from '../_reduxResourceBooking/resourceBookingActions';
+import {
+	fetchResouceBooking,
+	fetchResouceBookingFilter,
+	setTaskEditResource
+} from '../_reduxResourceBooking/resourceBookingActions';
 import TableResource from './component/TableResource';
 import { ResourceContext } from '../resourceContext';
 
@@ -17,6 +21,7 @@ export default function ResourcePage() {
 	const { page, rowPage, setPage, sort, search, setRowPage, setSort, setSearch } = resourceGroupContext;
 	const { currentState } = useSelector(state => ({ currentState: state.booking.resource }), shallowEqual);
 	const handleChangeRoute = () => {
+		dispatch(setTaskEditResource(null));
 		history.push('/booking/resource/modify-resource/create');
 	};
 	const { entities, listLoading, actionLoading, total_count } = currentState;

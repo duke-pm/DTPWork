@@ -1,3 +1,4 @@
+/* eslint-disable radix */
 /* eslint-disable no-return-assign */
 /* eslint-disable consistent-return */
 /* eslint-disable array-callback-return */
@@ -14,6 +15,12 @@ export const checkDeadline = time => {
 export const sortDirestion = {
 	ascend: 'asc',
 	descend: 'desc'
+};
+
+export const parseIntTime = string => {
+	const splitString = string.split(':');
+	const concatTime = splitString[0].concat(splitString[1]);
+	return parseInt(concatTime);
 };
 
 export const durationDay = (start, end) => {

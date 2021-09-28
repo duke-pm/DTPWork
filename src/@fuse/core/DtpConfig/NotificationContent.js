@@ -77,6 +77,10 @@ export const notificationContent = {
 			resource: {
 				edit: 'Updated resource successfully.',
 				create: 'Created resource successfully.'
+			},
+			booking: {
+				edit: 'Updated booking successfully.',
+				create: 'Created booking successfully.'
 			}
 		}
 	}

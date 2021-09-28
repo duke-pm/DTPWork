@@ -1,103 +1,107 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import { Grid, Typography } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { Avatar, Tag, Tooltip, Tabs, Input } from 'antd';
+import Text from 'app/components/Text';
 import React from 'react';
+import moment from 'moment';
+import { useHistory } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { deleteBooking } from '../../../_reduxBooking/bookingActions';
 
 const { TextArea } = Input;
 
 const { TabPane } = Tabs;
-export default function index() {
+export default function View({ entitiesEdit }) {
+	const history = useHistory();
+	const dispatch = useDispatch();
+	const HandleEdit = () => {
+		history.push('/booking/modify-booking/updated');
+	};
+	const handleDelete = () => {
+		history.goBack();
+		dispatch(deleteBooking(entitiesEdit.bookID));
+	};
 	return (
 		<Grid container item spacing={2}>
 			<Grid className="mb-20" item lg={6}>
-				<Typography variant="subtitle2" className="title__view" color="primary">
+				<Text type="subTitle" className="title__view" color="primary">
 					{' '}
 					INFORMATION{' '}
-				</Typography>
+				</Text>
 			</Grid>
 			<Grid container direction="row" justify="flex-end" alignItems="center" className="mb-20" lg={6}>
 				<div>
 					<Tooltip placement="bottom" title="Edit">
-						<button className="btn--primary mr-8"> Edit </button>
+						<button onClick={HandleEdit} className="btn--primary mr-8">
+							{' '}
+							Edit{' '}
+						</button>
 					</Tooltip>
 					<Tooltip placement="bottom" title="Delete">
-						<button className="btn--primary"> Delete </button>
+						<button onClick={handleDelete} className="btn--primary">
+							{' '}
+							Delete{' '}
+						</button>
 					</Tooltip>
 				</div>
 			</Grid>
 			<Grid item lg={6}>
-				<Typography variant="subtitle2" color="primary">
-					{' '}
-					Code :
-				</Typography>
+				<Text type="body"> Code :</Text>
 			</Grid>
 			<Grid item lg={6}>
 				{' '}
-				<Typography variant="body2"> BKRS-1</Typography>
+				<Text type="body">{entitiesEdit?.bookID}</Text>
 			</Grid>
 			<Grid item lg={6}>
-				<Typography variant="subtitle2" color="primary">
-					{' '}
-					Created by :
-				</Typography>
+				<Text type="body"> Created by :</Text>
 			</Grid>
 			<Grid item lg={6}>
 				<div className="flex items-center">
 					<Avatar size="small" style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
-						L
+						{entitiesEdit?.ownerNameAlpha}
 					</Avatar>{' '}
-					<Typography className="ml-8" variant="body2">
-						The Linh
-					</Typography>
+					<Text className="ml-8" type="body">
+						{entitiesEdit?.ownerName}
+					</Text>
 				</div>
 			</Grid>
 			<Grid item lg={6}>
-				<Typography variant="subtitle2" color="primary">
-					{' '}
-					Resource :
-				</Typography>
+				<Text type="body"> Resource :</Text>
 			</Grid>
 			<Grid item lg={6}>
 				{' '}
-				<Typography variant="body2">Phòng họp</Typography>
+				<Text type="body"> {entitiesEdit?.resourceName} </Text>
 			</Grid>
 			<Grid item lg={6}>
-				<Typography variant="subtitle2" color="primary">
-					Resource group:
-				</Typography>
+				<Text type="body">Resource group:</Text>
 			</Grid>
 			<Grid item lg={6}>
 				{' '}
-				<Typography variant="body2"> Phòng họp HCM</Typography>
+				<Text type="body"> {entitiesEdit?.groupName} </Text>
+			</Grid>
+			{/* <Grid item lg={6}>
+				<Text type="body">Frequency :</Text>
 			</Grid>
 			<Grid item lg={6}>
-				<Typography variant="subtitle2" color="primary">
-					Frequency :
-				</Typography>
-			</Grid>
+				<Text type="body"> One-time booking</Text>
+			</Grid> */}
 			<Grid item lg={6}>
-				<Typography variant="body2"> One-time booking</Typography>
-			</Grid>
-			<Grid item lg={6}>
-				<Typography variant="subtitle2" color="primary">
-					{' '}
-					Booking time :
-				</Typography>
+				<Text type="body"> Booking time :</Text>
 			</Grid>
 			<Grid container direction="row" justify="space-between" alignItems="center" item lg={6}>
-				<Tag>04/09/2021</Tag>
-				<Tag>22:00</Tag>
-				<Typography color="primary">to</Typography>
-				<Tag>04/09/2021</Tag>
-				<Tag>22:00</Tag>
+				<Tag>{moment(entitiesEdit?.startDate).format('DD/MM/YYYY')}</Tag>
+				<Tag>{entitiesEdit?.strStartTime}</Tag>
+				<Text color="primary">to</Text>
+				<Tag>{moment(entitiesEdit?.endDate).format('DD/MM/YYYY')}</Tag>
+				<Tag>{entitiesEdit?.strEndTime}</Tag>
 			</Grid>
 			<Grid item lg={12}>
-				<Typography variant="subtitle2" className="title__view" color="primary">
+				<Text type="subTitle" className="title__view" color="primary">
 					{' '}
 					ACTIVITIES{' '}
-				</Typography>
+				</Text>
 			</Grid>
 			<Grid item lg={12}>
 				<Tabs defaultActiveKey="1">
@@ -107,7 +111,7 @@ export default function index() {
 								<Avatar size="large" style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
 									L
 								</Avatar>{' '}
-								<TextArea placeholder="Write a comment" style={{ width: '90%' }} rows={2} />
+								<TextArea disabled placeholder="Write a comment" style={{ width: '90%' }} rows={2} />
 							</div>
 							<div>
 								<div className="mb-8">
@@ -118,12 +122,12 @@ export default function index() {
 										<div className="content__comment">
 											<div className="content__comment--detail">
 												<div className="flex content__comment--header items-center p-2">
-													<Typography variant="body1" color="primary">
+													<Text variant="body1" color="primary">
 														The Linh
-													</Typography>
-													<Typography variant="caption" className="ml-8 time">
+													</Text>
+													<Text variant="caption" className="ml-8 time">
 														31/08/2021 01:38 +07:00
-													</Typography>
+													</Text>
 												</div>
 												<div className="">Test</div>
 											</div>
@@ -143,12 +147,12 @@ export default function index() {
 										<div className="content__comment">
 											<div className="content__comment--detail">
 												<div className="flex content__comment--header items-center p-2">
-													<Typography variant="body1" color="primary">
+													<Text variant="body1" color="primary">
 														The Linh
-													</Typography>
-													<Typography variant="caption" className="ml-8 time">
+													</Text>
+													<Text variant="caption" className="ml-8 time">
 														31/08/2021 01:38 +07:00
-													</Typography>
+													</Text>
 												</div>
 												<div className="">Test</div>
 											</div>
@@ -164,9 +168,7 @@ export default function index() {
 						</div>
 					</TabPane>
 					{/* <TabPane tab="Logs" key="2">
-						<div>
-
-						</div>
+						<div />
 					</TabPane> */}
 				</Tabs>
 			</Grid>

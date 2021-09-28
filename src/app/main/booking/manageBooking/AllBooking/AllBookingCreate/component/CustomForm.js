@@ -1,30 +1,47 @@
 // import { AntInput } from '@fuse/CustomForm/CreateAntField';
-import AntCascadeCustom from '@fuse/FormBookingCustom/AntCascadeCustom';
+import { validateFieldEN } from '@fuse/core/DtpConfig';
 import AntDateCustom from '@fuse/FormBookingCustom/AntDateCustom';
 // import AntDatepickerCustom from '@fuse/FormBookingCustom/AntDatepickerCustom';
 import AntDescriptionsCustom from '@fuse/FormBookingCustom/AntDescriptionsCustom';
 import AntInputCustom from '@fuse/FormBookingCustom/AntInputCustom';
-import AntRadioCustom from '@fuse/FormBookingCustom/AntRadioCustom';
+// import AntRadioCustom from '@fuse/FormBookingCustom/AntRadioCustom';
+import AntSelectCustom from '@fuse/FormBookingCustom/AntSelectCustom';
 import AntSelectMultiCustom from '@fuse/FormBookingCustom/AntSelectMultiCustom';
 import AntTimeCustom from '@fuse/FormBookingCustom/AntTimeCustom';
-import { Button, Icon, Typography } from '@material-ui/core';
+import { Button, Icon } from '@material-ui/core';
+import { Spin } from 'antd';
+import Text from 'app/components/Text';
 import { Form, Formik, Field } from 'formik';
 import React from 'react';
+import * as Yup from 'yup';
 
-const options = [{ label: 'Phong hop HCM', value: 1, children: [{ label: 'Phòng họp', value: 2 }] }];
-export default function CustomForm({ initital }) {
-	console.log(initital);
+export default function CustomForm({ initital, bkResource, Users, handleSubmitForm, actionLoading, ExitPage }) {
+	const validationSchema = Yup.object().shape({
+		resource: Yup.string().required(`${validateFieldEN}`).nullable(),
+		purpose: Yup.string().required(`${validateFieldEN}`),
+		startDate: Yup.string().required(`${validateFieldEN}`).nullable(),
+		endDate: Yup.string().required(`${validateFieldEN}`).nullable(),
+		timeStart: Yup.string().required(`${validateFieldEN}`).nullable(),
+		timeEnd: Yup.string().required(`${validateFieldEN}`).nullable()
+	});
 	return (
 		<>
-			<Formik enableReinitialize initialValues={initital}>
+			<Formik
+				validationSchema={validationSchema}
+				enableReinitialize
+				initialValues={initital}
+				onSubmit={values => {
+					handleSubmitForm(values);
+				}}
+			>
 				{({ handleSubmit, isSubmitting }) => (
 					<Form>
 						<div className=" mt-8 px-16 sm:px-24">
 							<div className="mb-20">
-								<Typography variant="subtitle2" className="title__view" color="primary">
+								<Text type="subTitle" color="primary">
 									{' '}
 									GENERAL INFORMATION{' '}
-								</Typography>
+								</Text>
 							</div>
 							<div>
 								<Field
@@ -32,24 +49,17 @@ export default function CustomForm({ initital }) {
 									name="resource"
 									placeholder="Enter resource name"
 									hasFeedback
-									options={options}
-									component={AntCascadeCustom}
+									options={bkResource}
+									component={AntSelectCustom}
 								/>
 							</div>
 							<div>
-								<Field
-									label="Purpose"
-									name="purpose"
-									hasFeedback
-									type="text"
-									component={AntInputCustom}
-								/>
+								<Field label="Purpose" name="purpose" hasFeedback component={AntInputCustom} />
 							</div>
 							<div>
 								<Field
 									label="Description"
 									name="description"
-									hasFeedback
 									row={4}
 									component={AntDescriptionsCustom}
 								/>
@@ -58,33 +68,32 @@ export default function CustomForm({ initital }) {
 								<Field
 									label="Participants"
 									name="participants"
-									hasFeedback
-									options={[{ value: 1, label: 'TheLinh' }]}
+									options={Users}
 									component={AntSelectMultiCustom}
 								/>
 							</div>
-							<div>
+							{/* <div>
 								<Field
 									name="checkBooking"
 									options={[{ value: true, label: 'One-time booking' }]}
 									component={AntRadioCustom}
 								/>
-							</div>
+							</div> */}
 							<div className="control-booking-time">
 								<div className={`flex flex-row `}>
-									<Typography color="primary" variant="body1" className="label--form">
+									<Text type="body" className="label--form">
 										Booking time
-									</Typography>
+									</Text>
 									<p style={{ marginBottom: '-20px' }} className="text-red">
 										*
 									</p>
 								</div>
 								<div className="flex justify-between">
 									<div className="flex justify-between items-center">
-										<Field name="booking.startDate" component={AntDateCustom} hasFeedback />
+										<Field name="startDate" component={AntDateCustom} hasFeedback />
 										<Field
 											marginleft="10px"
-											name="booking.timeStart"
+											name="timeStart"
 											component={AntTimeCustom}
 											hasFeedback
 										/>
@@ -97,24 +106,33 @@ export default function CustomForm({ initital }) {
 										</Icon>{' '}
 									</div>
 									<div className="flex">
-										<Field name="booking.endDate" component={AntDateCustom} hasFeedback />
-										<Field
-											marginleft="10px"
-											name="booking.timeEnd"
-											component={AntTimeCustom}
-											hasFeedback
-										/>
+										<Field name="endDate" component={AntDateCustom} hasFeedback />
+										<Field marginleft="10px" name="timeEnd" component={AntTimeCustom} hasFeedback />
 									</div>
 								</div>
 							</div>
-							<div className="flex justify-end">
-								<Button className="button__cancle mr-8" variant="contained" color="secondary">
-									{' '}
-									<Typography variant="button"> Cancel </Typography>
-								</Button>
-								<Button className="button__form" variant="contained" color="primary">
-									{' '}
-									<Typography variant="button"> Create booking </Typography>
+							<div className="flex items-center justify-end">
+								{actionLoading ? (
+									<Spin className="ml-20" />
+								) : (
+									<Button
+										type="submit"
+										className="button__cancle mr-8"
+										variant="contained"
+										color="primary"
+									>
+										<Text type="button" color="white">
+											Save
+										</Text>
+									</Button>
+								)}
+								<Button
+									onClick={ExitPage}
+									className="button__cancle"
+									variant="contained"
+									color="secondary"
+								>
+									<Text type="button">Cancel</Text>
 								</Button>
 							</div>
 						</div>

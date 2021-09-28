@@ -25,6 +25,9 @@
     color: $primary-page;
     border-radius: 4px;
 }
+.ant-badge-status-text{
+    font-size: 1.3rem !important;
+}
 .resource{
     height: 100vh;
     overflow: hidden;
@@ -217,7 +220,7 @@
         }
     }
     &__content{
-        height: calc(100vh - 175px);
+        height: calc(100vh - 215px);
         overflow-x: hidden;
         overflow-y: auto;
         &--table{
@@ -320,4 +323,64 @@
 
 .label--form{
     margin-bottom: 10px;
+}
+.rbc-month-view{
+    border: #f3f4f6 !important;
+}
+.rbc-header{
+    color: $primary-page !important;
+    font-weight: 600 !important;
+    border-bottom: 1px solid #fff !important;
+}
+.rbc-off-range-bg{
+    background-color: rgb(243, 244, 246) !important;
+}
+.rbc-row-bg{
+    background-color: rgb(250, 251, 251);
+}
+.rbc-month-row + .rbc-month-row{
+border-top: 1px solid #fff !important
+}
+.rbc-day-bg + .rbc-day-bg{
+    border-left: 1px solid #fff !important;
+}
+.rbc-header + .rbc-header{
+    border-left: 1px solid #fff !important;
+}
+
+.buttonToday{
+    width: 87px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    border-radius: 4px;
+    background-color: rgb(243, 244, 246);
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: normal;
+    padding: 8px 16px;
+    border: none;
+    outline: none;
+}
+.buttonIcon{
+    height: 32px;
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    background-color: rgb(243, 244, 246);
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: normal;
+    padding: 8px 16px;
+}
+.rbc-date-cell.rbc-now{
+    color: #f77a0c !important;
+    a{
+        border-bottom: 1px solid #f77a0c;
+    }
+}
+.rbc-date-cell{
+    a{
+        text-decoration: none !important;
+    }
 }

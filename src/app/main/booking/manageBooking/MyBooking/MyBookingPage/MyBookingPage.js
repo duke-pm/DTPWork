@@ -33,16 +33,22 @@ export default function AllBookingPage() {
 			<div className="booking__subcontent px-16">
 				<Typography color="primary" variant="subtitle1">
 					{' '}
-					9 Booking{' '}
+					8 Booking{' '}
 				</Typography>
 				<div className="booking__subcontent--action">
 					<span onClick={handleChangeRouteList} className="btn__btn--action mr-16">
 						{' '}
-						<Icon fontSize="small"> border_all </Icon>{' '}
+						<Icon fontSize="small" color="primary">
+							{' '}
+							border_all{' '}
+						</Icon>{' '}
 					</span>
 					<span className="btn__btn--action active">
 						{' '}
-						<Icon fontSize="small"> list </Icon>{' '}
+						<Icon fontSize="small" color="primary">
+							{' '}
+							list{' '}
+						</Icon>{' '}
 					</span>
 				</div>
 			</div>

@@ -27,11 +27,12 @@ export default function AntTimeCustom({
 	const hasError = form.errors[field.name];
 	const submittedError = hasError && submitted;
 	const touchedError = hasError && touched;
-	// const { value } = field;
+	const { value } = field;
 	const handleDateChange = (time, timeString) => {
 		form.setFieldValue(field.name, time);
 	};
 	// const dateFormat = 'DD/MM/YYYY';
+	const format = 'HH:mm';
 	return (
 		<>
 			<div className={`form-item-input ${position && 'flex flex-row justify-between '}`}>
@@ -52,7 +53,11 @@ export default function AntTimeCustom({
 					help={submittedError || touchedError ? hasError : false}
 					validateStatus={submittedError || touchedError ? 'error' : 'success'}
 				>
-					<TimePicker onChange={handleDateChange} defaultOpenValue={moment('00:00:00', 'HH:mm:ss')} />
+					<TimePicker
+						format={format}
+						onChange={handleDateChange}
+						defaultValue={moment(value || '00:00', format)}
+					/>
 				</FormItem>
 			</div>
 		</>

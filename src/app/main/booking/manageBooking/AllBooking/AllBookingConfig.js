@@ -13,7 +13,7 @@ const AllBookingConfig = {
 			component: React.lazy(() => import('./AllBookingPage'))
 		},
 		{
-			path: '/booking/create-booking',
+			path: '/booking/modify-booking/:type',
 			component: React.lazy(() => import('./AllBookingCreate'))
 		},
 		{
