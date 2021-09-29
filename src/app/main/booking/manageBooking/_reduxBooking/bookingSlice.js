@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
 	entities: null,
+	entitiesCalendar: [],
 	entitiesEdit: null,
 	total_count: 0,
 	listLoading: false,
@@ -34,8 +35,9 @@ export const bookingSlice = createSlice({
 			}
 		},
 		fetchsBooking: (state, action) => {
-			const { dataRes, total_count } = action.payload;
+			const { dataRes, total_count, dataCalender } = action.payload;
 			state.listLoading = false;
+			state.entitiesCalendar = dataCalender;
 			state.actionLoading = false;
 			state.entities = dataRes;
 			state.total_count = total_count;
@@ -56,9 +58,11 @@ export const bookingSlice = createSlice({
 		removeBooking: (state, action) => {
 			const { bookingID } = action.payload;
 			state.actionLoading = false;
-			const { entities } = state;
+			const { entities, entitiesCalendar } = state;
+			const newArrayCalendar = entitiesCalendar.filter(item => item.bookID !== bookingID);
 			const newArray = entities.lstBooking.filter(item => item.bookID !== bookingID);
 			state.entities.lstBooking = newArray;
+			state.entitiesCalendar = newArrayCalendar;
 		}
 	}
 });

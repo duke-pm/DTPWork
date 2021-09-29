@@ -32,20 +32,22 @@ export default function View({ entitiesEdit }) {
 				</Text>
 			</Grid>
 			<Grid container direction="row" justify="flex-end" alignItems="center" className="mb-20" lg={6}>
-				<div>
-					<Tooltip placement="bottom" title="Edit">
-						<button onClick={HandleEdit} className="btn--primary mr-8">
-							{' '}
-							Edit{' '}
-						</button>
-					</Tooltip>
-					<Tooltip placement="bottom" title="Delete">
-						<button onClick={handleDelete} className="btn--primary">
-							{' '}
-							Delete{' '}
-						</button>
-					</Tooltip>
-				</div>
+				{entitiesEdit?.isUpdated && (
+					<div>
+						<Tooltip placement="bottom" title="Edit">
+							<button onClick={HandleEdit} className="btn--primary mr-8">
+								{' '}
+								Edit{' '}
+							</button>
+						</Tooltip>
+						<Tooltip placement="bottom" title="Delete">
+							<button onClick={handleDelete} className="btn--primary">
+								{' '}
+								Delete{' '}
+							</button>
+						</Tooltip>
+					</div>
+				)}
 			</Grid>
 			<Grid item lg={6}>
 				<Text type="body"> Code :</Text>

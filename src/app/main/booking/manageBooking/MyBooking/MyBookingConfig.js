@@ -15,14 +15,6 @@ const MyBookingConfig = {
 		{
 			path: '/booking/calendar-my-booking',
 			component: React.lazy(() => import('./MyBookingCalendar'))
-		},
-		{
-			path: '/booking/create-my-booking',
-			component: React.lazy(() => import('./MyBookingCreate'))
-		},
-		{
-			path: '/booking/view/:id',
-			component: React.lazy(() => import('./MyBookingView'))
 		}
 	]
 };

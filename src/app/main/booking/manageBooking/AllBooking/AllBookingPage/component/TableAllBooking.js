@@ -1,3 +1,4 @@
+/* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Icon } from '@material-ui/core';
@@ -115,15 +116,23 @@ export default function TableAllBooking({ entities, listLoading, createSortHandl
 			key: 'status',
 			render: (_, item) => (
 				<div className="flex justify-end">
-					<Tooltip placement="bottom" title="Edit">
-						<span onClick={() => handleEdit(item)} className="action--button mr-14">
+					<Tooltip disabled placement="bottom" title="Edit">
+						<button
+							disabled={!item.isUpdated}
+							onClick={() => handleEdit(item)}
+							className="action--button mr-14"
+						>
 							<Icon fontSize="small">edit</Icon>
-						</span>
+						</button>
 					</Tooltip>
 					<Tooltip placement="bottom" title="Delete">
-						<span onClick={() => handleDelete(item)} className="action--button ">
+						<button
+							disabled={!item.isUpdated}
+							onClick={() => handleDelete(item)}
+							className="action--button "
+						>
 							<Icon size="small">delete</Icon>
-						</span>
+						</button>
 					</Tooltip>
 				</div>
 			)

@@ -106,22 +106,17 @@ export default function AllBookingPage() {
 					<Badge
 						style={{ marginLeft: '12px' }}
 						color="#069662"
-						text={`${entities?.header?.[0].countApproved} Approved`}
+						text={`${entities?.header?.[0].countHappening} Happening`}
 					/>
 					<Badge
 						style={{ marginLeft: '12px' }}
 						color="#d71d31"
-						text={`${entities?.header?.[0].countRejected} Rejected`}
+						text={`${entities?.header?.[0].countOutOfDate} Out of date`}
 					/>
 					<Badge
 						style={{ marginLeft: '12px' }}
 						color="#f1b228"
 						text={`${entities?.header?.[0].countPending} Pending`}
-					/>
-					<Badge
-						style={{ marginLeft: '12px' }}
-						color="#172b4d"
-						text={`${entities?.header?.[0].countCancelled} Cancelled`}
 					/>
 				</div>
 				<div className="booking__subcontent--action">

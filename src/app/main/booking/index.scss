@@ -6,6 +6,10 @@
     width: $button-md;
     height:$button-height;
 }
+.button__create--sm{
+    width: $button-small;
+    height:$button-height;
+}
 .button__form{
     width: $button-small;
     height: $button-height;
@@ -347,6 +351,34 @@ border-top: 1px solid #fff !important
 .rbc-header + .rbc-header{
     border-left: 1px solid #fff !important;
 }
+.rbc-event{
+    padding: 0 0 !important;
+    color: #172b4d !important;
+}
+.container--content{
+    border-radius: 5px;
+    position: relative;
+    .tag{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 5px;
+        border-bottom-left-radius: 5px;
+        border-top-left-radius: 5px;
+        height: 100%;
+        // background-color: #069662;
+    }
+    .time-content{
+        font-size: 1.1rem !important;
+        font-weight: 600 !important;
+    }
+    .title-content{
+        font-size: 1.1rem !important;
+    }
+    // .title-event{
+    //     white-space: nowrap;
+    // }
+}
 
 .buttonToday{
     width: 87px;
@@ -382,5 +414,36 @@ border-top: 1px solid #fff !important
 .rbc-date-cell{
     a{
         text-decoration: none !important;
+    }
+}
+.popever-event{
+    width: 350px;
+    .status{
+    width: 85px;
+    height: 26px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    border-radius: 4px;
+    }
+    .radio{
+        width:16px;
+        height: 16px;
+        border-radius: 2px;
+    }
+    .action--button{
+        display: flex;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        align-items: center;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: .4s;
+        &:hover{
+            background-color: $primary-page;
+            color: $white;
+        }
     }
 }

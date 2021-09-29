@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Button, Icon, Typography } from '@material-ui/core';
 import Search from 'antd/lib/input/Search';
+import Text from 'app/components/Text';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import TableAllBooking from './component/TableAllBooking';
@@ -11,7 +12,7 @@ import TableAllBooking from './component/TableAllBooking';
 export default function AllBookingPage() {
 	const history = useHistory();
 	const handleChangeRoute = () => {
-		history.push('/booking/create-booking');
+		history.push('/booking/modify-booking/created');
 	};
 	const handleChangeRouteList = () => {
 		history.push('/booking/calendar-my-booking');
@@ -26,7 +27,7 @@ export default function AllBookingPage() {
 					<Search className="input__search" placeholder="Search" />
 					<Button onClick={handleChangeRoute} className="button__create" variant="contained" color="primary">
 						{' '}
-						<Typography variant="body2"> Create booking </Typography>
+						<Text type="button"> Create booking </Text>
 					</Button>
 				</div>
 			</div>

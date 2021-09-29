@@ -6,19 +6,38 @@ import Text from 'app/components/Text';
 import React from 'react';
 import moment from 'moment';
 import { useHistory } from 'react-router';
+import { shallowEqual, useSelector } from 'react-redux';
+import { Badge, Tooltip } from 'antd';
 
 export default function CustomToolbar(props) {
 	const history = useHistory();
 	const handleChangeRouteList = () => {
 		history.push('/booking/list-my-booking');
 	};
+	const { currentState } = useSelector(state => ({ currentState: state.booking.booking }), shallowEqual);
+	const { entities } = currentState;
 	return (
 		<div className="booking__subcontent">
-			<div>
-				<Text color="primary" variant="subtitle1">
+			<div className="flex justify-between">
+				<Text color="primary" type="subTitle">
 					{' '}
-					9 Booking{' '}
+					{entities?.header?.[0].countMyBooking} Booking{' '}
 				</Text>
+				<Badge
+					style={{ marginLeft: '12px' }}
+					color="#069662"
+					text={`${entities?.header?.[0].countHappening} Happening`}
+				/>
+				<Badge
+					style={{ marginLeft: '12px' }}
+					color="#d71d31"
+					text={`${entities?.header?.[0].countOutOfDate} Out of date`}
+				/>
+				<Badge
+					style={{ marginLeft: '12px' }}
+					color="#f1b228"
+					text={`${entities?.header?.[0].countPending} Pending`}
+				/>
 			</div>
 			<div className="flex justify-between items-center">
 				<button onClick={() => props.onNavigate('TODAY')} className="buttonToday mr-16">
@@ -26,6 +45,13 @@ export default function CustomToolbar(props) {
 						Today
 					</Text>
 				</button>
+				<Tooltip placement="bottom" title="Mode month">
+					<button onClick={() => props.onView('month')} className="buttonToday mr-16">
+						<Text color="primary" type="subTitle">
+							Month
+						</Text>
+					</button>
+				</Tooltip>
 				<button onClick={() => props.onNavigate('PREV')} className="buttonIcon  mr-16">
 					{' '}
 					<Icon color="primary"> navigate_before </Icon>{' '}

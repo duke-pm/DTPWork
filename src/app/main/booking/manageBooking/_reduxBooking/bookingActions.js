@@ -18,7 +18,38 @@ export const fetchsBooking = (isMyBooking, limit, page) => dispatch => {
 			if (!data.isError) {
 				const dataRes = data.data;
 				const total_count = data.totalRow;
-				dispatch(actions.fetchsBooking({ dataRes, total_count }));
+				const dataCalender = dataRes?.lstBooking.reduce(
+					(arr, curr) => [
+						...arr,
+						{
+							bookID: curr.bookID,
+							id: curr.bookID,
+							title: curr.purpose,
+							purpose: curr.purpose,
+							color: curr.color,
+							ownerName: curr.ownerName,
+							ownerAlpha: curr.ownerNameAlpha,
+							status: curr.statusName,
+							resourceName: curr.resourceName,
+							resourceID: curr.resourceID,
+							groupName: curr.groupName,
+							startTime: curr.strStartTime,
+							endTime: curr.strEndTime,
+							start: curr.startDate,
+							end: curr.endDate,
+							remarks: curr.remarks,
+							listUserIDJoined: curr.listUserIDJoined,
+							startDate: curr.startDate,
+							endDate: curr.endDate,
+							strStartTime: curr.strStartTime,
+							strEndTime: curr.strEndTime,
+							icon: curr.icon,
+							isUpdated: curr.isUpdated
+						}
+					],
+					[]
+				);
+				dispatch(actions.fetchsBooking({ dataRes, total_count, dataCalender }));
 			} else {
 				dispatch(actions.catchErrors({ callType: callTypes.action }));
 				notificationConfig('warning', 'Faild', data.errorMessage);
@@ -49,7 +80,37 @@ export const fetchsBookingFilter =
 				if (!data.isError) {
 					const dataRes = data.data;
 					const total_count = data.totalRow;
-					dispatch(actions.fetchsBooking({ dataRes, total_count }));
+					const dataCalender = dataRes?.lstBooking.reduce(
+						(arr, curr) => [
+							...arr,
+							{
+								id: curr.bookID,
+								title: curr.purpose,
+								purpose: curr.purpose,
+								color: curr.color,
+								ownerName: curr.ownerName,
+								ownerAlpha: curr.ownerNameAlpha,
+								status: curr.statusName,
+								resourceName: curr.resourceName,
+								resourceID: curr.resourceID,
+								groupName: curr.groupName,
+								startTime: curr.strStartTime,
+								endTime: curr.strEndTime,
+								start: curr.startDate,
+								end: curr.endDate,
+								remarks: curr.remarks,
+								listUserIDJoined: curr.listUserIDJoined,
+								startDate: curr.startDate,
+								endDate: curr.endDate,
+								strStartTime: curr.strStartTime,
+								strEndTime: curr.strEndTime,
+								icon: curr.icon,
+								isUpdated: curr.isUpdated
+							}
+						],
+						[]
+					);
+					dispatch(actions.fetchsBooking({ dataRes, total_count, dataCalender }));
 				} else {
 					dispatch(actions.catchErrors({ callType: callTypes.action }));
 					notificationConfig('warning', 'Faild', data.errorMessage);
@@ -148,7 +209,7 @@ export const deleteBooking = bookingID => dispatch => {
 			const { data } = res;
 			if (!data.isError) {
 				dispatch(actions.removeBooking({ bookingID }));
-				notificationConfig('success', 'Success!!!', 'Remove resource group success.');
+				notificationConfig('success', 'Success!!!', 'Remove booking success.');
 			} else {
 				dispatch(actions.catchErrors({ callType: callTypes.action }));
 				notificationConfig('warning', 'Faild!!!', data.systemErrorMessage);

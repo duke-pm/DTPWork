@@ -43,7 +43,7 @@ export default function AllBookingCreate() {
 			<div className="booking__header px-16 shadow-lg">
 				<Typography color="primary" variant="h6">
 					{' '}
-					Create Booking
+					{params.type === 'updated' ? 'Update booking' : 'Create booking'}
 				</Typography>
 				<div className="booking__header--action">
 					<Tooltip placement="bottom" title="Exit">
