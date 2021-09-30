@@ -10,25 +10,20 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import 'moment/locale/vi';
 import moment from 'moment';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { Avatar, Popover, Spin, Tag, Tooltip } from 'antd';
+import { Popover, Spin } from 'antd';
 import Text from 'app/components/Text';
 import CustomToolbar from './component/CustomToolbar';
-import { fetchsBooking, fetchsBookingFilter } from '../../_reduxBooking/bookingActions';
+import { fetchsBooking, fetchsBookingFilter, setTaskEditBooking } from '../../_reduxBooking/bookingActions';
 import { BookingContext } from '../MyBookingContext';
 import ContentTooltip from './component/ContentTooltip';
-
-const colorStatus = {
-	Happening: '#069662',
-	Happened: '#d71d31',
-	Pending: '#f1b228'
-};
+import { colorStatus } from '../../BookingConfig';
 
 const allViews = Object.keys(Views).map(k => Views[k]);
 const MonthEvent = ({ event }) => {
 	return (
 		<Popover content={<ContentTooltip event={event} />}>
 			<div className="container--content flex items-center" style={{ backgroundColor: event.color }}>
-				<span style={{ backgroundColor: colorStatus[event.status] }} className="tag" />
+				<span style={{ backgroundColor: colorStatus[event.statusName] }} className="tag" />
 				<div className="ml-8 time-content">{event.startTime}</div>
 				<div className="ml-8 title-content truncate">{event.title}</div>
 			</div>
@@ -44,6 +39,7 @@ export default function MyBookingCalendar(props) {
 	const { page, limit, setToDate, setFromDate, search } = myBookingContext;
 	const dispatch = useDispatch();
 	const handleChangeRoute = () => {
+		dispatch(setTaskEditBooking(null));
 		history.push('/booking/modify-booking/created');
 	};
 	useEffect(() => {

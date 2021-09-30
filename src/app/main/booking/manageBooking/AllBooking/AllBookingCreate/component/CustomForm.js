@@ -4,7 +4,7 @@ import AntDateCustom from '@fuse/FormBookingCustom/AntDateCustom';
 // import AntDatepickerCustom from '@fuse/FormBookingCustom/AntDatepickerCustom';
 import AntDescriptionsCustom from '@fuse/FormBookingCustom/AntDescriptionsCustom';
 import AntInputCustom from '@fuse/FormBookingCustom/AntInputCustom';
-// import AntRadioCustom from '@fuse/FormBookingCustom/AntRadioCustom';
+import AntdCustomCheckbox from '@fuse/FormBookingCustom/AntdCustomCheckbox';
 import AntSelectCustom from '@fuse/FormBookingCustom/AntSelectCustom';
 import AntSelectMultiCustom from '@fuse/FormBookingCustom/AntSelectMultiCustom';
 import AntTimeCustom from '@fuse/FormBookingCustom/AntTimeCustom';
@@ -72,13 +72,15 @@ export default function CustomForm({ initital, bkResource, Users, handleSubmitFo
 									component={AntSelectMultiCustom}
 								/>
 							</div>
-							{/* <div>
+							<div>
 								<Field
 									name="checkBooking"
-									options={[{ value: true, label: 'One-time booking' }]}
-									component={AntRadioCustom}
+									label="One-time booking"
+									position
+									value={initital.checkBooking}
+									component={AntdCustomCheckbox}
 								/>
-							</div> */}
+							</div>
 							<div className="control-booking-time">
 								<div className={`flex flex-row `}>
 									<Text type="body" className="label--form">

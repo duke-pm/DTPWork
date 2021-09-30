@@ -39,7 +39,8 @@ export default function From({ bkResource, Users, actionLoading, ExitPage, entit
 			timeStart: entitiesEdit?.strStartTime,
 			timeEnd: entitiesEdit?.strEndTime,
 			timeStartUpdate: entitiesEdit?.strStartTime,
-			timeEndUpdate: entitiesEdit?.strEndTime
+			timeEndUpdate: entitiesEdit?.strEndTime,
+			checkBooking: entitiesEdit?.isOneTimeBooking
 		};
 	}
 	const handleSubmitForm = value => {

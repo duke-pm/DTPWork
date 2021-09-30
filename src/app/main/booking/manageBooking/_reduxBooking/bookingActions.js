@@ -28,8 +28,8 @@ export const fetchsBooking = (isMyBooking, limit, page) => dispatch => {
 							purpose: curr.purpose,
 							color: curr.color,
 							ownerName: curr.ownerName,
-							ownerAlpha: curr.ownerNameAlpha,
-							status: curr.statusName,
+							ownerNameAlpha: curr.ownerNameAlpha,
+							statusName: curr.statusName,
 							resourceName: curr.resourceName,
 							resourceID: curr.resourceID,
 							groupName: curr.groupName,
@@ -39,12 +39,15 @@ export const fetchsBooking = (isMyBooking, limit, page) => dispatch => {
 							end: curr.endDate,
 							remarks: curr.remarks,
 							listUserIDJoined: curr.listUserIDJoined,
+							lstUserJoined: curr.lstUserJoined,
 							startDate: curr.startDate,
 							endDate: curr.endDate,
 							strStartTime: curr.strStartTime,
 							strEndTime: curr.strEndTime,
 							icon: curr.icon,
-							isUpdated: curr.isUpdated
+							isUpdated: curr.isUpdated,
+							isOneTimeBooking: curr.isOneTimeBooking,
+							strOneTimeBooking: curr.strOneTimeBooking
 						}
 					],
 					[]
@@ -85,12 +88,13 @@ export const fetchsBookingFilter =
 							...arr,
 							{
 								id: curr.bookID,
+								bookID: curr.bookID,
 								title: curr.purpose,
 								purpose: curr.purpose,
 								color: curr.color,
 								ownerName: curr.ownerName,
-								ownerAlpha: curr.ownerNameAlpha,
-								status: curr.statusName,
+								ownerNameAlpha: curr.ownerNameAlpha,
+								statusName: curr.statusName,
 								resourceName: curr.resourceName,
 								resourceID: curr.resourceID,
 								groupName: curr.groupName,
@@ -100,12 +104,15 @@ export const fetchsBookingFilter =
 								end: curr.endDate,
 								remarks: curr.remarks,
 								listUserIDJoined: curr.listUserIDJoined,
+								lstUserJoined: curr.lstUserJoined,
 								startDate: curr.startDate,
 								endDate: curr.endDate,
 								strStartTime: curr.strStartTime,
 								strEndTime: curr.strEndTime,
 								icon: curr.icon,
-								isUpdated: curr.isUpdated
+								isUpdated: curr.isUpdated,
+								isOneTimeBooking: curr.isOneTimeBooking,
+								strOneTimeBooking: curr.strOneTimeBooking
 							}
 						],
 						[]
@@ -136,6 +143,7 @@ export const createBooking = value => dispatch => {
 		ResourceID: value.resource,
 		Purpose: value.purpose,
 		Remarks: value.description,
+		IsOneTimeBooking: value.checkBooking,
 		StartDate: moment(value.startDate).format('YYYY/MM/DD'),
 		EndDate: moment(value.endDate).format('YYYY/MM/DD'),
 		StartTime: parseIntTime(StartTime),
@@ -171,6 +179,7 @@ export const updateBooking = value => dispatch => {
 		ResourceID: value.resource,
 		Purpose: value.purpose,
 		Remarks: value.description,
+		IsOneTimeBooking: value.checkBooking,
 		StartDate: moment(value.startDate).format('YYYY/MM/DD'),
 		EndDate: moment(value.endDate).format('YYYY/MM/DD'),
 		StartTime: !parseIntTime(StartTime) ? timeStartUpdate : parseIntTime(StartTime),

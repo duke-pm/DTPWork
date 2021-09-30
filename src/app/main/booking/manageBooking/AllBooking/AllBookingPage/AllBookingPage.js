@@ -1,4 +1,4 @@
-import { Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import Search from 'antd/lib/input/Search';
 import React, { useContext, useEffect } from 'react';
 import { Badge, DatePicker, Spin } from 'antd';
@@ -111,12 +111,12 @@ export default function AllBookingPage() {
 					<Badge
 						style={{ marginLeft: '12px' }}
 						color="#d71d31"
-						text={`${entities?.header?.[0].countOutOfDate} Out of date`}
+						text={`${entities?.header?.[0].countHappened} Out of date`}
 					/>
 					<Badge
 						style={{ marginLeft: '12px' }}
 						color="#f1b228"
-						text={`${entities?.header?.[0].countPending} Pending`}
+						text={`${entities?.header?.[0].countPending} Not yet happen`}
 					/>
 				</div>
 				<div className="booking__subcontent--action">

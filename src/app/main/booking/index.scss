@@ -228,6 +228,17 @@
         overflow-x: hidden;
         overflow-y: auto;
         &--table{
+            .status{
+                // width: 75px;
+                // height: 26px;
+                // display: flex;
+                // justify-content: center;
+                // align-items: center;
+                font-size: 1.2rem;
+                font-weight: 600;
+                padding: 3px 8px;
+                border-radius: 5px;
+                }
             thead[class*="ant-table-thead"] th{
                 background-color: $backgroud-table !important;
               }
@@ -249,6 +260,17 @@
             padding: 24px 15px;
             max-width: 692px;
             margin: 0 auto;
+            .status{
+                // width: 75px;
+                // height: 26px;
+                // display: flex;
+                // justify-content: center;
+                // align-items: center;
+                font-size: 1.2rem;
+                font-weight: 600;
+                padding: 3px 8px;
+                border-radius: 5px;
+                }
             .title__view{
                 font-size: 17px;
                 text-transform: uppercase;
@@ -419,13 +441,10 @@ border-top: 1px solid #fff !important
 .popever-event{
     width: 350px;
     .status{
-    width: 85px;
-    height: 26px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 500;
-    border-radius: 4px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        padding: 3px 8px;
+        border-radius: 5px;
     }
     .radio{
         width:16px;

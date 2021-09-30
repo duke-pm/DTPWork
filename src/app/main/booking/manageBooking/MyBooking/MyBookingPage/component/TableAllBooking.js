@@ -1,148 +1,57 @@
+/* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Icon, Typography } from '@material-ui/core';
-import { Avatar, Dropdown, Menu, Table, Tooltip } from 'antd';
-import Checkbox from 'antd/lib/checkbox/Checkbox';
+import { sortDirestion } from '@fuse/core/DtpConfig';
+import { Icon } from '@material-ui/core';
+import { Avatar, Table, Tooltip } from 'antd';
+import Text from 'app/components/Text';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import moment from 'moment';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
+import { deleteBooking, setTaskEditBooking } from '../../../_reduxBooking/bookingActions';
+import { colorStatus, colorText } from '../../../BookingConfig';
 
-const data = [
-	{
-		id: 1,
-		code: 'BKEV-14',
-		name: 'Đào tạo',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 2,
-		code: 'BKEV-14',
-		name: 'Đào tạo',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 3,
-		code: 'BKEV-14',
-		name: 'Đào tạo',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 4,
-		code: 'BKEV-14',
-		name: 'Đào tạo',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 5,
-		code: 'BKEV-14',
-		name: 'Đào tạo',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 6,
-		code: 'BKEV-14',
-		name: 'Đào tạo',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 7,
-		code: 'BKEV-14',
-		name: 'Đào tạo',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 8,
-		code: 'BKEV-14',
-		name: 'Đào tạo',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 9,
-		code: 'BKEV-14',
-		name: 'Đào tạo',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 10,
-		code: 'BKEV-14',
-		name: 'Đào tạo',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 11,
-		code: 'BKEV-14',
-		name: 'Đào tạo',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	},
-	{
-		id: 12,
-		code: 'BKEV-14',
-		name: 'Đào tạo',
-		owner: 'The Linh',
-		resourcemanager: '',
-		lastModifide: '25/08/2021 02:03 PM',
-		status: true
-	}
-];
-export default function TableAllBooking() {
+export default function TableAllBooking({ entities, createSortHandler, listLoading }) {
 	const history = useHistory();
-	// const filterOwner = value => {
-	// 	console.log(value);
-	// };
-	// const onChange = value => {
-	// 	console.log(value);
-	// };
-	const handChangeRouteView = () => {
-		history.push('/booking/view/6');
+	const dispatch = useDispatch();
+	const theme = useTheme();
+	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
+	const onChange = (pagination, filters, sorter, extra) => {
+		const sort = sortDirestion[sorter.order];
+		createSortHandler(sort, sorter.field);
+	};
+	const handChangeRouteView = item => {
+		dispatch(setTaskEditBooking(item));
+		history.push(`/booking/view/${item.bookID}`);
+	};
+	const handleEdit = item => {
+		history.push('/booking/modify-booking/updated');
+		dispatch(setTaskEditBooking(item));
+	};
+	const handleDelete = item => {
+		dispatch(deleteBooking(item.bookID));
 	};
 	const columns = [
 		{
 			title: 'Code',
-			dataIndex: 'code',
-			key: 'code',
-			render: (_, item) => <Typography variant="body1">{item.code}</Typography>
+			dataIndex: 'bookID',
+			key: 'bookID',
+			sorter: true,
+			render: (_, item) => <Text type="body">{item.bookID}</Text>
 		},
 		{
 			title: 'Booking Title',
-			dataIndex: 'bookingTitle',
+			dataIndex: 'purpose',
 			align: 'left',
-			key: 'bookingTitle',
+			key: 'purpose',
+			sorter: true,
 			render: (_, item) => (
-				<Typography className="cursor-pointer" onClick={handChangeRouteView} variant="body1">
-					{item.name}
-				</Typography>
+				<Text className="cursor-pointer" onClick={() => handChangeRouteView(item)} type="body">
+					{item.purpose}
+				</Text>
 			)
 		},
 		{
@@ -153,8 +62,8 @@ export default function TableAllBooking() {
 			render: (_, item) => (
 				<div className="flex justify-between items-center">
 					<div>
-						<Typography variant="body1"> 04/09/2021 </Typography>{' '}
-						<Typography variant="caption"> 22:00 </Typography>{' '}
+						<Text type="body"> {moment(item.startDate).format('DD/MM/YYYY')} </Text>{' '}
+						<Text type="caption"> {item.strStartTime} </Text>{' '}
 					</div>
 					<div>
 						<Icon fontSize="small" color="primary">
@@ -163,64 +72,64 @@ export default function TableAllBooking() {
 						</Icon>
 					</div>
 					<div>
-						<Typography variant="body1"> 04/09/2021 </Typography>{' '}
-						<Typography variant="caption"> 22:00 </Typography>{' '}
+						<Text type="body"> {moment(item.endDate).format('DD/MM/YYYY')} </Text>{' '}
+						<Text type="caption"> {item.strEndTime} </Text>{' '}
 					</div>
 				</div>
 			)
 		},
 		{
 			title: 'Resource',
-			dataIndex: 'resource',
-			key: 'resource',
-			render: (_, item) => <Typography variant="body1">phong hop</Typography>
+			dataIndex: 'resourceName',
+			key: 'resourceName',
+			sorter: true,
+			render: (_, item) => <Text type="body">{item.resourceName}</Text>
 		},
+		// {
+		// 	title: 'Frequency',
+		// 	dataIndex: 'frequency',
+		// 	key: 'frequency',
+		// 	render: (_, item) => <Text type="body">One-time booking</Text>
+		// },
 		{
-			title: 'Frequency',
-			dataIndex: 'frequency',
-			key: 'frequency',
-			render: (_, item) => <Typography variant="body1">One-time booking</Typography>
-		},
-		{
-			title: () => {
-				return (
-					<div className="flex items-center ">
-						Created by
-						<Dropdown
-							overlay={
-								<Menu overlaystyle={{ width: '200px' }}>
-									<Menu.Item>
-										<Checkbox>User1</Checkbox>
-									</Menu.Item>
-								</Menu>
-							}
-							placement="bottomRight"
-							arrow
-						>
-							<Icon className="cursor-pointer"> arrow_drop_down </Icon>
-						</Dropdown>
-					</div>
-				);
-			},
-			dataIndex: 'owner',
-			key: 'owner',
+			title: 'Created by',
+			dataIndex: 'ownerName',
+			key: 'ownerName',
+			sorter: true,
 			align: 'left',
 			render: (_, item) => (
 				<div className="flex items-center">
 					<Avatar size="small" style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
-						L
+						{item.ownerNameAlpha}
 					</Avatar>{' '}
-					<Typography className="ml-8" variant="body1">
-						{item.owner}
-					</Typography>
+					<Text className="ml-8" type="body">
+						{item.ownerName}
+					</Text>
 				</div>
+			)
+		},
+		{
+			title: 'Status',
+			dataIndex: 'status',
+			key: 'status',
+			sorter: true,
+			align: 'left',
+			render: (_, item) => (
+				<span
+					className="status"
+					style={{ backgroundColor: colorStatus[item.statusName], color: colorText[item.statusName] }}
+				>
+					{' '}
+					{item.statusName}{' '}
+				</span>
 			)
 		},
 		{
 			title: 'Time of creation',
 			dataIndex: 'lastModifide',
 			key: 'lastModifide',
-			render: (_, item) => <Typography variant="body1">21:59 25/08/2021</Typography>
+			sorter: true,
+			render: (_, item) => <Text type="body">{item.strCrtdDate}</Text>
 		},
 		{
 			title: '',
@@ -228,20 +137,42 @@ export default function TableAllBooking() {
 			key: 'status',
 			render: (_, item) => (
 				<div className="flex justify-end">
-					<Tooltip placement="bottom" title="Edit">
-						<span className="action--button mr-14">
+					<Tooltip disabled placement="bottom" title="Edit">
+						<button
+							disabled={!item.isUpdated}
+							onClick={() => handleEdit(item)}
+							className="action--button mr-14"
+						>
 							<Icon fontSize="small">edit</Icon>
-						</span>
+						</button>
 					</Tooltip>
 					<Tooltip placement="bottom" title="Delete">
-						<span className="action--button ">
+						<button
+							disabled={!item.isUpdated}
+							onClick={() => handleDelete(item)}
+							className="action--button "
+						>
 							<Icon size="small">delete</Icon>
-						</span>
+						</button>
 					</Tooltip>
 				</div>
 			)
 		}
 	];
 
-	return <Table rowKey="id" pagination={false} columns={columns} dataSource={data} />;
+	return (
+		<Table
+			showSorterTooltip={false}
+			onChange={onChange}
+			rowKey="bookID"
+			scroll={{
+				x: matchesSM ? 1200 : null,
+				y: null
+			}}
+			pagination={false}
+			columns={columns}
+			dataSource={entities?.lstBooking}
+			loading={listLoading}
+		/>
+	);
 }

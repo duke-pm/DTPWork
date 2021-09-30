@@ -31,7 +31,7 @@ export default function CustomToolbar(props) {
 				<Badge
 					style={{ marginLeft: '12px' }}
 					color="#d71d31"
-					text={`${entities?.header?.[0].countOutOfDate} Out of date`}
+					text={`${entities?.header?.[0].countHappened} Happened`}
 				/>
 				<Badge
 					style={{ marginLeft: '12px' }}
@@ -45,13 +45,15 @@ export default function CustomToolbar(props) {
 						Today
 					</Text>
 				</button>
-				<Tooltip placement="bottom" title="Mode month">
-					<button onClick={() => props.onView('month')} className="buttonToday mr-16">
-						<Text color="primary" type="subTitle">
-							Month
-						</Text>
-					</button>
-				</Tooltip>
+				{props.view === 'day' && (
+					<Tooltip placement="bottom" title="Mode month">
+						<button onClick={() => props.onView('month')} className="buttonToday mr-16">
+							<Text color="primary" type="subTitle">
+								Month
+							</Text>
+						</button>
+					</Tooltip>
+				)}
 				<button onClick={() => props.onNavigate('PREV')} className="buttonIcon  mr-16">
 					{' '}
 					<Icon color="primary"> navigate_before </Icon>{' '}

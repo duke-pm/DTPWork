@@ -2,17 +2,22 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Icon } from '@material-ui/core';
-import { Avatar, Dropdown, Menu, Table, Tooltip } from 'antd';
+import { Avatar, Table, Tooltip } from 'antd';
 import Text from 'app/components/Text';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { sortDirestion } from '@fuse/core/DtpConfig';
 import { useDispatch } from 'react-redux';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 import { setTaskEditBooking, deleteBooking } from '../../../_reduxBooking/bookingActions';
+import { colorStatus, colorText } from '../../../BookingConfig';
 
 export default function TableAllBooking({ entities, listLoading, createSortHandler }) {
 	const history = useHistory();
+	const theme = useTheme();
+	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
 	const dispatch = useDispatch();
 	const onChange = (pagination, filters, sorter, extra) => {
 		const sort = sortDirestion[sorter.order];
@@ -104,6 +109,22 @@ export default function TableAllBooking({ entities, listLoading, createSortHandl
 			)
 		},
 		{
+			title: 'Status',
+			dataIndex: 'status',
+			key: 'status',
+			sorter: true,
+			align: 'left',
+			render: (_, item) => (
+				<span
+					className="status"
+					style={{ backgroundColor: colorStatus[item.statusName], color: colorText[item.statusName] }}
+				>
+					{' '}
+					{item.statusName}{' '}
+				</span>
+			)
+		},
+		{
 			title: 'Time of creation',
 			dataIndex: 'lastModifide',
 			key: 'lastModifide',
@@ -143,7 +164,11 @@ export default function TableAllBooking({ entities, listLoading, createSortHandl
 		<Table
 			showSorterTooltip={false}
 			onChange={onChange}
-			rowKey="id"
+			rowKey="bookID"
+			scroll={{
+				x: matchesSM ? 1200 : null,
+				y: null
+			}}
 			pagination={false}
 			columns={columns}
 			dataSource={entities?.lstBooking}

@@ -8,12 +8,7 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { useHistory } from 'react-router';
 import { deleteBooking, setTaskEditBooking } from '../../../_reduxBooking/bookingActions';
-
-const colorStatus = {
-	Happening: '#069662',
-	Happened: '#d71d31',
-	Pending: '#f1b228'
-};
+import { colorStatus, colorText } from '../../../BookingConfig';
 
 export default function ContentTooltip({ event }) {
 	const dispatch = useDispatch();
@@ -34,10 +29,10 @@ export default function ContentTooltip({ event }) {
 	return (
 		<div className="popever-event" style={{ width: '350px' }}>
 			<div className="flex justify-between">
-				<span className="status" style={{ backgroundColor: colorStatus[event.status] }}>
+				<span className="status" style={{ backgroundColor: colorStatus[event.statusName] }}>
 					{' '}
-					<Text type="subTitle" style={{ color: '#fff' }}>
-						{event.status}{' '}
+					<Text type="subTitle" style={{ color: colorText[event.statusName] }}>
+						{event.statusName}{' '}
 					</Text>
 				</span>
 				{actionLoading ? (
@@ -94,7 +89,7 @@ export default function ContentTooltip({ event }) {
 					</Grid>
 					<Grid item lg={2}>
 						<Avatar size="small" style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
-							{event.ownerAlpha}
+							{event.ownerNameAlpha}
 						</Avatar>{' '}
 					</Grid>
 					<Grid item lg={10}>

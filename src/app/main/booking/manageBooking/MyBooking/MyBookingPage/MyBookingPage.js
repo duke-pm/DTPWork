@@ -1,21 +1,84 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Button, Icon, Typography } from '@material-ui/core';
+import { Badge, DatePicker, Spin } from 'antd';
+import Panigation from '@fuse/core/FusePanigate';
 import Search from 'antd/lib/input/Search';
 import Text from 'app/components/Text';
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { fetchsBooking, fetchsBookingFilter, setTaskEditBooking } from '../../_reduxBooking/bookingActions';
 import TableAllBooking from './component/TableAllBooking';
+import { BookingContext } from '../MyBookingContext';
 
-// const { RangePicker } = DatePicker;
+const { RangePicker } = DatePicker;
 
 export default function AllBookingPage() {
 	const history = useHistory();
+	const dispatch = useDispatch();
+	const bookingContex = useContext(BookingContext);
+	const {
+		page,
+		rowPage,
+		setPage,
+		setRowPage,
+		setFromDate,
+		setToDate,
+		sort,
+		search,
+		setSort,
+		fromDate,
+		toDate,
+		setSearch
+	} = bookingContex;
 	const handleChangeRoute = () => {
+		dispatch(setTaskEditBooking(null));
 		history.push('/booking/modify-booking/created');
 	};
 	const handleChangeRouteList = () => {
 		history.push('/booking/calendar-my-booking');
+	};
+	useEffect(() => {
+		dispatch(fetchsBooking(true));
+	}, [dispatch]);
+	const { currentState } = useSelector(state => ({ currentState: state.booking.booking }), shallowEqual);
+	const { entities, listLoading, actionLoading, total_count } = currentState;
+	const handleChangePage = (event, newPage) => {
+		setPage(newPage);
+		dispatch(fetchsBookingFilter(true, rowPage, newPage + 1, sort.id, sort.direction, search, fromDate, toDate));
+	};
+	const handleRowPage = e => {
+		const rowPageParse = parseInt(e.target.value, 10);
+		setRowPage(rowPageParse);
+		dispatch(fetchsBookingFilter(true, rowPageParse, page, sort.id, sort.direction, search, fromDate, toDate));
+	};
+	const createSortHandler = (direction, id) => {
+		dispatch(fetchsBookingFilter(true, rowPage, page, id, direction, search, fromDate, toDate));
+		setSort({
+			direction,
+			id
+		});
+	};
+	const handleSearch = () => {
+		setPage(0);
+		dispatch(fetchsBookingFilter(true, rowPage, page, sort.id, sort.direction, search, fromDate, toDate));
+	};
+	const onHandleChange = e => {
+		setSearch(e.target.value);
+		setPage(0);
+		if (e.target.value.length <= 0) {
+			dispatch(
+				fetchsBookingFilter(true, rowPage, page, sort.id, sort.direction, e.target.value, fromDate, toDate)
+			);
+		}
+	};
+	const handleChange = (date, dateString) => {
+		setFromDate(dateString[0]);
+		setToDate(dateString[1]);
+		dispatch(
+			fetchsBookingFilter(true, rowPage, page, sort.id, sort.direction, search, dateString[0], dateString[1])
+		);
 	};
 	return (
 		<div className="container booking">
@@ -24,20 +87,45 @@ export default function AllBookingPage() {
 					My bookings
 				</Typography>
 				<div className="booking__header--action">
-					<Search className="input__search" placeholder="Search" />
+					<Search
+						onChange={e => onHandleChange(e)}
+						onSearch={handleSearch}
+						className="input__search"
+						placeholder="Search"
+					/>
 					<Button onClick={handleChangeRoute} className="button__create" variant="contained" color="primary">
 						{' '}
-						<Text type="button"> Create booking </Text>
+						<Text type="button" color="white">
+							{' '}
+							Create booking{' '}
+						</Text>
 					</Button>
 				</div>
 			</div>
 			<div className="booking__subcontent px-16">
-				<Typography color="primary" variant="subtitle1">
-					{' '}
-					8 Booking{' '}
-				</Typography>
+				<div className="flex justify-between">
+					<Text color="primary" type="subTitle">
+						{entities?.header?.[0].countMyBooking} Booking{' '}
+					</Text>
+					<Badge
+						style={{ marginLeft: '12px' }}
+						color="#069662"
+						text={`${entities?.header?.[0].countHappening} Happening`}
+					/>
+					<Badge
+						style={{ marginLeft: '12px' }}
+						color="#d71d31"
+						text={`${entities?.header?.[0].countHappened} Out of date`}
+					/>
+					<Badge
+						style={{ marginLeft: '12px' }}
+						color="#f1b228"
+						text={`${entities?.header?.[0].countPending} Not yet happen`}
+					/>
+				</div>
 				<div className="booking__subcontent--action">
-					<span onClick={handleChangeRouteList} className="btn__btn--action mr-16">
+					<RangePicker onChange={handleChange} />
+					<span onClick={handleChangeRouteList} className="btn__btn--action mr-8">
 						{' '}
 						<Icon fontSize="small" color="primary">
 							{' '}
@@ -55,7 +143,23 @@ export default function AllBookingPage() {
 			</div>
 			<div className="booking__content mt-8">
 				<div className="booking__content--table px-16">
-					<TableAllBooking />
+					<TableAllBooking
+						listLoading={listLoading}
+						entities={entities}
+						createSortHandler={createSortHandler}
+					/>
+					{entities?.lstBooking?.length !== 0 && (
+						<div className="flex flex-row items-center justify-end">
+							{actionLoading && <Spin />}
+							<Panigation
+								page={page}
+								handleChangePage={handleChangePage}
+								rowPage={rowPage}
+								handleChangeRowsPerPage={handleRowPage}
+								count={total_count}
+							/>
+						</div>
+					)}
 				</div>
 			</div>
 		</div>
