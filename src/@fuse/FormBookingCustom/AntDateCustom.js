@@ -15,6 +15,7 @@ export default function AntDateCustom({
 	customFeedbackLabel,
 	type,
 	width,
+	disabledDate,
 	placeholder,
 	readOnly,
 	position,
@@ -31,10 +32,10 @@ export default function AntDateCustom({
 	const handleDateChange = (date, dateString) => {
 		form.setFieldValue(field.name, date);
 	};
-	// function disabledDate(current) {
-	// 	// Can not select days before today and today
-	// 	return current && current < moment().subtract(1, 'days');
-	// }
+	function funcDisabledDate(current) {
+		// Can not select days before today and today
+		return current && current < moment().subtract(1, 'days');
+	}
 	const dateFormat = 'DD/MM/YYYY';
 	return (
 		<>
@@ -57,7 +58,7 @@ export default function AntDateCustom({
 						style={{ width: '100%' }}
 						// placeholder={placeholder || 'Vui lòng chọn ngày'}
 						margin="normal"
-						// disabledDate={disabledDate}
+						disabledDate={disabledDate && funcDisabledDate}
 						format={dateFormat}
 						value={value ? moment(moment(value), dateFormat) : null}
 						onChange={handleDateChange}

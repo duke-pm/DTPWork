@@ -115,7 +115,7 @@ export default function AllBookingPage() {
 					<Badge
 						style={{ marginLeft: '12px' }}
 						color="#d71d31"
-						text={`${entities?.header?.[0].countHappened} Out of date`}
+						text={`${entities?.header?.[0].countHappened} Happened`}
 					/>
 					<Badge
 						style={{ marginLeft: '12px' }}

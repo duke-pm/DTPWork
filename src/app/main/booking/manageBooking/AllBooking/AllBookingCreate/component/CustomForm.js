@@ -38,7 +38,7 @@ export default function CustomForm({ initital, bkResource, Users, handleSubmitFo
 					<Form>
 						<div className=" mt-8 px-16 sm:px-24">
 							<div className="mb-20">
-								<Text type="subTitle" color="primary">
+								<Text type="subTitle" color="primary" borderBottom>
 									{' '}
 									GENERAL INFORMATION{' '}
 								</Text>
@@ -92,7 +92,7 @@ export default function CustomForm({ initital, bkResource, Users, handleSubmitFo
 								</div>
 								<div className="flex justify-between">
 									<div className="flex justify-between items-center">
-										<Field name="startDate" component={AntDateCustom} hasFeedback />
+										<Field disabledDate name="startDate" component={AntDateCustom} hasFeedback />
 										<Field
 											marginleft="10px"
 											name="timeStart"
@@ -108,14 +108,14 @@ export default function CustomForm({ initital, bkResource, Users, handleSubmitFo
 										</Icon>{' '}
 									</div>
 									<div className="flex">
-										<Field name="endDate" component={AntDateCustom} hasFeedback />
+										<Field disabledDate name="endDate" component={AntDateCustom} hasFeedback />
 										<Field marginleft="10px" name="timeEnd" component={AntTimeCustom} hasFeedback />
 									</div>
 								</div>
 							</div>
 							<div className="flex items-center justify-end">
 								{actionLoading ? (
-									<Spin className="ml-20" />
+									<Spin style={{ marginRight: '20px' }} />
 								) : (
 									<Button
 										type="submit"

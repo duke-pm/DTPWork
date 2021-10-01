@@ -54,6 +54,7 @@ export default function AntTimeCustom({
 					validateStatus={submittedError || touchedError ? 'error' : 'success'}
 				>
 					<TimePicker
+						minuteStep={10}
 						format={format}
 						onChange={handleDateChange}
 						defaultValue={moment(value || '00:00', format)}

@@ -365,17 +365,24 @@
     background-color: rgb(250, 251, 251);
 }
 .rbc-month-row + .rbc-month-row{
-border-top: 1px solid #fff !important
+border-top: 3px solid #fff !important
 }
 .rbc-day-bg + .rbc-day-bg{
-    border-left: 1px solid #fff !important;
+    border-left: 3px solid #fff !important;
 }
 .rbc-header + .rbc-header{
-    border-left: 1px solid #fff !important;
+    border-left: 3px solid #fff !important;
 }
 .rbc-event{
+    background-color: rgb(250, 251, 251) !important;
     padding: 0 0 !important;
     color: #172b4d !important;
+}
+.rbc-day-slot .rbc-event{
+    border: none !important;
+}
+.rbc-today{
+    background-color:  rgb(250, 251, 251) !important;
 }
 .container--content{
     border-radius: 5px;

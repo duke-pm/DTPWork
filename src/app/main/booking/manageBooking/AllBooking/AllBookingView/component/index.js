@@ -120,14 +120,14 @@ export default function View({ entitiesEdit }) {
 			</Grid>
 			<Grid item lg={6}>
 				{' '}
-				<Text type="body"> {entitiesEdit?.remarks} </Text>
+				<Text type="body"> {entitiesEdit?.remarks ? entitiesEdit.remarks : '-'} </Text>
 			</Grid>
 			<Grid item lg={6}>
 				<Text type="body">Frequency:</Text>
 			</Grid>
 			<Grid item lg={6}>
 				{' '}
-				<Text type="body"> {entitiesEdit?.strOneTimeBooking} </Text>
+				<Text type="body"> {entitiesEdit?.strOneTimeBooking ? entitiesEdit.strOneTimeBooking : '-'} </Text>
 			</Grid>
 			<Grid item lg={6}>
 				<Text type="body">Members:</Text>
