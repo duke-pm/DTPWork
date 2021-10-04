@@ -10,7 +10,7 @@ import * as Yup from 'yup';
 export default function CustomForm({ initital, bkIcon, handleSubmitForm, actionLoading, ExitPage }) {
 	const validationSchema = Yup.object().shape({
 		name: Yup.string().required(`${validateFieldEN}`),
-		icon: Yup.string().required(`${validateFieldEN}`)
+		icon: Yup.string().required(`${validateFieldEN}`).nullable()
 	});
 	return (
 		<>

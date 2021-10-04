@@ -18,7 +18,7 @@ export default function CustomForm({
 }) {
 	const validationSchema = Yup.object().shape({
 		name: Yup.string().required(`${validateFieldEN}`),
-		resourceGroup: Yup.string().required(`${validateFieldEN}`),
+		resourceGroup: Yup.string().required(`${validateFieldEN}`).nullable(),
 		color: Yup.string().required(`${validateFieldEN}`)
 	});
 	return (
