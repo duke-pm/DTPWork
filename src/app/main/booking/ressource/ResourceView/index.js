@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import { Icon, Typography } from '@material-ui/core';
+import { Icon } from '@material-ui/core';
 import { Spin, Tooltip } from 'antd';
 import Text from 'app/components/Text';
 import React, { useEffect } from 'react';

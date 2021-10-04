@@ -2,8 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { sliceString, sortDirestion } from '@fuse/core/DtpConfig';
 import { Icon, Typography } from '@material-ui/core';
-import { Avatar, Dropdown, Menu, Table, Tooltip } from 'antd';
-import Checkbox from 'antd/lib/checkbox/Checkbox';
+import { Avatar, Table, Tooltip } from 'antd';
 import Text from 'app/components/Text';
 import React from 'react';
 import { useDispatch } from 'react-redux';

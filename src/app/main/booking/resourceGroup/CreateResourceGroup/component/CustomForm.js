@@ -1,10 +1,10 @@
 import { validateFieldEN } from '@fuse/core/DtpConfig';
 import AntInputCustom from '@fuse/FormBookingCustom/AntInputCustom';
 import AntSelectIconCustom from '@fuse/FormBookingCustom/AntSelectIconCustom';
-import { Button, Icon, Typography } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import { Spin } from 'antd';
 import { Form, Formik, Field } from 'formik';
-import React, { useState } from 'react';
+import React from 'react';
 import * as Yup from 'yup';
 
 export default function CustomForm({ initital, bkIcon, handleSubmitForm, actionLoading, ExitPage }) {

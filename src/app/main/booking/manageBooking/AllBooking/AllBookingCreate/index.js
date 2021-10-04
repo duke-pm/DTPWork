@@ -37,7 +37,7 @@ export default function AllBookingCreate() {
 		: [];
 	useEffect(() => {
 		if (!entitiesEdit && params.type === 'updated') histroy.goBack();
-	}, [entitiesEdit, histroy]);
+	}, [entitiesEdit, histroy, params.type]);
 	return (
 		<div className="container booking">
 			<div className="booking__header px-16 shadow-lg">

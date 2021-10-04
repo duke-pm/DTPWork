@@ -2,7 +2,7 @@ import { notificationConfig } from '@fuse/core/DtpConfig';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory, useParams } from 'react-router';
+import { useHistory } from 'react-router';
 import { createResouce, updateResouce } from '../../_reduxResourceBooking/resourceBookingActions';
 import CustomForm from './CustomForm';
 
@@ -32,7 +32,7 @@ export default function From({ groupBkColor, bkResourceGroup, entitiesEdit, acti
 	}
 	useEffect(() => {
 		if (params.type === 'updated' && !entitiesEdit) history.goBack();
-	}, [entitiesEdit, history]);
+	}, [entitiesEdit, history, params]);
 	const handleSubmitForm = values => {
 		if (entitiesEdit && entitiesEdit.resourceID) {
 			dispatch(updateResouce(values)).then(data => {

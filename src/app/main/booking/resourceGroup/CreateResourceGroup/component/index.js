@@ -17,7 +17,7 @@ export default function From({ bkIcon, actionLoading, entitiesEdit, params, Exit
 	};
 	useEffect(() => {
 		if (params.type === 'updates' && !entitiesEdit) history.goBack();
-	}, [entitiesEdit, history]);
+	}, [entitiesEdit, params.type, history]);
 
 	if (entitiesEdit) {
 		const icon = bkIcon?.filter(item => item.icon === entitiesEdit?.icon);

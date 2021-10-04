@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import { Grid, Icon } from '@material-ui/core';
-import { Avatar, Tag, Tooltip, Tabs, Input, Divider } from 'antd';
+import { Avatar, Tag, Tooltip, Divider } from 'antd';
 import Text from 'app/components/Text';
 import React from 'react';
 import moment from 'moment';
@@ -11,9 +11,6 @@ import { useDispatch } from 'react-redux';
 import { deleteBooking } from '../../../_reduxBooking/bookingActions';
 import { colorStatus, colorText } from '../../../BookingConfig';
 
-const { TextArea } = Input;
-
-const { TabPane } = Tabs;
 export default function View({ entitiesEdit }) {
 	const history = useHistory();
 	const dispatch = useDispatch();
