@@ -92,7 +92,7 @@ export default function AllBookingPage() {
 						{' '}
 						<Text type="button" color="white">
 							{' '}
-							Create booking{' '}
+							Create{' '}
 						</Text>
 					</Button>
 				</div>

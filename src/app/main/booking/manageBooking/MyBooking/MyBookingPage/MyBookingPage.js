@@ -93,11 +93,16 @@ export default function AllBookingPage() {
 						className="input__search"
 						placeholder="Search"
 					/>
-					<Button onClick={handleChangeRoute} className="button__create" variant="contained" color="primary">
+					<Button
+						onClick={handleChangeRoute}
+						className="button__create--sm"
+						variant="contained"
+						color="primary"
+					>
 						{' '}
 						<Text type="button" color="white">
 							{' '}
-							Create booking{' '}
+							Create{' '}
 						</Text>
 					</Button>
 				</div>

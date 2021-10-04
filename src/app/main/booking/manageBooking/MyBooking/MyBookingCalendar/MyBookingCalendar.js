@@ -73,14 +73,14 @@ export default function MyBookingCalendar(props) {
 				<div className="booking__header--action">
 					<Button
 						onClick={handleChangeRoute}
-						className="button__create--sm"
+						className="button__create--xs"
 						variant="contained"
 						color="primary"
 					>
 						{' '}
 						<Text type="button" color="white">
 							{' '}
-							Create booking{' '}
+							Create{' '}
 						</Text>
 					</Button>
 				</div>
