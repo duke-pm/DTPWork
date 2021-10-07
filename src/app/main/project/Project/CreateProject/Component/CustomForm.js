@@ -332,7 +332,7 @@ export default function CustomForm({
 					<Divider className="mb-16 mt-16" />
 					<div className="flex items-center justify-end">
 						{actionLoading ? (
-							<Spin />
+							<Spin style={{ marginRight: '20px' }} />
 						) : entitiesEdit && entitiesEdit.taskID ? (
 							<Button
 								disabled={!entitiesEdit.isModified}

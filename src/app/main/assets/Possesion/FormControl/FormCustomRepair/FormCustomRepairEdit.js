@@ -128,7 +128,7 @@ export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairS
 						</div>
 						<div className="flex justify-end">
 							{actionLoading ? (
-								<Spin />
+								<Spin style={{ marginRight: '20px' }} />
 							) : (
 								<Button type="submit" className="mr-8" variant="contained" color="primary">
 									<Text type="button" color="white">

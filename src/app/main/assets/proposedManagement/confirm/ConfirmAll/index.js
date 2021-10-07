@@ -158,13 +158,15 @@ export default function ConfrimAllocation(props) {
 						<div className="proposedManagement__subcontent--action">
 							<DatePicker
 								onChange={handleChangeFilterDateStart}
-								value={dateStart !== 'null' ? moment(moment(dateStart), 'YYYY/MM/YYYY') : null}
+								format="DD/MM/YYYY"
+								value={dateStart !== 'null' ? moment(moment(dateStart), 'DD/MM/YYYY') : null}
 								placeholder="Ngày bắt đầu"
 								style={{ width: '100%' }}
 							/>
 							<DatePicker
 								onChange={handleChangeFilterDateEnd}
-								value={dateEnd !== 'null' ? moment(moment(dateEnd), 'YYYY/MM/YYYY') : null}
+								format="DD/MM/YYYY"
+								value={dateEnd !== 'null' ? moment(moment(dateEnd), 'DD/MM/YYYY') : null}
 								placeholder="Ngày kết thúc"
 								style={{ width: '100%' }}
 							/>

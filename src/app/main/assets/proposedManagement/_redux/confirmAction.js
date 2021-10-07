@@ -77,7 +77,7 @@ export const getInformationCompany = params => dispatch => {
 			if (!data.isError) {
 				dispatch(actions.informationsFetch({ data }));
 			} else {
-				notificationConfig('warning', 'Thất bại', data.errorMessage);
+				notificationConfig('warning', 'Đã có lỗi xảy ra vui lòng thử lại', data.systemErrorMessage);
 			}
 		})
 		.catch(err => {
@@ -139,7 +139,7 @@ export const reportFailurePossesion = (information, data, user) => dispatch => {
 			if (!data.isError) {
 				dispatch(actions.reportFromUser());
 			} else {
-				notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', data.errorMessage);
+				notificationConfig('error', 'Đã có lỗi xảy ra vui lòng thử lại', data.systemErrorMessage);
 				dispatch(actions.catchError({ callType: callTypes.action }));
 			}
 			return data;
@@ -185,7 +185,7 @@ export const requestApprove = (data, status, values) => dispatch => {
 				const dataReq = data.data.listRequest[0];
 				dispatch(actions.approveUpdate({ dataReq }));
 			} else {
-				notificationConfig('warning', 'Thất bại', data.errorMessage);
+				notificationConfig('warning', 'Đã có lỗi xảy ra vui lòng thử lại', data.systemErrorMessage);
 				dispatch(actions.catchError({ callType: callTypes.action }));
 			}
 			return data;
@@ -212,7 +212,7 @@ export const requestApproveResolve = (data, status, values) => dispatch => {
 				const requestID = dataReq.RequestID;
 				dispatch(actions.approveUpdateResolve({ requestID }));
 			} else {
-				notificationConfig('warning', 'Thất bại', data.errorMessage);
+				notificationConfig('warning', 'Đã có lỗi xảy ra vui lòng thử lại', data.systemErrorMessage);
 				dispatch(actions.catchError({ callType: callTypes.action }));
 			}
 			return data;
