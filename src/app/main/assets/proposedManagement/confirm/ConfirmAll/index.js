@@ -104,7 +104,6 @@ export default function ConfrimAllocation(props) {
 		);
 	};
 	const handleChangeFilterDateStart = date => {
-		setDateStart(date);
 		dispatch(
 			action.searchConfirms(false, status, rowPage, page, 1, sort.id, sort.direction, search, date, dateEnd)
 		);
