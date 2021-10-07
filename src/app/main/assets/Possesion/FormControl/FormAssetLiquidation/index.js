@@ -44,7 +44,7 @@ export default function FormAssetLiquidation() {
 		<div className="container assets">
 			<div className="assets__header px-16 shadow-lg">
 				<Text color="primary" type="title">
-					Sửa chữa bảo hành tài sản
+					Thanh lý tài sản
 				</Text>
 				<div className="assets__header--action">
 					<Tooltip placement="bottom" title="Exit">

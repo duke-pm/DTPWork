@@ -25,7 +25,7 @@ export default function ProcessingUseAsset() {
 		<div className="container assets">
 			<div className="assets__header px-16 shadow-lg">
 				<Text color="primary" type="title">
-					Qúa trình sử dụng tài sản
+					Nhật ký tài sản
 				</Text>
 				<div className="assets__header--action">
 					<Tooltip placement="bottom" title="Exit">
