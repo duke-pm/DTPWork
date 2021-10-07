@@ -3,6 +3,7 @@ import Search from 'antd/lib/input/Search';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { Tabs } from 'antd';
 import Text from 'app/components/Text';
+import { useHistory } from 'react-router';
 import { ConfirmContext } from './ConfirmContext';
 import ConfirmAll from './ConfirmAll';
 import ConfirmDamaged from './ConfirmDamaged';
@@ -47,6 +48,7 @@ function PossesionPage(props) {
 		shallowEqual
 	);
 	const { value } = tabs;
+	const history = useHistory();
 	const total_Record = currentState && currentState.total_items;
 	const handleChange = key => {
 		dispatch(actions.changeTabs(key));
@@ -60,15 +62,19 @@ function PossesionPage(props) {
 		setSearch('');
 		switch (key) {
 			case '0':
+				history.push(`/tai-san/danh-sach-de-xuat`);
 				dispatch(fetchDataConfirms(0, 1));
 				break;
 			case '1':
+				history.push('/tai-san/danh-sach-de-xuat');
 				dispatch(fetchDataConfirms(0, 2));
 				break;
 			case '2':
+				history.push('/tai-san/danh-sach-de-xuat');
 				dispatch(fetchDataConfirms(0, 3));
 				break;
 			default:
+				history.push('/tai-san/danh-sach-de-xuat');
 				dispatch(fetchDataConfirms(0, 1));
 		}
 	};

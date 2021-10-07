@@ -13,7 +13,9 @@ const initialState = {
 	total_items: null,
 	lastErrors: false,
 	entitiesInformation: null,
-	assetsUser: null
+	assetsUser: null,
+	dateStartGobal: null,
+	dateEndGobal: null
 };
 
 export const callTypes = {

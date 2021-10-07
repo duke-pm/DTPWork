@@ -6,15 +6,15 @@ import { callTypes, confirmSlice } from './confirmSlice';
 
 const { actions } = confirmSlice;
 
-export const fetchDataConfirms = (status, typeRequest, isResovle) => dispatch => {
+export const fetchDataConfirms = (status, typeRequest, isResovle, FromDate, ToDate) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.list }));
 	const paramsReq = {
 		Search: '',
 		StatusID: status || 0,
 		PageSize: 25,
 		PageNum: 1,
-		FromDate: moment().startOf('month').format('YYYY/MM/DD'),
-		ToDate: moment().endOf('month').format('YYYY/MM/DD'),
+		FromDate: FromDate || moment().startOf('month').format('YYYY/MM/DD'),
+		ToDate: ToDate || moment().endOf('month').format('YYYY/MM/DD'),
 		RequestTypeID: typeRequest,
 		IsResolveRequest: isResovle || false
 	};

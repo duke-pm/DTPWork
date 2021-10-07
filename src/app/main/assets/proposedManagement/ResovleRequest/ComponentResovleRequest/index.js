@@ -4,7 +4,9 @@ import React, { useContext, useEffect } from 'react';
 import Panigation from '@fuse/core/FusePanigate';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { Spin } from 'antd';
-import { useHistory } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
+import queryString from 'query-string';
+import * as moment from 'moment';
 import { ResovleContext } from '../ResovleRequestContext';
 import * as action from '../../_redux/confirmAction';
 import TableResovleRequest from './component/TableResource';
@@ -12,14 +14,37 @@ import TableResovleRequest from './component/TableResource';
 export default function RequestResovelTable(props) {
 	const history = useHistory();
 	const dispatch = useDispatch();
+	const location = useLocation();
+	const searchLocation = queryString.parse(location.search);
+	const dateStartLocation = searchLocation.dateStart
+		? searchLocation.dateStart
+		: moment().startOf('month').format('YYYY/MM/DD');
+	const dateEndLocation = searchLocation.dateEnd
+		? searchLocation.dateEnd
+		: moment().endOf('month').format('YYYY/MM/DD');
 	const ResovleContextHandle = useContext(ResovleContext);
-	const { setPage, status, page, rowPage, setRowPage, search, dateStart, dateEnd, sort, setTimeLine, requestTypeId } =
-		ResovleContextHandle;
+	const {
+		setPage,
+		status,
+		page,
+		rowPage,
+		setRowPage,
+		search,
+		dateStart,
+		dateEnd,
+		setDateStart,
+		setDateEnd,
+		sort,
+		setTimeLine,
+		requestTypeId
+	} = ResovleContextHandle;
 	const { currentState } = useSelector(state => ({ currentState: state.confirm }), shallowEqual);
 	const { listloading, entities, total_count, actionLoading } = currentState;
 	useEffect(() => {
-		dispatch(action.fetchDataConfirms(0, 0, true));
-	}, [dispatch]);
+		setDateStart(dateStartLocation);
+		setDateEnd(dateEndLocation);
+		dispatch(action.fetchDataConfirms(0, 0, true, dateStartLocation, dateEndLocation));
+	}, [dispatch, dateStartLocation, dateEndLocation, setDateStart, setDateEnd]);
 	const handleRowChange = e => {
 		const rowPageParse = parseInt(e.target.value, 10);
 		setRowPage(rowPageParse);

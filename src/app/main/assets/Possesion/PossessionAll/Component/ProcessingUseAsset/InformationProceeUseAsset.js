@@ -27,31 +27,31 @@ export default function InformationProceeUseAsset({ entitiesEdit, actionLoading 
 						<Text>Mã tài sản:</Text>
 					</Grid>
 					<Grid item xs={7} md={8} lg={9}>
-						<Text>{entitiesEdit?.assetCode}</Text>
+						<Text type="subTitle">{entitiesEdit?.assetCode}</Text>
 					</Grid>
 					<Grid item xs={5} md={4} lg={3}>
 						<Text>Tên tài sản:</Text>
 					</Grid>
 					<Grid item xs={7} md={8} lg={9}>
-						<Text variant="body1">{entitiesEdit?.assetName}</Text>
+						<Text type="subTitle">{entitiesEdit?.assetName}</Text>
 					</Grid>
 					<Grid item xs={5} md={4} lg={3}>
 						<Text>Nhóm tài sản:</Text>
 					</Grid>
 					<Grid item xs={7} md={8} lg={9}>
-						<Text variant="body1">{entitiesEdit?.groupName}</Text>
+						<Text type="subTitle">{entitiesEdit?.groupName}</Text>
 					</Grid>
 					<Grid item xs={5} md={4} lg={3}>
 						<Text>Mô tả:</Text>
 					</Grid>
 					<Grid item xs={7} md={8} lg={9}>
-						<Text>{entitiesEdit?.descr ? entitiesEdit.descr : '-'}</Text>
+						<Text type="subTitle">{entitiesEdit?.descr ? entitiesEdit.descr : '-'}</Text>
 					</Grid>
 					<Grid item xs={5} md={4} lg={3}>
 						<Text>Ngày mua:</Text>
 					</Grid>
 					<Grid item xs={7} md={8} lg={9}>
-						<Text>
+						<Text type="subTitle">
 							{entitiesEdit?.purchaseDate ? moment(entitiesEdit.purchaseDate).format('DD/MM/YYYY') : ''}
 						</Text>
 					</Grid>
@@ -59,13 +59,13 @@ export default function InformationProceeUseAsset({ entitiesEdit, actionLoading 
 						<Text>Nguyên giá:</Text>
 					</Grid>
 					<Grid item xs={7} md={8} lg={9}>
-						<Text>{entitiesEdit && currencyFormat(entitiesEdit.originalPrice)}</Text>
+						<Text type="subTitle">{entitiesEdit && currencyFormat(entitiesEdit.originalPrice)}</Text>
 					</Grid>
 					<Grid item xs={5} md={4} lg={3}>
 						<Text>Tình trạng:</Text>
 					</Grid>
 					<Grid item xs={7} md={8} lg={9}>
-						<Text>{entitiesEdit?.statusName}</Text>
+						<Text type="subTitle">{entitiesEdit?.statusName}</Text>
 					</Grid>
 				</Grid>
 			</div>

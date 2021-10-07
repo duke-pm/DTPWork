@@ -51,35 +51,35 @@ export default function FormCustomCorruptEdit({ entitiesEdit, handleClose, setFo
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
 								{' '}
-								<Text type="body"> {entitiesEdit?.assetID}</Text>
+								<Text type="subTitle"> {entitiesEdit?.assetID}</Text>
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
 								<Text type="body"> Tên tài sản :</Text>
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
 								{' '}
-								<Text type="body"> {entitiesEdit?.assetName}</Text>
+								<Text type="subTitle"> {entitiesEdit?.assetName}</Text>
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
 								<Text type="body"> Nhóm tài sản :</Text>
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
 								{' '}
-								<Text type="body"> </Text>
+								<Text type="subTitle"> </Text>
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
 								<Text type="body"> Quy cách tài sản :</Text>
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
 								{' '}
-								<Text type="body"> </Text>
+								<Text type="subTitle"> </Text>
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
 								<Text type="body"> Ngày mua :</Text>
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
 								{' '}
-								<Text type="body">
+								<Text type="subTitle">
 									{' '}
 									{momemt(entitiesEdit?.purchaseDate).format('DD/MM/YYYY') || ''}{' '}
 								</Text>
@@ -88,13 +88,13 @@ export default function FormCustomCorruptEdit({ entitiesEdit, handleClose, setFo
 								<Text type="body"> Nguyên giá :</Text>
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
-								<Text type="body">{currencyFormat(entitiesEdit?.originalPrice) || ''} </Text>
+								<Text type="subTitle">{currencyFormat(entitiesEdit?.originalPrice) || ''} </Text>
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
 								<Text type="body">Tình trạng :</Text>
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
-								<Text type="body">{entitiesEdit?.assetStatusName}</Text>
+								<Text type="subTitle">{entitiesEdit?.assetStatusName}</Text>
 							</Grid>
 							<Grid item xs={12} sm={12} md={12} lg={12}>
 								<Text type="subTitle" color="primary" borderBottom>
