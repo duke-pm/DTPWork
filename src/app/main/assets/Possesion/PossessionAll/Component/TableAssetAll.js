@@ -40,6 +40,7 @@ export default function TableAssetAll({ entities, listLoading, createSortHandler
 		},
 		{
 			title: 'Mã tài sản',
+			fixed: 'left',
 			dataIndex: 'assetCode',
 			key: 'AssetCode',
 			sorter: true,

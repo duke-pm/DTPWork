@@ -21,6 +21,7 @@ export default function TableAssetPay({ entities, listLoading, createSortHandler
 			title: 'Mã tài sản',
 			dataIndex: 'assetCode',
 			key: 'AssetCode',
+			fixed: 'left',
 			sorter: true,
 			// defaultSortOrder: 'ascend',
 			render: (_, item) => <Text>{item.assetCode}</Text>

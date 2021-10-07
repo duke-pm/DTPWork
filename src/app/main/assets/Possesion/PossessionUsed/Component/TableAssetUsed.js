@@ -54,6 +54,7 @@ export default function TableAssetUsed({
 			title: 'Mã tài sản',
 			dataIndex: 'assetCode',
 			key: 'AssetCode',
+			fixed: 'left',
 			sorter: true,
 			// defaultSortOrder: 'ascend',
 			render: (_, item) => <Text>{item.assetCode}</Text>

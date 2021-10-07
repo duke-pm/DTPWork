@@ -55,6 +55,7 @@ export default function TableAssetCorrupt({
 			dataIndex: 'assetCode',
 			key: 'AssetCode',
 			sorter: true,
+			fixed: 'left',
 			// defaultSortOrder: 'ascend',
 			render: (_, item) => <Typography variant="body1">{item.assetCode}</Typography>
 		},

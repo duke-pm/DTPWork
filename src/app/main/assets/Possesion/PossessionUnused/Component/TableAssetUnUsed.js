@@ -55,6 +55,7 @@ export default function TableAssetUnUsed({
 			dataIndex: 'assetCode',
 			key: 'AssetCode',
 			sorter: true,
+			fixed: 'left',
 			// defaultSortOrder: 'ascend',
 			render: (_, item) => <Text type="body">{item.assetCode}</Text>
 		},
