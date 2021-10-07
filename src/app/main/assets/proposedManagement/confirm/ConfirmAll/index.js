@@ -7,8 +7,9 @@ import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { DatePicker, Spin } from 'antd';
 import { Icon, Typography } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import moment from 'moment';
+import queryString from 'query-string';
 import { ConfirmContext } from '../ConfirmContext';
 import * as action from '../../_redux/confirmAction';
 import TableConfirmAll from './Components/TableCofirmAll';
@@ -40,6 +41,14 @@ export default function ConfrimAllocation(props) {
 		setDateStart,
 		setDateEnd
 	} = AllocationContext;
+	const location = useLocation();
+	const searchLocation = queryString.parse(location.search);
+	const dateStartLocation = searchLocation.dateStart
+		? searchLocation.dateStart
+		: moment().startOf('month').format('YYYY/MM/DD');
+	const dateEndLocation = searchLocation.dateEnd
+		? searchLocation.dateEnd
+		: moment().endOf('month').format('YYYY/MM/DD');
 	const { currentState } = useSelector(state => ({ currentState: state.confirm }), shallowEqual);
 	const { listloading, entities, total_count, actionLoading } = currentState;
 	const handleOpenTimeLine = item => {
@@ -54,8 +63,10 @@ export default function ConfrimAllocation(props) {
 		history.push('/tai-san/danh-sach-de-xuat/allocation');
 	};
 	useEffect(() => {
-		dispatch(action.fetchDataConfirms(0, 1));
-	}, [dispatch]);
+		setDateStart(dateStartLocation);
+		setDateEnd(dateEndLocation);
+		dispatch(action.fetchDataConfirms(0, 1, null, dateStartLocation, dateEndLocation));
+	}, [dispatch, dateStartLocation, dateEndLocation, setDateStart, setDateEnd]);
 	const handleRowChange = e => {
 		const rowPageParse = parseInt(e.target.value, 10);
 		setRowPage(rowPageParse);
@@ -97,11 +108,18 @@ export default function ConfrimAllocation(props) {
 		dispatch(
 			action.searchConfirms(false, status, rowPage, page, 1, sort.id, sort.direction, search, date, dateEnd)
 		);
+		history.push(
+			`/tai-san/danh-sach-de-xuat?dateStart=${date ? moment(date).format('YYYY/MM/DD') : null}&dateEnd=${dateEnd}`
+		);
 	};
 	const handleChangeFilterDateEnd = date => {
-		setDateEnd(date);
 		dispatch(
 			action.searchConfirms(false, status, rowPage, page, 1, sort.id, sort.direction, search, dateStart, date)
+		);
+		history.push(
+			`/tai-san/danh-sach-de-xuat?dateStart=${dateStart}&dateEnd=${
+				date ? moment(date).format('YYYY/MM/DD') : null
+			}`
 		);
 	};
 	const createSortHandler = (direction, id) => {
@@ -140,13 +158,13 @@ export default function ConfrimAllocation(props) {
 						<div className="proposedManagement__subcontent--action">
 							<DatePicker
 								onChange={handleChangeFilterDateStart}
-								value={dateStart}
+								value={dateStart !== 'null' ? moment(moment(dateStart), 'YYYY/MM/YYYY') : null}
 								placeholder="Ngày bắt đầu"
 								style={{ width: '100%' }}
 							/>
 							<DatePicker
 								onChange={handleChangeFilterDateEnd}
-								value={dateEnd}
+								value={dateEnd !== 'null' ? moment(moment(dateEnd), 'YYYY/MM/YYYY') : null}
 								placeholder="Ngày kết thúc"
 								style={{ width: '100%' }}
 							/>

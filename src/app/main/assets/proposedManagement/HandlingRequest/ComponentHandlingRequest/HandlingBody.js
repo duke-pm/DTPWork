@@ -99,7 +99,7 @@ export default function HandlingBody({ dataAssets, setDataAssets, value }) {
 							</div>
 						</div>
 						{!disable && (
-							<div className="px-16 w-full sm:px-24">
+							<div className="px-16 w-full sm:px-24 mb-16">
 								<ContentFormReport classes={classes} entitiesEdit={dataAssets} />
 							</div>
 						)}

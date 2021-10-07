@@ -33,49 +33,49 @@ export default function FormCorrupt({ entitiesEdit, actionLoading, params }) {
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
 				{' '}
-				<Text variant="body"> {entitiesEdit?.assetID}</Text>
+				<Text type="subTitle"> {entitiesEdit?.assetID}</Text>
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
 				<Text type="body"> Tên tài sản:</Text>
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
 				{' '}
-				<Text type="body"> {entitiesEdit?.assetName}</Text>
+				<Text type="subTitle"> {entitiesEdit?.assetName}</Text>
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
 				<Text type="body"> Nhóm tài sản :</Text>
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
 				{' '}
-				<Text type="body"> {entitiesEdit?.groupName}</Text>
+				<Text type="subTitle"> {entitiesEdit?.groupName}</Text>
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
 				<Text type="body"> Quy cách tài sản :</Text>
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
 				{' '}
-				<Text type="body"> </Text>
+				<Text type="subTitle"> </Text>
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
 				<Text type="body"> Ngày mua :</Text>
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
 				{' '}
-				<Text type="body"> {moment(entitiesEdit?.purchaseDate).format('DD/MM/YYYY')} </Text>
+				<Text type="subTitle"> {moment(entitiesEdit?.purchaseDate).format('DD/MM/YYYY')} </Text>
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
 				<Text type="body"> Nguyên giá :</Text>
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
 				{' '}
-				<Text type="body"> {currencyFormat(entitiesEdit?.originalPrice) || ''} </Text>
+				<Text type="subTitle"> {currencyFormat(entitiesEdit?.originalPrice) || ''} </Text>
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
 				<Text type="body"> Tình trạng :</Text>
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
 				{' '}
-				<Text type="body"> {entitiesEdit?.assetStatusName} </Text>
+				<Text type="subTitle"> {entitiesEdit?.assetStatusName} </Text>
 			</Grid>
 			<Grid item sm={12} md={12} lg={12}>
 				<Text color="primary" type="subTitle" borderBottom>

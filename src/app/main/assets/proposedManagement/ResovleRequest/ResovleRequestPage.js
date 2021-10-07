@@ -6,6 +6,7 @@ import Search from 'antd/lib/input/Search';
 import { useDispatch } from 'react-redux';
 import { DatePicker } from 'antd';
 import moment from 'moment';
+import { useHistory } from 'react-router';
 import TimeLine from '../TimeLine';
 import RequestResovelTable from './ComponentResovleRequest';
 import { ResovleContext } from './ResovleRequestContext';
@@ -18,6 +19,7 @@ const requestType = {
 	3: 'Báo mất'
 };
 export default function ResovleRequestPage() {
+	const history = useHistory();
 	const dispatch = useDispatch();
 	const ResovleContextHandle = useContext(ResovleContext);
 	const {
@@ -61,15 +63,21 @@ export default function ResovleRequestPage() {
 		setRequestTypeId(null);
 	};
 	const handleChangeFilterDateStart = date => {
-		setDateStart(date);
 		dispatch(
 			searchConfirms(true, status, rowPage, page, requestTypeId, sort.id, sort.direction, search, date, dateEnd)
 		);
+		history.push(
+			`/tai-san/de-xuat-can-xu-ly?dateStart=${date ? moment(date).format('YYYY/MM/DD') : null}&dateEnd=${dateEnd}`
+		);
 	};
 	const handleChangeFilterDateEnd = date => {
-		setDateEnd(date);
 		dispatch(
 			searchConfirms(true, status, rowPage, page, requestTypeId, sort.id, sort.direction, search, dateStart, date)
+		);
+		history.push(
+			`/tai-san/de-xuat-can-xu-ly?dateStart=${dateStart}&dateEnd=${
+				date ? moment(date).format('YYYY/MM/DD') : null
+			}`
 		);
 	};
 	const handleSearch = () => {
@@ -130,13 +138,13 @@ export default function ResovleRequestPage() {
 					<div className="proposedManagement__subcontent--action">
 						<DatePicker
 							onChange={handleChangeFilterDateStart}
-							value={dateStart}
+							value={dateStart !== 'null' ? moment(moment(dateStart), 'YYYY/MM/YYYY') : null}
 							placeholder="Ngày bắt đầu"
 							style={{ width: '100%' }}
 						/>
 						<DatePicker
 							onChange={handleChangeFilterDateEnd}
-							value={dateEnd}
+							value={dateEnd !== 'null' ? moment(moment(dateEnd), 'YYYY/MM/YYYY') : null}
 							placeholder="Ngày kết thúc"
 							style={{ width: '100%' }}
 						/>
