@@ -33,7 +33,7 @@ export default function FormCorrupt({ entitiesEdit, actionLoading, params }) {
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
 				{' '}
-				<Text type="subTitle"> {entitiesEdit?.assetID}</Text>
+				<Text type="subTitle"> {entitiesEdit?.assetCode}</Text>
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
 				<Text type="body"> Tên tài sản:</Text>

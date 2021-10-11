@@ -100,8 +100,7 @@ export default function ConfirmLose(props) {
 	useEffect(() => {
 		setDateStart(dateStartLocation);
 		setDateEnd(dateEndLocation);
-		dispatch(action.fetchDataConfirms(0, 3, null, dateStartLocation, dateEndLocation));
-	}, [dispatch, dateStartLocation, dateEndLocation, setDateStart, setDateEnd]);
+	}, [dateStartLocation, dateEndLocation, setDateStart, setDateEnd]);
 	const createSortHandler = (direction, id) => {
 		dispatch(action.searchConfirms(false, status, rowPage, page, 3, id, direction, search, dateStart, dateEnd));
 		setSort({

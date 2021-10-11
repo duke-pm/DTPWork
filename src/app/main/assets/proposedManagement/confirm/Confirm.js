@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Search from 'antd/lib/input/Search';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { Tabs } from 'antd';
 import Text from 'app/components/Text';
 import { useHistory } from 'react-router';
+import moment from 'moment';
 import { ConfirmContext } from './ConfirmContext';
 import ConfirmAll from './ConfirmAll';
 import ConfirmDamaged from './ConfirmDamaged';
@@ -37,7 +38,9 @@ function PossesionPage(props) {
 		sort,
 		search,
 		dateStart,
-		dateEnd
+		dateEnd,
+		setDateStart,
+		setDateEnd
 	} = confirmContext;
 	const dispatch = useDispatch();
 	const { currentState, tabs } = useSelector(
@@ -50,9 +53,49 @@ function PossesionPage(props) {
 	const { value } = tabs;
 	const history = useHistory();
 	const total_Record = currentState && currentState.total_items;
+	useEffect(() => {
+		switch (value) {
+			case '0':
+				dispatch(
+					fetchDataConfirms(
+						0,
+						1,
+						null,
+						moment(dateStart).format('YYYY/MM/DD'),
+						moment(dateEnd).format('YYYY/MM/DD')
+					)
+				);
+				break;
+			case '1':
+				dispatch(
+					fetchDataConfirms(
+						0,
+						2,
+						null,
+						moment(dateStart).format('YYYY/MM/DD'),
+						moment(dateEnd).format('YYYY/MM/DD')
+					)
+				);
+				break;
+			case '3':
+				dispatch(
+					fetchDataConfirms(
+						0,
+						2,
+						null,
+						moment(dateStart).format('YYYY/MM/DD'),
+						moment(dateEnd).format('YYYY/MM/DD')
+					)
+				);
+				break;
+			default:
+		}
+	}, [value, dateStart, dateEnd, dispatch]);
 	const handleChange = key => {
 		dispatch(actions.changeTabs(key));
 		setPage(0);
+		setDateStart(moment().startOf('month'));
+		setDateEnd(moment().endOf('month'));
 		setStatus(null);
 		setRowPage(25);
 		setSort({

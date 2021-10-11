@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-shadow */
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Panigation from '@fuse/core/FusePanigate';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { DatePicker, Spin } from 'antd';
@@ -32,14 +32,14 @@ export default function ConfrimAllocation(props) {
 		rowPage,
 		setRowPage,
 		search,
-		dateStart,
-		dateEnd,
 		sort,
 		setSort,
 		setTimeLine,
 		setStatus,
+		setDateEnd,
 		setDateStart,
-		setDateEnd
+		dateStart,
+		dateEnd
 	} = AllocationContext;
 	const location = useLocation();
 	const searchLocation = queryString.parse(location.search);
@@ -65,8 +65,7 @@ export default function ConfrimAllocation(props) {
 	useEffect(() => {
 		setDateStart(dateStartLocation);
 		setDateEnd(dateEndLocation);
-		dispatch(action.fetchDataConfirms(0, 1, null, dateStartLocation, dateEndLocation));
-	}, [dispatch, dateStartLocation, dateEndLocation, setDateStart, setDateEnd]);
+	}, [dateStartLocation, dateEndLocation, setDateStart, setDateEnd]);
 	const handleRowChange = e => {
 		const rowPageParse = parseInt(e.target.value, 10);
 		setRowPage(rowPageParse);
