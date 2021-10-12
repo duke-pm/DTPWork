@@ -27,7 +27,7 @@ export default function ContentFormReport({ entitiesEdit, classes }) {
 				<Text>Nhóm tài sản:</Text>
 			</Grid>
 			<Grid item xs={6} md={6} lg={8}>
-				<Text type="subTitle">{entitiesEdit?.groupName ? entitiesEdit.assetGroupName : '-'}</Text>
+				<Text type="subTitle">{entitiesEdit?.groupName ? entitiesEdit.groupName : '-'}</Text>
 			</Grid>
 			<Grid item xs={6} md={6} lg={4}>
 				<Text>Ngày mua:</Text>
