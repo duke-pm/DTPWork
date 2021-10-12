@@ -95,24 +95,24 @@ export default function CustomForm({
 				<Form>
 					<div className="mt-8">
 						<Text color="primary" type="subTitle" borderBottom>
-							QUYỀN
+							LINE PHÊ DUYỆT
 						</Text>
 						<div className="grid grid-cols-1 gap-8">
 							<Field
 								position="right"
-								label="Nhóm"
+								label="Nhóm chức năng"
 								hasFeedback
 								placeholder="Chọn nội dung"
-								width="90.1%"
+								width="80.1%"
 								name="groupID"
 								options={groupUser}
 								component={AntSelectCustom}
 							/>{' '}
 							<Field
 								position="right"
-								label="Quyền"
+								label="Line phê duyệt"
 								placeholder="Chọn nội dung"
-								width="90.1%"
+								width="80.1%"
 								name="roleID"
 								options={roles}
 								component={AntSelectCustom}
@@ -120,14 +120,14 @@ export default function CustomForm({
 						</div>
 
 						<Text color="primary" type="subTitle" borderBottom>
-							CẤP ĐỘ CHI TIẾT
+							CHI TIẾT
 						</Text>
 						<Grid container spacing={2}>
 							<Grid item lg={6} md={6} sm={6} xs={6}>
 								<Field
 									position="right"
 									placeholder="Chọn nội dung"
-									label="Cấp 1"
+									label="Level 1"
 									name="levels[0].UserID"
 									options={users}
 									handleChangeState={handleChange}
@@ -150,7 +150,7 @@ export default function CustomForm({
 							<Grid item lg={6} md={6} sm={6} xs={6}>
 								<Field
 									position="right"
-									label="Cấp 2"
+									label="Level 2"
 									name="levels[1].UserID"
 									handleChangeState={handleChange}
 									placeholder="Chọn nội dung"
@@ -174,7 +174,7 @@ export default function CustomForm({
 							<Grid item lg={6} md={6} sm={6} xs={6}>
 								<Field
 									position="right"
-									label="Cấp 3"
+									label="Level 3"
 									placeholder="Chọn nội dung"
 									name="levels[2].UserID"
 									options={users}
@@ -198,7 +198,7 @@ export default function CustomForm({
 							<Grid item lg={6} md={6} sm={6} xs={6}>
 								<Field
 									position="right"
-									label="Cấp 4"
+									label="Level 4"
 									placeholder="Chọn nội dung"
 									name="levels[3].UserID"
 									handleChangeState={handleChange}
@@ -223,7 +223,7 @@ export default function CustomForm({
 								<Field
 									placeholder="Chọn nội dung"
 									position="right"
-									label="Cấp 5"
+									label="Level 5"
 									handleChangeState={handleChange}
 									name="levels[4].UserID"
 									options={users}
@@ -242,7 +242,7 @@ export default function CustomForm({
 							</Grid>
 						</Grid>
 						<Text color="primary" type="subTitle" borderBottom>
-							NỘI DUNG
+							GHI CHÚ
 						</Text>
 						<Grid container spacing={2}>
 							<Grid item lg={12} md={12} sm={12} xs={12}>

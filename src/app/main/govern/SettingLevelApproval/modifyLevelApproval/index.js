@@ -85,7 +85,7 @@ export default function ModifyLevelApproval() {
 		<div className="container govern">
 			<div className="govern__header px-16">
 				<Text color="primary" type="title">
-					{params.type === 'cap-nhat' ? 'Chỉnh sửa cấp quyền' : 'Tạo cấp quyền mới'}
+					{params.type === 'cap-nhat' ? 'Cập nhật level' : 'Thiết lập level'}
 				</Text>
 				<div className="govern__header--action">
 					<Tooltip placement="bottom" title="Exit">
