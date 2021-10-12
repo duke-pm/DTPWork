@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-shadow */
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Icon, Typography } from '@material-ui/core';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import Panigation from '@fuse/core/FusePanigate';
@@ -43,10 +43,14 @@ export default function ConfirmDamaged(props) {
 	const location = useLocation();
 	const searchLocation = queryString.parse(location.search);
 	const dateStartLocation = searchLocation.dateStart
-		? searchLocation.dateStart
+		? searchLocation.dateStart !== 'null'
+			? searchLocation.dateStart
+			: null
 		: moment().startOf('month').format('YYYY/MM/DD');
 	const dateEndLocation = searchLocation.dateEnd
-		? searchLocation.dateEnd
+		? searchLocation.dateEnd !== 'null'
+			? searchLocation.dateEnd
+			: null
 		: moment().endOf('month').format('YYYY/MM/DD');
 	const { currentState } = useSelector(state => ({ currentState: state.confirm }), shallowEqual);
 	const { listloading, entities, total_count, actionLoading } = currentState;
@@ -156,14 +160,14 @@ export default function ConfirmDamaged(props) {
 							<DatePicker
 								onChange={handleChangeFilterDateStart}
 								format="DD/MM/YYYY"
-								value={dateStart !== 'null' ? moment(moment(dateStart), 'YYYY/MM/YYYY') : null}
+								value={dateStart ? moment(moment(dateStart), 'YYYY/MM/YYYY') : null}
 								placeholder="Ngày bắt đầu"
 								style={{ width: '100%' }}
 							/>
 							<DatePicker
 								onChange={handleChangeFilterDateEnd}
 								format="DD/MM/YYYY"
-								value={dateEnd !== 'null' ? moment(moment(dateEnd), 'YYYY/MM/YYYY') : null}
+								value={dateEnd ? moment(moment(dateEnd), 'YYYY/MM/YYYY') : null}
 								placeholder="Ngày kết thúc"
 								style={{ width: '100%' }}
 							/>

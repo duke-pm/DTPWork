@@ -111,7 +111,7 @@ export const confirmSlice = createSlice({
 			const { id } = action.payload;
 			state.actionLoading = false;
 			const { entitiesApproval } = state;
-			const newTimeLine = entitiesApproval.filter(item => item.requestID === id && item.levelApproval !== null);
+			const newTimeLine = entitiesApproval.filter(item => item.requestID === id);
 			state.newEntitiesApproval = newTimeLine;
 		}
 	}

@@ -47,14 +47,7 @@ export default function FormCorrupt({ entitiesEdit, actionLoading, params }) {
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
 				{' '}
-				<Text type="subTitle"> {entitiesEdit?.groupName}</Text>
-			</Grid>
-			<Grid item sm={6} md={6} lg={6}>
-				<Text type="body"> Quy cách tài sản :</Text>
-			</Grid>
-			<Grid item sm={6} md={6} lg={6}>
-				{' '}
-				<Text type="subTitle"> </Text>
+				<Text type="subTitle"> {entitiesEdit?.assetGroupName}</Text>
 			</Grid>
 			<Grid item sm={6} md={6} lg={6}>
 				<Text type="body"> Ngày mua :</Text>

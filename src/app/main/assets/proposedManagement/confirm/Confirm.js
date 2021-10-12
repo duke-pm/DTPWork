@@ -61,8 +61,8 @@ function PossesionPage(props) {
 						0,
 						1,
 						null,
-						moment(dateStart).format('YYYY/MM/DD'),
-						moment(dateEnd).format('YYYY/MM/DD')
+						dateStart ? moment(dateStart).format('YYYY/MM/DD') : 'null',
+						dateEnd ? moment(dateEnd).format('YYYY/MM/DD') : 'null'
 					)
 				);
 				break;
@@ -72,23 +72,32 @@ function PossesionPage(props) {
 						0,
 						2,
 						null,
-						moment(dateStart).format('YYYY/MM/DD'),
-						moment(dateEnd).format('YYYY/MM/DD')
+						dateStart ? moment(dateStart).format('YYYY/MM/DD') : 'null',
+						dateEnd ? moment(dateEnd).format('YYYY/MM/DD') : 'null'
 					)
 				);
 				break;
-			case '3':
+			case '2':
 				dispatch(
 					fetchDataConfirms(
 						0,
-						2,
+						3,
 						null,
-						moment(dateStart).format('YYYY/MM/DD'),
-						moment(dateEnd).format('YYYY/MM/DD')
+						dateStart ? moment(dateStart).format('YYYY/MM/DD') : 'null',
+						dateEnd ? moment(dateEnd).format('YYYY/MM/DD') : 'null'
 					)
 				);
 				break;
 			default:
+				dispatch(
+					fetchDataConfirms(
+						0,
+						1,
+						null,
+						dateStart ? moment(dateStart).format('YYYY/MM/DD') : 'null',
+						dateEnd ? moment(dateEnd).format('YYYY/MM/DD') : 'null'
+					)
+				);
 		}
 	}, [value, dateStart, dateEnd, dispatch]);
 	const handleChange = key => {

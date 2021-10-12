@@ -1,7 +1,6 @@
 import React from 'react';
-import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import * as moment from 'moment';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import Text from 'app/components/Text';
 
 export default function ContentFormReport({ entitiesEdit, classes }) {
@@ -28,7 +27,7 @@ export default function ContentFormReport({ entitiesEdit, classes }) {
 				<Text>Nhóm tài sản:</Text>
 			</Grid>
 			<Grid item xs={6} md={6} lg={8}>
-				<Text type="subTitle">{entitiesEdit?.groupName ? entitiesEdit.groupName : '-'}</Text>
+				<Text type="subTitle">{entitiesEdit?.groupName ? entitiesEdit.assetGroupName : '-'}</Text>
 			</Grid>
 			<Grid item xs={6} md={6} lg={4}>
 				<Text>Ngày mua:</Text>

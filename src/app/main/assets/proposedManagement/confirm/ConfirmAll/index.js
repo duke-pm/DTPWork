@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-shadow */
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Panigation from '@fuse/core/FusePanigate';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { DatePicker, Spin } from 'antd';
@@ -44,10 +44,14 @@ export default function ConfrimAllocation(props) {
 	const location = useLocation();
 	const searchLocation = queryString.parse(location.search);
 	const dateStartLocation = searchLocation.dateStart
-		? searchLocation.dateStart
+		? searchLocation.dateStart !== 'null'
+			? searchLocation.dateStart
+			: null
 		: moment().startOf('month').format('YYYY/MM/DD');
 	const dateEndLocation = searchLocation.dateEnd
-		? searchLocation.dateEnd
+		? searchLocation.dateEnd !== 'null'
+			? searchLocation.dateEnd
+			: null
 		: moment().endOf('month').format('YYYY/MM/DD');
 	const { currentState } = useSelector(state => ({ currentState: state.confirm }), shallowEqual);
 	const { listloading, entities, total_count, actionLoading } = currentState;
@@ -115,7 +119,7 @@ export default function ConfrimAllocation(props) {
 			action.searchConfirms(false, status, rowPage, page, 1, sort.id, sort.direction, search, dateStart, date)
 		);
 		history.push(
-			`/tai-san/danh-sach-de-xuat?dateStart=${dateStart}&dateEnd=${
+			`/tai-san/danh-sach-de-xuat?dateStart=${dateStart && moment(dateStart).format('YYYY/MM/DD')}&dateEnd=${
 				date ? moment(date).format('YYYY/MM/DD') : null
 			}`
 		);
@@ -157,14 +161,14 @@ export default function ConfrimAllocation(props) {
 							<DatePicker
 								onChange={handleChangeFilterDateStart}
 								format="DD/MM/YYYY"
-								value={dateStart !== 'null' ? moment(moment(dateStart), 'DD/MM/YYYY') : null}
+								value={dateStart ? moment(moment(dateStart), 'DD/MM/YYYY') : null}
 								placeholder="Ngày bắt đầu"
 								style={{ width: '100%' }}
 							/>
 							<DatePicker
 								onChange={handleChangeFilterDateEnd}
 								format="DD/MM/YYYY"
-								value={dateEnd !== 'null' ? moment(moment(dateEnd), 'DD/MM/YYYY') : null}
+								value={dateEnd ? moment(moment(dateEnd), 'DD/MM/YYYY') : null}
 								placeholder="Ngày kết thúc"
 								style={{ width: '100%' }}
 							/>

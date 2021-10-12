@@ -65,7 +65,7 @@ export default function FormCustomCorruptEdit({ entitiesEdit, handleClose, setFo
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
 								{' '}
-								<Text type="subTitle"> {entitiesEdit?.groupName}</Text>
+								<Text type="subTitle"> {entitiesEdit?.assetGroupName}</Text>
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
 								<Text type="body"> Ngày mua :</Text>
