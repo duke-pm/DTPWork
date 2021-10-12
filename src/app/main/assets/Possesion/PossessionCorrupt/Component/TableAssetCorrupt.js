@@ -33,22 +33,23 @@ export default function TableAssetCorrupt({
 			key: 'operation',
 			fixed: 'left',
 			width: '4%',
-			render: (_, item) => (
-				<Popover
-					overlayStyle={{ zIndex: '19' }}
-					placement="rightTop"
-					content={() => (
-						<ActionHandleFunc
-							handleOpenFormLiquiAsset={handleOpenFormLiquiAsset}
-							handleOpenFormService={handleOpenFormService}
-							items={item}
-						/>
-					)}
-					title="Hành động"
-				>
-					<MoreVertIcon className="cursor-pointer" />
-				</Popover>
-			)
+			render: (_, item) =>
+				item.statusID !== 5 && (
+					<Popover
+						overlayStyle={{ zIndex: '19' }}
+						placement="rightTop"
+						content={() => (
+							<ActionHandleFunc
+								handleOpenFormLiquiAsset={handleOpenFormLiquiAsset}
+								handleOpenFormService={handleOpenFormService}
+								items={item}
+							/>
+						)}
+						title="Hành động"
+					>
+						<MoreVertIcon className="cursor-pointer" />
+					</Popover>
+				)
 		},
 		{
 			title: 'Mã tài sản',
