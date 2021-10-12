@@ -3,11 +3,11 @@ import {
 	Dialog,
 	AppBar,
 	Toolbar,
-	Typography,
 	DialogContent,
 	DialogActions,
 	Button,
-	IconButton
+	IconButton,
+	Typography
 } from '@material-ui/core';
 import { Form, Formik, Field } from 'formik';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
@@ -58,8 +58,8 @@ export default function FormConfirmGobal() {
 					<IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
 						<CloseIcon />
 					</IconButton>
-					<Typography variant="subtitle1" color="inherit">
-						Lý do không duyệt.
+					<Typography variant="subtitle2" color="inherit">
+						Lí do không duyệt.
 					</Typography>
 				</Toolbar>
 			</AppBar>

@@ -138,12 +138,14 @@ export default function ResovleRequestPage() {
 					<div className="proposedManagement__subcontent--action">
 						<DatePicker
 							onChange={handleChangeFilterDateStart}
+							format="DD/MM/YYYY"
 							value={dateStart !== 'null' ? moment(moment(dateStart), 'YYYY/MM/YYYY') : null}
 							placeholder="Ngày bắt đầu"
 							style={{ width: '100%' }}
 						/>
 						<DatePicker
 							onChange={handleChangeFilterDateEnd}
+							format="DD/MM/YYYY"
 							value={dateEnd !== 'null' ? moment(moment(dateEnd), 'YYYY/MM/YYYY') : null}
 							placeholder="Ngày kết thúc"
 							style={{ width: '100%' }}

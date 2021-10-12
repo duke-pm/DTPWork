@@ -58,7 +58,7 @@ export default function FormConfirmGobal() {
 					<IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
 						<CloseIcon />
 					</IconButton>
-					<Typography variant="subtitle1" color="inherit">
+					<Typography variant="subtitle2" color="inherit">
 						Lý do không duyệt.
 					</Typography>
 				</Toolbar>

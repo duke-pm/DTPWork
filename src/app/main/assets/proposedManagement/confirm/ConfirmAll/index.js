@@ -32,22 +32,26 @@ export default function ConfrimAllocation(props) {
 		rowPage,
 		setRowPage,
 		search,
-		dateStart,
-		dateEnd,
 		sort,
 		setSort,
 		setTimeLine,
 		setStatus,
+		setDateEnd,
 		setDateStart,
-		setDateEnd
+		dateStart,
+		dateEnd
 	} = AllocationContext;
 	const location = useLocation();
 	const searchLocation = queryString.parse(location.search);
 	const dateStartLocation = searchLocation.dateStart
-		? searchLocation.dateStart
+		? searchLocation.dateStart !== 'null'
+			? searchLocation.dateStart
+			: null
 		: moment().startOf('month').format('YYYY/MM/DD');
 	const dateEndLocation = searchLocation.dateEnd
-		? searchLocation.dateEnd
+		? searchLocation.dateEnd !== 'null'
+			? searchLocation.dateEnd
+			: null
 		: moment().endOf('month').format('YYYY/MM/DD');
 	const { currentState } = useSelector(state => ({ currentState: state.confirm }), shallowEqual);
 	const { listloading, entities, total_count, actionLoading } = currentState;
@@ -65,8 +69,7 @@ export default function ConfrimAllocation(props) {
 	useEffect(() => {
 		setDateStart(dateStartLocation);
 		setDateEnd(dateEndLocation);
-		dispatch(action.fetchDataConfirms(0, 1, null, dateStartLocation, dateEndLocation));
-	}, [dispatch, dateStartLocation, dateEndLocation, setDateStart, setDateEnd]);
+	}, [dateStartLocation, dateEndLocation, setDateStart, setDateEnd]);
 	const handleRowChange = e => {
 		const rowPageParse = parseInt(e.target.value, 10);
 		setRowPage(rowPageParse);
@@ -104,7 +107,6 @@ export default function ConfrimAllocation(props) {
 		);
 	};
 	const handleChangeFilterDateStart = date => {
-		setDateStart(date);
 		dispatch(
 			action.searchConfirms(false, status, rowPage, page, 1, sort.id, sort.direction, search, date, dateEnd)
 		);
@@ -117,7 +119,7 @@ export default function ConfrimAllocation(props) {
 			action.searchConfirms(false, status, rowPage, page, 1, sort.id, sort.direction, search, dateStart, date)
 		);
 		history.push(
-			`/tai-san/danh-sach-de-xuat?dateStart=${dateStart}&dateEnd=${
+			`/tai-san/danh-sach-de-xuat?dateStart=${dateStart && moment(dateStart).format('YYYY/MM/DD')}&dateEnd=${
 				date ? moment(date).format('YYYY/MM/DD') : null
 			}`
 		);
@@ -158,13 +160,15 @@ export default function ConfrimAllocation(props) {
 						<div className="proposedManagement__subcontent--action">
 							<DatePicker
 								onChange={handleChangeFilterDateStart}
-								value={dateStart !== 'null' ? moment(moment(dateStart), 'YYYY/MM/YYYY') : null}
+								format="DD/MM/YYYY"
+								value={dateStart ? moment(moment(dateStart), 'DD/MM/YYYY') : null}
 								placeholder="Ngày bắt đầu"
 								style={{ width: '100%' }}
 							/>
 							<DatePicker
 								onChange={handleChangeFilterDateEnd}
-								value={dateEnd !== 'null' ? moment(moment(dateEnd), 'YYYY/MM/YYYY') : null}
+								format="DD/MM/YYYY"
+								value={dateEnd ? moment(moment(dateEnd), 'DD/MM/YYYY') : null}
 								placeholder="Ngày kết thúc"
 								style={{ width: '100%' }}
 							/>

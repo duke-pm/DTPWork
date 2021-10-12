@@ -131,7 +131,7 @@ export default function HandlingBody({ dataAssets, setDataAssets, value }) {
 						</div>
 						<div className="px-16 w-full sm:px-24 mb-28 flex justify-end">
 							{actionLoading ? (
-								<Spin className="mr-23" />
+								<Spin style={{ marginRight: '20px' }} />
 							) : (
 								<Button type="submit" className="h-26 mr-16" variant="contained" color="primary">
 									<Typography variant="button">Gửi yêu cầu</Typography>

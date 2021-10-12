@@ -42,7 +42,7 @@ export default function CustomForm({
 		initial = {
 			id: entitiesEdit?.absID,
 			groupID: entitiesEdit?.groupID,
-			roleID: entitiesEdit?.roleID,
+			roleID: entitiesEdit?.roleID !== 0 ? entitiesEdit.roleID : null,
 			notes: entitiesEdit?.notes,
 			levels: [
 				{
@@ -80,8 +80,7 @@ export default function CustomForm({
 		setIsChange(true);
 	};
 	const validationSchema = Yup.object().shape({
-		groupID: Yup.string().required(`${validateField}`),
-		roleID: Yup.string().required(`${validateField}`)
+		groupID: Yup.string().required(`${validateField}`)
 	});
 	return (
 		<Formik
@@ -114,7 +113,6 @@ export default function CustomForm({
 								label="Quyền"
 								placeholder="Chọn nội dung"
 								width="90.1%"
-								hasFeedback
 								name="roleID"
 								options={roles}
 								component={AntSelectCustom}

@@ -137,7 +137,7 @@ export default function FormCustomProject({
 						<Divider />
 						<DialogActions>
 							{actionLoading ? (
-								<Spin />
+								<Spin style={{ marginRight: '20px' }} />
 							) : (
 								<Button type="submit" className="h-26" variant="contained" color="primary">
 									<span>{initial?.prjID !== '0' ? 'Save' : 'Save'}</span>

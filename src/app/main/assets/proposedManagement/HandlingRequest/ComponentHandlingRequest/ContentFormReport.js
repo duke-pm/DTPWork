@@ -1,7 +1,6 @@
 import React from 'react';
-import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import * as moment from 'moment';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import Text from 'app/components/Text';
 
 export default function ContentFormReport({ entitiesEdit, classes }) {

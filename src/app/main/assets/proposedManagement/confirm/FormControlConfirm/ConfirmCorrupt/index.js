@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Dialog, AppBar, Toolbar, Typography, DialogContent, IconButton } from '@material-ui/core';
+import { Dialog, AppBar, Toolbar, DialogContent, IconButton, Typography } from '@material-ui/core';
 import { Form, Formik, Field } from 'formik';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import InputTextAreaLg from '@fuse/CustomForm/InputTextAreaLg';
@@ -46,8 +46,8 @@ export default function FormConfirmGobal({ open }) {
 					<IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
 						<CloseIcon />
 					</IconButton>
-					<Typography variant="subtitle1" color="inherit">
-						Lý do không duyệt.
+					<Typography variant="subtitle2" color="inherit">
+						Lí do không duyệt
 					</Typography>
 				</Toolbar>
 			</AppBar>

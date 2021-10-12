@@ -51,7 +51,7 @@ export default function FormCustomCorruptEdit({ entitiesEdit, handleClose, setFo
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
 								{' '}
-								<Text type="subTitle"> {entitiesEdit?.assetID}</Text>
+								<Text type="subTitle"> {entitiesEdit?.assetCode}</Text>
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
 								<Text type="body"> Tên tài sản :</Text>
@@ -65,14 +65,7 @@ export default function FormCustomCorruptEdit({ entitiesEdit, handleClose, setFo
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
 								{' '}
-								<Text type="subTitle"> </Text>
-							</Grid>
-							<Grid item xs={6} sm={6} md={6} lg={6}>
-								<Text type="body"> Quy cách tài sản :</Text>
-							</Grid>
-							<Grid item xs={6} sm={6} md={6} lg={6}>
-								{' '}
-								<Text type="subTitle"> </Text>
+								<Text type="subTitle"> {entitiesEdit?.assetGroupName}</Text>
 							</Grid>
 							<Grid item xs={6} sm={6} md={6} lg={6}>
 								<Text type="body"> Ngày mua :</Text>

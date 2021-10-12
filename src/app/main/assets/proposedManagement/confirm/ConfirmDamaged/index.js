@@ -30,23 +30,27 @@ export default function ConfirmDamaged(props) {
 		setRowPage,
 		status,
 		search,
-		dateStart,
-		dateEnd,
 		setPage,
 		sort,
 		setSort,
 		setTimeLine,
+		setStatus,
+		dateStart,
+		dateEnd,
 		setDateStart,
-		setDateEnd,
-		setStatus
+		setDateEnd
 	} = ConfirmContextDamage;
 	const location = useLocation();
 	const searchLocation = queryString.parse(location.search);
 	const dateStartLocation = searchLocation.dateStart
-		? searchLocation.dateStart
+		? searchLocation.dateStart !== 'null'
+			? searchLocation.dateStart
+			: null
 		: moment().startOf('month').format('YYYY/MM/DD');
 	const dateEndLocation = searchLocation.dateEnd
-		? searchLocation.dateEnd
+		? searchLocation.dateEnd !== 'null'
+			? searchLocation.dateEnd
+			: null
 		: moment().endOf('month').format('YYYY/MM/DD');
 	const { currentState } = useSelector(state => ({ currentState: state.confirm }), shallowEqual);
 	const { listloading, entities, total_count, actionLoading } = currentState;
@@ -100,8 +104,7 @@ export default function ConfirmDamaged(props) {
 	useEffect(() => {
 		setDateStart(dateStartLocation);
 		setDateEnd(dateEndLocation);
-		dispatch(action.fetchDataConfirms(0, 2, null, dateStartLocation, dateEndLocation));
-	}, [dispatch, setDateStart, setDateEnd, dateStartLocation, dateEndLocation]);
+	}, [setDateStart, setDateEnd, dateStartLocation, dateEndLocation]);
 	const createSortHandler = (direction, id) => {
 		dispatch(action.searchConfirms(false, status, rowPage, page, 2, id, direction, search, dateStart, dateEnd));
 		setSort({
@@ -156,13 +159,15 @@ export default function ConfirmDamaged(props) {
 						<div className="proposedManagement__subcontent--action">
 							<DatePicker
 								onChange={handleChangeFilterDateStart}
-								value={dateStart !== 'null' ? moment(moment(dateStart), 'YYYY/MM/YYYY') : null}
+								format="DD/MM/YYYY"
+								value={dateStart ? moment(moment(dateStart), 'YYYY/MM/YYYY') : null}
 								placeholder="Ngày bắt đầu"
 								style={{ width: '100%' }}
 							/>
 							<DatePicker
 								onChange={handleChangeFilterDateEnd}
-								value={dateEnd !== 'null' ? moment(moment(dateEnd), 'YYYY/MM/YYYY') : null}
+								format="DD/MM/YYYY"
+								value={dateEnd ? moment(moment(dateEnd), 'YYYY/MM/YYYY') : null}
 								placeholder="Ngày kết thúc"
 								style={{ width: '100%' }}
 							/>

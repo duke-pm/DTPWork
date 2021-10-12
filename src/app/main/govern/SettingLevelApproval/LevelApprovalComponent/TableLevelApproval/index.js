@@ -24,9 +24,9 @@ function TableLevelApproval(props) {
 		{
 			title: 'Code',
 			align: 'left',
-			dataIndex: 'roleID',
-			key: 'roleID',
-			render: (_, item) => <Text>{item.roleID}</Text>
+			dataIndex: 'roleCode',
+			key: 'roleCode',
+			render: (_, item) => <Text>{item.roleCode}</Text>
 		},
 		{
 			title: 'Description',
