@@ -14,14 +14,14 @@ function TableProject(props) {
 	const deleteTask = item => deleteItem(item);
 	const columns = [
 		{
-			title: 'Mã quyền',
+			title: 'Code',
 			align: 'left',
 			dataIndex: 'roleCode',
 			key: 'roleCode',
 			render: (_, item) => <Text>{item.roleCode}</Text>
 		},
 		{
-			title: 'Tên quyền',
+			title: 'Mô tả',
 			align: 'left',
 			dataIndex: 'roleName',
 			key: 'roleName',

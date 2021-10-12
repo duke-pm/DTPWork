@@ -55,7 +55,7 @@ export default function ModifySettingLine() {
 		<div className="container govern">
 			<div className="govern__header px-16">
 				<Text color="primary" type="title">
-					{params.type === 'cap-nhat' ? 'Chỉnh sửa quyền' : 'Tạo quyền mới'}
+					{params.type === 'cap-nhat' ? 'Cập nhật' : 'Tạo mới'}
 				</Text>
 				<div className="govern__header--action">
 					<Tooltip placement="bottom" title="Exit">

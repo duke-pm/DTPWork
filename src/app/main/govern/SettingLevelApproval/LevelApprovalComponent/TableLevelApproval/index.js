@@ -22,49 +22,49 @@ function TableLevelApproval(props) {
 	};
 	const columns = [
 		{
-			title: 'Mã quyền',
+			title: 'Code',
 			align: 'left',
 			dataIndex: 'roleID',
 			key: 'roleID',
 			render: (_, item) => <Text>{item.roleID}</Text>
 		},
 		{
-			title: 'Tên quyền',
+			title: 'Description',
 			align: 'left',
 			dataIndex: 'roleName',
 			key: 'roleName',
 			render: (_, item) => <Text>{item.roleName ? item.roleName : '-'}</Text>
 		},
 		{
-			title: 'Cấp 1',
+			title: 'Level 1',
 			align: 'left',
 			dataIndex: 'level1',
 			key: 'level1',
 			render: (_, item) => <Text>{item.listLevel?.[0].fullName ? item.listLevel?.[0].fullName : '-'}</Text>
 		},
 		{
-			title: 'Cấp 2',
+			title: 'Level 2',
 			align: 'left',
 			dataIndex: 'level2',
 			key: 'level2',
 			render: (_, item) => <Text>{item.listLevel?.[1].fullName ? item.listLevel?.[1].fullName : '-'}</Text>
 		},
 		{
-			title: 'Cấp 3',
+			title: 'Level 3',
 			align: 'left',
 			dataIndex: 'level3',
 			key: 'level3',
 			render: (_, item) => <Text>{item.listLevel?.[2].fullName ? item.listLevel?.[2].fullName : '-'}</Text>
 		},
 		{
-			title: 'Cấp 4',
+			title: 'Level 4',
 			align: 'left',
 			dataIndex: 'level4',
 			key: 'level4',
 			render: (_, item) => <Text>{item.listLevel?.[3].fullName ? item.listLevel?.[3].fullName : '-'}</Text>
 		},
 		{
-			title: 'Cấp 5',
+			title: 'Level 5',
 			align: 'left',
 			dataIndex: 'level5',
 			key: 'level5',

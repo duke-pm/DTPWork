@@ -35,7 +35,7 @@ export default function ContentProvider() {
 		<div className="container govern">
 			<div className="govern__header px-16 shadow-lg">
 				<Text color="primary" type="title">
-					Quyền
+					Thiết lập line phê duyệt
 				</Text>
 				<div className="govern__header--action">
 					<Search

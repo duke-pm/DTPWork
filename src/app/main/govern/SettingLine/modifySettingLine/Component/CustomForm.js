@@ -46,14 +46,14 @@ export default function CustomForm({ actionLoading, entitiesEdit, handleSubmitLi
 						<div>
 							<Field
 								hasFeedback
-								label="Mã quyền"
+								label="Code"
 								name="roleCode"
 								type="text"
 								component={AntInputCustom}
 							/>
 						</div>
 						<div>
-							<Field hasFeedback label="Tên quyền" name="roleName" component={AntInputCustom} />
+							<Field hasFeedback label="Mô tả" name="roleName" component={AntInputCustom} />
 						</div>
 						<div>
 							<Field
