@@ -72,7 +72,7 @@ export default function CustomForm({ initital, bkResource, Users, handleSubmitFo
 									component={AntSelectMultiCustom}
 								/>
 							</div>
-							<div>
+							{/* <div>
 								<Field
 									name="checkBooking"
 									label="One-time booking"
@@ -80,7 +80,7 @@ export default function CustomForm({ initital, bkResource, Users, handleSubmitFo
 									value={initital.checkBooking}
 									component={AntdCustomCheckbox}
 								/>
-							</div>
+							</div> */}
 							<div className="control-booking-time">
 								<div className={`flex flex-row `}>
 									<Text type="body" className="label--form">

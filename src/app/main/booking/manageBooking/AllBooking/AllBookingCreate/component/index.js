@@ -16,7 +16,7 @@ export default function From({ bkResource, Users, actionLoading, ExitPage, entit
 		purpose: '',
 		description: '',
 		participants: [],
-		checkBooking: true,
+		checkBooking: false,
 		timeStart: null,
 		timeEnd: null,
 		timeStartUpdate: null,

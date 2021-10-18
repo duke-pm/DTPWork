@@ -8,6 +8,7 @@ import Text from 'app/components/Text';
 import React, { useContext, useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import moment from 'moment';
 import { fetchsBooking, fetchsBookingFilter, setTaskEditBooking } from '../../_reduxBooking/bookingActions';
 import TableAllBooking from './component/TableAllBooking';
 import { BookingContext } from '../MyBookingContext';
@@ -74,10 +75,19 @@ export default function AllBookingPage() {
 		}
 	};
 	const handleChange = (date, dateString) => {
-		setFromDate(dateString[0]);
-		setToDate(dateString[1]);
+		setFromDate(date && moment(date[0]).format('YYYY/MM/DD'));
+		setToDate(date && moment(date[1]).format('YYYY/MM/DD'));
 		dispatch(
-			fetchsBookingFilter(true, rowPage, page, sort.id, sort.direction, search, dateString[0], dateString[1])
+			fetchsBookingFilter(
+				true,
+				rowPage,
+				page,
+				sort.id,
+				sort.direction,
+				search,
+				date && moment(date[0]).format('YYYY/MM/DD'),
+				date && moment(date[1]).format('YYYY/MM/DD')
+			)
 		);
 	};
 	return (
@@ -129,7 +139,7 @@ export default function AllBookingPage() {
 					/>
 				</div>
 				<div className="booking__subcontent--action">
-					<RangePicker onChange={handleChange} />
+					<RangePicker format="DD/MM/YYYY" onChange={handleChange} />
 					<span onClick={handleChangeRouteList} className="btn__btn--action mr-8">
 						{' '}
 						<Icon fontSize="small" color="primary">
