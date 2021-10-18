@@ -79,7 +79,7 @@ export default function AllBookingPage() {
 		<div className="container booking">
 			<div className="booking__header px-16 shadow-lg">
 				<Text color="primary" type="title">
-					All bookings
+					Tất cả booking
 				</Text>
 				<div className="booking__header--action">
 					<Search
@@ -92,7 +92,7 @@ export default function AllBookingPage() {
 						{' '}
 						<Text type="button" color="white">
 							{' '}
-							Create{' '}
+							Tạo booking{' '}
 						</Text>
 					</Button>
 				</div>

@@ -68,7 +68,7 @@ export default function MyBookingCalendar(props) {
 		<div className="container booking">
 			<div className="booking__header px-16">
 				<Typography color="primary" variant="h6">
-					My bookings
+					Booking của tôi
 				</Typography>
 				<div className="booking__header--action">
 					<Button
@@ -80,7 +80,7 @@ export default function MyBookingCalendar(props) {
 						{' '}
 						<Text type="button" color="white">
 							{' '}
-							Create{' '}
+							Tạo booking{' '}
 						</Text>
 					</Button>
 				</div>

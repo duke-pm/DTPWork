@@ -40,25 +40,25 @@ export default function CustomForm({ initital, bkResource, Users, handleSubmitFo
 							<div className="mb-20">
 								<Text type="subTitle" color="primary" borderBottom>
 									{' '}
-									GENERAL INFORMATION{' '}
+									THÔNG TIN BOOKING{' '}
 								</Text>
 							</div>
 							<div>
 								<Field
-									label="Resource"
+									label="Tài nguyên sử dụng"
 									name="resource"
-									placeholder="Enter resource name"
+									placeholder="Chọn tài nguyên sử dụng"
 									hasFeedback
 									options={bkResource}
 									component={AntSelectCustom}
 								/>
 							</div>
 							<div>
-								<Field label="Purpose" name="purpose" hasFeedback component={AntInputCustom} />
+								<Field label="Mục đích" name="purpose" hasFeedback component={AntInputCustom} />
 							</div>
 							<div>
 								<Field
-									label="Description"
+									label="Ghi chú"
 									name="description"
 									row={4}
 									component={AntDescriptionsCustom}
@@ -66,7 +66,7 @@ export default function CustomForm({ initital, bkResource, Users, handleSubmitFo
 							</div>
 							<div>
 								<Field
-									label="Participants"
+									label="Người tham gia"
 									name="participants"
 									options={Users}
 									component={AntSelectMultiCustom}
@@ -84,7 +84,7 @@ export default function CustomForm({ initital, bkResource, Users, handleSubmitFo
 							<div className="control-booking-time">
 								<div className={`flex flex-row `}>
 									<Text type="body" className="label--form">
-										Booking time
+										Thời gian sử dụng
 									</Text>
 									<p style={{ marginBottom: '-20px' }} className="text-red">
 										*

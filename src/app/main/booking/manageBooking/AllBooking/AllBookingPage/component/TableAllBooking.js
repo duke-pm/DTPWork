@@ -36,14 +36,14 @@ export default function TableAllBooking({ entities, listLoading, createSortHandl
 	};
 	const columns = [
 		{
-			title: 'Code',
+			title: 'Mã',
 			dataIndex: 'bookID',
 			key: 'bookID',
 			sorter: true,
 			render: (_, item) => <Text type="body">{item.bookID}</Text>
 		},
 		{
-			title: 'Booking Title',
+			title: 'Tên booking',
 			dataIndex: 'purpose',
 			align: 'left',
 			key: 'purpose',
@@ -55,7 +55,7 @@ export default function TableAllBooking({ entities, listLoading, createSortHandl
 			)
 		},
 		{
-			title: 'Booking Time',
+			title: 'Thời gian sử dụng',
 			dataIndex: 'bookingTime',
 			align: 'left',
 			key: 'bookingTime',
@@ -79,7 +79,7 @@ export default function TableAllBooking({ entities, listLoading, createSortHandl
 			)
 		},
 		{
-			title: 'Resource',
+			title: 'Tài nguyên',
 			dataIndex: 'resourceName',
 			key: 'resourceName',
 			sorter: true,
@@ -92,7 +92,7 @@ export default function TableAllBooking({ entities, listLoading, createSortHandl
 		// 	render: (_, item) => <Text type="body">One-time booking</Text>
 		// },
 		{
-			title: 'Created by',
+			title: 'Người tạo',
 			dataIndex: 'owner',
 			key: 'owner',
 			sorter: true,
@@ -109,7 +109,14 @@ export default function TableAllBooking({ entities, listLoading, createSortHandl
 			)
 		},
 		{
-			title: 'Status',
+			title: 'Thời gian tạo',
+			dataIndex: 'lastModifide',
+			key: 'lastModifide',
+			sorter: true,
+			render: (_, item) => <Text type="body">{item.strCrtdDate}</Text>
+		},
+		{
+			title: 'Trạng thái',
 			dataIndex: 'status',
 			key: 'status',
 			sorter: true,
@@ -125,19 +132,12 @@ export default function TableAllBooking({ entities, listLoading, createSortHandl
 			)
 		},
 		{
-			title: 'Time of creation',
-			dataIndex: 'lastModifide',
-			key: 'lastModifide',
-			sorter: true,
-			render: (_, item) => <Text type="body">{item.strCrtdDate}</Text>
-		},
-		{
 			title: '',
 			dataIndex: 'status',
 			key: 'status',
 			render: (_, item) => (
 				<div className="flex justify-end">
-					<Tooltip disabled placement="bottom" title="Edit">
+					<Tooltip disabled placement="bottom" title="Cập nhật">
 						<button
 							disabled={!item.isUpdated}
 							onClick={() => handleEdit(item)}
@@ -146,7 +146,7 @@ export default function TableAllBooking({ entities, listLoading, createSortHandl
 							<Icon fontSize="small">edit</Icon>
 						</button>
 					</Tooltip>
-					<Tooltip placement="bottom" title="Delete">
+					<Tooltip placement="bottom" title="Xóa">
 						<button
 							disabled={!item.isUpdated}
 							onClick={() => handleDelete(item)}
