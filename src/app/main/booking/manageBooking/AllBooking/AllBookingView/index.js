@@ -25,9 +25,13 @@ export default function AllBookingView() {
 	return (
 		<div className="container booking">
 			<div className="booking__header px-16 shadow-lg">
-				<Text color="primary" type="title">
-					{entitiesEdit?.purpose}
-				</Text>
+				<div className="flex items-center">
+					<div className="booking__radio--button" style={{ backgroundColor: entitiesEdit?.color }} />
+					<Text type="title" color="primary" className="ml-8">
+						{' '}
+						{entitiesEdit?.resourceName}{' '}
+					</Text>
+				</div>
 				<div className="booking__header--action">
 					<Tooltip placement="bottom" title="Exit">
 						<span onClick={ExitPage} className="action--button">
