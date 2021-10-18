@@ -27,20 +27,20 @@ export default function CustomForm({ initital, bkIcon, handleSubmitForm, actionL
 						<div className=" mt-8 px-16 sm:px-24">
 							<div>
 								<Field
-									label="Name"
+									label="Tên nhóm tài nguyên"
 									name="name"
 									type="text"
-									placeholder="Enter resource name"
+									placeholder="Nhập tên nhóm tài nguyên"
 									hasFeedback
 									component={AntInputCustom}
 								/>
 							</div>
 							<div>
 								<Field
-									label="Description"
+									label="Mô tả"
 									name="description"
 									type="text"
-									placeholder="Enter a short description"
+									placeholder="Mô tả ngắn gọn cho nhóm tài nguyên"
 									component={AntInputCustom}
 								/>
 							</div>
@@ -52,7 +52,7 @@ export default function CustomForm({ initital, bkIcon, handleSubmitForm, actionL
 							<div className="grid grid-cols-3">
 								<Field
 									options={bkIcon}
-									label="Group icon"
+									label="Biểu tượng cho nhóm tài nguyên"
 									hasFeedback
 									handleChan
 									name="icon"

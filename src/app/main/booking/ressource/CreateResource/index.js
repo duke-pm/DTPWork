@@ -42,7 +42,7 @@ export default function CreateResource() {
 		<div className="container resource">
 			<div className="resource__header px-16 shadow-lg">
 				<Typography color="primary" variant="h6">
-					{params.type === 'updated' ? 'Update resource' : 'Create resource'}
+					{params.type === 'updated' ? 'Cập nhật tài nguyên' : 'Tạo tài nguyên'}
 				</Typography>
 				<div className="resource__header--action">
 					<Tooltip placement="bottom" title="Exit">

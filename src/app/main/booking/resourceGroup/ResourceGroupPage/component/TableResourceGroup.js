@@ -32,14 +32,14 @@ export default function TableResourceGroup({ entities, listLoading, createSortHa
 	};
 	const columns = [
 		{
-			title: 'Code',
+			title: 'Mã',
 			dataIndex: 'groupID',
 			sorter: true,
 			key: 'groupID',
 			render: (_, item) => <Text type="body">{item.groupID}</Text>
 		},
 		{
-			title: 'Name',
+			title: 'Tên nhóm tài nguyên',
 			dataIndex: 'groupName',
 			align: 'left',
 			key: 'groupName',
@@ -59,13 +59,13 @@ export default function TableResourceGroup({ entities, listLoading, createSortHa
 			)
 		},
 		{
-			title: 'Descriptions',
+			title: 'Mô tả',
 			dataIndex: 'description',
 			key: 'description',
 			render: (_, item) => <Text type="body">{item.descr}</Text>
 		},
 		{
-			title: 'Created by',
+			title: 'Người tạo',
 			dataIndex: 'crtdName',
 			key: 'crtdName',
 			align: 'left',
@@ -81,7 +81,7 @@ export default function TableResourceGroup({ entities, listLoading, createSortHa
 			)
 		},
 		{
-			title: 'Last modifide',
+			title: 'Ngày cập nhật',
 			dataIndex: 'strCrtdDate',
 			sorter: true,
 			key: 'strCrtdDate',
@@ -93,12 +93,12 @@ export default function TableResourceGroup({ entities, listLoading, createSortHa
 			key: 'status',
 			render: (_, item) => (
 				<div className="flex justify-end">
-					<Tooltip placement="bottom" title="Edit">
+					<Tooltip placement="bottom" title="Cập nhật">
 						<span onClick={() => handleEdit(item)} className="action--button mr-14">
 							<Icon fontSize="small">edit</Icon>
 						</span>
 					</Tooltip>
-					<Tooltip placement="bottom" title="Delete">
+					<Tooltip placement="bottom" title="Xóa">
 						<span onClick={() => handleDelete(item)} className="action--button ">
 							<Icon fontSize="small">delete</Icon>
 						</span>

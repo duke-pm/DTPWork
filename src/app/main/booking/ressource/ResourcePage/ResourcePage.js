@@ -60,7 +60,7 @@ export default function ResourcePage() {
 			<div className="resource__header px-16 shadow-lg">
 				<Text color="primary" type="title">
 					{' '}
-					Resource{' '}
+					Tài nguyên{' '}
 				</Text>
 				<div className="resource__header--action">
 					<Search
@@ -73,7 +73,7 @@ export default function ResourcePage() {
 						{' '}
 						<Text type="button" color="white">
 							{' '}
-							Create{' '}
+							Tạo tài nguyên{' '}
 						</Text>
 					</Button>
 				</div>

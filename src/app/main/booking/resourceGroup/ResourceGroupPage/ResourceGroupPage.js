@@ -60,7 +60,7 @@ export default function ResourceGroupPage() {
 			<div className="resource__header px-16 shadow-lg">
 				<Text color="primary" type="title">
 					{' '}
-					Resource group{' '}
+					Nhóm tài nguyên{' '}
 				</Text>
 				<div className="resource__header--action">
 					<Search
@@ -73,7 +73,7 @@ export default function ResourceGroupPage() {
 						{' '}
 						<Text type="button" color="white">
 							{' '}
-							Create{' '}
+							Tạo nhóm{' '}
 						</Text>
 					</Button>
 				</div>

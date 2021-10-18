@@ -36,27 +36,27 @@ export default function CustomForm({
 						<div className=" mt-8 px-16 sm:px-24">
 							<div>
 								<Field
-									label="Name"
+									label="Tên tài nguyên"
 									name="name"
 									type="text"
-									placeholder="Enter resource name"
+									placeholder="Nhập tên tài nguyên mà bạn muốn đặt"
 									hasFeedback
 									component={AntInputCustom}
 								/>
 							</div>
 							<div>
 								<Field
-									label="Description"
+									label="Mô tả"
 									name="description"
 									type="text"
-									placeholder="Enter a short description"
+									placeholder="Mô tả cho tài nguyên"
 									component={AntInputCustom}
 								/>
 							</div>
 							<div>
 								<Field
 									options={bkResourceGroup}
-									label="Resource group"
+									label="Nhóm tài nguyên"
 									name="resourceGroup"
 									hasFeedback
 									component={AntSelectCustom}
@@ -64,7 +64,7 @@ export default function CustomForm({
 							</div>
 							<div>
 								<Field
-									label="Color"
+									label="Màu đại diện"
 									name="color"
 									options={groupBkColor}
 									hasFeedback

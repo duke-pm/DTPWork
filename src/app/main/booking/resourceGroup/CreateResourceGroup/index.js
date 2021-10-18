@@ -37,7 +37,7 @@ export default function CreateResourceGroup() {
 			<div className="resource__header px-16 shadow-lg">
 				<Typography color="primary" variant="h6">
 					{' '}
-					{params.type === 'updates' ? 'Update resource group' : 'Create resource group'}
+					{params.type === 'updates' ? 'Cập nhật nhóm tài nguyên' : 'Tạo nhóm tài nguyên'}
 				</Typography>
 				<div className="resource__header--action">
 					<Tooltip placement="bottom" title="Exit">

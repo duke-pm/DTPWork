@@ -30,7 +30,7 @@ export default function TableResource({ entities, listLoading, createSortHandler
 	};
 	const columns = [
 		{
-			title: 'Code',
+			title: 'Mã',
 			dataIndex: 'resourceID',
 			key: 'resourceID',
 			align: 'left',
@@ -38,7 +38,7 @@ export default function TableResource({ entities, listLoading, createSortHandler
 			render: (_, item) => <Text type="body">{item.resourceID}</Text>
 		},
 		{
-			title: 'Name',
+			title: 'Tên tài nguyên',
 			dataIndex: 'resourceName',
 			key: 'resourceName',
 			align: 'left',
@@ -53,7 +53,7 @@ export default function TableResource({ entities, listLoading, createSortHandler
 			)
 		},
 		{
-			title: 'Resource group',
+			title: 'Nhóm tài nguyên',
 			dataIndex: 'groupName',
 			key: 'groupName',
 			sorter: true,
@@ -65,7 +65,7 @@ export default function TableResource({ entities, listLoading, createSortHandler
 			)
 		},
 		{
-			title: 'Created by',
+			title: 'Người tạo',
 			dataIndex: 'crtdName',
 			key: 'crtdName',
 			align: 'left',
@@ -81,7 +81,7 @@ export default function TableResource({ entities, listLoading, createSortHandler
 			)
 		},
 		{
-			title: 'Last modifide',
+			title: 'Ngày cập nhật',
 			dataIndex: 'strCrtdDate',
 			key: 'strCrtdDate',
 			sorter: true,
@@ -93,12 +93,12 @@ export default function TableResource({ entities, listLoading, createSortHandler
 			key: 'status',
 			render: (_, item) => (
 				<div className="flex justify-end">
-					<Tooltip placement="bottom" title="Edit">
+					<Tooltip placement="bottom" title="Cập nhật">
 						<span onClick={() => handleEdit(item)} className="action--button mr-14">
 							<Icon fontSize="small">edit</Icon>
 						</span>
 					</Tooltip>
-					<Tooltip placement="bottom" title="Delete">
+					<Tooltip placement="bottom" title="Xóa">
 						<span onClick={() => handleDelete(item)} className="action--button ">
 							<Icon fontSize="small">delete</Icon>
 						</span>
