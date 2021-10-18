@@ -58,9 +58,9 @@ export default function AntSelectIconCustom({
 								<Icon color="primary" fontSize="small">
 									{p.icon}
 								</Icon>
-								<Text className="ml-8" color="primary" type="body">
+								{/* <Text className="ml-8" color="primary" type="body">
 									{p.label}
-								</Text>
+								</Text> */}
 							</div>
 						</Option>
 					))}

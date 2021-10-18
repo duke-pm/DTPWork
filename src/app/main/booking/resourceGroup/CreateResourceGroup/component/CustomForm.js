@@ -3,6 +3,7 @@ import AntInputCustom from '@fuse/FormBookingCustom/AntInputCustom';
 import AntSelectIconCustom from '@fuse/FormBookingCustom/AntSelectIconCustom';
 import { Button, Typography } from '@material-ui/core';
 import { Spin } from 'antd';
+import Text from 'app/components/Text';
 import { Form, Formik, Field } from 'formik';
 import React from 'react';
 import * as Yup from 'yup';
@@ -49,11 +50,14 @@ export default function CustomForm({ initital, bkIcon, handleSubmitForm, actionL
 									Resource photo
 								</Typography>
 							</div> */}
-							<div className="grid grid-cols-3">
+							<Text required="hasFeedback" type="body">
+								Biểu tượng cho nhóm tài nguyên
+							</Text>
+							<div className="grid grid-cols-9" style={{ marginTop: '2px' }}>
 								<Field
 									options={bkIcon}
-									label="Biểu tượng cho nhóm tài nguyên"
-									hasFeedback
+									// label="Biểu tượng cho nhóm tài nguyên"
+									// hasFeedback
 									handleChan
 									name="icon"
 									component={AntSelectIconCustom}
