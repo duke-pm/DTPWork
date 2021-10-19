@@ -63,6 +63,60 @@ export const fetchsBooking = (isMyBooking, limit, page) => dispatch => {
 			notificationConfig('warning', 'Thất bại', 'Server error');
 		});
 };
+
+export const fetchsResourceCalendar = (isMyBooking, limit, page) => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.list }));
+	const paramReq = {
+		page: page || 1,
+		limit: limit || 25,
+		IsMyBooking: isMyBooking || false
+	};
+	return requestFrom
+		.fetchsBooking(paramReq)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				const dataRes = data.data;
+				const total_count = data.totalRow;
+				const dataCalender = dataRes?.lstBooking.reduce(
+					(arr, curr) => [
+						...arr,
+						{
+							bookID: curr.bookID,
+							id: curr.bookID,
+							title: curr.purpose,
+							purpose: curr.purpose,
+							color: curr.color,
+							ownerName: curr.ownerName,
+							ownerNameAlpha: curr.ownerNameAlpha,
+							statusName: curr.statusName,
+							resourceName: curr.resourceName,
+							groupName: curr.groupName,
+							startTime: curr.strStartTime,
+							endTime: curr.strEndTime,
+							start: `${curr.startDate.split('T')[0]}T${curr.strStartTime}`,
+							end: `${curr.endDate.split('T')[0]}T${curr.strEndTime}`,
+							remarks: curr.remarks,
+							startDate: curr.startDate,
+							endDate: curr.endDate,
+							strStartTime: curr.strStartTime,
+							strEndTime: curr.strEndTime,
+							icon: curr.icon
+						}
+					],
+					[]
+				);
+				dispatch(actions.fetchsBooking({ dataRes, total_count, dataCalender }));
+			} else {
+				dispatch(actions.catchErrors({ callType: callTypes.action }));
+				notificationConfig('warning', 'Faild', data.errorMessage);
+			}
+		})
+		.catch(err => {
+			dispatch(actions.catchErrors({ callType: callTypes.list }));
+			notificationConfig('warning', 'Thất bại', 'Server error');
+		});
+};
 export const fetchsBookingFilter =
 	(isMyBooking, limit, page, SortColumn, SortDirection, search, fromDate, toDate) => dispatch => {
 		dispatch(actions.startCall({ callType: callTypes.action }));

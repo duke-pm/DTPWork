@@ -1,24 +1,24 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+import { sortDirestion } from '@fuse/core/DtpConfig';
 import { Icon } from '@material-ui/core';
 import { Avatar, Table, Tooltip } from 'antd';
 import Text from 'app/components/Text';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
-import { sortDirestion } from '@fuse/core/DtpConfig';
-import { useDispatch } from 'react-redux';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
-import { setTaskEditBooking, deleteBooking } from '../../../_reduxBooking/bookingActions';
+import { deleteBooking, setTaskEditBooking } from '../../../_reduxBooking/bookingActions';
 import { colorStatus, colorText } from '../../../BookingConfig';
 
-export default function TableAllBooking({ entities, listLoading, createSortHandler }) {
+export default function TableResourceBooking({ entities, createSortHandler, listLoading }) {
 	const history = useHistory();
+	const dispatch = useDispatch();
 	const theme = useTheme();
 	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
-	const dispatch = useDispatch();
 	const onChange = (pagination, filters, sorter, extra) => {
 		const sort = sortDirestion[sorter.order];
 		createSortHandler(sort, sorter.field);
@@ -30,9 +30,6 @@ export default function TableAllBooking({ entities, listLoading, createSortHandl
 	const handleEdit = item => {
 		history.push('/booking/modify-booking/updated');
 		dispatch(setTaskEditBooking(item));
-	};
-	const handleChangeRoute = item => {
-		history.push(`/booking/resource-calendar/calendar/${item.resourceID}`);
 	};
 	const handleDelete = item => {
 		dispatch(deleteBooking(item.bookID));
@@ -86,11 +83,7 @@ export default function TableAllBooking({ entities, listLoading, createSortHandl
 			dataIndex: 'resourceName',
 			key: 'resourceName',
 			sorter: true,
-			render: (_, item) => (
-				<Text className="cursor-pointer" onClick={() => handleChangeRoute(item)} type="body">
-					{item.resourceName}
-				</Text>
-			)
+			render: (_, item) => <Text type="body">{item.resourceName}</Text>
 		},
 		// {
 		// 	title: 'Frequency',
@@ -100,8 +93,8 @@ export default function TableAllBooking({ entities, listLoading, createSortHandl
 		// },
 		{
 			title: 'Người tạo',
-			dataIndex: 'owner',
-			key: 'owner',
+			dataIndex: 'ownerName',
+			key: 'ownerName',
 			sorter: true,
 			align: 'left',
 			render: (_, item) => (
@@ -137,34 +130,34 @@ export default function TableAllBooking({ entities, listLoading, createSortHandl
 					{item.statusName}{' '}
 				</span>
 			)
-		},
-		{
-			title: '',
-			dataIndex: 'status',
-			key: 'status',
-			render: (_, item) => (
-				<div className="flex justify-end">
-					<Tooltip disabled placement="bottom" title="Cập nhật">
-						<button
-							disabled={!item.isUpdated}
-							onClick={() => handleEdit(item)}
-							className="action--button mr-14"
-						>
-							<Icon fontSize="small">edit</Icon>
-						</button>
-					</Tooltip>
-					<Tooltip placement="bottom" title="Xóa">
-						<button
-							disabled={!item.isUpdated}
-							onClick={() => handleDelete(item)}
-							className="action--button "
-						>
-							<Icon size="small">delete</Icon>
-						</button>
-					</Tooltip>
-				</div>
-			)
 		}
+		// {
+		// 	title: '',
+		// 	dataIndex: 'status',
+		// 	key: 'status',
+		// 	render: (_, item) => (
+		// 		<div className="flex justify-end">
+		// 			<Tooltip disabled placement="bottom" title="Cập nhật">
+		// 				<button
+		// 					disabled={!item.isUpdated}
+		// 					onClick={() => handleEdit(item)}
+		// 					className="action--button mr-14"
+		// 				>
+		// 					<Icon fontSize="small">edit</Icon>
+		// 				</button>
+		// 			</Tooltip>
+		// 			<Tooltip placement="bottom" title="Xóa">
+		// 				<button
+		// 					disabled={!item.isUpdated}
+		// 					onClick={() => handleDelete(item)}
+		// 					className="action--button "
+		// 				>
+		// 					<Icon size="small">delete</Icon>
+		// 				</button>
+		// 			</Tooltip>
+		// 		</div>
+		// 	)
+		// }
 	];
 
 	return (

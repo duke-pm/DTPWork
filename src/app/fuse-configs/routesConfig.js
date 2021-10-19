@@ -21,16 +21,19 @@ import CheckLinkConfig from 'app/main/CheckLink/CheckLinkConfig';
 import ProjectConfigOverview from 'app/main/project/ProjectConfigOverview';
 import ListConfig from 'app/main/govern/SettingLine/ListConfig';
 import LevelApprovalConfig from 'app/main/govern/SettingLevelApproval/LevelApprovalConfig';
+// Booking
 import ResourceConfig from 'app/main/booking/ressource/resourceConfig';
 import ResourceGroupConfig from 'app/main/booking/resourceGroup/resourceGroupConfig';
 import AllBookingConfig from 'app/main/booking/manageBooking/AllBooking/AllBookingConfig';
 import MyBookingConfig from 'app/main/booking/manageBooking/MyBooking/MyBookingConfig';
+import ResourceCalendarConfig from 'app/main/booking/manageBooking/CalendarResouce/ResourceCalendarConfig';
 
 const routeConfigs = [
 	ResourceConfig,
 	ResourceGroupConfig,
 	AllBookingConfig,
 	MyBookingConfig,
+	ResourceCalendarConfig,
 	PossesionConfig,
 	ForgotPassConfig,
 	ChangePassConfig,

@@ -17,3 +17,7 @@ export const bookingModify = data => {
 export const removeBooking = params => {
 	return request(`${API}/Remove`, { params });
 };
+
+export const fetchsResourceCalendar = params => {
+	return request.get(`${API}`, { params });
+};
