@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Button, Icon, Typography } from '@material-ui/core';
 import React, { useContext, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Calendar, momentLocalizer, Views } from 'react-big-calendar';
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -13,7 +13,12 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Popover, Spin, Tooltip } from 'antd';
 import Text from 'app/components/Text';
 import CustomToolbar from './component/CustomToolbar';
-import { fetchsBooking, fetchsBookingFilter, setTaskEditBooking } from '../../_reduxBooking/bookingActions';
+import {
+	fetchsBooking,
+	fetchsBookingFilter,
+	fetchsResourceCalendar,
+	setTaskEditBooking
+} from '../../_reduxBooking/bookingActions';
 import { ResourceCalendarContext } from '../ResourceCalendarContext';
 import ContentTooltip from './component/ContentTooltip';
 import { colorStatus } from '../../BookingConfig';
@@ -36,15 +41,16 @@ const MonthEvent = ({ event }) => {
 const localizer = momentLocalizer(moment);
 export default function ResourceCalendarPage(props) {
 	const history = useHistory();
+	const params = useParams();
 	const resourceCalendarContext = useContext(ResourceCalendarContext);
-	const { page, limit, setToDate, setFromDate, search } = resourceCalendarContext;
+	const { setToDate, setFromDate, search } = resourceCalendarContext;
 	const dispatch = useDispatch();
 	const handleChangeRoute = () => {
 		dispatch(setTaskEditBooking(null));
 		history.push('/booking/modify-booking/created');
 	};
 	useEffect(() => {
-		dispatch(fetchsBooking(true));
+		dispatch(fetchsResourceCalendar(params?.id));
 	}, [dispatch]);
 	const { currentState } = useSelector(state => ({ currentState: state.booking.booking }), shallowEqual);
 	const { entitiesCalendar, listLoading, actionLoading } = currentState;
@@ -63,14 +69,14 @@ export default function ResourceCalendarPage(props) {
 		const endOfMonth = moment(value).endOf('month').format('YYYY/MM/DD');
 		setFromDate(startOfMonth);
 		setToDate(endOfMonth);
-		dispatch(fetchsBookingFilter(true, limit, page, null, null, search, startOfMonth, endOfMonth));
+		dispatch(fetchsResourceCalendar(params?.id, startOfMonth, endOfMonth));
 	};
 	const ExitPage = () => history.goBack();
 	return (
 		<div className="container booking">
 			<div className="booking__header px-16">
 				<Typography color="primary" variant="h6">
-					Resource calendar
+					Tài nguyên
 				</Typography>
 				<div className="booking__header--action">
 					<Button
@@ -85,11 +91,11 @@ export default function ResourceCalendarPage(props) {
 							Tạo booking{' '}
 						</Text>
 					</Button>
-					<Tooltip placement="bottom" title="Exit">
+					{/* <Tooltip placement="bottom" title="Exit">
 						<span onClick={ExitPage} className="action--button">
 							<Icon fontSize="small">close</Icon>
 						</span>
-					</Tooltip>
+					</Tooltip> */}
 				</div>
 			</div>
 			<Spin spinning={listLoading || actionLoading}>
@@ -102,6 +108,7 @@ export default function ResourceCalendarPage(props) {
 						events={entitiesCalendar}
 						// onEventDrop={moveEvent}
 						resizable
+						allDayAccessor
 						// onEventResize={resizeEvent}
 						defaultView={Views.MONTH}
 						// defaultDate={new Date(2020, 3, 1)}

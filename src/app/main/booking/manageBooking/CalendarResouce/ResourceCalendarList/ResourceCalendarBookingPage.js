@@ -2,14 +2,14 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Button, Icon, Typography } from '@material-ui/core';
 import { Badge, DatePicker, Spin } from 'antd';
-import Panigation from '@fuse/core/FusePanigate';
-import Search from 'antd/lib/input/Search';
+// import Panigation from '@fuse/core/FusePanigate';
+// import Search from 'antd/lib/input/Search';
 import Text from 'app/components/Text';
 import React, { useContext, useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import moment from 'moment';
-import { fetchsBooking, fetchsBookingFilter, setTaskEditBooking } from '../../_reduxBooking/bookingActions';
+import { fetchsBookingFilter, fetchsResourceCalendar, setTaskEditBooking } from '../../_reduxBooking/bookingActions';
 import TableAllBooking from './component/TableResourceBooking';
 import { ResourceCalendarContext } from '../ResourceCalendarContext';
 
@@ -22,17 +22,18 @@ export default function ResourceCalendarBookingPage() {
 	const {
 		page,
 		rowPage,
-		setPage,
-		setRowPage,
+		// setPage,
+		// setRowPage,
 		setFromDate,
 		setToDate,
-		sort,
+		// sort,
 		search,
 		setSort,
 		fromDate,
-		toDate,
-		setSearch
+		toDate
+		// setSearch
 	} = bookingContex;
+	const params = useParams();
 	const handleChangeRoute = () => {
 		dispatch(setTaskEditBooking(null));
 		history.push('/booking/modify-booking/created');
@@ -41,19 +42,19 @@ export default function ResourceCalendarBookingPage() {
 		history.push('/booking/resource-calendar/calendar/5');
 	};
 	useEffect(() => {
-		dispatch(fetchsBooking(true));
+		dispatch(fetchsResourceCalendar(params?.id));
 	}, [dispatch]);
 	const { currentState } = useSelector(state => ({ currentState: state.booking.booking }), shallowEqual);
 	const { entities, listLoading, actionLoading, total_count } = currentState;
-	const handleChangePage = (event, newPage) => {
-		setPage(newPage);
-		dispatch(fetchsBookingFilter(true, rowPage, newPage + 1, sort.id, sort.direction, search, fromDate, toDate));
-	};
-	const handleRowPage = e => {
-		const rowPageParse = parseInt(e.target.value, 10);
-		setRowPage(rowPageParse);
-		dispatch(fetchsBookingFilter(true, rowPageParse, page, sort.id, sort.direction, search, fromDate, toDate));
-	};
+	// const handleChangePage = (event, newPage) => {
+	// 	setPage(newPage);
+	// 	dispatch(fetchsBookingFilter(true, rowPage, newPage + 1, sort.id, sort.direction, search, fromDate, toDate));
+	// };
+	// const handleRowPage = e => {
+	// 	const rowPageParse = parseInt(e.target.value, 10);
+	// 	setRowPage(rowPageParse);
+	// 	dispatch(fetchsBookingFilter(true, rowPageParse, page, sort.id, sort.direction, search, fromDate, toDate));
+	// };
 	const createSortHandler = (direction, id) => {
 		dispatch(fetchsBookingFilter(true, rowPage, page, id, direction, search, fromDate, toDate));
 		setSort({
@@ -61,30 +62,25 @@ export default function ResourceCalendarBookingPage() {
 			id
 		});
 	};
-	const handleSearch = () => {
-		setPage(0);
-		dispatch(fetchsBookingFilter(true, rowPage, page, sort.id, sort.direction, search, fromDate, toDate));
-	};
-	const onHandleChange = e => {
-		setSearch(e.target.value);
-		setPage(0);
-		if (e.target.value.length <= 0) {
-			dispatch(
-				fetchsBookingFilter(true, rowPage, page, sort.id, sort.direction, e.target.value, fromDate, toDate)
-			);
-		}
-	};
+	// const handleSearch = () => {
+	// 	setPage(0);
+	// 	dispatch(fetchsBookingFilter(true, rowPage, page, sort.id, sort.direction, search, fromDate, toDate));
+	// };
+	// const onHandleChange = e => {
+	// 	setSearch(e.target.value);
+	// 	setPage(0);
+	// 	if (e.target.value.length <= 0) {
+	// 		dispatch(
+	// 			fetchsBookingFilter(true, rowPage, page, sort.id, sort.direction, e.target.value, fromDate, toDate)
+	// 		);
+	// 	}
+	// };
 	const handleChange = (date, dateString) => {
 		setFromDate(date && moment(date[0]).format('YYYY/MM/DD'));
 		setToDate(date && moment(date[1]).format('YYYY/MM/DD'));
 		dispatch(
-			fetchsBookingFilter(
-				true,
-				rowPage,
-				page,
-				sort.id,
-				sort.direction,
-				search,
+			fetchsResourceCalendar(
+				params?.id,
 				date && moment(date[0]).format('YYYY/MM/DD'),
 				date && moment(date[1]).format('YYYY/MM/DD')
 			)
@@ -94,15 +90,15 @@ export default function ResourceCalendarBookingPage() {
 		<div className="container booking">
 			<div className="booking__header px-16">
 				<Typography color="primary" variant="h6">
-					Booking của tôi
+					Tài nguyên
 				</Typography>
 				<div className="booking__header--action">
-					<Search
+					{/* <Search
 						onChange={e => onHandleChange(e)}
 						onSearch={handleSearch}
 						className="input__search"
 						placeholder="Search"
-					/>
+					/> */}
 					<Button
 						onClick={handleChangeRoute}
 						className="button__create--sm"
@@ -163,7 +159,7 @@ export default function ResourceCalendarBookingPage() {
 						entities={entities}
 						createSortHandler={createSortHandler}
 					/>
-					{entities?.lstBooking?.length !== 0 && (
+					{/* {entities?.lstBooking?.length !== 0 && (
 						<div className="flex flex-row items-center justify-end">
 							{actionLoading && <Spin />}
 							<Panigation
@@ -174,7 +170,7 @@ export default function ResourceCalendarBookingPage() {
 								count={total_count}
 							/>
 						</div>
-					)}
+					)} */}
 				</div>
 			</div>
 		</div>

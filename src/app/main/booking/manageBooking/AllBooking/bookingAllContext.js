@@ -7,6 +7,7 @@ export default function BookingContextProvider({ children }) {
 	const [rowPage, setRowPage] = useState(25);
 	const [fromDate, setFromDate] = useState(null);
 	const [toDate, setToDate] = useState(null);
+	const [resource, setResource] = useState(null);
 	const [search, setSearch] = useState('');
 	const [sort, setSort] = useState({
 		direction: 'desc',
@@ -25,7 +26,9 @@ export default function BookingContextProvider({ children }) {
 			fromDate,
 			setFromDate,
 			toDate,
-			setToDate
+			setToDate,
+			resource,
+			setResource
 		};
 	}, [
 		search,
@@ -39,7 +42,9 @@ export default function BookingContextProvider({ children }) {
 		fromDate,
 		setFromDate,
 		toDate,
-		setToDate
+		setToDate,
+		resource,
+		setResource
 	]);
 	return <BookingContext.Provider value={valueMemo}>{children}</BookingContext.Provider>;
 }

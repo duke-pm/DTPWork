@@ -5,7 +5,7 @@ import { Button, Typography } from '@material-ui/core';
 import { Spin } from 'antd';
 import * as moment from 'moment';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { getDataUserLocalStorage, notificationConfig } from '@fuse/core/DtpConfig';
+import { getDataUserLocalStorage, getToken, notificationConfig, URL } from '@fuse/core/DtpConfig';
 import { useHistory } from 'react-router-dom';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import DtpCustomStyles from '@fuse/core/DtpConfig/DtpCustomStyles';
@@ -72,6 +72,14 @@ export default function HandlingBody({ dataAssets, setDataAssets, value }) {
 							assets: ''
 						});
 						setDisable(true);
+						if (values.status === 'Damage') {
+							const token = getToken();
+							const dataReq = {
+								UserToken: token,
+								RequestID: data.data.requestID
+							};
+							window.location = `${URL}/api/RQAsset/ExportRequestDamage?value=${JSON.stringify(dataReq)}`;
+						}
 						resetForm({});
 					}
 				});

@@ -21,7 +21,7 @@ export default function CustomToolbar(props) {
 			<div className="flex justify-between">
 				<Text color="primary" type="subTitle">
 					{' '}
-					{entities?.header?.[0].countMyBooking} Booking{' '}
+					{entities?.header?.[0].countBooking} Booking{' '}
 				</Text>
 				<Badge
 					style={{ marginLeft: '12px' }}

@@ -64,17 +64,18 @@ export const fetchsBooking = (isMyBooking, limit, page) => dispatch => {
 		});
 };
 
-export const fetchsResourceCalendar = (isMyBooking, limit, page) => dispatch => {
+export const fetchsResourceCalendar = (resourceID, fromDate, toDate) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.list }));
 	const paramReq = {
-		page: page || 1,
-		limit: limit || 25,
-		IsMyBooking: isMyBooking || false
+		ResourceID: resourceID,
+		FromDate: fromDate || null,
+		ToDate: toDate || null
 	};
 	return requestFrom
-		.fetchsBooking(paramReq)
+		.fetchsResourceCalendar(paramReq)
 		.then(res => {
 			const { data } = res;
+			console.log(data);
 			if (!data.isError) {
 				const dataRes = data.data;
 				const total_count = data.totalRow;

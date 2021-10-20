@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Icon } from '@material-ui/core';
-import { Avatar, Table, Tooltip } from 'antd';
+import { Avatar, Checkbox, Dropdown, Table, Tooltip } from 'antd';
 import Text from 'app/components/Text';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
@@ -14,7 +14,14 @@ import { useTheme } from '@material-ui/core/styles';
 import { setTaskEditBooking, deleteBooking } from '../../../_reduxBooking/bookingActions';
 import { colorStatus, colorText } from '../../../BookingConfig';
 
-export default function TableAllBooking({ entities, listLoading, createSortHandler }) {
+export default function TableAllBooking({
+	entities,
+	listLoading,
+	createSortHandler,
+	bkResource,
+	resource,
+	setResource
+}) {
 	const history = useHistory();
 	const theme = useTheme();
 	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
@@ -36,6 +43,9 @@ export default function TableAllBooking({ entities, listLoading, createSortHandl
 	};
 	const handleDelete = item => {
 		dispatch(deleteBooking(item.bookID));
+	};
+	const onHandleChangeResource = value => {
+		setResource(value);
 	};
 	const columns = [
 		{
@@ -82,10 +92,34 @@ export default function TableAllBooking({ entities, listLoading, createSortHandl
 			)
 		},
 		{
-			title: 'Tài nguyên',
+			title: () => {
+				return (
+					<div className="flex items-center ">
+						<Text type="subTitle" color="primary">
+							Tài nguyên
+						</Text>
+						<Dropdown
+							// visible
+							overlay={
+								<div className="filter--status">
+									<Checkbox.Group
+										options={bkResource}
+										value={resource}
+										onChange={onHandleChangeResource}
+									/>
+								</div>
+							}
+							placement="bottomRight"
+							arrow
+						>
+							<Icon className="cursor-pointer"> arrow_drop_down </Icon>
+						</Dropdown>
+					</div>
+				);
+			},
 			dataIndex: 'resourceName',
 			key: 'resourceName',
-			sorter: true,
+			sorter: false,
 			render: (_, item) => (
 				<Text className="cursor-pointer" onClick={() => handleChangeRoute(item)} type="body">
 					{item.resourceName}

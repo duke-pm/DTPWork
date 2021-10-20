@@ -39,7 +39,7 @@ export default function TableResourceBooking({ entities, createSortHandler, list
 			title: 'Mã',
 			dataIndex: 'bookID',
 			key: 'bookID',
-			sorter: true,
+			// sorter: true,
 			render: (_, item) => <Text type="body">{item.bookID}</Text>
 		},
 		{
@@ -47,7 +47,7 @@ export default function TableResourceBooking({ entities, createSortHandler, list
 			dataIndex: 'purpose',
 			align: 'left',
 			key: 'purpose',
-			sorter: true,
+			// sorter: true,
 			render: (_, item) => (
 				<Text className="cursor-pointer" onClick={() => handChangeRouteView(item)} type="body">
 					{item.purpose}
@@ -82,7 +82,7 @@ export default function TableResourceBooking({ entities, createSortHandler, list
 			title: 'Tài nguyên',
 			dataIndex: 'resourceName',
 			key: 'resourceName',
-			sorter: true,
+			// sorter: true,
 			render: (_, item) => <Text type="body">{item.resourceName}</Text>
 		},
 		// {
@@ -95,7 +95,7 @@ export default function TableResourceBooking({ entities, createSortHandler, list
 			title: 'Người tạo',
 			dataIndex: 'ownerName',
 			key: 'ownerName',
-			sorter: true,
+			// sorter: true,
 			align: 'left',
 			render: (_, item) => (
 				<div className="flex items-center">
@@ -112,14 +112,14 @@ export default function TableResourceBooking({ entities, createSortHandler, list
 			title: 'Thời gian tạo',
 			dataIndex: 'lastModifide',
 			key: 'lastModifide',
-			sorter: true,
+			// sorter: true,
 			render: (_, item) => <Text type="body">{item.strCrtdDate}</Text>
 		},
 		{
 			title: 'Trạng thái',
 			dataIndex: 'status',
 			key: 'status',
-			sorter: true,
+			// sorter: true,
 			align: 'left',
 			render: (_, item) => (
 				<span

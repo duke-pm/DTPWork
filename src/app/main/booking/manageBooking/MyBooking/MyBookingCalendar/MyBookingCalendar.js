@@ -95,6 +95,7 @@ export default function MyBookingCalendar(props) {
 						events={entitiesCalendar}
 						// onEventDrop={moveEvent}
 						resizable
+						allDayAccessor
 						// onEventResize={resizeEvent}
 						defaultView={Views.MONTH}
 						// defaultDate={new Date(2020, 3, 1)}
@@ -102,7 +103,7 @@ export default function MyBookingCalendar(props) {
 						endAccessor={event => new Date(Date.parse(event.end))}
 						views={allViews}
 						step={60}
-						showMultiDayTimes
+						showAllEvents
 						components={{ toolbar: CustomToolbar, event: MonthEvent }}
 						onNavigate={handleNavigate}
 						onSelectEvent={event => {
