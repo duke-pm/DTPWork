@@ -91,11 +91,11 @@ export default function ResourceCalendarPage(props) {
 							Tạo booking{' '}
 						</Text>
 					</Button>
-					{/* <Tooltip placement="bottom" title="Exit">
+					<Tooltip placement="bottom" title="Exit">
 						<span onClick={ExitPage} className="action--button">
 							<Icon fontSize="small">close</Icon>
 						</span>
-					</Tooltip> */}
+					</Tooltip>
 				</div>
 			</div>
 			<Spin spinning={listLoading || actionLoading}>

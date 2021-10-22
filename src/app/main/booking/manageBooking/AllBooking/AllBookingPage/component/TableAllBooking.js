@@ -11,7 +11,7 @@ import { sortDirestion } from '@fuse/core/DtpConfig';
 import { useDispatch } from 'react-redux';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
-import { setTaskEditBooking, deleteBooking } from '../../../_reduxBooking/bookingActions';
+import { setTaskEditBooking, deleteBooking, fetchsBookingFilter } from '../../../_reduxBooking/bookingActions';
 import { colorStatus, colorText } from '../../../BookingConfig';
 
 export default function TableAllBooking({
@@ -20,15 +20,21 @@ export default function TableAllBooking({
 	createSortHandler,
 	bkResource,
 	resource,
-	setResource
+	setResource,
+	rowPage,
+	page,
+	sort,
+	search,
+	fromDate,
+	toDate
 }) {
 	const history = useHistory();
 	const theme = useTheme();
 	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
 	const dispatch = useDispatch();
 	const onChange = (pagination, filters, sorter, extra) => {
-		const sort = sortDirestion[sorter.order];
-		createSortHandler(sort, sorter.field);
+		const sortTable = sortDirestion[sorter.order];
+		createSortHandler(sortTable, sorter.field);
 	};
 	const handChangeRouteView = item => {
 		dispatch(setTaskEditBooking(item));
@@ -46,6 +52,19 @@ export default function TableAllBooking({
 	};
 	const onHandleChangeResource = value => {
 		setResource(value);
+		dispatch(
+			fetchsBookingFilter(
+				false,
+				rowPage,
+				page,
+				sort.id,
+				sort.direction,
+				search,
+				fromDate,
+				toDate,
+				value?.toString()
+			)
+		);
 	};
 	const columns = [
 		{

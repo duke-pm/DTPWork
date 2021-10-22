@@ -18,9 +18,9 @@ export default function TableAllBooking({
 	entities,
 	createSortHandler,
 	listLoading,
-	setResource,
 	resource,
-	bkResource
+	bkResource,
+	handleChangeResource
 }) {
 	const history = useHistory();
 	const dispatch = useDispatch();
@@ -41,9 +41,9 @@ export default function TableAllBooking({
 	const handleDelete = item => {
 		dispatch(deleteBooking(item.bookID));
 	};
-	const onHandleChangeResource = value => {
-		setResource(value);
-	};
+	// const onHandleChangeResource = value => {
+	// 	setResource(value);
+	// };
 	const handleChangeRoute = item => {
 		history.push(`/booking/resource-calendar/calendar/${item.resourceID}`);
 	};
@@ -105,7 +105,7 @@ export default function TableAllBooking({
 									<Checkbox.Group
 										options={bkResource}
 										value={resource}
-										onChange={onHandleChangeResource}
+										onChange={handleChangeResource}
 									/>
 								</div>
 							}

@@ -59,15 +59,41 @@ export default function AllBookingPage() {
 		: [];
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
-		dispatch(fetchsBookingFilter(false, rowPage, newPage + 1, sort.id, sort.direction, search, fromDate, toDate));
+		dispatch(
+			fetchsBookingFilter(
+				false,
+				rowPage,
+				newPage + 1,
+				sort.id,
+				sort.direction,
+				search,
+				fromDate,
+				toDate,
+				resource?.toString()
+			)
+		);
 	};
 	const handleRowPage = e => {
 		const rowPageParse = parseInt(e.target.value, 10);
 		setRowPage(rowPageParse);
-		dispatch(fetchsBookingFilter(false, rowPageParse, page, sort.id, sort.direction, search, fromDate, toDate));
+		dispatch(
+			fetchsBookingFilter(
+				false,
+				rowPageParse,
+				page,
+				sort.id,
+				sort.direction,
+				search,
+				fromDate,
+				toDate,
+				resource?.toString()
+			)
+		);
 	};
 	const createSortHandler = (direction, id) => {
-		dispatch(fetchsBookingFilter(false, rowPage, page, id, direction, search, fromDate, toDate));
+		dispatch(
+			fetchsBookingFilter(false, rowPage, page, id, direction, search, fromDate, toDate, resource?.toString())
+		);
 		setSort({
 			direction,
 			id
@@ -85,20 +111,43 @@ export default function AllBookingPage() {
 				sort.direction,
 				search,
 				date && moment(date[0]).format('YYYY/MM/DD'),
-				date && moment(date[1]).format('YYYY/MM/DD')
+				date && moment(date[1]).format('YYYY/MM/DD'),
+				resource?.toString()
 			)
 		);
 	};
 	const handleSearch = () => {
 		setPage(0);
-		dispatch(fetchsBookingFilter(false, rowPage, page, sort.id, sort.direction, search, fromDate, toDate));
+		dispatch(
+			fetchsBookingFilter(
+				false,
+				rowPage,
+				page,
+				sort.id,
+				sort.direction,
+				search,
+				fromDate,
+				toDate,
+				resource?.toString()
+			)
+		);
 	};
 	const onHandleChange = e => {
 		setSearch(e.target.value);
 		setPage(0);
 		if (e.target.value.length <= 0) {
 			dispatch(
-				fetchsBookingFilter(false, rowPage, page, sort.id, sort.direction, e.target.value, fromDate, toDate)
+				fetchsBookingFilter(
+					false,
+					rowPage,
+					page,
+					sort.id,
+					sort.direction,
+					e.target.value,
+					fromDate,
+					toDate,
+					resource?.toString()
+				)
 			);
 		}
 	};
@@ -177,7 +226,7 @@ export default function AllBookingPage() {
 				</div>
 			</div>
 			{resource?.length > 0 ? (
-				<div className="projects__filter px-16 mt-20">
+				<div className="projects__filter px-16">
 					<div className="title_filter flex">
 						<Icon fontSize="small" color="primary">
 							tune
@@ -242,6 +291,12 @@ export default function AllBookingPage() {
 						resource={resource}
 						bkResource={bkResource}
 						setResource={setResource}
+						rowPage={rowPage}
+						page={page}
+						sort={sort}
+						search={search}
+						fromDate={fromDate}
+						toDate={toDate}
 					/>
 					{entities?.lstBooking?.length !== 0 && (
 						<div className="flex flex-row items-center justify-end">

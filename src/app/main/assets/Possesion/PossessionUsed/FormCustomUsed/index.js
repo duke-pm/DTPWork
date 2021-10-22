@@ -3,10 +3,10 @@
 import React, { useEffect } from 'react';
 import { Icon } from '@material-ui/core';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import { notificationConfig } from '@fuse/core/DtpConfig';
+import { getToken, notificationConfig, URL } from '@fuse/core/DtpConfig';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import { Tooltip } from 'antd';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import Text from 'app/components/Text';
 import FormCustomUsedEdit from './FormCustomUsedEdit';
 import * as action from '../../_redux/possesionActions';
@@ -25,6 +25,14 @@ export default function FormCustomUsed() {
 	useEffect(() => {
 		if (!entitiesEdit) history.goBack();
 	}, [entitiesEdit, history]);
+	const ExportExcel = assetID => {
+		const token = getToken();
+		const dataReq = {
+			UserToken: token,
+			AssetID: assetID
+		};
+		window.location = `${URL}/api/RQAsset/ExportRequestRecovery?value=${JSON.stringify(dataReq)}`;
+	};
 	const saveWithDraw = values => {
 		dispatch(action.withdrawPossesion(values, entitiesEdit)).then(data => {
 			if (data && !data.isError) {
@@ -34,6 +42,7 @@ export default function FormCustomUsed() {
 					notificationContent.description.gobal.vi.updatedSuccess
 				);
 				history.goBack();
+				ExportExcel(data.data.assetID);
 			} else {
 				notificationConfig(
 					'warning',

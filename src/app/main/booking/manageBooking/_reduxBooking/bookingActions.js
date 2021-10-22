@@ -119,7 +119,7 @@ export const fetchsResourceCalendar = (resourceID, fromDate, toDate) => dispatch
 		});
 };
 export const fetchsBookingFilter =
-	(isMyBooking, limit, page, SortColumn, SortDirection, search, fromDate, toDate) => dispatch => {
+	(isMyBooking, limit, page, SortColumn, SortDirection, search, fromDate, toDate, resourceID) => dispatch => {
 		dispatch(actions.startCall({ callType: callTypes.action }));
 		const paramReq = {
 			page: page || 1,
@@ -129,7 +129,8 @@ export const fetchsBookingFilter =
 			SortDirection: SortDirection || 'asc',
 			IsMyBooking: isMyBooking || false,
 			FromDate: fromDate || null,
-			ToDate: toDate || null
+			ToDate: toDate || null,
+			ResourceID: resourceID || null
 		};
 		return requestFrom
 			.fetchsBooking(paramReq)
