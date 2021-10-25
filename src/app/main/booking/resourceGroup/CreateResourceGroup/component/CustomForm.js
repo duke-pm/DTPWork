@@ -51,7 +51,7 @@ export default function CustomForm({ initital, bkIcon, handleSubmitForm, actionL
 								</Typography>
 							</div> */}
 							<Text required="hasFeedback" type="body">
-								Biểu tượng cho nhóm tài nguyên
+								Biểu tượng
 							</Text>
 							<div className="grid grid-cols-9" style={{ marginTop: '2px' }}>
 								<Field
