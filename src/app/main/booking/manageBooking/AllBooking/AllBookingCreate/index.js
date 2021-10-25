@@ -5,13 +5,16 @@ import { Spin, Tooltip } from 'antd';
 import { getInformationCompany } from 'app/main/assets/Possesion/_redux/possesionActions';
 import React, { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router';
+import { useHistory, useParams, useLocation } from 'react-router';
+import queryString from 'query-string';
 import Form from './component/index';
 
 export default function AllBookingCreate() {
 	const histroy = useHistory();
 	const dispatch = useDispatch();
 	const params = useParams();
+	const location = useLocation();
+	const idResource = location?.search && queryString.parse(location?.search);
 	const ExitPage = () => histroy.goBack();
 	const paramsReq = 'BKResource,Users';
 	useEffect(() => {
@@ -57,6 +60,7 @@ export default function AllBookingCreate() {
 				<Spin spinning={listloading}>
 					<div className="create-booking">
 						<Form
+							resource_id={idResource?.resource}
 							entitiesEdit={entitiesEdit}
 							ExitPage={ExitPage}
 							actionLoading={actionLoading}
