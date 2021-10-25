@@ -1,40 +1,27 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+import { sortDirestion } from '@fuse/core/DtpConfig';
 import { Icon } from '@material-ui/core';
-import { Avatar, Checkbox, Dropdown, Table, Tooltip } from 'antd';
+import { Avatar, Table, Tooltip } from 'antd';
 import Text from 'app/components/Text';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
-import { sortDirestion } from '@fuse/core/DtpConfig';
-import { useDispatch } from 'react-redux';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
-import { setTaskEditBooking, deleteBooking, fetchsBookingFilter } from '../../../_reduxBooking/bookingActions';
+import { deleteBooking, setTaskEditBooking } from '../../../_reduxBooking/bookingActions';
 import { colorStatus, colorText } from '../../../BookingConfig';
 
-export default function TableAllBooking({
-	entities,
-	listLoading,
-	createSortHandler,
-	bkResource,
-	resource,
-	setResource,
-	rowPage,
-	page,
-	sort,
-	search,
-	fromDate,
-	toDate
-}) {
+export default function TableResourceBooking({ entities, createSortHandler, listLoading }) {
 	const history = useHistory();
+	const dispatch = useDispatch();
 	const theme = useTheme();
 	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
-	const dispatch = useDispatch();
 	const onChange = (pagination, filters, sorter, extra) => {
-		const sortTable = sortDirestion[sorter.order];
-		createSortHandler(sortTable, sorter.field);
+		const sort = sortDirestion[sorter.order];
+		createSortHandler(sort, sorter.field);
 	};
 	const handChangeRouteView = item => {
 		dispatch(setTaskEditBooking(item));
@@ -44,34 +31,15 @@ export default function TableAllBooking({
 		history.push('/booking/modify-booking/updated');
 		dispatch(setTaskEditBooking(item));
 	};
-	const handleChangeRoute = item => {
-		history.push(`/booking/resource-calendar/calendar/${item.resourceID}`);
-	};
 	const handleDelete = item => {
 		dispatch(deleteBooking(item.bookID));
-	};
-	const onHandleChangeResource = value => {
-		setResource(value);
-		dispatch(
-			fetchsBookingFilter(
-				false,
-				rowPage,
-				page,
-				sort.id,
-				sort.direction,
-				search,
-				fromDate,
-				toDate,
-				value?.toString()
-			)
-		);
 	};
 	const columns = [
 		{
 			title: 'Mã',
 			dataIndex: 'bookID',
 			key: 'bookID',
-			sorter: true,
+			// sorter: true,
 			render: (_, item) => <Text type="body">{item.bookID}</Text>
 		},
 		{
@@ -79,7 +47,7 @@ export default function TableAllBooking({
 			dataIndex: 'purpose',
 			align: 'left',
 			key: 'purpose',
-			sorter: true,
+			// sorter: true,
 			render: (_, item) => (
 				<Text className="cursor-pointer" onClick={() => handChangeRouteView(item)} type="body">
 					{item.purpose}
@@ -111,39 +79,11 @@ export default function TableAllBooking({
 			)
 		},
 		{
-			title: () => {
-				return (
-					<div className="flex items-center ">
-						<Text type="subTitle" color="primary">
-							Tài nguyên
-						</Text>
-						<Dropdown
-							// visible
-							overlay={
-								<div className="filter--status">
-									<Checkbox.Group
-										options={bkResource}
-										value={resource}
-										onChange={onHandleChangeResource}
-									/>
-								</div>
-							}
-							placement="bottomRight"
-							arrow
-						>
-							<Icon className="cursor-pointer"> arrow_drop_down </Icon>
-						</Dropdown>
-					</div>
-				);
-			},
+			title: 'Tài nguyên',
 			dataIndex: 'resourceName',
 			key: 'resourceName',
-			sorter: false,
-			render: (_, item) => (
-				<Text className="cursor-pointer" onClick={() => handleChangeRoute(item)} type="body">
-					{item.resourceName}
-				</Text>
-			)
+			// sorter: true,
+			render: (_, item) => <Text type="body">{item.resourceName}</Text>
 		},
 		// {
 		// 	title: 'Frequency',
@@ -153,9 +93,9 @@ export default function TableAllBooking({
 		// },
 		{
 			title: 'Người tạo',
-			dataIndex: 'owner',
-			key: 'owner',
-			sorter: true,
+			dataIndex: 'ownerName',
+			key: 'ownerName',
+			// sorter: true,
 			align: 'left',
 			render: (_, item) => (
 				<div className="flex items-center">
@@ -172,14 +112,14 @@ export default function TableAllBooking({
 			title: 'Thời gian tạo',
 			dataIndex: 'lastModifide',
 			key: 'lastModifide',
-			sorter: true,
+			// sorter: true,
 			render: (_, item) => <Text type="body">{item.strCrtdDate}</Text>
 		},
 		{
 			title: 'Trạng thái',
 			dataIndex: 'status',
 			key: 'status',
-			sorter: true,
+			// sorter: true,
 			align: 'left',
 			render: (_, item) => (
 				<span
@@ -190,34 +130,34 @@ export default function TableAllBooking({
 					{item.statusName}{' '}
 				</span>
 			)
-		},
-		{
-			title: '',
-			dataIndex: 'status',
-			key: 'status',
-			render: (_, item) => (
-				<div className="flex justify-end">
-					<Tooltip disabled placement="bottom" title="Cập nhật">
-						<button
-							disabled={!item.isUpdated}
-							onClick={() => handleEdit(item)}
-							className="action--button mr-14"
-						>
-							<Icon fontSize="small">edit</Icon>
-						</button>
-					</Tooltip>
-					<Tooltip placement="bottom" title="Xóa">
-						<button
-							disabled={!item.isUpdated}
-							onClick={() => handleDelete(item)}
-							className="action--button "
-						>
-							<Icon size="small">delete</Icon>
-						</button>
-					</Tooltip>
-				</div>
-			)
 		}
+		// {
+		// 	title: '',
+		// 	dataIndex: 'status',
+		// 	key: 'status',
+		// 	render: (_, item) => (
+		// 		<div className="flex justify-end">
+		// 			<Tooltip disabled placement="bottom" title="Cập nhật">
+		// 				<button
+		// 					disabled={!item.isUpdated}
+		// 					onClick={() => handleEdit(item)}
+		// 					className="action--button mr-14"
+		// 				>
+		// 					<Icon fontSize="small">edit</Icon>
+		// 				</button>
+		// 			</Tooltip>
+		// 			<Tooltip placement="bottom" title="Xóa">
+		// 				<button
+		// 					disabled={!item.isUpdated}
+		// 					onClick={() => handleDelete(item)}
+		// 					className="action--button "
+		// 				>
+		// 					<Icon size="small">delete</Icon>
+		// 				</button>
+		// 			</Tooltip>
+		// 		</div>
+		// 	)
+		// }
 	];
 
 	return (

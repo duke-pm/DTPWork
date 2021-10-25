@@ -1,7 +1,6 @@
 import request from 'app/store/setupAxios';
 
 const API = 'api/TransBooking';
-
 export const fetchsBooking = params => {
 	return request(`${API}/GetList`, { params });
 };
@@ -16,4 +15,8 @@ export const bookingModify = data => {
 
 export const removeBooking = params => {
 	return request(`${API}/Remove`, { params });
+};
+
+export const fetchsResourceCalendar = params => {
+	return request.get(`${API}/GetListResource`, { params });
 };

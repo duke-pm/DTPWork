@@ -8,7 +8,7 @@ import { DeleteOutlined } from '@ant-design/icons';
 import { Table, Input, Tooltip, Spin } from 'antd';
 import NumberFormat from 'react-number-format';
 import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
-import { notificationConfig } from '@fuse/core/DtpConfig';
+import { getToken, notificationConfig, URL } from '@fuse/core/DtpConfig';
 import FuseAnimate from '@fuse/core/FuseAnimate';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { useHistory } from 'react-router-dom';
@@ -171,6 +171,14 @@ export default function RequestProviderBody({
 								history.goBack();
 								setDataSource([]);
 								notificationConfig('success', 'Thành công!', 'Yêu cầu thành công !!');
+								const token = getToken();
+								const dataReq = {
+									UserToken: token,
+									RequestID: data.data.requestID
+								};
+								window.location = `${URL}/api/RQAsset/ExportRequestAllocation?value=${JSON.stringify(
+									dataReq
+								)}`;
 							} else {
 								// notificationConfig('warning', 'Thất bại!', 'Yêu cầu thất bại vui lòng thử lại');
 							}
@@ -182,6 +190,7 @@ export default function RequestProviderBody({
 					<FuseAnimate animation="transition.slideRightIn" delay={300}>
 						<Form className="flex flex-col items-center justify-between mb-28">
 							<div style={{ width: '90%' }} className="sm" id="content">
+								{/* <button onClick={DemoExport}> Exexl </button> */}
 								<div className="">
 									<div>
 										<Text type="subTitle" color="primary" borderBottom>

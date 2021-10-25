@@ -3,7 +3,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { sortDirestion } from '@fuse/core/DtpConfig';
 import { Icon } from '@material-ui/core';
-import { Avatar, Table, Tooltip } from 'antd';
+import { Avatar, Checkbox, Dropdown, Table, Tooltip } from 'antd';
 import Text from 'app/components/Text';
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -14,7 +14,14 @@ import { useTheme } from '@material-ui/core/styles';
 import { deleteBooking, setTaskEditBooking } from '../../../_reduxBooking/bookingActions';
 import { colorStatus, colorText } from '../../../BookingConfig';
 
-export default function TableAllBooking({ entities, createSortHandler, listLoading }) {
+export default function TableAllBooking({
+	entities,
+	createSortHandler,
+	listLoading,
+	resource,
+	bkResource,
+	handleChangeResource
+}) {
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const theme = useTheme();
@@ -33,6 +40,12 @@ export default function TableAllBooking({ entities, createSortHandler, listLoadi
 	};
 	const handleDelete = item => {
 		dispatch(deleteBooking(item.bookID));
+	};
+	// const onHandleChangeResource = value => {
+	// 	setResource(value);
+	// };
+	const handleChangeRoute = item => {
+		history.push(`/booking/resource-calendar/calendar/${item.resourceID}`);
 	};
 	const columns = [
 		{
@@ -79,11 +92,39 @@ export default function TableAllBooking({ entities, createSortHandler, listLoadi
 			)
 		},
 		{
-			title: 'Tài nguyên',
+			title: () => {
+				return (
+					<div className="flex items-center ">
+						<Text type="subTitle" color="primary">
+							Tài nguyên
+						</Text>
+						<Dropdown
+							// visible
+							overlay={
+								<div className="filter--status">
+									<Checkbox.Group
+										options={bkResource}
+										value={resource}
+										onChange={handleChangeResource}
+									/>
+								</div>
+							}
+							placement="bottomRight"
+							arrow
+						>
+							<Icon className="cursor-pointer"> arrow_drop_down </Icon>
+						</Dropdown>
+					</div>
+				);
+			},
 			dataIndex: 'resourceName',
 			key: 'resourceName',
-			sorter: true,
-			render: (_, item) => <Text type="body">{item.resourceName}</Text>
+			sorter: false,
+			render: (_, item) => (
+				<Text className="cursor-pointer" onClick={() => handleChangeRoute(item)} type="body">
+					{item.resourceName}
+				</Text>
+			)
 		},
 		// {
 		// 	title: 'Frequency',
@@ -130,7 +171,7 @@ export default function TableAllBooking({ entities, createSortHandler, listLoadi
 					{item.statusName}{' '}
 				</span>
 			)
-		},		
+		},
 		{
 			title: '',
 			dataIndex: 'status',

@@ -70,19 +70,6 @@ export default function View({ entitiesEdit }) {
 				</div>
 			</Grid>
 			<Grid item lg={6}>
-				<Text type="body"> Resource :</Text>
-			</Grid>
-			<Grid item lg={6}>
-				{' '}
-				<div className="flex">
-					<div className="booking__radio--button" style={{ backgroundColor: entitiesEdit?.color }} />
-					<Text type="body" className="ml-8">
-						{' '}
-						{entitiesEdit?.resourceName}{' '}
-					</Text>
-				</div>
-			</Grid>
-			<Grid item lg={6}>
 				<Text type="body">Resource group:</Text>
 			</Grid>
 			<Grid item lg={6}>
@@ -118,13 +105,6 @@ export default function View({ entitiesEdit }) {
 			<Grid item lg={6}>
 				{' '}
 				<Text type="body"> {entitiesEdit?.remarks ? entitiesEdit.remarks : '-'} </Text>
-			</Grid>
-			<Grid item lg={6}>
-				<Text type="body">Frequency:</Text>
-			</Grid>
-			<Grid item lg={6}>
-				{' '}
-				<Text type="body"> {entitiesEdit?.strOneTimeBooking ? entitiesEdit.strOneTimeBooking : '-'} </Text>
 			</Grid>
 			<Grid item lg={6}>
 				<Text type="body">Members:</Text>

@@ -1,14 +1,13 @@
 import React, { createContext, useMemo, useState } from 'react';
 
-export const BookingContext = createContext();
+export const ResourceCalendarContext = createContext();
 
-export default function BookingContextProvider({ children }) {
+export default function ResourceCalendarContextProvider({ children }) {
 	const [page, setPage] = useState(0);
 	const [rowPage, setRowPage] = useState(25);
 	const [fromDate, setFromDate] = useState(null);
 	const [toDate, setToDate] = useState(null);
 	const [search, setSearch] = useState('');
-	const [resource, setResource] = useState(null);
 	const [sort, setSort] = useState({
 		direction: 'desc',
 		id: null
@@ -26,9 +25,7 @@ export default function BookingContextProvider({ children }) {
 			fromDate,
 			setFromDate,
 			toDate,
-			setToDate,
-			resource,
-			setResource
+			setToDate
 		};
 	}, [
 		search,
@@ -42,9 +39,7 @@ export default function BookingContextProvider({ children }) {
 		fromDate,
 		setFromDate,
 		toDate,
-		setToDate,
-		resource,
-		setResource
+		setToDate
 	]);
-	return <BookingContext.Provider value={valueMemo}>{children}</BookingContext.Provider>;
+	return <ResourceCalendarContext.Provider value={valueMemo}>{children}</ResourceCalendarContext.Provider>;
 }
