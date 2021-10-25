@@ -36,10 +36,10 @@ export default function ResourceCalendarBookingPage() {
 	const params = useParams();
 	const handleChangeRoute = () => {
 		dispatch(setTaskEditBooking(null));
-		history.push('/booking/modify-booking/created');
+		history.push(`/booking/modify-booking/created?resource=${params.id}`);
 	};
 	const handleChangeRouteList = () => {
-		history.push('/booking/resource-calendar/calendar/5');
+		history.push(`/booking/resource-calendar/calendar/${params.id}`);
 	};
 	useEffect(() => {
 		dispatch(fetchsResourceCalendar(params?.id));

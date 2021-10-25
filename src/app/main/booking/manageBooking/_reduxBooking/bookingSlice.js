@@ -6,7 +6,8 @@ const initialState = {
 	entitiesEdit: null,
 	total_count: 0,
 	listLoading: false,
-	actionLoading: false
+	actionLoading: false,
+	idResource: null
 };
 
 export const callTypes = {

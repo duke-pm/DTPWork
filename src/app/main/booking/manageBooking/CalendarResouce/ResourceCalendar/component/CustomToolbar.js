@@ -8,11 +8,13 @@ import moment from 'moment';
 import { useHistory } from 'react-router';
 import { shallowEqual, useSelector } from 'react-redux';
 import { Badge, Tooltip } from 'antd';
+import { useParams } from 'react-router-dom';
 
 export default function CustomToolbar(props) {
 	const history = useHistory();
+	const params = useParams();
 	const handleChangeRouteList = () => {
-		history.push('/booking/resource-calendar/list/6');
+		history.push(`/booking/resource-calendar/list/${params.id}`);
 	};
 	const { currentState } = useSelector(state => ({ currentState: state.booking.booking }), shallowEqual);
 	const { entities } = currentState;

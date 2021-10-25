@@ -7,12 +7,12 @@ import { createBooking, updateBooking } from '../../../_reduxBooking/bookingActi
 // import moment from 'moment';
 import CustomForm from './CustomForm';
 
-export default function From({ bkResource, Users, actionLoading, ExitPage, entitiesEdit }) {
+export default function From({ bkResource, Users, actionLoading, ExitPage, entitiesEdit, resource_id }) {
 	const dispatch = useDispatch();
 	const history = useHistory();
 	let initital = {
 		id: null,
-		resource: null,
+		resource: (resource_id && parseInt(resource_id)) || null,
 		purpose: '',
 		description: '',
 		participants: [],
@@ -71,6 +71,7 @@ export default function From({ bkResource, Users, actionLoading, ExitPage, entit
 	return (
 		<>
 			<CustomForm
+				resource_id={resource_id}
 				ExitPage={ExitPage}
 				actionLoading={actionLoading}
 				handleSubmitForm={handleSubmitForm}

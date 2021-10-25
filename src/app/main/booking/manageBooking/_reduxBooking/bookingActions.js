@@ -4,12 +4,14 @@ import * as requestFrom from './bookingCrud';
 import { callTypes, bookingSlice } from './bookingSlice';
 
 const { actions } = bookingSlice;
-export const fetchsBooking = (isMyBooking, limit, page) => dispatch => {
+export const fetchsBooking = (isMyBooking, limit, page, fromDate, toDate) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.list }));
 	const paramReq = {
 		page: page || 1,
 		limit: limit || 25,
-		IsMyBooking: isMyBooking || false
+		IsMyBooking: isMyBooking || false,
+		FromDate: fromDate || moment().startOf('month').format('YYYY/MM/DD'),
+		ToDate: toDate || moment().endOf('month').format('YYYY/MM/DD')
 	};
 	return requestFrom
 		.fetchsBooking(paramReq)
@@ -68,8 +70,8 @@ export const fetchsResourceCalendar = (resourceID, fromDate, toDate) => dispatch
 	dispatch(actions.startCall({ callType: callTypes.list }));
 	const paramReq = {
 		ResourceID: resourceID,
-		FromDate: fromDate || null,
-		ToDate: toDate || null
+		FromDate: fromDate || moment().startOf('month').format('YYYY/MM/DD'),
+		ToDate: toDate || moment().endOf('month').format('YYYY/MM/DD')
 	};
 	return requestFrom
 		.fetchsResourceCalendar(paramReq)
@@ -128,8 +130,8 @@ export const fetchsBookingFilter =
 			SortColumn: SortColumn || null,
 			SortDirection: SortDirection || 'asc',
 			IsMyBooking: isMyBooking || false,
-			FromDate: fromDate || null,
-			ToDate: toDate || null,
+			FromDate: fromDate || moment().startOf('month').format('YYYY/MM/DD'),
+			ToDate: toDate || moment().endOf('month').format('YYYY/MM/DD'),
 			ResourceID: resourceID || null
 		};
 		return requestFrom
@@ -285,3 +287,7 @@ export const deleteBooking = bookingID => dispatch => {
 			notificationConfig('warning', 'Fail', `Serrver error`);
 		});
 };
+
+// export  const fetchIdResource =(id)=>dispatch=>{
+// 	dispatch
+// }

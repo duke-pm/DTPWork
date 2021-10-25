@@ -15,7 +15,7 @@ import { Form, Formik, Field } from 'formik';
 import React from 'react';
 import * as Yup from 'yup';
 
-export default function CustomForm({ initital, bkResource, Users, handleSubmitForm, actionLoading, ExitPage }) {
+export default function CustomForm({ initital, bkResource, Users, handleSubmitForm, actionLoading, ExitPage,resource_id }) {
 	const validationSchema = Yup.object().shape({
 		resource: Yup.string().required(`${validateFieldEN}`).nullable(),
 		purpose: Yup.string().required(`${validateFieldEN}`),
@@ -49,6 +49,7 @@ export default function CustomForm({ initital, bkResource, Users, handleSubmitFo
 									name="resource"
 									placeholder="Chọn tài nguyên sử dụng"
 									hasFeedback
+									readOnly={!!resource_id}
 									options={bkResource}
 									component={AntSelectCustom}
 								/>
