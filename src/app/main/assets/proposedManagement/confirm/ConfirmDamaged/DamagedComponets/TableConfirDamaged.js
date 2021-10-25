@@ -5,7 +5,7 @@ import { Icon, Typography } from '@material-ui/core';
 import { Table, Dropdown, Radio, Spin, Popover } from 'antd';
 import React, { useContext } from 'react';
 import AppsIcon from '@material-ui/icons/Apps';
-import { sortDirestion } from '@fuse/core/DtpConfig';
+import { getToken, sortDirestion, URL } from '@fuse/core/DtpConfig';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
@@ -39,6 +39,14 @@ export default function TableConfirDamaged({
 		const sort = sortDirestion[sorter.order];
 		createSortHandler(sort, sorter.field);
 	};
+	const exportExcel = item => {
+		const token = getToken();
+		const dataReq = {
+			UserToken: token,
+			RequestID: item.requestID
+		};
+		window.location = `${URL}/api/RQAsset/ExportRequestDamage?value=${JSON.stringify(dataReq)}`;
+	};
 	const columns = [
 		{
 			title: <AppsIcon />,
@@ -54,6 +62,7 @@ export default function TableConfirDamaged({
 						<DamagedActions
 							handleOpenTimeLine={handleOpenTimeLine}
 							items={item}
+							exportExcel={exportExcel}
 							handleOpenForm={handleOpenForm}
 						/>
 					)}

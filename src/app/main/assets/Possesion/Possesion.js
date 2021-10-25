@@ -15,6 +15,7 @@ import PossessionCorrupt from './PossessionCorrupt';
 import PossessionPay from './PossessionPay';
 import { PossessionContext } from './PossessionContext';
 import * as actions from './_redux/possesionActions';
+import { getToken, URL } from '../../../../@fuse/core/DtpConfig';
 
 const { TabPane } = Tabs;
 
@@ -81,6 +82,13 @@ function PossesionPage(props) {
 			}
 		}
 	};
+	const ExportExcel = () => {
+		const token = getToken();
+		const dataReq = {
+			UserToken: token
+		};
+		window.location = `${URL}/api/RQAsset/ExportRequestAllocation?value=${JSON.stringify(dataReq)}`;
+	};
 	const handleChange = value => {
 		setPage(0);
 		setRowPage(25);
@@ -139,16 +147,28 @@ function PossesionPage(props) {
 							placeholder="Search"
 						/>
 						{type?.loai === 'tat-ca' || type === null ? (
-							<Button
-								onClick={handleOpenForm}
-								variant="contained"
-								className="button__create"
-								color="primary"
-							>
-								<Text type="button" color="white">
-									Thêm mới
-								</Text>
-							</Button>
+							<>
+								<Button
+									onClick={handleOpenForm}
+									variant="contained"
+									className="button__create mr-8"
+									color="primary"
+								>
+									<Text type="button" color="white">
+										Thêm mới
+									</Text>
+								</Button>
+								<Button
+									onClick={ExportExcel}
+									variant="contained"
+									className="button__create"
+									color="primary"
+								>
+									<Text type="button" color="white">
+										Export
+									</Text>
+								</Button>
+							</>
 						) : (
 							''
 						)}

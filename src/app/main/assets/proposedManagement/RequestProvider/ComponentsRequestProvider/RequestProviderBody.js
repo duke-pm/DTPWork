@@ -35,9 +35,19 @@ export default function RequestProviderBody({
 	const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
 	const dispatch = useDispatch();
 	const history = useHistory();
+	const [requestID, setRequestID] = useState(null);
 	const [optionDept, setOptionsDept] = useState([]);
 	const [optionRegion, setOptionsRegion] = useState([]);
 	const [optionLocation, setOptionsLocation] = useState([]);
+	const ExportExcel = () => {
+		const token = getToken();
+		const dataReq = {
+			UserToken: token,
+			RequestID: requestID
+		};
+		history.goBack();
+		window.location = `${URL}/api/RQAsset/ExportRequestAllocation?value=${JSON.stringify(dataReq)}`;
+	};
 	useEffect(() => {
 		if (entitiesInformation) {
 			const newInformation = entitiesInformation.employees.reduce((arr, curr) =>
@@ -167,18 +177,9 @@ export default function RequestProviderBody({
 					} else {
 						dispatch(actions.requestAssetFromUserAction(values, dataSource)).then(data => {
 							if (data && !data.isError) {
-								resetForm({});
-								history.goBack();
-								setDataSource([]);
+								// setDataSource([]);
 								notificationConfig('success', 'Thành công!', 'Yêu cầu thành công !!');
-								const token = getToken();
-								const dataReq = {
-									UserToken: token,
-									RequestID: data.data.requestID
-								};
-								window.location = `${URL}/api/RQAsset/ExportRequestAllocation?value=${JSON.stringify(
-									dataReq
-								)}`;
+								setRequestID(data.data.requestID);
 							} else {
 								// notificationConfig('warning', 'Thất bại!', 'Yêu cầu thất bại vui lòng thử lại');
 							}
@@ -316,6 +317,16 @@ export default function RequestProviderBody({
 									</div>
 								</div>
 								<div className="w-full flex justify-end">
+									{requestID && (
+										<Button
+											onClick={ExportExcel}
+											className="h-26 mr-16"
+											variant="contained"
+											color="primary"
+										>
+											Export
+										</Button>
+									)}
 									{actionLoading ? (
 										<Spin size="middle" style={{ marginRight: 12 }} />
 									) : (

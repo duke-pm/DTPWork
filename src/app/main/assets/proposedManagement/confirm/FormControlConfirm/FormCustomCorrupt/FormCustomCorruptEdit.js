@@ -1,9 +1,9 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
+import { Button, Grid, Typography } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
 import { useDispatch } from 'react-redux';
 import * as momemt from 'moment';
-import { notificationConfig } from '@fuse/core/DtpConfig';
+import { getToken, notificationConfig, URL } from '@fuse/core/DtpConfig';
 import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import AntDescriptionsCustom from '@fuse/FormBookingCustom/AntDescriptionsCustom';
 import Text from 'app/components/Text';
@@ -21,6 +21,14 @@ export default function FormCustomCorruptEdit({ entitiesEdit, handleClose, setFo
 		};
 	}
 	const dispatch = useDispatch();
+	const exportExcel = () => {
+		const token = getToken();
+		const dataReq = {
+			UserToken: token,
+			RequestID: entitiesEdit.requestID
+		};
+		window.location = `${URL}/api/RQAsset/ExportRequestDamage?value=${JSON.stringify(dataReq)}`;
+	};
 	return (
 		<>
 			<Formik
@@ -116,6 +124,19 @@ export default function FormCustomCorruptEdit({ entitiesEdit, handleClose, setFo
 								</div>
 							</Grid>
 						</Grid>
+						{entitiesEdit?.requestTypeID === 2 && (
+							<div className="flex justify-end">
+								<Button
+									onClick={exportExcel}
+									type="button"
+									className="h-26"
+									variant="contained"
+									color="primary"
+								>
+									<Typography variant="button">Export</Typography>
+								</Button>
+							</div>
+						)}
 						{/* <DialogActions>
 							{actionLoading ? (
 								<Spin size="middle" />

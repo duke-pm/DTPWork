@@ -20,6 +20,7 @@ import ContentFormReport from './ContentFormReport';
 
 export default function HandlingBody({ dataAssets, setDataAssets, value }) {
 	const history = useHistory();
+	const [requestID, setRequestID] = useState(null);
 	const [disable, setDisable] = useState(true);
 	const [initialstate, setInitialState] = useState({
 		note: '',
@@ -35,6 +36,15 @@ export default function HandlingBody({ dataAssets, setDataAssets, value }) {
 		setUser(data);
 		dispatch(actions.getAssetsUser());
 	}, [dispatch]);
+	const exportExcel = () => {
+		const token = getToken();
+		const dataReq = {
+			UserToken: token,
+			RequestID: requestID
+		};
+		history.goBack();
+		window.location = `${URL}/api/RQAsset/ExportRequestDamage?value=${JSON.stringify(dataReq)}`;
+	};
 	const { actionLoading, assetsUser } = useSelector(
 		state => ({
 			assetsUser: state.confirm.assetsUser,
@@ -63,24 +73,20 @@ export default function HandlingBody({ dataAssets, setDataAssets, value }) {
 					if (data && !data.isError) {
 						notificationConfig('success', 'Thành công', 'Gửi yêu cầu thành công');
 						dispatch(actions.getAssetsUser());
-						history.goBack();
-						setInitialState({
-							note: '',
-							status: 'Damage',
-							date: moment(Date.now()),
-							file: '',
-							assets: ''
-						});
-						setDisable(true);
+						// history.goBack();
+						// setInitialState({
+						// 	note: '',
+						// 	status: 'Damage',
+						// 	date: moment(Date.now()),
+						// 	file: '',
+						// 	assets: ''
+						// });
+						// setDisable(true);
 						if (values.status === 'Damage') {
-							const token = getToken();
-							const dataReq = {
-								UserToken: token,
-								RequestID: data.data.requestID
-							};
-							window.location = `${URL}/api/RQAsset/ExportRequestDamage?value=${JSON.stringify(dataReq)}`;
+							setRequestID(data.data.requestID);
+						} else {
+							history.goBack();
 						}
-						resetForm({});
 					}
 				});
 			}}
@@ -138,6 +144,16 @@ export default function HandlingBody({ dataAssets, setDataAssets, value }) {
 							</div>
 						</div>
 						<div className="px-16 w-full sm:px-24 mb-28 flex justify-end">
+							{requestID && (
+								<Button
+									onClick={exportExcel}
+									className="h-26 mr-16"
+									variant="contained"
+									color="primary"
+								>
+									Export
+								</Button>
+							)}
 							{actionLoading ? (
 								<Spin style={{ marginRight: '20px' }} />
 							) : (

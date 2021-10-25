@@ -13,6 +13,8 @@ import AntRadioCustom from '@fuse/FormBookingCustom/AntRadioCustom';
 import AntInputCustom from '@fuse/FormBookingCustom/AntInputCustom';
 import AntDateCustom from '@fuse/FormBookingCustom/AntDateCustom';
 import Text from 'app/components/Text';
+import { Button } from '@material-ui/core';
+import { getToken, URL } from '../../../../../../../@fuse/core/DtpConfig';
 
 export default function FormCustomEditAllocation({ handleSubmitForm, entitiesEdit, newEntitiesEdit }) {
 	let initialState = {
@@ -71,6 +73,14 @@ export default function FormCustomEditAllocation({ handleSubmitForm, entitiesEdi
 	// const onConfirm = values => {
 	// 	// handleSubmitForm(values, dataSource);
 	// };
+	const exportExcel = () => {
+		const token = getToken();
+		const dataReq = {
+			UserToken: token,
+			RequestID: entitiesEdit.requestID
+		};
+		window.location = `${URL}/api/RQAsset/ExportRequestAllocation?value=${JSON.stringify(dataReq)}`;
+	};
 	return (
 		<>
 			<Formik
@@ -178,6 +188,11 @@ export default function FormCustomEditAllocation({ handleSubmitForm, entitiesEdi
 									component={AntDescriptionsCustom}
 								/>
 							</div>
+						</div>
+						<div className="flex justify-end">
+							<Button onClick={exportExcel} variant="contained" type="button" color="primary">
+								Export
+							</Button>
 						</div>
 						{/* <DialogActions>
 							{actionLoading ? (

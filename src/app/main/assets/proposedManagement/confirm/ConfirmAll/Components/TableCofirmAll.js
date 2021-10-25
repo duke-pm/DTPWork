@@ -5,7 +5,7 @@ import { Icon, Typography } from '@material-ui/core';
 import { Table, Dropdown, Radio, Spin, Popover } from 'antd';
 import React, { useContext } from 'react';
 import AppsIcon from '@material-ui/icons/Apps';
-import { sortDirestion } from '@fuse/core/DtpConfig';
+import { getToken, sortDirestion, URL } from '@fuse/core/DtpConfig';
 import moment from 'moment';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { useDispatch } from 'react-redux';
@@ -39,6 +39,14 @@ export default function TableConfirmAll({
 		const sort = sortDirestion[sorter.order];
 		createSortHandler(sort, sorter.field);
 	};
+	const ExportExcel = requestId => {
+		const token = getToken();
+		const dataReq = {
+			UserToken: token,
+			RequestID: requestId
+		};
+		window.location = `${URL}/api/RQAsset/ExportRequestAllocation?value=${JSON.stringify(dataReq)}`;
+	};
 	const columns = [
 		{
 			title: <AppsIcon />,
@@ -52,6 +60,7 @@ export default function TableConfirmAll({
 					placement="rightTop"
 					content={() => (
 						<ActionsAllocation
+							ExportExcel={ExportExcel}
 							handleOpenTimeLine={handleOpenTimeLine}
 							items={item}
 							handleOpenForm={handleOpenForm}

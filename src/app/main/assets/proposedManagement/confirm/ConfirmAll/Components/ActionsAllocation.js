@@ -2,7 +2,7 @@ import { ListItemIcon, ListItemText, MenuItem } from '@material-ui/core';
 import React from 'react';
 import Icon from '@material-ui/core/Icon';
 
-export default function ActionsAllocation({ handleOpenForm, items, handleOpenTimeLine }) {
+export default function ActionsAllocation({ handleOpenForm, items, handleOpenTimeLine,ExportExcel }) {
 	return (
 		<>
 			<MenuItem onClick={() => handleOpenForm(items)} role="button">
@@ -16,6 +16,12 @@ export default function ActionsAllocation({ handleOpenForm, items, handleOpenTim
 					<Icon>history</Icon>
 				</ListItemIcon>
 				<ListItemText primary="Quá trình phê duyệt" />
+			</MenuItem>
+			<MenuItem onClick={() => ExportExcel(items.requestID)} role="button">
+				<ListItemIcon className="min-w-40">
+					<Icon>get_app</Icon>
+				</ListItemIcon>
+				<ListItemText primary="Xuất excel" />
 			</MenuItem>
 		</>
 	);
