@@ -87,7 +87,7 @@ function PossesionPage(props) {
 		const dataReq = {
 			UserToken: token
 		};
-		window.location = `${URL}/api/RQAsset/ExportRequestAllocation?value=${JSON.stringify(dataReq)}`;
+		window.location = `${URL}/api/Assets/ExportAsset?value=${JSON.stringify(dataReq)}`;
 	};
 	const handleChange = value => {
 		setPage(0);

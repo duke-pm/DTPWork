@@ -111,7 +111,7 @@
         "velocity-react": "1.4.3",
         "web-vitals": "^0.2.4",
         "xlsx": "^0.17.0",
-        "yup": "^0.32.9"
+        "yup": "^0.32.11"
     },
     "resolutions": {
         "react": "17.0.1",
