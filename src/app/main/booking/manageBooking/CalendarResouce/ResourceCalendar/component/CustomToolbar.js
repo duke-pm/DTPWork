@@ -28,17 +28,17 @@ export default function CustomToolbar(props) {
 				<Badge
 					style={{ marginLeft: '12px' }}
 					color="#069662"
-					text={`${entities?.header?.[0].countHappening} Happening`}
+					text={`${entities?.header?.[0].countHappening} Đang xảy ra`}
 				/>
 				<Badge
 					style={{ marginLeft: '12px' }}
 					color="#d71d31"
-					text={`${entities?.header?.[0].countHappened} Happened`}
+					text={`${entities?.header?.[0].countHappened} Đã xảy ra`}
 				/>
 				<Badge
 					style={{ marginLeft: '12px' }}
 					color="#f1b228"
-					text={`${entities?.header?.[0].countPending} Not yet happen`}
+					text={`${entities?.header?.[0].countPending} Chưa xảy ra`}
 				/>
 			</div>
 			<div className="flex justify-between items-center">
