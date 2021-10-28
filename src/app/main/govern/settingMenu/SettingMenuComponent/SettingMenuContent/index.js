@@ -18,7 +18,7 @@ export default function SettingMenuContent() {
 		dispatch(actions.fetchsListMenuSettings());
 	}, [dispatch]);
 	const handleEditMenuSetting = item => {
-		history.push(`/quan-tri/thiet-lap-menu/cap-nhat/${item.menuID}`);
+		history.push(`/quan-tri/thiet-lap-menu/cap-nhat`);
 		dispatch(actions.setTaskEditMenuSetting(item));
 	};
 	const handleChangePage = (event, newPage) => {

@@ -31,7 +31,7 @@ export default function LineComponent() {
 	};
 	const setEditLine = item => {
 		dispatch(setTaskEditLine(item));
-		history.push(`/quan-tri/quyen/cap-nhat/${item.roleID}`);
+		history.push(`/quan-tri/quyen/cap-nhat`);
 	};
 	const deleteItem = item => dispatch(deletedLine(item));
 	return (

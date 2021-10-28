@@ -27,7 +27,7 @@ export default function LevelApprovalComponent() {
 		dispatch(fetchListLevelsFilter(rowPageParse, page, search));
 	};
 	const setTaskEdit = item => {
-		history.push(`/quan-tri/cap-quyen/cap-nhat/${item.absID}`);
+		history.push(`/quan-tri/cap-quyen/cap-nhat`);
 		dispatch(setTaskEditLevel(item));
 	};
 	const deleteLevel = items => {

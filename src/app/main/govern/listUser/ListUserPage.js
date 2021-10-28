@@ -29,7 +29,7 @@ export default function ListUserPage() {
 	};
 	const handleChangeRoute = () => {
 		dispatch(actions.setTaskEditListUser(null));
-		history.push('/quan-tri/danh-sach-nguoi-dung/tao-moi/null');
+		history.push('/quan-tri/danh-sach-nguoi-dung/tao-moi');
 	};
 	return (
 		<div className="container govern">

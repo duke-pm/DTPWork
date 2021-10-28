@@ -15,7 +15,7 @@ export default function ListUserContent() {
 	const { currentState } = useSelector(state => ({ currentState: state.govern.listUser }), shallowEqual);
 	const { entities, actionLoading, total_count, listLoading } = currentState;
 	const handleEditListUser = item => {
-		history.push(`/quan-tri/danh-sach-nguoi-dung/cap-nhat/${item.userID}`);
+		history.push(`/quan-tri/danh-sach-nguoi-dung/cap-nhat`);
 		dispatch(actions.setTaskEditListUser(item));
 	};
 

@@ -8,7 +8,7 @@ const LevelApprovalConfig = {
 	},
 	routes: [
 		{
-			path: '/quan-tri/cap-quyen/:type/:id',
+			path: '/quan-tri/cap-quyen/:type',
 			component: React.lazy(() => import('./modifyLevelApproval'))
 		},
 		{

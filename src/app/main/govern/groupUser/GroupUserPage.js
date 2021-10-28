@@ -13,7 +13,7 @@ export default function GroupUserPage() {
 	const dispatch = useDispatch();
 	const handleChangeRoute = () => {
 		dispatch(setTaskEditGroupUser(null));
-		history.push('/quan-tri/nhom-nguoi-dung/tao-moi/null');
+		history.push('/quan-tri/nhom-nguoi-dung/tao-moi');
 	};
 	const groupUserContext = useContext(GroupUserContext);
 	const { setPage, setSearch, search, page, rowPage, sort } = groupUserContext;

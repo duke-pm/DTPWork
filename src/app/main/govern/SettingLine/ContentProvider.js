@@ -29,7 +29,7 @@ export default function ContentProvider() {
 	};
 	const handleChangeRoute = () => {
 		dispatch(setTaskEditLine(null));
-		history.push('/quan-tri/quyen/tao-moi/null');
+		history.push('/quan-tri/quyen/tao-moi');
 	};
 	return (
 		<div className="container govern">

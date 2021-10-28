@@ -9,7 +9,7 @@ const GroupUserConfig = {
 	},
 	routes: [
 		{
-			path: '/quan-tri/nhom-nguoi-dung/:type/:id',
+			path: '/quan-tri/nhom-nguoi-dung/:type',
 			component: React.lazy(() => import('./modifyGroupUser'))
 		},
 		{

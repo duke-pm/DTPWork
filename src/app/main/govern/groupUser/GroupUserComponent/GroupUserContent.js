@@ -18,7 +18,7 @@ export default function GroupUserContent() {
 	const { currentState } = useSelector(state => ({ currentState: state.govern.groupUser }), shallowEqual);
 	const { entities, listLoading, actionLoading, total_count } = currentState;
 	const handleEditGroupUser = item => {
-		history.push(`/quan-tri/nhom-nguoi-dung/cap-nhat/${item.groupID}`);
+		history.push(`/quan-tri/nhom-nguoi-dung/cap-nhat`);
 		dispatch(actions.setTaskEditGroupUser(item));
 	};
 	const handleEditGroupUserDelete = item => {

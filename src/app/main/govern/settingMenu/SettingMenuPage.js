@@ -27,7 +27,7 @@ export default function SettingMenuPage() {
 	};
 	const handleChangeRoute = () => {
 		dispatch(actions.setTaskEditMenuSetting(null));
-		history.push('/quan-tri/thiet-lap-menu/tao-moi/null');
+		history.push('/quan-tri/thiet-lap-menu/tao-moi');
 	};
 	return (
 		<div className="container govern">

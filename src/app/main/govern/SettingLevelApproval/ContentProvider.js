@@ -28,7 +28,7 @@ export default function ContentProvider() {
 	};
 	const handleChangeRoute = () => {
 		dispatch(setTaskEditLevel(null));
-		history.push('/quan-tri/cap-quyen/tao-moi/null');
+		history.push('/quan-tri/cap-quyen/tao-moi');
 	};
 	useEffect(() => {
 		dispatch(fetchListLevels());
