@@ -3,21 +3,41 @@
 /* eslint-disable react/button-has-type */
 import { Icon } from '@material-ui/core';
 import Text from 'app/components/Text';
-import React from 'react';
+import React, { useState } from 'react';
 import moment from 'moment';
 import { useHistory } from 'react-router';
 import { shallowEqual, useSelector } from 'react-redux';
-import { Badge, Tooltip } from 'antd';
+import { Badge, Select, Tooltip } from 'antd';
 import { useParams } from 'react-router-dom';
+import { value } from 'lodash/seq';
 
 export default function CustomToolbar(props) {
-	const history = useHistory();
 	const params = useParams();
+	const parseParam = params?.id ? parseInt(params?.id) : null;
+	const [resource, setResouce] = useState(parseParam);
+	const history = useHistory();
+	const { inforCompany } = useSelector(
+		state => ({
+			inforCompany: state.possesion
+		}),
+		shallowEqual
+	);
+	const { entitiesInformation } = inforCompany;
+	const bkResource = entitiesInformation?.bkReSource
+		? entitiesInformation.bkReSource.reduce(
+				(arr, curr) => [...arr, { value: curr.resourceID, label: curr.resourceName }],
+				[]
+		  )
+		: [];
 	const handleChangeRouteList = () => {
 		history.push(`/booking/resource-calendar/list/${params.id}`);
 	};
 	const { currentState } = useSelector(state => ({ currentState: state.booking.booking }), shallowEqual);
 	const { entities } = currentState;
+	const handleChangeResource = value => {
+		setResouce(value);
+		history.push(`/booking/resource-calendar/calendar/${value}`);
+	};
 	return (
 		<div className="booking__subcontent">
 			<div className="flex justify-between">
@@ -42,6 +62,15 @@ export default function CustomToolbar(props) {
 				/>
 			</div>
 			<div className="flex justify-between items-center">
+				<div className="form-item-input mr-8">
+					<Select value={resource} onChange={handleChangeResource} style={{ width: '200px' }}>
+						{bkResource.map(p => (
+							<Select.Option key={p.value} value={p.value}>
+								{p.label}
+							</Select.Option>
+						))}
+					</Select>
+				</div>
 				<button onClick={() => props.onNavigate('TODAY')} className="buttonToday mr-16">
 					<Text color="primary" type="subTitle">
 						Today

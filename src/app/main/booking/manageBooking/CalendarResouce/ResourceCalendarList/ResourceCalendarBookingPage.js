@@ -1,17 +1,18 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Button, Icon, Typography } from '@material-ui/core';
-import { Badge, DatePicker, Spin } from 'antd';
+import { Badge, DatePicker, Select, Spin } from 'antd';
 // import Panigation from '@fuse/core/FusePanigate';
 // import Search from 'antd/lib/input/Search';
 import Text from 'app/components/Text';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import moment from 'moment';
 import { fetchsBookingFilter, fetchsResourceCalendar, setTaskEditBooking } from '../../_reduxBooking/bookingActions';
 import TableAllBooking from './component/TableResourceBooking';
 import { ResourceCalendarContext } from '../ResourceCalendarContext';
+import { getInformationCompany } from '../../../../assets/Possesion/_redux/possesionActions';
 
 const { RangePicker } = DatePicker;
 
@@ -34,6 +35,13 @@ export default function ResourceCalendarBookingPage() {
 		// setSearch
 	} = bookingContex;
 	const params = useParams();
+	const paramsReq = 'BKResource';
+	useEffect(() => {
+		dispatch(getInformationCompany(paramsReq));
+	}, [dispatch, paramsReq]);
+	const parseParam = params?.id ? parseInt(params?.id) : null;
+	const [resource, setResouce] = useState(parseParam);
+
 	const handleChangeRoute = () => {
 		dispatch(setTaskEditBooking(null));
 		history.push(`/booking/modify-booking/created?resource=${params.id}`);
@@ -43,9 +51,19 @@ export default function ResourceCalendarBookingPage() {
 	};
 	useEffect(() => {
 		dispatch(fetchsResourceCalendar(params?.id));
-	}, [dispatch]);
-	const { currentState } = useSelector(state => ({ currentState: state.booking.booking }), shallowEqual);
-	const { entities, listLoading, actionLoading, total_count } = currentState;
+	}, [dispatch, params]);
+	const { currentState, inforCompany } = useSelector(
+		state => ({ currentState: state.booking.booking, inforCompany: state.possesion }),
+		shallowEqual
+	);
+	const { entities, listLoading } = currentState;
+	const { entitiesInformation } = inforCompany;
+	const bkResource = entitiesInformation?.bkReSource
+		? entitiesInformation.bkReSource.reduce(
+				(arr, curr) => [...arr, { value: curr.resourceID, label: curr.resourceName }],
+				[]
+		  )
+		: [];
 	// const handleChangePage = (event, newPage) => {
 	// 	setPage(newPage);
 	// 	dispatch(fetchsBookingFilter(true, rowPage, newPage + 1, sort.id, sort.direction, search, fromDate, toDate));
@@ -85,6 +103,10 @@ export default function ResourceCalendarBookingPage() {
 				date && moment(date[1]).format('YYYY/MM/DD')
 			)
 		);
+	};
+	const handleChangeResource = value => {
+		setResouce(value);
+		history.push(`/booking/resource-calendar/list/${value}`);
 	};
 	return (
 		<div className="container booking">
@@ -135,6 +157,15 @@ export default function ResourceCalendarBookingPage() {
 					/>
 				</div>
 				<div className="booking__subcontent--action">
+					<div className="form-item-input mr-8">
+						<Select value={resource} onChange={handleChangeResource} style={{ width: '200px' }}>
+							{bkResource.map(p => (
+								<Select.Option key={p.value} value={p.value}>
+									{p.label}
+								</Select.Option>
+							))}
+						</Select>
+					</div>
 					<RangePicker format="DD/MM/YYYY" onChange={handleChange} />
 					<span onClick={handleChangeRouteList} className="btn__btn--action mr-8">
 						{' '}

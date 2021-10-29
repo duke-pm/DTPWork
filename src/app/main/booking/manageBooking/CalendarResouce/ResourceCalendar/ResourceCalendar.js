@@ -22,6 +22,7 @@ import {
 import { ResourceCalendarContext } from '../ResourceCalendarContext';
 import ContentTooltip from './component/ContentTooltip';
 import { colorStatus } from '../../BookingConfig';
+import { getInformationCompany } from '../../../../assets/Possesion/_redux/possesionActions';
 // import { colorStatus } from '../../BookingCo';
 
 const allViews = Object.keys(Views).map(k => Views[k]);
@@ -40,18 +41,22 @@ const MonthEvent = ({ event }) => {
 // const DragAndDropCalendar = withDragAndDrop(Calendar);
 const localizer = momentLocalizer(moment);
 export default function ResourceCalendarPage(props) {
+	const dispatch = useDispatch();
 	const history = useHistory();
 	const params = useParams();
+	const paramsReq = 'BKResource';
+	useEffect(() => {
+		dispatch(getInformationCompany(paramsReq));
+	}, [dispatch, paramsReq]);
 	const resourceCalendarContext = useContext(ResourceCalendarContext);
 	const { setToDate, setFromDate, search } = resourceCalendarContext;
-	const dispatch = useDispatch();
 	const handleChangeRoute = () => {
 		dispatch(setTaskEditBooking(null));
 		history.push(`/booking/modify-booking/created?resource=${params.id}`);
 	};
 	useEffect(() => {
 		dispatch(fetchsResourceCalendar(params?.id));
-	}, [dispatch]);
+	}, [dispatch, params?.id]);
 	const { currentState } = useSelector(state => ({ currentState: state.booking.booking }), shallowEqual);
 	const { entitiesCalendar, listLoading, actionLoading } = currentState;
 	const openEditEventDialog = value => {

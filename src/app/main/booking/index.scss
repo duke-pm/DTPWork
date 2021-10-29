@@ -477,3 +477,33 @@ border-top: 3px solid #fff !important
         }
     }
 }
+.label--radio-button{
+    font-size: 16px;
+}
+.form-item-input{
+    .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+        border-color: $border-ant-input;
+    }
+    .ant-select:hover{
+        border-color: $border-ant-input;
+
+    }
+    .ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+        border-color: $border-ant-input;
+    }
+    .ant-select-selector {
+        border-radius: 5px !important;
+        border: 1px solid #d0d4db;
+        padding: 4px 12px;
+        font-size: 1.3rem;
+        // color: #172b4d;
+        &:focus{
+            border-color: $border-ant-input;
+            box-shadow: 0 0 5px 0 $border-ant-input!important
+        }
+        &:hover{
+            border-color: $border-ant-input;
+            box-shadow: 0 0 5px 0 $border-ant-input!important
+        }
+    }
+}
