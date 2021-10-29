@@ -44,10 +44,18 @@ export default function ResourceCalendarBookingPage() {
 
 	const handleChangeRoute = () => {
 		dispatch(setTaskEditBooking(null));
-		history.push(`/booking/modify-booking/created?resource=${params.id}`);
+		if (params.id) {
+			history.push(`/booking/modify-booking/created?resource=${params.id}`);
+		} else {
+			history.push(`/booking/modify-booking/created`);
+		}
 	};
 	const handleChangeRouteList = () => {
-		history.push(`/booking/resource-calendar/calendar/${params.id}`);
+		if (params.id) {
+			history.push(`/booking/resource-calendar/calendar/${params.id}`);
+		} else {
+			history.push(`/booking/resource-calendar/calendar`);
+		}
 	};
 	useEffect(() => {
 		dispatch(fetchsResourceCalendar(params?.id));
@@ -158,7 +166,12 @@ export default function ResourceCalendarBookingPage() {
 				</div>
 				<div className="booking__subcontent--action">
 					<div className="form-item-input mr-8">
-						<Select value={resource} onChange={handleChangeResource} style={{ width: '200px' }}>
+						<Select
+							placeholder="Tìm kiếm tài nguyên"
+							value={resource}
+							onChange={handleChangeResource}
+							style={{ width: '200px' }}
+						>
 							{bkResource.map(p => (
 								<Select.Option key={p.value} value={p.value}>
 									{p.label}
@@ -166,7 +179,11 @@ export default function ResourceCalendarBookingPage() {
 							))}
 						</Select>
 					</div>
-					<RangePicker format="DD/MM/YYYY" onChange={handleChange} />
+					<RangePicker
+						defaultValue={[moment().startOf('month'), moment().endOf('month')]}
+						format="DD/MM/YYYY"
+						onChange={handleChange}
+					/>
 					<span onClick={handleChangeRouteList} className="btn__btn--action mr-8">
 						{' '}
 						<Icon fontSize="small" color="primary">

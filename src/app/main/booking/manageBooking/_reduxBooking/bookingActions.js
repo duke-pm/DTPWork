@@ -69,7 +69,7 @@ export const fetchsBooking = (isMyBooking, limit, page, fromDate, toDate) => dis
 export const fetchsResourceCalendar = (resourceID, fromDate, toDate) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.list }));
 	const paramReq = {
-		ResourceID: resourceID,
+		ResourceID: resourceID || 0,
 		FromDate: fromDate || moment().startOf('month').format('YYYY/MM/DD'),
 		ToDate: toDate || moment().endOf('month').format('YYYY/MM/DD')
 	};

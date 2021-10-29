@@ -30,7 +30,11 @@ export default function CustomToolbar(props) {
 		  )
 		: [];
 	const handleChangeRouteList = () => {
-		history.push(`/booking/resource-calendar/list/${params.id}`);
+		if (params.id) {
+			history.push(`/booking/resource-calendar/list/${params.id}`);
+		} else {
+			history.push(`/booking/resource-calendar/list`);
+		}
 	};
 	const { currentState } = useSelector(state => ({ currentState: state.booking.booking }), shallowEqual);
 	const { entities } = currentState;
@@ -63,7 +67,7 @@ export default function CustomToolbar(props) {
 			</div>
 			<div className="flex justify-between items-center">
 				<div className="form-item-input mr-8">
-					<Select value={resource} onChange={handleChangeResource} style={{ width: '200px' }}>
+					<Select placeholder="Tìm kiếm tài nguyên" value={resource} onChange={handleChangeResource} style={{ width: '200px' }}>
 						{bkResource.map(p => (
 							<Select.Option key={p.value} value={p.value}>
 								{p.label}

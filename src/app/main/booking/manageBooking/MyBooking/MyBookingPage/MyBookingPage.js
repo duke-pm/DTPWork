@@ -247,7 +247,11 @@ export default function AllBookingPage() {
 					/>
 				</div>
 				<div className="booking__subcontent--action">
-					<RangePicker format="DD/MM/YYYY" onChange={handleChange} />
+					<RangePicker
+						defaultValue={[moment().startOf('month'), moment().endOf('month')]}
+						format="DD/MM/YYYY"
+						onChange={handleChange}
+					/>
 					<span onClick={handleChangeRouteList} className="btn__btn--action mr-8">
 						{' '}
 						<Icon fontSize="small" color="primary">

@@ -222,7 +222,11 @@ export default function AllBookingPage() {
 					/>
 				</div>
 				<div className="booking__subcontent--action">
-					<RangePicker format="DD/MM/YYYY" onChange={handleChange} />
+					<RangePicker
+						defaultValue={[moment().startOf('month'), moment().endOf('month')]}
+						format="DD/MM/YYYY"
+						onChange={handleChange}
+					/>
 				</div>
 			</div>
 			{resource?.length > 0 ? (

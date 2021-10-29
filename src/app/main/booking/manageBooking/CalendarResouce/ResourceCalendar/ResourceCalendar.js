@@ -52,7 +52,11 @@ export default function ResourceCalendarPage(props) {
 	const { setToDate, setFromDate, search } = resourceCalendarContext;
 	const handleChangeRoute = () => {
 		dispatch(setTaskEditBooking(null));
-		history.push(`/booking/modify-booking/created?resource=${params.id}`);
+		if (params.id) {
+			history.push(`/booking/modify-booking/created?resource=${params.id}`);
+		} else {
+			history.push(`/booking/modify-booking/created`);
+		}
 	};
 	useEffect(() => {
 		dispatch(fetchsResourceCalendar(params?.id));

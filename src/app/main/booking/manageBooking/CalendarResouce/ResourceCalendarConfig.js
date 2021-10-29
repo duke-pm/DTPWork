@@ -13,7 +13,15 @@ const ResourceCalendarConfig = {
 			component: React.lazy(() => import('./ResourceCalendarList'))
 		},
 		{
+			path: '/booking/resource-calendar/list',
+			component: React.lazy(() => import('./ResourceCalendarList'))
+		},
+		{
 			path: '/booking/resource-calendar/calendar/:id',
+			component: React.lazy(() => import('./ResourceCalendar/index'))
+		},
+		{
+			path: '/booking/resource-calendar/calendar',
 			component: React.lazy(() => import('./ResourceCalendar/index'))
 		}
 	]
