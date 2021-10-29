@@ -47,7 +47,7 @@ export default function CustomForm({
 			levels: [
 				{
 					LevelID: 1,
-					UserID: entitiesEdit?.listLevel?.[0].userID !== 0 ? entitiesEdit?.listLevel?.[0].userID : '',
+					UserID: entitiesEdit?.listLevel?.[0].userID !== 0 ? entitiesEdit?.listLevel?.[0].userID : 0,
 					TitleID: entitiesEdit?.listLevel?.[0].titleID !== 0 ? entitiesEdit?.listLevel?.[0].titleID : ''
 				},
 				{
