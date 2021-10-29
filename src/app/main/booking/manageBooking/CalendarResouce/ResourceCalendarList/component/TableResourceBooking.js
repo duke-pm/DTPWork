@@ -46,6 +46,7 @@ export default function TableResourceBooking({ entities, createSortHandler, list
 			title: 'Tên booking',
 			dataIndex: 'purpose',
 			align: 'left',
+			width: 180,
 			key: 'purpose',
 			// sorter: true,
 			render: (_, item) => (

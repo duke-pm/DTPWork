@@ -78,6 +78,7 @@ export default function TableAllBooking({
 			title: 'Tên booking',
 			dataIndex: 'purpose',
 			align: 'left',
+			width: 180,
 			key: 'purpose',
 			sorter: true,
 			render: (_, item) => (
