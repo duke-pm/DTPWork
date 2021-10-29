@@ -14,7 +14,7 @@ import { createdLevel, updatedLevel } from '../reduxSettingLevel/LevelSettingAct
 
 export default function ModifyLevelApproval() {
 	const dispatch = useDispatch();
-	const param = 'Users,Roles,TypeGroups,TitleApproval';
+	const param = 'Roles,TypeGroups,TitleApproval,UserApproval';
 	const [isChanged, setIsChange] = useState(false);
 	useEffect(() => {
 		dispatch(getInformationCompany(param));
@@ -51,8 +51,11 @@ export default function ModifyLevelApproval() {
 				[]
 		  )
 		: [];
-	const users = entitiesInformation?.users
-		? entitiesInformation.users.reduce((arr, curr) => [...arr, { value: curr.empID, label: curr.empName }], [])
+	const users = entitiesInformation?.userApproval
+		? entitiesInformation.userApproval.reduce(
+				(arr, curr) => [...arr, { value: curr.empID, label: curr.empName }],
+				[]
+		  )
 		: [];
 	const handleSubmitApproval = value => {
 		if (entitiesEdit?.absID) {
