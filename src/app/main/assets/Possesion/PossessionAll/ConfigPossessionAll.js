@@ -1,4 +1,4 @@
-import { validateField } from '@fuse/core/DtpConfig';
+import { validateField, validateFieldPric } from '@fuse/core/DtpConfig';
 import * as Yup from 'yup';
 
 export const chipColor = {
@@ -89,7 +89,8 @@ export const checkValidateFormConfig = Yup.object().shape({
 	category: Yup.string().required(`${validateField}`),
 	group: Yup.string().required(`${validateField}`),
 	asset: Yup.string().required(`${validateField}`),
-	deptCodeManager: Yup.string().required(`${validateField}`)
+	deptCodeManager: Yup.string().required(`${validateField}`),
+	originalPrice: Yup.number().min(0, validateFieldPric)
 });
 
 export const checkValidateFormConfigUpdate = Yup.object().shape({

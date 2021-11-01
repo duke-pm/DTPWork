@@ -5,7 +5,7 @@ import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import * as Yup from 'yup';
 import * as moment from 'moment';
 import { Spin } from 'antd';
-import { validateField } from '@fuse/core/DtpConfig';
+import { validateField, validateFieldPric } from '@fuse/core/DtpConfig';
 import AntDateCustom from '@fuse/FormBookingCustom/AntDateCustom';
 import AntInputCustom from '@fuse/FormBookingCustom/AntInputCustom';
 import AntInputCurrency from '@fuse/FormBookingCustom/AntInputCurrency';
@@ -17,7 +17,7 @@ const initial = {
 	date: moment(Date.now()),
 	nameService: '',
 	note: '',
-	price: '',
+	price: 0,
 	file: '',
 	dateEnd: moment(Date.now())
 };
@@ -26,7 +26,7 @@ export default function FormCustomCycleEdit({ handleClose, entitiesEdit, handleS
 		dateEnd: Yup.string().required(`${validateField}`),
 		date: Yup.string().required(`${validateField}`),
 		nameService: Yup.string().required(`${validateField}`),
-		price: Yup.string().required(`${validateField}`)
+		price: Yup.number().min(0, validateFieldPric).required(`${validateField}`)
 	});
 	return (
 		<>

@@ -84,6 +84,7 @@ export const nameFile = url => {
 	return file;
 };
 export const validateField = 'Nội dung bắt buộc không được để trống.';
+export const validateFieldPric = 'Chi phí dự kiến phải lớn hơn hoặc bằng 0';
 export const validateFieldEN = 'Please fill in the field.';
 export function findIndexMultiple(id, newData, arr) {
 	arr.forEach((d, i) => {

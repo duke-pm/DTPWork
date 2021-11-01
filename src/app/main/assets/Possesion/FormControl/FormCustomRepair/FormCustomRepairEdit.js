@@ -5,7 +5,7 @@ import * as moment from 'moment';
 import * as Yup from 'yup';
 import { currencyFormat } from '@fuse/core/FuseFormatCurrency';
 import { Spin } from 'antd';
-import { validateField } from '@fuse/core/DtpConfig';
+import {validateField, validateFieldPric} from '@fuse/core/DtpConfig';
 import AntInputCustom from '@fuse/FormBookingCustom/AntInputCustom';
 import AntInputCurrency from '@fuse/FormBookingCustom/AntInputCurrency';
 import AntFileCustom from '@fuse/FormBookingCustom/AntFileCustom';
@@ -17,13 +17,13 @@ const initial = {
 	date: moment(Date.now()),
 	nameService: '',
 	note: '',
-	price: '',
+	price: 0,
 	file: ''
 };
 export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairService, actionLoading, handleClose }) {
 	const checkValidateForm = Yup.object().shape({
 		nameService: Yup.string().required(`${validateField}`),
-		price: Yup.string().required(`${validateField}`),
+		price: Yup.number().min(0, validateFieldPric).required(`${validateField}`),
 		date: Yup.date().required(`${validateField}`)
 	});
 	return (
