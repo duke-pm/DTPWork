@@ -60,6 +60,12 @@ export default function TableBodyProcessing({ history }) {
 					{item.statusName}
 				</div>
 			)
+		},
+		{
+			title: 'Nội dung',
+			dataIndex: 'reasons',
+			key: 'reasons',
+			render: (_, item) => <Text>{item.reasons}</Text>
 		}
 	];
 	return (
