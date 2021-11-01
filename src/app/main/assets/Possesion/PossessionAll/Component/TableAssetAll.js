@@ -113,7 +113,7 @@ export default function TableAssetAll({ entities, listLoading, createSortHandler
 	return (
 		<Table
 			showSorterTooltip={false}
-			rowKey="assetCode"
+			rowKey="assetID"
 			pagination={false}
 			columns={columns}
 			scroll={{

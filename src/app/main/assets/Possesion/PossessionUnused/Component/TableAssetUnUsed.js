@@ -110,7 +110,7 @@ export default function TableAssetUnUsed({
 	return (
 		<Table
 			showSorterTooltip={false}
-			rowKey="assetCode"
+			rowKey="assetID"
 			pagination={false}
 			columns={columns}
 			scroll={{

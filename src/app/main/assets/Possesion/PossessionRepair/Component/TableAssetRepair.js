@@ -108,7 +108,7 @@ export default function TableAssetRepair({
 	return (
 		<Table
 			showSorterTooltip={false}
-			rowKey="assetCode"
+			rowKey="assetID"
 			pagination={false}
 			columns={columns}
 			scroll={{
