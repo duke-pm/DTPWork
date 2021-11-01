@@ -95,5 +95,6 @@ export const checkValidateFormConfig = Yup.object().shape({
 
 export const checkValidateFormConfigUpdate = Yup.object().shape({
 	assetName: Yup.string().required(`${validateField}`),
-	purchaseDate: Yup.date().required(`${validateField}`).nullable()
+	purchaseDate: Yup.date().required(`${validateField}`).nullable(),
+	originalPrice: Yup.number().min(0, validateFieldPric)
 });
