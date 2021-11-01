@@ -17,13 +17,13 @@ const initial = {
 	date: moment(Date.now()),
 	nameService: '',
 	note: '',
-	price: 0,
+	price: null,
 	file: ''
 };
 export default function FormCustomRepairEdit({ entitiesEdit, handleSubmitRepairService, actionLoading, handleClose }) {
 	const checkValidateForm = Yup.object().shape({
 		nameService: Yup.string().required(`${validateField}`),
-		price: Yup.number().min(0, validateFieldPric).required(`${validateField}`),
+		price: Yup.number().min(0, validateFieldPric).required(`${validateField}`).nullable(),
 		date: Yup.date().required(`${validateField}`)
 	});
 	return (

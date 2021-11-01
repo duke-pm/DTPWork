@@ -17,7 +17,7 @@ const initial = {
 	date: moment(Date.now()),
 	nameService: '',
 	note: '',
-	price: 0,
+	price: null,
 	file: '',
 	dateEnd: moment(Date.now())
 };
@@ -26,7 +26,7 @@ export default function FormCustomCycleEdit({ handleClose, entitiesEdit, handleS
 		dateEnd: Yup.string().required(`${validateField}`),
 		date: Yup.string().required(`${validateField}`),
 		nameService: Yup.string().required(`${validateField}`),
-		price: Yup.number().min(0, validateFieldPric).required(`${validateField}`)
+		price: Yup.number().min(0, validateFieldPric).required(`${validateField}`).nullable()
 	});
 	return (
 		<>
