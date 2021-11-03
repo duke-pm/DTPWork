@@ -7,8 +7,8 @@ const { actions } = bookingSlice;
 export const fetchsBooking = (isMyBooking, limit, page, fromDate, toDate) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.list }));
 	const paramReq = {
-		page: page || 1,
-		limit: limit || 25,
+		PageNum: page || 1,
+		PageSize: limit || 25,
 		IsMyBooking: isMyBooking || false,
 		FromDate: fromDate || moment().startOf('month').format('YYYY/MM/DD'),
 		ToDate: toDate || moment().endOf('month').format('YYYY/MM/DD')
@@ -124,8 +124,8 @@ export const fetchsBookingFilter =
 	(isMyBooking, limit, page, SortColumn, SortDirection, search, fromDate, toDate, resourceID) => dispatch => {
 		dispatch(actions.startCall({ callType: callTypes.action }));
 		const paramReq = {
-			page: page || 1,
-			limit: limit || 25,
+			PageNum: page || 1,
+			PageSize: limit || 25,
 			Search: search,
 			SortColumn: SortColumn || null,
 			SortDirection: SortDirection || 'asc',

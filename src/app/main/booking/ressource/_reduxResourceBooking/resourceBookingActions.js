@@ -6,8 +6,8 @@ const { actions } = resourceBookingSlice;
 export const fetchResouceBooking = (limit, page) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.list }));
 	const paramReq = {
-		page: page || 1,
-		limit: limit || 25
+		PageNum: page || 1,
+		PageSize: limit || 25
 	};
 	return requestFrom
 		.fetchResouceBooking(paramReq)
@@ -30,8 +30,8 @@ export const fetchResouceBooking = (limit, page) => dispatch => {
 export const fetchResouceBookingFilter = (limit, page, SortColumn, SortDirection, search) => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	const paramReq = {
-		page: page || 1,
-		limit: limit || 25,
+		PageNum: page || 1,
+		PageSize: limit || 25,
 		Search: search,
 		SortColumn: SortColumn || null,
 		SortDirection: SortDirection || 'asc'
