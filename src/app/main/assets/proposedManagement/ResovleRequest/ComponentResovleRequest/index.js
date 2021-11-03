@@ -50,6 +50,7 @@ export default function RequestResovelTable(props) {
 		setRowPage(rowPageParse);
 		dispatch(
 			action.searchConfirms(
+				true,
 				status,
 				rowPageParse,
 				page,
@@ -66,6 +67,7 @@ export default function RequestResovelTable(props) {
 		setPage(newPage);
 		dispatch(
 			action.searchConfirms(
+				true,
 				status,
 				rowPage,
 				newPage + 1,
