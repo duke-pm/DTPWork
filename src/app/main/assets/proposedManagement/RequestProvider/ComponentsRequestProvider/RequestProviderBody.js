@@ -103,7 +103,7 @@ export default function RequestProviderBody({
 			title: 'Số lượng',
 			width: '10%',
 			render: (text, record, index) => (
-				<Input className="text-right" type="number" value={text} onChange={onInputChange('Qty', index)} />
+				<Input className="text-right" min={0} type="number" value={text} onChange={onInputChange('Qty', index)} />
 			)
 		},
 		{

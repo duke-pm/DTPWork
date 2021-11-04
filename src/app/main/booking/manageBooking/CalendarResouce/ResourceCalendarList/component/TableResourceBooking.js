@@ -3,7 +3,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { sortDirestion } from '@fuse/core/DtpConfig';
 import { Icon } from '@material-ui/core';
-import { Avatar, Table, Tooltip } from 'antd';
+import { Avatar, Table } from 'antd';
 import Text from 'app/components/Text';
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -11,7 +11,7 @@ import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
-import { deleteBooking, setTaskEditBooking } from '../../../_reduxBooking/bookingActions';
+import { setTaskEditBooking } from '../../../_reduxBooking/bookingActions';
 import { colorStatus, colorText } from '../../../BookingConfig';
 
 export default function TableResourceBooking({ entities, createSortHandler, listLoading }) {
@@ -27,13 +27,13 @@ export default function TableResourceBooking({ entities, createSortHandler, list
 		dispatch(setTaskEditBooking(item));
 		history.push(`/booking/view/${item.bookID}`);
 	};
-	const handleEdit = item => {
-		history.push('/booking/modify-booking/updated');
-		dispatch(setTaskEditBooking(item));
-	};
-	const handleDelete = item => {
-		dispatch(deleteBooking(item.bookID));
-	};
+	// const handleEdit = item => {
+	// 	history.push('/booking/modify-booking/updated');
+	// 	dispatch(setTaskEditBooking(item));
+	// };
+	// const handleDelete = item => {
+	// 	dispatch(deleteBooking(item.bookID));
+	// };
 	const columns = [
 		{
 			title: 'Mã',

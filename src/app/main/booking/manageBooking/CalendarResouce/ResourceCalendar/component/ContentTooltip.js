@@ -1,19 +1,13 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Grid, Icon } from '@material-ui/core';
-import { Avatar, Spin, Tag } from 'antd';
+import { Avatar, Tag } from 'antd';
 import Text from 'app/components/Text';
 import React from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
-import { useHistory } from 'react-router';
-import { deleteBooking, setTaskEditBooking } from '../../../_reduxBooking/bookingActions';
 import { colorStatus, colorText } from '../../../BookingConfig';
 
 export default function ContentTooltip({ event }) {
-	const dispatch = useDispatch();
-	const { currentState } = useSelector(state => ({ currentState: state.booking.booking }), shallowEqual);
-	const history = useHistory();
 	return (
 		<div className="popever-event" style={{ width: '350px' }}>
 			<div className="flex justify-between">

@@ -13,12 +13,7 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Popover, Spin, Tooltip } from 'antd';
 import Text from 'app/components/Text';
 import CustomToolbar from './component/CustomToolbar';
-import {
-	fetchsBooking,
-	fetchsBookingFilter,
-	fetchsResourceCalendar,
-	setTaskEditBooking
-} from '../../_reduxBooking/bookingActions';
+import { fetchsResourceCalendar, setTaskEditBooking } from '../../_reduxBooking/bookingActions';
 import { ResourceCalendarContext } from '../ResourceCalendarContext';
 import ContentTooltip from './component/ContentTooltip';
 import { colorStatus } from '../../BookingConfig';

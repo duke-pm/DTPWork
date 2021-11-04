@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Button, Icon, Typography } from '@material-ui/core';
-import { Badge, DatePicker, Select, Spin } from 'antd';
+import { Badge, DatePicker, Select } from 'antd';
 // import Panigation from '@fuse/core/FusePanigate';
 // import Search from 'antd/lib/input/Search';
 import Text from 'app/components/Text';
