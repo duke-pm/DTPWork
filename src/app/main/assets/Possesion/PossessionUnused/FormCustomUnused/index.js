@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import { Icon } from '@material-ui/core';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import { notificationConfig } from '@fuse/core/DtpConfig';
+import {getToken, notificationConfig, URL} from '@fuse/core/DtpConfig';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import { Spin, Tooltip } from 'antd';
 import { useHistory } from 'react-router';
@@ -31,6 +31,14 @@ export default function FormCustomUnused({ handleClose, open }) {
 	useEffect(() => {
 		if (!entitiesEdit) history.goBack();
 	}, [entitiesEdit, history]);
+	const ExportExcel = assetID => {
+		const token = getToken();
+		const dataReq = {
+			UserToken: token,
+			AssetID: assetID
+		};
+		window.location = `${URL}/api/RQAsset/ExportAllocation?value=${JSON.stringify(dataReq)}`;
+	};
 	const saveAddAsset = values => {
 		dispatch(actions.addPersonalPossesion(values, entitiesEdit.assetID)).then(data => {
 			if (data && !data.isError) {
@@ -40,6 +48,7 @@ export default function FormCustomUnused({ handleClose, open }) {
 					notificationContent.description.assets.providerAssetsSuccess
 				);
 				history.goBack();
+				ExportExcel(entitiesEdit.assetID);
 			} else {
 				notificationConfig(
 					'warning',
