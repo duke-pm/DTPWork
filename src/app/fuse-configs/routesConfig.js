@@ -27,6 +27,7 @@ import ResourceGroupConfig from 'app/main/booking/resourceGroup/resourceGroupCon
 import AllBookingConfig from 'app/main/booking/manageBooking/AllBooking/AllBookingConfig';
 import MyBookingConfig from 'app/main/booking/manageBooking/MyBooking/MyBookingConfig';
 import ResourceCalendarConfig from 'app/main/booking/manageBooking/CalendarResouce/ResourceCalendarConfig';
+import DocumentConfig from '../main/assets/DocumentAssets/DocumentConfig';
 
 const routeConfigs = [
 	ResourceConfig,
@@ -53,7 +54,8 @@ const routeConfigs = [
 	ProjectConfig,
 	CheckLinkConfig,
 	Error404PageConfig,
-	HomeConfig
+	HomeConfig,
+	DocumentConfig
 ];
 
 const routes = [

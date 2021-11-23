@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import { Icon } from '@material-ui/core';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import {getToken, notificationConfig, URL} from '@fuse/core/DtpConfig';
+import { getToken, notificationConfig, URL } from '@fuse/core/DtpConfig';
 import { notificationContent } from '@fuse/core/DtpConfig/NotificationContent';
 import { Spin, Tooltip } from 'antd';
 import { useHistory } from 'react-router';

@@ -7,8 +7,10 @@ import { projectSlice } from 'app/main/project/_redux/_projectSlice';
 import fuse from './fuse';
 import i18n from './i18nSlice';
 import { possesionSlice } from '../main/assets/Possesion/_redux/possesionSlice';
+
 import memberships from './membership/membershipSlice';
 import { tabsSlice } from './Tabs/sliceTab';
+import { documentAssetsSlice } from '../main/assets/DocumentAssets/service/documentAssetsSlice';
 
 const createReducer = asyncReducers => (state, action) => {
 	const combinedReducer = combineReducers({
@@ -19,6 +21,7 @@ const createReducer = asyncReducers => (state, action) => {
 		booking,
 		tabs: tabsSlice.reducer,
 		possesion: possesionSlice.reducer,
+		documentAsset: documentAssetsSlice.reducer,
 		memberships,
 		project: projectSlice.reducer,
 		confirm: confirmSlice.reducer,

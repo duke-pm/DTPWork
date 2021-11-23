@@ -49,7 +49,7 @@ export default function ContentForm({ entitiesEdit }) {
 				<Text>Tình trạng:</Text>
 			</Grid>
 			<Grid item xs={6} md={6} lg={8}>
-				<Text type="subTitle">Chưa sử dụng:</Text>
+				<Text type="subTitle">{entitiesEdit?.statusName ? entitiesEdit?.statusName : 'Chưa sử dụng'}</Text>
 			</Grid>
 		</Grid>
 	);
