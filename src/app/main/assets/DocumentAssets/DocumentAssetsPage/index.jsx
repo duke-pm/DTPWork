@@ -60,8 +60,8 @@ export default function DocumentAssetsPage() {
 					Quản lý biên bản
 				</Text>
 			</div>
-			<div className="mr-16 flex justify-end mt-8">
-				<div className="form-item-input mr-8">
+			<div className="mr-24 flex justify-end mt-16">
+				<div className="form-item-input mr-16">
 					<Select
 						allowClear
 						placeholder="Cấp phát/thu hồi"
@@ -76,13 +76,13 @@ export default function DocumentAssetsPage() {
 					</Select>
 				</div>
 				<RangePicker
-					className=""
+					className="mr-16"
 					defaultValue={[moment().startOf('month'), moment().endOf('month')]}
 					format="DD/MM/YYYY"
 					onChange={handleChange}
 				/>
 			</div>
-			<div className="assets__Tab px-16 mt-8">
+			<div className="assets__Tab px-16 mt-16">
 				<div className="table--tab">
 					<TableDocumentAssets entities={entities} />
 					{entities?.length !== 0 && (
