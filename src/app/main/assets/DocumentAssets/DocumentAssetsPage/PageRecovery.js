@@ -69,6 +69,7 @@ export default function PageRecovery() {
 	const handleClearListFile = () => {
 		setListFile(null);
 		setFileCheck(false);
+		setRemoveFile(true);
 	};
 	const handleChangeFile = value => {
 		setListFile(value.name);
