@@ -74,7 +74,7 @@ export const updateDocumentAssetAllocation = (entitiesEdit, data, removeFile) =>
 	formData.append('Lang', 'vi');
 	formData.append('TypeUpdate', 'Allocation');
 	if (data.file) {
-		formData.append('FileUpload', data.file);
+		formData.append('FileUpload', !removeFile && data.file);
 	}
 	formData.append('IsRemovedFile', removeFile);
 	return requestFrom
@@ -105,7 +105,7 @@ export const updateDocumentAssetRevcovery = (entitiesEdit, data, removeFile) => 
 	formData.append('Lang', 'vi');
 	formData.append('TypeUpdate', 'Recovery');
 	if (data.file) {
-		formData.append('FileUpload', data.file);
+		formData.append('FileUpload', !removeFile && data.file);
 	}
 	formData.append('IsRemovedFile', removeFile);
 	return requestFrom
