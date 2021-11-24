@@ -25,7 +25,7 @@ export const DocumentTableAction = props => {
 
 			<MenuItem onClick={() => ViewDetail(items)} role="button">
 				<ListItemIcon className="min-w-40">
-					<Icon>visibility</Icon>
+					<Icon>edit</Icon>
 				</ListItemIcon>
 				<ListItemText primary="Cập nhật" />
 			</MenuItem>

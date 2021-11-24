@@ -64,3 +64,65 @@ export const fetchDetailDocumentAsset = data => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.action }));
 	dispatch(actions.fetchDocumentAssetsDetail({ data }));
 };
+
+export const updateDocumentAssetAllocation = (entitiesEdit, data, removeFile) => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.action }));
+	const formData = new FormData();
+	formData.append('AssetID', entitiesEdit.assetID);
+	formData.append('LineNum', entitiesEdit.lineNum);
+	formData.append('Reasons', data.note);
+	formData.append('Lang', 'vi');
+	formData.append('TypeUpdate', 'Allocation');
+	if (data.file) {
+		formData.append('FileUpload', data.file);
+	}
+	formData.append('IsRemovedFile', removeFile);
+	return requestFrom
+		.updatedDocumentAssetsAllocation(formData)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				dispatch(actions.updateAllocationDocumentAssets());
+				notificationConfig('success', 'Thành công', 'Cập nhật thành công.');
+			} else {
+				dispatch(actions.catchError({ callType: callTypes.action }));
+				notificationConfig('warning', 'Faild', data.errorMessage);
+			}
+			return data;
+		})
+		.catch(err => {
+			dispatch(actions.catchError({ callType: callTypes.action }));
+			notificationConfig('warning', 'Thất bại', 'Server error');
+		});
+};
+
+export const updateDocumentAssetRevcovery = (entitiesEdit, data, removeFile) => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.action }));
+	const formData = new FormData();
+	formData.append('AssetID', entitiesEdit.assetID);
+	formData.append('LineNum', entitiesEdit.lineNum);
+	formData.append('Reasons', data.note);
+	formData.append('Lang', 'vi');
+	formData.append('TypeUpdate', 'Recovery');
+	if (data.file) {
+		formData.append('FileUpload', data.file);
+	}
+	formData.append('IsRemovedFile', removeFile);
+	return requestFrom
+		.updatedDocumentAssetsRecovery(formData)
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				dispatch(actions.updateRecoveryDocumentAssets());
+				notificationConfig('success', 'Thành công', 'Cập nhật thành công.');
+			} else {
+				dispatch(actions.catchError({ callType: callTypes.action }));
+				notificationConfig('warning', 'Faild', data.errorMessage);
+			}
+			return data;
+		})
+		.catch(err => {
+			dispatch(actions.catchError({ callType: callTypes.action }));
+			notificationConfig('warning', 'Thất bại', 'Server error');
+		});
+};

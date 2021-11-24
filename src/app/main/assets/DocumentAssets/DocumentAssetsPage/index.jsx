@@ -22,7 +22,7 @@ export default function DocumentAssetsPage() {
 	const { setFromDate, setToDate, setType, rowPage, page, fromDate, toDate, setPage, setRowPage, type } =
 		documentContex;
 	const { currentState } = useSelector(state => ({ currentState: state.documentAsset }), shallowEqual);
-	const { entities, listLoading, actionLoading, total_count } = currentState;
+	const { entities, listloading, actionLoading, total_count } = currentState;
 	const handleChange = (date, dateString) => {
 		setFromDate(date && moment(date[0]).format('YYYY/MM/DD'));
 		setToDate(date && moment(date[1]).format('YYYY/MM/DD'));
@@ -83,21 +83,23 @@ export default function DocumentAssetsPage() {
 				/>
 			</div>
 			<div className="assets__Tab px-16 mt-16">
-				<div className="table--tab">
-					<TableDocumentAssets entities={entities} />
-					{entities?.length !== 0 && (
-						<div className="flex flex-row items-center justify-end">
-							{actionLoading && <Spin />}
-							<Panigation
-								page={page}
-								handleChangePage={handleChangePage}
-								rowPage={rowPage}
-								handleChangeRowsPerPage={handleRowPage}
-								count={total_count}
-							/>
-						</div>
-					)}
-				</div>
+				<Spin spinning={listloading}>
+					<div className="table--tab">
+						<TableDocumentAssets entities={entities} />
+						{entities?.length !== 0 && (
+							<div className="flex flex-row items-center justify-end">
+								{actionLoading && <Spin />}
+								<Panigation
+									page={page}
+									handleChangePage={handleChangePage}
+									rowPage={rowPage}
+									handleChangeRowsPerPage={handleRowPage}
+									count={total_count}
+								/>
+							</div>
+						)}
+					</div>
+				</Spin>
 			</div>
 		</div>
 	);

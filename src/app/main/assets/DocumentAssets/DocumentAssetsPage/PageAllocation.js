@@ -1,13 +1,15 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect, useState } from 'react';
-import { Button, Icon } from '@material-ui/core';
+import { Button, Icon, IconButton } from '@material-ui/core';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import { Spin, Tooltip } from 'antd';
+import { Avatar, Spin, Tooltip } from 'antd';
 import { useHistory } from 'react-router';
 import Text from 'app/components/Text';
 import { Field, Form, Formik } from 'formik';
 import * as moment from 'moment';
+import CloseIcon from '@material-ui/icons/Close';
+import { FileExcelOutlined, FileImageOutlined, FileWordOutlined } from '@ant-design/icons';
 import * as actions from '../../Possesion/_redux/possesionActions';
 import { checkValidateForm } from '../../Possesion/PossessionUnused/ConfigPossessionUnused';
 import ContentForm from '../../Possesion/PossessionUnused/FormCustomUnused/ContentForm';
@@ -16,11 +18,24 @@ import AntInputCustom from '../../../../../@fuse/FormBookingCustom/AntInputCusto
 import AntDateCustom from '../../../../../@fuse/FormBookingCustom/AntDateCustom';
 import AntDescriptionsCustom from '../../../../../@fuse/FormBookingCustom/AntDescriptionsCustom';
 import AntFileCustom from '../../../../../@fuse/FormBookingCustom/AntFileCustom';
+import { checkFile, nameFile } from '../../../../../@fuse/core/DtpConfig';
+import { updateDocumentAssetAllocation } from '../service/_actionDocumentAssets';
 
+const file = {
+	docx: <FileWordOutlined />,
+	xlsx: <FileExcelOutlined />,
+	xls: <FileExcelOutlined />,
+	png: <FileImageOutlined />,
+	jpg: <FileImageOutlined />,
+	jpge: <FileImageOutlined />
+};
 export default function PageAllocation() {
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const ExitPage = () => history.goBack();
+	const [fileCheck, setFileCheck] = useState(true);
+	const [removeFile, setRemoveFile] = useState(false);
+	const [listFile, setListFile] = useState(null);
 	const params = 'Region,Department,Employee,Supplier,Company,AssetType,AssetGroup,AssetGroupDetail';
 	useEffect(() => {
 		dispatch(actions.getInformationCompany(params));
@@ -78,7 +93,7 @@ export default function PageAllocation() {
 				department: entitiesEdit?.deptCode,
 				location: entitiesEdit?.regionCode,
 				date: entitiesEdit?.transDate,
-				file: entitiesEdit?.attachFiles,
+				file: '',
 				note: entitiesEdit?.reasons
 			});
 		} else {
@@ -109,6 +124,24 @@ export default function PageAllocation() {
 		}
 	};
 	const handleClose = () => history.goBack();
+	const handleClearFile = () => {
+		setFileCheck(false);
+		setRemoveFile(true);
+	};
+	const handleClearListFile = () => {
+		setListFile(null);
+		setRemoveFile(true);
+	};
+	const handleChangeFile = value => {
+		setListFile(value.name);
+		setFileCheck(false);
+		setRemoveFile(false);
+	};
+	const handleSubmit = values => {
+		dispatch(updateDocumentAssetAllocation(entitiesEdit, values, removeFile)).then(data => {
+			if (!data?.isError) history.goBack();
+		});
+	};
 	return (
 		<div className="container assets">
 			<div className="assets__header px-16 shadow-lg">
@@ -126,8 +159,13 @@ export default function PageAllocation() {
 			<div className="assets__content mt-8">
 				<Spin spinning={listloading}>
 					<div className="assets__form">
-						<Formik enableReinitialize validationSchema={checkValidateForm} initialValues={intialState}>
-							{({ handleSubmit, isSubmitting }) => (
+						<Formik
+							enableReinitialize
+							validationSchema={checkValidateForm}
+							initialValues={intialState}
+							onSubmit={values => handleSubmit(values)}
+						>
+							{({ isSubmitting }) => (
 								<Form>
 									<div className="mb-20">
 										<div>
@@ -148,6 +186,7 @@ export default function PageAllocation() {
 												label="Cấp phát cho"
 												name="customer"
 												hasFeedback
+												readOnly
 												component={AntSelectCustom}
 												options={employees}
 												handleChangeState={onHandleChangeEmployee}
@@ -183,6 +222,7 @@ export default function PageAllocation() {
 											<Field
 												label="Ngày cấp"
 												name="date"
+												readOnly
 												format="DD/MM/YYYY"
 												placeholder="Vui lòng chọn ngày mua"
 												component={AntDateCustom}
@@ -196,10 +236,90 @@ export default function PageAllocation() {
 												row={3}
 												component={AntDescriptionsCustom}
 											/>
-											<Field label="File đính kèm" name="file" component={AntFileCustom} />
+											{entitiesEdit &&
+											entitiesEdit.attachFiles &&
+											entitiesEdit.attachFiles.length > 0 &&
+											fileCheck ? (
+												<div className="flex flex-row justify-between">
+													<div className="flex flex-row">
+														<Avatar
+															shape="square"
+															size={54}
+															style={{ backgroundColor: '#87d068' }}
+															icon={
+																entitiesEdit.attachFiles &&
+																file[checkFile(entitiesEdit.attachFiles)]
+															}
+														/>
+														<Button
+															style={{ backgroundColor: 'none', marginLeft: '10px' }}
+															href={`${process.env.REACT_APP_API_URL}/${entitiesEdit.attachFiles}`}
+														>
+															{' '}
+															{nameFile(entitiesEdit.attachFiles)}
+														</Button>
+													</div>
+													<div>
+														{' '}
+														<IconButton
+															edge="start"
+															color="inherit"
+															onClick={handleClearFile}
+															aria-label="close"
+														>
+															<CloseIcon />
+														</IconButton>{' '}
+													</div>
+												</div>
+											) : listFile && listFile.length ? (
+												<div className="flex flex-row justify-between">
+													<div className="flex flex-row">
+														<Avatar
+															shape="square"
+															size={54}
+															style={{ backgroundColor: '#87d068' }}
+															icon={listFile && file[checkFile(listFile)]}
+														/>
+														<Button style={{ backgroundColor: 'none', marginLeft: '10px' }}>
+															{' '}
+															{nameFile(listFile)}
+														</Button>
+													</div>
+													<div>
+														{' '}
+														<IconButton
+															edge="start"
+															color="inherit"
+															onClick={handleClearListFile}
+															aria-label="close"
+														>
+															<CloseIcon />
+														</IconButton>{' '}
+													</div>
+												</div>
+											) : (
+												<Field
+													label=""
+													handleChangeImage={handleChangeFile}
+													style={{ height: '25px' }}
+													name="file"
+													component={AntFileCustom}
+													className="mb-16"
+													variant="outlined"
+												/>
+											)}
 										</div>
 									</div>
 									<div className="flex justify-end">
+										{!actionLoading ? (
+											<Button className="mr-8" type="submit" variant="contained" color="primary">
+												<Text color="white" type="button">
+													Cập nhật
+												</Text>
+											</Button>
+										) : (
+											<Spin style={{ marginRight: '20px' }} />
+										)}
 										<Button
 											onClick={handleClose}
 											type="button"

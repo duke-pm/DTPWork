@@ -1,19 +1,34 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useEffect } from 'react';
-import { Button, Grid, Icon } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { Button, Grid, Icon, IconButton } from '@material-ui/core';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import { Spin, Tooltip } from 'antd';
+import { Avatar, Spin, Tooltip } from 'antd';
 import { useHistory } from 'react-router-dom';
 import Text from 'app/components/Text';
 import { Field, Form, Formik } from 'formik';
 import * as moment from 'moment';
+import CloseIcon from '@material-ui/icons/Close';
+import { FileExcelOutlined, FileImageOutlined, FileWordOutlined } from '@ant-design/icons';
 import AntDateCustom from '../../../../../@fuse/FormBookingCustom/AntDateCustom';
 import AntDescriptionsCustom from '../../../../../@fuse/FormBookingCustom/AntDescriptionsCustom';
+import { checkFile, nameFile } from '../../../../../@fuse/core/DtpConfig';
+import AntFileCustom from '../../../../../@fuse/FormBookingCustom/AntFileCustom';
+import { updateDocumentAssetRevcovery } from '../service/_actionDocumentAssets';
 // import AntFileCustom from '../../../../../@fuse/FormBookingCustom/AntFileCustom';
-
+const file = {
+	docx: <FileWordOutlined />,
+	xlsx: <FileExcelOutlined />,
+	xls: <FileExcelOutlined />,
+	png: <FileImageOutlined />,
+	jpg: <FileImageOutlined />,
+	jpge: <FileImageOutlined />
+};
 export default function PageRecovery() {
 	const dispatch = useDispatch();
+	const [fileCheck, setFileCheck] = useState(true);
+	const [listFile, setListFile] = useState(null);
+	const [removeFile, setRemoveFile] = useState(false);
 	const history = useHistory();
 	const { entitiesEdit, actionLoading } = useSelector(
 		state => ({
@@ -31,7 +46,7 @@ export default function PageRecovery() {
 		initial = {
 			date: entitiesEdit?.transDate,
 			note: entitiesEdit?.reasons,
-			file: entitiesEdit?.attachFiles
+			file: ''
 		};
 	}
 
@@ -47,6 +62,24 @@ export default function PageRecovery() {
 	// 	};
 	// 	window.location = `${URL}/api/RQAsset/ExportRequestRecovery?value=${JSON.stringify(dataReq)}`;
 	// };
+	const handleClearFile = () => {
+		setRemoveFile(true);
+		setFileCheck(false);
+	};
+	const handleClearListFile = () => {
+		setListFile(null);
+		setFileCheck(false);
+	};
+	const handleChangeFile = value => {
+		setListFile(value.name);
+		setFileCheck(false);
+		setRemoveFile(false);
+	};
+	const handleSubmit = values => {
+		dispatch(updateDocumentAssetRevcovery(entitiesEdit, values, removeFile)).then(data => {
+			if (!data?.isError) history.goBack();
+		});
+	};
 	return (
 		<div className="container assets">
 			<div className="assets__header px-16 shadow-lg">
@@ -63,8 +96,8 @@ export default function PageRecovery() {
 			</div>
 			<div className="assets__content mt-8">
 				<div className="assets__form">
-					<Formik enableReinitialize initialValues={initial}>
-						{({ handleSubmit, isSubmitting }) => (
+					<Formik enableReinitialize initialValues={initial} onSubmit={values => handleSubmit(values)}>
+						{({ isSubmitting }) => (
 							<Form>
 								<div className="mb-20">
 									<Grid container item spacing={2}>
@@ -173,6 +206,7 @@ export default function PageRecovery() {
 											label="Ngày thu hồi "
 											name="date"
 											hasFeedback
+											readOnly
 											component={AntDateCustom}
 										/>
 									</div>
@@ -183,18 +217,89 @@ export default function PageRecovery() {
 											row={3}
 											component={AntDescriptionsCustom}
 										/>
-										{/* <Field label="File đính kèm" name="file" component={AntFileCustom} /> */}
+										{entitiesEdit &&
+										entitiesEdit.attachFiles &&
+										entitiesEdit.attachFiles.length > 0 &&
+										fileCheck ? (
+											<div className="flex flex-row justify-between">
+												<div className="flex flex-row">
+													<Avatar
+														shape="square"
+														size={54}
+														style={{ backgroundColor: '#87d068' }}
+														icon={
+															entitiesEdit.attachFiles &&
+															file[checkFile(entitiesEdit.attachFiles)]
+														}
+													/>
+													<Button
+														style={{ backgroundColor: 'none', marginLeft: '10px' }}
+														href={`${process.env.REACT_APP_API_URL}/${entitiesEdit.attachFiles}`}
+													>
+														{' '}
+														{nameFile(entitiesEdit.attachFiles)}
+													</Button>
+												</div>
+												<div>
+													{' '}
+													<IconButton
+														edge="start"
+														color="inherit"
+														onClick={handleClearFile}
+														aria-label="close"
+													>
+														<CloseIcon />
+													</IconButton>{' '}
+												</div>
+											</div>
+										) : listFile && listFile.length ? (
+											<div className="flex flex-row justify-between">
+												<div className="flex flex-row">
+													<Avatar
+														shape="square"
+														size={54}
+														style={{ backgroundColor: '#87d068' }}
+														icon={listFile && file[checkFile(listFile)]}
+													/>
+													<Button style={{ backgroundColor: 'none', marginLeft: '10px' }}>
+														{' '}
+														{nameFile(listFile)}
+													</Button>
+												</div>
+												<div>
+													{' '}
+													<IconButton
+														edge="start"
+														color="inherit"
+														onClick={handleClearListFile}
+														aria-label="close"
+													>
+														<CloseIcon />
+													</IconButton>{' '}
+												</div>
+											</div>
+										) : (
+											<Field
+												label=""
+												handleChangeImage={handleChangeFile}
+												style={{ height: '25px' }}
+												name="file"
+												component={AntFileCustom}
+												className="mb-16"
+												variant="outlined"
+											/>
+										)}{' '}
 									</div>
 								</div>
 								<div className="flex justify-end">
-									{actionLoading ? (
-										<Spin size="middle" />
-									) : (
-										<Button type="submit" variant="contained" className="mr-8" color="primary">
-											<Text type="button" color="white">
-												Lưu
+									{!actionLoading ? (
+										<Button className="mr-8" type="submit" variant="contained" color="primary">
+											<Text color="white" type="button">
+												Cập nhật
 											</Text>
 										</Button>
+									) : (
+										<Spin style={{ marginRight: '20px' }} />
 									)}
 									<Button type="button" onClick={ExitPage} variant="contained" color="secondary">
 										<Text type="button">Quay lại</Text>
