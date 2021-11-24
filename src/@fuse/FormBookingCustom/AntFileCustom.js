@@ -41,7 +41,7 @@ export default function AntFileCustom({
 					<p style={style} className="ant-upload-text">
 						Chọn hoặc kéo thả vào khu vực này
 					</p>
-					<p className="ant-upload-hint">Hỗ trợ tải lên một lần hoặc hàng loạt.</p>
+					<p className="ant-upload-hint">Hỗ trợ tải lên một lần.</p>
 				</Dragger>
 			</FormItem>
 		</div>
