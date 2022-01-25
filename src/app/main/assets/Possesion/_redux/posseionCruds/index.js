@@ -9,6 +9,7 @@ const UrlType = `/api/AssetTrans/ProcessAsset`;
 const UrlHistory = `/api/Assets/GetHistoryByID`;
 const urlSupplier = `/api/Supplier/Modify`;
 const urlExportExcel = `/api/Assets/ExportExcel`;
+const urlUpdateEmployee = `/api/Assets/GetDataEmployee`;
 export const fetchDataPossesion = params => {
 	return request.get(`${urlRule}`, { params });
 };
@@ -63,4 +64,7 @@ export const exportExcel = paramsReq => {
 		responseType: 'Blob',
 		params: paramsReq
 	});
+};
+export const getDataEmployee = () => {
+	return request.get(`${urlUpdateEmployee}`);
 };

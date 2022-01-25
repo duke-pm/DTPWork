@@ -384,6 +384,25 @@ export const addNewsSupplier = values => dispatch => {
 		});
 };
 
+export const getDataEmployeeAction = values => dispatch => {
+	dispatch(actions.startCall({ callType: callTypes.actions }));
+	return requestFrom
+		.getDataEmployee()
+		.then(res => {
+			const { data } = res;
+			if (!data.isError) {
+				dispatch(actions.getDataEmployee());
+				notificationConfig('success', 'Thành công', 'Đã cập nhật danh sách thành công');
+			} else {
+				dispatch(actions.catchErrors({ callType: callTypes.action }));
+				notificationConfig('warning', 'Thất bại', data.systemErrorMessage);
+			}
+		})
+		.catch(err => {
+			dispatch(actions.catchErrors({ callType: callTypes.action }));
+			notificationConfig('warning', 'Thất bại', 'Đã có lỗi xảy ra ');
+		});
+};
 export const exportToExcel = () => dispatch => {
 	dispatch(actions.startCall({ callType: callTypes.actions }));
 	const paramsReq = {

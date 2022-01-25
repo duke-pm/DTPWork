@@ -150,6 +150,9 @@ export const possesionSlice = createSlice({
 			const { supplier } = entitiesInformation;
 			const newSupplier = [dataRes, ...supplier];
 			state.entitiesInformation.supplier = newSupplier;
+		},
+		getDataEmployee: (state, action) => {
+			state.actionLoading = false;
 		}
 	}
 });

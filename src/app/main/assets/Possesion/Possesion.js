@@ -3,7 +3,7 @@ import { Button } from '@material-ui/core';
 import React, { useContext, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import Search from 'antd/lib/input/Search';
-import { Tabs } from 'antd';
+import { Spin, Tabs } from 'antd';
 import { useHistory, useLocation } from 'react-router';
 import queryString from 'query-string';
 import Text from 'app/components/Text';
@@ -16,6 +16,7 @@ import PossessionPay from './PossessionPay';
 import { PossessionContext } from './PossessionContext';
 import * as actions from './_redux/possesionActions';
 import { getToken, URL } from '../../../../@fuse/core/DtpConfig';
+import { getDataEmployeeAction } from './_redux/possesionActions';
 
 const { TabPane } = Tabs;
 
@@ -30,6 +31,7 @@ function PossesionPage(props) {
 	const possessionContext = useContext(PossessionContext);
 	const { value, setPage, setRowPage, setSort, setSearch, search, rowPage, page, sort } = possessionContext;
 	const { currentState } = useSelector(state => ({ currentState: state.possesion }), shallowEqual);
+	const { actionLoading } = currentState;
 	const total_Record = currentState && currentState.total_items;
 	const handleSearch = () => {
 		switch (type?.loai) {
@@ -90,6 +92,9 @@ function PossesionPage(props) {
 			UserToken: token
 		};
 		window.location = `${URL}/api/Assets/ExportAsset?value=${JSON.stringify(dataReq)}`;
+	};
+	const getDataEmployee = () => {
+		dispatch(getDataEmployeeAction());
 	};
 	const handleChange = value => {
 		setPage(0);
@@ -173,18 +178,21 @@ function PossesionPage(props) {
 						) : (
 							''
 						)}
-						{data?.userName === 'admin' && (
-							<Button
-								onClick={ExportExcel}
-								variant="contained"
-								className="button__create ml-8"
-								color="primary"
-							>
-								<Text type="button" color="white">
-									Get data
-								</Text>
-							</Button>
-						)}
+						{data?.userName === 'admin' &&
+							(actionLoading ? (
+								<Spin style={{ marginLeft: '10px' }} />
+							) : (
+								<Button
+									onClick={getDataEmployee}
+									variant="contained"
+									className="button__create ml-8"
+									color="primary"
+								>
+									<Text type="button" color="white">
+										Get data
+									</Text>
+								</Button>
+							))}
 					</div>
 				</div>
 				<div className="assets__Tab px-16">
