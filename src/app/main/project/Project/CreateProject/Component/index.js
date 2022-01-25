@@ -18,7 +18,14 @@ export default function FormComponent({
 	ArrTaskComponent,
 	gradeGolbal
 }) {
-	let initial = {
+	const { currentState } = useSelector(
+		state => ({
+			currentState: state.project
+		}),
+		shallowEqual
+	);
+	const { entitiesEdit, actionLoading } = currentState;
+	const [initialState, setInitialState] = useState({
 		TaskID: '',
 		descr: '',
 		taskName: '',
@@ -42,38 +49,7 @@ export default function FormComponent({
 		version: '',
 		userInvite: [],
 		ownerName: ''
-	};
-	const { currentState } = useSelector(
-		state => ({
-			currentState: state.project
-		}),
-		shallowEqual
-	);
-	const { entitiesEdit, actionLoading } = currentState;
-	const initialEdit = {
-		taskID: entitiesEdit?.taskID,
-		taskType: entitiesEdit?.taskTypeID,
-		prjID: entitiesEdit?.prjID,
-		descr: entitiesEdit?.descr,
-		taskName: entitiesEdit?.taskName,
-		startDate: entitiesEdit?.startDate,
-		endDate: entitiesEdit?.endDate,
-		grade: entitiesEdit ? (entitiesEdit.grade === 0 ? null : entitiesEdit.grade) : null,
-		author: entitiesEdit?.author,
-		owner: entitiesEdit?.owner,
-		component: entitiesEdit ? (entitiesEdit.component === 0 ? null : entitiesEdit.component) : null,
-		originPublisher: entitiesEdit?.originPublisher,
-		ownership: entitiesEdit?.ownershipDTP,
-		priority: entitiesEdit?.priority,
-		project: entitiesEdit ? (entitiesEdit.parentID === 0 ? null : entitiesEdit.parentID) : null,
-		sectorID: entitiesEdit ? (entitiesEdit.sectorID === 0 ? null : entitiesEdit.sectorID) : null,
-		status: entitiesEdit?.statusID,
-		fileEdit: entitiesEdit?.attachFiles,
-		percentage: entitiesEdit?.percentage,
-		version: entitiesEdit?.version,
-		ownerName: entitiesEdit?.ownerName,
-		userInvite: entitiesEdit?.listUserIDInvited ? entitiesEdit.listUserIDInvited.split(',').map(Number) : []
-	};
+	});
 	const history = useHistory();
 	const params = useParams();
 	const [fileCheck, setFileCheck] = useState(true);
@@ -86,31 +62,35 @@ export default function FormComponent({
 			history.goBack();
 		}
 	}, [params.category, entitiesEdit, history]);
+	useEffect(() => {
+		if (entitiesEdit) {
+			setInitialState({
+				taskID: entitiesEdit?.taskID,
+				taskType: entitiesEdit?.taskTypeID,
+				prjID: entitiesEdit?.prjID,
+				descr: entitiesEdit?.descr,
+				taskName: entitiesEdit?.taskName,
+				startDate: entitiesEdit?.startDate,
+				endDate: entitiesEdit?.endDate,
+				grade: entitiesEdit ? (entitiesEdit.grade === 0 ? null : entitiesEdit.grade) : null,
+				author: entitiesEdit?.author,
+				owner: entitiesEdit?.owner,
+				component: entitiesEdit ? (entitiesEdit.component === 0 ? null : entitiesEdit.component) : null,
+				originPublisher: entitiesEdit?.originPublisher,
+				ownership: entitiesEdit?.ownershipDTP,
+				priority: entitiesEdit?.priority,
+				project: entitiesEdit ? (entitiesEdit.parentID === 0 ? null : entitiesEdit.parentID) : null,
+				sectorID: entitiesEdit ? (entitiesEdit.sectorID === 0 ? null : entitiesEdit.sectorID) : null,
+				status: entitiesEdit?.statusID,
+				fileEdit: entitiesEdit?.attachFiles,
+				percentage: entitiesEdit?.percentage,
+				version: entitiesEdit?.version,
+				ownerName: entitiesEdit?.ownerName,
+				userInvite: entitiesEdit?.listUserIDInvited ? entitiesEdit.listUserIDInvited.split(',').map(Number) : []
+			});
+		}
+	}, [entitiesEdit]);
 	const handleCloseFormProject = () => {
-		initial = {
-			TaskID: '',
-			descr: '',
-			taskName: '',
-			startDate: moment(),
-			endDate: moment(),
-			grade: null,
-			author: '',
-			owner: null,
-			component: null,
-			originPublisher: '',
-			ownership: '',
-			project: null,
-			priority: 'N',
-			sectorID: null,
-			status: 1,
-			taskType: '',
-			prjID: '',
-			file: '',
-			fileEdit: '',
-			percentage: '',
-			version: '',
-			userInvite: []
-		};
 		setListFile(null);
 		setFileCheck(true);
 	};
@@ -181,7 +161,7 @@ export default function FormComponent({
 	return (
 		<CustomForm
 			handleSubmitForm={handleSubmitForm}
-			initialState={entitiesEdit?.taskID ? initialEdit : initial}
+			initialState={initialState}
 			role={role}
 			owner={owner}
 			taskSub={taskSub}

@@ -20,6 +20,8 @@ import { getToken, URL } from '../../../../@fuse/core/DtpConfig';
 const { TabPane } = Tabs;
 
 function PossesionPage(props) {
+	const local = localStorage.getItem('data_user');
+	const data = JSON.parse(local);
 	const history = useHistory();
 	const [open, setOpen] = useState(false);
 	const location = useLocation();
@@ -130,7 +132,6 @@ function PossesionPage(props) {
 		dispatch(actions.setTaskEditPossesionAll(null));
 		history.push('/tai-san/quan-ly-tai-san/modify?type=tao-moi');
 	};
-	console.log(type);
 	return (
 		<>
 			<div className="container assets">
@@ -171,6 +172,18 @@ function PossesionPage(props) {
 							</>
 						) : (
 							''
+						)}
+						{data?.userName === 'admin' && (
+							<Button
+								onClick={ExportExcel}
+								variant="contained"
+								className="button__create ml-8"
+								color="primary"
+							>
+								<Text type="button" color="white">
+									Get data
+								</Text>
+							</Button>
 						)}
 					</div>
 				</div>
