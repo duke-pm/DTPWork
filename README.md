@@ -1,50 +1,116 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Documentation for React Dashlite application**
 
-## Available Scripts
+**React Quick Start:**
 
-In the project directory, you can run:
+1.  Make sure Node and npm package manager is installed, please check
+    the version by the command **_node -v_**
 
-### `yarn start`
+2.  Install Dependencies
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+    a. **_npm install or yarn install_**
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+3.  Start the application / Run the dev-server:
 
-### `yarn test`
+    a. **_npm start or yarn start_**
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    b. \*Open your browser at **localhost://3000\***
 
-### `yarn run build`
+**Detailed Installation Process:**
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Installing Node:
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+1.  Download latest version of node.js
+    from [**nodejs.org.**](https://nodejs.org/)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2.  Install and Setup Node.js using downloaded file in the development
+    environment
 
-### `yarn run eject`
+3.  To check your node version, run **node -v **in a terminal/console
+    window.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Installing Npm Package Manager:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1.  React CLI, and React apps depend on features and functionality
+    provided by libraries that are available as npm packages. To
+    download and install npm packages, you must have
+    an [**npm **](https://www.npmjs.com/)package manager.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+2.  This Quick Start uses the npm client command line interface, which
+    is installed with Node.js by default. To check that you have the npm
+    client installed, run **npm -v ** in a terminal/console window.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+3.  For better understanding React we suggest you to once go through
+    official documentation of React
+    from [**ReactJS.org**](https://reactjs.org/docs/getting-started.html)
 
-## Learn More
+Installing the React CLI:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1.  It is recommended to install the React CLI globally
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+2.  To Install just run the command **_npm install create-react-app_**
 
-## Handle client side routes with IIS on Page refresh React App
-Create new Application Pool with type .NET CLR Version is: No Managed Code
-Create new Web site with Application Pool just create above
-Install URL Rewrite (Ref: https://inthetechpit.com/2019/06/13/handle-client-side-routes-with-iis-on-page-refresh-react-app/)
-Create a file web.config
+Running React-Dashlite:
+
+1.  Download and extract Dashlite themes from themeforest.net
+
+2.  Extract it and then go in to the extracted folder.
+
+3.  Once in the folder, open the command prompt/git bash/Terminal
+    application (Mac) and type in **_cd theme_**
+
+4.  Import all dependency by installing npm command. Type in **_npm
+    install_**
+
+5.  After all the packages and dependencies have been installed
+    successfully, run the application by typing in **_npm start_**
+
+6.  Once you serve your application by default it will take their
+    default port so you can open port
+    using [**localhost://3000**](<javascript:void(0)>)
+
+**Build Application**
+
+1.  Build you application for host on server just by typing _npm run
+    build_ in the terminal
+
+2.  It will create a build file in the root directory. The application
+    is ready to go into the server of your choice, simply the upload the
+    zipped build file to the server. However, if the server is an apache
+    server create a .htaccess file in the build folder of the
+    application and paste the following code in it.
+
+> _Options -MultiViews_
+>
+> _RewriteEngine On_
+>
+> _RewriteCond %{REQUEST_FILENAME} !-f_
+>
+> _RewriteRule \^ index.html \[QSA,L\]_
+
+Copy the contents of the build file into the apache server, make sure
+the .htaccess file is included in the server.
+
+**Create New Directory / Page:**
+
+1.  To add a new directory or display contents on the side-panel. Add
+    details in the object in the file **_src/layout/menu/MenuData.js_**.
+
+    - Single Page: Add a JavaScript object with the properties of
+      icon, text and link
+
+    - Directory: Add a JavaScript object with properties of icon,
+      text, link and submenu array where add all the sub-directory
+      properties as an object.
+
+2.  Once you have added a new nav as a directory or a page. Create the
+    required page components in the pages folder. Make sure to export
+    it, to make it available to all other places of the project.
+
+3.  Include it in the route file in the directory **_routes/index.js_**.
+    Make sure to import the created component in Step 2, through
+    react-lazy process. And place the component in a route inside the
+    Switch component such as **_\<Route exact path="/your_link"
+    component={Your_Component}/\>._** Make sure the link provided here
+    is the same as in step one.
+
+4.  Restart the application and visit the created route.

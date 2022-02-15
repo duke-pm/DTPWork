@@ -1,0 +1,49 @@
+{
+  "common": {
+    "app_name": "DTP Work"
+  },
+  "validate": {
+    "empty": "Mục này không thể trống!",
+    "format_email": "E-mail này không đúng định dạng!"
+  },
+  "success": {
+    "title": "Thành công!!!",
+    "send_reset_link_title": "Gửi thành công!",
+    "send_reset_link_sub_title": "Hãy kiểm tra lại e-mail của bạn và chọn link liên kết để đổi mật khẩu của bạn ngay!",
+    "send_reset_pass_title": "Cập nhật thành công!",
+    "send_reset_pass_sub_title": "Vui lòng đăng nhập lại ngay bây giờ bằng mật khẩu mới của bạn!"
+  },
+  "error": {
+    "title": "Lỗi!!!",
+    "wrong_username_password": "Không thể đăng nhập bằng thông tin đăng nhập này!",
+    "wrong_email": "Không thể gửi bằng thông tin e-mail này!",
+    "cannot_sign_in_now": "Không thể đăng nhập ngay bây giờ! Vui lòng thử lại sau!",
+    "cannot_reset_password": "Không thể cập nhật lại mật khẩu mới! Vui lòng thử lại sau!"
+  },
+  "sign_in": {
+    "title": "Đăng nhập",
+    "head_title": "Xin chào",
+    "sub_title": "Truy cập DTP Work bằng tài khoản và mật khẩu dưới đây",
+    "user_name": "Tên đăng nhập",
+    "holder_user_name": "Nhập tên đăng nhập của bạn...",
+    "password": "Mật khẩu",
+    "holder_password": "Điền mật khẩu của bạn...",
+    "forgot_password": "Quên mật khẩu?"
+  },
+  "forgot_password": {
+    "title": "Quên mật khẩu",
+    "sub_title": "Nhập địa chỉ e-mail của bạn vào bên dưới.\nSau đó chúng tôi sẽ gửi một liên kết để bạn có thể đặt lại mật khẩu mới.",
+    "email": "E-mail",
+    "holder_email": "Nhập e-mail của bạn...",
+    "btn_send": "Gửi link cập nhật",
+    "return_sign_in": "Quay lại Đăng nhập"
+  },
+  "reset_password": {
+    "title": "Đặt lại mật khẩu",
+    "sub_title": "Liên kết này khả dụng trong 60 phút.\nHãy nhập mật khẩu mới của bạn vào bên dưới, chúng tôi sẽ đặt lại bằng mật khẩu mới và bạn có thể đăng nhập lại.",
+    "password": "Mật khẩu mới",
+    "holder_password": "Nhập mật khẩu mới của bạn...",
+    "btn_send": "Đặt lại mật khẩu ngay",
+    "return_sign_in": "Quay lại Đăng nhập"
+  }
+}

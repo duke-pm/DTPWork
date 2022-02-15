@@ -1,20 +1,25 @@
-// Internet Explorer 11 requires polyfills and partially supported by this project.
-// import 'react-app-polyfill/ie11';
-// import 'react-app-polyfill/stable';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import 'typeface-muli';
-import './i18n';
-import './react-chartjs-2-defaults';
-import './styles/index.css';
-import App from 'app/App';
-import 'antd/dist/antd.css';
-import reportWebVitals from './reportWebVitals';
+import React, { Suspense, lazy } from "react";
+import ReactDOM from "react-dom";
+import "./assets/scss/dashlite.scss";
+import "./assets/scss/style-email.scss";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const Error404Modern = lazy(() => import("./pages/error/404-modern"));
 
+ReactDOM.render(
+  <React.Fragment>
+    <Suspense fallback={<div />}>
+      <Router basename={`/`}>
+        <Route render={({ location }) => (location.state && location.state.is404 ? <Error404Modern /> : <App />)} />
+      </Router>
+    </Suspense>
+  </React.Fragment>,
+  document.getElementById("root")
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA

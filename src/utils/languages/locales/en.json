@@ -1,0 +1,49 @@
+{
+  "common": {
+    "app_name": "DTP Work"
+  },
+  "validate": {
+    "empty": "This field is required!",
+    "format_email": "Format e-mail is incorrect!"
+  },
+  "success": {
+    "title": "Successfully!!!",
+    "send_reset_link_title": "Submitted successfully!",
+    "send_reset_link_sub_title": "Please check your e-mail and select the link to change your password now!",
+    "send_reset_pass_title": "Updated successfully!",
+    "send_reset_pass_sub_title": "Please sign in again now with your new password!"
+  },
+  "error": {
+    "title": "Error!!!",
+    "wrong_username_password": "Unable to login with this credentials!",
+    "wrong_email": "Unable to send with this e-mail!",
+    "cannot_sign_in_now": "Cannot sign in now! Please try again!",
+    "cannot_reset_password": "Cannot reset your new password! Please try again!"
+  },
+  "sign_in": {
+    "title": "Sign in",
+    "head_title": "Hello",
+    "sub_title": "Access DTP Work by your username and password.",
+    "user_name": "Username",
+    "holder_user_name": "Enter your username...",
+    "password": "Password",
+    "holder_password": "Enter your password...",
+    "forgot_password": "Forgot password?"
+  },
+  "forgot_password": {
+    "title": "Forgot password",
+    "sub_title": "Enter your e-mail address below.\nWe will then send you a link where you can reset your new password.",
+    "email": "E-mail",
+    "holder_email": "Enter your e-mail...",
+    "btn_send": "Send reset link",
+    "return_sign_in": "Go back Sign in"
+  },
+  "reset_password": {
+    "title": "Reset password",
+    "sub_title": "This link available in 60 minutes.\nPlease enter your new password below, we will reset with your new password and you can sign in again.",
+    "password": "New password",
+    "holder_password": "Enter your new password...",
+    "btn_send": "Reset password now",
+    "return_sign_in": "Go back Sign in"
+  }
+}
