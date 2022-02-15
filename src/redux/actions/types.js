@@ -1,0 +1,2 @@
+/** COMMON */
+export const CHANGE_LANGUAGE = "[COMMON] CHANGE_LANGUAGE";
