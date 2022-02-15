@@ -24,10 +24,10 @@ const Login = () => {
 
   const onFormSubmit = (formData) => {
     setLoading(true);
-    const loginName = "info@softnio.com";
+    const loginName = "sample@sample.com";
     const pass = "123456";
 
-    if (formData.name === loginName && formData.passcode === pass) {
+    if (formData.name === loginName && formData.password === pass) {
       localStorage.setItem("accessToken", "token");
       setTimeout(() => {
         window.history.pushState(

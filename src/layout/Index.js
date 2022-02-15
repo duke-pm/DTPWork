@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
+import classNames from "classnames";
+/** COMPONENTS */
 import Pages from "../route/Index";
 import Sidebar from "./sidebar/Sidebar";
 import Head from "./head/Head";
 import Header from "./header/Header";
 import Footer from "./footer/Footer";
-import classNames from "classnames";
 
 const Layout = () => {
   //Sidebar

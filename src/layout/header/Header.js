@@ -3,9 +3,6 @@ import classNames from "classnames";
 import Toggle from "../sidebar/Toggle";
 import Logo from "../logo/Logo";
 import User from "./dropdown/user/User";
-import Notification from "./dropdown/notification/Notification";
-import HeaderSearch from "../header-search/HeaderSearch";
-import ChatDropdown from "./dropdown/chat/Chat";
 
 const Header = ({ fixed, theme, className, ...props }) => {
   const headerClass = classNames({
@@ -29,17 +26,8 @@ const Header = ({ fixed, theme, className, ...props }) => {
           <div className="nk-header-brand d-xl-none">
             <Logo />
           </div>
-          <div className="nk-header-search ml-3 ml-xl-0">
-            <HeaderSearch />
-          </div>
           <div className="nk-header-tools">
             <ul className="nk-quick-nav">
-              <li className="chats-dropdown hide-mb-xs">
-                <ChatDropdown />
-              </li>
-              <li className="notification-dropdown mr-n1">
-                <Notification />
-              </li>
               <li className="user-dropdown">
                 <User />
               </li>

@@ -1,5 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
+import {Row, Col} from "reactstrap";
 import Icon from "../icon/Icon";
 import classNames from "classnames";
 
@@ -8,11 +9,17 @@ export const LinkItem = ({ ...props }) => {
     <li>
       {props.tag !== "a" ? (
         <Link to={process.env.PUBLIC_URL + props.link} {...props}>
-          {props.icon ? <Icon name={props.icon} /> : null} <span>{props.text || props.children}</span>
+          <p className="d-flex justify-content-center">
+            {props.icon ? <Icon name={props.icon} /> : null}
+            <span className="pl-2">{props.text || props.children}</span>
+          </p>
         </Link>
       ) : (
         <a href={process.env.PUBLIC_URL + props.link} onClick={(ev) => ev.preventDefault()}>
-          {props.icon ? <Icon name={props.icon} /> : null} <span>{props.text || props.children}</span>
+          <p className="d-flex justify-content-center">
+            {props.icon ? <Icon name={props.icon} /> : null}
+            <span>{props.text || props.children}</span>
+          </p>
         </a>
       )}
     </li>

@@ -45,5 +45,11 @@
     "holder_password": "Enter your new password...",
     "btn_send": "Reset password now",
     "return_sign_in": "Go back Sign in"
+  },
+  "account": {
+    "title": "Account",
+    "view_profile": "View profile",
+    "account_settings": "Settings",
+    "sign_out": "Sign out"
   }
 }

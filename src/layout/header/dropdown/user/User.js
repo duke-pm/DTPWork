@@ -1,10 +1,14 @@
-import React, { useState } from "react";
-import { DropdownToggle, DropdownMenu, Dropdown } from "reactstrap";
-import { Icon } from "../../../../components/Component";
-import { LinkList, LinkItem } from "../../../../components/links/Links";
+import React, {useState} from "react";
+import {useTranslation} from "react-i18next";
+import {DropdownToggle, DropdownMenu, Dropdown} from "reactstrap";
+/** COMPONENTS */
+import {Icon} from "../../../../components/Component";
+import {LinkList, LinkItem} from "../../../../components/links/Links";
 import UserAvatar from "../../../../components/user/UserAvatar";
 
 const User = () => {
+  const {t} = useTranslation();
+
   const [open, setOpen] = useState(false);
   const toggle = () => setOpen((prevState) => !prevState);
 
@@ -45,13 +49,10 @@ const User = () => {
         <div className="dropdown-inner">
           <LinkList>
             <LinkItem link="/user-profile-regular" icon="user-alt" onClick={toggle}>
-              View Profile
+              {t("account:view_profile")}
             </LinkItem>
             <LinkItem link="/user-profile-setting" icon="setting-alt" onClick={toggle}>
-              Account Setting
-            </LinkItem>
-            <LinkItem link="/user-profile-activity" icon="activity-alt" onClick={toggle}>
-              Login Activity
+              {t("account:account_settings")}
             </LinkItem>
           </LinkList>
         </div>
@@ -59,7 +60,7 @@ const User = () => {
           <LinkList>
             <a href={`${process.env.PUBLIC_URL}/auth-login`} onClick={handleSignout}>
               <Icon name="signout"></Icon>
-              <span>Sign Out</span>
+              <span className="pl-2">{t("account:sign_out")}</span>
             </a>
           </LinkList>
         </div>

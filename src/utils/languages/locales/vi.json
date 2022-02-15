@@ -45,5 +45,11 @@
     "holder_password": "Nhập mật khẩu mới của bạn...",
     "btn_send": "Đặt lại mật khẩu ngay",
     "return_sign_in": "Quay lại Đăng nhập"
+  },
+  "account": {
+    "title": "Tài khoản",
+    "view_profile": "Xem hồ sơ",
+    "account_settings": "Cài đặt",
+    "sign_out": "Đăng xuất"
   }
 }
