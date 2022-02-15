@@ -178,7 +178,7 @@ function PossesionPage(props) {
 						) : (
 							''
 						)}
-						{data?.userName === 'admin' &&
+						{(data?.groupID == "1" || data?.groupID == "6") &&
 							(actionLoading ? (
 								<Spin style={{ marginLeft: '10px' }} />
 							) : (
