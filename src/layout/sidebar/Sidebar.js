@@ -4,7 +4,6 @@ import SimpleBar from "simplebar-react";
 import Logo from "../logo/Logo";
 import Menu from "../menu/Menu";
 import Toggle from "./Toggle";
-import EcommerceMenu from "../menu/EcommerceMenu";
 
 const Sidebar = ({ fixed, theme, className, sidebarToggle, ...props }) => {
   const [collapseSidebar, setSidebar] = useState(false);
@@ -27,8 +26,6 @@ const Sidebar = ({ fixed, theme, className, sidebarToggle, ...props }) => {
     [`${className}`]: className,
   });
 
-  console.log(window.location.pathname.split("/"));
-
   return (
     <div className={classes}>
       <div className="nk-sidebar-element nk-sidebar-head">
@@ -46,10 +43,10 @@ const Sidebar = ({ fixed, theme, className, sidebarToggle, ...props }) => {
           />
         </div>
       </div>
+
       <div className="nk-sidebar-content" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
         <SimpleBar className="nk-sidebar-menu">
-          {window.location.pathname.split("/")[2] === "ecommerce" ? <EcommerceMenu/> : <Menu/>}
-          
+          <Menu />
         </SimpleBar>
       </div>
     </div>

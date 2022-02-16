@@ -1,6 +1,10 @@
 {
   "common": {
-    "app_name": "DTP Work"
+    "app_name": "DTP Work",
+    "language_vietnam": "Vietnamese",
+    "language_english": "English",
+    "loading": "Loading",
+    "function": "Function"
   },
   "validate": {
     "empty": "This field is required!",
@@ -15,7 +19,7 @@
   },
   "error": {
     "title": "Error!!!",
-    "wrong_username_password": "Unable to login with this credentials!",
+    "wrong_username_password": "Unable to login with this information!",
     "wrong_email": "Unable to send with this e-mail!",
     "cannot_sign_in_now": "Cannot sign in now! Please try again!",
     "cannot_reset_password": "Cannot reset your new password! Please try again!"

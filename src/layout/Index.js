@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import {useTranslation} from "react-i18next";
 import classNames from "classnames";
 /** COMPONENTS */
 import Pages from "../route/Index";
@@ -6,9 +7,15 @@ import Sidebar from "./sidebar/Sidebar";
 import Head from "./head/Head";
 import Header from "./header/Header";
 import Footer from "./footer/Footer";
+import { useSelector } from "react-redux";
 
 const Layout = () => {
-  //Sidebar
+  const {t} = useTranslation();
+
+  const authState = useSelector(({auth}) => auth);
+  
+  /** Use state */
+  const [showSidebar, setShowSidebar] = useState(false);
   const [mobileView, setMobileView] = useState();
   const [visibility, setVisibility] = useState(false);
   const [themeState] = useState({
@@ -20,10 +27,9 @@ const Layout = () => {
 
   document.body.className = "nk-body bg-lighter npc-default has-sidebar no-touch nk-nio-theme";
 
-  useEffect(() => {
-    viewChange();
-  }, []);
-
+  /**
+   ** FUNCTIONS
+   */
   // function to toggle sidebar
   const toggleSidebar = (e) => {
     e.preventDefault();
@@ -50,12 +56,32 @@ const Layout = () => {
     "nk-sidebar-active": visibility && mobileView,
   });
 
+  /**
+   ** LIFE CYCLE
+   */
+  useEffect(() => {
+    viewChange();
+  }, []);
+
+  useEffect(() => {
+    if (authState["successSignIn"]) {
+      setShowSidebar(true);
+    }
+  }, [
+    authState["successSignIn"],
+  ]); 
+
+  /**
+   ** RENDER
+   */
   return (
     <React.Fragment>
-      <Head title="Loading" />
+      <Head title={t("common:loading")} />
       <div className="nk-app-root">
         <div className="nk-main">
-          <Sidebar sidebarToggle={toggleSidebar} fixed theme={themeState.sidebar} className={sidebarClass} />
+          {showSidebar &&
+            <Sidebar sidebarToggle={toggleSidebar} fixed theme={themeState.sidebar} className={sidebarClass} />
+          }
           {visibility && <div className="nk-sidebar-overlay" onClick={toggleSidebar}></div>}
           <div className="nk-wrap">
             <Header sidebarToggle={toggleSidebar} fixed theme={themeState.header} />

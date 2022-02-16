@@ -1,6 +1,10 @@
 {
   "common": {
-    "app_name": "DTP Work"
+    "app_name": "DTP Workspace",
+    "language_vietnam": "Tiếng việt",
+    "language_english": "Tiếng anh",
+    "loading": "Đang tải",
+    "function": "Chúc năng"
   },
   "validate": {
     "empty": "Mục này không thể trống!",
@@ -15,7 +19,7 @@
   },
   "error": {
     "title": "Lỗi!!!",
-    "wrong_username_password": "Không thể đăng nhập bằng thông tin đăng nhập này!",
+    "wrong_username_password": "Không thể đăng nhập cùng với thông tin này!",
     "wrong_email": "Không thể gửi bằng thông tin e-mail này!",
     "cannot_sign_in_now": "Không thể đăng nhập ngay bây giờ! Vui lòng thử lại sau!",
     "cannot_reset_password": "Không thể cập nhật lại mật khẩu mới! Vui lòng thử lại sau!"

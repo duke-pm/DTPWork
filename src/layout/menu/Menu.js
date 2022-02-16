@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import menu from "./MenuData";
+import {useSelector} from "react-redux";
+import {useTranslation} from "react-i18next";
 import { NavLink, Link } from "react-router-dom";
+import menu from "./MenuData";
 import Icon from "../../components/icon/Icon";
 import classNames from "classnames";
 
@@ -241,36 +243,63 @@ const MenuSub = ({ icon, link, text, sub, ...props }) => {
 };
 
 const Menu = () => {
-  const [data, setMenuData] = useState(menu);
+  const {t} = useTranslation();
+
+  /** Use redux */
+  const authState = useSelector(({auth}) => auth);
+
+  /** Use state */
+  const [loading, setLoading] = useState(true);
+  const [data, setMenuData] = useState([]);
 
   useEffect(() => {
-    data.forEach((item, index) => {
-      if (item.panel) {
-        let found = item.subPanel.find((sPanel) => process.env.PUBLIC_URL + sPanel.link === window.location.pathname);
-        if (found) {
-          setMenuData([menu[index]]);
+    let valMenuData = [{heading: t("common:function")}],
+      valMenuAuth = authState["data"].lstMenu;
+
+    if (valMenuAuth) {
+      valMenuAuth = valMenuAuth.lstPermissionItem[0];
+      let tmpMenu = null, tmpMenuItem = {};
+
+      for (let i = 0; i < valMenuAuth.lstPermissionItem.length; i++) {
+        tmpMenu = valMenuAuth.lstPermissionItem[i];
+        tmpMenuItem = {};
+        tmpMenuItem["icon"] = tmpMenu.icon;
+        tmpMenuItem["text"] = tmpMenu.menuName;
+        tmpMenuItem["active"] = false;
+        if (tmpMenu.lstPermissionItem.length > 0) {
+          let tmpMenu1 = null, tmpMenuItem1 = {}, tmpSubMenu = [];
+
+          for (let j = 0; j < tmpMenu.lstPermissionItem.length; j++) {
+            tmpMenu1 = tmpMenu.lstPermissionItem[j];
+            tmpMenuItem1 = {};
+            tmpMenuItem1["text"] = tmpMenu1.menuName;
+            tmpMenuItem1["link"] = tmpMenu1.url;
+            tmpSubMenu.push(tmpMenuItem1);
+          }
+          tmpMenuItem["subMenu"] = tmpSubMenu;
         }
+        valMenuData.push(tmpMenuItem);
       }
-    });
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }
+    console.log('[LOG] === valMenuData ===> ', valMenuData);
+    setMenuData(valMenuData);
+    setLoading(false);
+
+    // data.forEach((item, index) => {
+    //   if (item.panel) {
+    //     let found = item.subPanel.find((sPanel) => process.env.PUBLIC_URL + sPanel.link === window.location.pathname);
+    //     if (found) {
+    //       setMenuData([menu[index]]);
+    //     }
+    //   }
+    // });
+  }, []);
 
   return (
     <ul className="nk-menu">
-      {data.map((item, index) =>
+      {!loading && data.map((item, index) =>
         item.heading ? (
           <MenuHeading heading={item.heading} key={item.heading} />
-        ) : item.panel ? (
-          <PanelItem
-            key={item.text}
-            link={item.link}
-            icon={item.icon}
-            text={item.text}
-            index={index}
-            panel={item.panel}
-            subPanel={item.subPanel}
-            data={data}
-            setMenuData={setMenuData}
-          />
         ) : (
           <MenuItem
             key={item.text}

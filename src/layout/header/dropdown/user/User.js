@@ -1,21 +1,30 @@
 import React, {useState} from "react";
 import {useTranslation} from "react-i18next";
+import {useSelector} from "react-redux";
 import {DropdownToggle, DropdownMenu, Dropdown} from "reactstrap";
 /** COMPONENTS */
 import {Icon} from "../../../../components/Component";
 import {LinkList, LinkItem} from "../../../../components/links/Links";
 import UserAvatar from "../../../../components/user/UserAvatar";
+/** COMMON */
+import Constants from "utils/constants";
 
 const User = () => {
   const {t} = useTranslation();
 
+  /** Use redux */
+  const authState = useSelector(({auth}) => auth);
+
+  /** Use state */
   const [open, setOpen] = useState(false);
   const toggle = () => setOpen((prevState) => !prevState);
 
   const handleSignout = () => {
-    localStorage.removeItem("accessToken");
+    localStorage.removeItem(Constants.LS_SIGN_IN);
   };
 
+  const vNameOfUser = authState["data"]?.fullName || "";
+  const vPositionOfUser = authState["data"]?.jobTitle || "";
   return (
     <Dropdown isOpen={open} className="user-dropdown" toggle={toggle}>
       <DropdownToggle
@@ -29,8 +38,8 @@ const User = () => {
         <div className="user-toggle">
           <UserAvatar icon="user-alt" className="sm" />
           <div className="user-info d-none d-md-block">
-            <div className="user-status">Administrator</div>
-            <div className="user-name dropdown-indicator">Abu Bin Ishityak</div>
+            <div className="user-status">{vPositionOfUser}</div>
+            <div className="user-name dropdown-indicator">{vNameOfUser}</div>
           </div>
         </div>
       </DropdownToggle>
@@ -41,8 +50,8 @@ const User = () => {
               <span>AB</span>
             </div>
             <div className="user-info">
-              <span className="lead-text">Abu Bin Ishtiyak</span>
-              <span className="sub-text">info@softnio.com</span>
+              <span className="lead-text">{vNameOfUser}</span>
+              <span className="sub-text">{vPositionOfUser}</span>
             </div>
           </div>
         </div>

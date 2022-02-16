@@ -1,8 +1,8 @@
 import React, {Suspense, useLayoutEffect} from "react";
 import {Switch, Route} from "react-router-dom";
-import {CustomerProvider} from "../pages/panel/e-commerce/customer/CustomerContext";
-import {ProductContextProvider} from "../pages/pre-built/products/ProductContext";
-import {UserContextProvider} from "../pages/pre-built/user-manage/UserContext";
+// import {CustomerProvider} from "../pages/panel/e-commerce/customer/CustomerContext";
+// import {ProductContextProvider} from "../pages/pre-built/products/ProductContext";
+// import {UserContextProvider} from "../pages/pre-built/user-manage/UserContext";
 import {RedirectAs404} from "../utils/Utils";
 
 import Homepage from "../pages/dtp-work/Homepage";

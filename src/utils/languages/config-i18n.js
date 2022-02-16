@@ -1,9 +1,3 @@
-/**
- ** Name: Config i18n
- ** Author: DTP-Education
- ** CreateAt: 2021
- ** Description: Description of config-i18n.js
- **/
 import i18n from "i18next";
 import {initReactI18next} from "react-i18next";
 
@@ -19,7 +13,7 @@ i18n.use(initReactI18next).init({
   ns: ["common"],
   defaultNS: "common",
 
-  debug: false,
+  debug: true,
 
   // cache: {
   //   enabled: true
