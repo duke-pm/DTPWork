@@ -3,12 +3,15 @@
     "app_name": "DTP Work",
     "language_vietnam": "Vietnamese",
     "language_english": "English",
-    "loading": "Loading",
+    "loading": "Loading...",
     "function": "Function",
     "add_new": "Add",
     "export": "Export",
     "get_data": "Get data",
-    "search": "Search..."
+    "search": "Search...",
+    "no_data": "No corresponding data found!",
+    "prev": "Prev",
+    "next": "Next"
   },
   "validate": {
     "empty": "This field is required!",
@@ -62,6 +65,7 @@
   },
   "assets": {
     "title": "Assets",
+    "title_details": "Asset Details",
     "assets_management": "Assets Management",
     "all": "All",
     "not_use": "Not used",
@@ -71,6 +75,7 @@
     "liquidation": "Liquidation",
     "code": "Code",
     "name": "Name",
+    "description": "Description",
     "group": "Group",
     "type": "Type",
     "status": "Status",
@@ -80,6 +85,14 @@
     "dept_manager": "Department",
     "user_manager": "Management Staff",
     "region": "Region",
-    "code_base": "Reference Code"
+    "code_base": "Reference Code",
+    "view_details": "View details",
+    "use_process": "Use process",
+    "date": "Date",
+    "code_staff": "Code",
+    "name_staff": "Fullname",
+    "position_staff": "Position",
+    "department_staff": "Department",
+    "region_staff": "Region"
   }
 }

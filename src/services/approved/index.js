@@ -28,4 +28,24 @@ export default {
         });
     });
   },
+  historyAsset: params => {
+    return new Promise((resolve, reject) => {
+      let tmpConfigs = {params: {}};
+      tmpConfigs.params.ID = params["ID"];
+
+      API.get(jwtServiceConfig.baseURL + Routes.APPROVED.HISTORY_ASSET, tmpConfigs)
+        .then(response => {
+          console.log("FETCH LIST ASSETS => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          console.log("ERROR LIST ASSETS => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
 };

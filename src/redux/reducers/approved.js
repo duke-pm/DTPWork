@@ -2,10 +2,17 @@ import * as types from "../actions/types";
 
 export const initialState = {
   submittingListAssets: false,
+  submittingHistoryAsset: false,
 
   successListAssets: false,
   errorListAssets: false,
   errorHelperListAssets: "",
+
+  successHistoryAsset: false,
+  errorHistoryAsset: false,
+  errorHelperHistoryAsset: "",
+
+  historyAsset: [],
 
   listAssetsAll: [],
   listAssetsNotUse: [],
@@ -26,6 +33,7 @@ export default function (state = initialState, action = {}) {
   const {type, payload} = action;
 
   switch (type) {
+    /** List assets */
     case types.START_LIST_ASSETS:
       return {
         ...state,
@@ -92,6 +100,33 @@ export default function (state = initialState, action = {}) {
         numAssetsDamage,
         numAssetsLost,
         numAssetsLiquidation,
+      };
+
+    /** History asset */
+    case types.START_HISTORY_ASSET:
+      return {
+        ...state,
+        submittingHistoryAsset: true,
+        successHistoryAsset: false,
+        errorHistoryAsset: false,
+        errorHelperHistoryAsset: "",
+      };
+    case types.ERROR_HISTORY_ASSET:
+      return {
+        ...state,
+        submittingHistoryAsset: false,
+        successHistoryAsset: false,
+        errorHistoryAsset: true,
+        errorHelperHistoryAsset: payload,
+      };
+    case types.SUCCESS_HISTORY_ASSET:
+      return {
+        ...state,
+        submittingHistoryAsset: false,
+        successHistoryAsset: true,
+        errorHistoryAsset: false,
+        errorHelperHistoryAsset: "",
+        historyAsset: payload,
       };
 
     default:

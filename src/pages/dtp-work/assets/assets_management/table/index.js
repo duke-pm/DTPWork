@@ -1,80 +1,148 @@
 import React, {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
+import {useDispatch, useSelector} from "react-redux";
 import {
-  UncontrolledDropdown, DropdownMenu, DropdownToggle, DropdownItem,
+  UncontrolledDropdown, DropdownMenu, DropdownToggle,
+  DropdownItem, Modal, ModalBody,
 } from "reactstrap";
 import moment from "moment";
 /** COMPONENTS */
 import {
-  DataTableHead, DataTableItem, DataTableRow, TooltipComponent,
-  PaginationComponent, PreviewAltCard, Icon,
+  DataTableBody, DataTableHead, DataTableItem, DataTableRow,
+  Block, BlockHead, BlockTitle, PaginationComponent,
+  PreviewAltCard, Icon,
 } from "components/Component";
 /** COMMON */
 import Configs from "configs";
 import {numberFormat} from "utils/Utils";
+/** REDUX */
+import * as Actions from "redux/actions";
 
 function TableAssets(props) {
   const {t} = useTranslation();
-  const {idxTab, dataAssets, curPage, countItem, onChangePage} = props;
+  const {
+    idxTab,
+    dataAssets,
+    curPage,
+    countItem,
+    onChangePage,
+  } = props;
+
+  /** Use redux */
+  const dispatch = useDispatch();
+  const approvedState = useSelector(({approved}) => approved);
 
   /** Use state */
-  const [modal, setModal] = useState({
-    edit: false,
+  const [loading, setLoading] = useState({
+    history: false,
+  });
+  const [view, setView] = useState({
     add: false,
+    details: false,
   });
   const [data, setData] = useState(dataAssets);
+  const [formData, setFormData] = useState(null);
   const [currentPage, setCurrentPage] = useState(curPage);
 
-  // selects all the order
-  const selectorCheck = (e) => {
-    let newData;
-    newData = data.map((item) => {
-      item.check = e.currentTarget.checked;
-      return item;
-    });
-    setData([...newData]);
-  };
-
-  // function to delete the seletected item
-  const selectorDeleteOrder = () => {
-    let newData;
-    newData = data.filter((item) => item.check !== true);
-    setData([...newData]);
-  };
-
-  // selects one order
-  const onSelectChange = (e, id) => {
-    let newData = data;
-    let index = newData.findIndex((item) => item.id === id);
-    newData[index].check = e.currentTarget.checked;
-    setData([...newData]);
-  };
-
+  /**
+   ** FUNCTIONS
+   */
   // Change Page
+  const onGetDetailsData = (itemId) => {
+    setLoading({...loading, history: true});
+    onViewDetails(itemId);
+    toggle("details");
+    let params = {
+      ID: itemId,
+    };
+    dispatch(Actions.fFetchHistoryAsset(params));
+  };
+
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
     onChangePage(idxTab, pageNumber);
   };
 
+  const toggle = type => {
+    setView({
+      add: type === "add" ? true : false,
+      details: type === "details" ? true : false,
+    });
+  };
+
+  const onViewDetails = itemId => {
+    let fItem = data.find(f => f.assetID === itemId);
+    if (fItem) {
+      setFormData(fItem);
+    }
+  };
+
+  const onFormCancel = () => {
+    setView({add: false, details: false});
+    onResetForm();
+  };
+
+  const onResetForm = () => {
+    setFormData(null);
+  };
+
+  const onPrepareHistoryData = () => {
+    let tmpFormData = {...formData};
+    if (formData) {
+      tmpFormData.history = [];
+      if (approvedState["historyAsset"].length > 0) {
+        tmpFormData.history = approvedState["historyAsset"];
+      }
+      setFormData(tmpFormData);
+      onDone();
+    } else {
+      onDone();
+    }
+  };
+
+  const onDone = () => {
+    setLoading({history: false});
+  };
+
+  const onError = e => {
+    console.log('[LOG] ===  ===> ', e);
+    setLoading({history: false});
+  };
+
+  /**
+   ** LIFE CYCLE
+   */
   useEffect(() => {
     setData(dataAssets);
   }, [dataAssets]);
 
+  useEffect(() => {
+    if (loading.history) {
+      if (!approvedState["submittingHistoryAsset"]) {
+        if (approvedState["successHistoryAsset"] && !approvedState["errorHistoryAsset"]) {
+          return onPrepareHistoryData();
+        }
+
+        if (!approvedState["successHistoryAsset"] && approvedState["errorHistoryAsset"]) {
+          return onError(approvedState["errorHelperHistoryAsset"]);
+        }
+      }
+    }
+  }, [
+    loading.history,
+    approvedState["submittingHistoryAsset"],
+    approvedState["successHistoryAsset"],
+    approvedState["errorHistoryAsset"],
+  ]);
+
+  /**
+   ** RENDER
+   */
   return (
-    <div>
+    <React.Fragment>
+      {/** Data assets */}
       <div className="nk-tb-list is-separate is-medium mb-3">
         <DataTableHead className="nk-tb-item">
-          <DataTableRow className="nk-tb-col-check">
-            <div className="custom-control custom-control-sm custom-checkbox notext">
-              <input
-                type="checkbox"
-                className="custom-control-input form-control"
-                id="pid-all"
-                onChange={(e) => selectorCheck(e)}
-              />
-              <label className="custom-control-label" htmlFor="pid-all"></label>
-            </div>
-          </DataTableRow>
           <DataTableRow>
             <span className="lead-text">{t("assets:code")}</span>
           </DataTableRow>
@@ -152,19 +220,6 @@ function TableAssets(props) {
 
             return (
               <DataTableItem key={item.assetID + "_table_item_" + index}>
-                <DataTableRow className="nk-tb-col-check">
-                  <div className="custom-control custom-control-sm custom-checkbox notext">
-                    <input
-                      type="checkbox"
-                      className="custom-control-input form-control"
-                      defaultChecked={item.check}
-                      id={item.assetID + "oId-all"}
-                      key={Math.random()}
-                      onChange={(e) => onSelectChange(e, item.assetID)}
-                    />
-                    <label className="custom-control-label" htmlFor={item.assetID + "oId-all"}></label>
-                  </div>
-                </DataTableRow>
                 <DataTableRow>
                   <span className="tb-sub text-primary">{item.assetCode}</span>
                 </DataTableRow>
@@ -231,22 +286,6 @@ function TableAssets(props) {
                 </DataTableRow>
                 <DataTableRow className="nk-tb-col-tools">
                   <ul className="nk-tb-actions gx-1">
-                    <li
-                      className="nk-tb-action-hidden"
-                      onClick={() => {
-                        // loadDetail(item.id);
-                        // toggle("details");
-                      }}
-                    >
-                      <TooltipComponent
-                        tag="a"
-                        containerClassName="btn btn-trigger btn-icon"
-                        id={"view" + item.assetID}
-                        icon="eye"
-                        direction="top"
-                        text="View Details"
-                      />
-                    </li>
                     <li>
                       <UncontrolledDropdown>
                         <DropdownToggle tag="a" className="btn btn-icon dropdown-toggle btn-trigger">
@@ -260,12 +299,11 @@ function TableAssets(props) {
                                 href="#dropdown"
                                 onClick={(ev) => {
                                   ev.preventDefault();
-                                  // loadDetail(item.assetID);
-                                  // toggle("details");
+                                  onGetDetailsData(item.assetID);
                                 }}
                               >
                                 <Icon name="eye"></Icon>
-                                <span>Asset Details</span>
+                                <span>{t("assets:view_details")}</span>
                               </DropdownItem>
                             </li>
                           </ul>
@@ -280,6 +318,7 @@ function TableAssets(props) {
           : null}
       </div>
 
+      {/** Paging */}
       <PreviewAltCard>
         {data.length > 0 ? (
           <PaginationComponent
@@ -290,11 +329,221 @@ function TableAssets(props) {
           />
         ) : (
           <div className="text-center">
-            <span className="text-silent">No orders found</span>
+            <span className="text-silent">{t("common:no_data")}</span>
           </div>
         )}
       </PreviewAltCard>
-    </div>
+
+      {/** Modal asset details */}
+      <Modal
+        style={{maxWidth: '1300px', width: '100%'}}
+        className="modal-dialog-centered"
+        isOpen={view.details}
+        size="xl"
+        toggle={onFormCancel}
+      >
+        <ModalBody>
+          <a href="#cancel" className="close">
+            {" "}
+            <Icon
+              name="cross-sm"
+              onClick={(ev) => {
+                ev.preventDefault();
+                onFormCancel();
+              }}
+            ></Icon>
+          </a>
+
+          <div className="card-inner">
+            {/** Basic informations */}
+            <Block>
+              <BlockHead>
+                <BlockTitle tag="h5">{t("assets:title_details")}</BlockTitle>
+              </BlockHead>
+              <div className="profile-ud-list">
+                <div className="profile-ud-item">
+                  <div className="profile-ud wider">
+                    <span className="profile-ud-label">{t("assets:code")}</span>
+                    <span className="profile-ud-value">{formData?.assetCode}</span>
+                  </div>
+                </div>
+                <div className="profile-ud-item">
+                  <div className="profile-ud wider">
+                    <span className="profile-ud-label">{t("assets:name")}</span>
+                    <span className="profile-ud-value">{formData?.assetName}</span>
+                  </div>
+                </div>
+                <div className="profile-ud-item">
+                  <div className="profile-ud wider">
+                    <span className="profile-ud-label">{t("assets:group")}</span>
+                    <span className="profile-ud-value">{formData?.groupName}</span>
+                  </div>
+                </div>
+                <div className="profile-ud-item">
+                  <div className="profile-ud wider">
+                    <span className="profile-ud-label">{t("assets:purchase_date")}</span>
+                    <span className="profile-ud-value">{moment(formData?.purchaseDate).format("DD/MM/YYYY") || "-"}</span>
+                  </div>
+                </div>
+                <div className="profile-ud-item">
+                  <div className="profile-ud wider">
+                    <span className="profile-ud-label">{t("assets:origin_price")}</span>
+                    <span className="profile-ud-value">{numberFormat(formData?.originalPrice) || "-"}</span>
+                  </div>
+                </div>
+                <div className="profile-ud-item">
+                  <div className="profile-ud wider">
+                    <span className="profile-ud-label">{t("assets:status")}</span>
+                    <span className="profile-ud-value">
+                      <span
+                        className={`dot bg-${
+                          formData?.statusID === 1
+                            ? "gray"
+                            : formData?.statusID === 2
+                              ? "success"
+                              : formData?.statusID === 3
+                                ? "warning"
+                                : (formData?.statusID === 4 || formData?.statusID === 5)
+                                  ? "danger"
+                                  : "primary"
+                        } d-mb-none`}
+                      ></span>
+                      <span
+                        className={`badge badge-sm badge-dot has-bg badge-${
+                          formData?.statusID === 1
+                            ? "gray"
+                            : formData?.statusID === 2
+                              ? "success"
+                              : formData?.statusID === 3
+                                ? "warning"
+                                : (formData?.statusID === 4 || formData?.statusID === 5)
+                                  ? "danger"
+                                  : "primary"
+                        } d-none d-mb-inline-flex`}
+                      >
+                        {formData?.statusName}
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </Block>
+
+            <div className="nk-divider divider md"></div>
+
+            {/** Use process */}
+            <Block>
+              <BlockHead>
+                <BlockTitle tag="h5">{t("assets:use_process")}</BlockTitle>
+              </BlockHead>
+
+              {loading.history && (
+                <div className="spinner-border" role="status">
+                  <span className="sr-only">{t("common:loading")}</span>
+                </div>
+              )}
+              {!loading.history && formData?.history.length > 0 && (
+                <DataTableBody bodyclass="nk-tb-tnx">
+                  <DataTableHead className="nk-tb-item">
+                    <DataTableRow>
+                      <span className="lead-text">{t("assets:date")}</span>
+                    </DataTableRow>
+                    <DataTableRow>
+                      <span className="lead-text">{t("assets:code_staff")}</span>
+                    </DataTableRow>
+                    <DataTableRow>
+                      <span className="lead-text">{t("assets:name_staff")}</span>
+                    </DataTableRow>
+                    <DataTableRow>
+                      <span className="lead-text">{t("assets:position_staff")}</span>
+                    </DataTableRow>
+                    <DataTableRow>
+                      <span className="lead-text">{t("assets:department_staff")}</span>
+                    </DataTableRow>
+                    <DataTableRow>
+                      <span className="lead-text">{t("assets:region_staff")}</span>
+                    </DataTableRow>
+                    <DataTableRow>
+                      <span className="lead-text">{t("assets:status")}</span>
+                    </DataTableRow>
+                    <DataTableRow>
+                      <span className="lead-text">{t("assets:description")}</span>
+                    </DataTableRow>
+                  </DataTableHead>
+
+                  {formData?.history.map((itemH, indexH) => {
+                    let statusColor = "gray";
+                    switch (itemH.transStatus) {
+                      case 2:
+                        statusColor = "success";
+                        break;
+                      case 3:
+                        statusColor = "warning";
+                        break;
+                      case 4:
+                        statusColor = "danger";
+                       break;
+                      case 5:
+                        statusColor = "danger";
+                       break;
+                      case 6:
+                        statusColor = "primary";
+                        break;
+                      default:
+                        statusColor = "gray";
+                        break;
+                    };
+
+                    return (
+                      <DataTableItem key={itemH.empCode + "_history_item_" + indexH}>
+                        <DataTableRow>
+                          <span className="tb-sub">{moment(itemH.transDate).format("DD/MM/YYYY")}</span>
+                        </DataTableRow>
+                        <DataTableRow>
+                          <span className="tb-sub text-primary">{itemH.empCode}</span>
+                        </DataTableRow>
+                        <DataTableRow>
+                          <span className="tb-sub">{itemH.empName}</span>
+                        </DataTableRow>
+                        <DataTableRow>
+                          <span className="tb-sub">{itemH.jobTitle}</span>
+                        </DataTableRow>
+                        <DataTableRow>
+                          <span className="tb-sub">{itemH.deptName}</span>
+                        </DataTableRow>
+                        <DataTableRow>
+                          <span className="tb-sub">{itemH.regionName}</span>
+                        </DataTableRow>
+                        <DataTableRow>
+                          <span
+                            className={`dot bg-${statusColor} d-mb-none`}
+                          ></span>
+                          <span
+                            className={`badge badge-sm badge-dot has-bg badge-${
+                              statusColor
+                            } d-none d-mb-inline-flex`}
+                          >
+                            {itemH.statusName}
+                          </span>
+                        </DataTableRow>
+                        <DataTableRow>
+                          <span className="tb-sub">{itemH.reasons}</span>
+                        </DataTableRow>
+                      </DataTableItem>
+                    );
+                  })}
+                </DataTableBody>
+              )}
+              {!loading.history && formData?.history.length === 0 && (
+                <div className="text-center">
+                  <span className="text-silent">{t("common:no_data")}</span>
+                </div>
+              )}
+            </Block>
+          </div>
+        </ModalBody>
+      </Modal>
+    </React.Fragment>
   );
 };
 

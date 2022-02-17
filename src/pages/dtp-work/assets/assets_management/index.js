@@ -202,6 +202,7 @@ const AssetsManagement = ({ ...props }) => {
 
   const onError = error => {
     console.log('[LOG] === onError ===> ', error);
+    setLoading({main: false});
   };
 
   /** 

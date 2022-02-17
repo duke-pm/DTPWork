@@ -34,3 +34,32 @@ export const fFetchListAssets = (type, params) => {
       });
   };
 };
+
+/** History asset */
+export const fErrorHistoryAsset = error => ({
+  type: types.ERROR_HISTORY_ASSET,
+  payload: error,
+});
+
+export const fSuccessHistoryAsset = data => ({
+  type: types.SUCCESS_HISTORY_ASSET,
+  payload: data,
+});
+
+export const fFetchHistoryAsset = (params) => {
+  return dispatch => {
+    dispatch({type: types.START_HISTORY_ASSET});
+
+    Services.approved.historyAsset(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessHistoryAsset(res.data.listTransHistory));
+        } else {
+          return dispatch(fErrorHistoryAsset(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        return dispatch(fErrorHistoryAsset(error));
+      });
+  };
+};

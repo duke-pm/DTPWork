@@ -1,8 +1,10 @@
 import React from "react";
-import { Pagination, PaginationLink, PaginationItem } from "reactstrap";
+import {useTranslation} from "react-i18next";
+import {Pagination, PaginationLink, PaginationItem} from "reactstrap";
 import Icon from "../icon/Icon";
 
 const PaginationComponent = ({ itemPerPage, totalItems, paginate, currentPage }) => {
+  const {t} = useTranslation();
   const pageNumbers = [];
 
   for (let i = 1; i <= Math.ceil(totalItems / itemPerPage); i++) {
@@ -29,7 +31,7 @@ const PaginationComponent = ({ itemPerPage, totalItems, paginate, currentPage })
           href="#prev"
         >
           <Icon name="chevrons-left" />
-          <span>Prev</span>
+          <span>{t("common:prev")}</span>
         </PaginationLink>
       </PaginationItem>
       {pageNumbers.map((item) => {
@@ -58,7 +60,7 @@ const PaginationComponent = ({ itemPerPage, totalItems, paginate, currentPage })
           }}
           href="#next"
         >
-          <span>Next</span>
+          <span>{t("common:next")}</span>
           <Icon name="chevrons-right" />
         </PaginationLink>
       </PaginationItem>

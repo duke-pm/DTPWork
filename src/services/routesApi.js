@@ -9,6 +9,7 @@ const Routes = {
   },
   APPROVED: {
     LIST_ASSETS: "/Assets/GetList",
+    HISTORY_ASSET: "/Assets/GetHistoryByID",
   },
   // MASTER_DATA: {
   //   GET_ALL: "/MasterData/GetDataForForm",
