@@ -5,7 +5,9 @@ import {Switch, Route} from "react-router-dom";
 // import {UserContextProvider} from "../pages/pre-built/user-manage/UserContext";
 import {RedirectAs404} from "../utils/Utils";
 
-import Homepage from "../pages/dtp-work/Homepage";
+import Homepage from "../pages/dtp-work/homepage";
+
+import AssetsManagement from "../pages/dtp-work/assets/assets_management";
 
 // import Homepage from "../pages/Homepage";
 // import Sales from "../pages/Sales";
@@ -264,6 +266,9 @@ const Pages = () => {
         <Route exact path={`${process.env.PUBLIC_URL}/nioicon`} component={NioIconPage}></Route> */}
         {/* <Route exact path={`${process.env.PUBLIC_URL}/svg-icons`} component={SVGIconPage}></Route> */}
         <Route exact path={`${process.env.PUBLIC_URL}/`} component={Homepage}></Route>
+
+        <Route exact path={`${process.env.PUBLIC_URL}/assets-management`} component={AssetsManagement}></Route>
+
         <Route component={RedirectAs404}></Route>
       </Switch>
     </Suspense>

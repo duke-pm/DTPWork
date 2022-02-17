@@ -281,7 +281,6 @@ const Menu = () => {
         valMenuData.push(tmpMenuItem);
       }
     }
-    console.log('[LOG] === valMenuData ===> ', valMenuData);
     setMenuData(valMenuData);
     setLoading(false);
 

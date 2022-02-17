@@ -13,7 +13,7 @@ i18n.use(initReactI18next).init({
   ns: ["common"],
   defaultNS: "common",
 
-  debug: true,
+  debug: false,
 
   // cache: {
   //   enabled: true

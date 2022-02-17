@@ -7,6 +7,9 @@ const Routes = {
     UPDATE_PASSWORD: "/User/UpdateNewPassword",
     CHECK_TOKEN_PASSWORD: "/User/CheckToken",
   },
+  APPROVED: {
+    LIST_ASSETS: "/Assets/GetList",
+  },
   // MASTER_DATA: {
   //   GET_ALL: "/MasterData/GetDataForForm",
   //   GET_ASSETS_BY_USER: "/Assets/GetListByUser",

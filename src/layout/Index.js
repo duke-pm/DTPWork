@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import {useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
 import classNames from "classnames";
 /** COMPONENTS */
@@ -7,11 +8,11 @@ import Sidebar from "./sidebar/Sidebar";
 import Head from "./head/Head";
 import Header from "./header/Header";
 import Footer from "./footer/Footer";
-import { useSelector } from "react-redux";
 
 const Layout = () => {
   const {t} = useTranslation();
 
+  /** Use redux */
   const authState = useSelector(({auth}) => auth);
   
   /** Use state */
