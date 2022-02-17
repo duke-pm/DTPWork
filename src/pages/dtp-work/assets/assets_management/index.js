@@ -115,14 +115,19 @@ const AssetsManagement = ({ ...props }) => {
   ]);
   const [loading, setLoading] = useState({
     main: true,
+    search: false,
   });
   const [sm, updateSm] = useState(false);
-  const [onSearchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState("");
   const [filterTab, setFilterTab] = useState(0);
 
   /**
    ** FUNCTIONS
    */
+  const toggleSm = () => updateSm(!sm);
+
+  const onChangeSearch = (e) => setSearchText(e.target.value);
+
   const onStartGetData = (
     idxActive = 0,
     statusID = "0",
@@ -141,14 +146,32 @@ const AssetsManagement = ({ ...props }) => {
     dispatch(Actions.fFetchListAssets(tabActive.type, params));
   };
 
+  const onSearch = (ev, idxTab) => {
+    ev.preventDefault();
+    setLoading({...loading, search: true});
+    // Update active page of tab
+    let tmpTabs = [...tabs];
+    tmpTabs[idxTab].page = 1;
+    tmpTabs[idxTab].search = searchText;
+    setTabs(tmpTabs);
+    // Call api
+    onStartGetData(
+      filterTab,
+      tmpTabs[idxTab].id,
+      1,
+      searchText,
+    );
+  };
+
   const onChangeTab = (ev, idxTab) => {
     ev.preventDefault();
-    setLoading({main: true});
+    setLoading({...loading, main: true});
     // Update active tab
     setFilterTab(idxTab);
     let tmpTabs = [...tabs];
     tmpTabs[idxTab].page = 1;
     setTabs(tmpTabs);
+    setSearchText(tmpTabs[idxTab].search);
     // Call api
     onStartGetData(
       idxTab,
@@ -158,11 +181,8 @@ const AssetsManagement = ({ ...props }) => {
     );
   };
 
-  // onChange function for searching name
-  const onFilterChange = (e) => setSearchText(e.target.value);
-
   const onChangePage = (idxTab, newPage) => {
-    setLoading({main: true});
+    setLoading({...loading, main: true});
     // Update active page of tab
     let tmpTabs = [...tabs];
     tmpTabs[idxTab].page = newPage;
@@ -187,22 +207,14 @@ const AssetsManagement = ({ ...props }) => {
 
     // Update data item on active tab
     tmpTabs[filterTab].data = approvedState[tmpTabs[filterTab].type];
-    if (tmpTabs[filterTab].data.length > 0) {
-      let newData;
-      newData = tmpTabs[filterTab].data.map(item => {
-        item.check = false;
-        return item;
-      });
-      tmpTabs[filterTab].data = newData;
-    }
     
     setTabs(tmpTabs);
-    setLoading({main: false});
+    setLoading({main: false, search: false});
   };
 
   const onError = error => {
     console.log('[LOG] === onError ===> ', error);
-    setLoading({main: false});
+    setLoading({main: false, search: false});
   };
 
   /** 
@@ -217,7 +229,7 @@ const AssetsManagement = ({ ...props }) => {
   ]);
 
   useEffect(() => {
-    if (loading.main) {
+    if (loading.main || loading.search) {
       if (!approvedState["submittingListAssets"]) {
         if (approvedState["successListAssets"] && !approvedState["errorListAssets"]) {
           return onPrepareData();
@@ -230,6 +242,7 @@ const AssetsManagement = ({ ...props }) => {
     }
   }, [
     loading.main,
+    loading.search,
     approvedState["submittingListAssets"],
     approvedState["successListAssets"],
     approvedState["errorListAssets"]
@@ -254,7 +267,7 @@ const AssetsManagement = ({ ...props }) => {
               <div className="toggle-wrap nk-block-tools-toggle">
                 <Button
                   className={`btn-icon btn-trigger toggle-expand mr-n1 ${sm ? "active" : ""}`}
-                  onClick={() => updateSm(!sm)}
+                  onClick={toggleSm}
                 >
                   <Icon name="menu-alt-r"></Icon>
                 </Button>
@@ -262,15 +275,18 @@ const AssetsManagement = ({ ...props }) => {
                   <ul className="nk-block-tools g-3">
                     <li>
                       <div className="form-control-wrap">
-                        <div className="form-icon form-icon-right">
+                        <a className="form-icon form-icon-right"
+                          href="#search"
+                          onClick={ev => onSearch(ev, filterTab)}>
                           <Icon name="search"></Icon>
-                        </div>
+                        </a>
                         <input
                           type="text"
                           className="form-control"
                           id="default-04"
+                          value={searchText}
                           placeholder={t("common:search")}
-                          onChange={(e) => onFilterChange(e)}
+                          onChange={onChangeSearch}
                         />
                       </div>
                     </li>
@@ -330,13 +346,20 @@ const AssetsManagement = ({ ...props }) => {
           </ul>
           <div className="tab-content">
             <div className={`tab-pane ${filterTab === 0 && "active"}`} id="tabAll">
-              <TableAssets
-                idxTab={filterTab}
-                curPage={tabs[0].page}
-                countItem={tabs[0].count}
-                dataAssets={tabs[0].data}
-                onChangePage={onChangePage}
-              />
+              {!loading.main && !loading.search && (
+                <TableAssets
+                  idxTab={filterTab}
+                  curPage={tabs[0].page}
+                  countItem={tabs[0].count}
+                  dataAssets={tabs[0].data}
+                  onChangePage={onChangePage}
+                />
+              )}
+              {(loading.main || loading.search) && (
+                <div className="spinner-border" role="status">
+                  <span className="sr-only">{t("common:loading")}</span>
+                </div>
+              )}
             </div>
             <div className={`tab-pane ${filterTab === 1 && "active"}`} id="tabNotUsed">
               <TableAssets
@@ -369,7 +392,7 @@ const AssetsManagement = ({ ...props }) => {
               <TableAssets
                 idxTab={filterTab}
                 curPage={tabs[4].page}
-                countItem={tabs[4].count}
+                countItem={tabs[4].countDamage + tabs[4].countLost}
                 dataAssets={tabs[4].data}
                 onChangePage={onChangePage}
               />

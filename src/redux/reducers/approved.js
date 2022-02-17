@@ -53,36 +53,76 @@ export default function (state = initialState, action = {}) {
     case types.SUCCESS_LIST_ASSETS:
       let {type, data} = payload;
       let newData = [],
-        numAssetsAll = data?.data?.header.countAll || 0,
-        numAssetsNotUse = data?.data?.header.countNoUseYet || 0,
-        numAssetsUsing = data?.data?.header.countUsing || 0,
-        numAssetsRepair = data?.data?.header.countWarrantyRepair || 0,
-        numAssetsDamage = data?.data?.header.countDamaged || 0,
-        numAssetsLost = data?.data?.header.countLost || 0,
-        numAssetsLiquidation = data?.data?.header.countLiquidation || 0;
+        numAssetsAll = 0,
+        numAssetsNotUse = 0,
+        numAssetsUsing = 0,
+        numAssetsRepair = 0,
+        numAssetsDamage = 0,
+        numAssetsLost = 0,
+        numAssetsLiquidation = 0;
 
       switch (type) {
-        case "listAssetsAll":
-          newData = data?.data?.listItem || [];
-          break;
         case "listAssetsNotUse":
           newData = data?.data?.listItem || [];
+          numAssetsAll = data?.data?.header.countAll || 0;
+          numAssetsNotUse = data?.totalRow || data?.data?.header.countNoUseYet;
+          numAssetsUsing = data?.data?.header.countUsing || 0;
+          numAssetsRepair = data?.data?.header.countWarrantyRepair || 0;
+          numAssetsDamage = data?.data?.header.countDamaged || 0;
+          numAssetsLost = data?.data?.header.countLost || 0;
+          numAssetsLiquidation = data?.data?.header.countLiquidation || 0;
           break;
         case "listAssetsUsing":
           newData = data?.data?.listItem || [];
+          numAssetsAll = data?.data?.header.countAll || 0;
+          numAssetsNotUse = data?.data?.header.countNoUseYet || 0;
+          numAssetsUsing = data?.totalRow || data?.data?.header.countUsing;
+          numAssetsRepair = data?.data?.header.countWarrantyRepair || 0;
+          numAssetsDamage = data?.data?.header.countDamaged || 0;
+          numAssetsLost = data?.data?.header.countLost || 0;
+          numAssetsLiquidation = data?.data?.header.countLiquidation || 0;
           break;
         case "listAssetsRepair":
           newData = data?.data?.listItem || [];
+          numAssetsAll = data?.data?.header.countAll || 0;
+          numAssetsNotUse = data?.data?.header.countNoUseYet || 0;
+          numAssetsUsing = data?.data?.header.countUsing || 0;
+          numAssetsRepair = data?.totalRow || data?.data?.header.countWarrantyRepair;
+          numAssetsDamage = data?.data?.header.countDamaged || 0;
+          numAssetsLost = data?.data?.header.countLost || 0;
+          numAssetsLiquidation = data?.data?.header.countLiquidation || 0;
           break;
         case "listAssetsDamageLost":
           newData = data?.data?.listItem || [];
+          numAssetsAll = data?.data?.header.countAll || 0;
+          numAssetsNotUse = data?.data?.header.countNoUseYet || 0;
+          numAssetsUsing = data?.data?.header.countUsing || 0;
+          numAssetsRepair = data?.data?.header.countWarrantyRepair || 0;
+          numAssetsDamage = data?.data?.header.countDamaged || 0;
+          numAssetsLost = data?.data?.header.countLost || 0;
+          numAssetsLiquidation = data?.data?.header.countLiquidation || 0;
           break;
         case "listAssetsLiquidation":
           newData = data?.data?.listItem || [];
+
+          numAssetsAll = data?.data?.header.countAll || 0;
+          numAssetsNotUse = data?.data?.header.countNoUseYet || 0;
+          numAssetsUsing = data?.data?.header.countUsing || 0;
+          numAssetsRepair = data?.data?.header.countWarrantyRepair || 0;
+          numAssetsDamage = data?.data?.header.countDamaged || 0;
+          numAssetsLost = data?.data?.header.countLost || 0;
+          numAssetsLiquidation = data?.totalRow || data?.data?.header.countLiquidation;
           break;
 
         default:
           newData = data?.data?.listItem || [];
+          numAssetsAll = data?.totalRow || data?.data?.header.countAll;
+          numAssetsNotUse = data?.data?.header.countNoUseYet || 0;
+          numAssetsUsing = data?.data?.header.countUsing || 0;
+          numAssetsRepair = data?.data?.header.countWarrantyRepair || 0;
+          numAssetsDamage = data?.data?.header.countDamaged || 0;
+          numAssetsLost = data?.data?.header.countLost || 0;
+          numAssetsLiquidation = data?.data?.header.countLiquidation || 0;
           break;
       };
 
