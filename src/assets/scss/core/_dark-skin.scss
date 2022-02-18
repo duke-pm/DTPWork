@@ -989,6 +989,11 @@ body.dark-mode {
         box-shadow: -10px 15px 30px 5px rgba($black, .4);
     }
 
+    .nk-add-assets {
+        background: lighten($dark-card-bg, 4%);
+        box-shadow: -10px 15px 30px 5px rgba($black, .4);
+    }
+
     .nk-tb-list.is-separate .nk-tb-item > .nk-tb-col,
     .nk-tb-list.is-separate .nk-tb-item:hover .nk-tb-action-hidden,
     .nk-download{
@@ -1136,6 +1141,10 @@ body.dark-mode {
         border-color: $dark-border-color;
     }
     .nk-add-product {
+        background: $dark-body-bg;
+        box-shadow: -10px 15px 30px 5px rgba($black, .4);
+    }
+    .nk-add-assets {
         background: $dark-body-bg;
         box-shadow: -10px 15px 30px 5px rgba($black, .4);
     }

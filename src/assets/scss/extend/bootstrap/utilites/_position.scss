@@ -1,4 +1,8 @@
 .absolute{
+    &-top{
+        position: absolute;
+        top: 0;
+    }
     &-top-left{
         position: absolute;
         top: 0;
@@ -8,6 +12,10 @@
         position: absolute;
         top: 0;
         right: 0;
+    }
+    &-bottom{
+        position: absolute;
+        bottom: 0;
     }
     &-bottom-left{
         position: absolute;

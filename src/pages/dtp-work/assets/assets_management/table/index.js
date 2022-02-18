@@ -358,7 +358,7 @@ function TableAssets(props) {
             {/** Basic informations */}
             <Block>
               <BlockHead>
-                <BlockTitle tag="h5">{t("assets:title_details")}</BlockTitle>
+                <BlockTitle tag="h6">{t("assets:title_details")}</BlockTitle>
               </BlockHead>
               <div className="profile-ud-list">
                 <div className="profile-ud-item">
@@ -434,7 +434,7 @@ function TableAssets(props) {
             {/** Use process */}
             <Block>
               <BlockHead>
-                <BlockTitle tag="h5">{t("assets:use_process")}</BlockTitle>
+                <BlockTitle tag="h6">{t("assets:use_process")}</BlockTitle>
               </BlockHead>
 
               {loading.history && (

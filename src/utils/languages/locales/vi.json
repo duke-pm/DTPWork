@@ -11,7 +11,13 @@
     "search": "Tìm kiếm...",
     "no_data": "Không tìm thấy dữ liệu tương ứng!",
     "prev": "Trước",
-    "next": "Tiếp"
+    "next": "Tiếp",
+    "add": "Thêm",
+    "cancel": "Hủy bỏ",
+    "close": "Đóng",
+    "ok": "OK",
+    "confirm": "Xác nhận",
+    "reset": "Đặt lại"
   },
   "validate": {
     "empty": "Mục này không thể trống!",
@@ -22,7 +28,8 @@
     "send_reset_link_title": "Gửi thành công!",
     "send_reset_link_sub_title": "Hãy kiểm tra lại e-mail của bạn và chọn link liên kết để đổi mật khẩu của bạn ngay!",
     "send_reset_pass_title": "Cập nhật thành công!",
-    "send_reset_pass_sub_title": "Vui lòng đăng nhập lại ngay bây giờ bằng mật khẩu mới của bạn!"
+    "send_reset_pass_sub_title": "Vui lòng đăng nhập lại ngay bây giờ bằng mật khẩu mới của bạn!",
+    "get_data": "Đã cập nhật thành công dữ liệu!"
   },
   "error": {
     "title": "Lỗi!!!",
@@ -67,6 +74,7 @@
     "title": "Tài sản",
     "title_details": "Thông tin Tài sản",
     "assets_management": "Quản lý Tài sản",
+    "get_data": "Lấy dữ liệu",
     "all": "Tất cả",
     "not_use": "Chưa sử dụng",
     "using": "Đang sử dụng",
@@ -94,5 +102,32 @@
     "position_staff": "Vị trí",
     "department_staff": "Bộ phận",
     "region_staff": "Khu vực"
+  },
+  "add_assets": {
+    "title": "Thêm mới Tài sản",
+    "information": "Thông tin cơ bản",
+    "name": "Tên",
+    "holder_name": "Tên tài sản...",
+    "quantity": "Số lượng",
+    "holder_quantity": "Số lượng tài sản...",
+    "supplier": "Nhà cung cấp",
+    "holder_supplier": "Nhà cung cấp tài sản...",
+    "description": "Quy cách tài sản/Thông số",
+    "holder_description": "Mô tả quy cách, thông số tài sản...",
+    "purchase_date": "Ngày mua",
+    "visible_date": "Thời gian hiệu lực",
+    "insurance_date": "Thời gian bảo hành (tháng)",
+    "holder_insurance_date": "Số tháng bảo hành...",
+    "origin_price": "Nguyên giá",
+    "holder_origin_price": "Nguyên giá của tài sản...",
+    "depreciation_date": "Thời gian khấu hao (tháng)",
+    "holder_depreciation_date": "Thời gian khấu hao của tài sản...",
+    "department": "Bộ phận quản lý",
+    "rule_code": "Quy tắc đánh mã",
+    "company": "Công ty",
+    "type": "Loại tài sản",
+    "group": "Nhóm tài sản",
+    "assets": "Tài sản",
+    "prefix": "Tiền tố"
   }
 }

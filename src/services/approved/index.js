@@ -48,4 +48,21 @@ export default {
         });
     });
   },
+  dataEmployee: () => {
+    return new Promise((resolve, reject) => {
+      API.get(jwtServiceConfig.baseURL + Routes.APPROVED.DATA_EMPLOYEE, {params: {}})
+        .then(response => {
+          console.log("FETCH DATA EMPLOYEE => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          console.log("ERROR DATA EMPLOYEE => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
 };

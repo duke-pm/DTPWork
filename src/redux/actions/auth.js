@@ -3,15 +3,16 @@ import Services from "services";
 import API from "services/axios";
 import FieldsAuth from "configs/fieldsAuth";
 import Constants from "utils/constants";
-/** REDUX */
+import {setCookies} from "utils/Utils";
+//** REDUX */
 import * as Actions from "redux/actions";
 
-/** Sign out module */
+//** Sign out module */
 export const fSignout = () => ({
   type: types.SIGN_OUT,
 });
 
-/** Sign in module */
+//** Sign in module */
 export const fErrorSignIn = error => ({
   type: types.ERROR_SIGN_IN,
   payload: error,
@@ -22,6 +23,7 @@ export const fSuccessSignIn = (data, isRefresh = false) => {
   if (isRefresh) {
     API.defaults.headers.Authorization =
       "Bearer " + data.access_token;
+    setCookies("access_token", data.access_token);
 
     for (item of FieldsAuth) {
       payload[item.value] = data[item.key];
@@ -29,6 +31,7 @@ export const fSuccessSignIn = (data, isRefresh = false) => {
   } else {
     API.defaults.headers.Authorization =
       "Bearer " + data.tokenInfo.access_token;
+    setCookies("access_token", data.tokenInfo.access_token);
 
     for (item of FieldsAuth) {
       payload[item.value] = data.tokenInfo[item.key];
@@ -71,7 +74,7 @@ export const fFetchSignIn = params => {
   };
 };
 
-/** Forgot password module */
+//** Forgot password module */
 export const resetForgotPassword = () => ({
   type: types.RESET_FORGOT_PASSWORD,
 });
@@ -108,7 +111,7 @@ export const fFetchForgotPassword = params => {
   };
 };
 
-/** Reset password module */
+//** Reset password module */
 export const resetResetPassword = () => ({
   type: types.RESET_RESET_PASSWORD,
 });
@@ -177,7 +180,7 @@ export const fFetchResetPassword = params => {
   };
 };
 
-/** Refresh token module */
+//** Refresh token module */
 export const fFetchRefreshToken = (params, history) => {
   return dispatch => {
     dispatch({type: types.REFRESH_TOKEN});

@@ -10,11 +10,13 @@ const Routes = {
   APPROVED: {
     LIST_ASSETS: "/Assets/GetList",
     HISTORY_ASSET: "/Assets/GetHistoryByID",
+    DATA_EMPLOYEE: "/Assets/GetDataEmployee",
+    EXPORT_ASSETS: "/Assets/ExportAsset"
   },
-  // MASTER_DATA: {
-  //   GET_ALL: "/MasterData/GetDataForForm",
-  //   GET_ASSETS_BY_USER: "/Assets/GetListByUser",
-  // },
+  MASTER_DATA: {
+    GET_ALL: "/MasterData/GetDataForForm",
+    // GET_ASSETS_BY_USER: "/Assets/GetListByUser",
+  },
   // APPROVED: {
   //   LIST_REQUEST: "/RQAsset/GetList",
   //   REQUEST_DETAIL: "/RQAsset/GetByID",

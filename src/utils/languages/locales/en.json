@@ -11,7 +11,13 @@
     "search": "Search...",
     "no_data": "No corresponding data found!",
     "prev": "Prev",
-    "next": "Next"
+    "next": "Next",
+    "add": "Add",
+    "cancel": "Cancel",
+    "close": "Close",
+    "ok": "OK",
+    "confirm": "Confirm",
+    "reset": "Reset"
   },
   "validate": {
     "empty": "This field is required!",
@@ -22,7 +28,8 @@
     "send_reset_link_title": "Submitted successfully!",
     "send_reset_link_sub_title": "Please check your e-mail and select the link to change your password now!",
     "send_reset_pass_title": "Updated successfully!",
-    "send_reset_pass_sub_title": "Please sign in again now with your new password!"
+    "send_reset_pass_sub_title": "Please sign in again now with your new password!",
+    "get_data": "The data has been successfully updated!"
   },
   "error": {
     "title": "Error!!!",
@@ -67,6 +74,7 @@
     "title": "Assets",
     "title_details": "Asset Details",
     "assets_management": "Assets Management",
+    "get_data": "Get Data",
     "all": "All",
     "not_use": "Not used",
     "using": "Using",
@@ -94,5 +102,32 @@
     "position_staff": "Position",
     "department_staff": "Department",
     "region_staff": "Region"
+  },
+  "add_assets": {
+    "title": "Add New Asset",
+    "information": "Basic Informations",
+    "name": "Name",
+    "holder_name": "Name of asset...",
+    "quantity": "Quantity",
+    "holder_quantity": "Quantity of asset...",
+    "supplier": "Supplier",
+    "holder_supplier": "Supplier of asset...",
+    "description": "Property Specifications/Parameters",
+    "holder_description": "Description of specifications, property parameters...",
+    "purchase_date": "Purchase date",
+    "visible_date": "Effective time",
+    "insurance_date": "Warranty period (month)",
+    "holder_insurance_date": "Number of months of warranty...",
+    "origin_price": "Origin price",
+    "holder_origin_price": "Origin price of asset...",
+    "depreciation_date": "Depreciation period (month)",
+    "holder_depreciation_date": "Depreciation period of asset...",
+    "department": "Management department",
+    "rule_code": "Code Rules",
+    "company": "Company",
+    "type": "Asset type",
+    "group": "Asset group",
+    "assets": "Assets",
+    "prefix": "Prefix"
   }
 }

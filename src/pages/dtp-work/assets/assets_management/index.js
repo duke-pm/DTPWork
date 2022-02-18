@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {useTranslation} from "react-i18next";
 import {useDispatch, useSelector} from "react-redux";
+import {Alert} from "reactstrap";
 /** COMPONENTS */
 import Content from "layout/content/Content";
 import Head from "layout/head/Head";
@@ -16,8 +17,11 @@ import {
 import TableAssets from "./table";
 /** COMMON */
 import Configs from "configs";
+import {getCookies} from "utils/Utils";
+import Routes from "services/routesApi";
 /** REDUX */
 import * as Actions from "redux/actions";
+import AddEditForm from "./form/AddEdit";
 
 const TabItem = ({
   index = 0,
@@ -116,14 +120,31 @@ const AssetsManagement = ({ ...props }) => {
   const [loading, setLoading] = useState({
     main: true,
     search: false,
+    getData: false,
+  });
+  const [alert, setAlert] = useState({
+    show: false,
+    type: "",
+    helper: "",
   });
   const [sm, updateSm] = useState(false);
+  const [view, setView] = useState({
+    add: false,
+  });
   const [searchText, setSearchText] = useState("");
   const [filterTab, setFilterTab] = useState(0);
 
   /**
    ** FUNCTIONS
    */
+  const toogleAddEdit = type => {
+    setView({
+      add: type === "add" ? true : false,
+    });
+  };
+
+  const toggleAlert = () => setAlert({...alert, show: false});
+
   const toggleSm = () => updateSm(!sm);
 
   const onChangeSearch = (e) => setSearchText(e.target.value);
@@ -196,6 +217,23 @@ const AssetsManagement = ({ ...props }) => {
     );
   };
 
+  const onGetEmployee = () => {
+    setLoading({...loading, getData: true});
+    dispatch(Actions.fFetchDataEmployee());
+  };
+
+  const onExportData = () => {
+    let tmpAccessToken = getCookies("access_token");
+    if (tmpAccessToken) {
+      let params = {
+        UserToken: tmpAccessToken
+      }
+      window.location = `${Configs.hostAPI}/${Configs.prefixAPI}${
+        Routes.APPROVED.EXPORT_ASSETS
+      }?value=${JSON.stringify(params)}`;
+    }
+  };
+
   const onPrepareData = () => {
     let tmpTabs = [...tabs];
     // Update count item on every tab
@@ -209,12 +247,37 @@ const AssetsManagement = ({ ...props }) => {
     tmpTabs[filterTab].data = approvedState[tmpTabs[filterTab].type];
     
     setTabs(tmpTabs);
-    setLoading({main: false, search: false});
+    setLoading({main: false, search: false, getData: false});
+  };
+
+  const onSuccess = (showAlert, type) => {
+    let tmphelper = "";
+    if (type === "GetData") {
+      console.log('[LOG] === Success Get Data ===> ', type);
+      tmphelper = "success:get_data";
+    }
+    setLoading({main: false, search: false, getData: false});
+    setAlert({
+      show: showAlert,
+      type: "success",
+      helper: tmphelper,
+    });
+    setTimeout(() => {
+      toggleAlert();
+    }, 2000);
   };
 
   const onError = error => {
-    console.log('[LOG] === onError ===> ', error);
-    setLoading({main: false, search: false});
+    console.log('[LOG] === Error ===> ', error);
+    setLoading({main: false, search: false, getData: false});
+    setAlert({
+      show: true,
+      type: "error",
+      helper: error,
+    });
+    setTimeout(() => {
+      toggleAlert();
+    }, 2000);
   };
 
   /** 
@@ -248,12 +311,35 @@ const AssetsManagement = ({ ...props }) => {
     approvedState["errorListAssets"]
   ]);
 
+  useEffect(() => {
+    if (loading.getData) {
+      if (!approvedState["submittingDataEmployee"]) {
+        if (approvedState["successDataEmployee"] && !approvedState["errorDataEmployee"]) {
+          return onSuccess(true, "GetData");
+        }
+
+        if (!approvedState["successDataEmployee"] && approvedState["errorDataEmployee"]) {
+          return onError(approvedState["errorHelperDataEmployee"]);
+        }
+      }
+    }
+  }, [
+    loading.getData,
+    approvedState["submittingDataEmployee"],
+    approvedState["successDataEmployee"],
+    approvedState["errorDataEmployee"],
+  ]);
+
   /** 
    ** RENDER
    */
+  const showGetData = authState["data"].groupID === "1" ||
+    authState["data"].groupID === "6";
+
   return (
     <React.Fragment>
       <Head title={t("assets:title")}></Head>
+
       <Content>
         {/** Header table */}
         <BlockHead size="sm">
@@ -290,39 +376,75 @@ const AssetsManagement = ({ ...props }) => {
                         />
                       </div>
                     </li>
-                    <li>
-                      <Button color="light" outline className="btn-white">
-                        <Icon name="download-cloud"></Icon>
-                        <span>{t("common:export")}</span>
-                      </Button>
-                    </li>
-                    <li className="nk-block-tools-opt">
-                      <Button
-                        className="toggle btn-icon d-md-none"
-                        color="primary"
-                        onClick={() => {
-
-                        }}
-                      >
-                        <Icon name="plus"></Icon>
-                      </Button>
-                      <Button
-                        className="toggle d-none d-md-inline-flex"
-                        color="primary"
-                        onClick={() => {
-
-                        }}
-                      >
-                        <Icon name="plus"></Icon>
-                        <span>{t("common:add_new")}</span>
-                      </Button>
-                    </li>
+                    {filterTab === 0 && (
+                      <li>
+                        <Button
+                          color="light"
+                          outline
+                          className="btn-white"
+                          onClick={onExportData}>
+                          <Icon name="download-cloud"></Icon>
+                          <span>{t("common:export")}</span>
+                        </Button>
+                      </li>
+                    )}
+                    {showGetData && (
+                      <li className="nk-block-tools-opt">
+                        <Button
+                          className="toggle btn-icon d-md-none"
+                          color="primary"
+                          onClick={onGetEmployee}
+                        >
+                          <Icon name="reload-alt"></Icon>
+                        </Button>
+                        <Button
+                          className="toggle d-none d-md-inline-flex"
+                          color="primary"
+                          onClick={onGetEmployee}
+                        >
+                          {loading.getData && (
+                            <div class="spinner-border spinner-border-sm text-white mr-2" role="status" />
+                          )}
+                          {!loading.getData && <Icon className="mr-1" name="reload-alt"></Icon>}
+                          <span>{t("assets:get_data")}</span>
+                        </Button>
+                      </li>
+                    )}
+                    {filterTab === 0 && (
+                      <li className="nk-block-tools-opt">
+                        <Button
+                          className="toggle btn-icon d-md-none"
+                          color="primary"
+                          onClick={() => toogleAddEdit("add")}
+                        >
+                          <Icon name="plus"></Icon>
+                        </Button>
+                        <Button
+                          className="toggle d-none d-md-inline-flex"
+                          color="primary"
+                          onClick={() => toogleAddEdit("add")}
+                        >
+                          <Icon name="plus"></Icon>
+                          <span>{t("common:add_new")}</span>
+                        </Button>
+                      </li>
+                    )}
                   </ul>
                 </div>
               </div>
             </BlockHeadContent>
           </BlockBetween>
         </BlockHead>
+
+        <Alert
+          className="alert-icon absolute-top-right"
+          color={alert.type === "success" ? "success" : "danger"}
+          fade
+          isOpen={alert.show}
+          toggle={toggleAlert}>
+          <Icon name={alert.type === "success" ? "check-circle" : "cross-circle"} />
+          <strong>{alert.helper}</strong>
+        </Alert>
 
         {/** Content table */}
         <Block>
@@ -334,10 +456,9 @@ const AssetsManagement = ({ ...props }) => {
                   index={index}
                   tab={item.id}
                   curTab={filterTab}
-                  label={`${item.label} (${
-                    item.count 
-                      ? item.count
-                      : item.countDamage + " - " + item.countLost
+                  label={`${item.label} (${item.count !== undefined
+                    ? item.count
+                    : item.countDamage + " - " + item.countLost
                   })`}
                   onChange={onChangeTab}
                 />
@@ -356,8 +477,8 @@ const AssetsManagement = ({ ...props }) => {
                 />
               )}
               {(loading.main || loading.search) && (
-                <div className="spinner-border" role="status">
-                  <span className="sr-only">{t("common:loading")}</span>
+                <div class="d-flex justify-content-center">
+                  <div className="spinner-border text-primary" role="status" />
                 </div>
               )}
             </div>
@@ -408,6 +529,11 @@ const AssetsManagement = ({ ...props }) => {
             </div>
           </div>
         </Block>
+        <AddEditForm
+          show={view.add}
+        />
+
+        {view.add && <div className="toggle-overlay" onClick={toogleAddEdit}></div>}
       </Content>
     </React.Fragment>
   );

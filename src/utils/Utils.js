@@ -1,4 +1,5 @@
-import { Redirect } from "react-router-dom";
+import {Redirect} from "react-router-dom";
+import Cookies from 'js-cookie';
 
 //url for production
 export var url = "";
@@ -156,3 +157,17 @@ export const numberFormat = (value) =>
     style: 'currency',
     currency: 'VND'
   }).format(value);
+
+export const removeCookies = arrCookies => {
+  for (let item of arrCookies) {
+    Cookies.remove(item);
+  }
+};
+
+export const setCookies = (cookies, value) => {
+  return Cookies.set(cookies, value, {expires: 1});
+};
+
+export const getCookies = cookies => {
+  return Cookies.get(cookies) || null;
+};

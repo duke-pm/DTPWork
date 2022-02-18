@@ -3,6 +3,7 @@ import * as types from "../actions/types";
 export const initialState = {
   submittingListAssets: false,
   submittingHistoryAsset: false,
+  submittingDataEmployee: false,
 
   successListAssets: false,
   errorListAssets: false,
@@ -11,6 +12,10 @@ export const initialState = {
   successHistoryAsset: false,
   errorHistoryAsset: false,
   errorHelperHistoryAsset: "",
+
+  successDataEmployee: false,
+  errorDataEmployee: false,
+  errorHelperDataEmployee: "",
 
   historyAsset: [],
 
@@ -33,7 +38,7 @@ export default function (state = initialState, action = {}) {
   const {type, payload} = action;
 
   switch (type) {
-    /** List assets */
+    //** List assets */
     case types.START_LIST_ASSETS:
       return {
         ...state,
@@ -142,7 +147,7 @@ export default function (state = initialState, action = {}) {
         numAssetsLiquidation,
       };
 
-    /** History asset */
+    //** History asset */
     case types.START_HISTORY_ASSET:
       return {
         ...state,
@@ -168,6 +173,33 @@ export default function (state = initialState, action = {}) {
         errorHelperHistoryAsset: "",
         historyAsset: payload,
       };
+
+    //** Data employee */
+    case types.START_DATA_EMPLOYEE:
+      return {
+        ...state,
+        submittingDataEmployee: true,
+        successDataEmployee: false,
+        errorDataEmployee: false,
+        errorHelperDataEmployee: "",
+      };
+    case types.ERROR_DATA_EMPLOYEE:
+      return {
+        ...state,
+        submittingDataEmployee: false,
+        successDataEmployee: false,
+        errorDataEmployee: true,
+        errorHelperDataEmployee: payload,
+      };
+    case types.SUCCESS_DATA_EMPLOYEE:
+      return {
+        ...state,
+        submittingDataEmployee: false,
+        successDataEmployee: true,
+        errorDataEmployee: false,
+        errorHelperDataEmployee: "",
+      };
+
 
     default:
       return state;

@@ -1,0 +1,10 @@
+.nk-add-assets {
+  top: $header-height;
+  background-color: $white;
+  width: 800px;
+  height: calc(100vh - #{$header-height});
+  padding: 1.5rem;
+  + .toggle-overlay{
+      z-index: 700;
+  }
+}

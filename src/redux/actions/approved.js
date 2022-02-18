@@ -1,12 +1,10 @@
 import * as types from "./types";
 import Services from "services";
-/** REDUX */
-import * as Actions from "redux/actions";
 
 /**
  ** Assets module
  */
-/** All assets */
+//** All assets */
 export const fErrorListAssets = error => ({
   type: types.ERROR_LIST_ASSETS,
   payload: error,
@@ -35,7 +33,7 @@ export const fFetchListAssets = (type, params) => {
   };
 };
 
-/** History asset */
+//** History asset */
 export const fErrorHistoryAsset = error => ({
   type: types.ERROR_HISTORY_ASSET,
   payload: error,
@@ -60,6 +58,34 @@ export const fFetchHistoryAsset = (params) => {
       })
       .catch(error => {
         return dispatch(fErrorHistoryAsset(error));
+      });
+  };
+};
+
+//** Get data Employee */
+export const fErrorDataEmployee = error => ({
+  type: types.ERROR_DATA_EMPLOYEE,
+  payload: error,
+});
+
+export const fSuccessDataEmployee = () => ({
+  type: types.SUCCESS_DATA_EMPLOYEE,
+});
+
+export const fFetchDataEmployee = () => {
+  return dispatch => {
+    dispatch({type: types.START_DATA_EMPLOYEE});
+
+    Services.approved.dataEmployee()
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessDataEmployee());
+        } else {
+          return dispatch(fErrorDataEmployee(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        return dispatch(fErrorDataEmployee(error));
       });
   };
 };
