@@ -65,4 +65,38 @@ export default {
         });
     });
   },
+  createAssets: params => {
+    return new Promise((resolve, reject) => {
+      API.post(jwtServiceConfig.baseURL + Routes.APPROVED.CREATE_ASSETS, params)
+        .then(response => {
+          console.log("FETCH CREATE ASSETS => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          console.log("ERROR CREATE ASSETS => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
+  updateAssets: params => {
+    return new Promise((resolve, reject) => {
+      API.put(jwtServiceConfig.baseURL + Routes.APPROVED.UPDATE_ASSETS, params)
+        .then(response => {
+          console.log("FETCH UPDATE ASSETS => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          console.log("ERROR UPDATE ASSETS => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
 };

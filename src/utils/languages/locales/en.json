@@ -6,6 +6,7 @@
     "loading": "Loading...",
     "function": "Function",
     "add_new": "Add",
+    "update": "Update",
     "export": "Export",
     "get_data": "Get data",
     "search": "Search...",
@@ -17,7 +18,8 @@
     "close": "Close",
     "ok": "OK",
     "confirm": "Confirm",
-    "reset": "Reset"
+    "reset": "Reset",
+    "non_data": "Non select"
   },
   "validate": {
     "empty": "This field is required!",
@@ -25,18 +27,23 @@
   },
   "success": {
     "title": "Successfully!!!",
+    "login": "Welcome back to DTP Workspace!",
     "send_reset_link_title": "Submitted successfully!",
     "send_reset_link_sub_title": "Please check your e-mail and select the link to change your password now!",
     "send_reset_pass_title": "Updated successfully!",
     "send_reset_pass_sub_title": "Please sign in again now with your new password!",
-    "get_data": "The data has been successfully updated!"
+    "get_data": "The data has been successfully updated!",
+    "create_assets": "Successfully added new asset!\nPlease check again in list!",
+    "update_assets": "Successfully updated asset!\nPlease check again in list!"
   },
   "error": {
     "title": "Error!!!",
+    "expired_session": "Your session is expired! Please login again to continue using!",
     "wrong_username_password": "Unable to login with this information!",
     "wrong_email": "Unable to send with this e-mail!",
     "cannot_sign_in_now": "Cannot sign in now! Please try again!",
-    "cannot_reset_password": "Cannot reset your new password! Please try again!"
+    "cannot_reset_password": "Cannot reset your new password! Please try again!",
+    "create_assets": "Cannot create new asset! Please try again!"
   },
   "sign_in": {
     "title": "Sign in",
@@ -101,10 +108,17 @@
     "name_staff": "Fullname",
     "position_staff": "Position",
     "department_staff": "Department",
-    "region_staff": "Region"
+    "region_staff": "Region",
+    "approved_assets": "Approved ssset",
+    "update_assets": "Update asset",
+    "recall_assets": "Asset recovery",
+    "repair_assets": "Repair - Warranty asset",
+    "liquidation_assets": "Asset liquidation",
+    "reuse_assets": "Put it back into use"
   },
   "add_assets": {
     "title": "Add New Asset",
+    "update_title": "Update Asset",
     "information": "Basic Informations",
     "name": "Name",
     "holder_name": "Name of asset...",
@@ -128,6 +142,7 @@
     "type": "Asset type",
     "group": "Asset group",
     "assets": "Assets",
-    "prefix": "Prefix"
+    "prefix": "Prefix",
+    "non_use": "Non use"
   }
 }

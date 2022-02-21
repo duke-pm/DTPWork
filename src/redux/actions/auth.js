@@ -4,6 +4,7 @@ import API from "services/axios";
 import FieldsAuth from "configs/fieldsAuth";
 import Constants from "utils/constants";
 import {setCookies} from "utils/Utils";
+import {toast} from 'react-toastify';
 //** REDUX */
 import * as Actions from "redux/actions";
 
@@ -183,22 +184,30 @@ export const fFetchResetPassword = params => {
 //** Refresh token module */
 export const fFetchRefreshToken = (params, history) => {
   return dispatch => {
-    dispatch({type: types.REFRESH_TOKEN});
+    dispatch({type: types.START_REFRESH_TOKEN});
 
-    Services.authentication
-      .refreshToken(params)
+    Services.authentication.refreshToken(params)
       .then(res => {
         if (!res.isError) {
+          dispatch({type: types.SUCCESS_REFRESH_TOKEN});
           return dispatch(fSuccessSignIn(res.data, true));
         } else {
+          dispatch({type: types.ERROR_REFRESH_TOKEN});
           localStorage.removeItem(Constants.LS_SIGN_IN);
           dispatch(fErrorSignIn("error"));
           dispatch(Actions.fSignout());
+          toast.warn("Your session is expired! Please login again to continue using!", {
+            autoClose: 2000,
+          });
           return history.replace("/auth-login");
         }
       })
       .catch(error => {
+        dispatch({type: types.ERROR_REFRESH_TOKEN});
         dispatch(fErrorSignIn(error));
+        toast.warn("Your session is expired! Please login again to continue using!", {
+          autoClose: 2000,
+        });
         return history.replace("/auth-login");
       });
   };

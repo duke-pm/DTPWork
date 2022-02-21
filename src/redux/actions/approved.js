@@ -1,6 +1,6 @@
 import * as types from "./types";
 import Services from "services";
-
+import * as Actions from "redux/actions";
 /**
  ** Assets module
  */
@@ -15,7 +15,7 @@ export const fSuccessListAssets = (type, data) => ({
   payload: {type, data},
 });
 
-export const fFetchListAssets = (type, params) => {
+export const fFetchListAssets = (type, params, history) => {
   return dispatch => {
     dispatch({type: types.START_LIST_ASSETS});
 
@@ -28,7 +28,14 @@ export const fFetchListAssets = (type, params) => {
         }
       })
       .catch(error => {
-        return dispatch(fErrorListAssets(error));
+        dispatch(fErrorListAssets(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
       });
   };
 };
@@ -44,7 +51,7 @@ export const fSuccessHistoryAsset = data => ({
   payload: data,
 });
 
-export const fFetchHistoryAsset = (params) => {
+export const fFetchHistoryAsset = (params, history) => {
   return dispatch => {
     dispatch({type: types.START_HISTORY_ASSET});
 
@@ -57,7 +64,14 @@ export const fFetchHistoryAsset = (params) => {
         }
       })
       .catch(error => {
-        return dispatch(fErrorHistoryAsset(error));
+        dispatch(fErrorHistoryAsset(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
       });
   };
 };
@@ -72,7 +86,7 @@ export const fSuccessDataEmployee = () => ({
   type: types.SUCCESS_DATA_EMPLOYEE,
 });
 
-export const fFetchDataEmployee = () => {
+export const fFetchDataEmployee = (params, history) => {
   return dispatch => {
     dispatch({type: types.START_DATA_EMPLOYEE});
 
@@ -85,7 +99,87 @@ export const fFetchDataEmployee = () => {
         }
       })
       .catch(error => {
-        return dispatch(fErrorDataEmployee(error));
+        dispatch(fErrorDataEmployee(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};
+
+//** Create/Update data assets */
+export const fResetCreateAssets = () => ({
+  type: types.RESET_CREATE_ASSETS,
+});
+
+export const fErrorCreateAssets = error => ({
+  type: types.ERROR_CREATE_ASSETS,
+  payload: error,
+});
+
+export const fSuccessCreateAssets = () => ({
+  type: types.SUCCESS_CREATE_ASSETS,
+});
+
+export const fFetchCreateAssets = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_CREATE_ASSETS});
+
+    Services.approved.createAssets(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessCreateAssets());
+        } else {
+          return dispatch(fErrorCreateAssets(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorCreateAssets(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};
+
+export const fErrorUpdateAssets = error => ({
+  type: types.ERROR_UPDATE_ASSETS,
+  payload: error,
+});
+
+export const fSuccessUpdateAssets = () => ({
+  type: types.SUCCESS_UPDATE_ASSETS,
+});
+
+export const fFetchUpdateAssets = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_UPDATE_ASSETS});
+
+    Services.approved.updateAssets(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessUpdateAssets());
+        } else {
+          return dispatch(fErrorUpdateAssets(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorUpdateAssets(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
       });
   };
 };

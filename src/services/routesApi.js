@@ -11,7 +11,9 @@ const Routes = {
     LIST_ASSETS: "/Assets/GetList",
     HISTORY_ASSET: "/Assets/GetHistoryByID",
     DATA_EMPLOYEE: "/Assets/GetDataEmployee",
-    EXPORT_ASSETS: "/Assets/ExportAsset"
+    EXPORT_ASSETS: "/Assets/ExportAsset",
+    CREATE_ASSETS: "/Assets/Create",
+    UPDATE_ASSETS: "/Assets/Update",
   },
   MASTER_DATA: {
     GET_ALL: "/MasterData/GetDataForForm",

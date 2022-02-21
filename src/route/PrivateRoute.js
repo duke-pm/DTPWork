@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Route, Redirect, useParams} from "react-router-dom";
 /** COMMON */
@@ -15,6 +15,9 @@ const PrivateRoute = ({ exact, component: Component, ...rest }) => {
   /** Use redux */
   const dispatch = useDispatch();
   const authState = useSelector(({auth}) => auth);
+
+  /** Use state */
+  const [loading, setLoading] = useState(true);
 
   /**
    ** FUNCTIONS
@@ -37,6 +40,9 @@ const PrivateRoute = ({ exact, component: Component, ...rest }) => {
       }
       tmpDataLogin["lstMenu"] = localSignIn["lstMenu"];
       dispatch(Actions.fSuccessSignIn(tmpDataLogin));
+      setLoading(false);
+    } else {
+      setLoading(false);
     }
   };
 
@@ -55,12 +61,18 @@ const PrivateRoute = ({ exact, component: Component, ...rest }) => {
       exact={exact ? true : false}
       rest
       render={(props) =>
-        auth ? (
-          <Component {...props} {...rest}></Component>
-        ) : tokenData ? (
-          <Redirect to={`${process.env.PUBLIC_URL}/auth-reset/${tokenData}`}></Redirect>
+        !loading ? (
+          auth ? (
+            <Component {...props} {...rest}></Component>
+          ) : tokenData ? (
+            <Redirect to={`${process.env.PUBLIC_URL}/auth-reset/${tokenData}`}></Redirect>
+          ) : (
+            <Redirect to={`${process.env.PUBLIC_URL}/auth-login`}></Redirect>
+          )
         ) : (
-          <Redirect to={`${process.env.PUBLIC_URL}/auth-login`}></Redirect>
+          <div className="d-flex justify-content-center align-items-center">
+            <div className="spinner-border" role="status" />
+          </div>
         )
       }
     ></Route>

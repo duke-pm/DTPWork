@@ -4,6 +4,8 @@ export const initialState = {
   submittingListAssets: false,
   submittingHistoryAsset: false,
   submittingDataEmployee: false,
+  submittingCreateAssets: false,
+  submittingUpdateAssets: false,
 
   successListAssets: false,
   errorListAssets: false,
@@ -16,6 +18,14 @@ export const initialState = {
   successDataEmployee: false,
   errorDataEmployee: false,
   errorHelperDataEmployee: "",
+
+  successCreateAssets: false,
+  errorCreateAssets: false,
+  errorHelperCreateAssets: "",
+
+  successUpdateAssets: false,
+  errorUpdateAssets: false,
+  errorHelperUpdateAssets: "",
 
   historyAsset: [],
 
@@ -200,6 +210,68 @@ export default function (state = initialState, action = {}) {
         errorHelperDataEmployee: "",
       };
 
+  //** Create/Update data assets */
+  case types.RESET_CREATE_ASSETS:
+      return {
+        ...state,
+        submittingCreateAssets: false,
+        successCreateAssets: false,
+        errorCreateAssets: false,
+        errorHelperCreateAssets: "",
+
+        submittingUpdateAssets: false,
+        successUpdateAssets: false,
+        errorUpdateAssets: false,
+        errorHelperUpdateAssets: "",
+      };
+    case types.START_CREATE_ASSETS:
+      return {
+        ...state,
+        submittingCreateAssets: true,
+        successCreateAssets: false,
+        errorCreateAssets: false,
+        errorHelperCreateAssets: "",
+      };
+    case types.ERROR_CREATE_ASSETS:
+      return {
+        ...state,
+        submittingCreateAssets: false,
+        successCreateAssets: false,
+        errorCreateAssets: true,
+        errorHelperCreateAssets: payload,
+      };
+    case types.SUCCESS_CREATE_ASSETS:
+      return {
+        ...state,
+        submittingCreateAssets: false,
+        successCreateAssets: true,
+        errorCreateAssets: false,
+        errorHelperCreateAssets: "",
+      };
+    case types.START_UPDATE_ASSETS:
+      return {
+        ...state,
+        submittingUpdateAssets: true,
+        successUpdateAssets: false,
+        errorUpdateAssets: false,
+        errorHelperUpdateAssets: "",
+      };
+    case types.ERROR_UPDATE_ASSETS:
+      return {
+        ...state,
+        submittingUpdateAssets: false,
+        successUpdateAssets: false,
+        errorUpdateAssets: true,
+        errorHelperUpdateAssets: payload,
+      };
+    case types.SUCCESS_UPDATE_ASSETS:
+      return {
+        ...state,
+        submittingUpdateAssets: false,
+        successUpdateAssets: true,
+        errorUpdateAssets: false,
+        errorHelperUpdateAssets: "",
+      };
 
     default:
       return state;

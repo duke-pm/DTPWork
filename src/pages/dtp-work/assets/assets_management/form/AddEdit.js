@@ -4,7 +4,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
 import DatePicker from "react-datepicker";
 import SimpleBar from "simplebar-react";
-import {Form, FormGroup, Input} from "reactstrap";
+import NumberFormat from 'react-number-format';
+import {Form, FormGroup} from "reactstrap";
 import moment from "moment";
 /** COMMON */
 import {
@@ -12,7 +13,6 @@ import {
   BlockHead,
   BlockHeadContent,
   BlockTitle,
-  BlockDes,
   Icon,
   Button,
   BlockBetween,
@@ -38,12 +38,21 @@ const CustomDateInput = forwardRef(({ value, onClick, onChange }, ref) => (
 
 function AddEditForm(props) {
   const {t} = useTranslation();
-  const {show} = props;
+  const {
+    show,
+    isAdd,
+    isUpdate,
+    history,
+    commonState,
+    authState,
+    updateItem,
+    onClose,
+  } = props;
 
   /** Use redux */
   const dispatch = useDispatch();
-  const authState = useSelector(({auth}) => auth);
   const masterState = useSelector(({master}) => master);
+  const approvedState = useSelector(({approved}) => approved);
 
   /** Use state */
   const [loading, setLoading] = useState({
@@ -51,10 +60,15 @@ function AddEditForm(props) {
     submit: false,
   });
   const [disables, setDisables] = useState({
-    type: false,
-    group: false,
-    assets: false,
-
+    group: true,
+    assets: true,
+  });
+  const [dataSelect, setDataSelect] = useState({
+    suppliers: [{supplierID: "", supplierName: t("common:non_data")}],
+    departments: [{deptCode: "", deptName: t("common:non_data")}],
+    assetType: [{typeID: "", typeName: t("common:non_data")}],
+    assetGroup: [{groupID: "", groupName: t("common:non_data")}],
+    assetGroupDetail: [{absID: "", itemName: t("common:non_data")}],
   });
   const [formData, setFormData] = useState({
     assetName: "",
@@ -63,15 +77,16 @@ function AddEditForm(props) {
     assetDesciption: "",
     assetPurchaseDate: new Date(),
     assetEffectiveDate: new Date(),
-    assetInsuranceDate: 0,
-    assetOriginPrice: 0,
-    assetDepreciationDate: 0,
+    assetInsuranceDate: "",
+    assetOriginPrice: "",
+    assetDepreciationDate: "",
     assetDepartment: "",
     assetCompany: "",
     assetType: "",
     assetGroup: "",
     assetAssets: "",
     assetPrefix: "",
+    assetInactive: false,
   });
 
   /**
@@ -81,63 +96,233 @@ function AddEditForm(props) {
     setFormData({...formData, [e.target.name]: e.target.value});
   };
 
-  const onChangeSelect = (nextInput, e) => {
-    setFormData({...formData, [e.target.name]: e.target.value});
-    if (nextInput) {
-      setDisables({...disables, [nextInput]: false});
+  const onChangeSelect = (nextInput, e, pos) => {
+    if (!nextInput) {
+      return setFormData({...formData, [e.target.name]: e.target.value});
     }
+    if (nextInput && e.target.value) {
+      pos !== 4 && setFormData({...formData, [e.target.name]: e.target.value});
+      pos !== 4 && setDisables({...disables, [nextInput]: false});
+
+      let filter = [], defaultData = [];
+      if (pos === 2) {
+        filter = masterState["assetGroup"].filter(f => f.typeID == e.target.value);
+        defaultData = [{groupID: "", groupName: t("common:non_data")}];
+        defaultData = [...defaultData, ...filter];
+        setDataSelect({...dataSelect, assetGroup: defaultData});
+      } else if (pos === 3) {
+        filter = masterState["assetGroupDetail"].filter(f => f.groupID == e.target.value);
+        defaultData = [{absID: "", itemName: t("common:non_data")}];
+        defaultData = [...defaultData, ...filter];
+        setDataSelect({...dataSelect, assetGroupDetail: defaultData});
+      } else if (pos === 4) {
+        let fPrefix = masterState["assetGroupDetail"].find(f => f.absID == e.target.value);
+        if (fPrefix) {
+          setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+            [nextInput]: formData.assetCompany + "." + fPrefix.itemCode,
+          });
+        }
+      }
+    } else {
+      if (pos === 2) {
+        setDisables({group: true, assets: true});
+        setFormData({
+          ...formData,
+          assetType: "",
+          assetGroup: "",
+          assetAssets: "",
+          assetPrefix: "",
+        });
+      }
+      if (pos === 3) {
+        setDisables({...disables, assets: true});
+        setFormData({
+          ...formData,
+          assetGroup: "",
+          assetAssets: "",
+          assetPrefix: "",
+        });
+      }
+      if (pos === 4) {
+        setFormData({
+          ...formData,
+          assetAssets: "",
+          assetPrefix: "",
+        });
+      }
+    }
+  };
+
+  const onChangeCheckbox = e => {
+    setFormData({...formData, assetInactive: !formData.assetInactive})
   };
 
   const onDateChange = (key, value) => {
     setFormData({...formData, [key]: value});
   };
 
+  const onSetFormDataDetails = data => {
+    let fSupplier = masterState["supplier"].find(f => f.supplierName === data.supplierName);
+    setFormData({
+      ...formData,
+      assetName: data?.assetName || "",
+      assetSupplier: fSupplier?.supplierID || "",
+      assetDesciption: data?.descr,
+      assetPurchaseDate: new Date(
+        moment(data.purchaseDate).year() + "/" +
+        (moment(data.purchaseDate).month() + 1) + "/" +
+        moment(data.purchaseDate).date()
+      ),
+      assetEffectiveDate: new Date(
+        moment(data.effectiveDate).year() + "/" +
+        (moment(data.effectiveDate).month() + 1) + "/" +
+        moment(data.effectiveDate).date()
+      ),
+      assetInsuranceDate: data?.warrantyPeriod || "",
+      assetOriginPrice: data?.originalPrice || "",
+      assetDepreciationDate: data?.depreciationPeriod || "",
+      assetDepartment: data?.deptCodeManager || "",
+      assetInactive: data?.inactive || false,
+    });
+  };
+
   const onResetData = () => {
-  
+    setFormData({
+      assetName: "",
+      assetQuantity: 1,
+      assetSupplier: "",
+      assetDesciption: "",
+      assetPurchaseDate: new Date(),
+      assetEffectiveDate: new Date(),
+      assetInsuranceDate: "",
+      assetOriginPrice: "",
+      assetDepreciationDate: "",
+      assetDepartment: "",
+      assetCompany: "",
+      assetType: "",
+      assetGroup: "",
+      assetAssets: "",
+      assetPrefix: "",
+      assetInactive: false,
+    });
   };
 
   const onGetMasterData = () => {
     let params = {
       ListType: "Region,Department,Employee,Supplier,Company,AssetType,AssetGroup,AssetGroupDetail",
+      RefreshToken: authState["data"]["refreshToken"],
+      Lang: commonState["language"],
     }
-    dispatch(Actions.fFetchMasterData(params));
+    dispatch(Actions.fFetchMasterData(params, history));
   };
 
-  
-
   const onFormSubmit = () => {
-    
+    setLoading({...loading, submit: true});
+    if (isAdd) {
+      let fConpany = masterState["company"].find(f => f.shortName === formData.assetCompany);
+      let params = {
+        AssetName: formData.assetName.trim(),
+        Suppiler: Number(formData.assetSupplier),
+        Qty: Number(formData.assetQuantity),
+        Descr: formData.assetDesciption,
+        PurchaseDate: moment(formData.assetPurchaseDate).format("YYYY-MM-DD"),
+        EffectiveDate: moment(formData.assetEffectiveDate).format("YYYY-MM-DD"),
+        WarrantyPeriod: formData.assetInsuranceDate !== ""
+          ? Number(formData.assetInsuranceDate)
+          : "",
+        OriginalPrice: formData.assetOriginPrice !== ""
+          ? Number(formData.assetOriginPrice)
+          : "",
+        DepreciationPeriod: formData.assetDepreciationDate !== ""
+          ? Number(formData.assetDepreciationDate)
+          : "",
+        DeptCode: formData.assetDepartment,
+        CmpnID: Number(fConpany.cmpnID),
+        AssetTypeID: Number(formData.assetType),
+        AssetGroupID: Number(formData.assetGroup),
+        AssetGroupDetailID: Number(formData.assetAssets),
+        PreAssetCode: formData.assetPrefix,
+        Lang: commonState["language"],
+        RefreshToken: authState["data"]["refreshToken"],
+      };
+      console.log('[LOG] === onFormSubmit ADD ===> ', params);
+      dispatch(Actions.fFetchCreateAssets(params, history));
+    } else {
+      let params = {
+        AssetID: updateItem.assetID,
+        AssetName: formData.assetName.trim(),
+        Suppiler: Number(formData.assetSupplier),
+        Descr: formData.assetDesciption,
+        PurchaseDate: moment(formData.assetPurchaseDate).format("YYYY-MM-DD"),
+        EffectiveDate: moment(formData.assetEffectiveDate).format("YYYY-MM-DD"),
+        WarrantyPeriod: formData.assetInsuranceDate !== ""
+          ? Number(formData.assetInsuranceDate)
+          : "",
+        OriginalPrice: formData.assetOriginPrice !== ""
+          ? Number(formData.assetOriginPrice)
+          : "",
+        DepreciationPeriod: formData.assetDepreciationDate !== ""
+          ? Number(formData.assetDepreciationDate)
+          : "",
+        DeptCode: formData.assetDepartment,
+        Inactive: formData.assetInactive,
+        Lang: commonState["language"],
+        RefreshToken: authState["data"]["refreshToken"],
+      };
+      console.log('[LOG] === onFormSubmit UPDATE ===> ', params);
+      dispatch(Actions.fFetchUpdateAssets(params, history));
+    }
   };
 
   const onSuccess = type => {
     if (type === "MasterData") {
-      setFormData({
-        ...formData,
-        assetSupplier: masterState["supplier"][0]?.supplierID,
-        assetDepartment: masterState["department"][0]?.deptCode,
-        assetCompany: masterState["company"][0]?.cmpnID,
-        assetType: masterState["assetType"][0]?.typeID,
-        assetGroup: masterState["assetGroup"][0]?.groupID,
-        assetAssets: masterState["assetGroupDetail"][0]?.absID,
+      setFormData({...formData, assetCompany: masterState["company"][0].shortName});
+      setDataSelect({
+        suppliers: [...dataSelect.suppliers, ...masterState["supplier"]],
+        departments: [...dataSelect.departments, ...masterState["department"]],
+        assetType: [...dataSelect.assetType, ...masterState["assetType"]],
+        assetGroup: [...dataSelect.assetGroup, ...masterState["assetGroup"]],
+        assetGroupDetail: [...dataSelect.assetGroupDetail, ...masterState["assetGroupDetail"]],
       });
+    }
+    if (type === "Create" || type === "Update") {
+      onResetData();
+      onClose(true, type === "Create"
+        ? t("success:create_assets")
+        : t("success:update_assets"));
     }
     setLoading({main: false, submit: false});
   };
 
-  const onError = error => {
+  const onError = (type, error) => {
     console.log('[LOG] === onError ===> ', error);
     setLoading({main: false, submit: false});
+    if (type === "Create" || type === "Update") {
+      onResetData();
+      onClose(false, error);
+    }
   };
 
   /**
    ** LIFE CYCLE 
    */
   useEffect(() => {
-    if (authState["successSignIn"]) {
+    if (loading.main && authState["successSignIn"]) {
       onGetMasterData();
     }
   }, [
+    loading.main,
     authState["successSignIn"]
+  ]);
+
+  useEffect(() => {
+    if (updateItem) {
+      onSetFormDataDetails(updateItem);
+    }
+  }, [
+    updateItem
   ]);
 
   useEffect(() => {
@@ -147,7 +332,7 @@ function AddEditForm(props) {
           return onSuccess("MasterData");
         }
         if (!masterState["successGetAll"] && masterState["errorGetAll"]) {
-          return onError(masterState["errorHelperGetAll"]);
+          return onError("MasterData", masterState["errorHelperGetAll"]);
         }
       }
     }
@@ -158,11 +343,47 @@ function AddEditForm(props) {
     masterState["errorGetAll"],
   ]);
 
+  useEffect(() => {
+    if (loading.submit) {
+      if (!approvedState["submittingCreateAssets"]) {
+        if (approvedState["successCreateAssets"] && !approvedState["errorCreateAssets"]) {
+          return onSuccess("Create");
+        }
+        if (!approvedState["successCreateAssets"] && approvedState["errorCreateAssets"]) {
+          return onError("Create", approvedState["errorHelperCreateAssets"]);
+        }
+      }
+    }
+  }, [
+    loading.submit,
+    approvedState["submittingCreateAssets"],
+    approvedState["successCreateAssets"],
+    approvedState["errorCreateAssets"],
+  ]);
+
+  useEffect(() => {
+    if (loading.submit) {
+      if (!approvedState["submittingUpdateAssets"]) {
+        if (approvedState["successUpdateAssets"] && !approvedState["errorUpdateAssets"]) {
+          return onSuccess("Update");
+        }
+        if (!approvedState["successUpdateAssets"] && approvedState["errorUpdateAssets"]) {
+          return onError("Update", approvedState["errorHelperUpdateAssets"]);
+        }
+      }
+    }
+  }, [
+    loading.submit,
+    approvedState["submittingUpdateAssets"],
+    approvedState["successUpdateAssets"],
+    approvedState["errorUpdateAssets"],
+  ]);
+
   /**
    ** RENDER 
    */
   const { errors, register, handleSubmit } = useForm();
-
+  const disabled = loading.main || loading.submit;
   return (
     <SimpleBar
       className={`nk-add-assets toggle-slide toggle-slide-right toggle-screen-any ${
@@ -173,44 +394,88 @@ function AddEditForm(props) {
         <BlockHead>
           <BlockBetween>
             <BlockHeadContent>
-              <BlockTitle tag="h3">{t("add_assets:title")}</BlockTitle>
+              {isAdd && <BlockTitle tag="h3">{t("add_assets:title")}</BlockTitle>}
+              {isUpdate && <BlockTitle tag="h3">{t("add_assets:update_title")}</BlockTitle>}
             </BlockHeadContent>
             <BlockHeadContent>
               <ul className="nk-block-tools g-3">
-                <li className="nk-block-tools-opt">
-                  <Button
-                    className="toggle btn-icon d-md-none"
-                    color="gray"
-                    onClick={onResetData}
-                  >
-                    <Icon name="undo"></Icon>
-                  </Button>
-                  <Button
-                    className="toggle d-none d-md-inline-flex"
-                    color="gray"
-                    onClick={onResetData}
-                  >
-                    <Icon name="undo"></Icon>
-                    <span>{t("common:reset")}</span>
-                  </Button>
-                </li>
-                <li className="nk-block-tools-opt">
-                  <Button
-                    className="toggle btn-icon d-md-none"
-                    color="primary"
-                    type="submit"
-                  >
-                    <Icon name="plus"></Icon>
-                  </Button>
-                  <Button
-                    className="toggle d-none d-md-inline-flex"
-                    color="primary"
-                    type="submit"
-                  >
-                    <Icon name="plus"></Icon>
-                    <span>{t("common:add_new")}</span>
-                  </Button>
-                </li>
+                {isAdd && (
+                  <li className="nk-block-tools-opt">
+                    <Button
+                      className="toggle btn-icon d-md-none"
+                      color="gray"
+                      type="button"
+                      disabled={disabled}
+                      onClick={onResetData}
+                    >
+                      <Icon name="undo"></Icon>
+                    </Button>
+                    <Button
+                      className="toggle d-none d-md-inline-flex"
+                      color="gray"
+                      type="button"
+                      disabled={disabled}
+                      onClick={onResetData}
+                    >
+                      <Icon name="undo"></Icon>
+                      <span>{t("common:reset")}</span>
+                    </Button>
+                  </li>
+                )}
+                {isAdd && (
+                  <li className="nk-block-tools-opt">
+                    <Button
+                      className="toggle btn-icon d-md-none"
+                      color="primary"
+                      type="submit"
+                      disabled={disabled}
+                    >
+                      {loading.submit && (
+                        <div className="spinner-border spinner-border-sm text-white" role="status" />
+                      )}
+                      {!loading.submit && <Icon name="plus"></Icon>}
+                    </Button>
+                    <Button
+                      className="toggle d-none d-md-inline-flex"
+                      color="primary"
+                      type="submit"
+                      disabled={disabled}
+                    >
+                      {loading.submit && (
+                        <div className="spinner-border spinner-border-sm text-white mr-2" role="status" />
+                      )}
+                      {!loading.submit && <Icon name="plus"></Icon>}
+                      <span>{t("common:add_new")}</span>
+                    </Button>
+                  </li>
+                )}
+                {isUpdate && (
+                  <li className="nk-block-tools-opt">
+                    <Button
+                      className="toggle btn-icon d-md-none"
+                      color="primary"
+                      type="submit"
+                      disabled={disabled}
+                    >
+                      {loading.submit && (
+                        <div className="spinner-border spinner-border-sm text-white" role="status" />
+                      )}
+                      {!loading.submit && <Icon name="edit-alt"></Icon>}
+                    </Button>
+                    <Button
+                      className="toggle d-none d-md-inline-flex"
+                      color="primary"
+                      type="submit"
+                      disabled={disabled}
+                    >
+                      {loading.submit && (
+                        <div className="spinner-border spinner-border-sm text-white mr-2" role="status" />
+                      )}
+                      {!loading.submit && <Icon name="edit-alt"></Icon>}
+                      <span>{t("common:update")}</span>
+                    </Button>
+                  </li>
+                )}
               </ul>
             </BlockHeadContent>
           </BlockBetween>
@@ -234,10 +499,14 @@ function AddEditForm(props) {
                     className="form-control"
                     type="text"
                     name="assetName"
+                    disabled={disabled}
+                    value={formData.assetName}
                     placeholder={t("add_assets:holder_name")}
                     onChange={onInputChange}
                   />
-                  {errors.assetName && <span className="invalid">{errors.assetName.message}</span>}
+                  {errors.assetName && (
+                    <span className="invalid">{errors.assetName.message}</span>
+                  )}
                 </div>
               </FormGroup>
             </Col>
@@ -250,41 +519,53 @@ function AddEditForm(props) {
                 </div>
                 <div className="form-control-wrap">
                   <div className="form-control-select">
-                    <Input type="select" name="assetSupplier" id="assetSupplier">
-                      {masterState["supplier"].length > 0 &&
-                        masterState["supplier"].map((itemS, indexS) => {
-                          return (
-                            <option
-                              key={itemS.supplierID + "_supplier_" + indexS}
-                              value={itemS.supplierID}>
-                              {itemS.supplierName}
-                            </option>
-                          )
-                        })}
-                    </Input>
+                    <select
+                      className="form-control form-select"
+                      name="assetSupplier"
+                      id="assetSupplier"
+                      disabled={disabled}
+                      value={formData.assetSupplier}
+                      onChange={e => onChangeSelect(null, e)}
+                    >
+                      {dataSelect.suppliers.map((itemS, indexS) => {
+                        return (
+                          <option
+                            key={itemS.supplierID + "_supplier_" + indexS}
+                            value={itemS.supplierID}>
+                            {itemS.supplierName}
+                          </option>
+                        )
+                      })}
+                    </select>
                   </div>
                 </div>
               </FormGroup>
             </Col>
             <Col md="2">
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="assetQuantity">
-                    {t("add_assets:quantity")}
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <input
-                    className="form-control"
-                    type="number"
-                    name="assetQuantity"
-                    value={formData.assetQuantity}
-                    placeholder={t("add_assets:holder_quantity")}
-                    onChange={onInputChange}
-                  />
-                  {errors.assetQuantity && <span className="invalid">{errors.assetQuantity.message}</span>}
-                </div>
-              </FormGroup>
+              {isAdd && (
+                <FormGroup>
+                  <div className="form-label-group">
+                    <label className="form-label" htmlFor="assetQuantity">
+                      {t("add_assets:quantity")}
+                    </label>
+                  </div>
+                  <div className="form-control-wrap">
+                    <input
+                      className="form-control"
+                      type="number"
+                      min={1}
+                      name="assetQuantity"
+                      disabled={disabled}
+                      value={formData.assetQuantity}
+                      placeholder={t("add_assets:holder_quantity")}
+                      onChange={onInputChange}
+                    />
+                    {errors.assetQuantity && (
+                      <span className="invalid">{errors.assetQuantity.message}</span>
+                    )}
+                  </div>
+                </FormGroup>
+              )}
             </Col>
             <Col size="12">
               <FormGroup>
@@ -298,6 +579,8 @@ function AddEditForm(props) {
                     className="no-resize form-control"
                     type="text"
                     name="assetDesciption"
+                    disabled={disabled}
+                    value={formData.assetDesciption}
                     placeholder={t("add_assets:holder_description")}
                     onChange={onInputChange}
                   />
@@ -318,6 +601,8 @@ function AddEditForm(props) {
                   <DatePicker
                     selected={formData.assetPurchaseDate}
                     className="form-control date-picker"
+                    disabled={disabled}
+                    value={formData.assetPurchaseDate}
                     onChange={e => onDateChange("assetPurchaseDate", e)}
                     customInput={<CustomDateInput />}
                   />
@@ -338,6 +623,8 @@ function AddEditForm(props) {
                   <DatePicker
                     selected={formData.assetEffectiveDate}
                     className="form-control date-picker"
+                    disabled={disabled}
+                    value={formData.assetEffectiveDate}
                     onChange={e => onDateChange("assetEffectiveDate", e)}
                     customInput={<CustomDateInput />}
                   />
@@ -355,11 +642,13 @@ function AddEditForm(props) {
                   <input
                     className="form-control"
                     type="number"
+                    min={1}
                     name="assetInsuranceDate"
+                    disabled={disabled}
+                    value={formData.assetInsuranceDate}
                     placeholder={t("add_assets:holder_insurance_date")}
                     onChange={onInputChange}
                   />
-                  {errors.assetInsuranceDate && <span className="invalid">{errors.assetInsuranceDate.message}</span>}
                 </div>
               </FormGroup>
             </Col>
@@ -371,14 +660,16 @@ function AddEditForm(props) {
                   </label>
                 </div>
                 <div className="form-control-wrap">
-                  <input
+                  <NumberFormat
                     className="form-control"
-                    type="number"
-                    name="assetOriginPrice"
-                    placeholder={t("add_assets:holder_origin_price")}
-                    onChange={onInputChange}
+                    name={"assetOriginPrice"}
+                    value={formData.assetOriginPrice}
+                    placeholder={t("add_assets:holder_origin_price") || ' '}
+                    thousandSeparator
+                    prefix="đ "
+                    onValueChange={val =>
+                      onInputChange({target: {name: "assetOriginPrice", value: val.floatValue}})}
                   />
-                  {errors.assetOriginPrice && <span className="invalid">{errors.assetOriginPrice.message}</span>}
                 </div>
               </FormGroup>
             </Col>
@@ -395,10 +686,11 @@ function AddEditForm(props) {
                     type="number"
                     min={1}
                     name="assetDepreciationDate"
+                    disabled={disabled}
+                    value={formData.assetDepreciationDate}
                     placeholder={t("add_assets:holder_depreciation_date")}
                     onChange={onInputChange}
                   />
-                  {errors.assetDepreciationDate && <span className="invalid">{errors.assetDepreciationDate.message}</span>}
                 </div>
               </FormGroup>
             </Col>
@@ -411,177 +703,218 @@ function AddEditForm(props) {
                 </div>
                 <div className="form-control-wrap">
                   <div className="form-control-select">
-                    <Input type="select" name="assetDepartment" id="assetDepartment">
-                      {masterState["department"].length > 0 &&
-                        masterState["department"].map((itemD, indexD) => {
-                          return (
-                            <option
-                              key={itemD.deptCode + "_department_" + indexD}
-                              value={itemD.deptCode}>
-                              {itemD.deptName}
-                            </option>
-                          )
-                        })}
-                    </Input>
-                  </div>
-                </div>
-              </FormGroup>
-            </Col>
-          </Row>
-
-          <div className="nk-divider divider md"></div>
-          <BlockHead>
-            <BlockTitle tag="h6">{t("add_assets:rule_code")}</BlockTitle>
-          </BlockHead>
-          <Row className="g-3">
-            <Col md="8">
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="assetCompany">
-                    {t("add_assets:company")}
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <div className="form-control-select">
-                    <Input
-                      type="select"
-                      name="assetCompany"
-                      id="assetCompany"
-                      value={formData.assetCompany}
-                      onChange={e => onChangeSelect("type", e)}
-                    >
-                      {masterState["company"].length > 0 &&
-                        masterState["company"].map((itemC, indexC) => {
-                          return (
-                            <option
-                              key={itemC.cmpnID + "_company_" + indexC}
-                              value={itemC.cmpnID}>
-                              {itemC.cmpnName}
-                            </option>
-                          )
-                        })}
-                    </Input>
-                  </div>
-                </div>
-              </FormGroup>
-            </Col>
-            <Col md="4">
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="assetType">
-                    {t("add_assets:type")}
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <div className="form-control-select">
-                    <Input
-                      type="select"
-                      name="assetType"
-                      id="assetType"
-                      value={formData.assetType}
-                      disabled={disables.type}
-                      onChange={e => onChangeSelect("group", e)}
-                    >
-                      {masterState["assetType"].length > 0 &&
-                        masterState["assetType"].map((itemAT, indexAT) => {
-                          return (
-                            <option
-                              key={itemAT.typeID + "_assetType_" + indexAT}
-                              value={itemAT.typeID}>
-                              {itemAT.typeName}
-                            </option>
-                          )
-                        })}
-                    </Input>
-                  </div>
-                </div>
-              </FormGroup>
-            </Col>
-            <Col md="4">
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="assetGroup">
-                    {t("add_assets:group")}
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <div className="form-control-select">
-                    <Input
-                      type="select"
-                      name="assetGroup"
-                      id="assetGroup"
-                      value={formData.assetGroup}
-                      disabled={disables.group}
-                      onChange={e => onChangeSelect("assets", e)}
-                    >
-                      {masterState["assetGroup"].length > 0 &&
-                        masterState["assetGroup"].map((itemAG, indexAG) => {
-                          return (
-                            <option
-                              key={itemAG.groupID + "_assetGroup_" + indexAG}
-                              value={itemAG.groupID}>
-                              {itemAG.groupName}
-                            </option>
-                          )
-                        })}
-                    </Input>
-                  </div>
-                </div>
-              </FormGroup>
-            </Col>
-            <Col md="4">
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="assetAssets">
-                    {t("add_assets:assets")}
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <div className="form-control-select">
-                    <Input
-                      type="select"
-                      name="assetAssets"
-                      id="assetAssets"
-                      value={formData.assetAssets}
-                      disabled={disables.assets}
+                    <select
+                      ref={register({ required: t("validate:empty") })}
+                      className="form-control form-select"
+                      name="assetDepartment"
+                      id="assetDepartment"
+                      disabled={disabled}
+                      value={formData.assetDepartment}
                       onChange={e => onChangeSelect(null, e)}
                     >
-                      {masterState["assetGroupDetail"].length > 0 &&
-                        masterState["assetGroupDetail"].map((itemAA, indexAA) => {
-                          return (
-                            <option
-                              key={itemAA.absID + "_assetGroupDetail_" + indexAA}
-                              value={itemAA.absID}>
-                              {itemAA.itemName}
-                            </option>
-                          )
-                        })}
-                    </Input>
+                      {dataSelect.departments.map((itemD, indexD) => {
+                        return (
+                          <option
+                            key={itemD.deptCode + "_department_" + indexD}
+                            value={itemD.deptCode}>
+                            {itemD.deptName}
+                          </option>
+                        )
+                      })}
+                    </select>
+                    {errors.assetDepartment && (
+                      <span className="invalid">{errors.assetDepartment.message}</span>
+                    )}
                   </div>
                 </div>
               </FormGroup>
             </Col>
-            <Col md="4">
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="assetPrefix">
-                    {t("add_assets:prefix")} <span className="text-danger">*</span>
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <input
-                    ref={register({ required: t("validate:empty") })}
-                    className="form-control"
-                    disabled={true}
-                    type="text"
-                    name="assetPrefix"
-                    onChange={onInputChange}
-                  />
-                  {errors.assetPrefix && <span className="invalid">{errors.assetPrefix.message}</span>}
-                </div>
-              </FormGroup>
-            </Col>
+            {isUpdate && (
+              <Col size="12" className="d-flex justify-content-end">
+                <FormGroup>
+                  <div className="custom-control custom-checkbox">
+                    <input
+                      type="checkbox"
+                      className="custom-control-input form-control"
+                      id="assetInactive"
+                      value={formData.assetInactive}
+                      onChange={onChangeCheckbox}
+                    />
+                    <label className="custom-control-label" htmlFor="assetInactive">
+                      {t("add_assets:non_use")}
+                    </label>
+                  </div>
+                </FormGroup>
+              </Col>
+            )}
           </Row>
+
+          {isAdd && (
+            <>
+              <div className="nk-divider divider md"></div>
+          
+              <BlockHead>
+                <BlockTitle tag="h6">{t("add_assets:rule_code")}</BlockTitle>
+              </BlockHead>
+              <Row className="g-3">
+                <Col md="8">
+                  <FormGroup>
+                    <div className="form-label-group">
+                      <label className="form-label" htmlFor="assetCompany">
+                        {t("add_assets:company")} <span className="text-danger">*</span>
+                      </label>
+                    </div>
+                    <div className="form-control-wrap">
+                      <div className="form-control-select">
+                        <select
+                          className="form-control form-select"
+                          name="assetCompany"
+                          id="assetCompany"
+                          disabled={disabled}
+                          value={formData.assetCompany}
+                          onChange={e => onChangeSelect("type", e, 1)}
+                        >
+                          {masterState["company"].length > 0 &&
+                            masterState["company"].map((itemC, indexC) => {
+                              return (
+                                <option
+                                  key={itemC.shortName + "_company_" + indexC}
+                                  value={itemC.shortName}>
+                                  {itemC.cmpnName}
+                                </option>
+                              )
+                            })}
+                        </select>
+                      </div>
+                    </div>
+                  </FormGroup>
+                </Col>
+                <Col md="4">
+                  <FormGroup>
+                    <div className="form-label-group">
+                      <label className="form-label" htmlFor="assetType">
+                        {t("add_assets:type")} <span className="text-danger">*</span>
+                      </label>
+                    </div>
+                    <div className="form-control-wrap">
+                      <div className="form-control-select">
+                        <select
+                          ref={register({ required: t("validate:empty") })}
+                          className="form-control form-select"
+                          name="assetType"
+                          id="assetType"
+                          disabled={disabled}
+                          value={formData.assetType}
+                          onChange={e => onChangeSelect("group", e, 2)}
+                        >
+                          {dataSelect.assetType.map((itemAT, indexAT) => {
+                            return (
+                              <option
+                                key={itemAT.typeID + "_assetType_" + indexAT}
+                                value={itemAT.typeID}>
+                                {itemAT.typeName}
+                              </option>
+                            )
+                          })}
+                        </select>
+                        {errors.assetType && (
+                          <span className="invalid">{errors.assetType.message}</span>
+                        )}
+                      </div>
+                    </div>
+                  </FormGroup>
+                </Col>
+                <Col md="4">
+                  <FormGroup>
+                    <div className="form-label-group">
+                      <label className="form-label" htmlFor="assetGroup">
+                        {t("add_assets:group")} <span className="text-danger">*</span>
+                      </label>
+                    </div>
+                    <div className="form-control-wrap">
+                      <div className="form-control-select">
+                        <select
+                          ref={register({ required: t("validate:empty") })}
+                          className="form-control form-select"
+                          name="assetGroup"
+                          id="assetGroup"
+                          value={formData.assetGroup}
+                          disabled={disables.group || disabled}
+                          onChange={e => onChangeSelect("assets", e, 3)}
+                        >
+                          {dataSelect.assetGroup.map((itemAG, indexAG) => {
+                            return (
+                              <option
+                                key={itemAG.groupID + "_assetGroup_" + indexAG}
+                                value={itemAG.groupID}>
+                                {itemAG.groupName}
+                              </option>
+                            )
+                          })}
+                        </select>
+                        {errors.assetGroup && (
+                          <span className="invalid">{errors.assetGroup.message}</span>
+                        )}
+                      </div>
+                    </div>
+                  </FormGroup>
+                </Col>
+                <Col md="4">
+                  <FormGroup>
+                    <div className="form-label-group">
+                      <label className="form-label" htmlFor="assetAssets">
+                        {t("add_assets:assets")} <span className="text-danger">*</span>
+                      </label>
+                    </div>
+                    <div className="form-control-wrap">
+                      <div className="form-control-select">
+                        <select
+                          ref={register({ required: t("validate:empty") })}
+                          className="form-control form-select"
+                          name="assetAssets"
+                          id="assetAssets"
+                          value={formData.assetAssets}
+                          disabled={disables.assets || disabled}
+                          onChange={e => onChangeSelect("assetPrefix", e, 4)}
+                        >
+                          {dataSelect.assetGroupDetail.map((itemAA, indexAA) => {
+                            return (
+                              <option
+                                key={itemAA.absID + "_assetAssets_" + indexAA}
+                                value={itemAA.absID}>
+                                {itemAA.itemName}
+                              </option>
+                            )
+                          })}
+                        </select>
+                        {errors.assetAssets && (
+                          <span className="invalid">{errors.assetAssets.message}</span>
+                        )}
+                      </div>
+                    </div>
+                  </FormGroup>
+                </Col>
+                <Col md="4">
+                  <FormGroup>
+                    <div className="form-label-group">
+                      <label className="form-label" htmlFor="assetPrefix">
+                        {t("add_assets:prefix")} <span className="text-danger">*</span>
+                      </label>
+                    </div>
+                    <div className="form-control-wrap">
+                      <input
+                        className="form-control"
+                        disabled={true}
+                        type="text"
+                        name="assetPrefix"
+                        value={formData.assetPrefix}
+                      />
+                    </div>
+                  </FormGroup>
+                </Col>
+              </Row>
+            </>
+          )}
         </Block>
       </Form>
     </SimpleBar>

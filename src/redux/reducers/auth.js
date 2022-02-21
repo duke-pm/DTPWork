@@ -6,9 +6,10 @@ export const initialState = {
   submittingForgotPass: false,
   submittingUpdatePass: false,
   submittingCheckTokenPass: false,
+  submittingRefresh: false,
 
-  successRefreshToken: false,
-  errorRefreshToken: false,
+  successRefresh: false,
+  errorRefresh: false,
 
   successSignIn: false,
   errorSignIn: false,
@@ -75,6 +76,28 @@ export default function (state = initialState, action = {}) {
         }
       };
 
+    case types.START_REFRESH_TOKEN:
+      return {
+        ...state,
+        submittingRefresh: true,
+        successRefresh: false,
+        errorRefresh: false,
+      };
+    case types.SUCCESS_REFRESH_TOKEN:
+      return {
+        ...state,
+        submittingRefresh: false,
+        successRefresh: true,
+        errorRefresh: false,
+      };
+    case types.ERROR_REFRESH_TOKEN:
+      return {
+        ...state,
+        submittingRefresh: false,
+        successRefresh: false,
+        errorRefresh: true,
+      };
+
     case types.START_SIGN_IN:
       return {
         ...state,
@@ -88,8 +111,6 @@ export default function (state = initialState, action = {}) {
         ...state,
         submitting: false,
         successSignIn: true,
-        successRefreshToken: true,
-        errorRefreshToken: false,
         errorSignIn: false,
         errorHelperSignIn: "",
         data: {

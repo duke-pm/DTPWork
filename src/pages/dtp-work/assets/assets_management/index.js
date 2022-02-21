@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from "react";
 import {useTranslation} from "react-i18next";
 import {useDispatch, useSelector} from "react-redux";
-import {Alert} from "reactstrap";
+import {useHistory} from "react-router-dom";
+import {toast} from "react-toastify";
 /** COMPONENTS */
 import Content from "layout/content/Content";
 import Head from "layout/head/Head";
@@ -15,13 +16,13 @@ import {
   BlockBetween,
 } from "components/Component";
 import TableAssets from "./table";
+import AddEditForm from "./form/AddEdit";
 /** COMMON */
 import Configs from "configs";
 import {getCookies} from "utils/Utils";
 import Routes from "services/routesApi";
 /** REDUX */
 import * as Actions from "redux/actions";
-import AddEditForm from "./form/AddEdit";
 
 const TabItem = ({
   index = 0,
@@ -46,9 +47,11 @@ const TabItem = ({
 
 const AssetsManagement = ({ ...props }) => {
   const {t} = useTranslation();
+  const history = useHistory();
 
   /** Use redux */
   const dispatch = useDispatch();
+  const commonState = useSelector(({common}) => common);
   const authState = useSelector(({auth}) => auth);
   const approvedState = useSelector(({approved}) => approved);
 
@@ -122,17 +125,14 @@ const AssetsManagement = ({ ...props }) => {
     search: false,
     getData: false,
   });
-  const [alert, setAlert] = useState({
-    show: false,
-    type: "",
-    helper: "",
-  });
   const [sm, updateSm] = useState(false);
   const [view, setView] = useState({
     add: false,
+    update: false,
   });
   const [searchText, setSearchText] = useState("");
   const [filterTab, setFilterTab] = useState(0);
+  const [updateItem, setUpdateItem] = useState(null);
 
   /**
    ** FUNCTIONS
@@ -140,10 +140,10 @@ const AssetsManagement = ({ ...props }) => {
   const toogleAddEdit = type => {
     setView({
       add: type === "add" ? true : false,
+      update: type === "update" ? true : false,
     });
+    if (!type && updateItem) setUpdateItem(null);
   };
-
-  const toggleAlert = () => setAlert({...alert, show: false});
 
   const toggleSm = () => updateSm(!sm);
 
@@ -163,8 +163,10 @@ const AssetsManagement = ({ ...props }) => {
       Search: search,
       SortColumn: "",
       SortDirection: "desc",
+      RefreshToken: authState["data"]["refreshToken"],
+      Lang: commonState["language"],
     };
-    dispatch(Actions.fFetchListAssets(tabActive.type, params));
+    dispatch(Actions.fFetchListAssets(tabActive.type, params, history));
   };
 
   const onSearch = (ev, idxTab) => {
@@ -217,9 +219,18 @@ const AssetsManagement = ({ ...props }) => {
     );
   };
 
+  const onUpdateItem = item => {
+    toogleAddEdit("update");
+    setUpdateItem(item);
+  };
+
   const onGetEmployee = () => {
     setLoading({...loading, getData: true});
-    dispatch(Actions.fFetchDataEmployee());
+    let params = {
+      RefreshToken: authState["data"]["refreshToken"],
+      Lang: commonState["language"],
+    };
+    dispatch(Actions.fFetchDataEmployee(params, history));
   };
 
   const onExportData = () => {
@@ -250,34 +261,29 @@ const AssetsManagement = ({ ...props }) => {
     setLoading({main: false, search: false, getData: false});
   };
 
+  const onCloseAddEditForm = (isSuccess, message) => {
+    toogleAddEdit();
+    if (isSuccess) {
+      toast(message, {type: "success"});
+    } else {
+      toast(message || t("error:title"), {type: "error"});
+    }
+    dispatch(Actions.fResetCreateAssets());
+  };
+
   const onSuccess = (showAlert, type) => {
     let tmphelper = "";
     if (type === "GetData") {
-      console.log('[LOG] === Success Get Data ===> ', type);
       tmphelper = "success:get_data";
     }
     setLoading({main: false, search: false, getData: false});
-    setAlert({
-      show: showAlert,
-      type: "success",
-      helper: tmphelper,
-    });
-    setTimeout(() => {
-      toggleAlert();
-    }, 2000);
+    tmphelper!== "" && toast(tmphelper, {type: "success"});
   };
 
   const onError = error => {
     console.log('[LOG] === Error ===> ', error);
     setLoading({main: false, search: false, getData: false});
-    setAlert({
-      show: true,
-      type: "error",
-      helper: error,
-    });
-    setTimeout(() => {
-      toggleAlert();
-    }, 2000);
+    toast(error, {type: "error"});
   };
 
   /** 
@@ -403,7 +409,7 @@ const AssetsManagement = ({ ...props }) => {
                           onClick={onGetEmployee}
                         >
                           {loading.getData && (
-                            <div class="spinner-border spinner-border-sm text-white mr-2" role="status" />
+                            <div className="spinner-border spinner-border-sm text-white mr-2" role="status" />
                           )}
                           {!loading.getData && <Icon className="mr-1" name="reload-alt"></Icon>}
                           <span>{t("assets:get_data")}</span>
@@ -436,16 +442,6 @@ const AssetsManagement = ({ ...props }) => {
           </BlockBetween>
         </BlockHead>
 
-        <Alert
-          className="alert-icon absolute-top-right"
-          color={alert.type === "success" ? "success" : "danger"}
-          fade
-          isOpen={alert.show}
-          toggle={toggleAlert}>
-          <Icon name={alert.type === "success" ? "check-circle" : "cross-circle"} />
-          <strong>{alert.helper}</strong>
-        </Alert>
-
         {/** Content table */}
         <Block>
           <ul className="nav nav-tabs">
@@ -469,6 +465,9 @@ const AssetsManagement = ({ ...props }) => {
             <div className={`tab-pane ${filterTab === 0 && "active"}`} id="tabAll">
               {!loading.main && !loading.search && (
                 <TableAssets
+                  history={history}
+                  commonState={commonState}
+                  authState={authState}
                   idxTab={filterTab}
                   curPage={tabs[0].page}
                   countItem={tabs[0].count}
@@ -477,22 +476,29 @@ const AssetsManagement = ({ ...props }) => {
                 />
               )}
               {(loading.main || loading.search) && (
-                <div class="d-flex justify-content-center">
+                <div className="d-flex justify-content-center">
                   <div className="spinner-border text-primary" role="status" />
                 </div>
               )}
             </div>
             <div className={`tab-pane ${filterTab === 1 && "active"}`} id="tabNotUsed">
               <TableAssets
+                history={history}
+                commonState={commonState}
+                authState={authState}
                 idxTab={filterTab}
                 curPage={tabs[1].page}
                 countItem={tabs[1].count}
                 dataAssets={tabs[1].data}
                 onChangePage={onChangePage}
+                onUpdateItem={onUpdateItem}
               />
             </div>
             <div className={`tab-pane ${filterTab === 2 && "active"}`} id="tabUsing">
               <TableAssets
+                history={history}
+                commonState={commonState}
+                authState={authState}
                 idxTab={filterTab}
                 curPage={tabs[2].page}
                 countItem={tabs[2].count}
@@ -502,6 +508,9 @@ const AssetsManagement = ({ ...props }) => {
             </div>
             <div className={`tab-pane ${filterTab === 3 && "active"}`} id="tabRepairInsurance">
               <TableAssets
+                history={history}
+                commonState={commonState}
+                authState={authState}
                 idxTab={filterTab}
                 curPage={tabs[3].page}
                 countItem={tabs[3].count}
@@ -511,6 +520,9 @@ const AssetsManagement = ({ ...props }) => {
             </div>
             <div className={`tab-pane ${filterTab === 4 && "active"}`} id="tabDamageLost">
               <TableAssets
+                history={history}
+                commonState={commonState}
+                authState={authState}
                 idxTab={filterTab}
                 curPage={tabs[4].page}
                 countItem={tabs[4].countDamage + tabs[4].countLost}
@@ -520,6 +532,9 @@ const AssetsManagement = ({ ...props }) => {
             </div>
             <div className={`tab-pane ${filterTab === 5 && "active"}`} id="tabLiquidation">
               <TableAssets
+                history={history}
+                commonState={commonState}
+                authState={authState}
                 idxTab={filterTab}
                 curPage={tabs[5].page}
                 countItem={tabs[5].count}
@@ -529,11 +544,20 @@ const AssetsManagement = ({ ...props }) => {
             </div>
           </div>
         </Block>
+
         <AddEditForm
-          show={view.add}
+          show={view.add || view.update}
+          isAdd={view.add}
+          isUpdate={view.update}
+          history={history}
+          commonState={commonState}
+          authState={authState}
+          updateItem={updateItem}
+          onClose={onCloseAddEditForm}
         />
 
         {view.add && <div className="toggle-overlay" onClick={toogleAddEdit}></div>}
+        {view.update && <div className="toggle-overlay" onClick={toogleAddEdit}></div>}
       </Content>
     </React.Fragment>
   );
