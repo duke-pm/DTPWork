@@ -6,6 +6,10 @@ export const initialState = {
   submittingDataEmployee: false,
   submittingCreateAssets: false,
   submittingUpdateAssets: false,
+  submittingApprovedRecallAssets: false,
+  submittingRepairAssets: false,
+  submittingLiquidationAssets: false,
+  submittingReuseAssets: false,
 
   successListAssets: false,
   errorListAssets: false,
@@ -26,6 +30,22 @@ export const initialState = {
   successUpdateAssets: false,
   errorUpdateAssets: false,
   errorHelperUpdateAssets: "",
+
+  successApprovedRecallAssets: false,
+  errorApprovedRecallAssets: false,
+  errorHelperApprovedRecallAssets: "",
+
+  successRepairAssets: false,
+  errorRepairAssets: false,
+  errorHelperRepairAssets: "",
+
+  successLiquidationAssets: false,
+  errorLiquidationAssets: false,
+  errorHelperLiquidationAssets: "",
+
+  successReuseAssets: false,
+  errorReuseAssets: false,
+  errorHelperReuseAssets: "",
 
   historyAsset: [],
 
@@ -212,59 +232,79 @@ export default function (state = initialState, action = {}) {
 
   //** Create/Update data assets */
   case types.RESET_CREATE_ASSETS:
-      return {
-        ...state,
-        submittingCreateAssets: false,
-        successCreateAssets: false,
-        errorCreateAssets: false,
-        errorHelperCreateAssets: "",
+    return {
+      ...state,
+      submittingCreateAssets: false,
+      successCreateAssets: false,
+      errorCreateAssets: false,
+      errorHelperCreateAssets: "",
 
-        submittingUpdateAssets: false,
-        successUpdateAssets: false,
-        errorUpdateAssets: false,
-        errorHelperUpdateAssets: "",
-      };
-    case types.START_CREATE_ASSETS:
-      return {
-        ...state,
-        submittingCreateAssets: true,
-        successCreateAssets: false,
-        errorCreateAssets: false,
-        errorHelperCreateAssets: "",
-      };
-    case types.ERROR_CREATE_ASSETS:
-      return {
-        ...state,
-        submittingCreateAssets: false,
-        successCreateAssets: false,
-        errorCreateAssets: true,
-        errorHelperCreateAssets: payload,
-      };
-    case types.SUCCESS_CREATE_ASSETS:
-      return {
-        ...state,
-        submittingCreateAssets: false,
-        successCreateAssets: true,
-        errorCreateAssets: false,
-        errorHelperCreateAssets: "",
-      };
-    case types.START_UPDATE_ASSETS:
-      return {
-        ...state,
-        submittingUpdateAssets: true,
-        successUpdateAssets: false,
-        errorUpdateAssets: false,
-        errorHelperUpdateAssets: "",
-      };
-    case types.ERROR_UPDATE_ASSETS:
-      return {
-        ...state,
-        submittingUpdateAssets: false,
-        successUpdateAssets: false,
-        errorUpdateAssets: true,
-        errorHelperUpdateAssets: payload,
-      };
-    case types.SUCCESS_UPDATE_ASSETS:
+      submittingUpdateAssets: false,
+      successUpdateAssets: false,
+      errorUpdateAssets: false,
+      errorHelperUpdateAssets: "",
+
+      submittingApprovedRecallAssets: false,
+      successApprovedRecallAssets: false,
+      errorApprovedRecallAssets: false,
+      errorHelperApprovedRecallAssets: "",
+
+      submittingRepairAssets: false,
+      successRepairAssets: false,
+      errorRepairAssets: false,
+      errorHelperRepairAssets: "",
+
+      submittingLiquidationAssets: false,
+      successLiquidationAssets: false,
+      errorLiquidationAssets: false,
+      errorHelperLiquidationAssets: "",
+
+      submittingReuseAssets: false,
+      successReuseAssets: false,
+      errorReuseAssets: false,
+      errorHelperReuseAssets: "",
+    };
+  case types.START_CREATE_ASSETS:
+    return {
+      ...state,
+      submittingCreateAssets: true,
+      successCreateAssets: false,
+      errorCreateAssets: false,
+      errorHelperCreateAssets: "",
+    };
+  case types.ERROR_CREATE_ASSETS:
+    return {
+      ...state,
+      submittingCreateAssets: false,
+      successCreateAssets: false,
+      errorCreateAssets: true,
+      errorHelperCreateAssets: payload,
+    };
+  case types.SUCCESS_CREATE_ASSETS:
+    return {
+      ...state,
+      submittingCreateAssets: false,
+      successCreateAssets: true,
+      errorCreateAssets: false,
+      errorHelperCreateAssets: "",
+    };
+  case types.START_UPDATE_ASSETS:
+    return {
+      ...state,
+      submittingUpdateAssets: true,
+      successUpdateAssets: false,
+      errorUpdateAssets: false,
+      errorHelperUpdateAssets: "",
+    };
+  case types.ERROR_UPDATE_ASSETS:
+    return {
+      ...state,
+      submittingUpdateAssets: false,
+      successUpdateAssets: false,
+      errorUpdateAssets: true,
+      errorHelperUpdateAssets: payload,
+    };
+  case types.SUCCESS_UPDATE_ASSETS:
       return {
         ...state,
         submittingUpdateAssets: false,
@@ -272,6 +312,110 @@ export default function (state = initialState, action = {}) {
         errorUpdateAssets: false,
         errorHelperUpdateAssets: "",
       };
+
+  //** Approved/Recall assets */
+  case types.START_APPROVED_RECALL_ASSETS:
+    return {
+      ...state,
+      submittingApprovedRecallAssets: true,
+      successApprovedRecallAssets: false,
+      errorApprovedRecallAssets: false,
+      errorHelperApprovedRecallAssets: "",
+    };
+  case types.ERROR_APPROVED_RECALL_ASSETS:
+    return {
+      ...state,
+      submittingApprovedRecallAssets: false,
+      successApprovedRecallAssets: false,
+      errorApprovedRecallAssets: true,
+      errorHelperApprovedRecallAssets: payload,
+    };
+  case types.SUCCESS_APPROVED_RECALL_ASSETS:
+    return {
+      ...state,
+      submittingApprovedRecallAssets: false,
+      successApprovedRecallAssets: true,
+      errorApprovedRecallAssets: false,
+      errorHelperApprovedRecallAssets: "",
+    };
+
+  //** Repair assets */
+  case types.START_REPAIR_ASSETS:
+    return {
+      ...state,
+      submittingRepairAssets: true,
+      successRepairAssets: false,
+      errorRepairAssets: false,
+      errorHelperRepairAssets: "",
+    };
+  case types.ERROR_REPAIR_ASSETS:
+    return {
+      ...state,
+      submittingRepairAssets: false,
+      successRepairAssets: false,
+      errorRepairAssets: true,
+      errorHelperRepairAssets: payload,
+    };
+  case types.SUCCESS_REPAIR_ASSETS:
+    return {
+      ...state,
+      submittingRepairAssets: false,
+      successRepairAssets: true,
+      errorRepairAssets: false,
+      errorHelperRepairAssets: "",
+    };
+
+  //** Liquidation assets */
+  case types.START_LIQUIDATION_ASSETS:
+    return {
+      ...state,
+      submittingLiquidationAssets: true,
+      successLiquidationAssets: false,
+      errorLiquidationAssets: false,
+      errorHelperLiquidationAssets: "",
+    };
+  case types.ERROR_LIQUIDATION_ASSETS:
+    return {
+      ...state,
+      submittingLiquidationAssets: false,
+      successLiquidationAssets: false,
+      errorLiquidationAssets: true,
+      errorHelperLiquidationAssets: payload,
+    };
+  case types.SUCCESS_LIQUIDATION_ASSETS:
+    return {
+      ...state,
+      submittingLiquidationAssets: false,
+      successLiquidationAssets: true,
+      errorLiquidationAssets: false,
+      errorHelperLiquidationAssets: "",
+    };
+
+  //** Reuse assets */
+  case types.START_REUSE_ASSETS:
+    return {
+      ...state,
+      submittingReuseAssets: true,
+      successReuseAssets: false,
+      errorReuseAssets: false,
+      errorHelperReuseAssets: "",
+    };
+  case types.ERROR_REUSE_ASSETS:
+    return {
+      ...state,
+      submittingReuseAssets: false,
+      successReuseAssets: false,
+      errorReuseAssets: true,
+      errorHelperReuseAssets: payload,
+    };
+  case types.SUCCESS_REUSE_ASSETS:
+    return {
+      ...state,
+      submittingReuseAssets: false,
+      successReuseAssets: true,
+      errorReuseAssets: false,
+      errorHelperReuseAssets: "",
+    };
 
     default:
       return state;

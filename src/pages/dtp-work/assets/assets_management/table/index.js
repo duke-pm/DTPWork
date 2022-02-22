@@ -30,6 +30,10 @@ function TableAssets(props) {
     countItem,
     onChangePage,
     onUpdateItem,
+    onApprovedRecallItem,
+    onRepairItem,
+    onLiquidationItem,
+    onReuseItem,
   } = props;
 
   /** Use redux */
@@ -290,7 +294,7 @@ function TableAssets(props) {
                 <DataTableRow>
                   <span className="tb-sub">{item.remarks || "-"}</span>
                 </DataTableRow>
-                {idxTab !== 5 && (
+                {idxTab < 4 && (
                   <DataTableRow className="nk-tb-col-tools">
                     <ul className="nk-tb-actions gx-1">
                       <li>
@@ -322,7 +326,7 @@ function TableAssets(props) {
                                     href="#dropdownApproved"
                                     onClick={(ev) => {
                                       ev.preventDefault();
-                                      onUpdateItem(item);
+                                      onApprovedRecallItem("approved", item);
                                     }}
                                   >
                                     <Icon name="clipboad-check"></Icon>
@@ -352,6 +356,7 @@ function TableAssets(props) {
                                     href="#dropdownRecall"
                                     onClick={(ev) => {
                                       ev.preventDefault();
+                                      onApprovedRecallItem("recall", item);
                                     }}
                                   >
                                     <Icon name="undo"></Icon>
@@ -366,9 +371,10 @@ function TableAssets(props) {
                                     href="#dropdownRepair"
                                     onClick={(ev) => {
                                       ev.preventDefault();
+                                      onRepairItem(item);
                                     }}
                                   >
-                                    <Icon name="reload-alt"></Icon>
+                                    <Icon name="setting"></Icon>
                                     <span>{t("assets:repair_assets")}</span>
                                   </DropdownItem>
                                 </li>
@@ -380,6 +386,7 @@ function TableAssets(props) {
                                     href="#dropdownRecall"
                                     onClick={(ev) => {
                                       ev.preventDefault();
+                                      onLiquidationItem(item);
                                     }}
                                   >
                                     <Icon name="money"></Icon>
@@ -394,6 +401,7 @@ function TableAssets(props) {
                                     href="#dropdownRepair"
                                     onClick={(ev) => {
                                       ev.preventDefault();
+                                      onReuseItem(item);
                                     }}
                                   >
                                     <Icon name="undo"></Icon>
@@ -401,36 +409,55 @@ function TableAssets(props) {
                                   </DropdownItem>
                                 </li>
                               )}
-                              {idxTab === 4 && (
+                            </ul>
+                          </DropdownMenu>
+                        </UncontrolledDropdown>
+                      </li>
+                    </ul>
+                  </DataTableRow>
+                )}
+                {idxTab === 4 && (
+                  <DataTableRow className="nk-tb-col-tools">
+                    <ul className="nk-tb-actions gx-1">
+                      <li>
+                        <UncontrolledDropdown>
+                          {item.statusID === 4 && (
+                            <DropdownToggle tag="a" className="btn btn-icon dropdown-toggle btn-trigger">
+                              <Icon name="more-h"></Icon>
+                            </DropdownToggle>
+                          )}
+                          {item.statusID == 4 && (
+                            <DropdownMenu right>
+                              <ul className="link-list-opt no-bdr">
                                 <li>
                                   <DropdownItem
                                     tag="a"
                                     href="#dropdownRecall"
                                     onClick={(ev) => {
                                       ev.preventDefault();
+                                      onLiquidationItem(item);
                                     }}
                                   >
                                     <Icon name="money"></Icon>
                                     <span>{t("assets:liquidation_assets")}</span>
                                   </DropdownItem>
                                 </li>
-                              )}
-                              {idxTab === 4 && (
                                 <li>
                                   <DropdownItem
                                     tag="a"
                                     href="#dropdownRepair"
                                     onClick={(ev) => {
                                       ev.preventDefault();
+                                      onRepairItem(item);
                                     }}
                                   >
-                                    <Icon name="reload-alt"></Icon>
+                                    <Icon name="setting"></Icon>
                                     <span>{t("assets:repair_assets")}</span>
                                   </DropdownItem>
                                 </li>
-                              )}
-                            </ul>
-                          </DropdownMenu>
+                              </ul>
+                            </DropdownMenu>
+                          )}
                         </UncontrolledDropdown>
                       </li>
                     </ul>

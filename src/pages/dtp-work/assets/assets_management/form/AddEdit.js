@@ -170,16 +170,18 @@ function AddEditForm(props) {
       assetName: data?.assetName || "",
       assetSupplier: fSupplier?.supplierID || "",
       assetDesciption: data?.descr,
-      assetPurchaseDate: new Date(
-        moment(data.purchaseDate).year() + "/" +
-        (moment(data.purchaseDate).month() + 1) + "/" +
-        moment(data.purchaseDate).date()
-      ),
-      assetEffectiveDate: new Date(
-        moment(data.effectiveDate).year() + "/" +
-        (moment(data.effectiveDate).month() + 1) + "/" +
-        moment(data.effectiveDate).date()
-      ),
+      assetPurchaseDate: data?.purchaseDate
+        ? new Date(
+          moment(data.purchaseDate).year() + "/" +
+          (moment(data.purchaseDate).month() + 1) + "/" +
+          moment(data.purchaseDate).date())
+        : "",
+      assetEffectiveDate: data?.effectiveDate
+        ? new Date(
+          moment(data.effectiveDate).year() + "/" +
+          (moment(data.effectiveDate).month() + 1) + "/" +
+          moment(data.effectiveDate).date())
+        : "",
       assetInsuranceDate: data?.warrantyPeriod || "",
       assetOriginPrice: data?.originalPrice || "",
       assetDepreciationDate: data?.depreciationPeriod || "",
@@ -278,7 +280,8 @@ function AddEditForm(props) {
 
   const onSuccess = type => {
     if (type === "MasterData") {
-      setFormData({...formData, assetCompany: masterState["company"][0].shortName});
+      masterState["company"][0] &&
+        setFormData({...formData, assetCompany: masterState["company"][0].shortName});
       setDataSelect({
         suppliers: [...dataSelect.suppliers, ...masterState["supplier"]],
         departments: [...dataSelect.departments, ...masterState["department"]],
@@ -309,24 +312,26 @@ function AddEditForm(props) {
    ** LIFE CYCLE 
    */
   useEffect(() => {
-    if (loading.main && authState["successSignIn"]) {
+    if (loading.main && authState["successSignIn"] && show) {
       onGetMasterData();
     }
   }, [
+    show,
     loading.main,
-    authState["successSignIn"]
+    authState["successSignIn"],
   ]);
 
   useEffect(() => {
-    if (updateItem) {
+    if (updateItem && show) {
       onSetFormDataDetails(updateItem);
     }
   }, [
+    show,
     updateItem
   ]);
 
   useEffect(() => {
-    if (loading.main) {
+    if (loading.main && show) {
       if (!masterState["submittingGetAll"]) {
         if (masterState["successGetAll"] && !masterState["errorGetAll"]) {
           return onSuccess("MasterData");
@@ -337,6 +342,7 @@ function AddEditForm(props) {
       }
     }
   }, [
+    show,
     loading.main,
     masterState["submittingGetAll"],
     masterState["successGetAll"],
@@ -344,7 +350,7 @@ function AddEditForm(props) {
   ]);
 
   useEffect(() => {
-    if (loading.submit) {
+    if (loading.submit && show) {
       if (!approvedState["submittingCreateAssets"]) {
         if (approvedState["successCreateAssets"] && !approvedState["errorCreateAssets"]) {
           return onSuccess("Create");
@@ -355,6 +361,7 @@ function AddEditForm(props) {
       }
     }
   }, [
+    show,
     loading.submit,
     approvedState["submittingCreateAssets"],
     approvedState["successCreateAssets"],
@@ -362,7 +369,7 @@ function AddEditForm(props) {
   ]);
 
   useEffect(() => {
-    if (loading.submit) {
+    if (loading.submit && show) {
       if (!approvedState["submittingUpdateAssets"]) {
         if (approvedState["successUpdateAssets"] && !approvedState["errorUpdateAssets"]) {
           return onSuccess("Update");
@@ -373,6 +380,7 @@ function AddEditForm(props) {
       }
     }
   }, [
+    show,
     loading.submit,
     approvedState["submittingUpdateAssets"],
     approvedState["successUpdateAssets"],
@@ -481,6 +489,8 @@ function AddEditForm(props) {
           </BlockBetween>
         </BlockHead>
 
+        <div className="nk-divider divider md"></div>
+
         <Block>
           <BlockHead>
             <BlockTitle tag="h6">{t("add_assets:information")}</BlockTitle>
@@ -498,6 +508,7 @@ function AddEditForm(props) {
                     ref={register({ required: t("validate:empty") })}
                     className="form-control"
                     type="text"
+                    id="assetName"
                     name="assetName"
                     disabled={disabled}
                     value={formData.assetName}
@@ -554,6 +565,7 @@ function AddEditForm(props) {
                       className="form-control"
                       type="number"
                       min={1}
+                      id="assetQuantity"
                       name="assetQuantity"
                       disabled={disabled}
                       value={formData.assetQuantity}
@@ -578,6 +590,7 @@ function AddEditForm(props) {
                   <textarea
                     className="no-resize form-control"
                     type="text"
+                    id="assetDesciption"
                     name="assetDesciption"
                     disabled={disabled}
                     value={formData.assetDesciption}
@@ -643,6 +656,7 @@ function AddEditForm(props) {
                     className="form-control"
                     type="number"
                     min={1}
+                    id="assetInsuranceDate"
                     name="assetInsuranceDate"
                     disabled={disabled}
                     value={formData.assetInsuranceDate}
@@ -685,6 +699,7 @@ function AddEditForm(props) {
                     className="form-control"
                     type="number"
                     min={1}
+                    id="assetDepreciationDate"
                     name="assetDepreciationDate"
                     disabled={disabled}
                     value={formData.assetDepreciationDate}

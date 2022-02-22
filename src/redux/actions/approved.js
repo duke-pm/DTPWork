@@ -183,3 +183,178 @@ export const fFetchUpdateAssets = (params, history) => {
       });
   };
 };
+
+//** Approved data assets */
+export const fErrorApprovedAssets = error => ({
+  type: types.ERROR_APPROVED_RECALL_ASSETS,
+  payload: error,
+});
+
+export const fSuccessApprovedAssets = () => ({
+  type: types.SUCCESS_APPROVED_RECALL_ASSETS,
+});
+
+export const fFetchApprovedAssets = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_APPROVED_RECALL_ASSETS});
+
+    Services.approved.approvedAssets(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessApprovedAssets());
+        } else {
+          return dispatch(fErrorApprovedAssets(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorApprovedAssets(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};
+
+//** Recall data assets */
+export const fErrorRecallAssets = error => ({
+  type: types.ERROR_APPROVED_RECALL_ASSETS,
+  payload: error,
+});
+
+export const fSuccessRecallAssets = () => ({
+  type: types.SUCCESS_APPROVED_RECALL_ASSETS,
+});
+
+export const fFetchRecallAssets = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_APPROVED_RECALL_ASSETS});
+
+    Services.approved.recallAssets(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessRecallAssets());
+        } else {
+          return dispatch(fErrorRecallAssets(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorRecallAssets(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};
+
+//** Repair data assets */
+export const fErrorRepairAssets = error => ({
+  type: types.ERROR_REPAIR_ASSETS,
+  payload: error,
+});
+
+export const fSuccessRepairAssets = () => ({
+  type: types.SUCCESS_REPAIR_ASSETS,
+});
+
+export const fFetchRepairAssets = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_REPAIR_ASSETS});
+
+    Services.approved.repairAssets(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessRepairAssets());
+        } else {
+          return dispatch(fErrorRepairAssets(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorRepairAssets(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};
+
+//** Liquidation data assets */
+export const fErrorLiquidationAssets = error => ({
+  type: types.ERROR_LIQUIDATION_ASSETS,
+  payload: error,
+});
+
+export const fSuccessLiquidationAssets = () => ({
+  type: types.SUCCESS_LIQUIDATION_ASSETS,
+});
+
+export const fFetchLiquidationAssets = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_LIQUIDATION_ASSETS});
+
+    Services.approved.liquidationAssets(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessLiquidationAssets());
+        } else {
+          return dispatch(fErrorLiquidationAssets(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorLiquidationAssets(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};
+
+//** Reuse data assets */
+export const fErrorReuseAssets = error => ({
+  type: types.ERROR_REUSE_ASSETS,
+  payload: error,
+});
+
+export const fSuccessReuseAssets = () => ({
+  type: types.SUCCESS_REUSE_ASSETS,
+});
+
+export const fFetchReuseAssets = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_REUSE_ASSETS});
+
+    Services.approved.reuseAssets(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessReuseAssets());
+        } else {
+          return dispatch(fErrorReuseAssets(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorReuseAssets(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};

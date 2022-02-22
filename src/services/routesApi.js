@@ -7,17 +7,25 @@ const Routes = {
     UPDATE_PASSWORD: "/User/UpdateNewPassword",
     CHECK_TOKEN_PASSWORD: "/User/CheckToken",
   },
+  MASTER_DATA: {
+    GET_ALL: "/MasterData/GetDataForForm",
+    // GET_ASSETS_BY_USER: "/Assets/GetListByUser",
+  },
   APPROVED: {
     LIST_ASSETS: "/Assets/GetList",
     HISTORY_ASSET: "/Assets/GetHistoryByID",
     DATA_EMPLOYEE: "/Assets/GetDataEmployee",
-    EXPORT_ASSETS: "/Assets/ExportAsset",
     CREATE_ASSETS: "/Assets/Create",
     UPDATE_ASSETS: "/Assets/Update",
-  },
-  MASTER_DATA: {
-    GET_ALL: "/MasterData/GetDataForForm",
-    // GET_ASSETS_BY_USER: "/Assets/GetListByUser",
+    APPROVED_ASSETS: "/AssetTrans/ProcessAsset",
+    RECALL_ASSETS: "/AssetTrans/ProcessAsset",
+    REPAIR_ASSETS: "/AssetTrans/ProcessAsset",
+    LIQUIDATION_ASSETS: "/AssetTrans/ProcessAsset",
+    REUSE_ASSETS: "/AssetTrans/ProcessAsset",
+
+    EXPORT_ASSETS: "/Assets/ExportAsset",
+    EXPORT_APPROVED_ASSETS: "/RQAsset/ExportAllocation",
+    EXPORT_RECALL_ASSETS: "/RQAsset/ExportRequestRecovery",
   },
   // APPROVED: {
   //   LIST_REQUEST: "/RQAsset/GetList",

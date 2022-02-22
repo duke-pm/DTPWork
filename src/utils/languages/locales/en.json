@@ -13,13 +13,14 @@
     "no_data": "No corresponding data found!",
     "prev": "Prev",
     "next": "Next",
-    "add": "Add",
+    "save": "Save",
     "cancel": "Cancel",
     "close": "Close",
     "ok": "OK",
     "confirm": "Confirm",
     "reset": "Reset",
-    "non_data": "Non select"
+    "non_data": "Non select",
+    "choose_file": "Choose file"
   },
   "validate": {
     "empty": "This field is required!",
@@ -34,7 +35,8 @@
     "send_reset_pass_sub_title": "Please sign in again now with your new password!",
     "get_data": "The data has been successfully updated!",
     "create_assets": "Successfully added new asset!\nPlease check again in list!",
-    "update_assets": "Successfully updated asset!\nPlease check again in list!"
+    "update_assets": "Successfully updated asset!\nPlease check again in list!",
+    "approved_assets": "Successfully approved asset!\nPlease check again in list!"
   },
   "error": {
     "title": "Error!!!",
@@ -144,5 +146,28 @@
     "assets": "Assets",
     "prefix": "Prefix",
     "non_use": "Non use"
+  },
+  "approved_assets": {
+    "title": "Approved Asset",
+    "information": "Basic Informations",
+    "code": "Code",
+    "name": "Name",
+    "group": "Group",
+    "description": "Description",
+    "purchase_date": "Purchase date",
+    "origin_price": "Origin price",
+    "status": "Status",
+    "information_approved": "Approved Informations",
+    "approved_for": "Approved Employee",
+    "position": "Position Job",
+    "holder_position": "Position Job...",
+    "department": "Department",
+    "holder_department": "Department...",
+    "region": "Region",
+    "holder_region": "Region...",
+    "approved_date": "Approved date",
+    "reason": "Reason",
+    "holder_reason": "Reason...",
+    "file": "Attached files"
   }
 }

@@ -17,12 +17,16 @@ import {
 } from "components/Component";
 import TableAssets from "./table";
 import AddEditForm from "./form/AddEdit";
+import ApprovedForm from "./form/Approved";
+import RepairForm from "./form/Repair";
+import LiquidationForm from "./form/Liquidation";
 /** COMMON */
 import Configs from "configs";
-import {getCookies} from "utils/Utils";
 import Routes from "services/routesApi";
+import {getCookies} from "utils/Utils";
 /** REDUX */
 import * as Actions from "redux/actions";
+import ReUseForm from "./form/ReUse";
 
 const TabItem = ({
   index = 0,
@@ -129,6 +133,11 @@ const AssetsManagement = ({ ...props }) => {
   const [view, setView] = useState({
     add: false,
     update: false,
+    approved: false,
+    recall: false,
+    repair: false,
+    liquidation: false,
+    reuse: false,
   });
   const [searchText, setSearchText] = useState("");
   const [filterTab, setFilterTab] = useState(0);
@@ -137,10 +146,15 @@ const AssetsManagement = ({ ...props }) => {
   /**
    ** FUNCTIONS
    */
-  const toogleAddEdit = type => {
+  const toogleView = type => {
     setView({
       add: type === "add" ? true : false,
       update: type === "update" ? true : false,
+      approved: type === "approved" ? true : false,
+      recall: type === "recall" ? true : false,
+      repair: type === "repair" ? true : false,
+      liquidation: type === "liquidation" ? true : false,
+      reuse: type === "reuse" ? true : false,
     });
     if (!type && updateItem) setUpdateItem(null);
   };
@@ -190,11 +204,11 @@ const AssetsManagement = ({ ...props }) => {
     ev.preventDefault();
     setLoading({...loading, main: true});
     // Update active tab
-    setFilterTab(idxTab);
     let tmpTabs = [...tabs];
     tmpTabs[idxTab].page = 1;
     setTabs(tmpTabs);
     setSearchText(tmpTabs[idxTab].search);
+    setFilterTab(idxTab);
     // Call api
     onStartGetData(
       idxTab,
@@ -220,7 +234,27 @@ const AssetsManagement = ({ ...props }) => {
   };
 
   const onUpdateItem = item => {
-    toogleAddEdit("update");
+    toogleView("update");
+    setUpdateItem(item);
+  };
+
+  const onApprovedRecallItem = (type, item) => {
+    toogleView(type);
+    setUpdateItem(item);
+  };
+
+  const onRepairItem = item => {
+    toogleView("repair");
+    setUpdateItem(item);
+  };
+
+  const onLiquidationItem = item => {
+    toogleView("liquidation");
+    setUpdateItem(item);
+  };
+
+  const onReuseItem = item => {
+    toogleView("reuse");
     setUpdateItem(item);
   };
 
@@ -262,16 +296,24 @@ const AssetsManagement = ({ ...props }) => {
   };
 
   const onCloseAddEditForm = (isSuccess, message) => {
-    toogleAddEdit();
+    toogleView();
     if (isSuccess) {
-      toast(message, {type: "success"});
+      toast(message, {type: "success", autoClose: 2000});
     } else {
-      toast(message || t("error:title"), {type: "error"});
+      toast(message || t("error:title"), {type: "error", autoClose: 2000});
     }
     dispatch(Actions.fResetCreateAssets());
+    setLoading({...loading, main: true});
+    // Call api
+    isSuccess && onStartGetData(
+      filterTab,
+      tabs[filterTab].id,
+      tabs[filterTab].page,
+      tabs[filterTab].search,
+    );
   };
 
-  const onSuccess = (showAlert, type) => {
+  const onSuccess = type => {
     let tmphelper = "";
     if (type === "GetData") {
       tmphelper = "success:get_data";
@@ -321,7 +363,7 @@ const AssetsManagement = ({ ...props }) => {
     if (loading.getData) {
       if (!approvedState["submittingDataEmployee"]) {
         if (approvedState["successDataEmployee"] && !approvedState["errorDataEmployee"]) {
-          return onSuccess(true, "GetData");
+          return onSuccess("GetData");
         }
 
         if (!approvedState["successDataEmployee"] && approvedState["errorDataEmployee"]) {
@@ -421,14 +463,14 @@ const AssetsManagement = ({ ...props }) => {
                         <Button
                           className="toggle btn-icon d-md-none"
                           color="primary"
-                          onClick={() => toogleAddEdit("add")}
+                          onClick={() => toogleView("add")}
                         >
                           <Icon name="plus"></Icon>
                         </Button>
                         <Button
                           className="toggle d-none d-md-inline-flex"
                           color="primary"
-                          onClick={() => toogleAddEdit("add")}
+                          onClick={() => toogleView("add")}
                         >
                           <Icon name="plus"></Icon>
                           <span>{t("common:add_new")}</span>
@@ -492,6 +534,7 @@ const AssetsManagement = ({ ...props }) => {
                 dataAssets={tabs[1].data}
                 onChangePage={onChangePage}
                 onUpdateItem={onUpdateItem}
+                onApprovedRecallItem={onApprovedRecallItem}
               />
             </div>
             <div className={`tab-pane ${filterTab === 2 && "active"}`} id="tabUsing">
@@ -504,6 +547,8 @@ const AssetsManagement = ({ ...props }) => {
                 countItem={tabs[2].count}
                 dataAssets={tabs[2].data}
                 onChangePage={onChangePage}
+                onApprovedRecallItem={onApprovedRecallItem}
+                onRepairItem={onRepairItem}
               />
             </div>
             <div className={`tab-pane ${filterTab === 3 && "active"}`} id="tabRepairInsurance">
@@ -516,6 +561,8 @@ const AssetsManagement = ({ ...props }) => {
                 countItem={tabs[3].count}
                 dataAssets={tabs[3].data}
                 onChangePage={onChangePage}
+                onLiquidationItem={onLiquidationItem}
+                onReuseItem={onReuseItem}
               />
             </div>
             <div className={`tab-pane ${filterTab === 4 && "active"}`} id="tabDamageLost">
@@ -528,6 +575,8 @@ const AssetsManagement = ({ ...props }) => {
                 countItem={tabs[4].countDamage + tabs[4].countLost}
                 dataAssets={tabs[4].data}
                 onChangePage={onChangePage}
+                onLiquidationItem={onLiquidationItem}
+                onRepairItem={onRepairItem}
               />
             </div>
             <div className={`tab-pane ${filterTab === 5 && "active"}`} id="tabLiquidation">
@@ -556,8 +605,51 @@ const AssetsManagement = ({ ...props }) => {
           onClose={onCloseAddEditForm}
         />
 
-        {view.add && <div className="toggle-overlay" onClick={toogleAddEdit}></div>}
-        {view.update && <div className="toggle-overlay" onClick={toogleAddEdit}></div>}
+        <ApprovedForm
+          show={view.approved || view.recall}
+          isApproved={view.approved}
+          isRecall={view.recall}
+          history={history}
+          commonState={commonState}
+          authState={authState}
+          updateItem={updateItem}
+          onClose={onCloseAddEditForm}
+        />
+
+        <RepairForm
+          show={view.repair}
+          history={history}
+          commonState={commonState}
+          authState={authState}
+          updateItem={updateItem}
+          onClose={onCloseAddEditForm}
+        />
+
+        <LiquidationForm
+          show={view.liquidation}
+          history={history}
+          commonState={commonState}
+          authState={authState}
+          updateItem={updateItem}
+          onClose={onCloseAddEditForm}
+        />
+
+        <ReUseForm
+          show={view.reuse}
+          history={history}
+          commonState={commonState}
+          authState={authState}
+          updateItem={updateItem}
+          onClose={onCloseAddEditForm}
+        />
+
+        {view.add && <div className="toggle-overlay" onClick={toogleView}></div>}
+        {view.update && <div className="toggle-overlay" onClick={toogleView}></div>}
+        {view.approved && <div className="toggle-overlay" onClick={toogleView}></div>}
+        {view.recall && <div className="toggle-overlay" onClick={toogleView}></div>}
+        {view.repair && <div className="toggle-overlay" onClick={toogleView}></div>}
+        {view.liquidation && <div className="toggle-overlay" onClick={toogleView}></div>}
+        {view.reuse && <div className="toggle-overlay" onClick={toogleView}></div>}
       </Content>
     </React.Fragment>
   );

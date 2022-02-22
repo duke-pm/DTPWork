@@ -99,4 +99,149 @@ export default {
         });
     });
   },
+  approvedAssets: params => {
+    return new Promise((resolve, reject) => {
+      const formData = new FormData();
+      formData.append("AssetID", params.AssetID);
+      formData.append("EmpCode", params.EmpCode);
+      formData.append("DeptCode", params.DeptCode);
+      formData.append("RegionCode", params.RegionCode);
+      formData.append("Reasons", params.Reasons);
+      formData.append("JobTitle", params.JobTitle);
+      formData.append("FileUpload", params.FileUpload || "");
+      formData.append("TransDate", params.TransDate);
+      formData.append("TypeUpdate", "Allocation");
+
+      API.post(jwtServiceConfig.baseURL + Routes.APPROVED.APPROVED_ASSETS, formData)
+        .then(response => {
+          console.log("FETCH APPROVED ASSETS => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          console.log("ERROR APPROVED ASSETS => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
+  recallAssets: params => {
+    return new Promise((resolve, reject) => {
+      const formData = new FormData();
+      formData.append("AssetID", params.AssetID);
+      formData.append("EmpCode", params.EmpCode);
+      formData.append("DeptCode", params.DeptCode);
+      formData.append("RegionCode", params.RegionCode);
+      formData.append("Reasons", params.Reasons);
+      formData.append("JobTitle", params.JobTitle);
+      formData.append("FileUpload", params.FileUpload || "");
+      formData.append("TransDate", params.TransDate);
+      formData.append("TypeUpdate", "Recovery");
+
+      API.post(jwtServiceConfig.baseURL + Routes.APPROVED.RECALL_ASSETS, formData)
+        .then(response => {
+          console.log("FETCH RECALL ASSETS => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          console.log("ERROR RECALL ASSETS => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
+  repairAssets: params => {
+    return new Promise((resolve, reject) => {
+      const formData = new FormData();
+      formData.append("AssetID", params.AssetID);
+      formData.append("EmpCode", params.EmpCode);
+      formData.append("DeptCode", params.DeptCode);
+      formData.append("RegionCode", params.RegionCode);
+      formData.append("Reasons", params.Reasons);
+      formData.append("JobTitle", params.JobTitle);
+      formData.append("FileUpload", params.FileUpload || "");
+      formData.append("TransDate", params.TransDate);
+      formData.append("SupplierRepair", params.SupplierRepair);
+      formData.append("ExpCost", params.ExpCost);
+      formData.append("TypeUpdate", "Repair");
+
+      API.post(jwtServiceConfig.baseURL + Routes.APPROVED.REPAIR_ASSETS, formData)
+        .then(response => {
+          console.log("FETCH REPAIR ASSETS => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          console.log("ERROR REPAIR ASSETS => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
+  liquidationAssets: params => {
+    return new Promise((resolve, reject) => {
+      const formData = new FormData();
+      formData.append("AssetID", params.AssetID);
+      formData.append("EmpCode", params.EmpCode);
+      formData.append("DeptCode", params.DeptCode);
+      formData.append("RegionCode", params.RegionCode);
+      formData.append("Reasons", params.Reasons);
+      formData.append("JobTitle", params.JobTitle);
+      formData.append("FileUpload", params.FileUpload || "");
+      formData.append("TransDate", params.TransDate);
+      formData.append("TypeUpdate", "Liquidate");
+
+      API.post(jwtServiceConfig.baseURL + Routes.APPROVED.LIQUIDATION_ASSETS, formData)
+        .then(response => {
+          console.log("FETCH LIQUIDATION ASSETS => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          console.log("ERROR LIQUIDATION ASSETS => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
+  reuseAssets: params => {
+    return new Promise((resolve, reject) => {
+      const formData = new FormData();
+      formData.append("AssetID", params.AssetID);
+      formData.append("EmpCode", params.EmpCode);
+      formData.append("DeptCode", params.DeptCode);
+      formData.append("RegionCode", params.RegionCode);
+      formData.append("Reasons", params.Reasons);
+      formData.append("JobTitle", params.JobTitle);
+      formData.append("FileUpload", params.FileUpload || "");
+      formData.append("TransDate", params.TransDate);
+      formData.append("EndRepairDate", params.EndRepairDate);
+      formData.append("SupplierRepair", params.SupplierRepair);
+      formData.append("ActCost", params.ActCost);
+      formData.append("TypeUpdate", "Reuse");
+
+      API.post(jwtServiceConfig.baseURL + Routes.APPROVED.REUSE_ASSETS, formData)
+        .then(response => {
+          console.log("FETCH REUSE ASSETS => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          console.log("ERROR REUSE ASSETS => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
 };

@@ -154,8 +154,8 @@ export const bulkActionOptions = [
 
 export const numberFormat = (value) =>
   new Intl.NumberFormat('vi-VN', {
-    style: 'currency',
-    currency: 'VND'
+    style: "currency",
+    currency: "VND",
   }).format(value);
 
 export const removeCookies = arrCookies => {
