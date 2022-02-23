@@ -17,6 +17,7 @@ import {
   BlockBetween,
   Row,
   Col,
+  RSelect,
 } from "components/Component";
 /** COMMON */
 import Routes from "services/routesApi";
@@ -64,6 +65,9 @@ function ApprovedForm(props) {
     approved: false,
     recall: false,
   });
+  const [error, setError] = useState({
+    employee: null,
+  })
   const [dataItem, setDataItem] = useState({
     id: "",
     code: "",
@@ -80,9 +84,9 @@ function ApprovedForm(props) {
     region: "",
   });
   const [dataSelect, setDataSelect] = useState({
-    employee: [{empCode: "", empName: t("common:non_data")}],
-    department: [{deptCode: "", deptName: t("common:non_data")}],
-    region: [{regionCode: "", regionName: t("common:non_data")}],
+    employee: [],
+    department: [],
+    region: [],
   });
   const [formData, setFormData] = useState({
     assetEmployee: "",
@@ -101,15 +105,18 @@ function ApprovedForm(props) {
     setFormData({...formData, [e.target.name]: e.target.value});
   };
 
-  const onChangeSelect = e => {
-    let fEmployee = masterState["employee"].find(f => f.empCode === e.target.value);
-    if (fEmployee) {
+  const onChangeSelect = sel => {
+    if (error.employee) setError({employee: null});
+    let fEmp = masterState["employee"].find(f => f.empCode === sel.value);
+    if (fEmp) {
+      let fDep = dataSelect.department.find(f => f.value === fEmp.deptCode);
+      let fReg = dataSelect.region.find(f => f.value === fEmp.regionCode);
       setFormData({
         ...formData,
-        [e.target.name]: e.target.value,
-        assetDepartment: fEmployee.deptCode,
-        assetRegion: fEmployee.regionCode,
-        assetPosition: fEmployee.jobTitle,
+        assetEmployee: sel,
+        assetDepartment: fDep,
+        assetRegion: fReg,
+        assetPosition: fEmp.jobTitle,
       });
     }
   };
@@ -188,6 +195,11 @@ function ApprovedForm(props) {
   };
 
   const onFormSubmit = () => {
+    setError({employee: null});
+    if (!formData.assetEmployee) {
+      return setError({employee: {message: t("validate:empty")}});
+    }
+
     setLoading({
       ...loading,
       approved: isApproved ? true : false,
@@ -195,9 +207,9 @@ function ApprovedForm(props) {
     });
     let params = {
       AssetID: dataItem.id,
-      EmpCode: formData.assetEmployee,
-      DeptCode: formData.assetDepartment,
-      RegionCode: formData.assetRegion,
+      EmpCode: formData.assetEmployee.value,
+      DeptCode: formData.assetDepartment.value,
+      RegionCode: formData.assetRegion.value,
       Reasons: formData.reason,
       JobTitle: formData.assetPosition,
       FileUpload: formData.file,
@@ -229,10 +241,19 @@ function ApprovedForm(props) {
 
   const onSuccess = type => {
     if (type === "MasterData") {
+      let tmpDataEmp = masterState["employee"].map(item => {
+        return {value: item.empCode, label: item.empName};
+      });
+      let tmpDataDep = masterState["department"].map(item => {
+        return {value: item.deptCode, label: item.deptName};
+      });
+      let tmpDataReg = masterState["region"].map(item => {
+        return {value: item.regionCode, label: item.regionName};
+      });
       setDataSelect({
-        employee: [...dataSelect.employee, ...masterState["employee"]],
-        department: [...dataSelect.department, ...masterState["department"]],
-        region: [...dataSelect.region, ...masterState["region"]],
+        employee: [...dataSelect.employee, ...tmpDataEmp],
+        department: [...dataSelect.department, ...tmpDataDep],
+        region: [...dataSelect.region, ...tmpDataReg],
       });
     }
     if (type === "Approved") {
@@ -271,11 +292,11 @@ function ApprovedForm(props) {
   ]);
 
   useEffect(() => {
-    if (updateItem && show) {
-      onResetData();
+    if (!loading.main && updateItem && show) {
       onSetFormDataDetails(updateItem);
     }
   }, [
+    loading.main,
     show,
     updateItem
   ]);
@@ -532,35 +553,42 @@ function ApprovedForm(props) {
               <Col md="4">
                 <FormGroup>
                   <div className="form-label-group">
+                    <label className="form-label" htmlFor="approvedDate">
+                      {t("approved_assets:approved_date")}
+                    </label>
+                  </div>
+                  <div className="form-control-wrap" style={{zIndex: 1000}}>
+                    <div className="form-icon form-icon-left">
+                      <Icon name="calendar"></Icon>
+                    </div>
+                    <DatePicker
+                      selected={formData.approvedDate}
+                      className="form-control date-picker"
+                      disabled={disabled}
+                      value={formData.approvedDate}
+                      onChange={onChangeDate}
+                      customInput={<CustomDateInput />}
+                    />
+                  </div>
+                </FormGroup>
+              </Col>
+              <Col md="8">
+                <FormGroup>
+                  <div className="form-label-group">
                     <label className="form-label" htmlFor="assetEmployee">
                       {t("approved_assets:approved_for")} <span className="text-danger">*</span>
                     </label>
                   </div>
                   <div className="form-control-wrap">
-                    <div className="form-control-select">
-                      <select
-                        ref={register({ required: t("validate:empty") })}
-                        className="form-control form-select"
-                        name="assetEmployee"
-                        id="assetEmployee"
-                        disabled={disabled}
-                        value={formData.assetEmployee}
-                        onChange={onChangeSelect}
-                      >
-                        {dataSelect.employee.map((itemE, indexE) => {
-                          return (
-                            <option
-                              key={itemE.empCode + "_employee_" + indexE}
-                              value={itemE.empCode}>
-                              {itemE.empName}
-                            </option>
-                          )
-                        })}
-                      </select>
-                      {errors.assetEmployee && (
-                        <span className="invalid">{errors.assetEmployee.message}</span>
-                      )}
-                    </div>
+                    <RSelect
+                      name="assetEmployee"
+                      isMulti={false}
+                      error={error.employee}
+                      options={dataSelect.employee}
+                      value={formData.assetEmployee}
+                      placeholder={t("approved_assets:holder_approved_for")}
+                      onChange={onChangeSelect}
+                    />
                   </div>
                 </FormGroup>
               </Col>
@@ -592,26 +620,14 @@ function ApprovedForm(props) {
                     </label>
                   </div>
                   <div className="form-control-wrap">
-                    <div className="form-control-select">
-                      <select
-                        className="form-control form-select"
-                        name="assetDepartment"
-                        id="assetDepartment"
-                        disabled={true}
-                        value={formData.assetDepartment}
-                        onChange={onChangeSelect}
-                      >
-                        {dataSelect.department.map((itemD, indexD) => {
-                          return (
-                            <option
-                              key={itemD.deptCode + "_department_" + indexD}
-                              value={itemD.deptCode}>
-                              {itemD.deptName}
-                            </option>
-                          )
-                        })}
-                      </select>
-                    </div>
+                    <RSelect
+                      name="assetDepartment"
+                      isMulti={false}
+                      isDisabled={true}
+                      options={dataSelect.department}
+                      value={formData.assetDepartment}
+                      placeholder={t("approved_assets:holder_department")}
+                    />
                   </div>
                 </FormGroup>
               </Col>
@@ -623,52 +639,18 @@ function ApprovedForm(props) {
                     </label>
                   </div>
                   <div className="form-control-wrap">
-                    <div className="form-control-select">
-                      <select
-                        className="form-control form-select"
-                        name="assetRegion"
-                        id="assetRegion"
-                        disabled={true}
-                        value={formData.assetRegion}
-                        onChange={onChangeSelect}
-                      >
-                        {dataSelect.region.map((itemR, indexR) => {
-                          return (
-                            <option
-                              key={itemR.regionCode + "_region_" + indexR}
-                              value={itemR.regionCode}>
-                              {itemR.regionName}
-                            </option>
-                          )
-                        })}
-                      </select>
-                    </div>
-                  </div>
-                </FormGroup>
-              </Col>
-              <Col md="4">
-                <FormGroup>
-                  <div className="form-label-group">
-                    <label className="form-label" htmlFor="approvedDate">
-                      {t("approved_assets:approved_date")}
-                    </label>
-                  </div>
-                  <div className="form-control-wrap">
-                    <div className="form-icon form-icon-left">
-                      <Icon name="calendar"></Icon>
-                    </div>
-                    <DatePicker
-                      selected={formData.approvedDate}
-                      className="form-control date-picker"
-                      disabled={disabled}
-                      value={formData.approvedDate}
-                      onChange={onChangeDate}
-                      customInput={<CustomDateInput />}
+                    <RSelect
+                      name="assetRegion"
+                      isMulti={false}
+                      isDisabled={true}
+                      options={dataSelect.region}
+                      value={formData.assetRegion}
+                      placeholder={t("approved_assets:holder_region")}
                     />
                   </div>
                 </FormGroup>
               </Col>
-              <Col md="4">
+              <Col size="12">
                 <FormGroup>
                   <div className="form-label-group">
                     <label className="form-label" htmlFor="file">

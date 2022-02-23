@@ -18,6 +18,7 @@ import {
   BlockBetween,
   Row,
   Col,
+  RSelect,
 } from "components/Component";
 /** REDUX */
 import * as Actions from "redux/actions";
@@ -60,15 +61,24 @@ function AddEditForm(props) {
     submit: false,
   });
   const [disables, setDisables] = useState({
+    type: true,
     group: true,
     assets: true,
   });
+  const [error, setError] = useState({
+    department: null,
+    company: null,
+    type: null,
+    group: null,
+    assets: null,
+  });
   const [dataSelect, setDataSelect] = useState({
-    suppliers: [{supplierID: "", supplierName: t("common:non_data")}],
-    departments: [{deptCode: "", deptName: t("common:non_data")}],
-    assetType: [{typeID: "", typeName: t("common:non_data")}],
-    assetGroup: [{groupID: "", groupName: t("common:non_data")}],
-    assetGroupDetail: [{absID: "", itemName: t("common:non_data")}],
+    suppliers: [],
+    departments: [],
+    companys: [],
+    assetType: [],
+    assetGroup: [],
+    assetGroupDetail: [],
   });
   const [formData, setFormData] = useState({
     assetName: "",
@@ -97,37 +107,81 @@ function AddEditForm(props) {
   };
 
   const onChangeSelect = (nextInput, e, pos) => {
+    setError({
+      department: null,
+      company: null,
+      type: null,
+      group: null,
+      assets: null,
+    });
     if (!nextInput) {
-      return setFormData({...formData, [e.target.name]: e.target.value});
+      return setFormData({...formData, [e.key]: e.value});
     }
-    if (nextInput && e.target.value) {
-      pos !== 4 && setFormData({...formData, [e.target.name]: e.target.value});
+
+    if (nextInput && e.key) {
       pos !== 4 && setDisables({...disables, [nextInput]: false});
 
       let filter = [], defaultData = [];
-      if (pos === 2) {
-        filter = masterState["assetGroup"].filter(f => f.typeID == e.target.value);
-        defaultData = [{groupID: "", groupName: t("common:non_data")}];
+      if (pos === 1) {
+        if (formData.assetPrefix) {
+          setFormData({
+            ...formData,
+            [e.key]: e.value,
+            assetPrefix: e.value.shortName + formData.assetPrefix.substring(2, formData.assetPrefix.length),
+          });
+        } else {
+          setFormData({...formData, [e.key]: e.value});
+        }
+      } else if (pos === 2) { // type
+        filter = masterState["assetGroup"].filter(f => f.typeID == e.value.value);
+        filter = filter.map(item => {return {value: item.groupID, label: item.groupName}});
+        defaultData = [];
         defaultData = [...defaultData, ...filter];
         setDataSelect({...dataSelect, assetGroup: defaultData});
-      } else if (pos === 3) {
-        filter = masterState["assetGroupDetail"].filter(f => f.groupID == e.target.value);
-        defaultData = [{absID: "", itemName: t("common:non_data")}];
+        setDisables({...disables, group: false, assets: true});
+        setFormData({
+          ...formData,
+          [e.key]: e.value,
+          assetGroup: "",
+          assetAssets: "",
+          assetPrefix: "",
+        });
+      } else if (pos === 3) { // group
+        filter = masterState["assetGroupDetail"].filter(f => f.groupID == e.value.value);
+        filter = filter.map(item => {return {value: item.absID, label: item.itemName}});
+        defaultData = [];
         defaultData = [...defaultData, ...filter];
         setDataSelect({...dataSelect, assetGroupDetail: defaultData});
-      } else if (pos === 4) {
-        let fPrefix = masterState["assetGroupDetail"].find(f => f.absID == e.target.value);
+        setDisables({...disables, assets: false});
+        setFormData({
+          ...formData,
+          [e.key]: e.value,
+          assetAssets: "",
+          assetPrefix: "",
+        });
+      } else if (pos === 4) { // prefix
+        let fPrefix = masterState["assetGroupDetail"].find(f => f.absID == e.value.value);
         if (fPrefix) {
           setFormData({
             ...formData,
-            [e.target.name]: e.target.value,
-            [nextInput]: formData.assetCompany + "." + fPrefix.itemCode,
+            [e.key]: e.value,
+            [nextInput]: formData.assetCompany.shortName + "." + fPrefix.itemCode,
           });
         }
       }
     } else {
+      if (pos === 1) {
+        setDisables({type: true, group: true, assets: true});
+        setFormData({
+          ...formData,
+          assetType: "",
+          assetGroup: "",
+          assetAssets: "",
+          assetPrefix: "",
+        });
+      }
       if (pos === 2) {
-        setDisables({group: true, assets: true});
+        setDisables({...disables, group: true, assets: true});
         setFormData({
           ...formData,
           assetType: "",
@@ -164,11 +218,15 @@ function AddEditForm(props) {
   };
 
   const onSetFormDataDetails = data => {
-    let fSupplier = masterState["supplier"].find(f => f.supplierName === data.supplierName);
+    console.log('[LOG] === onSetFormDataDetails ===> ', data);
+    let fSupplier = masterState["supplier"].find(f => f.supplierID === data.suppiler);
+    let fDept = masterState["department"].find(f => f.deptCode == data.deptCodeManager);
     setFormData({
       ...formData,
       assetName: data?.assetName || "",
-      assetSupplier: fSupplier?.supplierID || "",
+      assetSupplier: fSupplier
+        ? {value: fSupplier.supplierID, label: fSupplier.supplierName}
+        : "",
       assetDesciption: data?.descr,
       assetPurchaseDate: data?.purchaseDate
         ? new Date(
@@ -185,7 +243,9 @@ function AddEditForm(props) {
       assetInsuranceDate: data?.warrantyPeriod || "",
       assetOriginPrice: data?.originalPrice || "",
       assetDepreciationDate: data?.depreciationPeriod || "",
-      assetDepartment: data?.deptCodeManager || "",
+      assetDepartment: fDept
+        ? {value: fDept.deptCode, label: fDept.deptName}
+        : "",
       assetInactive: data?.inactive || false,
     });
   };
@@ -209,6 +269,18 @@ function AddEditForm(props) {
       assetPrefix: "",
       assetInactive: false,
     });
+    setDisables({
+      type: true,
+      group: true,
+      assets: true,
+    });
+    setError({
+      department: null,
+      company: null,
+      type: null,
+      group: null,
+      assets: null,
+    });
   };
 
   const onGetMasterData = () => {
@@ -220,13 +292,49 @@ function AddEditForm(props) {
     dispatch(Actions.fFetchMasterData(params, history));
   };
 
+  const onValidateAdd = () => {
+    let isError = false,
+    tmpError = {
+      department: null,
+      company: null,
+      type: null,
+      group: null,
+      assets: null,
+    };
+    setError(tmpError);
+    if (!formData.assetDepartment) {
+      isError = true;
+      tmpError.department = {message: t("validate:empty")};
+    }
+    if (!formData.assetCompany) {
+      isError = true;
+      tmpError.company = {message: t("validate:empty")};
+    }
+    if (!formData.assetType) {
+      isError = true;
+      tmpError.type = {message: t("validate:empty")};
+    }
+    if (!formData.assetGroup) {
+      isError = true;
+      tmpError.group = {message: t("validate:empty")};
+    }
+    if (!formData.assetAssets) {
+      isError = true;
+      tmpError.assets = {message: t("validate:empty")};
+    }
+    setError(tmpError);
+    return isError;
+  };
+
   const onFormSubmit = () => {
-    setLoading({...loading, submit: true});
     if (isAdd) {
-      let fConpany = masterState["company"].find(f => f.shortName === formData.assetCompany);
+      let isError = onValidateAdd();
+      if (isError) return;
+
+      setLoading({...loading, submit: true});
       let params = {
         AssetName: formData.assetName.trim(),
-        Suppiler: Number(formData.assetSupplier),
+        Suppiler: Number(formData.assetSupplier.value),
         Qty: Number(formData.assetQuantity),
         Descr: formData.assetDesciption,
         PurchaseDate: moment(formData.assetPurchaseDate).format("YYYY-MM-DD"),
@@ -240,11 +348,11 @@ function AddEditForm(props) {
         DepreciationPeriod: formData.assetDepreciationDate !== ""
           ? Number(formData.assetDepreciationDate)
           : "",
-        DeptCode: formData.assetDepartment,
-        CmpnID: Number(fConpany.cmpnID),
-        AssetTypeID: Number(formData.assetType),
-        AssetGroupID: Number(formData.assetGroup),
-        AssetGroupDetailID: Number(formData.assetAssets),
+        DeptCode: formData.assetDepartment.value,
+        CmpnID: Number(formData.assetCompany.value),
+        AssetTypeID: Number(formData.assetType.value),
+        AssetGroupID: Number(formData.assetGroup.value),
+        AssetGroupDetailID: Number(formData.assetAssets.value),
         PreAssetCode: formData.assetPrefix,
         Lang: commonState["language"],
         RefreshToken: authState["data"]["refreshToken"],
@@ -252,10 +360,11 @@ function AddEditForm(props) {
       console.log('[LOG] === onFormSubmit ADD ===> ', params);
       dispatch(Actions.fFetchCreateAssets(params, history));
     } else {
+      setLoading({...loading, submit: true});
       let params = {
         AssetID: updateItem.assetID,
         AssetName: formData.assetName.trim(),
-        Suppiler: Number(formData.assetSupplier),
+        Suppiler: Number(formData.assetSupplier.value),
         Descr: formData.assetDesciption,
         PurchaseDate: moment(formData.assetPurchaseDate).format("YYYY-MM-DD"),
         EffectiveDate: moment(formData.assetEffectiveDate).format("YYYY-MM-DD"),
@@ -268,7 +377,7 @@ function AddEditForm(props) {
         DepreciationPeriod: formData.assetDepreciationDate !== ""
           ? Number(formData.assetDepreciationDate)
           : "",
-        DeptCode: formData.assetDepartment,
+        DeptCode: formData.assetDepartment.value,
         Inactive: formData.assetInactive,
         Lang: commonState["language"],
         RefreshToken: authState["data"]["refreshToken"],
@@ -280,14 +389,31 @@ function AddEditForm(props) {
 
   const onSuccess = type => {
     if (type === "MasterData") {
-      masterState["company"][0] &&
-        setFormData({...formData, assetCompany: masterState["company"][0].shortName});
+      let tmpDataSup = masterState["supplier"].map(item => {
+        return {value: item.supplierID, label: item.supplierName};
+      });
+      let tmpDataDep = masterState["department"].map(item => {
+        return {value: item.deptCode, label: item.deptName};
+      });
+      let tmpDataCom = masterState["company"].map(item => {
+        return {value: item.cmpnID, label: item.cmpnName, shortName: item.shortName};
+      });
+      let tmpDataAst = masterState["assetType"].map(item => {
+        return {value: item.typeID, label: item.typeName};
+      });
+      let tmpDataAsg = masterState["assetGroup"].map(item => {
+        return {value: item.groupID, label: item.groupName};
+      });
+      let tmpDataAgd = masterState["assetGroupDetail"].map(item => {
+        return {value: item.absID, label: item.itemName};
+      });
       setDataSelect({
-        suppliers: [...dataSelect.suppliers, ...masterState["supplier"]],
-        departments: [...dataSelect.departments, ...masterState["department"]],
-        assetType: [...dataSelect.assetType, ...masterState["assetType"]],
-        assetGroup: [...dataSelect.assetGroup, ...masterState["assetGroup"]],
-        assetGroupDetail: [...dataSelect.assetGroupDetail, ...masterState["assetGroupDetail"]],
+        suppliers: [...dataSelect.suppliers, ...tmpDataSup],
+        departments: [...dataSelect.departments, ...tmpDataDep],
+        companys: [...dataSelect.companys, ...tmpDataCom],
+        assetType: [...dataSelect.assetType, ...tmpDataAst],
+        assetGroup: [...dataSelect.assetGroup, ...tmpDataAsg],
+        assetGroupDetail: [...dataSelect.assetGroupDetail, ...tmpDataAgd],
       });
     }
     if (type === "Create" || type === "Update") {
@@ -322,12 +448,13 @@ function AddEditForm(props) {
   ]);
 
   useEffect(() => {
-    if (updateItem && show) {
+    if (!loading.main && updateItem && show) {
       onSetFormDataDetails(updateItem);
     }
   }, [
+    loading.main,
     show,
-    updateItem
+    updateItem,
   ]);
 
   useEffect(() => {
@@ -529,26 +656,15 @@ function AddEditForm(props) {
                   </label>
                 </div>
                 <div className="form-control-wrap">
-                  <div className="form-control-select">
-                    <select
-                      className="form-control form-select"
-                      name="assetSupplier"
-                      id="assetSupplier"
-                      disabled={disabled}
-                      value={formData.assetSupplier}
-                      onChange={e => onChangeSelect(null, e)}
-                    >
-                      {dataSelect.suppliers.map((itemS, indexS) => {
-                        return (
-                          <option
-                            key={itemS.supplierID + "_supplier_" + indexS}
-                            value={itemS.supplierID}>
-                            {itemS.supplierName}
-                          </option>
-                        )
-                      })}
-                    </select>
-                  </div>
+                  <RSelect
+                    name="assetSupplier"
+                    isMulti={false}
+                    isDisabled={disabled}
+                    options={dataSelect.suppliers}
+                    value={formData.assetSupplier}
+                    placeholder={t("add_assets:holder_supplier")}
+                    onChange={e => onChangeSelect(null, {key: "assetSupplier", value: e})}
+                  />
                 </div>
               </FormGroup>
             </Col>
@@ -713,34 +829,20 @@ function AddEditForm(props) {
               <FormGroup>
                 <div className="form-label-group">
                   <label className="form-label" htmlFor="assetDepartment">
-                    {t("add_assets:department")}
+                    {t("add_assets:department")} <span className="text-danger">*</span>
                   </label>
                 </div>
                 <div className="form-control-wrap">
-                  <div className="form-control-select">
-                    <select
-                      ref={register({ required: t("validate:empty") })}
-                      className="form-control form-select"
-                      name="assetDepartment"
-                      id="assetDepartment"
-                      disabled={disabled}
-                      value={formData.assetDepartment}
-                      onChange={e => onChangeSelect(null, e)}
-                    >
-                      {dataSelect.departments.map((itemD, indexD) => {
-                        return (
-                          <option
-                            key={itemD.deptCode + "_department_" + indexD}
-                            value={itemD.deptCode}>
-                            {itemD.deptName}
-                          </option>
-                        )
-                      })}
-                    </select>
-                    {errors.assetDepartment && (
-                      <span className="invalid">{errors.assetDepartment.message}</span>
-                    )}
-                  </div>
+                  <RSelect
+                    name="assetDepartment"
+                    isMulti={false}
+                    isDisabled={disabled}
+                    error={error.department}
+                    options={dataSelect.departments}
+                    value={formData.assetDepartment}
+                    placeholder={t("add_assets:holder_department")}
+                    onChange={e => onChangeSelect(null, {key: "assetDepartment", value: e})}
+                  />
                 </div>
               </FormGroup>
             </Col>
@@ -780,27 +882,16 @@ function AddEditForm(props) {
                       </label>
                     </div>
                     <div className="form-control-wrap">
-                      <div className="form-control-select">
-                        <select
-                          className="form-control form-select"
-                          name="assetCompany"
-                          id="assetCompany"
-                          disabled={disabled}
-                          value={formData.assetCompany}
-                          onChange={e => onChangeSelect("type", e, 1)}
-                        >
-                          {masterState["company"].length > 0 &&
-                            masterState["company"].map((itemC, indexC) => {
-                              return (
-                                <option
-                                  key={itemC.shortName + "_company_" + indexC}
-                                  value={itemC.shortName}>
-                                  {itemC.cmpnName}
-                                </option>
-                              )
-                            })}
-                        </select>
-                      </div>
+                      <RSelect
+                        name="assetCompany"
+                        isMulti={false}
+                        isDisabled={disabled}
+                        error={error.company}
+                        options={dataSelect.companys}
+                        value={formData.assetCompany}
+                        placeholder={t("add_assets:holder_company")}
+                        onChange={e => onChangeSelect("type", {key: "assetCompany", value: e}, 1)}
+                      />
                     </div>
                   </FormGroup>
                 </Col>
@@ -812,30 +903,16 @@ function AddEditForm(props) {
                       </label>
                     </div>
                     <div className="form-control-wrap">
-                      <div className="form-control-select">
-                        <select
-                          ref={register({ required: t("validate:empty") })}
-                          className="form-control form-select"
-                          name="assetType"
-                          id="assetType"
-                          disabled={disabled}
-                          value={formData.assetType}
-                          onChange={e => onChangeSelect("group", e, 2)}
-                        >
-                          {dataSelect.assetType.map((itemAT, indexAT) => {
-                            return (
-                              <option
-                                key={itemAT.typeID + "_assetType_" + indexAT}
-                                value={itemAT.typeID}>
-                                {itemAT.typeName}
-                              </option>
-                            )
-                          })}
-                        </select>
-                        {errors.assetType && (
-                          <span className="invalid">{errors.assetType.message}</span>
-                        )}
-                      </div>
+                      <RSelect
+                        name="assetType"
+                        isMulti={false}
+                        isDisabled={disables.type || disabled}
+                        error={error.type}
+                        options={dataSelect.assetType}
+                        value={formData.assetType}
+                        placeholder={t("add_assets:holder_type")}
+                        onChange={e => onChangeSelect("group", {key: "assetType", value: e}, 2)}
+                      />
                     </div>
                   </FormGroup>
                 </Col>
@@ -847,30 +924,16 @@ function AddEditForm(props) {
                       </label>
                     </div>
                     <div className="form-control-wrap">
-                      <div className="form-control-select">
-                        <select
-                          ref={register({ required: t("validate:empty") })}
-                          className="form-control form-select"
-                          name="assetGroup"
-                          id="assetGroup"
-                          value={formData.assetGroup}
-                          disabled={disables.group || disabled}
-                          onChange={e => onChangeSelect("assets", e, 3)}
-                        >
-                          {dataSelect.assetGroup.map((itemAG, indexAG) => {
-                            return (
-                              <option
-                                key={itemAG.groupID + "_assetGroup_" + indexAG}
-                                value={itemAG.groupID}>
-                                {itemAG.groupName}
-                              </option>
-                            )
-                          })}
-                        </select>
-                        {errors.assetGroup && (
-                          <span className="invalid">{errors.assetGroup.message}</span>
-                        )}
-                      </div>
+                      <RSelect
+                        name="assetGroup"
+                        isMulti={false}
+                        isDisabled={disables.group || disabled}
+                        error={error.group}
+                        options={dataSelect.assetGroup}
+                        value={formData.assetGroup}
+                        placeholder={t("add_assets:holder_group")}
+                        onChange={e => onChangeSelect("assets", {key: "assetGroup", value: e}, 3)}
+                      />
                     </div>
                   </FormGroup>
                 </Col>
@@ -882,30 +945,16 @@ function AddEditForm(props) {
                       </label>
                     </div>
                     <div className="form-control-wrap">
-                      <div className="form-control-select">
-                        <select
-                          ref={register({ required: t("validate:empty") })}
-                          className="form-control form-select"
-                          name="assetAssets"
-                          id="assetAssets"
-                          value={formData.assetAssets}
-                          disabled={disables.assets || disabled}
-                          onChange={e => onChangeSelect("assetPrefix", e, 4)}
-                        >
-                          {dataSelect.assetGroupDetail.map((itemAA, indexAA) => {
-                            return (
-                              <option
-                                key={itemAA.absID + "_assetAssets_" + indexAA}
-                                value={itemAA.absID}>
-                                {itemAA.itemName}
-                              </option>
-                            )
-                          })}
-                        </select>
-                        {errors.assetAssets && (
-                          <span className="invalid">{errors.assetAssets.message}</span>
-                        )}
-                      </div>
+                      <RSelect
+                        name="assetAssets"
+                        isMulti={false}
+                        isDisabled={disables.assets || disabled}
+                        error={error.assets}
+                        options={dataSelect.assetGroupDetail}
+                        value={formData.assetAssets}
+                        placeholder={t("add_assets:holder_group")}
+                        onChange={e => onChangeSelect("assetPrefix", {key: "assetAssets", value: e}, 4)}
+                      />
                     </div>
                   </FormGroup>
                 </Col>
@@ -913,7 +962,7 @@ function AddEditForm(props) {
                   <FormGroup>
                     <div className="form-label-group">
                       <label className="form-label" htmlFor="assetPrefix">
-                        {t("add_assets:prefix")} <span className="text-danger">*</span>
+                        {t("add_assets:prefix")}
                       </label>
                     </div>
                     <div className="form-control-wrap">

@@ -50,12 +50,10 @@ function LiquidationForm(props) {
 
   /** Use redux */
   const dispatch = useDispatch();
-  const masterState = useSelector(({master}) => master);
   const approvedState = useSelector(({approved}) => approved);
 
   /** Use state */
   const [loading, setLoading] = useState({
-    main: true,
     liquidation: false,
   });
   const [dataItem, setDataItem] = useState({
@@ -168,7 +166,7 @@ function LiquidationForm(props) {
   };
 
   const onSuccess = type => {
-    setLoading({main: false, liquidation: false});
+    setLoading({liquidation: false});
     if (type === "Liquidation") {
       onResetData();
       onClose(true, t("success:liquidation_assets"));
@@ -177,7 +175,7 @@ function LiquidationForm(props) {
 
   const onError = (type, error) => {
     console.log('[LOG] === onError ===> ', error);
-    setLoading({main: false, liquidation: false});
+    setLoading({liquidation: false});
     if (type === "Liquidation") {
       onResetData();
       onClose(false, error);
@@ -187,16 +185,6 @@ function LiquidationForm(props) {
   /**
    ** LIFE CYCLE 
    */
-   useEffect(() => {
-    if (loading.main && authState["successSignIn"] && show) {
-      onGetMasterData();
-    }
-  }, [
-    show,
-    loading.main,
-    authState["successSignIn"]
-  ]);
-
   useEffect(() => {
     if (updateItem && show) {
       onResetData();
@@ -205,25 +193,6 @@ function LiquidationForm(props) {
   }, [
     show,
     updateItem
-  ]);
-
-  useEffect(() => {
-    if (loading.main && show) {
-      if (!masterState["submittingGetAll"]) {
-        if (masterState["successGetAll"] && !masterState["errorGetAll"]) {
-          return onSuccess("MasterData");
-        }
-        if (!masterState["successGetAll"] && masterState["errorGetAll"]) {
-          return onError("MasterData", masterState["errorHelperGetAll"]);
-        }
-      }
-    }
-  }, [
-    show,
-    loading.main,
-    masterState["submittingGetAll"],
-    masterState["successGetAll"],
-    masterState["errorGetAll"],
   ]);
 
   useEffect(() => {
@@ -249,7 +218,7 @@ function LiquidationForm(props) {
    ** RENDER 
    */
   const {errors, register, handleSubmit} = useForm();
-  const disabled = loading.main || loading.liquidation;
+  const disabled = loading.liquidation;
 
   return (
     <SimpleBar

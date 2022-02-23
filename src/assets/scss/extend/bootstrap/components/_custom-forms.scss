@@ -258,7 +258,7 @@ label{
 
 //validation
 
-.is-alter .form-control ~, .is-alter .input-group ~, .custom-control{
+.is-alter .form-control ~, .is-alter .input-group ~, .custom-control, .form-control-select{
     position: relative;
     .invalid{
         position: absolute;
@@ -285,7 +285,7 @@ label{
         }
     }
 }
-.is-alter .form-control ~, .is-alter .input-group ~{
+.is-alter .form-control ~, .is-alter .input-group ~, .form-control-select{
     .invalid{
         left: auto;
         right: 0;

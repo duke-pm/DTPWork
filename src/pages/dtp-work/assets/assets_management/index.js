@@ -20,13 +20,13 @@ import AddEditForm from "./form/AddEdit";
 import ApprovedForm from "./form/Approved";
 import RepairForm from "./form/Repair";
 import LiquidationForm from "./form/Liquidation";
+import ReUseForm from "./form/ReUse";
 /** COMMON */
 import Configs from "configs";
 import Routes from "services/routesApi";
 import {getCookies} from "utils/Utils";
 /** REDUX */
 import * as Actions from "redux/actions";
-import ReUseForm from "./form/ReUse";
 
 const TabItem = ({
   index = 0,

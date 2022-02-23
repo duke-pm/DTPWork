@@ -318,7 +318,7 @@ textarea{
 
 // validation
 
-.custom-file-input,.form-control,.input-group{
+.custom-file-input,.form-control,.input-group,.form-control-select{
     ~ .error, ~ .invalid{
         color: $field-error-color;
         font-size: $fx-sz-11;

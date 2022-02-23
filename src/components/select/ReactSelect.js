@@ -9,6 +9,9 @@ const RSelect = ({ ...props }) => {
         classNamePrefix="react-select"
         {...props}
       />
+      {props.error && (
+        <span className="invalid">{props.error.message}</span>
+      )}
     </div>
   );
 };

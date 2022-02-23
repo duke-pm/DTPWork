@@ -51,7 +51,6 @@ function ReUseForm(props) {
 
   /** Use redux */
   const dispatch = useDispatch();
-  const masterState = useSelector(({master}) => master);
   const approvedState = useSelector(({approved}) => approved);
 
   /** Use state */
@@ -60,10 +59,7 @@ function ReUseForm(props) {
     reuse: false,
   });
   const [error, setError] = useState({
-    cost: {
-      status: false,
-      helper: "",
-    }
+    cost: null,
   });
   const [dataItem, setDataItem] = useState({
     id: "",
@@ -143,9 +139,9 @@ function ReUseForm(props) {
   };
 
   const onFormSubmit = () => {
-    setError({cost: {status: false, helper: ""}})
+    setError({cost: null});
     if (!formData.repairCost) {
-      return setError({cost: {status: true, helper: t("validate:empty")}})
+      return setError({cost: {message: t("validate:empty")}});
     }
 
     setLoading({...loading, reuse: true});
@@ -440,8 +436,8 @@ function ReUseForm(props) {
                     onValueChange={val =>
                       onChangeInput({target: {name: "repairCost", value: val.floatValue}})}
                   />
-                  {error.cost.status && (
-                    <span className="invalid">{error.cost.helper}</span>
+                  {error.cost && (
+                    <span className="invalid">{error.cost.message}</span>
                   )}
                 </div>
               </FormGroup>

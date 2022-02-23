@@ -51,7 +51,6 @@ function RepairForm(props) {
 
   /** Use redux */
   const dispatch = useDispatch();
-  const masterState = useSelector(({master}) => master);
   const approvedState = useSelector(({approved}) => approved);
 
   /** Use state */
@@ -176,7 +175,6 @@ function RepairForm(props) {
    */
   useEffect(() => {
     if (updateItem && show) {
-      onResetData();
       onSetFormDataDetails(updateItem);
     }
   }, [
