@@ -24,6 +24,8 @@ const Routes = {
     REUSE_ASSETS: "/AssetTrans/ProcessAsset",
     CREATE_SUPPLIER: "/Supplier/Modify",
 
+    LIST_REQUEST: "/RQAsset/GetList",
+
     EXPORT_ASSETS: "/Assets/ExportAsset",
     EXPORT_APPROVED_ASSETS: "/RQAsset/ExportAllocation",
     EXPORT_RECALL_ASSETS: "/RQAsset/ExportRequestRecovery",

@@ -349,7 +349,7 @@ function AddEditForm(props) {
         AssetName: formData.assetName.trim(),
         Suppiler: Number(formData.assetSupplier.value),
         Qty: Number(formData.assetQuantity),
-        Descr: formData.assetDesciption,
+        Descr: formData.assetDesciption.trim(),
         PurchaseDate: moment(formData.assetPurchaseDate).format("YYYY-MM-DD"),
         EffectiveDate: moment(formData.assetEffectiveDate).format("YYYY-MM-DD"),
         WarrantyPeriod: formData.assetInsuranceDate !== ""
@@ -378,11 +378,11 @@ function AddEditForm(props) {
         AssetID: updateItem.assetID,
         AssetName: formData.assetName.trim(),
         Suppiler: Number(formData.assetSupplier.value),
-        Descr: formData.assetDesciption,
+        Descr: formData.assetDesciption.trim(),
         PurchaseDate: moment(formData.assetPurchaseDate).format("YYYY-MM-DD"),
         EffectiveDate: moment(formData.assetEffectiveDate).format("YYYY-MM-DD"),
         WarrantyPeriod: formData.assetInsuranceDate !== ""
-          ? Number(formData.assetInsuranceDate)
+          ? Number(formData.assetInsuranceDatev)
           : "",
         OriginalPrice: formData.assetOriginPrice !== ""
           ? Number(formData.assetOriginPrice)

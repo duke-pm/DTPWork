@@ -14,13 +14,17 @@
     "prev": "Trước",
     "next": "Tiếp",
     "save": "Lưu",
+    "send": "Gửi",
     "cancel": "Hủy bỏ",
     "close": "Đóng",
     "ok": "OK",
     "confirm": "Xác nhận",
     "reset": "Đặt lại",
     "non_data": "Chưa chọn dữ liệu",
-    "choose_file": "Chọn tệp"
+    "choose_file": "Chọn tệp",
+    "to": "ĐẾN",
+    "approved": "Duyệt",
+    "reject": "Từ chối"
   },
   "validate": {
     "empty": "Mục này không thể trống!",
@@ -97,7 +101,7 @@
     "repair_insurance": "Sửa chữa - Bảo hành",
     "damage_lost": "Hư hỏng - Mất",
     "liquidation": "Thanh lý",
-    "code": "Mã",
+    "code": "Mã số",
     "name": "Tên",
     "description": "Mô tả",
     "group": "Nhóm",
@@ -178,7 +182,7 @@
     "title": "Cấp phát Tài sản",
     "recall_title": "Thu hồi Tài sản",
     "information": "Thông tin cơ bản",
-    "code": "Mã",
+    "code": "Mã số",
     "name": "Tên",
     "group": "Nhóm",
     "description": "Mô tả",
@@ -208,7 +212,7 @@
   "repair_assets": {
     "title": "Sửa chữa - Bảo hành tài sản",
     "information": "Thông tin cơ bản",
-    "code": "Mã",
+    "code": "Mã số",
     "name": "Tên",
     "group": "Nhóm",
     "description": "Mô tả",
@@ -228,7 +232,7 @@
   "liquidation_assets": {
     "title": "Thanh lý tài sản",
     "information": "Thông tin cơ bản",
-    "code": "Mã",
+    "code": "Mã số",
     "name": "Tên",
     "group": "Nhóm",
     "description": "Mô tả",
@@ -249,7 +253,7 @@
   "reuse_assets": {
     "title": "Đưa vào sử dụng tài sản",
     "information": "Thông tin cơ bản",
-    "code": "Mã",
+    "code": "Mã số",
     "name": "Tên",
     "group": "Nhóm",
     "description": "Mô tả",
@@ -267,5 +271,36 @@
     "reuse_date": "Ngày thực hiện",
     "reuse_reason": "Lý do đưa vào sử dụng",
     "holder_reuse_reason": "Lý do đưa vào sử dụng..."
+  },
+  "request_handle": {
+    "title": "Đề xuất cần xử lý",
+    "code_request": "Mã số",
+    "date_request": "Ngày yêu cầu",
+    "name_employee": "Tên nhân viên",
+    "department_employee": "Bộ phận",
+    "region_employee": "Khu vực",
+    "type_request": "Loại yêu cầu",
+    "status_request": "Trạng thái",
+    "approved_action": "Phê duyệt",
+    "approved_timeline": "Quá trình phê duyệt"
+  },
+  "approved_action": {
+    "approved_assets": "Phê duyệt cấp phát tài sản",
+    "approved_damage": "Phê duyệt báo hỏng tài sản",
+    "approved_lost": "Phê duyệt báo mất tài sản",
+    "information": "Thông tin cơ bản",
+    "code_assets": "Mã số",
+    "name_assets": "Tên",
+    "group_assets": "Nhóm",
+    "purchase_date_assets": "Ngày mua",
+    "origin_price_assets": "Nguyên giá",
+    "status_assets": "Trạng thái",
+    "information_approved": "Thông tin duyệt đơn",
+    "confirm_approved_title": "Xác nhận!",
+    "confirm_approved_assets_des": "Bạn thực sự muốn duyệt 'Đơn cấp phát' này?",
+    "confirm_approved_damage_des": "Bạn thực sự muốn duyệt 'Đơn báo hỏng' này?",
+    "confirm_approved_lost_des": "Bạn thực sự muốn duyệt 'Đơn báo mất' này?",
+    "confirm_reject_des": "Lý do từ chối đơn này",
+    "holder_confirm_reject_des": "Lý do..."
   }
 }

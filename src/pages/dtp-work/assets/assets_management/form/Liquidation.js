@@ -154,7 +154,7 @@ function LiquidationForm(props) {
       DeptCode: formData.liquidationDepartment,
       RegionCode: formData.liquidationRegion,
       JobTitle: dataItem.position,
-      Reasons: formData.reason,
+      Reasons: formData.reason.trim(),
       FileUpload: formData.file,
       TransDate: moment(formData.liquidationDate).format("YYYY-MM-DD"),
       

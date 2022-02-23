@@ -261,4 +261,32 @@ export default {
         });
     });
   },
+
+  listRequest: params => {
+    return new Promise((resolve, reject) => {
+      let tmpConfigs = {params: {}};
+      tmpConfigs.params.StatusID = params["StatusID"];
+      tmpConfigs.params.Search = params["Search"];
+      tmpConfigs.params.PageSize = params["PageSize"];
+      tmpConfigs.params.PageNum = params["PageNum"];
+      tmpConfigs.params.FromDate = params["FromDate"];
+      tmpConfigs.params.ToDate = params["ToDate"];
+      tmpConfigs.params.RequestTypeID = params["RequestTypeID"];
+      tmpConfigs.params.IsResolveRequest = params["IsResolveRequest"];
+
+      API.get(jwtServiceConfig.baseURL + Routes.APPROVED.LIST_REQUEST, tmpConfigs)
+        .then(response => {
+          console.log("FETCH LIST REQUEST => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          console.log("ERROR LIST REQUEST => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
 };

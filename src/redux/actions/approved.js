@@ -396,3 +396,48 @@ export const fFetchCreateSupplier = (params, history) => {
       });
   };
 };
+
+//** List request handle */
+export const fResetApprovedRequest = () => ({
+  type: types.RESET_APPROVED_REQUEST
+});
+
+export const fErrorListRequestHandle = error => ({
+  type: types.ERROR_LIST_REQUEST_HANDLE,
+  payload: error,
+});
+
+export const fSuccessListRequestHandle = (data, count) => ({
+  type: types.SUCCESS_LIST_REQUEST_HANDLE,
+  payload: {
+    list: data.listRequest,
+    process: data.listProcessApprove,
+    details: data.listRequestDetail,
+    count,
+  },
+});
+
+export const fFetchListRequestHandle = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_LIST_REQUEST_HANDLE});
+
+    Services.approved.listRequest(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessListRequestHandle(res.data, res.totalRow));
+        } else {
+          return dispatch(fErrorListRequestHandle(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorListRequestHandle(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};

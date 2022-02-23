@@ -8,6 +8,7 @@ import {RedirectAs404} from "../utils/Utils";
 import Homepage from "../pages/dtp-work/homepage";
 
 import AssetsManagement from "../pages/dtp-work/assets/assets_management";
+import RequestAssetsHandle from "../pages/dtp-work/assets/list_request_handle";
 
 // import Homepage from "../pages/Homepage";
 // import Sales from "../pages/Sales";
@@ -268,6 +269,7 @@ const Pages = () => {
         <Route exact path={`${process.env.PUBLIC_URL}/`} component={Homepage}></Route>
 
         <Route exact path={`${process.env.PUBLIC_URL}/assets-management`} component={AssetsManagement}></Route>
+        <Route exact path={`${process.env.PUBLIC_URL}/tai-san/de-xuat-can-xu-ly`} component={RequestAssetsHandle}></Route>
 
         <Route component={RedirectAs404}></Route>
       </Switch>

@@ -140,10 +140,10 @@ function RepairForm(props) {
       DeptCode: dataItem.department,
       RegionCode: dataItem.region,
       JobTitle: dataItem.position,
-      Reasons: formData.reason,
+      Reasons: formData.reason.trim(),
       FileUpload: formData.file,
       TransDate: moment(formData.repairDate).format("YYYY-MM-DD"),
-      SupplierRepair: formData.repairName,
+      SupplierRepair: formData.repairName.trim(),
       ExpCost: formData.repairCost,
 
       RefreshToken: authState["data"]["refreshToken"],

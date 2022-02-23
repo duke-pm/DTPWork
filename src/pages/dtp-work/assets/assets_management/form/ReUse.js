@@ -151,11 +151,11 @@ function ReUseForm(props) {
       DeptCode: dataItem.department,
       RegionCode: dataItem.region,
       JobTitle: dataItem.position,
-      Reasons: formData.reason,
+      Reasons: formData.reason.trim(),
       FileUpload: formData.file,
       TransDate: moment(formData.resueDate).format("YYYY-MM-DD"),
       EndRepairDate: moment(formData.repairDate).format("YYYY-MM-DD"),
-      SupplierRepair: formData.repairName,
+      SupplierRepair: formData.repairName.trim(),
       ActCost: formData.repairCost,
       
       RefreshToken: authState["data"]["refreshToken"],

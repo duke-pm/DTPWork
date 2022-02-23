@@ -210,7 +210,7 @@ function ApprovedForm(props) {
       EmpCode: formData.assetEmployee.value,
       DeptCode: formData.assetDepartment.value,
       RegionCode: formData.assetRegion.value,
-      Reasons: formData.reason,
+      Reasons: formData.reason.trim(),
       JobTitle: formData.assetPosition,
       FileUpload: formData.file,
       TransDate: moment(formData.approvedDate).format("YYYY-MM-DD"),

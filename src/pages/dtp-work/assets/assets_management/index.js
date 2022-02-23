@@ -49,7 +49,7 @@ const TabItem = ({
   )
 }
 
-const AssetsManagement = ({ ...props }) => {
+function AssetsManagement(props) {
   const {t} = useTranslation();
   const history = useHistory();
 
@@ -161,7 +161,7 @@ const AssetsManagement = ({ ...props }) => {
 
   const toggleSm = () => updateSm(!sm);
 
-  const onChangeSearch = (e) => setSearchText(e.target.value);
+  const onChangeSearch = (e) => setSearchText(e.target.value.trim());
 
   const onStartGetData = (
     idxActive = 0,

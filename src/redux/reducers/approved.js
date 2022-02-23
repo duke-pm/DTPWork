@@ -11,6 +11,7 @@ export const initialState = {
   submittingLiquidationAssets: false,
   submittingReuseAssets: false,
   submittingCreateSupplier: false,
+  submittingListRequestHandle: false,
 
   successListAssets: false,
   errorListAssets: false,
@@ -52,6 +53,10 @@ export const initialState = {
   errorCreateSupplier: false,
   errorHelperCreateSupplier: "",
 
+  successListRequestHandle: false,
+  errorListRequestHandle: false,
+  errorHelperListRequestHandle: "",
+
   historyAsset: [],
 
   listAssetsAll: [],
@@ -67,6 +72,11 @@ export const initialState = {
   numAssetsDamage: 0,
   numAssetsLost: 0,
   numAssetsLiquidation: 0,
+
+  listRequestHandle: [],
+  listProcessApproved: [],
+  listDetailsApproved: [],
+  numRequestHandle: 0,
 };
 
 export default function (state = initialState, action = {}) {
@@ -451,6 +461,44 @@ export default function (state = initialState, action = {}) {
       successCreateSupplier: true,
       errorCreateSupplier: false,
       errorHelperCreateSupplier: "",
+    };
+
+  //** List request handle */
+  case types.RESET_APPROVED_REQUEST:
+    return {
+      ...state,
+      submittingListRequestHandle: false,
+      successListRequestHandle: false,
+      errorListRequestHandle: false,
+      errorHelperListRequestHandle: "",
+    };
+  case types.START_LIST_REQUEST_HANDLE:
+    return {
+      ...state,
+      submittingListRequestHandle: true,
+      successListRequestHandle: false,
+      errorListRequestHandle: false,
+      errorHelperListRequestHandle: "",
+    };
+  case types.ERROR_LIST_REQUEST_HANDLE:
+    return {
+      ...state,
+      submittingListRequestHandle: false,
+      successListRequestHandle: false,
+      errorListRequestHandle: true,
+      errorHelperListRequestHandle: payload,
+    };
+  case types.SUCCESS_LIST_REQUEST_HANDLE:
+    return {
+      ...state,
+      submittingListRequestHandle: false,
+      successListRequestHandle: true,
+      errorListRequestHandle: false,
+      errorHelperListRequestHandle: "",
+      listRequestHandle: payload.list,
+      listProcessApproved: payload.process,
+      listDetailsApproved: payload.details,
+      numRequestHandle: payload.count,
     };
 
     default:
