@@ -5,6 +5,10 @@ import * as Actions from "redux/actions";
 /**
  ** Master data module
  */
+ export const fUpdateSupplier = data => ({
+  type: types.UPDATE_MASTER_SUPPLIER,
+  payload: data,
+});
 //** All master data */
 export const fErrorMasterData = error => ({
   type: types.ERROR_MASTER_GET_ALL,

@@ -244,4 +244,21 @@ export default {
         });
     });
   },
+  createSupplier: params => {
+    return new Promise((resolve, reject) => {
+      API.post(jwtServiceConfig.baseURL + Routes.APPROVED.CREATE_SUPPLIER, params)
+        .then(response => {
+          console.log("FETCH CREATE SUPPLIER => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          console.log("ERROR CREATE SUPPLIER => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
 };

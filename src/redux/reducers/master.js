@@ -71,6 +71,12 @@ export default function (state = initialState, action = {}) {
         bkReSource: payload.bkReSource || state["bkReSource"],
       };
 
+    case types.UPDATE_MASTER_SUPPLIER:
+      return {
+        ...state,
+        supplier: [payload, ...state.supplier],
+      };
+
     default:
       return state;
   };

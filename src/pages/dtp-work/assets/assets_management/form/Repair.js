@@ -282,7 +282,7 @@ function RepairForm(props) {
             <div className="profile-ud-item">
               <div className="profile-ud wider">
                 <span className="profile-ud-label">{t("repair_assets:code")}</span>
-                <span className="profile-ud-value">{dataItem.code}</span>
+                <span className="profile-ud-value text-primary">{dataItem.code}</span>
               </div>
             </div>
             <div className="profile-ud-item">

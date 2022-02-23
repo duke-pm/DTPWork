@@ -10,6 +10,7 @@ export const initialState = {
   submittingRepairAssets: false,
   submittingLiquidationAssets: false,
   submittingReuseAssets: false,
+  submittingCreateSupplier: false,
 
   successListAssets: false,
   errorListAssets: false,
@@ -46,6 +47,10 @@ export const initialState = {
   successReuseAssets: false,
   errorReuseAssets: false,
   errorHelperReuseAssets: "",
+
+  successCreateSupplier: false,
+  errorCreateSupplier: false,
+  errorHelperCreateSupplier: "",
 
   historyAsset: [],
 
@@ -263,6 +268,11 @@ export default function (state = initialState, action = {}) {
       successReuseAssets: false,
       errorReuseAssets: false,
       errorHelperReuseAssets: "",
+
+      submittingCreateSupplier: false,
+      successCreateSupplier: false,
+      errorCreateSupplier: false,
+      errorHelperCreateSupplier: "",
     };
   case types.START_CREATE_ASSETS:
     return {
@@ -415,6 +425,32 @@ export default function (state = initialState, action = {}) {
       successReuseAssets: true,
       errorReuseAssets: false,
       errorHelperReuseAssets: "",
+    };
+
+  //** Create supplier */
+  case types.START_CREATE_SUPPLIER:
+    return {
+      ...state,
+      submittingCreateSupplier: true,
+      successCreateSupplier: false,
+      errorCreateSupplier: false,
+      errorHelperCreateSupplier: "",
+    };
+  case types.ERROR_CREATE_SUPPLIER:
+    return {
+      ...state,
+      submittingCreateSupplier: false,
+      successCreateSupplier: false,
+      errorCreateSupplier: true,
+      errorHelperCreateSupplier: payload,
+    };
+  case types.SUCCESS_CREATE_SUPPLIER:
+    return {
+      ...state,
+      submittingCreateSupplier: false,
+      successCreateSupplier: true,
+      errorCreateSupplier: false,
+      errorHelperCreateSupplier: "",
     };
 
     default:

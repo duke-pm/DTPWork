@@ -24,7 +24,7 @@
   },
   "validate": {
     "empty": "Mục này không thể trống!",
-    "format_email": "E-mail này không đúng định dạng!"
+    "format_email": "E-mail không đúng định dạng!"
   },
   "success": {
     "title": "Thành công!!!",
@@ -40,7 +40,8 @@
     "recall_assets": "Thành công thu hồi tài sản!",
     "repair_assets": "Thành công sữa chữa - bảo hành tài sản!",
     "liquidation_assets": "Thành công thanh lý tài sản!",
-    "reuse_assets": "Thành công đưa vào sử dụng tài sản!"
+    "reuse_assets": "Thành công đưa vào sử dụng tài sản!",
+    "create_supplier": "Thành công thêm mới nhà cung cấp!"
   },
   "error": {
     "title": "Lỗi!!!",
@@ -49,7 +50,8 @@
     "wrong_email": "Không thể gửi bằng thông tin e-mail này!",
     "cannot_sign_in_now": "Không thể đăng nhập ngay bây giờ! Vui lòng thử lại sau!",
     "cannot_reset_password": "Không thể cập nhật lại mật khẩu mới! Vui lòng thử lại sau!",
-    "create_assets": "Không thể thêm tài sản mới! Vui lòng thử lại sau!"
+    "create_assets": "Không thể thêm mới tài sản! Vui lòng thử lại sau!",
+    "create_supplier": "Không thể thêm mới nhà cung cấp! Vui lòng thử lại sau!"
   },
   "sign_in": {
     "title": "Đăng nhập",
@@ -85,7 +87,8 @@
   },
   "assets": {
     "title": "Tài sản",
-    "title_details": "Thông tin Tài sản",
+    "informations_details": "Chi tiết Tài sản",
+    "title_details": "Thông tin cơ bản",
     "assets_management": "Quản lý Tài sản",
     "get_data": "Cập nhật dữ liệu",
     "all": "Tất cả",
@@ -132,6 +135,7 @@
     "holder_quantity": "Số lượng tài sản...",
     "supplier": "Nhà cung cấp",
     "holder_supplier": "Nhà cung cấp tài sản...",
+    "add_supplier": "Thêm NCC",
     "description": "Quy cách tài sản/Thông số",
     "holder_description": "Mô tả quy cách, thông số tài sản...",
     "purchase_date": "Ngày mua",
@@ -155,7 +159,20 @@
     "holder_assets": "Tài sản...",
     "prefix": "Tiền tố",
     "holder_prefix": "Tiền tố...",
-    "non_use": "Không sử dụng"
+    "non_use": "Không sử dụng",
+    "create_supplier": "Thêm mới Nhà cung cấp",
+    "supplier_name": "Tên",
+    "holder_supplier_name": "Tên nhà cung cấp...",
+    "supplier_address": "Địa chỉ",
+    "holder_supplier_address": "Địa chỉ nhà cung cấp...",
+    "supplier_email": "E-mail",
+    "holder_supplier_email": "E-mail nhà cung cấp...",
+    "supplier_phone": "Số điện thoại",
+    "holder_supplier_phone": "Số điện thoại nhà cung cấp...",
+    "supplier_contact": "Người liên hệ",
+    "holder_supplier_contact": "Người liên hệ...",
+    "supplier_contact_phone": "Số điện thoại người liên hệ",
+    "holder_supplier_contact_phone": "Số điện thoại người liên hệ..."
   },
   "approved_assets": {
     "title": "Cấp phát Tài sản",

@@ -1,6 +1,6 @@
 import * as types from "./types";
-import Services from "services";
 import * as Actions from "redux/actions";
+import Services from "services";
 /**
  ** Assets module
  */
@@ -348,6 +348,44 @@ export const fFetchReuseAssets = (params, history) => {
       })
       .catch(error => {
         dispatch(fErrorReuseAssets(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};
+
+//** Create data supplier */
+export const fErrorCreateSupplier = error => ({
+  type: types.ERROR_CREATE_SUPPLIER,
+  payload: error,
+});
+
+export const fSuccessCreateSupplier = newSupplier => {
+  return dispatch => {
+    dispatch({type: types.UPDATE_MASTER_SUPPLIER, payload: newSupplier});
+    dispatch({type: types.SUCCESS_CREATE_SUPPLIER});
+  };
+};
+
+export const fFetchCreateSupplier = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_CREATE_SUPPLIER});
+
+    Services.approved.createSupplier(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessCreateSupplier(res.data));
+        } else {
+          return dispatch(fErrorCreateSupplier(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorCreateSupplier(error));
         if (error.message && error.message.search("Authorization") !== -1) {
           let tmp = {
             RefreshToken: params.RefreshToken,

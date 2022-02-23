@@ -5,9 +5,9 @@ import {useForm} from "react-hook-form";
 import DatePicker from "react-datepicker";
 import SimpleBar from "simplebar-react";
 import NumberFormat from 'react-number-format';
-import {Form, FormGroup} from "reactstrap";
+import {Form, FormGroup, Modal, ModalBody} from "reactstrap";
 import moment from "moment";
-/** COMMON */
+/** COMPONENTS */
 import {
   Block,
   BlockHead,
@@ -20,8 +20,10 @@ import {
   Col,
   RSelect,
 } from "components/Component";
+import AddSupplier from "./AddSupplier";
 /** REDUX */
 import * as Actions from "redux/actions";
+import { toast } from "react-toastify";
 
 const CustomDateInput = forwardRef(({ value, onClick, onChange }, ref) => (
   <div onClick={onClick} ref={ref}>
@@ -59,6 +61,9 @@ function AddEditForm(props) {
   const [loading, setLoading] = useState({
     main: true,
     submit: false,
+  });
+  const [view, setView] = useState({
+    supplier: false,
   });
   const [disables, setDisables] = useState({
     type: true,
@@ -102,6 +107,14 @@ function AddEditForm(props) {
   /**
    ** FUNCTIONS 
    */
+  const onFormSupplierCancel = isSuccess => {
+    if (isSuccess) {
+      toast(t("success:create_supplier"), {type: "success"});
+      onGetMasterData();
+    }
+    setView({supplier: false})
+  };
+
   const onInputChange = e => {
     setFormData({...formData, [e.target.name]: e.target.value});
   };
@@ -650,10 +663,21 @@ function AddEditForm(props) {
             </Col>
             <Col md="5">
               <FormGroup>
-                <div className="form-label-group">
+                <div className="form-label-group d-flex justify-content-between">
                   <label className="form-label" htmlFor="assetSupplier">
                     {t("add_assets:supplier")}
                   </label>
+                  <a
+                    href="#addsupplier"
+                    onClick={(ev) => {
+                      ev.preventDefault();
+                      setView({supplier: true});
+                    }}
+                    className="link link-sm"
+                  >
+                    <span>{t("add_assets:add_supplier")}</span>
+                    <Icon name="plus-circle"></Icon>
+                  </a>
                 </div>
                 <div className="form-control-wrap">
                   <RSelect
@@ -981,6 +1005,15 @@ function AddEditForm(props) {
           )}
         </Block>
       </Form>
+
+      {/** Modal create supplier */}
+      <AddSupplier
+        history={history}
+        show={view.supplier}
+        authState={authState}
+        commonState={commonState}
+        onCancel={onFormSupplierCancel}
+      />
     </SimpleBar>
   )
 };

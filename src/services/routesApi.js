@@ -22,6 +22,7 @@ const Routes = {
     REPAIR_ASSETS: "/AssetTrans/ProcessAsset",
     LIQUIDATION_ASSETS: "/AssetTrans/ProcessAsset",
     REUSE_ASSETS: "/AssetTrans/ProcessAsset",
+    CREATE_SUPPLIER: "/Supplier/Modify",
 
     EXPORT_ASSETS: "/Assets/ExportAsset",
     EXPORT_APPROVED_ASSETS: "/RQAsset/ExportAllocation",
