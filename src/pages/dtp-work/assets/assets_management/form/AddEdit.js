@@ -542,12 +542,12 @@ function AddEditForm(props) {
         <BlockHead>
           <BlockBetween>
             <BlockHeadContent>
-              {isAdd && <BlockTitle tag="h3">{t("add_assets:title")}</BlockTitle>}
-              {isUpdate && <BlockTitle tag="h3">{t("add_assets:update_title")}</BlockTitle>}
+              {isAdd && <BlockTitle tag="h4">{t("add_assets:title")}</BlockTitle>}
+              {isUpdate && <BlockTitle tag="h4">{t("add_assets:update_title")}</BlockTitle>}
             </BlockHeadContent>
             <BlockHeadContent>
               <ul className="nk-block-tools g-3">
-                {isAdd && (
+                {/* {isAdd && (
                   <li className="nk-block-tools-opt">
                     <Button
                       className="toggle btn-icon d-md-none"
@@ -569,135 +569,196 @@ function AddEditForm(props) {
                       <span>{t("common:reset")}</span>
                     </Button>
                   </li>
-                )}
-                {isAdd && (
-                  <li className="nk-block-tools-opt">
-                    <Button
-                      className="toggle btn-icon d-md-none"
-                      color="primary"
-                      type="submit"
-                      disabled={disabled}
-                    >
-                      {loading.submit && (
-                        <div className="spinner-border spinner-border-sm text-white" role="status" />
-                      )}
-                      {!loading.submit && <Icon name="plus"></Icon>}
-                    </Button>
-                    <Button
-                      className="toggle d-none d-md-inline-flex"
-                      color="primary"
-                      type="submit"
-                      disabled={disabled}
-                    >
-                      {loading.submit && (
-                        <div className="spinner-border spinner-border-sm text-white mr-2" role="status" />
-                      )}
-                      {!loading.submit && <Icon name="plus"></Icon>}
-                      <span>{t("common:add_new")}</span>
-                    </Button>
-                  </li>
-                )}
-                {isUpdate && (
-                  <li className="nk-block-tools-opt">
-                    <Button
-                      className="toggle btn-icon d-md-none"
-                      color="primary"
-                      type="submit"
-                      disabled={disabled}
-                    >
-                      {loading.submit && (
-                        <div className="spinner-border spinner-border-sm text-white" role="status" />
-                      )}
-                      {!loading.submit && <Icon name="edit-alt"></Icon>}
-                    </Button>
-                    <Button
-                      className="toggle d-none d-md-inline-flex"
-                      color="primary"
-                      type="submit"
-                      disabled={disabled}
-                    >
-                      {loading.submit && (
-                        <div className="spinner-border spinner-border-sm text-white mr-2" role="status" />
-                      )}
-                      {!loading.submit && <Icon name="edit-alt"></Icon>}
-                      <span>{t("common:update")}</span>
-                    </Button>
-                  </li>
-                )}
+                )} */}
+                <li className="nk-block-tools-opt">
+                  <Button
+                    className="toggle btn-icon d-md-none"
+                    color="primary"
+                    type="submit"
+                    disabled={disabled}
+                  >
+                    {loading.submit && (
+                      <div className="spinner-border spinner-border-sm text-white" />
+                    )}
+                    {!loading.submit && <Icon name={`${isAdd ? "plus" : "edit"}`} />}
+                  </Button>
+                  <Button
+                    className="toggle d-none d-md-inline-flex"
+                    color="primary"
+                    type="submit"
+                    disabled={disabled}
+                  >
+                    {loading.submit && (
+                      <div className="spinner-border spinner-border-sm text-white mr-2" />
+                    )}
+                    {!loading.submit && <Icon name={`${isAdd ? "plus" : "edit"}`} />}
+                    <span>{t(isAdd ? "common:add_new" : "common:update")}</span>
+                  </Button>
+                </li>
               </ul>
             </BlockHeadContent>
           </BlockBetween>
         </BlockHead>
 
-        <div className="nk-divider divider md"></div>
-
         <Block>
-          <BlockHead>
-            <BlockTitle tag="h6">{t("add_assets:information")}</BlockTitle>
-          </BlockHead>
-          <Row className="g-3">
-            <Col md="5">
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="assetName">
-                    {t("add_assets:name")} <span className="text-danger">*</span>
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <input
-                    ref={register({ required: t("validate:empty") })}
-                    className="form-control"
-                    type="text"
-                    id="assetName"
-                    name="assetName"
-                    disabled={disabled}
-                    value={formData.assetName}
-                    placeholder={t("add_assets:holder_name")}
-                    onChange={onInputChange}
-                  />
-                  {errors.assetName && (
-                    <span className="invalid">{errors.assetName.message}</span>
-                  )}
-                </div>
-              </FormGroup>
-            </Col>
-            <Col md="5">
-              <FormGroup>
-                <div className="form-label-group d-flex justify-content-between">
-                  <label className="form-label" htmlFor="assetSupplier">
-                    {t("add_assets:supplier")}
-                  </label>
-                  <a
-                    href="#addsupplier"
-                    onClick={(ev) => {
-                      ev.preventDefault();
-                      setView({supplier: true});
-                    }}
-                    className="link link-sm"
-                  >
-                    <span>{t("add_assets:add_supplier")}</span>
-                    <Icon name="plus-circle"></Icon>
-                  </a>
-                </div>
-                <div className="form-control-wrap">
-                  <RSelect
-                    name="assetSupplier"
-                    isMulti={false}
-                    isDisabled={disabled}
-                    options={dataSelect.suppliers}
-                    value={formData.assetSupplier}
-                    placeholder={t("add_assets:holder_supplier")}
-                    onChange={e => onChangeSelect(null, {key: "assetSupplier", value: e})}
-                  />
-                </div>
-              </FormGroup>
-            </Col>
-            <Col md="2">
-              {isAdd && (
+          <div className="data-head">
+            <h6 className="overline-title">{t("add_assets:information")}</h6>
+          </div>
+          <div className="mt-3">
+            <Row className="g-3">
+              <Col md="5">
                 <FormGroup>
                   <div className="form-label-group">
-                    <label className="form-label" htmlFor="assetQuantity">
-                      {t("add_assets:quantity")}
+                    <label className="form-label" htmlFor="assetName">
+                      {t("add_assets:name")} <span className="text-danger">*</span>
+                    </label>
+                  </div>
+                  <div className="form-control-wrap">
+                    <input
+                      ref={register({ required: t("validate:empty") })}
+                      className="form-control"
+                      type="text"
+                      id="assetName"
+                      name="assetName"
+                      disabled={disabled}
+                      value={formData.assetName}
+                      placeholder={t("add_assets:holder_name")}
+                      onChange={onInputChange}
+                    />
+                    {errors.assetName && (
+                      <span className="invalid">{errors.assetName.message}</span>
+                    )}
+                  </div>
+                </FormGroup>
+              </Col>
+              <Col md={isUpdate ? "7" : "5"}>
+                <FormGroup>
+                  <div className="form-label-group d-flex justify-content-between">
+                    <label className="form-label" htmlFor="assetSupplier">
+                      {t("add_assets:supplier")}
+                    </label>
+                    <a
+                      href="#addsupplier"
+                      onClick={(ev) => {
+                        ev.preventDefault();
+                        setView({supplier: true});
+                      }}
+                      className="link link-sm"
+                    >
+                      <span>{t("add_assets:add_supplier")}</span>
+                      <Icon name="plus-circle"></Icon>
+                    </a>
+                  </div>
+                  <div className="form-control-wrap">
+                    <RSelect
+                      name="assetSupplier"
+                      isMulti={false}
+                      isDisabled={disabled}
+                      options={dataSelect.suppliers}
+                      value={formData.assetSupplier}
+                      placeholder={t("add_assets:holder_supplier")}
+                      onChange={e => onChangeSelect(null, {key: "assetSupplier", value: e})}
+                    />
+                  </div>
+                </FormGroup>
+              </Col>
+              <Col md="2">
+                {isAdd && (
+                  <FormGroup>
+                    <div className="form-label-group">
+                      <label className="form-label" htmlFor="assetQuantity">
+                        {t("add_assets:quantity")}
+                      </label>
+                    </div>
+                    <div className="form-control-wrap">
+                      <input
+                        className="form-control"
+                        type="number"
+                        min={1}
+                        id="assetQuantity"
+                        name="assetQuantity"
+                        disabled={disabled}
+                        value={formData.assetQuantity}
+                        placeholder={t("add_assets:holder_quantity")}
+                        onChange={onInputChange}
+                      />
+                      {errors.assetQuantity && (
+                        <span className="invalid">{errors.assetQuantity.message}</span>
+                      )}
+                    </div>
+                  </FormGroup>
+                )}
+              </Col>
+              <Col size="12">
+                <FormGroup>
+                  <div className="form-label-group">
+                    <label className="form-label" htmlFor="assetDesciption">
+                      {t("add_assets:description")}
+                    </label>
+                  </div>
+                  <div className="form-control-wrap">
+                    <textarea
+                      className="no-resize form-control"
+                      type="text"
+                      id="assetDesciption"
+                      name="assetDesciption"
+                      disabled={disabled}
+                      value={formData.assetDesciption}
+                      placeholder={t("add_assets:holder_description")}
+                      onChange={onInputChange}
+                    />
+                  </div>
+                </FormGroup>
+              </Col>
+              <Col md="4">
+                <FormGroup>
+                  <div className="form-label-group">
+                    <label className="form-label" htmlFor="assetPurchaseDate">
+                      {t("add_assets:purchase_date")}
+                    </label>
+                  </div>
+                  <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="calendar"></Icon>
+                    </div>
+                    <DatePicker
+                      selected={formData.assetPurchaseDate}
+                      className="form-control date-picker"
+                      disabled={disabled}
+                      value={formData.assetPurchaseDate}
+                      onChange={e => onDateChange("assetPurchaseDate", e)}
+                      customInput={<CustomDateInput />}
+                    />
+                  </div>
+                </FormGroup>
+              </Col>
+              <Col md="4">
+                <FormGroup>
+                  <div className="form-label-group">
+                    <label className="form-label" htmlFor="assetEffectiveDate">
+                      {t("add_assets:visible_date")}
+                    </label>
+                  </div>
+                  <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="calendar"></Icon>
+                    </div>
+                    <DatePicker
+                      selected={formData.assetEffectiveDate}
+                      className="form-control date-picker"
+                      disabled={disabled}
+                      value={formData.assetEffectiveDate}
+                      onChange={e => onDateChange("assetEffectiveDate", e)}
+                      customInput={<CustomDateInput />}
+                    />
+                  </div>
+                </FormGroup>
+              </Col>
+              <Col md="4">
+                <FormGroup>
+                  <div className="form-label-group">
+                    <label className="form-label" htmlFor="assetInsuranceDate">
+                      {t("add_assets:insurance_date")}
                     </label>
                   </div>
                   <div className="form-control-wrap">
@@ -705,198 +766,109 @@ function AddEditForm(props) {
                       className="form-control"
                       type="number"
                       min={1}
-                      id="assetQuantity"
-                      name="assetQuantity"
+                      id="assetInsuranceDate"
+                      name="assetInsuranceDate"
                       disabled={disabled}
-                      value={formData.assetQuantity}
-                      placeholder={t("add_assets:holder_quantity")}
+                      value={formData.assetInsuranceDate}
+                      placeholder={t("add_assets:holder_insurance_date")}
                       onChange={onInputChange}
                     />
-                    {errors.assetQuantity && (
-                      <span className="invalid">{errors.assetQuantity.message}</span>
-                    )}
-                  </div>
-                </FormGroup>
-              )}
-            </Col>
-            <Col size="12">
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="assetDesciption">
-                    {t("add_assets:description")}
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <textarea
-                    className="no-resize form-control"
-                    type="text"
-                    id="assetDesciption"
-                    name="assetDesciption"
-                    disabled={disabled}
-                    value={formData.assetDesciption}
-                    placeholder={t("add_assets:holder_description")}
-                    onChange={onInputChange}
-                  />
-                </div>
-              </FormGroup>
-            </Col>
-            <Col md="4">
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="assetPurchaseDate">
-                    {t("add_assets:purchase_date")}
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <div className="form-icon form-icon-left">
-                    <Icon name="calendar"></Icon>
-                  </div>
-                  <DatePicker
-                    selected={formData.assetPurchaseDate}
-                    className="form-control date-picker"
-                    disabled={disabled}
-                    value={formData.assetPurchaseDate}
-                    onChange={e => onDateChange("assetPurchaseDate", e)}
-                    customInput={<CustomDateInput />}
-                  />
-                </div>
-              </FormGroup>
-            </Col>
-            <Col md="4">
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="assetEffectiveDate">
-                    {t("add_assets:visible_date")}
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <div className="form-icon form-icon-left">
-                    <Icon name="calendar"></Icon>
-                  </div>
-                  <DatePicker
-                    selected={formData.assetEffectiveDate}
-                    className="form-control date-picker"
-                    disabled={disabled}
-                    value={formData.assetEffectiveDate}
-                    onChange={e => onDateChange("assetEffectiveDate", e)}
-                    customInput={<CustomDateInput />}
-                  />
-                </div>
-              </FormGroup>
-            </Col>
-            <Col md="4">
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="assetInsuranceDate">
-                    {t("add_assets:insurance_date")}
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <input
-                    className="form-control"
-                    type="number"
-                    min={1}
-                    id="assetInsuranceDate"
-                    name="assetInsuranceDate"
-                    disabled={disabled}
-                    value={formData.assetInsuranceDate}
-                    placeholder={t("add_assets:holder_insurance_date")}
-                    onChange={onInputChange}
-                  />
-                </div>
-              </FormGroup>
-            </Col>
-            <Col md="4">
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="assetOriginPrice">
-                    {t("add_assets:origin_price")}
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <NumberFormat
-                    className="form-control"
-                    name={"assetOriginPrice"}
-                    value={formData.assetOriginPrice}
-                    placeholder={t("add_assets:holder_origin_price") || ' '}
-                    thousandSeparator
-                    prefix="đ "
-                    onValueChange={val =>
-                      onInputChange({target: {name: "assetOriginPrice", value: val.floatValue}})}
-                  />
-                </div>
-              </FormGroup>
-            </Col>
-            <Col md="4">
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="assetDepreciationDate">
-                    {t("add_assets:depreciation_date")}
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <input
-                    className="form-control"
-                    type="number"
-                    min={1}
-                    id="assetDepreciationDate"
-                    name="assetDepreciationDate"
-                    disabled={disabled}
-                    value={formData.assetDepreciationDate}
-                    placeholder={t("add_assets:holder_depreciation_date")}
-                    onChange={onInputChange}
-                  />
-                </div>
-              </FormGroup>
-            </Col>
-            <Col md="4">
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="assetDepartment">
-                    {t("add_assets:department")} <span className="text-danger">*</span>
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <RSelect
-                    name="assetDepartment"
-                    isMulti={false}
-                    isDisabled={disabled}
-                    error={error.department}
-                    options={dataSelect.departments}
-                    value={formData.assetDepartment}
-                    placeholder={t("add_assets:holder_department")}
-                    onChange={e => onChangeSelect(null, {key: "assetDepartment", value: e})}
-                  />
-                </div>
-              </FormGroup>
-            </Col>
-            {isUpdate && (
-              <Col size="12" className="d-flex justify-content-end">
-                <FormGroup>
-                  <div className="custom-control custom-checkbox">
-                    <input
-                      type="checkbox"
-                      className="custom-control-input form-control"
-                      id="assetInactive"
-                      value={formData.assetInactive}
-                      onChange={onChangeCheckbox}
-                    />
-                    <label className="custom-control-label" htmlFor="assetInactive">
-                      {t("add_assets:non_use")}
-                    </label>
                   </div>
                 </FormGroup>
               </Col>
-            )}
-          </Row>
+              <Col md="4">
+                <FormGroup>
+                  <div className="form-label-group">
+                    <label className="form-label" htmlFor="assetOriginPrice">
+                      {t("add_assets:origin_price")}
+                    </label>
+                  </div>
+                  <div className="form-control-wrap">
+                    <NumberFormat
+                      className="form-control"
+                      name={"assetOriginPrice"}
+                      value={formData.assetOriginPrice}
+                      placeholder={t("add_assets:holder_origin_price") || ' '}
+                      thousandSeparator
+                      prefix="đ "
+                      onValueChange={val =>
+                        onInputChange({target: {name: "assetOriginPrice", value: val.floatValue}})}
+                    />
+                  </div>
+                </FormGroup>
+              </Col>
+              <Col md="4">
+                <FormGroup>
+                  <div className="form-label-group">
+                    <label className="form-label" htmlFor="assetDepreciationDate">
+                      {t("add_assets:depreciation_date")}
+                    </label>
+                  </div>
+                  <div className="form-control-wrap">
+                    <input
+                      className="form-control"
+                      type="number"
+                      min={1}
+                      id="assetDepreciationDate"
+                      name="assetDepreciationDate"
+                      disabled={disabled}
+                      value={formData.assetDepreciationDate}
+                      placeholder={t("add_assets:holder_depreciation_date")}
+                      onChange={onInputChange}
+                    />
+                  </div>
+                </FormGroup>
+              </Col>
+              <Col md="4">
+                <FormGroup>
+                  <div className="form-label-group">
+                    <label className="form-label" htmlFor="assetDepartment">
+                      {t("add_assets:department")} <span className="text-danger">*</span>
+                    </label>
+                  </div>
+                  <div className="form-control-wrap">
+                    <RSelect
+                      name="assetDepartment"
+                      isMulti={false}
+                      isDisabled={disabled || updateItem?.statusID > 1}
+                      error={error.department}
+                      options={dataSelect.departments}
+                      value={formData.assetDepartment}
+                      placeholder={t("add_assets:holder_department")}
+                      onChange={e => onChangeSelect(null, {key: "assetDepartment", value: e})}
+                    />
+                  </div>
+                </FormGroup>
+              </Col>
+              {isUpdate && (
+                <Col size="12" className="d-flex justify-content-end">
+                  <FormGroup>
+                    <div className="custom-control custom-checkbox">
+                      <input
+                        type="checkbox"
+                        className="custom-control-input form-control"
+                        id="assetInactive"
+                        disabled={disabled || updateItem?.statusID > 1}
+                        value={formData.assetInactive}
+                        onChange={onChangeCheckbox}
+                      />
+                      <label className="custom-control-label" htmlFor="assetInactive">
+                        {t("add_assets:non_use")}
+                      </label>
+                    </div>
+                  </FormGroup>
+                </Col>
+              )}
+            </Row>
+          </div>
+        </Block>
 
-          {isAdd && (
-            <>
-              <div className="nk-divider divider md"></div>
-          
-              <BlockHead>
-                <BlockTitle tag="h6">{t("add_assets:rule_code")}</BlockTitle>
-              </BlockHead>
+        {isAdd && (
+          <Block>
+            <div className="data-head">
+              <h6 className="overline-title">{t("add_assets:rule_code")}</h6>
+            </div>
+            <div className="mt-3">
               <Row className="g-3">
                 <Col md="8">
                   <FormGroup>
@@ -1001,9 +973,9 @@ function AddEditForm(props) {
                   </FormGroup>
                 </Col>
               </Row>
-            </>
-          )}
-        </Block>
+            </div>
+          </Block>
+        )}
       </Form>
 
       {/** Modal create supplier */}

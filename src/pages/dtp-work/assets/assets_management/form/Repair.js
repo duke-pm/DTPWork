@@ -19,8 +19,9 @@ import {
   Row,
   Col,
 } from "components/Component";
+import AssetInformations from "../components/AssetInformations";
 /** COMMON */
-import {numberFormat} from "utils/Utils";
+import Configs from "configs";
 /** REDUX */
 import * as Actions from "redux/actions";
 
@@ -46,6 +47,7 @@ function RepairForm(props) {
     commonState,
     authState,
     updateItem,
+    updateHistory,
     onClose,
   } = props;
 
@@ -56,7 +58,12 @@ function RepairForm(props) {
   /** Use state */
   const [loading, setLoading] = useState({
     repair: false,
+    history: false,
   });
+  const [error, setError] = useState({
+    cost: false,
+  });
+  const [isRemoveFile, setRemoveFile] = useState(false);
   const [dataItem, setDataItem] = useState({
     id: "",
     code: "",
@@ -90,6 +97,9 @@ function RepairForm(props) {
 
   const onChangeFile = e => {
     setFormData({...formData, file: e.target.files[0]});
+    if (formData.file && e.target.files[0].name !== formData.file.name) {
+      setRemoveFile(true);
+    }
   };
 
   const onChangeDate = value => {
@@ -106,51 +116,105 @@ function RepairForm(props) {
     });
   };
 
-  const onSetFormDataDetails = data => {
+  const onSetFormDataDetails = (data, dataH) => {
     console.log('[LOG] === onSetFormDataDetails ===> ', data);
-    setDataItem({
-      id: data.assetID,
-      code: data.assetCode,
-      name: data.assetName,
-      group: data.groupName,
-      description: data.descr
-        ? data.descr
-        : "-",
-      purchaseDate: data.purchaseDate
-        ? moment(data.purchaseDate).format("DD/MM/YYYY")
-        : "-",
-      originPrice: data.originalPrice
-        ? numberFormat(data.originalPrice)
-        : "-",
-      statusID: data.statusID,
-      status: data.statusName,
+    if (!dataH) {
+      setDataItem({
+        id: data.assetID,
+        code: data.assetCode,
+        name: data.assetName,
+        group: data.groupName,
+        description: data.descr || "-",
+        purchaseDate: data.purchaseDate,
+        originPrice: data.originalPrice,
+        statusID: data.statusID,
+        status: data.statusName,
 
-      employee: data.empCode,
-      department: data.deptCodeManager,
-      region: data.regionCode,
-      position: data.jobTitle,
-    });
+        employee: data.empCode,
+        department: data.deptCodeManager,
+        region: data.regionCode,
+        position: data.jobTitle,
+      });
+    } else {
+      setDataItem({
+        id: data.assetID,
+        code: data.assetCode,
+        name: data.assetName,
+        group: data.groupName,
+        description: data.descr || "-",
+        purchaseDate: data.purchaseDate,
+        originPrice: data.originalPrice,
+        statusID: data.statusID,
+        status: data.statusName,
+
+        employee: dataH.empCode,
+        department: dataH.deptCode,
+        region: dataH.regionCode,
+        position: dataH.jobTitle,
+      });
+      setFormData({
+        ...formData,
+        repairName: dataH.supplierRepair,
+        repairCost: dataH.expCost,
+        repairDate: dataH.repairDate 
+          ? new Date(
+            moment(dataH.repairDate).year(),
+            moment(dataH.repairDate).month(),
+            moment(dataH.repairDate).date()
+          )
+          : new Date(),
+        reason: dataH.reasons,
+        file: dataH.attachFiles ? {id: "history", name: dataH.attachFiles} : "",
+      });
+    }
   };
 
   const onFormSubmit = () => {
-    setLoading({...loading, repair: true});
-    let params = {
-      AssetID: dataItem.id,
-      EmpCode: dataItem.employee,
-      DeptCode: dataItem.department,
-      RegionCode: dataItem.region,
-      JobTitle: dataItem.position,
-      Reasons: formData.reason.trim(),
-      FileUpload: formData.file,
-      TransDate: moment(formData.repairDate).format("YYYY-MM-DD"),
-      SupplierRepair: formData.repairName.trim(),
-      ExpCost: formData.repairCost,
+    setError({cost: null});
+    if (!formData.repairCost) {
+      return setError({cost: {message: t("validate:empty")}});
+    }
 
-      RefreshToken: authState["data"]["refreshToken"],
-      Lang: commonState["language"],
-    };
-    console.log('[LOG] === onFormSubmit ===> ', params);
-    dispatch(Actions.fFetchRepairAssets(params, history));
+    if (!updateHistory) {
+      setLoading({...loading, repair: true});
+      let params = {
+        AssetID: dataItem.id,
+        EmpCode: dataItem.employee,
+        DeptCode: dataItem.department,
+        RegionCode: dataItem.region,
+        JobTitle: dataItem.position,
+        Reasons: formData.reason.trim(),
+        FileUpload: formData.file,
+        RepairDate: moment(formData.repairDate).format("YYYY-MM-DD"),
+        SupplierRepair: formData.repairName.trim(),
+        ExpCost: formData.repairCost,
+
+        RefreshToken: authState["data"]["refreshToken"],
+        Lang: commonState["language"],
+      };
+      console.log('[LOG] === onFormSubmit ===> ', params);
+      dispatch(Actions.fFetchRepairAssets(params, history));
+    }
+    if (updateHistory) {
+      setLoading({...loading, history: true});
+      let params = {
+        LineNum: updateHistory.lineNum,
+        AssetID: dataItem.id,
+        IsRemovedFile: isRemoveFile,
+        TypeUpdate: "Repair",
+        Reasons: formData.reason.trim(),
+        FileUpload: formData.file?.id === "history" ? "" : formData.file,
+        RepairDate: moment(formData.repairDate).format("YYYY-MM-DD"),
+        TransDate: moment().format("YYYY-MM-DD"),
+        SupplierRepair: formData.repairName.trim(),
+        ExpCost: formData.repairCost,
+
+        RefreshToken: authState["data"]["refreshToken"],
+        Lang: commonState["language"],
+      };
+      console.log('[LOG] === onFormSubmit ===> ', params);
+      dispatch(Actions.fFetchUpdateProcess(params, history));
+    }
   };
 
   const onSuccess = type => {
@@ -158,28 +222,52 @@ function RepairForm(props) {
       onResetData();
       onClose(true, t("success:repair_assets"));
     }
-    setLoading({repair: false});
+    if (type === "History") {
+      onResetData();
+      onClose(true, t("success:update_history_assets"), "repair", true);
+    }
+    setRemoveFile(false);
+    setLoading({repair: false, history: false});
   };
 
   const onError = (type, error) => {
     console.log('[LOG] === onError ===> ', error);
-    setLoading({repair: false});
     if (type === "Repair") {
       onResetData();
       onClose(false, error);
     }
+    if (type === "History") {
+      onResetData();
+      onClose(false, error);
+    }
+    setRemoveFile(false);
+    setLoading({repair: false, history: false});
+  };
+
+  const onDownloadAttachFile = () => {
+    window.open(`${Configs.hostAPI}/${formData.file.name}`, "_blank");
   };
 
   /**
    ** LIFE CYCLE 
    */
   useEffect(() => {
-    if (updateItem && show) {
+    if (!updateHistory && updateItem && show) {
       onSetFormDataDetails(updateItem);
     }
   }, [
     show,
-    updateItem
+    updateItem,
+    updateHistory,
+  ]);
+
+  useEffect(() => {
+    if (updateHistory && show) {
+      onSetFormDataDetails(updateItem, updateHistory);
+    }
+  }, [
+    show,
+    updateHistory,
   ]);
 
   useEffect(() => {
@@ -201,11 +289,30 @@ function RepairForm(props) {
     approvedState["errorRepairAssets"],
   ]);
 
+  useEffect(() => {
+    if (loading.history && show) {
+      if (!approvedState["submittingUpdateProcess"]) {
+        if (approvedState["successUpdateProcess"] && !approvedState["errorUpdateProcess"]) {
+          return onSuccess("History");
+        }
+        if (!approvedState["successUpdateProcess"] && approvedState["errorUpdateProcess"]) {
+          return onError("History", approvedState["errorHelperUpdateProcess"]);
+        }
+      }
+    }
+  }, [
+    show,
+    loading.history,
+    approvedState["submittingUpdateProcess"],
+    approvedState["successUpdateProcess"],
+    approvedState["errorUpdateProcess"],
+  ]);
+
   /**
    ** RENDER 
    */
   const {errors, register, handleSubmit} = useForm();
-  const disabled = loading.repair;
+  const disabled = loading.repair || loading.history;
 
   return (
     <SimpleBar
@@ -217,11 +324,16 @@ function RepairForm(props) {
         <BlockHead>
           <BlockBetween>
             <BlockHeadContent>
-              <BlockTitle tag="h3">{t("repair_assets:title")}</BlockTitle>
+              {!updateHistory && (
+                <BlockTitle tag="h4">{t("repair_assets:title")}</BlockTitle>
+              )}
+              {updateHistory && (
+                <BlockTitle tag="h4">{t("repair_assets:history_title")}</BlockTitle>
+              )}
             </BlockHeadContent>
             <BlockHeadContent>
               <ul className="nk-block-tools g-3">
-                <li className="nk-block-tools-opt">
+                {/* <li className="nk-block-tools-opt">
                   <Button
                     className="toggle btn-icon d-md-none"
                     color="gray"
@@ -241,7 +353,7 @@ function RepairForm(props) {
                     <Icon name="undo"></Icon>
                     <span>{t("common:reset")}</span>
                   </Button>
-                </li>
+                </li> */}
                 <li className="nk-block-tools-opt">
                   <Button
                     className="toggle btn-icon d-md-none"
@@ -249,10 +361,10 @@ function RepairForm(props) {
                     type="submit"
                     disabled={disabled}
                   >
-                    {loading.repair && (
+                    {disabled && (
                       <div className="spinner-border spinner-border-sm text-white" role="status" />
                     )}
-                    {!loading.repair && <Icon name="save"></Icon>}
+                    {!loading.repair && !loading.history && <Icon name="save"></Icon>}
                   </Button>
                   <Button
                     className="toggle d-none d-md-inline-flex"
@@ -260,10 +372,10 @@ function RepairForm(props) {
                     type="submit"
                     disabled={disabled}
                   >
-                    {loading.repair && (
+                    {disabled && (
                       <div className="spinner-border spinner-border-sm text-white mr-2" role="status" />
                     )}
-                    {!loading.repair && <Icon name="save"></Icon>}
+                    {!loading.repair && !loading.history && <Icon name="save"></Icon>}
                     <span>{t("common:save")}</span>
                   </Button>
                 </li>
@@ -272,206 +384,145 @@ function RepairForm(props) {
           </BlockBetween>
         </BlockHead>
 
-        <div className="nk-divider divider md"></div>
+        <AssetInformations data={dataItem} />
 
         <Block>
-          <BlockHead>
-            <BlockTitle tag="h6">{t("repair_assets:information")}</BlockTitle>
-          </BlockHead>
-          <div className="profile-ud-list">
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("repair_assets:code")}</span>
-                <span className="profile-ud-value text-primary">{dataItem.code}</span>
-              </div>
-            </div>
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("repair_assets:name")}</span>
-                <span className="profile-ud-value">{dataItem.name}</span>
-              </div>
-            </div>
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("repair_assets:group")}</span>
-                <span className="profile-ud-value">{dataItem.group}</span>
-              </div>
-            </div>
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("repair_assets:purchase_date")}</span>
-                <span className="profile-ud-value">{dataItem.purchaseDate}</span>
-              </div>
-            </div>
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("repair_assets:origin_price")}</span>
-                <span className="profile-ud-value">{dataItem.originPrice}</span>
-              </div>
-            </div>
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("repair_assets:status")}</span>
-                <span className="profile-ud-value">
-                  <span
-                    className={`dot bg-${
-                      dataItem.statusID === 1
-                        ? "gray"
-                        : dataItem.statusID === 2
-                          ? "success"
-                          : dataItem.statusID === 3
-                            ? "warning"
-                            : (dataItem.statusID === 4 || dataItem.statusID === 5)
-                              ? "danger"
-                              : "primary"
-                    } d-mb-none`}
-                  ></span>
-                  <span
-                    className={`badge badge-sm badge-dot has-bg badge-${
-                      dataItem.statusID === 1
-                        ? "gray"
-                        : dataItem.statusID === 2
-                          ? "success"
-                          : dataItem.statusID === 3
-                            ? "warning"
-                            : (dataItem.statusID === 4 || dataItem.statusID === 5)
-                              ? "danger"
-                              : "primary"
-                    } d-none d-mb-inline-flex`}
-                  >
-                    {dataItem.status}
-                  </span>
-                </span>
-              </div>
-            </div>
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("repair_assets:description")}</span>
-                <span className="profile-ud-value">{dataItem.description}</span>
-              </div>
-            </div>
+          <div className="data-head">
+            <h6 className="overline-title">{t("repair_assets:information_repair")}</h6>
           </div>
-
-          <div className="nk-divider divider md"></div>
-
-          <BlockHead>
-            <BlockTitle tag="h6">{t("repair_assets:information_repair")}</BlockTitle>
-          </BlockHead>
-          <Row className="g-3">
-            <Col md="4">
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="approvedDate">
-                    {t("repair_assets:repair_date")}
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <div className="form-icon form-icon-left">
-                    <Icon name="calendar"></Icon>
+          <div className="mt-3">
+            <Row className="g-3">
+              <Col md="4">
+                <FormGroup>
+                  <div className="form-label-group">
+                    <label className="form-label" htmlFor="approvedDate">
+                      {t("repair_assets:repair_date")}
+                    </label>
                   </div>
-                  <DatePicker
-                    selected={formData.repairDate}
-                    className="form-control date-picker"
-                    disabled={disabled}
-                    value={formData.repairDate}
-                    onChange={onChangeDate}
-                    customInput={<CustomDateInput />}
-                  />
-                </div>
-              </FormGroup>
-            </Col>
-            <Col md="8">
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="repairName">
-                    {t("repair_assets:repair_name")} <span className="text-danger">*</span>
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <input
-                    ref={register({ required: t("validate:empty") })}
-                    className="form-control"
-                    type="text"
-                    id="repairName"
-                    name="repairName"
-                    disabled={disabled}
-                    value={formData.repairName}
-                    placeholder={t("repair_assets:holder_repair_name")}
-                    onChange={onChangeInput}
-                  />
-                  {errors.repairName && (
-                    <span className="invalid">{errors.repairName.message}</span>
-                  )}
-                </div>
-              </FormGroup>
-            </Col>
-            <Col md="4">
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="repairCost">
-                    {t("repair_assets:repair_cost")} <span className="text-danger">*</span>
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <NumberFormat
-                    className="form-control"
-                    name="repairCost"
-                    value={formData.repairCost}
-                    placeholder={t("repair_assets:holder_repair_cost") || ' '}
-                    thousandSeparator
-                    prefix="đ "
-                    onValueChange={val =>
-                      onChangeInput({target: {name: "repairCost", value: val.floatValue}})}
-                  />
-                </div>
-              </FormGroup>
-            </Col>
-            <Col md="8">
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="file">
-                    {t("repair_assets:file")}
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <div className="custom-file">
-                    <input
-                      className="custom-file-input form-control"
-                      id="file"
-                      type="file"
-                      multiple={false}
+                  <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="calendar"></Icon>
+                    </div>
+                    <DatePicker
+                      selected={formData.repairDate}
+                      className="form-control date-picker"
                       disabled={disabled}
-                      onChange={onChangeFile}
+                      value={formData.repairDate}
+                      onChange={onChangeDate}
+                      customInput={<CustomDateInput />}
                     />
-                    <Label className="custom-file-label" htmlFor="file">
-                      {!formData.file ? t("common:choose_file") : formData.file.name}
-                    </Label>
                   </div>
-                </div>
-              </FormGroup>
-            </Col>
-            <Col size="12">
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="reason">
-                    {t("repair_assets:repair_reason")}
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <textarea
-                    className="no-resize form-control"
-                    type="text"
-                    id="reason"
-                    name="reason"
-                    disabled={disabled}
-                    value={formData.reason}
-                    placeholder={t("repair_assets:holder_repair_reason")}
-                    onChange={onChangeInput}
-                  />
-                </div>
-              </FormGroup>
-            </Col>
-          </Row>
+                </FormGroup>
+              </Col>
+              <Col md="8">
+                <FormGroup>
+                  <div className="form-label-group">
+                    <label className="form-label" htmlFor="repairName">
+                      {t("repair_assets:repair_name")} <span className="text-danger">*</span>
+                    </label>
+                  </div>
+                  <div className="form-control-wrap">
+                    <input
+                      ref={register({ required: t("validate:empty") })}
+                      className="form-control"
+                      type="text"
+                      id="repairName"
+                      name="repairName"
+                      disabled={disabled}
+                      value={formData.repairName}
+                      placeholder={t("repair_assets:holder_repair_name")}
+                      onChange={onChangeInput}
+                    />
+                    {errors.repairName && (
+                      <span className="invalid">{errors.repairName.message}</span>
+                    )}
+                  </div>
+                </FormGroup>
+              </Col>
+              <Col md="4">
+                <FormGroup>
+                  <div className="form-label-group">
+                    <label className="form-label" htmlFor="repairCost">
+                      {t("repair_assets:repair_cost")} <span className="text-danger">*</span>
+                    </label>
+                  </div>
+                  <div className="form-control-wrap">
+                    <NumberFormat
+                      className="form-control"
+                      name="repairCost"
+                      value={formData.repairCost}
+                      placeholder={t("repair_assets:holder_repair_cost") || ' '}
+                      thousandSeparator
+                      prefix="đ "
+                      onValueChange={val =>
+                        onChangeInput({target: {name: "repairCost", value: val.floatValue}})}
+                    />
+                    {error.cost && (
+                      <span className="invalid">{error.cost.message}</span>
+                    )}
+                  </div>
+                </FormGroup>
+              </Col>
+              <Col md="8">
+                <FormGroup>
+                  <div className="form-label-group">
+                    <label className="form-label" htmlFor="file">
+                      {t("repair_assets:file")}
+                    </label>
+                  </div>
+                  <div className="d-flex align-items-center">
+                    <div className={`form-control-wrap flex-fill ${updateHistory && formData.file?.id === "history" && "mr-3"}`}>
+                      <div className="custom-file">
+                        <input
+                          className="custom-file-input form-control"
+                          id="file"
+                          type="file"
+                          multiple={false}
+                          disabled={disabled}
+                          onChange={onChangeFile}
+                        />
+                        <Label className="custom-file-label" htmlFor="file">
+                          {!formData.file ? t("common:choose_file") : formData.file.name}
+                        </Label>
+                      </div>
+                    </div>
+                    {updateHistory && formData.file?.id === "history" && (
+                      <Button
+                        color="primary"
+                        type="button"
+                        disabled={disabled}
+                        onClick={onDownloadAttachFile}
+                      >
+                        <Icon name="download"></Icon>
+                        <span>{t("common:download")}</span>
+                      </Button>
+                    )}
+                  </div>
+                </FormGroup>
+              </Col>
+              <Col size="12">
+                <FormGroup>
+                  <div className="form-label-group">
+                    <label className="form-label" htmlFor="reason">
+                      {t("repair_assets:repair_reason")}
+                    </label>
+                  </div>
+                  <div className="form-control-wrap">
+                    <textarea
+                      className="no-resize form-control"
+                      type="text"
+                      id="reason"
+                      name="reason"
+                      disabled={disabled}
+                      value={formData.reason}
+                      placeholder={t("repair_assets:holder_repair_reason")}
+                      onChange={onChangeInput}
+                    />
+                  </div>
+                </FormGroup>
+              </Col>
+            </Row>
+          </div>
         </Block>
       </Form>
     </SimpleBar>

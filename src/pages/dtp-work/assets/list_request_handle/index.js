@@ -77,10 +77,60 @@ function RequestAssetsHandle(props) {
 
   const onSearch = (ev) => {
     ev.preventDefault();
+    if (!loading.search) {
+      setLoading({...loading, search: true});
+      // Update params
+      let tmpFormData = {...formData};
+      tmpFormData.page = 1;
+      setFormData(tmpFormData);
+      // Call api
+      onStartGetData(
+        formData.rangeStart,
+        formData.rangeEnd,
+        formData.search,
+        formData.type,
+        formData.status,
+        1,
+      );
+    }
+  };
+
+  const onSearchByDate = () => {
+    if (!loading.search) {
+      setLoading({...loading, search: true});
+      // Update params
+      let tmpFormData = {...formData};
+      tmpFormData.page = 1;
+      setFormData(tmpFormData);
+      // Call api
+      onStartGetData(
+        formData.rangeStart,
+        formData.rangeEnd,
+        formData.search,
+        formData.type,
+        formData.status,
+        1,
+      );
+    }
   };
 
   const onChangePage = newPage => {
-    
+    if (!loading.search) {
+      setLoading({...loading, search: true});
+      // Update params
+      let tmpFormData = {...formData};
+      tmpFormData.page = newPage;
+      setFormData(tmpFormData);
+      // Call api
+      onStartGetData(
+        formData.rangeStart,
+        formData.rangeEnd,
+        formData.search,
+        formData.type,
+        formData.status,
+        newPage,
+      );
+    }
   };
 
   const onApproved = dataRequest => {
@@ -105,6 +155,8 @@ function RequestAssetsHandle(props) {
       ToDate: toDate,
       RequestTypeID: type,
       IsResolveRequest: true,
+      RefreshToken: authState["data"]["refreshToken"],
+      Lang: commonState["language"],
     };
     dispatch(Actions.fFetchListRequestHandle(params, history));
   };
@@ -178,6 +230,7 @@ function RequestAssetsHandle(props) {
   /**
    ** RENDER
    */
+  const disabled = loading.main || loading.search;
   return (
     <React.Fragment>
       <Head title={t("assets:title")}></Head>
@@ -187,9 +240,7 @@ function RequestAssetsHandle(props) {
         <BlockHead size="sm">
           <BlockBetween>
             <BlockHeadContent>
-              <BlockTitle page tag="h3">
-                {t("request_handle:title")}
-              </BlockTitle>
+              <BlockTitle tag="h4">{t("request_handle:title")}</BlockTitle>
             </BlockHeadContent>
             <BlockHeadContent>
               <div className="toggle-wrap nk-block-tools-toggle">
@@ -212,6 +263,7 @@ function RequestAssetsHandle(props) {
                           type="text"
                           className="form-control"
                           id="default-04"
+                          disabled={disabled}
                           value={formData.search}
                           placeholder={t("common:search")}
                           onChange={onChangeSearch}
@@ -223,6 +275,7 @@ function RequestAssetsHandle(props) {
                         <div className="form-control-wrap">
                           <div className="input-daterange date-picker-range">
                             <DatePicker
+                              className="form-control"
                               selected={formData.rangeStart}
                               onChange={date => onChangeDate("rangeStart", date)}
                               dateFormat="dd/MM/yyyy"
@@ -230,10 +283,11 @@ function RequestAssetsHandle(props) {
                               startDate={formData.rangeStart}
                               endDate={formData.rangeEnd}
                               wrapperClassName="start-m"
-                              className="form-control"
+                              disabled={disabled}
                             />{" "}
                             <div className="input-group-addon fw-bold">{t("common:to")}</div>
                             <DatePicker
+                              className="form-control"
                               selected={formData.rangeEnd}
                               onChange={date => onChangeDate("rangeEnd", date)}
                               dateFormat="dd/MM/yyyy"
@@ -242,8 +296,15 @@ function RequestAssetsHandle(props) {
                               selectsEnd
                               minDate={formData.rangeStart}
                               wrapperClassName="end-m"
-                              className="form-control"
+                              disabled={disabled}
                             />
+                            <div className="input-group-addon pl-4">
+                              <a className="form-icon form-icon-right"
+                                href="#searchDate"
+                                onClick={onSearchByDate}>
+                                <Icon name="search"></Icon>
+                              </a>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -258,6 +319,7 @@ function RequestAssetsHandle(props) {
         {/** Content table */}
         <Block>
           <TableRequestHandle
+            loading={loading.main || loading.search}
             curPage={formData.page}
             countItem={data.count}
             dataRequest={data.requests}

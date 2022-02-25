@@ -11,7 +11,9 @@ export const initialState = {
   submittingLiquidationAssets: false,
   submittingReuseAssets: false,
   submittingCreateSupplier: false,
+  submittingUpdateProcess: false,
   submittingListRequestHandle: false,
+  submittingApprovedRequest: false,
 
   successListAssets: false,
   errorListAssets: false,
@@ -53,10 +55,19 @@ export const initialState = {
   errorCreateSupplier: false,
   errorHelperCreateSupplier: "",
 
+  successUpdateProcess: false,
+  errorUpdateProcess: false,
+  errorHelperUpdateProcess: "",
+
   successListRequestHandle: false,
   errorListRequestHandle: false,
   errorHelperListRequestHandle: "",
 
+  successApprovedRequest: false,
+  errorApprovedRequest: false,
+  errorHelperApprovedRequest: "",
+
+  assetForHistory: null,
   historyAsset: [],
 
   listAssetsAll: [],
@@ -200,6 +211,8 @@ export default function (state = initialState, action = {}) {
         successHistoryAsset: false,
         errorHistoryAsset: false,
         errorHelperHistoryAsset: "",
+        historyAsset: [],
+        assetForHistory: null,
       };
     case types.ERROR_HISTORY_ASSET:
       return {
@@ -208,6 +221,8 @@ export default function (state = initialState, action = {}) {
         successHistoryAsset: false,
         errorHistoryAsset: true,
         errorHelperHistoryAsset: payload,
+        historyAsset: [],
+        assetForHistory: null,
       };
     case types.SUCCESS_HISTORY_ASSET:
       return {
@@ -216,7 +231,8 @@ export default function (state = initialState, action = {}) {
         successHistoryAsset: true,
         errorHistoryAsset: false,
         errorHelperHistoryAsset: "",
-        historyAsset: payload,
+        historyAsset: payload.dataHistory,
+        assetForHistory: payload.dataAsset,
       };
 
     //** Data employee */
@@ -283,6 +299,11 @@ export default function (state = initialState, action = {}) {
       successCreateSupplier: false,
       errorCreateSupplier: false,
       errorHelperCreateSupplier: "",
+
+      submittingUpdateProcess: false,
+      successUpdateProcess: false,
+      errorUpdateProcess: false,
+      errorHelperUpdateProcess: "",
     };
   case types.START_CREATE_ASSETS:
     return {
@@ -463,6 +484,32 @@ export default function (state = initialState, action = {}) {
       errorHelperCreateSupplier: "",
     };
 
+  //** Update process */
+  case types.START_UPDATE_PROCESS:
+    return {
+      ...state,
+      submittingUpdateProcess: true,
+      successUpdateProcess: false,
+      errorUpdateProcess: false,
+      errorHelperUpdateProcess: "",
+    };
+  case types.ERROR_UPDATE_PROCESS:
+    return {
+      ...state,
+      submittingUpdateProcess: false,
+      successUpdateProcess: false,
+      errorUpdateProcess: true,
+      errorHelperUpdateProcess: payload,
+    };
+  case types.SUCCESS_UPDATE_PROCESS:
+    return {
+      ...state,
+      submittingUpdateProcess: false,
+      successUpdateProcess: true,
+      errorUpdateProcess: false,
+      errorHelperUpdateProcess: "",
+    };
+
   //** List request handle */
   case types.RESET_APPROVED_REQUEST:
     return {
@@ -471,7 +518,13 @@ export default function (state = initialState, action = {}) {
       successListRequestHandle: false,
       errorListRequestHandle: false,
       errorHelperListRequestHandle: "",
+
+      submittingApprovedRequest: false,
+      successApprovedRequest: false,
+      errorApprovedRequest: false,
+      errorHelperApprovedRequest: "",
     };
+
   case types.START_LIST_REQUEST_HANDLE:
     return {
       ...state,
@@ -500,6 +553,33 @@ export default function (state = initialState, action = {}) {
       listDetailsApproved: payload.details,
       numRequestHandle: payload.count,
     };
+
+  //** Approved/Reject request */
+  case types.START_APPROVED_REQUEST:
+    return {
+      ...state,
+      submittingApprovedRequest: true,
+      successApprovedRequest: false,
+      errorApprovedRequest: false,
+      errorHelperApprovedRequest: "",
+    };
+  case types.ERROR_APPROVED_REQUEST:
+    return {
+      ...state,
+      submittingApprovedRequest: false,
+      successApprovedRequest: false,
+      errorApprovedRequest: true,
+      errorHelperApprovedRequest: payload,
+    };
+  case types.SUCCESS_APPROVED_REQUEST:
+    return {
+      ...state,
+      submittingApprovedRequest: false,
+      successApprovedRequest: true,
+      errorApprovedRequest: false,
+      errorHelperApprovedRequest: "",
+    };
+
 
     default:
       return state;

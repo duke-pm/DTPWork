@@ -144,158 +144,161 @@ function AddSupplier(props) {
             </BlockBetween>
           </BlockHead>
 
-          <div className="nk-divider divider md"></div>
-
           <Block>
-            <Row className="g-3">
-              <Col size="12">
-                <FormGroup>
-                  <div className="form-label-group">
-                    <label className="form-label" htmlFor="name">
-                      {t("add_assets:supplier_name")} <span className="text-danger">*</span>
-                    </label>
-                  </div>
-                  <div className="form-control-wrap">
-                    <input
-                      ref={register({ required: t("validate:empty") })}
-                      className="form-control"
-                      type="text"
-                      id="name"
-                      name="name"
-                      disabled={disabled}
-                      value={formData.name}
-                      placeholder={t("add_assets:holder_supplier_name")}
-                      onChange={onChangeInput}
-                    />
-                    {errors.name && (
-                      <span className="invalid">{errors.name.message}</span>
-                    )}
-                  </div>
-                </FormGroup>
-              </Col>
-              <Col size="12">
-                <FormGroup>
-                  <div className="form-label-group">
-                    <label className="form-label" htmlFor="address">
-                      {t("add_assets:supplier_address")} <span className="text-danger">*</span>
-                    </label>
-                  </div>
-                  <div className="form-control-wrap">
-                    <input
-                      ref={register({ required: t("validate:empty") })}
-                      className="form-control"
-                      type="text"
-                      id="address"
-                      name="address"
-                      disabled={disabled}
-                      value={formData.address}
-                      placeholder={t("add_assets:holder_supplier_address")}
-                      onChange={onChangeInput}
-                    />
-                    {errors.address && (
-                      <span className="invalid">{errors.address.message}</span>
-                    )}
-                  </div>
-                </FormGroup>
-              </Col>
-              <Col md="6">
-                <FormGroup>
-                  <div className="form-label-group">
-                    <label className="form-label" htmlFor="email">
-                      {t("add_assets:supplier_email")}
-                    </label>
-                  </div>
-                  <div className="form-control-wrap">
-                    <input
-                      ref={register({
-                        pattern: {
-                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                          message: t("validate:format_email"),
-                        },
-                      })}
-                      className="form-control"
-                      type="email"
-                      id="email"
-                      name="email"
-                      disabled={disabled}
-                      value={formData.email}
-                      placeholder={t("add_assets:holder_supplier_email")}
-                      onChange={onChangeInput}
-                    />
-                    {errors.email && (
-                      <span className="invalid">{errors.email.message}</span>
-                    )}
-                  </div>
-                </FormGroup>
-              </Col>
-              <Col md="6">
-                <FormGroup>
-                  <div className="form-label-group">
-                    <label className="form-label" htmlFor="phone">
-                      {t("add_assets:supplier_phone")}
-                    </label>
-                  </div>
-                  <div className="form-control-wrap">
-                    <input
-                      className="form-control"
-                      type="number"
-                      id="phone"
-                      name="phone"
-                      disabled={disabled}
-                      value={formData.phone}
-                      placeholder={t("add_assets:holder_supplier_phone")}
-                      onChange={onChangeInput}
-                    />
-                  </div>
-                </FormGroup>
-              </Col>
-              <Col md="6">
-                <FormGroup>
-                  <div className="form-label-group">
-                    <label className="form-label" htmlFor="contact">
-                      {t("add_assets:supplier_contact")} <span className="text-danger">*</span>
-                    </label>
-                  </div>
-                  <div className="form-control-wrap">
-                    <input
-                      ref={register({ required: t("validate:empty") })}
-                      className="form-control"
-                      type="text"
-                      id="contact"
-                      name="contact"
-                      disabled={disabled}
-                      value={formData.contact}
-                      placeholder={t("add_assets:holder_supplier_contact")}
-                      onChange={onChangeInput}
-                    />
-                    {errors.contact && (
-                      <span className="invalid">{errors.contact.message}</span>
-                    )}
-                  </div>
-                </FormGroup>
-              </Col>
-              <Col md="6">
-                <FormGroup>
-                  <div className="form-label-group">
-                    <label className="form-label" htmlFor="contactPhone">
-                      {t("add_assets:supplier_contact_phone")}
-                    </label>
-                  </div>
-                  <div className="form-control-wrap">
-                    <input
-                      className="form-control"
-                      type="number"
-                      id="contactPhone"
-                      name="contactPhone"
-                      disabled={disabled}
-                      value={formData.contactPhone}
-                      placeholder={t("add_assets:holder_supplier_contact_phone")}
-                      onChange={onChangeInput}
-                    />
-                  </div>
-                </FormGroup>
-              </Col>
-            </Row>
+            <div className="data-head">
+              <h6 className="overline-title">{t("add_assets:information")}</h6>
+            </div>
+            <div className="mt-3">
+              <Row className="g-3">
+                <Col size="12">
+                  <FormGroup>
+                    <div className="form-label-group">
+                      <label className="form-label" htmlFor="name">
+                        {t("add_assets:supplier_name")} <span className="text-danger">*</span>
+                      </label>
+                    </div>
+                    <div className="form-control-wrap">
+                      <input
+                        ref={register({ required: t("validate:empty") })}
+                        className="form-control"
+                        type="text"
+                        id="name"
+                        name="name"
+                        disabled={disabled}
+                        value={formData.name}
+                        placeholder={t("add_assets:holder_supplier_name")}
+                        onChange={onChangeInput}
+                      />
+                      {errors.name && (
+                        <span className="invalid">{errors.name.message}</span>
+                      )}
+                    </div>
+                  </FormGroup>
+                </Col>
+                <Col size="12">
+                  <FormGroup>
+                    <div className="form-label-group">
+                      <label className="form-label" htmlFor="address">
+                        {t("add_assets:supplier_address")} <span className="text-danger">*</span>
+                      </label>
+                    </div>
+                    <div className="form-control-wrap">
+                      <input
+                        ref={register({ required: t("validate:empty") })}
+                        className="form-control"
+                        type="text"
+                        id="address"
+                        name="address"
+                        disabled={disabled}
+                        value={formData.address}
+                        placeholder={t("add_assets:holder_supplier_address")}
+                        onChange={onChangeInput}
+                      />
+                      {errors.address && (
+                        <span className="invalid">{errors.address.message}</span>
+                      )}
+                    </div>
+                  </FormGroup>
+                </Col>
+                <Col md="6">
+                  <FormGroup>
+                    <div className="form-label-group">
+                      <label className="form-label" htmlFor="email">
+                        {t("add_assets:supplier_email")}
+                      </label>
+                    </div>
+                    <div className="form-control-wrap">
+                      <input
+                        ref={register({
+                          pattern: {
+                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                            message: t("validate:format_email"),
+                          },
+                        })}
+                        className="form-control"
+                        type="email"
+                        id="email"
+                        name="email"
+                        disabled={disabled}
+                        value={formData.email}
+                        placeholder={t("add_assets:holder_supplier_email")}
+                        onChange={onChangeInput}
+                      />
+                      {errors.email && (
+                        <span className="invalid">{errors.email.message}</span>
+                      )}
+                    </div>
+                  </FormGroup>
+                </Col>
+                <Col md="6">
+                  <FormGroup>
+                    <div className="form-label-group">
+                      <label className="form-label" htmlFor="phone">
+                        {t("add_assets:supplier_phone")}
+                      </label>
+                    </div>
+                    <div className="form-control-wrap">
+                      <input
+                        className="form-control"
+                        type="number"
+                        id="phone"
+                        name="phone"
+                        disabled={disabled}
+                        value={formData.phone}
+                        placeholder={t("add_assets:holder_supplier_phone")}
+                        onChange={onChangeInput}
+                      />
+                    </div>
+                  </FormGroup>
+                </Col>
+                <Col md="6">
+                  <FormGroup>
+                    <div className="form-label-group">
+                      <label className="form-label" htmlFor="contact">
+                        {t("add_assets:supplier_contact")} <span className="text-danger">*</span>
+                      </label>
+                    </div>
+                    <div className="form-control-wrap">
+                      <input
+                        ref={register({ required: t("validate:empty") })}
+                        className="form-control"
+                        type="text"
+                        id="contact"
+                        name="contact"
+                        disabled={disabled}
+                        value={formData.contact}
+                        placeholder={t("add_assets:holder_supplier_contact")}
+                        onChange={onChangeInput}
+                      />
+                      {errors.contact && (
+                        <span className="invalid">{errors.contact.message}</span>
+                      )}
+                    </div>
+                  </FormGroup>
+                </Col>
+                <Col md="6">
+                  <FormGroup>
+                    <div className="form-label-group">
+                      <label className="form-label" htmlFor="contactPhone">
+                        {t("add_assets:supplier_contact_phone")}
+                      </label>
+                    </div>
+                    <div className="form-control-wrap">
+                      <input
+                        className="form-control"
+                        type="number"
+                        id="contactPhone"
+                        name="contactPhone"
+                        disabled={disabled}
+                        value={formData.contactPhone}
+                        placeholder={t("add_assets:holder_supplier_contact_phone")}
+                        onChange={onChangeInput}
+                      />
+                    </div>
+                  </FormGroup>
+                </Col>
+              </Row>
+            </div>
           </Block>
 
           <div className="nk-divider divider md"></div>

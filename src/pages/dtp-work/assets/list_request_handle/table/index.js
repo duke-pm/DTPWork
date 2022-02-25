@@ -21,6 +21,7 @@ import * as Actions from "redux/actions";
 function TableRequestHandle(props) {
   const {t} = useTranslation();
   const {
+    loading,
     curPage,
     countItem,
     dataRequest,
@@ -139,7 +140,7 @@ function TableRequestHandle(props) {
                 </DataTableRow>
                 <DataTableRow size="md">
                   <span className={`tb-status text-${typeColor}`}>
-                    {item.requestTypeName}
+                    {item.requestTypeName.toUpperCase()}
                   </span>
                 </DataTableRow>
                 <DataTableRow className="nk-tb-col-tools">
@@ -188,7 +189,11 @@ function TableRequestHandle(props) {
           : null
         }
       </div>
-
+      {loading && (
+        <div className="text-center">
+          <div className="spinner-border spinner-border-sm text-primary" />
+        </div>
+      )}
       {/** Paging */}
       {data.length > 0 ? (
         <PreviewAltCard>

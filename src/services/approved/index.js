@@ -35,7 +35,7 @@ export default {
 
       API.get(jwtServiceConfig.baseURL + Routes.APPROVED.HISTORY_ASSET, tmpConfigs)
         .then(response => {
-          console.log("FETCH LIST ASSETS => ", response);
+          console.log("FETCH HISTORY ASSETS => ", response);
           if (response.status === 200 && response.data) {
             resolve(response.data);
           } else {
@@ -43,7 +43,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("ERROR LIST ASSETS => ", error);
+          console.log("ERROR HISTORY ASSETS => ", error);
           reject(error.response ? error.response.data : error);
         });
     });
@@ -165,7 +165,7 @@ export default {
       formData.append("Reasons", params.Reasons);
       formData.append("JobTitle", params.JobTitle);
       formData.append("FileUpload", params.FileUpload || "");
-      formData.append("TransDate", params.TransDate);
+      formData.append("RepairDate", params.RepairDate);
       formData.append("SupplierRepair", params.SupplierRepair);
       formData.append("ExpCost", params.ExpCost);
       formData.append("TypeUpdate", "Repair");
@@ -261,6 +261,37 @@ export default {
         });
     });
   },
+  updateProcess: params => {
+    return new Promise((resolve, reject) => {
+      const formData = new FormData();
+      formData.append("LineNum", params.LineNum);
+      formData.append("AssetID", params.AssetID);
+      formData.append("IsRemovedFile", params.IsRemovedFile);
+      formData.append("TypeUpdate", params.TypeUpdate);
+      formData.append("TransDate", params.TransDate);
+      formData.append("Reasons", params.Reasons);
+      formData.append("FileUpload", params.FileUpload || "");
+      formData.append("RepairDate", params.RepairDate);
+      formData.append("EndRepairDate", params.EndRepairDate);
+      formData.append("SupplierRepair", params.SupplierRepair);
+      formData.append("ActCost", params.ActCost);
+      formData.append("ExpCost", params.ExpCost);
+
+      API.post(jwtServiceConfig.baseURL + Routes.APPROVED.UPDATE_PROCESS, formData)
+        .then(response => {
+          console.log("FETCH UPDATE PROCESS => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          console.log("ERROR UPDATE PROCESS => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
 
   listRequest: params => {
     return new Promise((resolve, reject) => {
@@ -285,6 +316,23 @@ export default {
         })
         .catch(error => {
           console.log("ERROR LIST REQUEST => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
+  approvedRequest: params => {
+    return new Promise((resolve, reject) => {
+      API.post(jwtServiceConfig.baseURL + Routes.APPROVED.APPROVED_REQUEST, params)
+        .then(response => {
+          console.log("FETCH APPROVED REQUEST => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          console.log("ERROR APPROVED REQUEST => ", error);
           reject(error.response ? error.response.data : error);
         });
     });

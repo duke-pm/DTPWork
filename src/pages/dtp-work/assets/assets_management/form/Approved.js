@@ -19,13 +19,14 @@ import {
   Col,
   RSelect,
 } from "components/Component";
+import AssetInformations from "../components/AssetInformations";
+import EmployeeInformations from "../components/EmployeeInformations";
 /** COMMON */
+import Configs from "configs";
 import Routes from "services/routesApi";
-import {numberFormat} from "utils/Utils";
 import {getCookies} from "utils/Utils";
 /** REDUX */
 import * as Actions from "redux/actions";
-import Configs from "configs";
 
 const CustomDateInput = forwardRef(({ value, onClick, onChange }, ref) => (
   <div onClick={onClick} ref={ref}>
@@ -51,6 +52,7 @@ function ApprovedForm(props) {
     commonState,
     authState,
     updateItem,
+    updateHistory,
     onClose,
   } = props;
 
@@ -64,10 +66,12 @@ function ApprovedForm(props) {
     main: true,
     approved: false,
     recall: false,
+    history: false,
   });
   const [error, setError] = useState({
     employee: null,
-  })
+  });
+  const [isRemoveFile, setRemoveFile] = useState(false);
   const [dataItem, setDataItem] = useState({
     id: "",
     code: "",
@@ -78,7 +82,7 @@ function ApprovedForm(props) {
     originPrice: "",
     statusID: 0,
     status: "",
-
+    employeeCode: "",
     employee: "",
     department: "",
     region: "",
@@ -122,7 +126,12 @@ function ApprovedForm(props) {
   };
 
   const onChangeFile = e => {
-    setFormData({...formData, file: e.target.files[0]});
+    if (e.target.files.length > 0) {
+      if (formData.file && e.target.files[0].name !== formData.file.name) {
+        setRemoveFile(true);
+      }
+      setFormData({...formData, file: e.target.files[0]});
+    }
   };
 
   const onChangeDate = value => {
@@ -130,57 +139,98 @@ function ApprovedForm(props) {
   };
 
   const onResetData = () => {
-    if (isApproved) {
-      setFormData({
-        assetEmployee: "",
-        assetPosition: "",
-        assetDepartment: "",
-        assetRegion: "",
-        approvedDate: new Date(),
-        reason: "",
-        file: "",
-      });
-    }
-    if (isRecall) {
+    setDataItem({
+      id: "",
+      code: "",
+      name: "",
+      group: "",
+      description: "",
+      purchaseDate: "",
+      originPrice: "",
+      statusID: 0,
+      status: "",
+      employeeCode: "",
+      employee: "",
+      department: "",
+      region: "",
+    });
+    if (!updateHistory) {
+      if (isApproved) {
+        setFormData({
+          assetEmployee: "",
+          assetPosition: "",
+          assetDepartment: "",
+          assetRegion: "",
+          approvedDate: new Date(),
+          reason: "",
+          file: "",
+        });
+      }
+      if (isRecall) {
+        setFormData({
+          ...formData,
+          approvedDate: new Date(),
+          reason: "",
+          file: "",
+        });
+      }
+    } else {
       setFormData({
         ...formData,
-        approvedDate: new Date(),
         reason: "",
         file: "",
       });
     }
   };
 
-  const onSetFormDataDetails = data => {
-    console.log('[LOG] === onSetFormDataDetails ===> ', data);
-    setDataItem({
-      id: data.assetID,
-      code: data.assetCode,
-      name: data.assetName,
-      group: data.groupName,
-      description: data.descr
-        ? data.descr
-        : "-",
-      purchaseDate: data.purchaseDate
-        ? moment(data.purchaseDate).format("DD/MM/YYYY")
-        : "-",
-      originPrice: data.originalPrice
-        ? numberFormat(data.originalPrice)
-        : "-",
-      statusID: data.statusID,
-      status: data.statusName,
-
-      employee: data.empName || "",
-      department: data.deptNameManager || "",
-      region: data.regionName || "",
-    });
-    if (isRecall) {
+  const onSetFormDataDetails = (data, dataH) => {
+    if (!dataH) {
+      setDataItem({
+        id: data?.assetID,
+        code: data?.assetCode,
+        name: data?.assetName,
+        group: data?.groupName,
+        description: data?.descr || "",
+        purchaseDate: data.purchaseDate,
+        originPrice: data?.originalPrice,
+        statusID: data?.statusID,
+        status: data?.statusName,
+        employeeCode: data?.empCode || "",
+        employee: data?.empName || "",
+        department: data?.deptNameManager || "",
+        region: data?.regionName || "",
+      });
+      if (isRecall) {
+        setFormData({
+          ...formData,
+          assetEmployee: data.empCode,
+          assetDepartment: data.deptCodeManager,
+          assetRegion: data.regionCode,
+          assetPosition: data.jobTitle,
+        });
+      }
+    } else {
+      setDataItem({
+        ...dataItem,
+        id: data.assetID,
+        code: data.assetCode || "-",
+        name: data.assetName,
+        group: data.groupName,
+        description: data.descr || "-",
+        purchaseDate: data.purchaseDate,
+        originPrice: data.originalPrice || "-",
+        statusID: data.statusID,
+        status: data.statusName,
+      });
       setFormData({
         ...formData,
-        assetEmployee: data.empCode,
-        assetDepartment: data.deptCodeManager,
-        assetRegion: data.regionCode,
-        assetPosition: data.jobTitle,
+        approvedDate: dataH.transDate,
+        assetEmployee: dataH.empCode,
+        assetDepartment: dataH.deptCode,
+        assetRegion: dataH.regionCode,
+        assetPosition: dataH.jobTitle,
+        file: dataH.attachFiles ? {id: "history", name: dataH.attachFiles} : "",
+        reason: dataH.reasons || "",
       });
     }
   };
@@ -196,33 +246,58 @@ function ApprovedForm(props) {
 
   const onFormSubmit = () => {
     setError({employee: null});
-    if (!formData.assetEmployee) {
-      return setError({employee: {message: t("validate:empty")}});
+    if (!updateHistory) {
+      if (!formData.assetEmployee) {
+        return setError({employee: {message: t("validate:empty")}});
+      }
+  
+      setLoading({
+        ...loading,
+        approved: isApproved ? true : false,
+        recall: isRecall ? true : false,
+      });
+      let params = {
+        AssetID: dataItem.id,
+        EmpCode: isApproved
+          ? formData.assetEmployee.value
+          : formData.assetEmployee,
+        DeptCode: isApproved
+          ? formData.assetDepartment.value
+          : formData.assetDepartment,
+        RegionCode: isApproved
+          ? formData.assetRegion.value
+          : formData.assetRegion,
+        Reasons: formData.reason.trim(),
+        JobTitle: formData.assetPosition,
+        FileUpload: formData.file,
+        TransDate: moment(formData.approvedDate).format("YYYY-MM-DD"),
+        RefreshToken: authState["data"]["refreshToken"],
+        Lang: commonState["language"],
+      };
+      console.log('[LOG] === onFormSubmit ===> ', params);
+      if (isApproved) {
+        dispatch(Actions.fFetchApprovedAssets(params, history));
+      }
+      if (isRecall) {
+        dispatch(Actions.fFetchRecallAssets(params, history));
+      }
     }
+    if (updateHistory) {
+      setLoading({...loading, history: true});
+      let params = {
+        LineNum: updateHistory.lineNum,
+        AssetID: dataItem.id,
+        IsRemovedFile: isRemoveFile,
+        TypeUpdate: isApproved ? "Allocation" : "Recovery",
+        TransDate: moment(formData.approvedDate).format("YYYY/MM/DD"),
+        Reasons: formData.reason.trim(),
+        FileUpload: formData.file?.id === "history" ? "" : formData.file,
 
-    setLoading({
-      ...loading,
-      approved: isApproved ? true : false,
-      recall: isRecall ? true : false,
-    });
-    let params = {
-      AssetID: dataItem.id,
-      EmpCode: formData.assetEmployee.value,
-      DeptCode: formData.assetDepartment.value,
-      RegionCode: formData.assetRegion.value,
-      Reasons: formData.reason.trim(),
-      JobTitle: formData.assetPosition,
-      FileUpload: formData.file,
-      TransDate: moment(formData.approvedDate).format("YYYY-MM-DD"),
-      RefreshToken: authState["data"]["refreshToken"],
-      Lang: commonState["language"],
-    };
-    console.log('[LOG] === onFormSubmit ===> ', params);
-    if (isApproved) {
-      dispatch(Actions.fFetchApprovedAssets(params, history));
-    }
-    if (isRecall) {
-      dispatch(Actions.fFetchRecallAssets(params, history));
+        RefreshToken: authState["data"]["refreshToken"],
+        Lang: commonState["language"],
+      };
+      console.log('[LOG] === onFormSubmit ===> ', params);
+      dispatch(Actions.fFetchUpdateProcess(params, history));
     }
   };
 
@@ -266,16 +341,26 @@ function ApprovedForm(props) {
       onResetData();
       onClose(true, t("success:recall_assets"));
     }
-    setLoading({main: false, approved: false, recall: false});
+    if (type === "History") {
+      onResetData();
+      onClose(true, t("success:update_history_assets"), isApproved ? "approved" : "recall", true);
+    }
+    setRemoveFile(false);
+    setLoading({main: false, approved: false, recall: false, history: false});
   };
 
   const onError = (type, error) => {
     console.log('[LOG] === onError ===> ', error);
-    setLoading({main: false, approved: false, recall: false});
-    if (type === "Approved" || type === "Recall") {
+    if (type === "Approved" || type === "Recall" || type === "History") {
       onResetData();
       onClose(false, error);
     }
+    setRemoveFile(false);
+    setLoading({main: false, approved: false, recall: false, history: false});
+  };
+
+  const onDownloadAttachFile = () => {
+    window.open(`${Configs.hostAPI}/${formData.file.name}`, "_blank");
   };
 
   /**
@@ -288,17 +373,21 @@ function ApprovedForm(props) {
   }, [
     show,
     loading.main,
-    authState["successSignIn"]
+    authState["successSignIn"],
   ]);
 
   useEffect(() => {
-    if (!loading.main && updateItem && show) {
+    if (!loading.main && updateItem && !updateHistory && show) {
       onSetFormDataDetails(updateItem);
     }
+    if (!loading.main && updateItem && updateHistory && show) {
+      onSetFormDataDetails(updateItem, updateHistory);
+    }
   }, [
-    loading.main,
     show,
-    updateItem
+    loading.main,
+    updateItem,
+    updateHistory,
   ]);
 
   useEffect(() => {
@@ -358,11 +447,30 @@ function ApprovedForm(props) {
     approvedState["errorApprovedRecallAssets"],
   ]);
 
+  useEffect(() => {
+    if (loading.history && show) {
+      if (!approvedState["submittingUpdateProcess"]) {
+        if (approvedState["successUpdateProcess"] && !approvedState["errorUpdateProcess"]) {
+          return onSuccess("History");
+        }
+        if (!approvedState["successUpdateProcess"] && approvedState["errorUpdateProcess"]) {
+          return onError("History", approvedState["errorHelperUpdateProcess"]);
+        }
+      }
+    }
+  }, [
+    show,
+    loading.history,
+    approvedState["submittingUpdateProcess"],
+    approvedState["successUpdateProcess"],
+    approvedState["errorUpdateProcess"],
+  ]);
+
   /**
    ** RENDER 
    */
-  const {errors, register, handleSubmit} = useForm();
-  const disabled = loading.main || loading.approved || loading.recall;
+  const {handleSubmit} = useForm();
+  const disabled = loading.approved || loading.recall || loading.history;
 
   return (
     <SimpleBar
@@ -374,12 +482,22 @@ function ApprovedForm(props) {
         <BlockHead>
           <BlockBetween>
             <BlockHeadContent>
-              {isApproved && <BlockTitle tag="h3">{t("approved_assets:title")}</BlockTitle>}
-              {isRecall && <BlockTitle tag="h3">{t("approved_assets:recall_title")}</BlockTitle>}
+              {isApproved && !updateHistory && <BlockTitle tag="h4">
+                {t("approved_assets:title")}
+              </BlockTitle>}
+              {isApproved && updateHistory && <BlockTitle tag="h4">
+                {t("approved_assets:history_approved_title")}
+              </BlockTitle>}
+              {isRecall && !updateHistory && <BlockTitle tag="h4">
+                {t("approved_assets:recall_title")}
+              </BlockTitle>}
+              {isRecall && updateHistory && <BlockTitle tag="h4">
+                {t("approved_assets:history_recall_title")}
+              </BlockTitle>}
             </BlockHeadContent>
             <BlockHeadContent>
               <ul className="nk-block-tools g-3">
-                <li className="nk-block-tools-opt">
+                {/* <li className="nk-block-tools-opt">
                   <Button
                     className="toggle btn-icon d-md-none"
                     color="gray"
@@ -399,7 +517,7 @@ function ApprovedForm(props) {
                     <Icon name="undo"></Icon>
                     <span>{t("common:reset")}</span>
                   </Button>
-                </li>
+                </li> */}
                 <li className="nk-block-tools-opt">
                   <Button
                     className="toggle btn-icon d-md-none"
@@ -407,10 +525,10 @@ function ApprovedForm(props) {
                     type="submit"
                     disabled={disabled}
                   >
-                    {(loading.approved || loading.recall) && (
-                      <div className="spinner-border spinner-border-sm text-white" role="status" />
+                    {disabled && (
+                      <div className="spinner-border spinner-border-sm text-white" />
                     )}
-                    {!loading.approved && !loading.recall && <Icon name="save"></Icon>}
+                    {!loading.approved && !loading.recall && !loading.history && <Icon name="save"></Icon>}
                   </Button>
                   <Button
                     className="toggle d-none d-md-inline-flex"
@@ -418,10 +536,10 @@ function ApprovedForm(props) {
                     type="submit"
                     disabled={disabled}
                   >
-                    {(loading.approved || loading.recall) && (
-                      <div className="spinner-border spinner-border-sm text-white mr-2" role="status" />
+                    {disabled && (
+                      <div className="spinner-border spinner-border-sm text-white mr-2" />
                     )}
-                    {!loading.approved && !loading.recall && <Icon name="save"></Icon>}
+                    {!loading.approved && !loading.recall && !loading.history && <Icon name="save"></Icon>}
                     <span>{t("common:save")}</span>
                   </Button>
                 </li>
@@ -430,226 +548,166 @@ function ApprovedForm(props) {
           </BlockBetween>
         </BlockHead>
 
-        <div className="nk-divider divider md"></div>
+        <AssetInformations data={dataItem} />
 
         <Block>
-          <BlockHead>
-            <BlockTitle tag="h6">{t("approved_assets:information")}</BlockTitle>
-          </BlockHead>
-          <div className="profile-ud-list">
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("approved_assets:code")}</span>
-                <span className="profile-ud-value text-primary">{dataItem.code}</span>
-              </div>
-            </div>
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("approved_assets:name")}</span>
-                <span className="profile-ud-value">{dataItem.name}</span>
-              </div>
-            </div>
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("approved_assets:group")}</span>
-                <span className="profile-ud-value">{dataItem.group}</span>
-              </div>
-            </div>
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("approved_assets:purchase_date")}</span>
-                <span className="profile-ud-value">{dataItem.purchaseDate}</span>
-              </div>
-            </div>
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("approved_assets:origin_price")}</span>
-                <span className="profile-ud-value">{dataItem.originPrice}</span>
-              </div>
-            </div>
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("approved_assets:status")}</span>
-                <span className="profile-ud-value">
-                  <span
-                    className={`dot bg-${
-                      dataItem.statusID === 1
-                        ? "gray"
-                        : dataItem.statusID === 2
-                          ? "success"
-                          : dataItem.statusID === 3
-                            ? "warning"
-                            : (dataItem.statusID === 4 || dataItem.statusID === 5)
-                              ? "danger"
-                              : "primary"
-                    } d-mb-none`}
-                  ></span>
-                  <span
-                    className={`badge badge-sm badge-dot has-bg badge-${
-                      dataItem.statusID === 1
-                        ? "gray"
-                        : dataItem.statusID === 2
-                          ? "success"
-                          : dataItem.statusID === 3
-                            ? "warning"
-                            : (dataItem.statusID === 4 || dataItem.statusID === 5)
-                              ? "danger"
-                              : "primary"
-                    } d-none d-mb-inline-flex`}
-                  >
-                    {dataItem.status}
-                  </span>
-                </span>
-              </div>
-            </div>
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("approved_assets:description")}</span>
-                <span className="profile-ud-value">{dataItem.description}</span>
-              </div>
-            </div>
-          </div>
+          {isRecall && !updateHistory && (
+            <EmployeeInformations
+              data={{
+                employeeCode: dataItem?.employeeCode,
+                employee: dataItem?.employee,
+                position: formData?.assetPosition,
+                department: dataItem?.department,
+                region: dataItem?.region,
+              }}
+            />
+          )}
+          {isRecall && updateHistory && (
+            <EmployeeInformations
+              data={{
+                employeeCode: updateHistory?.empCode,
+                employee: updateHistory?.empName,
+                position: updateHistory?.jobTitle,
+                department: updateHistory?.deptName,
+                region: updateHistory?.regionName,
+              }}
+            />
+          )}
+          {isApproved && updateHistory && (
+            <EmployeeInformations
+              data={{
+                employeeCode: updateHistory?.empCode,
+                employee: updateHistory?.empName,
+                position: updateHistory?.jobTitle,
+                department: updateHistory?.deptName,
+                region: updateHistory?.regionName,
+              }}
+            />
+          )}
+        </Block>
 
-          <div className="nk-divider divider md"></div>
-
-          <BlockHead>
+        {(isApproved || isRecall) && (
+        <Block>
+          <div className="data-head">
             {isApproved && (
-              <BlockTitle tag="h6">{t("approved_assets:information_approved")}</BlockTitle>
+              <h6 className="overline-title">{t("approved_assets:information_approved")}</h6>
             )}
             {isRecall && (
-              <BlockTitle tag="h6">{t("approved_assets:information_employee")}</BlockTitle>
+              <h6 className="overline-title">{t("approved_assets:information_recall")}</h6>
             )}
-          </BlockHead>
-          {isRecall && (
-            <div className="profile-ud-list">
-              <div className="profile-ud-item">
-                <div className="profile-ud wider">
-                  <span className="profile-ud-label">{t("approved_assets:employee")}</span>
-                  <span className="profile-ud-value">{dataItem.employee}</span>
-                </div>
-              </div>
-              <div className="profile-ud-item">
-                <div className="profile-ud wider">
-                  <span className="profile-ud-label">{t("approved_assets:position")}</span>
-                  <span className="profile-ud-value">{formData.assetPosition}</span>
-                </div>
-              </div>
-              <div className="profile-ud-item">
-                <div className="profile-ud wider">
-                  <span className="profile-ud-label">{t("approved_assets:department")}</span>
-                  <span className="profile-ud-value">{dataItem.department}</span>
-                </div>
-              </div>
-              <div className="profile-ud-item">
-                <div className="profile-ud wider">
-                  <span className="profile-ud-label">{t("approved_assets:region")}</span>
-                  <span className="profile-ud-value">{dataItem.region}</span>
-                </div>
-              </div>
-            </div>
-          )}
-          {isApproved && (
+          </div>
+          <div className="mt-3">
             <Row className="g-3">
-              <Col md="4">
-                <FormGroup>
-                  <div className="form-label-group">
-                    <label className="form-label" htmlFor="approvedDate">
-                      {t("approved_assets:approved_date")}
-                    </label>
-                  </div>
-                  <div className="form-control-wrap" style={{zIndex: 1000}}>
-                    <div className="form-icon form-icon-left">
-                      <Icon name="calendar"></Icon>
+              {isApproved && !updateHistory && (
+                <Col md="4">
+                  <FormGroup>
+                    <div className="form-label-group">
+                      <label className="form-label" htmlFor="approvedDate">
+                        {t("approved_assets:approved_date")}
+                      </label>
                     </div>
-                    <DatePicker
-                      selected={formData.approvedDate}
-                      className="form-control date-picker"
-                      disabled={disabled}
-                      value={formData.approvedDate}
-                      onChange={onChangeDate}
-                      customInput={<CustomDateInput />}
-                    />
-                  </div>
-                </FormGroup>
-              </Col>
-              <Col md="8">
-                <FormGroup>
-                  <div className="form-label-group">
-                    <label className="form-label" htmlFor="assetEmployee">
-                      {t("approved_assets:approved_for")} <span className="text-danger">*</span>
-                    </label>
-                  </div>
-                  <div className="form-control-wrap">
-                    <RSelect
-                      name="assetEmployee"
-                      isMulti={false}
-                      error={error.employee}
-                      options={dataSelect.employee}
-                      value={formData.assetEmployee}
-                      placeholder={t("approved_assets:holder_approved_for")}
-                      onChange={onChangeSelect}
-                    />
-                  </div>
-                </FormGroup>
-              </Col>
-              <Col md="4">
-                <FormGroup>
-                  <div className="form-label-group">
-                    <label className="form-label" htmlFor="assetPosition">
-                      {t("approved_assets:position")}
-                    </label>
-                  </div>
-                  <div className="form-control-wrap">
-                    <input
-                      className="form-control"
-                      type="text"
-                      id="assetPosition"
-                      name="assetPosition"
-                      disabled={true}
-                      value={formData.assetPosition}
-                      placeholder={t("approved_assets:holder_position")}
-                    />
-                  </div>
-                </FormGroup>
-              </Col>
-              <Col md="4">
-                <FormGroup>
-                  <div className="form-label-group">
-                    <label className="form-label" htmlFor="assetDepartment">
-                      {t("approved_assets:department")}
-                    </label>
-                  </div>
-                  <div className="form-control-wrap">
-                    <RSelect
-                      name="assetDepartment"
-                      isMulti={false}
-                      isDisabled={true}
-                      options={dataSelect.department}
-                      value={formData.assetDepartment}
-                      placeholder={t("approved_assets:holder_department")}
-                    />
-                  </div>
-                </FormGroup>
-              </Col>
-              <Col md="4">
-                <FormGroup>
-                  <div className="form-label-group">
-                    <label className="form-label" htmlFor="assetRegion">
-                      {t("approved_assets:region")}
-                    </label>
-                  </div>
-                  <div className="form-control-wrap">
-                    <RSelect
-                      name="assetRegion"
-                      isMulti={false}
-                      isDisabled={true}
-                      options={dataSelect.region}
-                      value={formData.assetRegion}
-                      placeholder={t("approved_assets:holder_region")}
-                    />
-                  </div>
-                </FormGroup>
-              </Col>
+                    <div className="form-control-wrap" style={{zIndex: 1000}}>
+                      <div className="form-icon form-icon-left">
+                        <Icon name="calendar"></Icon>
+                      </div>
+                      <DatePicker
+                        selected={formData.approvedDate}
+                        className="form-control date-picker"
+                        disabled={disabled}
+                        value={formData.approvedDate}
+                        onChange={onChangeDate}
+                        customInput={<CustomDateInput />}
+                      />
+                    </div>
+                  </FormGroup>
+                </Col>
+              )}
+              {isApproved && !updateHistory && (
+                <Col md="8">
+                  <FormGroup>
+                    <div className="form-label-group">
+                      <label className="form-label" htmlFor="assetEmployee">
+                        {t("approved_assets:approved_for")} <span className="text-danger">*</span>
+                      </label>
+                    </div>
+                    <div className="form-control-wrap">
+                      <RSelect
+                        name="assetEmployee"
+                        isMulti={false}
+                        error={error.employee}
+                        options={dataSelect.employee}
+                        value={formData.assetEmployee}
+                        placeholder={t("approved_assets:holder_approved_for")}
+                        onChange={onChangeSelect}
+                      />
+                    </div>
+                  </FormGroup>
+                </Col>
+              )}
+              {isApproved && !updateHistory && (
+                <Col md="4">
+                  <FormGroup>
+                    <div className="form-label-group">
+                      <label className="form-label" htmlFor="assetPosition">
+                        {t("approved_assets:position")}
+                      </label>
+                    </div>
+                    <div className="form-control-wrap">
+                      <input
+                        className="form-control"
+                        type="text"
+                        id="assetPosition"
+                        name="assetPosition"
+                        disabled={true}
+                        value={formData.assetPosition}
+                        placeholder={t("approved_assets:holder_position")}
+                      />
+                    </div>
+                  </FormGroup>
+                </Col>
+              )}
+              {isApproved && !updateHistory && (
+                <Col md="4">
+                  <FormGroup>
+                    <div className="form-label-group">
+                      <label className="form-label" htmlFor="assetDepartment">
+                        {t("approved_assets:department")}
+                      </label>
+                    </div>
+                    <div className="form-control-wrap">
+                      <RSelect
+                        name="assetDepartment"
+                        isMulti={false}
+                        isDisabled={true}
+                        options={dataSelect.department}
+                        value={formData.assetDepartment}
+                        placeholder={t("approved_assets:holder_department")}
+                      />
+                    </div>
+                  </FormGroup>
+                </Col>
+              )}
+              {isApproved && !updateHistory && (
+                <Col md="4">
+                  <FormGroup>
+                    <div className="form-label-group">
+                      <label className="form-label" htmlFor="assetRegion">
+                        {t("approved_assets:region")}
+                      </label>
+                    </div>
+                    <div className="form-control-wrap">
+                      <RSelect
+                        name="assetRegion"
+                        isMulti={false}
+                        isDisabled={true}
+                        options={dataSelect.region}
+                        value={formData.assetRegion}
+                        placeholder={t("approved_assets:holder_region")}
+                      />
+                    </div>
+                  </FormGroup>
+                </Col>
+              )}
               <Col size="12">
                 <FormGroup>
                   <div className="form-label-group">
@@ -657,20 +715,33 @@ function ApprovedForm(props) {
                       {t("approved_assets:file")}
                     </label>
                   </div>
-                  <div className="form-control-wrap">
-                    <div className="custom-file">
-                      <input
-                        className="custom-file-input form-control"
-                        id="file"
-                        type="file"
-                        multiple={false}
-                        disabled={disabled}
-                        onChange={onChangeFile}
-                      />
-                      <Label className="custom-file-label" htmlFor="file">
-                        {!formData.file ? t("common:choose_file") : formData.file.name}
-                      </Label>
+                  <div className="d-flex align-items-center">
+                    <div className={`form-control-wrap flex-fill ${updateHistory && formData.file?.id === "history" && "mr-3"}`}>
+                      <div className="custom-file">
+                        <input
+                          className="custom-file-input form-control"
+                          id="file"
+                          type="file"
+                          multiple={false}
+                          disabled={disabled}
+                          onChange={onChangeFile}
+                        />
+                        <Label className="custom-file-label" htmlFor="file">
+                          {!formData.file ? t("common:choose_file") : formData.file.name}
+                        </Label>
+                      </div>
                     </div>
+                    {updateHistory && formData.file?.id === "history" && (
+                      <Button
+                        color="primary"
+                        type="button"
+                        disabled={disabled}
+                        onClick={onDownloadAttachFile}
+                      >
+                        <Icon name="download"></Icon>
+                        <span>{t("common:download")}</span>
+                      </Button>
+                    )}
                   </div>
                 </FormGroup>
               </Col>
@@ -696,15 +767,16 @@ function ApprovedForm(props) {
                 </FormGroup>
               </Col>
             </Row>
-          )}
+          </div>
+        </Block>
+        )}
 
-          {isRecall && (
-            <>
-              <div className="nk-divider divider md"></div>
-              
-              <BlockHead>
-                  <BlockTitle tag="h6">{t("approved_assets:information_recall")}</BlockTitle>
-              </BlockHead>
+        {isRecall && !updateHistory && (
+          <Block>
+            <div className="data-head">
+              <h6 className="overline-title">{t("approved_assets:information_recall")}</h6>
+            </div>
+            <div className="mt-3">
               <Row className="g-3">
                 <Col md="6">
                   <FormGroup>
@@ -774,9 +846,9 @@ function ApprovedForm(props) {
                   </FormGroup>
                 </Col>
               </Row>
-            </>
-          )}
-        </Block>
+            </div>
+          </Block>
+        )}
       </Form>
     </SimpleBar>
   );

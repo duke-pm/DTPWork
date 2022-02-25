@@ -19,8 +19,9 @@ import {
   Row,
   Col,
 } from "components/Component";
+import AssetInformations from "../components/AssetInformations";
 /** COMMON */
-import {numberFormat} from "utils/Utils";
+import Configs from "configs";
 /** REDUX */
 import * as Actions from "redux/actions";
 
@@ -46,6 +47,7 @@ function ReUseForm(props) {
     commonState,
     authState,
     updateItem,
+    updateHistory,
     onClose,
   } = props;
 
@@ -57,10 +59,12 @@ function ReUseForm(props) {
   const [loading, setLoading] = useState({
     main: false,
     reuse: false,
+    history: false,
   });
   const [error, setError] = useState({
     cost: null,
   });
+  const [isRemoveFile, setRemoveFile] = useState(false);
   const [dataItem, setDataItem] = useState({
     id: "",
     code: "",
@@ -95,6 +99,9 @@ function ReUseForm(props) {
 
   const onChangeFile = e => {
     setFormData({...formData, file: e.target.files[0]});
+    if (formData.file && e.target.files[0].name !== formData.file.name) {
+      setRemoveFile(true);
+    }
   };
 
   const onChangeDate = (key, value) => {
@@ -112,30 +119,64 @@ function ReUseForm(props) {
     });
   };
 
-  const onSetFormDataDetails = data => {
+  const onSetFormDataDetails = (data, dataH) => {
     console.log('[LOG] === onSetFormDataDetails ===> ', data);
-    setDataItem({
-      id: data.assetID,
-      code: data.assetCode,
-      name: data.assetName,
-      group: data.groupName,
-      description: data.descr
-        ? data.descr
-        : "-",
-      purchaseDate: data.purchaseDate
-        ? moment(data.purchaseDate).format("DD/MM/YYYY")
-        : "-",
-      originPrice: data.originalPrice
-        ? numberFormat(data.originalPrice)
-        : "-",
-      statusID: data.statusID,
-      status: data.statusName,
+    if (!dataH) {
+      setDataItem({
+        id: data.assetID,
+        code: data.assetCode,
+        name: data.assetName,
+        group: data.groupName,
+        description: data.descr || "-",
+        purchaseDate: data.purchaseDate,
+        originPrice: data.originalPrice,
+        statusID: data.statusID,
+        status: data.statusName,
 
-      employee: data.empCode || "",
-      department: data.deptCodeManager || "",
-      region: data.regionCode || "",
-      position: data.jobTitle || "",
-    });
+        employee: data.empCode || "",
+        department: data.deptCodeManager || "",
+        region: data.regionCode || "",
+        position: data.jobTitle || "",
+      });
+    } else {
+      setDataItem({
+        id: data.assetID,
+        code: data.assetCode,
+        name: data.assetName,
+        group: data.groupName,
+        description: data.descr || "-",
+        purchaseDate: data.purchaseDate,
+        originPrice: data.originalPrice,
+        statusID: data.statusID,
+        status: data.statusName,
+
+        employee: dataH.empCode || "",
+        department: dataH.deptCode || "",
+        region: dataH.regionCode || "",
+        position: dataH.jobTitle || "",
+      });
+      setFormData({
+        ...formData,
+        repairName: dataH.supplierRepair || "",
+        repairCost: dataH.actCost,
+        repairDate: dataH.endRepairDate 
+          ? new Date(
+            moment(dataH.endRepairDate).year(),
+            moment(dataH.endRepairDate).month(),
+            moment(dataH.endRepairDate).date()
+          )
+          : new Date(),
+        resueDate: dataH.transDate 
+        ? new Date(
+          moment(dataH.transDate).year(),
+          moment(dataH.transDate).month(),
+          moment(dataH.transDate).date()
+        )
+        : new Date(),
+        reason: dataH.reasons,
+        file: dataH.attachFiles ? {id: "history", name: dataH.attachFiles} : "",
+      });
+    }
   };
 
   const onFormSubmit = () => {
@@ -144,55 +185,100 @@ function ReUseForm(props) {
       return setError({cost: {message: t("validate:empty")}});
     }
 
-    setLoading({...loading, reuse: true});
-    let params = {
-      AssetID: dataItem.id,
-      EmpCode: dataItem.employee,
-      DeptCode: dataItem.department,
-      RegionCode: dataItem.region,
-      JobTitle: dataItem.position,
-      Reasons: formData.reason.trim(),
-      FileUpload: formData.file,
-      TransDate: moment(formData.resueDate).format("YYYY-MM-DD"),
-      EndRepairDate: moment(formData.repairDate).format("YYYY-MM-DD"),
-      SupplierRepair: formData.repairName.trim(),
-      ActCost: formData.repairCost,
-      
-      RefreshToken: authState["data"]["refreshToken"],
-      Lang: commonState["language"],
-    };
-    console.log('[LOG] === onFormSubmit ===> ', params);
-    dispatch(Actions.fFetchReuseAssets(params, history));
+    if (!updateHistory) {
+      setLoading({...loading, reuse: true});
+      let params = {
+        AssetID: dataItem.id,
+        EmpCode: dataItem.employee,
+        DeptCode: dataItem.department,
+        RegionCode: dataItem.region,
+        JobTitle: dataItem.position,
+        Reasons: formData.reason.trim(),
+        FileUpload: formData.file,
+        TransDate: moment(formData.resueDate).format("YYYY-MM-DD"),
+        EndRepairDate: moment(formData.repairDate).format("YYYY-MM-DD"),
+        SupplierRepair: formData.repairName.trim(),
+        ActCost: formData.repairCost,
+        
+        RefreshToken: authState["data"]["refreshToken"],
+        Lang: commonState["language"],
+      };
+      console.log('[LOG] === onFormSubmit ===> ', params);
+      dispatch(Actions.fFetchReuseAssets(params, history));
+    }
+    if (updateHistory) {
+      setLoading({...loading, history: true});
+      let params = {
+        LineNum: updateHistory.lineNum,
+        AssetID: dataItem.id,
+        IsRemovedFile: isRemoveFile,
+        TypeUpdate: "Reuse",
+        Reasons: formData.reason.trim(),
+        FileUpload: formData.file?.id === "history" ? "" : formData.file,
+        EndRepairDate: moment(formData.repairDate).format("YYYY-MM-DD"),
+        TransDate: moment(formData.resueDate).format("YYYY-MM-DD"),
+        SupplierRepair: formData.repairName.trim(),
+        ActCost: formData.repairCost,
+
+        RefreshToken: authState["data"]["refreshToken"],
+        Lang: commonState["language"],
+      };
+      console.log('[LOG] === onFormSubmit ===> ', params);
+      dispatch(Actions.fFetchUpdateProcess(params, history));
+    }
   };
 
   const onSuccess = type => {
-    setLoading({main: false, reuse: false});
     if (type === "Reuse") {
       onResetData();
       onClose(true, t("success:reuse_assets"));
     }
+    if (type === "History") {
+      onResetData();
+      onClose(true, t("success:update_history_assets"), "reuse", true);
+    }
+    setRemoveFile(false);
+    setLoading({main: false, reuse: false, history: false});
   };
 
   const onError = (type, error) => {
     console.log('[LOG] === onError ===> ', error);
-    setLoading({main: false, reuse: false});
     if (type === "Reuse") {
       onResetData();
       onClose(false, error);
     }
+    if (type === "History") {
+      onResetData();
+      onClose(false, error);
+    }
+    setRemoveFile(false);
+    setLoading({main: false, reuse: false});
+  };
+
+  const onDownloadAttachFile = () => {
+    window.open(`${Configs.hostAPI}/${formData.file.name}`, "_blank");
   };
 
   /**
    ** LIFE CYCLE 
    */
   useEffect(() => {
-    if (updateItem && show) {
-      onResetData();
+    if (!updateHistory && updateItem && show) {
       onSetFormDataDetails(updateItem);
     }
   }, [
     show,
-    updateItem
+    updateItem,
+    updateHistory,
+  ]);
+
+  useEffect(() => {
+    if (updateHistory && show) {
+      onSetFormDataDetails(updateItem, updateHistory);
+    }
+  }, [
+    show,
+    updateHistory,
   ]);
 
   useEffect(() => {
@@ -214,11 +300,30 @@ function ReUseForm(props) {
     approvedState["errorReuseAssets"],
   ]);
 
+  useEffect(() => {
+    if (loading.history && show) {
+      if (!approvedState["submittingUpdateProcess"]) {
+        if (approvedState["successUpdateProcess"] && !approvedState["errorUpdateProcess"]) {
+          return onSuccess("History");
+        }
+        if (!approvedState["successUpdateProcess"] && approvedState["errorUpdateProcess"]) {
+          return onError("History", approvedState["errorHelperUpdateProcess"]);
+        }
+      }
+    }
+  }, [
+    show,
+    loading.history,
+    approvedState["submittingUpdateProcess"],
+    approvedState["successUpdateProcess"],
+    approvedState["errorUpdateProcess"],
+  ]);
+
   /**
    ** RENDER 
    */
    const {errors, register, handleSubmit} = useForm();
-   const disabled = loading.main || loading.reuse;
+   const disabled = loading.main || loading.reuse || loading.history;
  
   return (
     <SimpleBar
@@ -230,11 +335,16 @@ function ReUseForm(props) {
       <BlockHead>
           <BlockBetween>
             <BlockHeadContent>
-              <BlockTitle tag="h3">{t("reuse_assets:title")}</BlockTitle>
+              {!updateHistory && (
+                <BlockTitle tag="h4">{t("reuse_assets:title")}</BlockTitle>
+              )}
+              {updateHistory && (
+                <BlockTitle tag="h4">{t("reuse_assets:history_title")}</BlockTitle>
+              )}
             </BlockHeadContent>
             <BlockHeadContent>
               <ul className="nk-block-tools g-3">
-                <li className="nk-block-tools-opt">
+                {/* <li className="nk-block-tools-opt">
                   <Button
                     className="toggle btn-icon d-md-none"
                     color="gray"
@@ -254,7 +364,7 @@ function ReUseForm(props) {
                     <Icon name="undo"></Icon>
                     <span>{t("common:reset")}</span>
                   </Button>
-                </li>
+                </li> */}
                 <li className="nk-block-tools-opt">
                   <Button
                     className="toggle btn-icon d-md-none"
@@ -262,10 +372,10 @@ function ReUseForm(props) {
                     type="submit"
                     disabled={disabled}
                   >
-                    {loading.reuse && (
+                    {(loading.reuse || loading.history) && (
                       <div className="spinner-border spinner-border-sm text-white" role="status" />
                     )}
-                    {!loading.reuse && <Icon name="save"></Icon>}
+                    {!loading.reuse && !loading.history && <Icon name="save"></Icon>}
                   </Button>
                   <Button
                     className="toggle d-none d-md-inline-flex"
@@ -273,10 +383,10 @@ function ReUseForm(props) {
                     type="submit"
                     disabled={disabled}
                   >
-                    {loading.reuse && (
+                    {(loading.reuse || loading.history) && (
                       <div className="spinner-border spinner-border-sm text-white mr-2" role="status" />
                     )}
-                    {!loading.reuse && <Icon name="save"></Icon>}
+                    {!loading.reuse && !loading.history && <Icon name="save"></Icon>}
                     <span>{t("common:save")}</span>
                   </Button>
                 </li>
@@ -285,239 +395,177 @@ function ReUseForm(props) {
           </BlockBetween>
         </BlockHead>
 
-        <div className="nk-divider divider md"></div>
+        <AssetInformations data={dataItem} />
 
         <Block>
-          <BlockHead>
-            <BlockTitle tag="h6">{t("reuse_assets:information")}</BlockTitle>
-          </BlockHead>
-          <div className="profile-ud-list">
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("reuse_assets:code")}</span>
-                <span className="profile-ud-value text-primary">{dataItem.code}</span>
-              </div>
-            </div>
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("reuse_assets:name")}</span>
-                <span className="profile-ud-value">{dataItem.name}</span>
-              </div>
-            </div>
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("reuse_assets:group")}</span>
-                <span className="profile-ud-value">{dataItem.group}</span>
-              </div>
-            </div>
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("reuse_assets:purchase_date")}</span>
-                <span className="profile-ud-value">{dataItem.purchaseDate}</span>
-              </div>
-            </div>
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("reuse_assets:origin_price")}</span>
-                <span className="profile-ud-value">{dataItem.originPrice}</span>
-              </div>
-            </div>
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("reuse_assets:status")}</span>
-                <span className="profile-ud-value">
-                  <span
-                    className={`dot bg-${
-                      dataItem.statusID === 1
-                        ? "gray"
-                        : dataItem.statusID === 2
-                          ? "success"
-                          : dataItem.statusID === 3
-                            ? "warning"
-                            : (dataItem.statusID === 4 || dataItem.statusID === 5)
-                              ? "danger"
-                              : "primary"
-                    } d-mb-none`}
-                  ></span>
-                  <span
-                    className={`badge badge-sm badge-dot has-bg badge-${
-                      dataItem.statusID === 1
-                        ? "gray"
-                        : dataItem.statusID === 2
-                          ? "success"
-                          : dataItem.statusID === 3
-                            ? "warning"
-                            : (dataItem.statusID === 4 || dataItem.statusID === 5)
-                              ? "danger"
-                              : "primary"
-                    } d-none d-mb-inline-flex`}
-                  >
-                    {dataItem.status}
-                  </span>
-                </span>
-              </div>
-            </div>
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("reuse_assets:description")}</span>
-                <span className="profile-ud-value">{dataItem.description}</span>
-              </div>
-            </div>
+          <div className="data-head">
+            <h6 className="overline-title">{t("reuse_assets:information_repair")}</h6>
           </div>
-
-          <div className="nk-divider divider md"></div>
-
-          <BlockHead>
-            <BlockTitle tag="h6">{t("reuse_assets:information_repair")}</BlockTitle>
-          </BlockHead>
-          <Row className="g-3">
-            <Col md="4">
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="repairDate">
-                    {t("reuse_assets:repair_date")}
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <div className="form-icon form-icon-left">
-                    <Icon name="calendar"></Icon>
+          <div className="mt-3">
+            <Row className="g-3">
+              <Col md="4">
+                <FormGroup>
+                  <div className="form-label-group">
+                    <label className="form-label" htmlFor="repairDate">
+                      {t("reuse_assets:repair_date")}
+                    </label>
                   </div>
-                  <DatePicker
-                    selected={formData.repairDate}
-                    className="form-control date-picker"
-                    disabled={disabled}
-                    value={formData.repairDate}
-                    onChange={date => onChangeDate("repairDate", date)}
-                    customInput={<CustomDateInput />}
-                  />
-                </div>
-              </FormGroup>
-            </Col>
-            <Col md="8">
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="repairName">
-                    {t("reuse_assets:repair_name")} <span className="text-danger">*</span>
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <input
-                    ref={register({ required: t("validate:empty") })}
-                    className="form-control"
-                    type="text"
-                    id="repairName"
-                    name="repairName"
-                    disabled={disabled}
-                    value={formData.repairName}
-                    placeholder={t("reuse_assets:holder_repair_name")}
-                    onChange={onChangeInput}
-                  />
-                  {errors.repairName && (
-                    <span className="invalid">{errors.repairName.message}</span>
-                  )}
-                </div>
-              </FormGroup>
-            </Col>
-            <Col md="4">
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="repairCost">
-                    {t("reuse_assets:repair_cost")} <span className="text-danger">*</span>
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <NumberFormat
-                    className="form-control"
-                    name="repairCost"
-                    value={formData.repairCost}
-                    placeholder={t("reuse_assets:holder_repair_cost") || ' '}
-                    thousandSeparator
-                    prefix="đ "
-                    onValueChange={val =>
-                      onChangeInput({target: {name: "repairCost", value: val.floatValue}})}
-                  />
-                  {error.cost && (
-                    <span className="invalid">{error.cost.message}</span>
-                  )}
-                </div>
-              </FormGroup>
-            </Col>
-            <Col md="8">
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="file">
-                    {t("reuse_assets:file")}
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <div className="custom-file">
-                    <input
-                      className="custom-file-input form-control"
-                      id="file"
-                      type="file"
-                      multiple={false}
+                  <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="calendar"></Icon>
+                    </div>
+                    <DatePicker
+                      selected={formData.repairDate}
+                      className="form-control date-picker"
                       disabled={disabled}
-                      onChange={onChangeFile}
+                      value={formData.repairDate}
+                      onChange={date => onChangeDate("repairDate", date)}
+                      customInput={<CustomDateInput />}
                     />
-                    <Label className="custom-file-label" htmlFor="file">
-                      {!formData.file ? t("common:choose_file") : formData.file.name}
-                    </Label>
                   </div>
-                </div>
-              </FormGroup>
-            </Col>
-          </Row>
-
-          <div className="nk-divider divider md"></div>
-
-          <BlockHead>
-            <BlockTitle tag="h6">{t("reuse_assets:information_reuse")}</BlockTitle>
-          </BlockHead>
-          <Row className="g-3">
-            <Col md="4">
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="resueDate">
-                    {t("reuse_assets:reuse_date")}
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <div className="form-icon form-icon-left">
-                    <Icon name="calendar"></Icon>
+                </FormGroup>
+              </Col>
+              <Col md="8">
+                <FormGroup>
+                  <div className="form-label-group">
+                    <label className="form-label" htmlFor="repairName">
+                      {t("reuse_assets:repair_name")} <span className="text-danger">*</span>
+                    </label>
                   </div>
-                  <DatePicker
-                    selected={formData.resueDate}
-                    className="form-control date-picker"
-                    disabled={disabled}
-                    value={formData.resueDate}
-                    onChange={date => onChangeDate("resueDate", date)}
-                    customInput={<CustomDateInput />}
-                  />
-                </div>
-              </FormGroup>
-            </Col>
-            <Col size="12">
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="reason">
-                    {t("reuse_assets:reuse_reason")}
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <textarea
-                    className="no-resize form-control"
-                    type="text"
-                    id="reason"
-                    name="reason"
-                    disabled={disabled}
-                    value={formData.reason}
-                    placeholder={t("reuse_assets:holder_reuse_reason")}
-                    onChange={onChangeInput}
-                  />
-                </div>
-              </FormGroup>
-            </Col>
-          </Row>
+                  <div className="form-control-wrap">
+                    <input
+                      ref={register({ required: t("validate:empty") })}
+                      className="form-control"
+                      type="text"
+                      id="repairName"
+                      name="repairName"
+                      disabled={disabled}
+                      value={formData.repairName}
+                      placeholder={t("reuse_assets:holder_repair_name")}
+                      onChange={onChangeInput}
+                    />
+                    {errors.repairName && (
+                      <span className="invalid">{errors.repairName.message}</span>
+                    )}
+                  </div>
+                </FormGroup>
+              </Col>
+              <Col md="4">
+                <FormGroup>
+                  <div className="form-label-group">
+                    <label className="form-label" htmlFor="repairCost">
+                      {t("reuse_assets:repair_cost")} <span className="text-danger">*</span>
+                    </label>
+                  </div>
+                  <div className="form-control-wrap">
+                    <NumberFormat
+                      className="form-control"
+                      name="repairCost"
+                      value={formData.repairCost}
+                      placeholder={t("reuse_assets:holder_repair_cost") || ' '}
+                      thousandSeparator
+                      prefix="đ "
+                      onValueChange={val =>
+                        onChangeInput({target: {name: "repairCost", value: val.floatValue}})}
+                    />
+                    {error.cost && (
+                      <span className="invalid">{error.cost.message}</span>
+                    )}
+                  </div>
+                </FormGroup>
+              </Col>
+              <Col md="8">
+                <FormGroup>
+                  <div className="form-label-group">
+                    <label className="form-label" htmlFor="file">
+                      {t("reuse_assets:file")}
+                    </label>
+                  </div>
+                  <div className="d-flex align-items-center">
+                    <div className={`form-control-wrap flex-fill ${updateHistory && formData.file?.id === "history" && "mr-3"}`}>
+                      <div className="custom-file">
+                        <input
+                          className="custom-file-input form-control"
+                          id="file"
+                          type="file"
+                          multiple={false}
+                          disabled={disabled}
+                          onChange={onChangeFile}
+                        />
+                        <Label className="custom-file-label" htmlFor="file">
+                          {!formData.file ? t("common:choose_file") : formData.file.name}
+                        </Label>
+                      </div>
+                    </div>
+                    {updateHistory && formData.file?.id === "history" && (
+                      <Button
+                        color="primary"
+                        type="button"
+                        disabled={disabled}
+                        onClick={onDownloadAttachFile}
+                      >
+                        <Icon name="download"></Icon>
+                        <span>{t("common:download")}</span>
+                      </Button>
+                    )}
+                  </div>
+                </FormGroup>
+              </Col>
+            </Row>
+          </div>
+        </Block>
+
+        <Block>
+          <div className="data-head">
+            <h6 className="overline-title">{t("reuse_assets:information_reuse")}</h6>
+          </div>
+          <div className="mt-3">
+            <Row className="g-3">
+              <Col md="4">
+                <FormGroup>
+                  <div className="form-label-group">
+                    <label className="form-label" htmlFor="resueDate">
+                      {t("reuse_assets:reuse_date")}
+                    </label>
+                  </div>
+                  <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="calendar"></Icon>
+                    </div>
+                    <DatePicker
+                      selected={formData.resueDate}
+                      className="form-control date-picker"
+                      disabled={disabled}
+                      value={formData.resueDate}
+                      onChange={date => onChangeDate("resueDate", date)}
+                      customInput={<CustomDateInput />}
+                    />
+                  </div>
+                </FormGroup>
+              </Col>
+              <Col size="12">
+                <FormGroup>
+                  <div className="form-label-group">
+                    <label className="form-label" htmlFor="reason">
+                      {t("reuse_assets:reuse_reason")}
+                    </label>
+                  </div>
+                  <div className="form-control-wrap">
+                    <textarea
+                      className="no-resize form-control"
+                      type="text"
+                      id="reason"
+                      name="reason"
+                      disabled={disabled}
+                      value={formData.reason}
+                      placeholder={t("reuse_assets:holder_reuse_reason")}
+                      onChange={onChangeInput}
+                    />
+                  </div>
+                </FormGroup>
+              </Col>
+            </Row>
+          </div>
         </Block>
       </Form>
     </SimpleBar>

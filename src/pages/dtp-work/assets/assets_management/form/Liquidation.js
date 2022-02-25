@@ -18,8 +18,10 @@ import {
   Row,
   Col,
 } from "components/Component";
+import AssetInformations from "../components/AssetInformations";
+import EmployeeInformations from "../components/EmployeeInformations";
 /** COMMON */
-import {numberFormat} from "utils/Utils";
+import Configs from "configs";
 /** REDUX */
 import * as Actions from "redux/actions";
 
@@ -45,6 +47,7 @@ function LiquidationForm(props) {
     commonState,
     authState,
     updateItem,
+    updateHistory,
     onClose,
   } = props;
 
@@ -55,7 +58,9 @@ function LiquidationForm(props) {
   /** Use state */
   const [loading, setLoading] = useState({
     liquidation: false,
+    history: false,
   });
+  const [isRemoveFile, setRemoveFile] = useState(false);
   const [dataItem, setDataItem] = useState({
     id: "",
     code: "",
@@ -67,6 +72,7 @@ function LiquidationForm(props) {
     statusID: 0,
     status: "",
 
+    employeeCode: "",
     employee: "",
     department: "",
     region: "",
@@ -90,6 +96,9 @@ function LiquidationForm(props) {
 
   const onChangeFile = e => {
     setFormData({...formData, file: e.target.files[0]});
+    if (formData.file && e.target.files[0].name !== formData.file.name) {
+      setRemoveFile(true);
+    }
   };
 
   const onChangeDate = value => {
@@ -105,94 +114,140 @@ function LiquidationForm(props) {
     });
   };
 
-  const onSetFormDataDetails = data => {
+  const onSetFormDataDetails = (data, dataH) => {
     console.log('[LOG] === onSetFormDataDetails ===> ', data);
     setDataItem({
       id: data.assetID,
       code: data.assetCode,
       name: data.assetName,
       group: data.groupName,
-      description: data.descr
-        ? data.descr
-        : "-",
-      purchaseDate: data.purchaseDate
-        ? moment(data.purchaseDate).format("DD/MM/YYYY")
-        : "-",
-      originPrice: data.originalPrice
-        ? numberFormat(data.originalPrice)
-        : "-",
+      description: data.descr || "-",
+      purchaseDate: data.purchaseDate,
+      originPrice: data.originalPrice,
       statusID: data.statusID,
       status: data.statusName,
-
+      employeeCode: data.empCode || "",
       employee: data.empName || "",
       department: data.deptNameManager || "",
       region: data.regionName || "",
       position: data.jobTitle || "",
     });
-    setFormData({
-      ...formData,
-      liquidationEmployee: data.empCode,
-      liquidationDepartment: data.deptCodeManager,
-      liquidationRegion: data.regionCode,
-    });
-  };
-
-  const onGetMasterData = () => {
-    let params = {
-      ListType: "Region,Department,Employee",
-      RefreshToken: authState["data"]["refreshToken"],
-      Lang: commonState["language"],
+    if (!dataH) {
+      setFormData({
+        liquidationEmployee: data.empCode,
+        liquidationDepartment: data.deptCodeManager,
+        liquidationRegion: data.regionCode,
+        liquidationDate: new Date(),
+        reason: "",
+        file: "",
+      });
+    } else {
+      setFormData({
+        liquidationEmployee: dataH.empCode,
+        liquidationDepartment: dataH.deptCode,
+        liquidationRegion: dataH.regionCode,
+        liquidationDate: dataH.transDate 
+          ? new Date(
+            moment(dataH.transDate).year(),
+            moment(dataH.transDate).month(),
+            moment(dataH.transDate).date()
+          )
+          : new Date(),
+        reason: dataH.reasons,
+        file: dataH.attachFiles ? {id: "history", name: dataH.attachFiles} : "",
+      });
     }
-    dispatch(Actions.fFetchMasterData(params, history));
   };
 
   const onFormSubmit = () => {
-    setLoading({...loading, liquidation: true});
-    let params = {
-      AssetID: dataItem.id,
-      EmpCode: formData.liquidationEmployee,
-      DeptCode: formData.liquidationDepartment,
-      RegionCode: formData.liquidationRegion,
-      JobTitle: dataItem.position,
-      Reasons: formData.reason.trim(),
-      FileUpload: formData.file,
-      TransDate: moment(formData.liquidationDate).format("YYYY-MM-DD"),
-      
-      RefreshToken: authState["data"]["refreshToken"],
-      Lang: commonState["language"],
-    };
-    console.log('[LOG] === onFormSubmit ===> ', params);
-    dispatch(Actions.fFetchLiquidationAssets(params, history));
+    if (!updateHistory) {
+      setLoading({...loading, liquidation: true});
+      let params = {
+        AssetID: dataItem.id,
+        EmpCode: formData.liquidationEmployee,
+        DeptCode: formData.liquidationDepartment,
+        RegionCode: formData.liquidationRegion,
+        JobTitle: dataItem.position,
+        Reasons: formData.reason.trim(),
+        FileUpload: formData.file,
+        TransDate: moment(formData.liquidationDate).format("YYYY-MM-DD"),
+        
+        RefreshToken: authState["data"]["refreshToken"],
+        Lang: commonState["language"],
+      };
+      console.log('[LOG] === onFormSubmit ===> ', params);
+      dispatch(Actions.fFetchLiquidationAssets(params, history));
+    }
+    if (updateHistory) {
+      setLoading({...loading, history: true});
+      let params = {
+        LineNum: updateHistory.lineNum,
+        AssetID: dataItem.id,
+        IsRemovedFile: isRemoveFile,
+        TypeUpdate: "Liquidate",
+        Reasons: formData.reason.trim(),
+        FileUpload: formData.file?.id === "history" ? "" : formData.file,
+        TransDate: moment(formData.liquidationDate).format("YYYY-MM-DD"),
+
+        RefreshToken: authState["data"]["refreshToken"],
+        Lang: commonState["language"],
+      };
+      console.log('[LOG] === onFormSubmit ===> ', params);
+      dispatch(Actions.fFetchUpdateProcess(params, history));
+    }
   };
 
   const onSuccess = type => {
-    setLoading({liquidation: false});
     if (type === "Liquidation") {
       onResetData();
       onClose(true, t("success:liquidation_assets"));
     }
+    if (type === "History") {
+      onResetData();
+      onClose(true, t("success:update_history_assets"), "liquidation", true);
+    }
+    setRemoveFile(false);
+    setLoading({liquidation: false, history: false});
   };
 
   const onError = (type, error) => {
     console.log('[LOG] === onError ===> ', error);
-    setLoading({liquidation: false});
     if (type === "Liquidation") {
       onResetData();
       onClose(false, error);
     }
+    if (type === "History") {
+      onResetData();
+      onClose(false, error);
+    }
+    setRemoveFile(false);
+    setLoading({liquidation: false, history: false});
+  };
+
+  const onDownloadAttachFile = () => {
+    window.open(`${Configs.hostAPI}/${formData.file.name}`, "_blank");
   };
 
   /**
    ** LIFE CYCLE 
    */
   useEffect(() => {
-    if (updateItem && show) {
-      onResetData();
+    if (!updateHistory && updateItem && show) {
       onSetFormDataDetails(updateItem);
     }
   }, [
     show,
-    updateItem
+    updateItem,
+    updateHistory,
+  ]);
+
+  useEffect(() => {
+    if (updateHistory && show) {
+      onSetFormDataDetails(updateItem, updateHistory);
+    }
+  }, [
+    show,
+    updateHistory,
   ]);
 
   useEffect(() => {
@@ -214,11 +269,30 @@ function LiquidationForm(props) {
     approvedState["errorLiquidationAssets"],
   ]);
 
+  useEffect(() => {
+    if (loading.history && show) {
+      if (!approvedState["submittingUpdateProcess"]) {
+        if (approvedState["successUpdateProcess"] && !approvedState["errorUpdateProcess"]) {
+          return onSuccess("History");
+        }
+        if (!approvedState["successUpdateProcess"] && approvedState["errorUpdateProcess"]) {
+          return onError("History", approvedState["errorHelperUpdateProcess"]);
+        }
+      }
+    }
+  }, [
+    show,
+    loading.history,
+    approvedState["submittingUpdateProcess"],
+    approvedState["successUpdateProcess"],
+    approvedState["errorUpdateProcess"],
+  ]);
+
   /**
    ** RENDER 
    */
-  const {errors, register, handleSubmit} = useForm();
-  const disabled = loading.liquidation;
+  const {handleSubmit} = useForm();
+  const disabled = loading.liquidation || loading.history;
 
   return (
     <SimpleBar
@@ -230,11 +304,16 @@ function LiquidationForm(props) {
         <BlockHead>
           <BlockBetween>
             <BlockHeadContent>
-              <BlockTitle tag="h3">{t("liquidation_assets:title")}</BlockTitle>
+              {!updateHistory && (
+                <BlockTitle tag="h4">{t("liquidation_assets:title")}</BlockTitle>
+              )}
+              {updateHistory && (
+                <BlockTitle tag="h4">{t("liquidation_assets:history_title")}</BlockTitle>
+              )}
             </BlockHeadContent>
             <BlockHeadContent>
               <ul className="nk-block-tools g-3">
-                <li className="nk-block-tools-opt">
+                {/* <li className="nk-block-tools-opt">
                   <Button
                     className="toggle btn-icon d-md-none"
                     color="gray"
@@ -254,7 +333,7 @@ function LiquidationForm(props) {
                     <Icon name="undo"></Icon>
                     <span>{t("common:reset")}</span>
                   </Button>
-                </li>
+                </li> */}
                 <li className="nk-block-tools-opt">
                   <Button
                     className="toggle btn-icon d-md-none"
@@ -262,10 +341,10 @@ function LiquidationForm(props) {
                     type="submit"
                     disabled={disabled}
                   >
-                    {loading.liquidation && (
+                    {disabled && (
                       <div className="spinner-border spinner-border-sm text-white" role="status" />
                     )}
-                    {!loading.liquidation && <Icon name="save"></Icon>}
+                    {!loading.liquidation && !loading.history && <Icon name="save"></Icon>}
                   </Button>
                   <Button
                     className="toggle d-none d-md-inline-flex"
@@ -273,10 +352,10 @@ function LiquidationForm(props) {
                     type="submit"
                     disabled={disabled}
                   >
-                    {loading.liquidation && (
+                    {disabled && (
                       <div className="spinner-border spinner-border-sm text-white mr-2" role="status" />
                     )}
-                    {!loading.liquidation && <Icon name="save"></Icon>}
+                    {!loading.liquidation && !loading.history && <Icon name="save"></Icon>}
                     <span>{t("common:save")}</span>
                   </Button>
                 </li>
@@ -285,192 +364,97 @@ function LiquidationForm(props) {
           </BlockBetween>
         </BlockHead>
 
-        <div className="nk-divider divider md"></div>
+        <AssetInformations data={dataItem} />
+        <EmployeeInformations data={dataItem} />
 
         <Block>
-          <BlockHead>
-            <BlockTitle tag="h6">{t("liquidation_assets:information")}</BlockTitle>
-          </BlockHead>
-          <div className="profile-ud-list">
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("liquidation_assets:code")}</span>
-                <span className="profile-ud-value text-primary">{dataItem.code}</span>
-              </div>
-            </div>
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("liquidation_assets:name")}</span>
-                <span className="profile-ud-value">{dataItem.name}</span>
-              </div>
-            </div>
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("liquidation_assets:group")}</span>
-                <span className="profile-ud-value">{dataItem.group}</span>
-              </div>
-            </div>
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("liquidation_assets:purchase_date")}</span>
-                <span className="profile-ud-value">{dataItem.purchaseDate}</span>
-              </div>
-            </div>
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("liquidation_assets:origin_price")}</span>
-                <span className="profile-ud-value">{dataItem.originPrice}</span>
-              </div>
-            </div>
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("liquidation_assets:status")}</span>
-                <span className="profile-ud-value">
-                  <span
-                    className={`dot bg-${
-                      dataItem.statusID === 1
-                        ? "gray"
-                        : dataItem.statusID === 2
-                          ? "success"
-                          : dataItem.statusID === 3
-                            ? "warning"
-                            : (dataItem.statusID === 4 || dataItem.statusID === 5)
-                              ? "danger"
-                              : "primary"
-                    } d-mb-none`}
-                  ></span>
-                  <span
-                    className={`badge badge-sm badge-dot has-bg badge-${
-                      dataItem.statusID === 1
-                        ? "gray"
-                        : dataItem.statusID === 2
-                          ? "success"
-                          : dataItem.statusID === 3
-                            ? "warning"
-                            : (dataItem.statusID === 4 || dataItem.statusID === 5)
-                              ? "danger"
-                              : "primary"
-                    } d-none d-mb-inline-flex`}
-                  >
-                    {dataItem.status}
-                  </span>
-                </span>
-              </div>
-            </div>
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("liquidation_assets:description")}</span>
-                <span className="profile-ud-value">{dataItem.description}</span>
-              </div>
-            </div>
+          <div className="data-head">
+            <h6 className="overline-title">{t("liquidation_assets:information_liquidation")}</h6>
           </div>
-
-          <div className="nk-divider divider md"></div>
-
-          <BlockHead>
-            <BlockTitle tag="h6">{t("liquidation_assets:information_employee")}</BlockTitle>
-          </BlockHead>
-          <div className="profile-ud-list">
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("liquidation_assets:employee")}</span>
-                <span className="profile-ud-value">{dataItem.employee}</span>
-              </div>
-            </div>
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("liquidation_assets:position")}</span>
-                <span className="profile-ud-value">{dataItem.position}</span>
-              </div>
-            </div>
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("liquidation_assets:department")}</span>
-                <span className="profile-ud-value">{dataItem.department}</span>
-              </div>
-            </div>
-            <div className="profile-ud-item">
-              <div className="profile-ud wider">
-                <span className="profile-ud-label">{t("liquidation_assets:region")}</span>
-                <span className="profile-ud-value">{dataItem.region}</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="nk-divider divider md"></div>
-
-          <BlockHead>
-            <BlockTitle tag="h6">{t("liquidation_assets:information_liquidation")}</BlockTitle>
-          </BlockHead>
-          <Row className="g-3">
-            <Col md="6">
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="liquidationDate">
-                    {t("liquidation_assets:liquidation_date")}
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <div className="form-icon form-icon-left">
-                    <Icon name="calendar"></Icon>
+          <div className="mt-3">
+            <Row className="g-3">
+              <Col md="4">
+                <FormGroup>
+                  <div className="form-label-group">
+                    <label className="form-label" htmlFor="liquidationDate">
+                      {t("liquidation_assets:liquidation_date")}
+                    </label>
                   </div>
-                  <DatePicker
-                    selected={formData.liquidationDate}
-                    className="form-control date-picker"
-                    disabled={disabled}
-                    value={formData.liquidationDate}
-                    onChange={onChangeDate}
-                    customInput={<CustomDateInput />}
-                  />
-                </div>
-              </FormGroup>
-            </Col>
-            <Col md="6">
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="file">
-                    {t("liquidation_assets:file")}
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <div className="custom-file">
-                    <input
-                      className="custom-file-input form-control"
-                      id="file"
-                      type="file"
-                      multiple={false}
+                  <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="calendar"></Icon>
+                    </div>
+                    <DatePicker
+                      selected={formData.liquidationDate}
+                      className="form-control date-picker"
                       disabled={disabled}
-                      onChange={onChangeFile}
+                      value={formData.liquidationDate}
+                      onChange={onChangeDate}
+                      customInput={<CustomDateInput />}
                     />
-                    <Label className="custom-file-label" htmlFor="file">
-                      {!formData.file ? t("common:choose_file") : formData.file.name}
-                    </Label>
                   </div>
-                </div>
-              </FormGroup>
-            </Col>
-            <Col size="12">
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="reason">
-                    {t("liquidation_assets:liquidation_reason")}
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <textarea
-                    className="no-resize form-control"
-                    type="text"
-                    id="reason"
-                    name="reason"
-                    disabled={disabled}
-                    value={formData.reason}
-                    placeholder={t("liquidation_assets:holder_liquidation_reason")}
-                    onChange={onChangeInput}
-                  />
-                </div>
-              </FormGroup>
-            </Col>
-          </Row>
+                </FormGroup>
+              </Col>
+              <Col md="8">
+                <FormGroup>
+                  <div className="form-label-group">
+                    <label className="form-label" htmlFor="file">
+                      {t("liquidation_assets:file")}
+                    </label>
+                  </div>
+                  <div className="d-flex align-items-center">
+                    <div className={`form-control-wrap flex-fill ${updateHistory && formData.file?.id === "history" && "mr-3"}`}>
+                      <div className="custom-file">
+                        <input
+                          className="custom-file-input form-control"
+                          id="file"
+                          type="file"
+                          multiple={false}
+                          disabled={disabled}
+                          onChange={onChangeFile}
+                        />
+                        <Label className="custom-file-label" htmlFor="file">
+                          {!formData.file ? t("common:choose_file") : formData.file.name}
+                        </Label>
+                      </div>
+                    </div>
+                    {updateHistory && formData.file?.id === "history" && (
+                      <Button
+                        color="primary"
+                        type="button"
+                        disabled={disabled}
+                        onClick={onDownloadAttachFile}
+                      >
+                        <Icon name="download"></Icon>
+                        <span>{t("common:download")}</span>
+                      </Button>
+                    )}
+                  </div>
+                </FormGroup>
+              </Col>
+              <Col size="12">
+                <FormGroup>
+                  <div className="form-label-group">
+                    <label className="form-label" htmlFor="reason">
+                      {t("liquidation_assets:liquidation_reason")}
+                    </label>
+                  </div>
+                  <div className="form-control-wrap">
+                    <textarea
+                      className="no-resize form-control"
+                      type="text"
+                      id="reason"
+                      name="reason"
+                      disabled={disabled}
+                      value={formData.reason}
+                      placeholder={t("liquidation_assets:holder_liquidation_reason")}
+                      onChange={onChangeInput}
+                    />
+                  </div>
+                </FormGroup>
+              </Col>
+            </Row>
+          </div>
         </Block>
       </Form>
     </SimpleBar>

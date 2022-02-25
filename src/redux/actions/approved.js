@@ -46,9 +46,9 @@ export const fErrorHistoryAsset = error => ({
   payload: error,
 });
 
-export const fSuccessHistoryAsset = data => ({
+export const fSuccessHistoryAsset = (dataAsset, dataHistory) => ({
   type: types.SUCCESS_HISTORY_ASSET,
-  payload: data,
+  payload: {dataAsset, dataHistory},
 });
 
 export const fFetchHistoryAsset = (params, history) => {
@@ -58,7 +58,7 @@ export const fFetchHistoryAsset = (params, history) => {
     Services.approved.historyAsset(params)
       .then(res => {
         if (!res.isError) {
-          return dispatch(fSuccessHistoryAsset(res.data.listTransHistory));
+          return dispatch(fSuccessHistoryAsset(res.data.header, res.data.listTransHistory));
         } else {
           return dispatch(fErrorHistoryAsset(res.errorMessage));
         }
@@ -397,6 +397,41 @@ export const fFetchCreateSupplier = (params, history) => {
   };
 };
 
+//** Update process */
+export const fErrorUpdateProcess = error => ({
+  type: types.ERROR_UPDATE_PROCESS,
+  payload: error,
+});
+
+export const fSuccessUpdateProcess = () => ({
+  type: types.SUCCESS_UPDATE_PROCESS,
+});
+
+export const fFetchUpdateProcess = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_UPDATE_PROCESS});
+
+    Services.approved.updateProcess(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessUpdateProcess());
+        } else {
+          return dispatch(fErrorUpdateProcess(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorUpdateProcess(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};
+
 //** List request handle */
 export const fResetApprovedRequest = () => ({
   type: types.RESET_APPROVED_REQUEST
@@ -431,6 +466,41 @@ export const fFetchListRequestHandle = (params, history) => {
       })
       .catch(error => {
         dispatch(fErrorListRequestHandle(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};
+
+//** Approved/Reject request */
+export const fErrorApprovedRequest = error => ({
+  type: types.ERROR_APPROVED_REQUEST,
+  payload: error,
+});
+
+export const fSuccessApprovedRequest = () => ({
+  type: types.SUCCESS_APPROVED_REQUEST,
+});
+
+export const fFetchApprovedRequest = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_APPROVED_REQUEST});
+
+    Services.approved.approvedRequest(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessApprovedRequest(res.data));
+        } else {
+          return dispatch(fErrorApprovedRequest(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorApprovedRequest(error));
         if (error.message && error.message.search("Authorization") !== -1) {
           let tmp = {
             RefreshToken: params.RefreshToken,

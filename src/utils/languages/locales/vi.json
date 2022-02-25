@@ -24,7 +24,8 @@
     "choose_file": "Chọn tệp",
     "to": "ĐẾN",
     "approved": "Duyệt",
-    "reject": "Từ chối"
+    "reject": "Từ chối",
+    "download": "Tải về"
   },
   "validate": {
     "empty": "Mục này không thể trống!",
@@ -45,7 +46,10 @@
     "repair_assets": "Thành công sữa chữa - bảo hành tài sản!",
     "liquidation_assets": "Thành công thanh lý tài sản!",
     "reuse_assets": "Thành công đưa vào sử dụng tài sản!",
-    "create_supplier": "Thành công thêm mới nhà cung cấp!"
+    "create_supplier": "Thành công thêm mới nhà cung cấp!",
+    "approved_request": "Thành công phê duyệt đơn!",
+    "reject_request": "Thành công từ chối đơn!",
+    "update_history_assets": "Thành công cập nhật quá trình sử dụng tài sản!"
   },
   "error": {
     "title": "Lỗi!!!",
@@ -127,7 +131,10 @@
     "recall_assets": "Thu hồi tài sản",
     "repair_assets": "Sửa chữa - Bảo hành tài sản",
     "liquidation_assets": "Thanh lý tài sản",
-    "reuse_assets": "Đưa vào sử dụng lại"
+    "reuse_assets": "Đưa vào sử dụng lại",
+    "export_report": "In biên bản",
+    "download_attach_file": "Tải file đính kèm",
+    "update_file": "Cập nhật quy trình"
   },
   "add_assets": {
     "title": "Thêm mới Tài sản",
@@ -181,7 +188,9 @@
   "approved_assets": {
     "title": "Cấp phát Tài sản",
     "recall_title": "Thu hồi Tài sản",
-    "information": "Thông tin cơ bản",
+    "history_approved_title": "Cập nhật Cấp phát",
+    "history_recall_title": "Cập nhật Thu hồi",
+    "information": "Thông tin tài sản",
     "code": "Mã số",
     "name": "Tên",
     "group": "Nhóm",
@@ -203,7 +212,8 @@
     "holder_reason": "Lý do cấp phát...",
     "file": "File đính kèm",
     "information_employee": "Thông tin nhân viên sử dụng",
-    "employee": "Nhân viên",
+    "employee_code": "Mã số",
+    "employee": "Họ và Tên",
     "information_recall": "Thông tin thu hồi",
     "recall_date": "Ngày thu hồi",
     "reason_recall": "Lý do thu hồi",
@@ -211,6 +221,7 @@
   },
   "repair_assets": {
     "title": "Sửa chữa - Bảo hành tài sản",
+    "history_title": "Cập nhật Sửa chữa - Bảo hành",
     "information": "Thông tin cơ bản",
     "code": "Mã số",
     "name": "Tên",
@@ -224,13 +235,14 @@
     "holder_repair_name": "Tên đơn vị thực hiện...",
     "repair_cost": "Chi phí dự kiến",
     "holder_repair_cost": "Chi phí dự kiến...",
-    "repair_date": "Ngày thực hiện",
+    "repair_date": "Ngày sửa chữa",
     "repair_reason": "Lý do sửa chữa - bảo hành",
     "holder_repair_reason": "Lý do sửa chữa - bảo hành...",
     "file": "File đính kèm"
   },
   "liquidation_assets": {
     "title": "Thanh lý tài sản",
+    "history_title": "Cập nhật Thanh lý",
     "information": "Thông tin cơ bản",
     "code": "Mã số",
     "name": "Tên",
@@ -252,6 +264,7 @@
   },
   "reuse_assets": {
     "title": "Đưa vào sử dụng tài sản",
+    "history_title": "Cập nhật Đưa vào sử dụng",
     "information": "Thông tin cơ bản",
     "code": "Mã số",
     "name": "Tên",
@@ -297,10 +310,16 @@
     "status_assets": "Trạng thái",
     "information_approved": "Thông tin duyệt đơn",
     "confirm_approved_title": "Xác nhận!",
-    "confirm_approved_assets_des": "Bạn thực sự muốn duyệt 'Đơn cấp phát' này?",
-    "confirm_approved_damage_des": "Bạn thực sự muốn duyệt 'Đơn báo hỏng' này?",
-    "confirm_approved_lost_des": "Bạn thực sự muốn duyệt 'Đơn báo mất' này?",
+    "confirm_approved_des_1": "Bạn thực sự muốn phê duyệt ",
+    "confirm_reject_des_1": "Bạn thực sự muốn từ chối ",
+    "confirm_approved_assets_des_2": "Đơn cấp phát số #",
+    "confirm_approved_damage_des_2": "Đơn báo hỏng số #",
+    "confirm_approved_lost_des_2": "Đơn báo mất số #",
+    "confirm_approved_des_3": " này của nhân viên ",
     "confirm_reject_des": "Lý do từ chối đơn này",
-    "holder_confirm_reject_des": "Lý do..."
+    "holder_confirm_reject_des": "Lý do...",
+    "assets": "cấp phát tài sản",
+    "damage": "báo hỏng tài sản",
+    "lost": "báo mất tài sản"
   }
 }

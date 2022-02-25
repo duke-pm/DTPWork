@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, createContext} from "react";
 import {useTranslation} from "react-i18next";
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
@@ -48,6 +48,8 @@ const TabItem = ({
     </li>
   )
 }
+
+let callbackF = null;
 
 function AssetsManagement(props) {
   const {t} = useTranslation();
@@ -142,19 +144,26 @@ function AssetsManagement(props) {
   const [searchText, setSearchText] = useState("");
   const [filterTab, setFilterTab] = useState(0);
   const [updateItem, setUpdateItem] = useState(null);
+  const [updateHistory, setUpdateHistory] = useState(null);
 
   /**
    ** FUNCTIONS
    */
-  const toogleView = type => {
+  const toogleView = (type, callback) => {
+    if ((type === "update" || type === "approved" ||
+    type === "recall" || type === "repair" ||
+    type === "liquidation" || type === "reuse")
+    && callback && callbackF) {
+      callbackF();
+    }
     setView({
       add: type === "add" ? true : false,
-      update: type === "update" ? true : false,
-      approved: type === "approved" ? true : false,
-      recall: type === "recall" ? true : false,
-      repair: type === "repair" ? true : false,
-      liquidation: type === "liquidation" ? true : false,
-      reuse: type === "reuse" ? true : false,
+      update: (type === "update" && !callback) ? true : false,
+      approved: (type === "approved" && !callback) ? true : false,
+      recall: (type === "recall" && !callback) ? true : false,
+      repair: (type === "repair" && !callback) ? true : false,
+      liquidation: (type === "liquidation" && !callback) ? true : false,
+      reuse: (type === "reuse" && !callback) ? true : false,
     });
     if (!type && updateItem) setUpdateItem(null);
   };
@@ -233,29 +242,68 @@ function AssetsManagement(props) {
     );
   };
 
-  const onUpdateItem = item => {
-    toogleView("update");
+  const onUpdateHistory = (dataAsset, itemHistory, callbackFunc) => {
+    let typeUpdate = "";
+    switch (itemHistory.transStatus) {
+      case 2:
+        typeUpdate = "approved";
+        break;
+      case 3:
+        typeUpdate = "repair";
+        break;
+      case 6:
+        typeUpdate = "liquidation";
+        break;
+      case 7:
+        typeUpdate = "recall";
+        break;
+      case 8:
+        typeUpdate = "reuse";
+        break;
+    }
+    if (typeUpdate !== "") {
+      callbackF = callbackFunc;
+      setUpdateHistory(itemHistory);
+      setUpdateItem(dataAsset);
+      toogleView(typeUpdate);
+    } else {
+      callbackF = null;
+      setUpdateHistory(null);
+    }
+  };
+
+  const onUpdateItem = (item, callbackFunc) => {
+    callbackF = callbackFunc;
     setUpdateItem(item);
+    toogleView("update");
   };
 
   const onApprovedRecallItem = (type, item) => {
-    toogleView(type);
+    callbackF = null;
+    setUpdateHistory(null);
     setUpdateItem(item);
+    toogleView(type);
   };
 
   const onRepairItem = item => {
-    toogleView("repair");
+    callbackF = null;
+    setUpdateHistory(null);
     setUpdateItem(item);
+    toogleView("repair");
   };
 
   const onLiquidationItem = item => {
-    toogleView("liquidation");
+    callbackF = null;
+    setUpdateHistory(null);
     setUpdateItem(item);
+    toogleView("liquidation");
   };
 
   const onReuseItem = item => {
-    toogleView("reuse");
+    callbackF = null;
+    setUpdateHistory(null);
     setUpdateItem(item);
+    toogleView("reuse");
   };
 
   const onGetEmployee = () => {
@@ -295,17 +343,17 @@ function AssetsManagement(props) {
     setLoading({main: false, search: false, getData: false});
   };
 
-  const onCloseAddEditForm = (isSuccess, message) => {
-    toogleView();
+  const onCloseAddEditForm = (isSuccess, message, type = null, isHistory = false) => {
+    dispatch(Actions.fResetCreateAssets());
+    toogleView(type, isHistory);
     if (isSuccess) {
       toast(message, {type: "success", autoClose: 2000});
     } else {
       toast(message || t("error:title"), {type: "error", autoClose: 2000});
     }
-    dispatch(Actions.fResetCreateAssets());
     setLoading({...loading, main: true});
     // Call api
-    isSuccess && onStartGetData(
+    !isHistory && isSuccess && onStartGetData(
       filterTab,
       tabs[filterTab].id,
       tabs[filterTab].page,
@@ -387,15 +435,12 @@ function AssetsManagement(props) {
   return (
     <React.Fragment>
       <Head title={t("assets:title")}></Head>
-
       <Content>
         {/** Header table */}
         <BlockHead size="sm">
           <BlockBetween>
             <BlockHeadContent>
-              <BlockTitle page tag="h3">
-                {t("assets:assets_management")}
-              </BlockTitle>
+              <BlockTitle tag="h4">{t("assets:assets_management")}</BlockTitle>
             </BlockHeadContent>
             <BlockHeadContent>
               <div className="toggle-wrap nk-block-tools-toggle">
@@ -507,6 +552,7 @@ function AssetsManagement(props) {
             <div className={`tab-pane ${filterTab === 0 && "active"}`} id="tabAll">
               {!loading.main && !loading.search && (
                 <TableAssets
+                  loadingTable={loading.main || loading.search}
                   history={history}
                   commonState={commonState}
                   authState={authState}
@@ -515,6 +561,8 @@ function AssetsManagement(props) {
                   countItem={tabs[0].count}
                   dataAssets={tabs[0].data}
                   onChangePage={onChangePage}
+                  onUpdateItem={onUpdateItem}
+                  onUpdateHistory={onUpdateHistory}
                 />
               )}
               {(loading.main || loading.search) && (
@@ -525,6 +573,7 @@ function AssetsManagement(props) {
             </div>
             <div className={`tab-pane ${filterTab === 1 && "active"}`} id="tabNotUsed">
               <TableAssets
+                loadingTable={loading.main || loading.search}
                 history={history}
                 commonState={commonState}
                 authState={authState}
@@ -535,10 +584,12 @@ function AssetsManagement(props) {
                 onChangePage={onChangePage}
                 onUpdateItem={onUpdateItem}
                 onApprovedRecallItem={onApprovedRecallItem}
+                onUpdateHistory={onUpdateHistory}
               />
             </div>
             <div className={`tab-pane ${filterTab === 2 && "active"}`} id="tabUsing">
               <TableAssets
+                loadingTable={loading.main || loading.search}
                 history={history}
                 commonState={commonState}
                 authState={authState}
@@ -549,10 +600,13 @@ function AssetsManagement(props) {
                 onChangePage={onChangePage}
                 onApprovedRecallItem={onApprovedRecallItem}
                 onRepairItem={onRepairItem}
+                onUpdateItem={onUpdateItem}
+                onUpdateHistory={onUpdateHistory}
               />
             </div>
             <div className={`tab-pane ${filterTab === 3 && "active"}`} id="tabRepairInsurance">
               <TableAssets
+                loadingTable={loading.main || loading.search}
                 history={history}
                 commonState={commonState}
                 authState={authState}
@@ -563,10 +617,13 @@ function AssetsManagement(props) {
                 onChangePage={onChangePage}
                 onLiquidationItem={onLiquidationItem}
                 onReuseItem={onReuseItem}
+                onUpdateItem={onUpdateItem}
+                onUpdateHistory={onUpdateHistory}
               />
             </div>
             <div className={`tab-pane ${filterTab === 4 && "active"}`} id="tabDamageLost">
               <TableAssets
+                loadingTable={loading.main || loading.search}
                 history={history}
                 commonState={commonState}
                 authState={authState}
@@ -577,10 +634,13 @@ function AssetsManagement(props) {
                 onChangePage={onChangePage}
                 onLiquidationItem={onLiquidationItem}
                 onRepairItem={onRepairItem}
+                onUpdateItem={onUpdateItem}
+                onUpdateHistory={onUpdateHistory}
               />
             </div>
             <div className={`tab-pane ${filterTab === 5 && "active"}`} id="tabLiquidation">
               <TableAssets
+                loadingTable={loading.main || loading.search}
                 history={history}
                 commonState={commonState}
                 authState={authState}
@@ -589,6 +649,8 @@ function AssetsManagement(props) {
                 countItem={tabs[5].count}
                 dataAssets={tabs[5].data}
                 onChangePage={onChangePage}
+                onUpdateItem={onUpdateItem}
+                onUpdateHistory={onUpdateHistory}
               />
             </div>
           </div>
@@ -605,51 +667,63 @@ function AssetsManagement(props) {
           onClose={onCloseAddEditForm}
         />
 
-        <ApprovedForm
-          show={view.approved || view.recall}
-          isApproved={view.approved}
-          isRecall={view.recall}
-          history={history}
-          commonState={commonState}
-          authState={authState}
-          updateItem={updateItem}
-          onClose={onCloseAddEditForm}
-        />
+        {(view.approved || view.recall) && (
+          <ApprovedForm
+            show={view.approved || view.recall}
+            isApproved={view.approved}
+            isRecall={view.recall}
+            history={history}
+            commonState={commonState}
+            authState={authState}
+            updateItem={updateItem}
+            updateHistory={updateHistory}
+            onClose={onCloseAddEditForm}
+          />
+        )}
 
-        <RepairForm
-          show={view.repair}
-          history={history}
-          commonState={commonState}
-          authState={authState}
-          updateItem={updateItem}
-          onClose={onCloseAddEditForm}
-        />
+        {view.repair && (
+          <RepairForm
+            show={view.repair}
+            history={history}
+            commonState={commonState}
+            authState={authState}
+            updateItem={updateItem}
+            updateHistory={updateHistory}
+            onClose={onCloseAddEditForm}
+          />
+        )}
 
-        <LiquidationForm
-          show={view.liquidation}
-          history={history}
-          commonState={commonState}
-          authState={authState}
-          updateItem={updateItem}
-          onClose={onCloseAddEditForm}
-        />
+        {view.liquidation && (
+          <LiquidationForm
+            show={view.liquidation}
+            history={history}
+            commonState={commonState}
+            authState={authState}
+            updateItem={updateItem}
+            updateHistory={updateHistory}
+            onClose={onCloseAddEditForm}
+          />
+        )}
 
-        <ReUseForm
-          show={view.reuse}
-          history={history}
-          commonState={commonState}
-          authState={authState}
-          updateItem={updateItem}
-          onClose={onCloseAddEditForm}
-        />
+        {view.reuse && (
+          <ReUseForm
+            show={view.reuse}
+            history={history}
+            commonState={commonState}
+            authState={authState}
+            updateItem={updateItem}
+            updateHistory={updateHistory}
+            onClose={onCloseAddEditForm}
+          />
+        )}
 
         {view.add && <div className="toggle-overlay" onClick={toogleView}></div>}
-        {view.update && <div className="toggle-overlay" onClick={toogleView}></div>}
-        {view.approved && <div className="toggle-overlay" onClick={toogleView}></div>}
-        {view.recall && <div className="toggle-overlay" onClick={toogleView}></div>}
-        {view.repair && <div className="toggle-overlay" onClick={toogleView}></div>}
-        {view.liquidation && <div className="toggle-overlay" onClick={toogleView}></div>}
-        {view.reuse && <div className="toggle-overlay" onClick={toogleView}></div>}
+        {view.update && <div className="toggle-overlay" onClick={() => toogleView("update", true)}></div>}
+        {view.approved && <div className="toggle-overlay" onClick={() => toogleView("approved", true)}></div>}
+        {view.recall && <div className="toggle-overlay" onClick={() => toogleView("recall", true)}></div>}
+        {view.repair && <div className="toggle-overlay" onClick={() => toogleView("repair", true)}></div>}
+        {view.liquidation && <div className="toggle-overlay" onClick={() => toogleView("liquidation", true)}></div>}
+        {view.reuse && <div className="toggle-overlay" onClick={() => toogleView("reuse", true)}></div>}
       </Content>
     </React.Fragment>
   );
