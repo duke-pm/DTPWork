@@ -296,14 +296,14 @@ export default {
   listRequest: params => {
     return new Promise((resolve, reject) => {
       let tmpConfigs = {params: {}};
-      tmpConfigs.params.StatusID = params["StatusID"];
-      tmpConfigs.params.Search = params["Search"];
-      tmpConfigs.params.PageSize = params["PageSize"];
-      tmpConfigs.params.PageNum = params["PageNum"];
       tmpConfigs.params.FromDate = params["FromDate"];
       tmpConfigs.params.ToDate = params["ToDate"];
+      tmpConfigs.params.Search = params["Search"];
+      tmpConfigs.params.StatusID = params["StatusID"];
       tmpConfigs.params.RequestTypeID = params["RequestTypeID"];
       tmpConfigs.params.IsResolveRequest = params["IsResolveRequest"];
+      tmpConfigs.params.PageSize = params["PageSize"];
+      tmpConfigs.params.PageNum = params["PageNum"];
 
       API.get(jwtServiceConfig.baseURL + Routes.APPROVED.LIST_REQUEST, tmpConfigs)
         .then(response => {
@@ -316,6 +316,51 @@ export default {
         })
         .catch(error => {
           console.log("ERROR LIST REQUEST => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
+  createRequestAllow: params => {
+    return new Promise((resolve, reject) => {
+      API.post(jwtServiceConfig.baseURL + Routes.APPROVED.CREATE_REQUEST_ALLOW, params)
+        .then(response => {
+          console.log("FETCH CREATE REQUEST ALLOW => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          console.log("ERROR CREATE REQUEST ALLOW => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
+  createRequestDamLos: params => {
+    return new Promise((resolve, reject) => {
+      const formData = new FormData();
+      formData.append("EmpCode", params.EmpCode);
+      formData.append("DeptCode", params.DeptCode);
+      formData.append("RegionCode", params.RegionCode);
+      formData.append("JobTitle", params.JobTitle);
+      formData.append("RequestDate", params.RequestDate);
+      formData.append("Reasons", params.Reasons);
+      formData.append("FileUpload", params.FileUpload || "");
+      formData.append("TypeUpdate", params.TypeUpdate);
+      formData.append("AssetID", params.AssetID);
+
+      API.post(jwtServiceConfig.baseURL + Routes.APPROVED.CREATE_REQUEST_DAM_LOS, formData)
+        .then(response => {
+          console.log("FETCH CREATE REQUEST DAMLOS => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          console.log("ERROR CREATE REQUEST DAMLOS => ", error);
           reject(error.response ? error.response.data : error);
         });
     });

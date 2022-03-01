@@ -65,10 +65,11 @@ const Layout = () => {
   }, []);
 
   useEffect(() => {
-    if (authState["successSignIn"]) {
+    if (!showSidebar && authState["successSignIn"]) {
       setShowSidebar(true);
     }
   }, [
+    showSidebar,
     authState["successSignIn"],
   ]); 
 

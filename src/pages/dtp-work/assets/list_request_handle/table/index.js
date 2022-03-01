@@ -1,22 +1,25 @@
 import React, {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
-import {useDispatch, useSelector} from "react-redux";
 import {
-  UncontrolledDropdown, DropdownMenu, DropdownToggle,
-  DropdownItem, Modal, ModalBody,
+  UncontrolledDropdown,
+  DropdownMenu,
+  DropdownToggle,
+  DropdownItem
 } from "reactstrap";
 import moment from "moment";
 /** COMPONENTS */
 import {
-  DataTableBody, DataTableHead, DataTableItem, DataTableRow,
-  Block, BlockHead, BlockTitle, PaginationComponent,
-  PreviewAltCard, Icon, TooltipComponent, BlockHeadContent, BlockBetween,
+  DataTableHead,
+  DataTableItem,
+  DataTableRow,
+  PaginationComponent,
+  PreviewAltCard,
+  Icon,
+  UserAvatar,
 } from "components/Component";
 /** COMMON */
 import Configs from "configs";
-import {numberFormat} from "utils/Utils";
-/** REDUX */
-import * as Actions from "redux/actions";
+import {findUpper} from "utils/Utils";
 
 function TableRequestHandle(props) {
   const {t} = useTranslation();
@@ -27,6 +30,7 @@ function TableRequestHandle(props) {
     dataRequest,
     onChangePage,
     onApproved,
+    onProcess,
   } = props;
 
   /** Use state */
@@ -62,9 +66,6 @@ function TableRequestHandle(props) {
             <span className="lead-text">{t("request_handle:date_request")}</span>
           </DataTableRow>
           <DataTableRow size="md">
-            <span className="lead-text">{t("request_handle:status_request")}</span>
-          </DataTableRow>
-          <DataTableRow size="md">
             <span className="lead-text">{t("request_handle:name_employee")}</span>
           </DataTableRow>
           <DataTableRow size="md">
@@ -75,6 +76,9 @@ function TableRequestHandle(props) {
           </DataTableRow>
           <DataTableRow size="md">
             <span className="lead-text">{t("request_handle:type_request")}</span>
+          </DataTableRow>
+          <DataTableRow size="md">
+            <span className="lead-text">{t("request_handle:status_request")}</span>
           </DataTableRow>
           <DataTableRow className="nk-tb-col-tools" />
         </DataTableHead>
@@ -112,10 +116,32 @@ function TableRequestHandle(props) {
             return (
               <DataTableItem key={item.requestID + "_table_request_" + index}>
                 <DataTableRow size="sm">
-                  <span className="tb-sub text-primary">{item.requestID}</span>
+                  <span className="tb-sub text-primary">#{item.requestID}</span>
                 </DataTableRow>
                 <DataTableRow size="md">
                   <span className="tb-sub">{moment(item.requestDate).format("DD/MM/YYYY")}</span>
+                </DataTableRow>
+                <DataTableRow size="md">
+                  <div className="user-card">
+                    <UserAvatar text={findUpper(item.personRequest)} />
+                    <div className="user-info">
+                      <span className="tb-lead">
+                        {item.personRequest} <span className="dot dot-success d-md-none ml-1"></span>
+                      </span>
+                      <span>{item.jobTitle}</span>
+                    </div>
+                  </div>
+                </DataTableRow>
+                <DataTableRow size="md">
+                  <span className="tb-sub">{item.deptName}</span>
+                </DataTableRow>
+                <DataTableRow size="md">
+                  <span className="tb-sub">{item.regionName}</span>
+                </DataTableRow>
+                <DataTableRow size="md">
+                  <span className={`tb-status text-${typeColor}`}>
+                    {item.requestTypeName.replace("Yêu cầu ", "").toUpperCase()}
+                  </span>
                 </DataTableRow>
                 <DataTableRow size="md">
                   <span
@@ -127,20 +153,6 @@ function TableRequestHandle(props) {
                     } d-none d-mb-inline-flex`}
                   >
                     {item.statusName}
-                  </span>
-                </DataTableRow>
-                <DataTableRow size="md">
-                  <span className="tb-sub">{item.personRequest}</span>
-                </DataTableRow>
-                <DataTableRow size="md">
-                  <span className="tb-sub">{item.deptName}</span>
-                </DataTableRow>
-                <DataTableRow size="md">
-                  <span className="tb-sub">{item.regionName}</span>
-                </DataTableRow>
-                <DataTableRow size="md">
-                  <span className={`tb-status text-${typeColor}`}>
-                    {item.requestTypeName.toUpperCase()}
                   </span>
                 </DataTableRow>
                 <DataTableRow className="nk-tb-col-tools">
@@ -155,7 +167,7 @@ function TableRequestHandle(props) {
                             <li>
                               <DropdownItem
                                 tag="a"
-                                href="#dropdownRecall"
+                                href="#actions"
                                 onClick={(ev) => {
                                   ev.preventDefault();
                                   onApproved(item);
@@ -168,10 +180,10 @@ function TableRequestHandle(props) {
                             <li>
                               <DropdownItem
                                 tag="a"
-                                href="#dropdownRepair"
+                                href="#process"
                                 onClick={(ev) => {
                                   ev.preventDefault();
-                                  // onRepairItem(item);
+                                  onProcess(item);
                                 }}
                               >
                                 <Icon name="list-check"></Icon>
@@ -186,29 +198,30 @@ function TableRequestHandle(props) {
                 </DataTableRow>
               </DataTableItem>
           )})
-          : null
-        }
+          : null}
       </div>
+
       {loading && (
         <div className="text-center">
           <div className="spinner-border spinner-border-sm text-primary" />
         </div>
       )}
+
       {/** Paging */}
+      <PreviewAltCard>
       {data.length > 0 ? (
-        <PreviewAltCard>
-          <PaginationComponent
-            itemPerPage={Configs.perPage}
-            totalItems={countItem}
-            currentPage={currentPage}
-            paginate={paginate}
-          />
-        </PreviewAltCard>
+        <PaginationComponent
+          itemPerPage={Configs.perPage}
+          totalItems={countItem}
+          currentPage={currentPage}
+          paginate={paginate}
+        />
       ) : (
         <div className="text-center">
           <span className="text-silent">{t("common:no_data")}</span>
         </div>
       )}
+      </PreviewAltCard>
     </React.Fragment>
   )
 

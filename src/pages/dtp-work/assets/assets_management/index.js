@@ -149,6 +149,10 @@ function AssetsManagement(props) {
   /**
    ** FUNCTIONS
    */
+  const toggleSm = () => updateSm(!sm);
+
+  const onChangeSearch = (e) => setSearchText(e.target.value.trim());
+
   const toogleView = (type, callback) => {
     if ((type === "update" || type === "approved" ||
     type === "recall" || type === "repair" ||
@@ -167,10 +171,6 @@ function AssetsManagement(props) {
     });
     if (!type && updateItem) setUpdateItem(null);
   };
-
-  const toggleSm = () => updateSm(!sm);
-
-  const onChangeSearch = (e) => setSearchText(e.target.value.trim());
 
   const onStartGetData = (
     idxActive = 0,
@@ -194,52 +194,57 @@ function AssetsManagement(props) {
 
   const onSearch = (ev, idxTab) => {
     ev.preventDefault();
-    setLoading({...loading, search: true});
-    // Update active page of tab
-    let tmpTabs = [...tabs];
-    tmpTabs[idxTab].page = 1;
-    tmpTabs[idxTab].search = searchText;
-    setTabs(tmpTabs);
-    // Call api
-    onStartGetData(
-      filterTab,
-      tmpTabs[idxTab].id,
-      1,
-      searchText,
+    if (!loading.search) {}
+      setLoading({...loading, search: true});
+      // Update active page of tab
+      let tmpTabs = [...tabs];
+      tmpTabs[idxTab].page = 1;
+      tmpTabs[idxTab].search = searchText;
+      setTabs(tmpTabs);
+      // Call api
+      onStartGetData(
+        filterTab,
+        tmpTabs[idxTab].id,
+        1,
+        searchText,
     );
   };
 
   const onChangeTab = (ev, idxTab) => {
     ev.preventDefault();
-    setLoading({...loading, main: true});
-    // Update active tab
-    let tmpTabs = [...tabs];
-    tmpTabs[idxTab].page = 1;
-    setTabs(tmpTabs);
-    setSearchText(tmpTabs[idxTab].search);
-    setFilterTab(idxTab);
-    // Call api
-    onStartGetData(
-      idxTab,
-      tmpTabs[idxTab].id,
-      1,
-      tmpTabs[idxTab].search,
-    );
+    if (!loading.main) {
+      setLoading({...loading, main: true});
+      // Update active tab
+      let tmpTabs = [...tabs];
+      tmpTabs[idxTab].page = 1;
+      setTabs(tmpTabs);
+      setSearchText(tmpTabs[idxTab].search);
+      setFilterTab(idxTab);
+      // Call api
+      onStartGetData(
+        idxTab,
+        tmpTabs[idxTab].id,
+        1,
+        tmpTabs[idxTab].search,
+      );
+    }
   };
 
   const onChangePage = (idxTab, newPage) => {
-    setLoading({...loading, main: true});
-    // Update active page of tab
-    let tmpTabs = [...tabs];
-    tmpTabs[idxTab].page = newPage;
-    setTabs(tmpTabs);
-    // Call api
-    onStartGetData(
-      filterTab,
-      tmpTabs[idxTab].id,
-      newPage,
-      tmpTabs[idxTab].search,
-    );
+    if (!loading.main) {
+      setLoading({...loading, main: true});
+      // Update active page of tab
+      let tmpTabs = [...tabs];
+      tmpTabs[idxTab].page = newPage;
+      setTabs(tmpTabs);
+      // Call api
+      onStartGetData(
+        filterTab,
+        tmpTabs[idxTab].id,
+        newPage,
+        tmpTabs[idxTab].search,
+      );
+    }
   };
 
   const onUpdateHistory = (dataAsset, itemHistory, callbackFunc) => {
@@ -328,12 +333,13 @@ function AssetsManagement(props) {
   };
 
   const onPrepareData = () => {
-    let tmpTabs = [...tabs];
+    let tmpTabs = [...tabs],
+      tabItem = null;
     // Update count item on every tab
-    for (let tab of tmpTabs) {
-      tab.count = approvedState[tab.typeCount];
-      tab.countDamage = approvedState[tab.typeCountDamage];
-      tab.countLost = approvedState[tab.typeCountLost];
+    for (tabItem of tmpTabs) {
+      tabItem.count = approvedState[tabItem.typeCount];
+      tabItem.countDamage = approvedState[tabItem.typeCountDamage];
+      tabItem.countLost = approvedState[tabItem.typeCountLost];
     }
 
     // Update data item on active tab
@@ -347,18 +353,20 @@ function AssetsManagement(props) {
     dispatch(Actions.fResetCreateAssets());
     toogleView(type, isHistory);
     if (isSuccess) {
-      toast(message, {type: "success", autoClose: 2000});
+      toast(message, {type: "success"});
     } else {
-      toast(message || t("error:title"), {type: "error", autoClose: 2000});
+      toast(message || t("error:title"), {type: "error"});
     }
-    setLoading({...loading, main: true});
-    // Call api
-    !isHistory && isSuccess && onStartGetData(
-      filterTab,
-      tabs[filterTab].id,
-      tabs[filterTab].page,
-      tabs[filterTab].search,
-    );
+    // If success => call fetch to get new data
+    if (!isHistory && isSuccess) {
+      setLoading({...loading, main: true});
+      onStartGetData(
+        filterTab,
+        tabs[filterTab].id,
+        tabs[filterTab].page,
+        tabs[filterTab].search,
+      );
+    }
   };
 
   const onSuccess = type => {
@@ -380,10 +388,11 @@ function AssetsManagement(props) {
    ** LIFE CYCLE
    */
   useEffect(() => {
-    if (authState["successSignIn"]) {
+    if (loading.main && authState["successSignIn"]) {
       onStartGetData();
     }
   }, [
+    loading.main,
     authState["successSignIn"]
   ]);
 
@@ -431,7 +440,7 @@ function AssetsManagement(props) {
    */
   const showGetData = authState["data"].groupID === "1" ||
     authState["data"].groupID === "6";
-
+  const disabled = loading.main || loading.search;
   return (
     <React.Fragment>
       <Head title={t("assets:title")}></Head>
@@ -552,7 +561,7 @@ function AssetsManagement(props) {
             <div className={`tab-pane ${filterTab === 0 && "active"}`} id="tabAll">
               {!loading.main && !loading.search && (
                 <TableAssets
-                  loadingTable={loading.main || loading.search}
+                  loadingTable={disabled}
                   history={history}
                   commonState={commonState}
                   authState={authState}
@@ -565,94 +574,104 @@ function AssetsManagement(props) {
                   onUpdateHistory={onUpdateHistory}
                 />
               )}
-              {(loading.main || loading.search) && (
-                <div className="d-flex justify-content-center">
-                  <div className="spinner-border text-primary" role="status" />
-                </div>
-              )}
             </div>
             <div className={`tab-pane ${filterTab === 1 && "active"}`} id="tabNotUsed">
-              <TableAssets
-                loadingTable={loading.main || loading.search}
-                history={history}
-                commonState={commonState}
-                authState={authState}
-                idxTab={filterTab}
-                curPage={tabs[1].page}
-                countItem={tabs[1].count}
-                dataAssets={tabs[1].data}
-                onChangePage={onChangePage}
-                onUpdateItem={onUpdateItem}
-                onApprovedRecallItem={onApprovedRecallItem}
-                onUpdateHistory={onUpdateHistory}
-              />
+              {!loading.main && !loading.search && (
+                <TableAssets
+                  loadingTable={disabled}
+                  history={history}
+                  commonState={commonState}
+                  authState={authState}
+                  idxTab={filterTab}
+                  curPage={tabs[1].page}
+                  countItem={tabs[1].count}
+                  dataAssets={tabs[1].data}
+                  onChangePage={onChangePage}
+                  onUpdateItem={onUpdateItem}
+                  onApprovedRecallItem={onApprovedRecallItem}
+                  onUpdateHistory={onUpdateHistory}
+                />
+              )}
             </div>
             <div className={`tab-pane ${filterTab === 2 && "active"}`} id="tabUsing">
-              <TableAssets
-                loadingTable={loading.main || loading.search}
-                history={history}
-                commonState={commonState}
-                authState={authState}
-                idxTab={filterTab}
-                curPage={tabs[2].page}
-                countItem={tabs[2].count}
-                dataAssets={tabs[2].data}
-                onChangePage={onChangePage}
-                onApprovedRecallItem={onApprovedRecallItem}
-                onRepairItem={onRepairItem}
-                onUpdateItem={onUpdateItem}
-                onUpdateHistory={onUpdateHistory}
-              />
+              {!loading.main && !loading.search && (
+                <TableAssets
+                  loadingTable={disabled}
+                  history={history}
+                  commonState={commonState}
+                  authState={authState}
+                  idxTab={filterTab}
+                  curPage={tabs[2].page}
+                  countItem={tabs[2].count}
+                  dataAssets={tabs[2].data}
+                  onChangePage={onChangePage}
+                  onApprovedRecallItem={onApprovedRecallItem}
+                  onRepairItem={onRepairItem}
+                  onUpdateItem={onUpdateItem}
+                  onUpdateHistory={onUpdateHistory}
+                />
+              )}
             </div>
             <div className={`tab-pane ${filterTab === 3 && "active"}`} id="tabRepairInsurance">
-              <TableAssets
-                loadingTable={loading.main || loading.search}
-                history={history}
-                commonState={commonState}
-                authState={authState}
-                idxTab={filterTab}
-                curPage={tabs[3].page}
-                countItem={tabs[3].count}
-                dataAssets={tabs[3].data}
-                onChangePage={onChangePage}
-                onLiquidationItem={onLiquidationItem}
-                onReuseItem={onReuseItem}
-                onUpdateItem={onUpdateItem}
-                onUpdateHistory={onUpdateHistory}
-              />
+              {!loading.main && !loading.search && (
+                <TableAssets
+                  loadingTable={disabled}
+                  history={history}
+                  commonState={commonState}
+                  authState={authState}
+                  idxTab={filterTab}
+                  curPage={tabs[3].page}
+                  countItem={tabs[3].count}
+                  dataAssets={tabs[3].data}
+                  onChangePage={onChangePage}
+                  onLiquidationItem={onLiquidationItem}
+                  onReuseItem={onReuseItem}
+                  onUpdateItem={onUpdateItem}
+                  onUpdateHistory={onUpdateHistory}
+                />
+              )}
             </div>
             <div className={`tab-pane ${filterTab === 4 && "active"}`} id="tabDamageLost">
-              <TableAssets
-                loadingTable={loading.main || loading.search}
-                history={history}
-                commonState={commonState}
-                authState={authState}
-                idxTab={filterTab}
-                curPage={tabs[4].page}
-                countItem={tabs[4].countDamage + tabs[4].countLost}
-                dataAssets={tabs[4].data}
-                onChangePage={onChangePage}
-                onLiquidationItem={onLiquidationItem}
-                onRepairItem={onRepairItem}
-                onUpdateItem={onUpdateItem}
-                onUpdateHistory={onUpdateHistory}
-              />
+              {!loading.main && !loading.search && (
+                <TableAssets
+                  loadingTable={disabled}
+                  history={history}
+                  commonState={commonState}
+                  authState={authState}
+                  idxTab={filterTab}
+                  curPage={tabs[4].page}
+                  countItem={tabs[4].countDamage + tabs[4].countLost}
+                  dataAssets={tabs[4].data}
+                  onChangePage={onChangePage}
+                  onLiquidationItem={onLiquidationItem}
+                  onRepairItem={onRepairItem}
+                  onUpdateItem={onUpdateItem}
+                  onUpdateHistory={onUpdateHistory}
+                />
+              )}
             </div>
             <div className={`tab-pane ${filterTab === 5 && "active"}`} id="tabLiquidation">
-              <TableAssets
-                loadingTable={loading.main || loading.search}
-                history={history}
-                commonState={commonState}
-                authState={authState}
-                idxTab={filterTab}
-                curPage={tabs[5].page}
-                countItem={tabs[5].count}
-                dataAssets={tabs[5].data}
-                onChangePage={onChangePage}
-                onUpdateItem={onUpdateItem}
-                onUpdateHistory={onUpdateHistory}
-              />
+              {!loading.main && !loading.search && (
+                <TableAssets
+                  loadingTable={disabled}
+                  history={history}
+                  commonState={commonState}
+                  authState={authState}
+                  idxTab={filterTab}
+                  curPage={tabs[5].page}
+                  countItem={tabs[5].count}
+                  dataAssets={tabs[5].data}
+                  onChangePage={onChangePage}
+                  onUpdateItem={onUpdateItem}
+                  onUpdateHistory={onUpdateHistory}
+                />
+              )}
             </div>
+            {disabled && (
+              <div className="d-flex justify-content-center">
+                <div className="spinner-border text-primary" />
+              </div>
+            )}
           </div>
         </Block>
 

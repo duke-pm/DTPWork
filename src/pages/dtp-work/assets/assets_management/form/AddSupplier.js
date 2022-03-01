@@ -306,7 +306,6 @@ function AddSupplier(props) {
           <Row className="g-3">
             <Col size="12">
               <Button
-                className="toggle d-none d-md-inline-flex"
                 color="primary"
                 type="submit"
                 disabled={disabled}
@@ -318,7 +317,7 @@ function AddSupplier(props) {
                 <span>{t("common:add_new")}</span>
               </Button>
               <Button
-                className="toggle d-none d-md-inline-flex ml-3"
+                className="ml-3"
                 color="gray"
                 type="button"
                 disabled={disabled}

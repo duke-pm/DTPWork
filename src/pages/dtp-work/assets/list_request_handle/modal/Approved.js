@@ -9,15 +9,19 @@ import {
   Block,
   BlockHead,
   BlockHeadContent,
+  BlockBetween,
   BlockTitle,
+  DataTableHead,
+  DataTableItem,
+  DataTableRow,
+  DataTableBody,
   Icon,
   Button,
-  BlockBetween,
   Row,
   Col,
 } from "components/Component";
 /** COMMON */
-import { numberFormat } from "utils/Utils";
+import {numberFormat} from "utils/Utils";
 /** REDUX */
 import * as Actions from "redux/actions";
 
@@ -29,6 +33,7 @@ function ApprovedForm(props) {
     authState,
     commonState,
     updateItem,
+    dataDetails,
     onClose,
   } = props;
 
@@ -46,7 +51,7 @@ function ApprovedForm(props) {
   const [error, setError] = useState({
     reason: null,
   });
-  const [dataRequest, setDataRequest] = useState(null);
+  const [dataRequest, setDataRequest] = useState(updateItem);
   const [formData, setFormData] = useState({
     approved: 1,
     reason: "",
@@ -160,8 +165,7 @@ function ApprovedForm(props) {
         className="modal-dialog-centered"
         isOpen={show}
         size="lg"
-        toggle={() => disabled ? null : onFormCancel(false)}
-      >
+        toggle={() => disabled ? null : onFormCancel(false)}>
         <Form className="is-alter" onSubmit={handleSubmit(onFormSubmit)}>
           <ModalBody>
             <BlockHead>
@@ -184,177 +188,327 @@ function ApprovedForm(props) {
               </BlockBetween>
             </BlockHead>
 
-            <div className="nk-divider divider md"></div>
-
             <Block>
-              <BlockHead>
-                <BlockTitle tag="h6">{t("approved_action:information")}</BlockTitle>
-              </BlockHead>
-              <div className="profile-ud-list">
-                <div className="profile-ud-item">
-                  <div className="profile-ud wider">
-                    <span className="profile-ud-label">{t("approved_action:code_assets")}</span>
-                    <span className="profile-ud-value text-primary">{dataRequest?.assetCode || "-"}</span>
-                  </div>
-                </div>
-                <div className="profile-ud-item">
-                  <div className="profile-ud wider">
-                    <span className="profile-ud-label">{t("approved_action:name_assets")}</span>
-                    <span className="profile-ud-value">{dataRequest?.assetName || "-"}</span>
-                  </div>
-                </div>
-                <div className="profile-ud-item">
-                  <div className="profile-ud wider">
-                    <span className="profile-ud-label">{t("approved_action:group_assets")}</span>
-                    <span className="profile-ud-value">{dataRequest?.assetGroupName || "-"}</span>
-                  </div>
-                </div>
-                <div className="profile-ud-item">
-                  <div className="profile-ud wider">
-                    <span className="profile-ud-label">{t("approved_action:purchase_date_assets")}</span>
-                    <span className="profile-ud-value">
-                      {dataRequest?.purchaseDate
-                        ? moment(dataRequest?.purchaseDate).format("DD/MM/YYYY")
-                        : "-"}
-                    </span>
-                  </div>
-                </div>
-                <div className="profile-ud-item">
-                  <div className="profile-ud wider">
-                    <span className="profile-ud-label">{t("approved_action:origin_price_assets")}</span>
-                    <span className="profile-ud-value">
-                      {dataRequest?.originalPrice
-                        ? numberFormat(dataRequest?.originalPrice)
-                        : "-"}
-                    </span>
-                  </div>
-                </div>
-                <div className="profile-ud-item">
-                  <div className="profile-ud wider">
-                    <span className="profile-ud-label">{t("approved_action:status_assets")}</span>
-                    <span className="profile-ud-value">
-                      <span
-                        className={`dot bg-${
-                          dataRequest?.assetStatusID === 1
-                            ? "gray"
-                            : dataRequest?.assetStatusID === 2
-                              ? "success"
-                              : dataRequest?.assetStatusID === 3
-                                ? "warning"
-                                : (dataRequest?.assetStatusID === 4 || dataRequest?.assetStatusID === 5)
-                                  ? "danger"
-                                  : "primary"
-                        } d-mb-none`}
-                      ></span>
-                      <span
-                        className={`badge badge-sm badge-dot has-bg badge-${
-                          dataRequest?.assetStatusID === 1
-                            ? "gray"
-                            : dataRequest?.assetStatusID === 2
-                              ? "success"
-                              : dataRequest?.assetStatusID === 3
-                                ? "warning"
-                                : (dataRequest?.assetStatusID === 4 || dataRequest?.assetStatusID === 5)
-                                  ? "danger"
-                                  : "primary"
-                        } d-none d-mb-inline-flex`}
-                      >
-                        {dataRequest?.assetStatusName}
-                      </span>
-                    </span>
-                  </div>
-                </div>
+              <div className="data-head">
+                <h6 className="overline-title">{t("request_details:information_employee")}</h6>
+              </div>
+              <div className="mt-3">
+                <Row className="g-3">
+                  <Col md="6">
+                    <div className="profile-ud plain">
+                      <span className="profile-ud-label">{t("request_details:code_employee")}</span>
+                      <span className="profile-ud-value text-primary">#{dataRequest?.empCode || "-"}</span>
+                    </div>
+                  </Col>
+                  <Col md="6">
+                    <div className="profile-ud plain">
+                      <span className="profile-ud-label">{t("request_details:name_employee")}</span>
+                      <span className="profile-ud-value">{dataRequest?.fullName || "-"}</span>
+                    </div>
+                  </Col>
+                  <Col md="6">
+                    <div className="profile-ud plain">
+                      <span className="profile-ud-label">{t("request_details:department_employee")}</span>
+                      <span className="profile-ud-value">{dataRequest?.deptName || "-"}</span>
+                    </div>
+                  </Col>
+                  <Col md="6">
+                    <div className="profile-ud plain">
+                      <span className="profile-ud-label">{t("request_details:region_employee")}</span>
+                      <span className="profile-ud-value">{dataRequest?.regionName || "-"}</span>
+                    </div>
+                  </Col>
+                </Row>
               </div>
             </Block>
 
-            <div className="nk-divider divider md"></div>
+            {dataRequest?.requestTypeID === 1 && (
+              <Block>
+                <div className="data-head">
+                  <h6 className="overline-title">{t("request_details:information_assets_approved")}</h6>
+                </div>
+                <div className="mt-3">
+                  <Row className="g-3">
+                    <Col md="6">
+                      <div className="profile-ud plain">
+                        <span className="profile-ud-label">{t("request_details:request_date")}</span>
+                        <span className="profile-ud-value">
+                          {dataRequest?.requestDate
+                            ? moment(dataRequest?.requestDate).format("DD/MM/YYYY")
+                            : "-"}
+                        </span>
+                      </div>
+                    </Col>
+                    <Col md="6">
+                      <div className="profile-ud plain">
+                        <span className="profile-ud-label">{t("request_details:location_use")}</span>
+                        <span className="profile-ud-value">{dataRequest?.locationName || "-"}</span>
+                      </div>
+                    </Col>
+                    <Col md="6">
+                      <div className="profile-ud plain">
+                        <span className="profile-ud-label">{t("request_details:type_buy")}</span>
+                        <span className="profile-ud-value">
+                          {dataRequest?.docType === "N" ? t("request_details:buy_new") : t("request_details:additional")}
+                        </span>
+                      </div>
+                    </Col>
+                    <Col md="6">
+                      <div className="profile-ud plain">
+                        <span className="profile-ud-label">{t("request_details:in_planing")}</span>
+                        <span className="profile-ud-value">
+                          {dataRequest?.isBudget ? t("common:yes") : t("common:no")}
+                        </span>
+                      </div>
+                    </Col>
+                    {dataRequest?.supplierName !== "" && (
+                      <Col md="6">
+                        <div className="profile-ud plain">
+                          <span className="profile-ud-label">{`${t("request_details:supplier")}`}</span>
+                          <span className="profile-ud-value">{dataRequest?.supplierName}</span>
+                        </div>
+                      </Col>
+                    )}
+                    {dataRequest?.reason !== "" && (
+                      <Col md="6">
+                        <div className="profile-ud plain">
+                          <span className="profile-ud-label">{`${t("request_details:reason")}`}</span>
+                          <span className="profile-ud-value">{dataRequest?.reason}</span>
+                        </div>
+                      </Col>
+                    )}
+                    {dataDetails.length > 0 && (
+                  <Col size="12">
+                    <div className="profile-ud plain">
+                      <span className="profile-ud-label">{`${t("request_details:assets")}`}</span>
+                      <span className="profile-ud-value">
+                        <DataTableBody className="border-top" bodyclass="nk-tb-orders">
+                          <DataTableHead>
+                            <DataTableRow size="lg">
+                              <span>{t("request_details:des_assets")}</span>
+                            </DataTableRow>
+                            <DataTableRow size="sm">
+                              <span>{t("request_details:count_assets")}</span>
+                            </DataTableRow>
+                            <DataTableRow size="md">
+                              <span>{t("request_details:price_assets")}</span>
+                            </DataTableRow>
+                            <DataTableRow size="md">
+                              <span>{t("request_details:subtotal")}</span>
+                            </DataTableRow>
+                          </DataTableHead>
+
+                          {dataDetails.map((itemD, indexD) => {
+                            return (
+                              <DataTableItem key={"_asset_item_" + indexD}>
+                                <DataTableRow>
+                                  <span className="tb-lead">{itemD.descr}</span>
+                                </DataTableRow>
+                                <DataTableRow>
+                                  <span className="tb-sub tb-amount">{itemD.qty}</span>
+                                </DataTableRow>
+                                <DataTableRow>
+                                  <span className="tb-sub tb-amount">
+                                    {itemD.unitPrice
+                                      ? numberFormat(itemD.unitPrice)
+                                      : "-"}
+                                  </span>
+                                </DataTableRow>
+                                <DataTableRow>
+                                  <span className="tb-sub tb-amount">
+                                    {itemD.totalAmt
+                                      ? numberFormat(itemD.totalAmt)
+                                      : "-"
+                                    }
+                                  </span>
+                                </DataTableRow>
+                              </DataTableItem>
+                            );
+                          })}
+                        </DataTableBody>
+                      </span>
+                    </div>
+                  </Col>
+                )}
+                  </Row>
+                </div>
+              </Block>
+            )}
+
+            {dataRequest?.requestTypeID !== 1 && (
+              <Block>
+                <div className="data-head">
+                  <h6 className="overline-title">{t("approved_action:information")}</h6>
+                </div>
+                <div className="mt-3">
+                  <Row className="g-3">
+                    <Col md="6">
+                      <div className="profile-ud plain">
+                        <span className="profile-ud-label">{t("approved_action:code_assets")}</span>
+                        <span className="profile-ud-value text-primary">{dataRequest?.assetCode || "-"}</span>
+                      </div>
+                    </Col>
+                    <Col md="6">
+                      <div className="profile-ud plain">
+                        <span className="profile-ud-label">{t("approved_action:name_assets")}</span>
+                        <span className="profile-ud-value">{dataRequest?.assetName || "-"}</span>
+                      </div>
+                    </Col>
+                    <Col md="6">
+                      <div className="profile-ud plain">
+                        <span className="profile-ud-label">{t("approved_action:group_assets")}</span>
+                        <span className="profile-ud-value">{dataRequest?.assetGroupName || "-"}</span>
+                      </div>
+                    </Col>
+                    <Col md="6">
+                      <div className="profile-ud plain">
+                        <span className="profile-ud-label">{t("approved_action:purchase_date_assets")}</span>
+                        <span className="profile-ud-value">
+                          {dataRequest?.purchaseDate
+                            ? moment(dataRequest?.purchaseDate).format("DD/MM/YYYY")
+                            : "-"}
+                        </span>
+                      </div>
+                    </Col>
+                    <Col md="6">
+                      <div className="profile-ud plain">
+                        <span className="profile-ud-label">{t("approved_action:origin_price_assets")}</span>
+                        <span className="profile-ud-value">
+                          {dataRequest?.originalPrice
+                            ? numberFormat(dataRequest?.originalPrice)
+                            : "-"}
+                        </span>
+                      </div>
+                    </Col>
+                    <Col md="6">
+                      <div className="profile-ud plain">
+                        <span className="profile-ud-label">{t("approved_action:status_assets")}</span>
+                        <span className="profile-ud-value">
+                          <span
+                            className={`dot bg-${
+                              dataRequest?.assetStatusID === 1
+                                ? "gray"
+                                : dataRequest?.assetStatusID === 2
+                                  ? "success"
+                                  : dataRequest?.assetStatusID === 3
+                                    ? "warning"
+                                    : (dataRequest?.assetStatusID === 4 || dataRequest?.assetStatusID === 5)
+                                      ? "danger"
+                                      : "primary"
+                            } d-mb-none`}
+                          ></span>
+                          <span
+                            className={`badge badge-sm badge-dot has-bg badge-${
+                              dataRequest?.assetStatusID === 1
+                                ? "gray"
+                                : dataRequest?.assetStatusID === 2
+                                  ? "success"
+                                  : dataRequest?.assetStatusID === 3
+                                    ? "warning"
+                                    : (dataRequest?.assetStatusID === 4 || dataRequest?.assetStatusID === 5)
+                                      ? "danger"
+                                      : "primary"
+                            } d-none d-mb-inline-flex`}
+                          >
+                            {dataRequest?.assetStatusName}
+                          </span>
+                        </span>
+                      </div>
+                    </Col>
+                  </Row>
+                </div>
+              </Block>
+            )}
 
             <Block>
-              <BlockHead>
-                <BlockTitle tag="h6">{t("approved_action:information_approved")}</BlockTitle>
-              </BlockHead>
-              <Row className="g-3">
-                <Col size="3" />
-                <Col size="3">
-                  <div className="preview-block">
-                    <div className="custom-control custom-radio">
-                      <input
-                        className="custom-control-input form-control"
-                        type="radio"
-                        id="radioApproved"
-                        name="radioApproved"
-                        disabled={disabled}
-                        checked={formData.approved === 1}
-                        onChange={() => onChangeRadio(1)}
-                      />
-                      <label
-                        className={`custom-control-label ${formData.approved === 1 && "fw-bold"}`}
-                        htmlFor="radioApproved">
-                        {t("common:approved")}
-                      </label>
-                    </div>
-                  </div>
-                </Col>
-                <Col size="3">
-                  <div className="preview-block">
-                    <div className="custom-control custom-radio">
-                      <input
-                        className="custom-control-input form-control"
-                        type="radio"
-                        id="radioReject"
-                        name="radioReject"
-                        disabled={disabled}
-                        checked={formData.approved === 2}
-                        onChange={() => onChangeRadio(2)}
-                      />
-                      <label
-                        className={`custom-control-label ${formData.approved === 2 && "fw-bold"}`}
-                        htmlFor="radioReject">
-                        {t("common:reject")}
-                      </label>
-                    </div>
-                  </div>
-                </Col>
-                <Col size="3" />
-                <Col size="12">
-                  <Collapse isOpen={formData.approved === 2}>
-                    <FormGroup>
-                      <div className="form-label-group">
-                        <label className="form-label" htmlFor="reason">
-                          {t("approved_action:confirm_reject_des")} <span className="text-danger">*</span>
+              <div className="data-head">
+                <h6 className="overline-title">{t("approved_action:information_approved")}</h6>
+              </div>
+              <div className="mt-3">
+                <Row className="g-3">
+                  <Col size="3" />
+                  <Col size="3">
+                    <div className="preview-block">
+                      <div className="custom-control custom-radio">
+                        <input
+                          className="custom-control-input form-control"
+                          type="radio"
+                          id="radioApproved"
+                          name="radioApproved"
+                          disabled={disabled}
+                          checked={formData.approved === 1}
+                          onChange={() => onChangeRadio(1)}
+                        />
+                        <label
+                          className={`custom-control-label ${formData.approved === 1 && "fw-bold"}`}
+                          htmlFor="radioApproved">
+                          {t("common:approved")}
                         </label>
                       </div>
-                      <div className="form-control-wrap">
-                        <textarea
-                          className="no-resize form-control"
-                          type="text"
-                          id="reason"
-                          name="reason"
+                    </div>
+                  </Col>
+                  <Col size="3">
+                    <div className="preview-block">
+                      <div className="custom-control custom-radio">
+                        <input
+                          className="custom-control-input form-control"
+                          type="radio"
+                          id="radioReject"
+                          name="radioReject"
                           disabled={disabled}
-                          value={formData.reason}
-                          placeholder={t("approved_action:holder_confirm_reject_des")}
-                          onChange={onChangeInput}
+                          checked={formData.approved === 2}
+                          onChange={() => onChangeRadio(2)}
                         />
-                        {error.reason && (
-                          <span className="invalid">{error.reason.message}</span>
-                        )}
+                        <label
+                          className={`custom-control-label ${formData.approved === 2 && "fw-bold"}`}
+                          htmlFor="radioReject">
+                          {t("common:reject")}
+                        </label>
                       </div>
-                    </FormGroup>
-                  </Collapse>
-                  <div className="nk-divider divider sm"></div>
-                </Col>
+                    </div>
+                  </Col>
+                  <Col size="3" />
+                  <Col size="12">
+                    <Collapse isOpen={formData.approved === 2}>
+                      <FormGroup>
+                        <div className="form-label-group">
+                          <label className="form-label" htmlFor="reason">
+                            {t("approved_action:confirm_reject_des")} <span className="text-danger">*</span>
+                          </label>
+                        </div>
+                        <div className="form-control-wrap">
+                          <textarea
+                            className="no-resize form-control"
+                            type="text"
+                            id="reason"
+                            name="reason"
+                            disabled={disabled}
+                            value={formData.reason}
+                            placeholder={t("approved_action:holder_confirm_reject_des")}
+                            onChange={onChangeInput}
+                          />
+                          {error.reason && (
+                            <span className="invalid">{error.reason.message}</span>
+                          )}
+                        </div>
+                      </FormGroup>
+                    </Collapse>
+                    <div className="nk-divider divider sm"></div>
+                  </Col>
 
-                <Col size="12">
-                  <Button
-                    color="primary"
-                    type="submit"
-                    disabled={disabled}
-                  >
-                    <Icon name="send" />
-                    <span>{t("common:send")}</span>
-                  </Button>
-                </Col>
-              </Row>
+                  <Col size="12">
+                    <Button
+                      color="primary"
+                      type="submit"
+                      disabled={disabled}
+                    >
+                      <Icon name="send" />
+                      <span>{t("common:send")}</span>
+                    </Button>
+                  </Col>
+                </Row>
+              </div>
+              
             </Block>
           </ModalBody>
         </Form>
@@ -372,7 +526,7 @@ function ApprovedForm(props) {
             <h4 className="nk-modal-title">{t("approved_action:confirm_approved_title")}</h4>
             <div className="nk-modal-text">
               {formData.approved === 1 && (
-                <div className="caption-text">
+                <div className="sub-text-sm">
                   {t("approved_action:confirm_approved_des_1")}
                   <span className="fw-bold">{dataRequest?.requestTypeID === 1
                     ? t("approved_action:confirm_approved_assets_des_2")
@@ -384,7 +538,7 @@ function ApprovedForm(props) {
                 </div>
               )}
               {formData.approved === 2 && (
-                <div className="caption-text">
+                <div className="sub-text-sm">
                   {t("approved_action:confirm_reject_des_1")}
                   <span className="fw-bold">{dataRequest?.requestTypeID === 1
                     ? t("approved_action:confirm_approved_assets_des_2")
@@ -404,7 +558,7 @@ function ApprovedForm(props) {
             <div className="d-flex justify-content-center">
               <div className="nk-modal-action mr-2">
                 <Button
-                  color="primary"
+                  color="success"
                   size="lg"
                   disabled={disabled}
                   onClick={onConfirm}
@@ -418,7 +572,7 @@ function ApprovedForm(props) {
               </div>
               <div className="nk-modal-action ml-2">
                 <Button
-                  color="gray"
+                  color="danger"
                   size="lg"
                   disabled={disabled}
                   onClick={toggleConfirm}

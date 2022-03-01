@@ -44,3 +44,39 @@ export const fFetchMasterData = (params, history) => {
       });
   };
 };
+
+//** Assets of User */
+export const fErrorAssetsByUser = error => ({
+  type: types.ERROR_ASSETS_BY_USER,
+  payload: error,
+});
+
+export const fSuccessAssetsByUser = data => ({
+  type: types.SUCCESS_ASSETS_BY_USER,
+  payload: data,
+});
+
+export const fFetchAssetsByUser = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_ASSETS_BY_USER});
+
+    Services.master.getAssetsByUser(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessAssetsByUser(res.data));
+        } else {
+          return dispatch(fErrorAssetsByUser(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorAssetsByUser(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};

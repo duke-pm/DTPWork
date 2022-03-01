@@ -511,3 +511,94 @@ export const fFetchApprovedRequest = (params, history) => {
       });
   };
 };
+
+export const fErrorListRequest = error => ({
+  type: types.ERROR_LIST_REQUEST,
+  payload: error,
+});
+
+export const fSuccessListRequest = (type, data) => ({
+  type: types.SUCCESS_LIST_REQUEST,
+  payload: {typeRequest: type, dataRequest: data},
+});
+
+export const fFetchListRequest = (type, params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_LIST_REQUEST});
+
+    Services.approved.listRequest(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessListRequest(type, res));
+        } else {
+          return dispatch(fErrorListRequest(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorListRequest(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};
+
+//** Create data request */
+export const fErrorCreateRequest = error => ({
+  type: types.ERROR_CREATE_REQUEST,
+  payload: error,
+});
+
+export const fSuccessCreateRequest = () => ({
+  type: types.SUCCESS_CREATE_REQUEST,
+});
+
+export const fFetchCreateRequest = (type, params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_CREATE_REQUEST});
+
+    if (type === "allow") {
+      Services.approved.createRequestAllow(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessCreateRequest());
+        } else {
+          return dispatch(fErrorCreateRequest(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorCreateRequest(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+    } else {
+      Services.approved.createRequestDamLos(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessCreateRequest());
+        } else {
+          return dispatch(fErrorCreateRequest(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorCreateRequest(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+    }
+  };
+};

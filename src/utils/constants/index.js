@@ -4,6 +4,8 @@ const Constants = {
   /** KEY LOCAL STORAGE */
   LS_LANGUAGE: "LS_LANGUAGE",
   LS_SIGN_IN: "LS_SIGN_IN",
+  LS_FROM_TO_REQUEST: "LS_FROM_TO_REQUEST",
+  LS_FROM_TO_REQUEST_HANDLE: "LS_FROM_TO_REQUEST_HANDLE",
 };
 
 export default Constants;

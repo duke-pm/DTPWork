@@ -247,7 +247,7 @@ function TableAssets(props) {
               <DataTableItem key={item.assetID + "_table_item_" + index}>
                 <DataTableRow>
                   <span className={`tb-sub ${item.isProcessing ? "text-danger" : "text-primary"}`}>
-                    {item.assetCode}
+                    #{item.assetCode}
                   </span>
                 </DataTableRow>
                 <DataTableRow>
@@ -275,7 +275,7 @@ function TableAssets(props) {
                 )}
                 <DataTableRow>
                   <span className="tb-sub">
-                    {moment(item.purchaseDate, "YYYY-MM-DDTHH:mm:ss").format("DD/MM/YYYY")}
+                    {moment(item.purchaseDate).format("DD/MM/YYYY")}
                   </span>
                 </DataTableRow>
                 {(idxTab === 1 || idxTab === 2 || idxTab === 3) && (
@@ -321,7 +321,7 @@ function TableAssets(props) {
                             tag="a"
                             containerClassName="btn btn-trigger btn-icon"
                             iconClass="text-danger"
-                            icon="help"
+                            icon="info"
                             direction="top"
                             id="tooltipProcess"
                             text={item.requestTypeName}

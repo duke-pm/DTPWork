@@ -14,6 +14,8 @@ export const initialState = {
   submittingUpdateProcess: false,
   submittingListRequestHandle: false,
   submittingApprovedRequest: false,
+  submittingListRequest: false,
+  submittingCreateRequest: false,
 
   successListAssets: false,
   errorListAssets: false,
@@ -67,6 +69,14 @@ export const initialState = {
   errorApprovedRequest: false,
   errorHelperApprovedRequest: "",
 
+  successListRequest: false,
+  errorListRequest: false,
+  errorHelperListRequest: "",
+
+  successCreateRequest: false,
+  errorCreateRequest: false,
+  errorHelperCreateRequest: "",
+
   assetForHistory: null,
   historyAsset: [],
 
@@ -88,6 +98,13 @@ export const initialState = {
   listProcessApproved: [],
   listDetailsApproved: [],
   numRequestHandle: 0,
+
+  listAssetsApproved: [],
+  listAssetsDamaged: [],
+  listAssetsLosted: [],
+  numAssetsApproved: 0,
+  numAssetsDamaged: 0,
+  numAssetsLosted: 0,
 };
 
 export default function (state = initialState, action = {}) {
@@ -523,6 +540,16 @@ export default function (state = initialState, action = {}) {
       successApprovedRequest: false,
       errorApprovedRequest: false,
       errorHelperApprovedRequest: "",
+
+      submittingListRequest: false,
+      successListRequest: false,
+      errorListRequest: false,
+      errorHelperListRequest: "",
+
+      submittingCreateRequest: false,
+      successCreateRequest: false,
+      errorCreateRequest: false,
+      errorHelperCreateRequest: "",
     };
 
   case types.START_LIST_REQUEST_HANDLE:
@@ -548,6 +575,7 @@ export default function (state = initialState, action = {}) {
       successListRequestHandle: true,
       errorListRequestHandle: false,
       errorHelperListRequestHandle: "",
+
       listRequestHandle: payload.list,
       listProcessApproved: payload.process,
       listDetailsApproved: payload.details,
@@ -580,6 +608,91 @@ export default function (state = initialState, action = {}) {
       errorHelperApprovedRequest: "",
     };
 
+  //** List request */
+  case types.START_LIST_REQUEST:
+    return {
+      ...state,
+      submittingListRequest: true,
+      successListRequest: false,
+      errorListRequest: false,
+      errorHelperListRequest: "",
+    };
+  case types.ERROR_LIST_REQUEST:
+    return {
+      ...state,
+      submittingListRequest: false,
+      successListRequest: false,
+      errorListRequest: true,
+      errorHelperListRequest: payload,
+    };
+  case types.SUCCESS_LIST_REQUEST:
+    let {typeRequest, dataRequest} = payload;
+    let newDataRequest = [],
+      numAssetsApproved = 0,
+      numAssetsDamaged = 0,
+      numAssetsLosted = 0;
+
+    switch (typeRequest) {
+      case "listAssetsDamaged":
+        newDataRequest = dataRequest?.data?.listRequest || [];
+        numAssetsApproved = dataRequest?.data?.header.countAllocation || 0;
+        numAssetsDamaged = dataRequest?.data?.header.countDamage;
+        numAssetsLosted = dataRequest?.data?.header.countLost || 0;
+        break;
+      case "listAssetsLosted":
+        newDataRequest = dataRequest?.data?.listRequest || [];
+        numAssetsApproved = dataRequest?.data?.header.countAllocation || 0;
+        numAssetsDamaged = dataRequest?.data?.header.countDamage || 0;
+        numAssetsLosted = dataRequest?.data?.header.countLost;
+        break;
+      default:
+        newDataRequest = dataRequest?.data?.listRequest || [];
+        numAssetsApproved = dataRequest?.data?.header.countAllocation;
+        numAssetsDamaged = dataRequest?.data?.header.countDamage || 0;
+        numAssetsLosted = dataRequest?.data?.header.countLost || 0;
+        break;
+    }
+
+    return {
+      ...state,
+      submittingListRequest: false,
+      successListRequest: true,
+      errorListRequest: false,
+      errorHelperListRequest: "",
+
+      [typeRequest]: newDataRequest,
+      listProcessApproved: dataRequest?.data?.listProcessApprove,
+      listDetailsApproved: dataRequest?.data?.listRequestDetail,
+      numAssetsApproved,
+      numAssetsDamaged,
+      numAssetsLosted,
+    };
+
+    //** Create request allow/damage/lost */
+  case types.START_CREATE_REQUEST:
+    return {
+      ...state,
+      submittingCreateRequest: true,
+      successCreateRequest: false,
+      errorCreateRequest: false,
+      errorHelperCreateRequest: "",
+    };
+  case types.ERROR_CREATE_REQUEST:
+    return {
+      ...state,
+      submittingCreateRequest: false,
+      successCreateRequest: false,
+      errorCreateRequest: true,
+      errorHelperCreateRequest: payload,
+    };
+  case types.SUCCESS_CREATE_REQUEST:
+    return {
+      ...state,
+      submittingCreateRequest: false,
+      successCreateRequest: true,
+      errorCreateRequest: false,
+      errorHelperCreateRequest: "",
+    };
 
     default:
       return state;

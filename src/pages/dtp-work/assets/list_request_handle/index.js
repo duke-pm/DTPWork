@@ -19,12 +19,13 @@ import {
 } from "components/Component";
 import TableRequestHandle from "./table";
 import ApprovedForm from "./modal/Approved";
+import ProcessModal from "./modal/Process";
 /** COMMON */
 import Configs from "configs";
-import Routes from "services/routesApi";
-import {getCookies} from "utils/Utils";
+import {getLocalStorage, setLocalStorage} from "utils/Utils";
 /** REDUX */
 import * as Actions from "redux/actions";
+import Constants from "utils/constants";
 
 function RequestAssetsHandle(props) {
   const {t} = useTranslation();
@@ -44,6 +45,7 @@ function RequestAssetsHandle(props) {
   const [sm, updateSm] = useState(false);
   const [view, setView] = useState({
     approved: false,
+    process: false,
   });
   const [formData, setFormData] = useState({
     page: 1,
@@ -58,22 +60,27 @@ function RequestAssetsHandle(props) {
     count: 0,
   });
   const [updateItem, setUpdateItem] = useState(null);
+  const [detailsItem, setDetailsItem] = useState([]);
 
   /**
    ** FUNCTIONS
    */
   const toggleSm = () => updateSm(!sm);
 
-  const toogleView = type => {
-    setView({
-      approved: type === "approved" ? true : false,
-    });
-    if (!type && updateItem) setUpdateItem(null);
-  };
-
   const onChangeSearch = (e) => setFormData({...formData, search: e.target.value});
 
   const onChangeDate = (type, date) => setFormData({...formData, [type]: date});
+
+  const toogleView = type => {
+    setView({
+      approved: type === "approved" ? true : false,
+      process: type === "process" ? true : false,
+    });
+    if (!type && updateItem) {
+      setUpdateItem(null);
+      setDetailsItem([]);
+    }
+  };
 
   const onSearch = (ev) => {
     ev.preventDefault();
@@ -102,6 +109,11 @@ function RequestAssetsHandle(props) {
       let tmpFormData = {...formData};
       tmpFormData.page = 1;
       setFormData(tmpFormData);
+      // Save to local storage
+      setLocalStorage(Constants.LS_FROM_TO_REQUEST_HANDLE, {
+        start: moment(formData.rangeStart).format('YYYY/MM/DD'),
+        end: moment(formData.rangeEnd).format('YYYY/MM/DD'),
+      });
       // Call api
       onStartGetData(
         formData.rangeStart,
@@ -138,12 +150,41 @@ function RequestAssetsHandle(props) {
     setUpdateItem(dataRequest);
   };
 
+  const onProcess = dataRequest => {
+    toogleView("process");
+    setUpdateItem(dataRequest);
+    if (dataRequest.requestTypeID === 1) {
+      let fDetails = approvedState["listDetailsApproved"].filter(f =>
+        f.requestID === dataRequest.requestID);
+      setDetailsItem(fDetails);
+    } else {
+      setDetailsItem([]);
+    }
+  };
+
+  const onCheckLocal = () => {
+    let fFromToDate = getLocalStorage(Constants.LS_FROM_TO_REQUEST_HANDLE);
+    if (fFromToDate) {
+      setFormData({
+        ...formData,
+        rangeStart: new Date(fFromToDate.start),
+        rangeEnd: new Date(fFromToDate.end),
+      });
+      onStartGetData(
+        fFromToDate.start,
+        fFromToDate.end,
+      );
+    } else {
+      onStartGetData();
+    }
+  };
+
   const onStartGetData = (
     fromDate = moment().startOf('month').format('YYYY/MM/DD'),
     toDate = moment().endOf('month').format('YYYY/MM/DD'),
     search = "",
     type = 0,
-    status = 0,
+    status = "1,2,3,4",
     page = 1,
   ) => {
     let params = {
@@ -171,23 +212,22 @@ function RequestAssetsHandle(props) {
   };
 
   const onCloseAddEditForm = (isSuccess, showToast, message) => {
+    dispatch(Actions.fResetApprovedRequest());
     toogleView();
     if (isSuccess) {
       toast(message, {type: "success"});
+      setLoading({...loading, main: true});
+      onStartGetData(
+        formData.rangeStart,
+        formData.rangeEnd,
+        formData.search,
+        formData.type,
+        formData.status,
+        formData.page,
+      );
     } else {
       showToast && toast(message || t("error:title"), {type: "error"});
     }
-    dispatch(Actions.fResetApprovedRequest());
-    setLoading({...loading, main: true});
-    // Call api
-    isSuccess && onStartGetData(
-      formData.rangeStart,
-      formData.rangeEnd,
-      formData.search,
-      formData.type,
-      formData.status,
-      formData.page,
-    );
   };
 
   const onError = error => {
@@ -200,10 +240,11 @@ function RequestAssetsHandle(props) {
    ** LIFE CYCLE
    */
   useEffect(() => {
-    if (authState["successSignIn"]) {
-      onStartGetData();
+    if (loading.main && authState["successSignIn"]) {
+      onCheckLocal();
     }
   }, [
+    loading.main,
     authState["successSignIn"]
   ]);
 
@@ -254,6 +295,43 @@ function RequestAssetsHandle(props) {
                   <ul className="nk-block-tools g-3">
                     <li>
                       <div className="form-control-wrap">
+                        <div className="input-daterange date-picker-range input-group justify-content-end">
+                          <DatePicker
+                            className="form-control"
+                            wrapperClassName="start-m"
+                            selected={formData.rangeStart}
+                            onChange={date => onChangeDate("rangeStart", date)}
+                            dateFormat="dd/MM/yyyy"
+                            selectsStart
+                            startDate={formData.rangeStart}
+                            endDate={formData.rangeEnd}
+                            disabled={disabled}
+                            />{" "}
+                          <div className="input-group-addon fw-bold">{t("common:to")}</div>
+                          <DatePicker
+                            className="form-control"
+                            wrapperClassName="end-m"
+                            selected={formData.rangeEnd}
+                            onChange={date => onChangeDate("rangeEnd", date)}
+                            dateFormat="dd/MM/yyyy"
+                            startDate={formData.rangeStart}
+                            endDate={formData.rangeEnd}
+                            selectsEnd
+                            minDate={formData.rangeStart}
+                            disabled={disabled}
+                          />
+                          <div className="input-group-addon pl-4">
+                            <a className="form-icon form-icon-right"
+                              href="#searchDate"
+                              onClick={onSearchByDate}>
+                              <Icon name="search"></Icon>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div className="form-control-wrap">
                         <a className="form-icon form-icon-right"
                           href="#search"
                           onClick={onSearch}>
@@ -268,45 +346,6 @@ function RequestAssetsHandle(props) {
                           placeholder={t("common:search")}
                           onChange={onChangeSearch}
                         />
-                      </div>
-                    </li>
-                    <li>
-                      <div className="form-group">
-                        <div className="form-control-wrap">
-                          <div className="input-daterange date-picker-range">
-                            <DatePicker
-                              className="form-control"
-                              selected={formData.rangeStart}
-                              onChange={date => onChangeDate("rangeStart", date)}
-                              dateFormat="dd/MM/yyyy"
-                              selectsStart
-                              startDate={formData.rangeStart}
-                              endDate={formData.rangeEnd}
-                              wrapperClassName="start-m"
-                              disabled={disabled}
-                            />{" "}
-                            <div className="input-group-addon fw-bold">{t("common:to")}</div>
-                            <DatePicker
-                              className="form-control"
-                              selected={formData.rangeEnd}
-                              onChange={date => onChangeDate("rangeEnd", date)}
-                              dateFormat="dd/MM/yyyy"
-                              startDate={formData.rangeStart}
-                              endDate={formData.rangeEnd}
-                              selectsEnd
-                              minDate={formData.rangeStart}
-                              wrapperClassName="end-m"
-                              disabled={disabled}
-                            />
-                            <div className="input-group-addon pl-4">
-                              <a className="form-icon form-icon-right"
-                                href="#searchDate"
-                                onClick={onSearchByDate}>
-                                <Icon name="search"></Icon>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
                       </div>
                     </li>
                   </ul>
@@ -325,6 +364,7 @@ function RequestAssetsHandle(props) {
             dataRequest={data.requests}
             onChangePage={onChangePage}
             onApproved={onApproved}
+            onProcess={onProcess}
           />
         </Block>
 
@@ -334,7 +374,14 @@ function RequestAssetsHandle(props) {
           commonState={commonState}
           authState={authState}
           updateItem={updateItem}
+          dataDetails={detailsItem}
           onClose={onCloseAddEditForm}
+        />
+
+        <ProcessModal
+          show={view.process}
+          dataRequest={updateItem}
+          onClose={toogleView}
         />
       </Content>
     </React.Fragment>

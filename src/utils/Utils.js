@@ -33,7 +33,8 @@ export const findUpper = (string) => {
     }
   }
   if (extractedString.length > 1) {
-    return extractedString[0] + extractedString[1];
+    const reversed = extractedString.reverse();
+    return reversed[0] + reversed[1];
   } else {
     return extractedString[0];
   }
@@ -170,4 +171,30 @@ export const setCookies = (cookies, value) => {
 
 export const getCookies = cookies => {
   return Cookies.get(cookies) || null;
+};
+
+export const getLocalStorage = (key) => {
+  let fValue = localStorage.getItem(key);
+  if (fValue) {
+    fValue = JSON.parse(fValue);
+    return fValue;
+  } else {
+    return null;
+  }
+};
+
+export const setLocalStorage = (key, value) => {
+  let tmpValue = value;
+  if (typeof tmpValue !== "string") {
+    tmpValue = JSON.stringify(tmpValue);
+  }
+  return localStorage.setItem(key, tmpValue);
+};
+
+export const removeLocalStorage = (key) => {
+  return localStorage.removeItem(key);
+};
+
+export const clearLocalStorage = () => {
+  return localStorage.clear();
 };

@@ -2,10 +2,15 @@ import * as types from "../actions/types";
 
 export const initialState = {
   submittingGetAll: false,
+  submittingAssetsByUser: false,
 
   successGetAll: false,
   errorGetAll: false,
   errorHelperGetAll: "",
+
+  successAssetsByUser: false,
+  errorAssetsByUser: false,
+  errorHelperAssetsByUser: "",
 
   region: [],
   department: [],
@@ -75,6 +80,33 @@ export default function (state = initialState, action = {}) {
       return {
         ...state,
         supplier: [payload, ...state.supplier],
+      };
+
+    case types.START_ASSETS_BY_USER:
+      return {
+        ...state,
+        submittingAssetsByUser: true,
+        successAssetsByUser: false,
+        errorAssetsByUser: false,
+        errorHelperAssetsByUser: "",
+      };
+    case types.ERROR_ASSETS_BY_USER:
+      return {
+        ...state,
+        submittingAssetsByUser: false,
+        successAssetsByUser: false,
+        errorAssetsByUser: true,
+        errorHelperAssetsByUser: payload,
+      };
+    case types.SUCCESS_ASSETS_BY_USER:
+      return {
+        ...state,
+        submittingAssetsByUser: false,
+        successAssetsByUser: true,
+        errorAssetsByUser: false,
+        errorHelperAssetsByUser: "",
+
+        assetByUser: payload || [],
       };
 
     default:

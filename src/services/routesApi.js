@@ -9,7 +9,7 @@ const Routes = {
   },
   MASTER_DATA: {
     GET_ALL: "/MasterData/GetDataForForm",
-    // GET_ASSETS_BY_USER: "/Assets/GetListByUser",
+    GET_ASSETS_BY_USER: "/Assets/GetListByUser",
   },
   APPROVED: {
     LIST_ASSETS: "/Assets/GetList",
@@ -26,11 +26,17 @@ const Routes = {
     CREATE_SUPPLIER: "/Supplier/Modify",
 
     LIST_REQUEST: "/RQAsset/GetList",
+    CREATE_REQUEST_ALLOW: "/RQAsset/CreateAllocation",
+    CREATE_REQUEST_DAM_LOS: "/RQAsset/CreateHandling",
     APPROVED_REQUEST: "/RequestApprove/Approve",
+    REJECT_REQUEST: "/RequestApprove/Approve",
 
     EXPORT_ASSETS: "/Assets/ExportAsset",
     EXPORT_APPROVED_ASSETS: "/RQAsset/ExportAllocation",
     EXPORT_RECALL_ASSETS: "/RQAsset/ExportRequestRecovery",
+    EXPORT_REQUEST_ALLOW: "/RQAsset/ExportRequestAllocation",
+    EXPORT_REQUEST_DAMAGE: "/RQAsset/ExportRequestDamage",
+    
   },
   // APPROVED: {
   //   LIST_REQUEST: "/RQAsset/GetList",

@@ -6,6 +6,7 @@ import DatePicker from "react-datepicker";
 import SimpleBar from "simplebar-react";
 import NumberFormat from 'react-number-format';
 import {Form, FormGroup, Modal, ModalBody} from "reactstrap";
+import {toast} from "react-toastify";
 import moment from "moment";
 /** COMPONENTS */
 import {
@@ -23,7 +24,6 @@ import {
 import AddSupplier from "./AddSupplier";
 /** REDUX */
 import * as Actions from "redux/actions";
-import { toast } from "react-toastify";
 
 const CustomDateInput = forwardRef(({ value, onClick, onChange }, ref) => (
   <div onClick={onClick} ref={ref}>
@@ -335,7 +335,7 @@ function AddEditForm(props) {
       isError = true;
       tmpError.assets = {message: t("validate:empty")};
     }
-    setError(tmpError);
+    isError && setError(tmpError);
     return isError;
   };
 
@@ -788,7 +788,7 @@ function AddEditForm(props) {
                       className="form-control"
                       name={"assetOriginPrice"}
                       value={formData.assetOriginPrice}
-                      placeholder={t("add_assets:holder_origin_price") || ' '}
+                      placeholder={t("add_assets:holder_origin_price")}
                       thousandSeparator
                       prefix="đ "
                       onValueChange={val =>
