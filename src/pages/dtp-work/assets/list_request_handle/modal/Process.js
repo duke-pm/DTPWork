@@ -136,7 +136,7 @@ function ProcessModal(props) {
                           <div className="timeline-data">
                             <div className="timeline-des">
                               <div className="profile-ud plain">
-                                <span className="profile-ud-label">{`${itemT.levelApproval === 0
+                                <span className="profile-ud-label fw-bold">{`${itemT.levelApproval === 0
                                 ? t("approved_process:employee_request")
                                 : t("approved_process:employee_approved")}${
                                   itemT.levelApproval !== 0
@@ -145,11 +145,11 @@ function ProcessModal(props) {
                                 <span className="profile-ud-value text-primary fw-bold">{itemT.personApproveName}</span>
                               </div>
                               <div className="profile-ud plain mt-2">
-                                <span className="profile-ud-label">{t("approved_process:status")}:</span>
+                                <span className="profile-ud-label fw-bold">{t("approved_process:status")}:</span>
                                 <span className="profile-ud-value">{itemT.statusName || "-"}</span>
                               </div>
                               <div className="profile-ud plain mt-2">
-                                <span className="profile-ud-label">{t("approved_process:reason")}:</span>
+                                <span className="profile-ud-label fw-bold">{t("approved_process:reason")}:</span>
                                 <span className="profile-ud-value">{itemT.reason || "-"}</span>
                               </div>
                             </div>

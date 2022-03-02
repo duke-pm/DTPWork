@@ -196,25 +196,25 @@ function ApprovedForm(props) {
                 <Row className="g-3">
                   <Col md="6">
                     <div className="profile-ud plain">
-                      <span className="profile-ud-label">{t("request_details:code_employee")}</span>
+                      <span className="profile-ud-label fw-bold">{t("request_details:code_employee")}</span>
                       <span className="profile-ud-value text-primary">#{dataRequest?.empCode || "-"}</span>
                     </div>
                   </Col>
                   <Col md="6">
                     <div className="profile-ud plain">
-                      <span className="profile-ud-label">{t("request_details:name_employee")}</span>
+                      <span className="profile-ud-label fw-bold">{t("request_details:name_employee")}</span>
                       <span className="profile-ud-value">{dataRequest?.fullName || "-"}</span>
                     </div>
                   </Col>
                   <Col md="6">
                     <div className="profile-ud plain">
-                      <span className="profile-ud-label">{t("request_details:department_employee")}</span>
+                      <span className="profile-ud-label fw-bold">{t("request_details:department_employee")}</span>
                       <span className="profile-ud-value">{dataRequest?.deptName || "-"}</span>
                     </div>
                   </Col>
                   <Col md="6">
                     <div className="profile-ud plain">
-                      <span className="profile-ud-label">{t("request_details:region_employee")}</span>
+                      <span className="profile-ud-label fw-bold">{t("request_details:region_employee")}</span>
                       <span className="profile-ud-value">{dataRequest?.regionName || "-"}</span>
                     </div>
                   </Col>
@@ -231,7 +231,7 @@ function ApprovedForm(props) {
                   <Row className="g-3">
                     <Col md="6">
                       <div className="profile-ud plain">
-                        <span className="profile-ud-label">{t("request_details:request_date")}</span>
+                        <span className="profile-ud-label fw-bold">{t("request_details:request_date")}</span>
                         <span className="profile-ud-value">
                           {dataRequest?.requestDate
                             ? moment(dataRequest?.requestDate).format("DD/MM/YYYY")
@@ -241,13 +241,13 @@ function ApprovedForm(props) {
                     </Col>
                     <Col md="6">
                       <div className="profile-ud plain">
-                        <span className="profile-ud-label">{t("request_details:location_use")}</span>
+                        <span className="profile-ud-label fw-bold">{t("request_details:location_use")}</span>
                         <span className="profile-ud-value">{dataRequest?.locationName || "-"}</span>
                       </div>
                     </Col>
                     <Col md="6">
                       <div className="profile-ud plain">
-                        <span className="profile-ud-label">{t("request_details:type_buy")}</span>
+                        <span className="profile-ud-label fw-bold">{t("request_details:type_buy")}</span>
                         <span className="profile-ud-value">
                           {dataRequest?.docType === "N" ? t("request_details:buy_new") : t("request_details:additional")}
                         </span>
@@ -255,7 +255,7 @@ function ApprovedForm(props) {
                     </Col>
                     <Col md="6">
                       <div className="profile-ud plain">
-                        <span className="profile-ud-label">{t("request_details:in_planing")}</span>
+                        <span className="profile-ud-label fw-bold">{t("request_details:in_planing")}</span>
                         <span className="profile-ud-value">
                           {dataRequest?.isBudget ? t("common:yes") : t("common:no")}
                         </span>
@@ -264,7 +264,7 @@ function ApprovedForm(props) {
                     {dataRequest?.supplierName !== "" && (
                       <Col md="6">
                         <div className="profile-ud plain">
-                          <span className="profile-ud-label">{`${t("request_details:supplier")}`}</span>
+                          <span className="profile-ud-label fw-bold">{`${t("request_details:supplier")}`}</span>
                           <span className="profile-ud-value">{dataRequest?.supplierName}</span>
                         </div>
                       </Col>
@@ -272,7 +272,7 @@ function ApprovedForm(props) {
                     {dataRequest?.reason !== "" && (
                       <Col md="6">
                         <div className="profile-ud plain">
-                          <span className="profile-ud-label">{`${t("request_details:reason")}`}</span>
+                          <span className="profile-ud-label fw-bold">{`${t("request_details:reason")}`}</span>
                           <span className="profile-ud-value">{dataRequest?.reason}</span>
                         </div>
                       </Col>
@@ -280,7 +280,7 @@ function ApprovedForm(props) {
                     {dataDetails.length > 0 && (
                   <Col size="12">
                     <div className="profile-ud plain">
-                      <span className="profile-ud-label">{`${t("request_details:assets")}`}</span>
+                      <span className="profile-ud-label fw-bold">{`${t("request_details:assets")}`}</span>
                       <span className="profile-ud-value">
                         <DataTableBody className="border-top" bodyclass="nk-tb-orders">
                           <DataTableHead>
@@ -344,25 +344,25 @@ function ApprovedForm(props) {
                   <Row className="g-3">
                     <Col md="6">
                       <div className="profile-ud plain">
-                        <span className="profile-ud-label">{t("approved_action:code_assets")}</span>
+                        <span className="profile-ud-label fw-bold">{t("approved_action:code_assets")}</span>
                         <span className="profile-ud-value text-primary">{dataRequest?.assetCode || "-"}</span>
                       </div>
                     </Col>
                     <Col md="6">
                       <div className="profile-ud plain">
-                        <span className="profile-ud-label">{t("approved_action:name_assets")}</span>
+                        <span className="profile-ud-label fw-bold">{t("approved_action:name_assets")}</span>
                         <span className="profile-ud-value">{dataRequest?.assetName || "-"}</span>
                       </div>
                     </Col>
                     <Col md="6">
                       <div className="profile-ud plain">
-                        <span className="profile-ud-label">{t("approved_action:group_assets")}</span>
+                        <span className="profile-ud-label fw-bold">{t("approved_action:group_assets")}</span>
                         <span className="profile-ud-value">{dataRequest?.assetGroupName || "-"}</span>
                       </div>
                     </Col>
                     <Col md="6">
                       <div className="profile-ud plain">
-                        <span className="profile-ud-label">{t("approved_action:purchase_date_assets")}</span>
+                        <span className="profile-ud-label fw-bold">{t("approved_action:purchase_date_assets")}</span>
                         <span className="profile-ud-value">
                           {dataRequest?.purchaseDate
                             ? moment(dataRequest?.purchaseDate).format("DD/MM/YYYY")
@@ -372,7 +372,7 @@ function ApprovedForm(props) {
                     </Col>
                     <Col md="6">
                       <div className="profile-ud plain">
-                        <span className="profile-ud-label">{t("approved_action:origin_price_assets")}</span>
+                        <span className="profile-ud-label fw-bold">{t("approved_action:origin_price_assets")}</span>
                         <span className="profile-ud-value">
                           {dataRequest?.originalPrice
                             ? numberFormat(dataRequest?.originalPrice)
@@ -382,7 +382,7 @@ function ApprovedForm(props) {
                     </Col>
                     <Col md="6">
                       <div className="profile-ud plain">
-                        <span className="profile-ud-label">{t("approved_action:status_assets")}</span>
+                        <span className="profile-ud-label fw-bold">{t("approved_action:status_assets")}</span>
                         <span className="profile-ud-value">
                           <span
                             className={`dot bg-${

@@ -20,7 +20,7 @@ const PaginationComponent = ({ itemPerPage, totalItems, paginate, currentPage })
   };
 
   return (
-    <Pagination aria-label="Page navigation example">
+    <Pagination aria-label="Page navigation">
       <PaginationItem disabled={currentPage - 1 === 0 ? true : false}>
         <PaginationLink
           className="page-link-prev"

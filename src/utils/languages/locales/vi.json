@@ -25,12 +25,15 @@
     "choose_file": "Chọn tệp",
     "from": "TỪ",
     "to": "ĐẾN",
+    "from_date": "Từ ngày",
+    "to_date": "Đến ngày",
     "approved": "Phê duyệt",
     "reject": "Từ chối",
     "download": "Tải về",
     "yes": "Có",
     "no": "Không",
-    "remove": "Xóa"
+    "remove": "Xóa",
+    "filter": "Lọc"
   },
   "validate": {
     "empty": "Mục này không thể trống!",
@@ -108,7 +111,7 @@
     "informations_details": "Chi tiết Tài sản",
     "title_details": "Thông tin cơ bản",
     "assets_management": "Quản lý Tài sản",
-    "get_data": "Cập nhật dữ liệu",
+    "get_data": "Cập nhật",
     "all": "Tất cả",
     "not_use": "Chưa sử dụng",
     "using": "Đang sử dụng",
@@ -305,7 +308,11 @@
     "type_request": "Loại yêu cầu",
     "status_request": "Trạng thái",
     "approved_action": "Phê duyệt",
-    "approved_timeline": "Quy trình phê duyệt"
+    "approved_timeline": "Quy trình phê duyệt",
+    "filter_request": "Lọc đề xuất cần xử lý",
+    "allow": "Cấp phát",
+    "damage": "Báo hỏng",
+    "lost": "Báo mất"
   },
   "approved_action": {
     "approved_assets": "Phê duyệt cấp phát tài sản",
@@ -344,6 +351,7 @@
   },
   "request_approved": {
     "title": "Danh sách đề xuất",
+    "filter_request": "Lọc danh sách đề xuất",
     "assets_title": "Cấp phát",
     "damage_title": "Báo hỏng",
     "lost_title": "Báo mất",
@@ -358,7 +366,11 @@
     "status_request": "Trạng thái",
     "view_details": "Xem chi tiết",
     "approved_timeline": "Quy trình phê duyệt",
-    "export_file": "Xuất excel"
+    "export_file": "Xuất excel",
+    "wait": "Chờ phê duyệt",
+    "approved": "Đã duyệt",
+    "success": "Hoàn thành",
+    "reject": "Từ chối"
   },
   "request_details": {
     "assets_title": "Chi tiết Đề xuất cấp phát",

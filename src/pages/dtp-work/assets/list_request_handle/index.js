@@ -4,6 +4,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import {toast} from "react-toastify";
+import {
+  DropdownMenu,
+  DropdownToggle,
+  FormGroup,
+  UncontrolledDropdown,
+} from "reactstrap";
 import moment from "moment";
 /** COMPONENTS */
 import Content from "layout/content/Content";
@@ -13,19 +19,23 @@ import {
   BlockHead,
   BlockHeadContent,
   BlockTitle,
+  DataTable,
+  PaginationComponent,
+  PreviewAltCard,
   Icon,
   Button,
-  BlockBetween,
+  Row,
+  Col,
 } from "components/Component";
 import TableRequestHandle from "./table";
 import ApprovedForm from "./modal/Approved";
 import ProcessModal from "./modal/Process";
 /** COMMON */
 import Configs from "configs";
+import Constants from "utils/constants";
 import {getLocalStorage, setLocalStorage} from "utils/Utils";
 /** REDUX */
 import * as Actions from "redux/actions";
-import Constants from "utils/constants";
 
 function RequestAssetsHandle(props) {
   const {t} = useTranslation();
@@ -44,13 +54,14 @@ function RequestAssetsHandle(props) {
   });
   const [sm, updateSm] = useState(false);
   const [view, setView] = useState({
+    search: false,
     approved: false,
     process: false,
   });
   const [formData, setFormData] = useState({
     page: 1,
-    type: 0,
-    status: 0,
+    type: [1, 2, 3],
+    status: [1, 2, 3, 4],
     search: "",
     rangeStart: new Date(moment().startOf('month').format('YYYY/MM/DD')),
     rangeEnd: new Date(moment().endOf('month').format('YYYY/MM/DD')),
@@ -67,23 +78,67 @@ function RequestAssetsHandle(props) {
    */
   const toggleSm = () => updateSm(!sm);
 
-  const onChangeSearch = (e) => setFormData({...formData, search: e.target.value});
+  const onChangeSearch = e => setFormData({...formData, search: e.target.value.trim()});
 
   const onChangeDate = (type, date) => setFormData({...formData, [type]: date});
 
-  const toogleView = type => {
-    setView({
-      approved: type === "approved" ? true : false,
-      process: type === "process" ? true : false,
+  const onChangeType = e => {
+    let tmpFormData = {...formData};
+    if (e.target.name === "allowType") {
+      if (tmpFormData.type.includes(1))
+        tmpFormData.type = tmpFormData.type.filter(f => f !== 1);
+      else tmpFormData.type.push(1);
+    }
+    if (e.target.name === "damageType") {
+      if (tmpFormData.type.includes(2))
+        tmpFormData.type = tmpFormData.type.filter(f => f !== 2);
+      else tmpFormData.type.push(2);
+    }
+    if (e.target.name === "lostType") {
+      if (tmpFormData.type.includes(3))
+        tmpFormData.type = tmpFormData.type.filter(f => f !== 3);
+      else tmpFormData.type.push(3);
+    }
+    setFormData(tmpFormData);
+  };
+
+  const onResetFilter = () => {
+    setFormData({
+      ...formData,
+      type: [1, 2, 3],
+      rangeStart: new Date(moment().startOf('month').format('YYYY/MM/DD')),
+      rangeEnd: new Date(moment().endOf('month').format('YYYY/MM/DD')),
     });
-    if (!type && updateItem) {
-      setUpdateItem(null);
-      setDetailsItem([]);
+  };
+
+  const paginate = pageNumber => {
+    if (pageNumber !== formData.page) {
+      setFormData({...formData, page: pageNumber});
+      onChangePage(pageNumber);
+    }
+  };
+
+  const toggleView = type => {
+    if (type === "search" && view.search) {
+      setView({...view, search: false});
+      if (formData.search === "") {
+        onSearch();
+      }
+    } else {
+      setView({
+        search: type === "search" ? true : false,
+        approved: type === "approved" ? true : false,
+        process: type === "process" ? true : false,
+      });
+      if (!type && updateItem) {
+        setUpdateItem(null);
+        setDetailsItem([]);
+      }
     }
   };
 
   const onSearch = (ev) => {
-    ev.preventDefault();
+    ev && ev.preventDefault();
     if (!loading.search) {
       setLoading({...loading, search: true});
       // Update params
@@ -102,7 +157,7 @@ function RequestAssetsHandle(props) {
     }
   };
 
-  const onSearchByDate = () => {
+  const onSearchFilter = () => {
     if (!loading.search) {
       setLoading({...loading, search: true});
       // Update params
@@ -146,12 +201,12 @@ function RequestAssetsHandle(props) {
   };
 
   const onApproved = dataRequest => {
-    toogleView("approved");
+    toggleView("approved");
     setUpdateItem(dataRequest);
   };
 
   const onProcess = dataRequest => {
-    toogleView("process");
+    toggleView("process");
     setUpdateItem(dataRequest);
     if (dataRequest.requestTypeID === 1) {
       let fDetails = approvedState["listDetailsApproved"].filter(f =>
@@ -183,18 +238,18 @@ function RequestAssetsHandle(props) {
     fromDate = moment().startOf('month').format('YYYY/MM/DD'),
     toDate = moment().endOf('month').format('YYYY/MM/DD'),
     search = "",
-    type = 0,
-    status = "1,2,3,4",
+    type = [1, 2, 3],
+    status = [1, 2, 3, 4],
     page = 1,
   ) => {
     let params = {
       Search: search,
-      StatusID: status,
+      StatusID: status.join(),
       PageSize: Configs.perPage,
       PageNum: page,
       FromDate: fromDate,
       ToDate: toDate,
-      RequestTypeID: type,
+      RequestTypeID: type.length !== 0 ? type.join() : "4",
       IsResolveRequest: true,
       RefreshToken: authState["data"]["refreshToken"],
       Lang: commonState["language"],
@@ -213,7 +268,7 @@ function RequestAssetsHandle(props) {
 
   const onCloseAddEditForm = (isSuccess, showToast, message) => {
     dispatch(Actions.fResetApprovedRequest());
-    toogleView();
+    toggleView();
     if (isSuccess) {
       toast(message, {type: "success"});
       setLoading({...loading, main: true});
@@ -279,93 +334,239 @@ function RequestAssetsHandle(props) {
       <Content>
         {/** Header table */}
         <BlockHead size="sm">
-          <BlockBetween>
-            <BlockHeadContent>
-              <BlockTitle tag="h4">{t("request_handle:title")}</BlockTitle>
-            </BlockHeadContent>
-            <BlockHeadContent>
-              <div className="toggle-wrap nk-block-tools-toggle">
-                <Button
-                  className={`btn-icon btn-trigger toggle-expand mr-n1 ${sm ? "active" : ""}`}
-                  onClick={toggleSm}
-                >
-                  <Icon name="menu-alt-r"></Icon>
-                </Button>
-                <div className="toggle-expand-content" style={{ display: sm ? "block" : "none" }}>
-                  <ul className="nk-block-tools g-3">
+          <BlockHeadContent>
+            <BlockTitle tag="h4">{t("request_handle:title")}</BlockTitle>
+          </BlockHeadContent>
+        </BlockHead>
+
+        {/** Content table */}
+        <Block>
+          <DataTable className="card-stretch">
+            {/** Filter table */}
+            <div className="card-inner position-relative card-tools-toggle">
+              <div className="card-title-group">
+                <div className="card-tools"></div>
+                <div className="card-tools mr-n1">
+                  <ul className="btn-toolbar gx-1">
                     <li>
-                      <div className="form-control-wrap">
-                        <div className="input-daterange date-picker-range input-group justify-content-end">
-                          <DatePicker
-                            className="form-control"
-                            wrapperClassName="start-m"
-                            selected={formData.rangeStart}
-                            onChange={date => onChangeDate("rangeStart", date)}
-                            dateFormat="dd/MM/yyyy"
-                            selectsStart
-                            startDate={formData.rangeStart}
-                            endDate={formData.rangeEnd}
-                            disabled={disabled}
-                            />{" "}
-                          <div className="input-group-addon fw-bold">{t("common:to")}</div>
-                          <DatePicker
-                            className="form-control"
-                            wrapperClassName="end-m"
-                            selected={formData.rangeEnd}
-                            onChange={date => onChangeDate("rangeEnd", date)}
-                            dateFormat="dd/MM/yyyy"
-                            startDate={formData.rangeStart}
-                            endDate={formData.rangeEnd}
-                            selectsEnd
-                            minDate={formData.rangeStart}
-                            disabled={disabled}
-                          />
-                          <div className="input-group-addon pl-4">
-                            <a className="form-icon form-icon-right"
-                              href="#searchDate"
-                              onClick={onSearchByDate}>
-                              <Icon name="search"></Icon>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
+                      <a
+                        href="#search"
+                        onClick={(ev) => {
+                          ev.preventDefault();
+                          toggleView("search");
+                        }}
+                        className="btn btn-icon search-toggle toggle-search"
+                      >
+                        <Icon name="search"></Icon>
+                      </a>
                     </li>
+                    <li className="btn-toolbar-sep"></li>
                     <li>
-                      <div className="form-control-wrap">
-                        <a className="form-icon form-icon-right"
-                          href="#search"
-                          onClick={onSearch}>
-                          <Icon name="search"></Icon>
-                        </a>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="default-04"
-                          disabled={disabled}
-                          value={formData.search}
-                          placeholder={t("common:search")}
-                          onChange={onChangeSearch}
-                        />
+                      <div className="toggle-wrap">
+                        <Button
+                          className={`btn-icon btn-trigger toggle ${sm ? "active" : ""}`}
+                          onClick={toggleSm}
+                        >
+                          <Icon name="menu-right"></Icon>
+                        </Button>
+                        <div className={`toggle-content ${sm ? "content-active" : ""}`}>
+                          <ul className="btn-toolbar gx-1">
+                            <li className="toggle-close">
+                              <Button className="btn-icon btn-trigger toggle" onClick={toggleSm}>
+                                <Icon name="arrow-left"></Icon>
+                              </Button>
+                            </li>
+                            <li>
+                              <UncontrolledDropdown>
+                                <DropdownToggle tag="a" className="btn btn-trigger btn-icon dropdown-toggle">
+                                  <div className="dot dot-primary"></div>
+                                  <Icon name="filter-alt"></Icon>
+                                </DropdownToggle>
+                                <DropdownMenu
+                                  right
+                                  className="filter-wg dropdown-menu-xl"
+                                  style={{ overflow: "visible" }}
+                                >
+                                  <div className="dropdown-head">
+                                    <h6>
+                                      {t("request_handle:filter_request").toUpperCase()}
+                                    </h6>
+                                  </div>
+                                  <div className="dropdown-body dropdown-body-rg">
+                                    <Row className="gx-6 gy-3">
+                                      <Col md="6">
+                                        <FormGroup className="form-group" style={{zIndex: 10000}}>
+                                          <label className="overline-title overline-title-alt">
+                                            {t("common:from_date")}
+                                          </label>
+                                          <DatePicker
+                                            className="form-control"
+                                            wrapperClassName="start-m"
+                                            selected={formData.rangeStart}
+                                            dateFormat="dd/MM/yyyy"
+                                            startDate={formData.rangeStart}
+                                            endDate={formData.rangeEnd}
+                                            disabled={disabled}
+                                            selectsStart
+                                            onChange={date => onChangeDate("rangeStart", date)}
+                                          />
+                                        </FormGroup>
+                                      </Col>
+                                      <Col md="6">
+                                        <FormGroup className="form-group" style={{zIndex: 10000}}>
+                                          <label className="overline-title overline-title-alt">
+                                            {t("common:to_date")}
+                                          </label>
+                                          <DatePicker
+                                            className="form-control"
+                                            wrapperClassName="end-m"
+                                            selected={formData.rangeEnd}
+                                            dateFormat="dd/MM/yyyy"
+                                            startDate={formData.rangeStart}
+                                            endDate={formData.rangeEnd}
+                                            minDate={formData.rangeStart}
+                                            disabled={disabled}
+                                            selectsEnd
+                                            onChange={date => onChangeDate("rangeEnd", date)}
+                                          />
+                                        </FormGroup>
+                                      </Col>
+                                      <Col size="12">
+                                        <FormGroup className="form-group">
+                                          <label className="overline-title overline-title-alt">
+                                            {t("request_handle:type_request")}
+                                          </label>
+                                          <ul className="custom-control-group g-3 align-center">
+                                            <li>
+                                              <div className="custom-control custom-control-sm custom-checkbox">
+                                                <input
+                                                  className="custom-control-input form-control"
+                                                  id="allowType"
+                                                  name="allowType"
+                                                  type="checkbox"
+                                                  value={1}
+                                                  checked={formData.type.includes(1)}
+                                                  onChange={onChangeType}
+                                                />
+                                                <label className="custom-control-label" htmlFor="allowType">
+                                                  {t("request_handle:allow")}
+                                                </label>
+                                              </div>
+                                            </li>
+                                            <li>
+                                              <div className="custom-control custom-control-sm custom-checkbox">
+                                                <input
+                                                  className="custom-control-input form-control"
+                                                  id="damageType"
+                                                  name="damageType"
+                                                  type="checkbox"
+                                                  value={2}
+                                                  checked={formData.type.includes(2)}
+                                                  onChange={onChangeType}
+                                                />
+                                                <label className="custom-control-label " htmlFor="damageType">
+                                                  {t("request_handle:damage")}
+                                                </label>
+                                              </div>
+                                            </li>
+                                            <li>
+                                              <div className="custom-control custom-control-sm custom-checkbox">
+                                                <input
+                                                  className="custom-control-input form-control"
+                                                  id="lostType"
+                                                  name="lostType"
+                                                  type="checkbox"
+                                                  value={3}
+                                                  checked={formData.type.includes(3)}
+                                                  onChange={onChangeType}
+                                                />
+                                                <label className="custom-control-label" htmlFor="lostType">
+                                                  {t("request_handle:lost")}
+                                                </label>
+                                              </div>
+                                            </li>
+                                          </ul>
+                                        </FormGroup>
+                                      </Col>
+                                    </Row>
+                                  </div>
+                                  <div className="dropdown-foot between">
+                                    <Button color="primary" onClick={onSearchFilter}>
+                                      <Icon name="filter"></Icon>
+                                      <span>{t("common:filter")}</span>
+                                    </Button>
+                                    <Button className="btn-dim" color="secondary" onClick={onResetFilter}>
+                                      <Icon name="undo"></Icon>
+                                      <span>{t("common:reset")}</span>
+                                    </Button>
+                                  </div>
+                                </DropdownMenu>
+                              </UncontrolledDropdown>
+                            </li>
+                          </ul>
+                        </div>
                       </div>
                     </li>
                   </ul>
                 </div>
               </div>
-            </BlockHeadContent>
-          </BlockBetween>
-        </BlockHead>
-
-        {/** Content table */}
-        <Block>
-          <TableRequestHandle
-            loading={loading.main || loading.search}
-            curPage={formData.page}
-            countItem={data.count}
-            dataRequest={data.requests}
-            onChangePage={onChangePage}
-            onApproved={onApproved}
-            onProcess={onProcess}
-          />
+              <div className={`card-search search-wrap ${view.search && "active"}`}>
+                <div className="card-body">
+                  <div className="search-content">
+                    <Button
+                      className="search-back btn-icon toggle-search active"
+                      onClick={(ev) => {
+                        ev.preventDefault();
+                        toggleView("search");
+                      }}
+                    >
+                      <Icon name="arrow-left"></Icon>
+                    </Button>
+                    <input
+                      type="text"
+                      className="border-transparent form-focus-none form-control"
+                      value={formData.search}
+                      placeholder={t("common:search")}
+                      onChange={onChangeSearch}
+                    />
+                    <Button
+                      className="search-submit btn-icon"
+                      onClick={onSearch}
+                    >
+                      <Icon name="search"></Icon>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/** Data table */}
+            <TableRequestHandle
+              dataRequest={data.requests}
+              onApproved={onApproved}
+              onProcess={onProcess}
+            />
+            {/** Paging table */}
+            <PreviewAltCard>
+              {disabled ? (
+                <div className="text-center">
+                  <div className="spinner-border spinner-border-sm text-primary" />
+                </div>
+              ) : 
+                data.requests.length > 0 ? (
+                  <PaginationComponent
+                    itemPerPage={Configs.perPage}
+                    totalItems={data.count}
+                    currentPage={formData.page}
+                    paginate={paginate}
+                  />
+                ) : (
+                  <div className="text-center">
+                    <span className="text-silent">{t("common:no_data")}</span>
+                  </div>
+                )
+              } 
+            </PreviewAltCard>
+          </DataTable>
         </Block>
 
         <ApprovedForm
@@ -381,7 +582,7 @@ function RequestAssetsHandle(props) {
         <ProcessModal
           show={view.process}
           dataRequest={updateItem}
-          onClose={toogleView}
+          onClose={toggleView}
         />
       </Content>
     </React.Fragment>

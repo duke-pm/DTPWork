@@ -93,25 +93,25 @@ function DetailsModal(props) {
             <Row className="g-3">
               <Col md="6">
                 <div className="profile-ud plain">
-                  <span className="profile-ud-label">{t("request_details:code_employee")}</span>
+                  <span className="profile-ud-label fw-bold">{t("request_details:code_employee")}</span>
                   <span className="profile-ud-value text-primary">#{dataRequest?.empCode || "-"}</span>
                 </div>
               </Col>
               <Col md="6">
                 <div className="profile-ud plain">
-                  <span className="profile-ud-label">{t("request_details:name_employee")}</span>
+                  <span className="profile-ud-label fw-bold">{t("request_details:name_employee")}</span>
                   <span className="profile-ud-value">{dataRequest?.fullName || "-"}</span>
                 </div>
               </Col>
               <Col md="6">
                 <div className="profile-ud plain">
-                  <span className="profile-ud-label">{t("request_details:department_employee")}</span>
+                  <span className="profile-ud-label fw-bold">{t("request_details:department_employee")}</span>
                   <span className="profile-ud-value">{dataRequest?.deptName || "-"}</span>
                 </div>
               </Col>
               <Col md="6">
                 <div className="profile-ud plain">
-                  <span className="profile-ud-label">{t("request_details:region_employee")}</span>
+                  <span className="profile-ud-label fw-bold">{t("request_details:region_employee")}</span>
                   <span className="profile-ud-value">{dataRequest?.regionName || "-"}</span>
                 </div>
               </Col>
@@ -128,7 +128,7 @@ function DetailsModal(props) {
               <Row className="g-3">
                 <Col md="6">
                   <div className="profile-ud plain">
-                    <span className="profile-ud-label">{t("request_details:request_date")}</span>
+                    <span className="profile-ud-label fw-bold">{t("request_details:request_date")}</span>
                     <span className="profile-ud-value">
                       {dataRequest?.requestDate
                         ? moment(dataRequest?.requestDate).format("DD/MM/YYYY")
@@ -138,13 +138,13 @@ function DetailsModal(props) {
                 </Col>
                 <Col md="6">
                   <div className="profile-ud plain">
-                    <span className="profile-ud-label">{t("request_details:location_use")}</span>
+                    <span className="profile-ud-label fw-bold">{t("request_details:location_use")}</span>
                     <span className="profile-ud-value">{dataRequest?.locationName || "-"}</span>
                   </div>
                 </Col>
                 <Col md="6">
                   <div className="profile-ud plain">
-                    <span className="profile-ud-label">{t("request_details:type_buy")}</span>
+                    <span className="profile-ud-label fw-bold">{t("request_details:type_buy")}</span>
                     <span className="profile-ud-value">
                       {dataRequest?.docType === "N" ? t("request_details:buy_new") : t("request_details:additional")}
                     </span>
@@ -152,7 +152,7 @@ function DetailsModal(props) {
                 </Col>
                 <Col md="6">
                   <div className="profile-ud plain">
-                    <span className="profile-ud-label">{t("request_details:in_planing")}</span>
+                    <span className="profile-ud-label fw-bold">{t("request_details:in_planing")}</span>
                     <span className="profile-ud-value">
                       {dataRequest?.isBudget ? t("common:yes") : t("common:no")}
                     </span>
@@ -160,7 +160,7 @@ function DetailsModal(props) {
                 </Col>
                 <Col md="6">
                   <div className="profile-ud plain">
-                    <span className="profile-ud-label">{`${t("request_details:status")}`}</span>
+                    <span className="profile-ud-label fw-bold">{`${t("request_details:status")}`}</span>
                     <span
                       className={`dot bg-${
                         dataRequest?.statusID === 1
@@ -190,7 +190,7 @@ function DetailsModal(props) {
                 {dataRequest?.supplierName !== "" && (
                   <Col md="6">
                     <div className="profile-ud plain">
-                      <span className="profile-ud-label">{`${t("request_details:supplier")}`}</span>
+                      <span className="profile-ud-label fw-bold">{`${t("request_details:supplier")}`}</span>
                       <span className="profile-ud-value">{dataRequest?.supplierName}</span>
                     </div>
                   </Col>
@@ -198,7 +198,7 @@ function DetailsModal(props) {
                 {dataRequest?.reason !== "" && (
                   <Col md="6">
                     <div className="profile-ud plain">
-                      <span className="profile-ud-label">{`${t("request_details:reason")}`}</span>
+                      <span className="profile-ud-label fw-bold">{`${t("request_details:reason")}`}</span>
                       <span className="profile-ud-value">{dataRequest?.reason}</span>
                     </div>
                   </Col>
@@ -206,7 +206,7 @@ function DetailsModal(props) {
                 {dataDetails.length > 0 && (
                   <Col size="12">
                     <div className="profile-ud plain">
-                      <span className="profile-ud-label">{`${t("request_details:assets")}`}</span>
+                      <span className="profile-ud-label fw-bold">{`${t("request_details:assets")}`}</span>
                       <span className="profile-ud-value">
                         <DataTableBody className="border-top" bodyclass="nk-tb-orders">
                           <DataTableHead>
@@ -270,25 +270,25 @@ function DetailsModal(props) {
               <Row className="g-3">
                 <Col md="6">
                   <div className="profile-ud plain">
-                    <span className="profile-ud-label">{t("request_details:code")}</span>
+                    <span className="profile-ud-label fw-bold">{t("request_details:code")}</span>
                     <span className="profile-ud-value text-primary">#{dataRequest?.assetID || "-"}</span>
                   </div>
                 </Col>
                 <Col md="6">
                   <div className="profile-ud plain">
-                    <span className="profile-ud-label">{t("request_details:name")}</span>
+                    <span className="profile-ud-label fw-bold">{t("request_details:name")}</span>
                     <span className="profile-ud-value">{dataRequest?.assetName || "-"}</span>
                   </div>
                 </Col>
                 <Col md="6">
                   <div className="profile-ud plain">
-                    <span className="profile-ud-label">{t("request_details:group")}</span>
+                    <span className="profile-ud-label fw-bold">{t("request_details:group")}</span>
                     <span className="profile-ud-value">{dataRequest?.assetGroupName || "-"}</span>
                   </div>
                 </Col>
                 <Col md="6">
                   <div className="profile-ud plain">
-                    <span className="profile-ud-label">{t("request_details:purchase_date")}</span>
+                    <span className="profile-ud-label fw-bold">{t("request_details:purchase_date")}</span>
                     <span className="profile-ud-value">
                       {dataRequest?.purchaseDate
                         ? moment(dataRequest?.purchaseDate).format("DD/MM/YYYY")
@@ -298,7 +298,7 @@ function DetailsModal(props) {
                 </Col>
                 <Col md="6">
                   <div className="profile-ud plain">
-                    <span className="profile-ud-label">{t("request_details:origin_price")}</span>
+                    <span className="profile-ud-label fw-bold">{t("request_details:origin_price")}</span>
                     <span className="profile-ud-value">
                       {dataRequest?.originalPrice
                         ? numberFormat(dataRequest?.originalPrice)
@@ -308,7 +308,7 @@ function DetailsModal(props) {
                 </Col>
                 <Col md="6">
                   <div className="profile-ud plain">
-                    <span className="profile-ud-label">{t("request_details:status")}</span>
+                    <span className="profile-ud-label fw-bold">{t("request_details:status")}</span>
                     <span className="profile-ud-value">
                       <span
                         className={`dot bg-${
@@ -343,7 +343,7 @@ function DetailsModal(props) {
                 </Col>
                 <Col size="12">
                   <div className="profile-ud plain">
-                    <span className="profile-ud-label">{t("request_details:description")}:</span>
+                    <span className="profile-ud-label fw-bold">{t("request_details:description")}:</span>
                     <span className="profile-ud-value">{dataRequest?.descr || "-"}</span>
                   </div>
                 </Col>
@@ -367,7 +367,7 @@ function DetailsModal(props) {
             <Row className="g-3">
               <Col md="6">
                 <div className="profile-ud plain">
-                  <span className="profile-ud-label">{`${t("request_details:status")}`}</span>
+                  <span className="profile-ud-label fw-bold">{`${t("request_details:status")}`}</span>
                   <span
                     className={`dot bg-${
                       dataRequest?.statusID === 1
@@ -396,14 +396,14 @@ function DetailsModal(props) {
               </Col>
               <Col md="6">
                 <div className="profile-ud plain">
-                  <span className="profile-ud-label">{`${t("request_details:reason")}`}</span>
+                  <span className="profile-ud-label fw-bold">{`${t("request_details:reason")}`}</span>
                   <span className="profile-ud-value">{dataRequest?.reason || "-"}</span>
                 </div>
               </Col>
               {dataRequest?.statusID === 4 && (
                 <Col md="6">
                   <div className="profile-ud plain">
-                    <span className="profile-ud-label">{t("request_details:reason_reject")}:</span>
+                    <span className="profile-ud-label fw-bold">{t("request_details:reason_reject")}:</span>
                     <span className="profile-ud-value">{dataRequest?.reasonReject || "-"}</span>
                   </div>
                 </Col>
