@@ -24,6 +24,7 @@ import {getCookies, findUpper} from "utils/Utils";
 function TableRequest(props) {
   const {t} = useTranslation();
   const {
+    typeRequest,
     dataRequest,
     onDetails,
     onProcess,
@@ -43,9 +44,15 @@ function TableRequest(props) {
         RequestID: requestID,
       }
       window.location = `${Configs.hostAPI}/${Configs.prefixAPI}${
-        Routes.APPROVED.EXPORT_REQUEST_DAMAGE
+        typeRequest === 1
+          ? Routes.APPROVED.EXPORT_REQUEST_ALLOW
+          : Routes.APPROVED.EXPORT_REQUEST_DAMAGE
       }?value=${JSON.stringify(params)}`;
     }
+  };
+
+  const onDownload = fileDir => {
+    window.open(`${Configs.hostAPI}/${fileDir}`, "_blank");
   };
 
   /**
@@ -62,22 +69,22 @@ function TableRequest(props) {
     <DataTableBody compact>
       <DataTableHead className="nk-tb-item">
         <DataTableRow>
-          <span>{t("request_approved:code_request")}</span>
+          <span className="fw-bold">{t("request_approved:code_request")}</span>
         </DataTableRow>
         <DataTableRow size="md">
-          <span>{t("request_approved:date_request")}</span>
+          <span className="fw-bold">{t("request_approved:date_request")}</span>
         </DataTableRow>
         <DataTableRow>
-          <span>{t("request_approved:name_employee")}</span>
+          <span className="fw-bold">{t("request_approved:name_employee")}</span>
         </DataTableRow>
         <DataTableRow size="md">
-          <span>{t("request_approved:department_employee")}</span>
+          <span className="fw-bold">{t("request_approved:department_employee")}</span>
         </DataTableRow>
         <DataTableRow size="md">
-          <span>{t("request_approved:region_employee")}</span>
+          <span className="fw-bold">{t("request_approved:region_employee")}</span>
         </DataTableRow>
         <DataTableRow>
-          <span>{t("request_approved:status_request")}</span>
+          <span className="fw-bold">{t("request_approved:status_request")}</span>
         </DataTableRow>
         <DataTableRow className="nk-tb-col-tools" />
       </DataTableHead>
@@ -186,6 +193,21 @@ function TableRequest(props) {
                             <span>{t("request_approved:export_file")}</span>
                           </DropdownItem>
                         </li>
+                        {itemR.attachFiles && (
+                            <li>
+                              <DropdownItem
+                                tag="a"
+                                href="#attach"
+                                onClick={(ev) => {
+                                  ev.preventDefault();
+                                  onDownload(itemR.attachFiles);
+                                }}
+                              >
+                                <Icon name="download"></Icon>
+                                <span>{t("request_approved:download_attach_file")}</span>
+                              </DropdownItem>
+                            </li>
+                          )}
                       </ul>
                     </DropdownMenu>
                   </UncontrolledDropdown>

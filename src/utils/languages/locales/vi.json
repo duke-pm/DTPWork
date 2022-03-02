@@ -33,7 +33,10 @@
     "yes": "Có",
     "no": "Không",
     "remove": "Xóa",
-    "filter": "Lọc"
+    "filter": "Lọc",
+    "go_back_home": "Trở về Trang chủ",
+    "des_404": "Chúng tôi rất xin lỗi vì sự bất tiện. Có vẻ như bạn đang cố gắng truy cập một trang đã bị xóa hoặc không bao giờ tồn tại!",
+    "title_404": "Chú ý! Tại sao bạn ở đây?"
   },
   "validate": {
     "empty": "Mục này không thể trống!",
@@ -62,7 +65,8 @@
     "update_history_assets": "Thành công cập nhật quá trình sử dụng tài sản!",
     "create_request_allow": "Thành công thêm mới đề xuất cấp phát tài sản!",
     "create_request_damage": "Thành công thêm mới đề xuất báo hỏng tài sản!",
-    "create_request_lost": "Thành công thêm mới đề xuất báo mất tài sản!"
+    "create_request_lost": "Thành công thêm mới đề xuất báo mất tài sản!",
+    "change_password": "Thành công đổi mật khẩu mới!"
   },
   "error": {
     "title": "Lỗi!!!",
@@ -72,7 +76,10 @@
     "cannot_sign_in_now": "Không thể đăng nhập ngay bây giờ! Vui lòng thử lại sau!",
     "cannot_reset_password": "Không thể cập nhật lại mật khẩu mới! Vui lòng thử lại sau!",
     "create_assets": "Không thể thêm mới tài sản! Vui lòng thử lại sau!",
-    "create_supplier": "Không thể thêm mới nhà cung cấp! Vui lòng thử lại sau!"
+    "create_supplier": "Không thể thêm mới nhà cung cấp! Vui lòng thử lại sau!",
+    "new_password_same_old": "Mật khẩu mới trùng với mật khẩu cũ!",
+    "confirm_password_not_same": "Nhập lại mật khẩu không đúng!",
+    "change_password": "Đổi mật khẩu không thành công!"
   },
   "sign_in": {
     "title": "Đăng nhập",
@@ -99,6 +106,20 @@
     "holder_password": "Nhập mật khẩu mới của bạn...",
     "btn_send": "Đặt lại mật khẩu ngay",
     "return_sign_in": "Quay lại Đăng nhập"
+  },
+  "change_password": {
+    "main_title": "Đổi mật khẩu",
+    "title": "Đổi mật khẩu tài khoản",
+    "sub_title": "Để đổi mật khẩu, bạn cần điền những thông tin dưới đây",
+    "old_password": "Mật khẩu cũ",
+    "holder_old_password": "Mật khẩu cũ...",
+    "new_password": "Mật khẩu mới",
+    "holder_new_password": "Mật khẩu mới...",
+    "confirm_password": "Nhập lại lại mật khẩu",
+    "holder_confirm_password": "Nhập lại lại mật khẩu...",
+    "confirm_title": "Cần xác nhận!",
+    "confirm_des_1": "Bạn thực sự muốn cập nhật mật khẩu mới này?",
+    "confirm_des_2": "Nếu thành công, bạn sẽ cần đăng nhập lại để có thể tiếp tục sử dụng!"
   },
   "account": {
     "title": "Tài khoản",
@@ -312,7 +333,8 @@
     "filter_request": "Lọc đề xuất cần xử lý",
     "allow": "Cấp phát",
     "damage": "Báo hỏng",
-    "lost": "Báo mất"
+    "lost": "Báo mất",
+    "download_attach_file": "Tải file đính kèm"
   },
   "approved_action": {
     "approved_assets": "Phê duyệt cấp phát tài sản",
@@ -366,11 +388,12 @@
     "status_request": "Trạng thái",
     "view_details": "Xem chi tiết",
     "approved_timeline": "Quy trình phê duyệt",
-    "export_file": "Xuất excel",
+    "export_file": "Tải mẫu đề xuất",
     "wait": "Chờ phê duyệt",
     "approved": "Đã duyệt",
     "success": "Hoàn thành",
-    "reject": "Từ chối"
+    "reject": "Từ chối",
+    "download_attach_file": "Tải file đính kèm"
   },
   "request_details": {
     "assets_title": "Chi tiết Đề xuất cấp phát",

@@ -170,52 +170,52 @@ function TableAssets(props) {
     <DataTableBody compact>
       <DataTableHead className="nk-tb-item">
         <DataTableRow size="md">
-          <span>{t("assets:code")}</span>
+          <span className="fw-bold">{t("assets:code")}</span>
         </DataTableRow>
         <DataTableRow>
-          <span>{t("assets:name")}</span>
+          <span className="fw-bold">{t("assets:name")}</span>
         </DataTableRow>
         <DataTableRow size="lg">
-          <span>{t("assets:group")}</span>
+          <span className="fw-bold">{t("assets:group")}</span>
         </DataTableRow>
         <DataTableRow size="lg">
-          <span>{t("assets:type")}</span>
+          <span className="fw-bold">{t("assets:type")}</span>
         </DataTableRow>
         {(idxTab === 0 || idxTab === 4) && (
           <DataTableRow>
-            <span>{t("assets:status")}</span>
+            <span className="fw-bold">{t("assets:status")}</span>
           </DataTableRow>
         )}
         <DataTableRow size="lg">
-          <span>{t("assets:purchase_date")}</span>
+          <span className="fw-bold">{t("assets:purchase_date")}</span>
         </DataTableRow>
         {(idxTab === 1 || idxTab === 2 || idxTab === 3) && (
           <DataTableRow size="lg">
-            <span>{t("assets:origin_price")}</span>
+            <span className="fw-bold">{t("assets:origin_price")}</span>
           </DataTableRow>
         )}
         {(idxTab !== 5) && (
           <DataTableRow size="lg">
-            <span>{t("assets:dept_manager")}</span>
+            <span className="fw-bold">{t("assets:dept_manager")}</span>
           </DataTableRow>
         )}
         {(idxTab !== 1 && idxTab !== 2 && idxTab !== 3 && idxTab !== 5) && (
           <DataTableRow size="md">
-            <span>{t("assets:user_manager")}</span>
+            <span className="fw-bold">{t("assets:user_manager")}</span>
           </DataTableRow>
         )}
         {(idxTab !== 5) && (
           <DataTableRow size="md">
-            <span>{t("assets:region")}</span>
+            <span className="fw-bold">{t("assets:region")}</span>
           </DataTableRow>
         )}
         {(idxTab === 5) && (
           <DataTableRow size="md">
-            <span>{t("assets:liquidation_date")}</span>
+            <span className="fw-bold">{t("assets:liquidation_date")}</span>
           </DataTableRow>
         )}
         <DataTableRow size="lg">
-          <span>{t("assets:code_base")}</span>
+          <span className="fw-bold">{t("assets:code_base")}</span>
         </DataTableRow>
         <DataTableRow className="nk-tb-col-tools" />
       </DataTableHead>
@@ -618,31 +618,33 @@ function TableAssets(props) {
             </div>
 
             {loading.history && (
-              <div className="spinner-border spinner-border-sm text-primary" />
+              <div className="text-center mt-3">
+                <div className="spinner-border spinner-border-sm text-primary" />
+              </div>
             )}
             {!loading.history && formData?.history.length > 0 && (
               <DataTableBody compact>
                 <DataTableHead className="nk-tb-item">
                   <DataTableRow>
-                    <span>{t("assets:date")}</span>
+                    <span className="fw-bold">{t("assets:date")}</span>
                   </DataTableRow>
                   <DataTableRow size="lg">
-                    <span>{t("assets:code_staff")}</span>
+                    <span className="fw-bold">{t("assets:code_staff")}</span>
                   </DataTableRow>
                   <DataTableRow>
-                    <span>{t("assets:name_staff")}</span>
+                    <span className="fw-bold">{t("assets:name_staff")}</span>
                   </DataTableRow>
                   <DataTableRow size="lg">
-                    <span>{t("assets:department_staff")}</span>
+                    <span className="fw-bold">{t("assets:department_staff")}</span>
                   </DataTableRow>
                   <DataTableRow size="lg">
-                    <span>{t("assets:region_staff")}</span>
+                    <span className="fw-bold">{t("assets:region_staff")}</span>
                   </DataTableRow>
                   <DataTableRow>
-                    <span>{t("assets:status")}</span>
+                    <span className="fw-bold">{t("assets:status")}</span>
                   </DataTableRow>
                   <DataTableRow size="md">
-                    <span>{t("assets:description")}</span>
+                    <span className="fw-bold">{t("assets:description")}</span>
                   </DataTableRow>
                   <DataTableRow className="nk-tb-col-tools" />
                 </DataTableHead>

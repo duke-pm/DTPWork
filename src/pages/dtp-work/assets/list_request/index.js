@@ -49,7 +49,8 @@ const TabItem = ({
 }) => {
   return (
     <li className={`${index === curTab && "active"}`}>
-      <a href={`#tab_${tab}`} onClick={(ev) => onChange(ev, index)}>
+      <a href={index !== curTab ? `#tab_${tab}` : undefined}
+        onClick={(ev) => onChange(ev, index)}>
         <span className={`sub-text ${index === curTab && "text-primary"}`}>{label}</span>
       </a>
     </li>
@@ -282,7 +283,7 @@ function RequestAssets(props) {
 
   const onChangeTab = (ev, idxTab) => {
     ev.preventDefault();
-    if (!loading.main) {
+    if (!loading.main && filterTab !== idxTab) {
       setLoading({...loading, search: true});
       // Update active tab
       let tmpTabs = [...tabs];
@@ -705,10 +706,10 @@ function RequestAssets(props) {
               {tabs.map((itemT, indexT) => {
                 return (
                   <div className={`tab-pane ${filterTab === indexT && "active"}`}
-                    id={"tab_" + itemT.id + indexT}>
+                    key={"tab_" + itemT.id + indexT}>
                     {!loading.main && !loading.search && (
                       <TableRequest
-                        idxTab={indexT}
+                        typeRequest={itemT.typeRequest}
                         dataRequest={itemT.data}
                         onProcess={onProcess}
                         onDetails={onDetails}

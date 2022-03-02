@@ -14,6 +14,10 @@ export const fSignout = () => ({
 });
 
 //** Sign in module */
+export const resetSignIn = () => ({
+  type: types.RESET_SIGN_IN,
+});
+
 export const fErrorSignIn = error => ({
   type: types.ERROR_SIGN_IN,
   payload: error,
@@ -213,3 +217,39 @@ export const fFetchRefreshToken = (params, history) => {
   };
 };
 
+//** Change password module */
+export const resetChangePassword = () => ({
+  type: types.RESET_CHANGE_PASSWORD,
+});
+
+export const fErrorChangePassword = error => ({
+  type: types.ERROR_CHANGE_PASSWORD,
+  payload: error,
+});
+
+export const fSuccessChangePassword = () => {
+  return {
+    type: types.SUCCESS_CHANGE_PASSWORD,
+  };
+};
+
+export const fFetchChangePassword = params => {
+  return dispatch => {
+    dispatch({type: types.START_CHANGE_PASSWORD});
+
+    Services.authentication
+      .changePassword(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessChangePassword());
+        } else {
+          return dispatch(
+            fErrorChangePassword(res.systemErrorMessage || res.errorMessage),
+          );
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorChangePassword(error));
+      });
+  };
+};

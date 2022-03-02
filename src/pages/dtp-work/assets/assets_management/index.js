@@ -40,8 +40,11 @@ const TabItem = ({
 }) => {
   return (
     <li className={`${index === curTab && "active"}`}>
-      <a href={`#tab_${tab}`} onClick={(ev) => onChange(ev, index)}>
-        <span className={`sub-text ${index === curTab && "text-primary"}`}>{label}</span>
+      <a href={index !== curTab ? `#tab_${tab}` : undefined}
+        onClick={(ev) => onChange(ev, index)}>
+        <span className={`sub-text ${index === curTab && "text-primary"}`}>
+          {label}
+        </span>
       </a>
     </li>
   )
@@ -227,7 +230,7 @@ function AssetsManagement(props) {
 
   const onChangeTab = (ev, idxTab) => {
     ev.preventDefault();
-    if (!loading.search) {
+    if (!loading.search && filterTab !== idxTab) {
       setLoading({...loading, search: true});
       // Update active tab
       let tmpTabs = [...tabs];
@@ -484,14 +487,14 @@ function AssetsManagement(props) {
                     <li className="nk-block-tools-opt">
                       <Button
                         className="toggle btn-icon d-md-none"
-                        color="primary"
+                        color="secondary"
                         onClick={onGetEmployee}
                       >
                         <Icon name="reload-alt"></Icon>
                       </Button>
                       <Button
                         className="toggle d-none d-md-inline-flex"
-                        color="primary"
+                        color="secondary"
                         onClick={onGetEmployee}
                       >
                         {loading.getData && (

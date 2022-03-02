@@ -57,11 +57,8 @@ const User = () => {
         </div>
         <div className="dropdown-inner">
           <LinkList>
-            <LinkItem link="/user-profile-regular" icon="user-alt" onClick={toggle}>
-              {t("account:view_profile")}
-            </LinkItem>
-            <LinkItem link="/user-profile-setting" icon="setting-alt" onClick={toggle}>
-              {t("account:account_settings")}
+            <LinkItem link="/change-password" icon="unlock" onClick={toggle}>
+              {t("change_password:main_title")}
             </LinkItem>
           </LinkList>
         </div>

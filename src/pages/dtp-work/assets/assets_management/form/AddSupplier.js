@@ -24,9 +24,9 @@ function AddSupplier(props) {
   const {
     history,
     show,
-    onCancel,
     authState,
     commonState,
+    onCancel,
   } = props;
 
   /** Use redux */
@@ -55,7 +55,7 @@ function AddSupplier(props) {
 
   const onFormCancel = isSuccess => {
     onResetData();
-    onCancel(isSuccess ? true : false);
+    onCancel(isSuccess);
   };
 
   const onResetData = () => {
@@ -79,6 +79,7 @@ function AddSupplier(props) {
       Phone: formData.phone.trim(),
       CnctName: formData.contact.trim(),
       CnctPhone: formData.contactPhone.trim(),
+
       RefreshToken: authState["data"]["refreshToken"],
       Lang: commonState["language"],
     };
@@ -100,8 +101,10 @@ function AddSupplier(props) {
   /**
    ** LIFE CYCLE
    */
+
+
   useEffect(() => {
-    if (loading.submit) {
+    if (loading.submit && show) {
       if (!approvedState["submittingCreateSupplier"]) {
         if (approvedState["successCreateSupplier"] && !approvedState["errorCreateSupplier"]) {
           return onSuccess();
@@ -112,6 +115,7 @@ function AddSupplier(props) {
       }
     }
   }, [
+    show,
     loading.submit,
     approvedState["submittingCreateSupplier"],
     approvedState["successCreateSupplier"],
@@ -211,7 +215,7 @@ function AddSupplier(props) {
                       <input
                         ref={register({
                           pattern: {
-                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                            value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
                             message: t("validate:format_email"),
                           },
                         })}
@@ -316,7 +320,7 @@ function AddSupplier(props) {
                 {!disabled && <Icon name="plus" />}
                 <span>{t("common:add_new")}</span>
               </Button>
-              <Button
+              {/* <Button
                 className="ml-3"
                 color="gray"
                 type="button"
@@ -325,7 +329,7 @@ function AddSupplier(props) {
               >
                 <Icon name="undo" />
                 <span>{t("common:reset")}</span>
-              </Button>
+              </Button> */}
             </Col>
           </Row>
         </ModalBody>

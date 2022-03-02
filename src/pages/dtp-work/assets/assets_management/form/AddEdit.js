@@ -5,7 +5,7 @@ import {useForm} from "react-hook-form";
 import DatePicker from "react-datepicker";
 import SimpleBar from "simplebar-react";
 import NumberFormat from 'react-number-format';
-import {Form, FormGroup, Modal, ModalBody} from "reactstrap";
+import {Form, FormGroup} from "reactstrap";
 import {toast} from "react-toastify";
 import moment from "moment";
 /** COMPONENTS */
@@ -109,10 +109,11 @@ function AddEditForm(props) {
    */
   const onFormSupplierCancel = isSuccess => {
     if (isSuccess) {
+      setLoading({...loading, main: true});
       toast(t("success:create_supplier"), {type: "success"});
       onGetMasterData();
     }
-    setView({supplier: false})
+    setView({supplier: false});
   };
 
   const onInputChange = e => {

@@ -8,6 +8,7 @@ import {
   Button, Icon, PreviewCard,
 } from "../../components/Component";
 import {Form, FormGroup, Spinner, Alert} from "reactstrap";
+import {toast} from "react-toastify";
 /** COMPONENTS */
 import PageContainer from "../../layout/page-container/PageContainer";
 import Head from "../../layout/head/Head";
@@ -40,7 +41,6 @@ const Login = () => {
     submit: false,
   });
   const [passState, setPassState] = useState(false);
-  const [errorVal, setError] = useState("");
 
   /**
    ** FUNCTIONS 
@@ -70,7 +70,6 @@ const Login = () => {
   };
 
   const onFormSubmit = formData => {
-    setError("");
     let valUsername = formData[INPUT_NAME.USER_NAME].trim(),
       valPassword = formData[INPUT_NAME.PASSWORD].trim();
     if (valUsername !== "" && valPassword !== "") {
@@ -83,7 +82,7 @@ const Login = () => {
       }
       dispatch(Actions.fFetchSignIn(params));
     } else {
-      setError(t("error:wrong_username_password"));
+      toast(t("error:wrong_username_password"), {type: "error"});
     }
   };
 
@@ -97,12 +96,9 @@ const Login = () => {
   };
 
   const onSignInError = error => {
-    let tmpError = error;
-    if (typeof tmpError === "object") {
-      tmpError = t("error:wrong_username_password");
-    }
-    setError(tmpError);
+    toast(error, {type: "error"});
     setLoading({main: false, submit: false});
+    dispatch(Actions.resetSignIn());
   };
 
   /**
@@ -121,7 +117,7 @@ const Login = () => {
         }
 
         if (!authState["successSignIn"] && authState["errorSignIn"]) {
-          return onSignInError(authState["errorHelperLogin"]);
+          return onSignInError(authState["errorHelperSignIn"]);
         }
       }
     }
@@ -160,14 +156,6 @@ const Login = () => {
                 </BlockDes>
               </BlockContent>
             </BlockHead>
-            {errorVal && (
-              <div className="mb-3">
-                <Alert color="danger" className="alert-icon">
-                  {" "}
-                  <Icon name="alert-circle" /> {errorVal}
-                </Alert>
-              </div>
-            )}
             <Form className="is-alter" onSubmit={handleSubmit(onFormSubmit)}>
               <FormGroup>
                 <div className="form-label-group">

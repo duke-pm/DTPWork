@@ -17,7 +17,9 @@ import {
   UserAvatar,
 } from "components/Component";
 /** COMMON */
-import {findUpper} from "utils/Utils";
+import Configs from "configs";
+import Routes from "services/routesApi";
+import {getCookies, findUpper} from "utils/Utils";
 
 function TableRequestHandle(props) {
   const {t} = useTranslation();
@@ -29,6 +31,10 @@ function TableRequestHandle(props) {
 
   /** Use state */
   const [data, setData] = useState(dataRequest);
+
+  const onDownload = fileDir => {
+    window.open(`${Configs.hostAPI}/${fileDir}`, "_blank");
+  };
 
    /**
    ** LIFE CYCLE
@@ -44,25 +50,25 @@ function TableRequestHandle(props) {
     <DataTableBody compact>
       <DataTableHead className="nk-tb-item">
         <DataTableRow>
-          <span>{t("request_handle:code_request")}</span>
+          <span className="fw-bold">{t("request_handle:code_request")}</span>
         </DataTableRow>
         <DataTableRow size="md">
-          <span>{t("request_handle:date_request")}</span>
+          <span className="fw-bold">{t("request_handle:date_request")}</span>
         </DataTableRow>
         <DataTableRow>
-          <span>{t("request_handle:name_employee")}</span>
+          <span className="fw-bold">{t("request_handle:name_employee")}</span>
         </DataTableRow>
         <DataTableRow size="md">
-          <span>{t("request_handle:department_employee")}</span>
+          <span className="fw-bold">{t("request_handle:department_employee")}</span>
         </DataTableRow>
         <DataTableRow size="md">
-          <span>{t("request_handle:region_employee")}</span>
+          <span className="fw-bold">{t("request_handle:region_employee")}</span>
         </DataTableRow>
         <DataTableRow>
-          <span>{t("request_handle:type_request")}</span>
+          <span className="fw-bold">{t("request_handle:type_request")}</span>
         </DataTableRow>
         <DataTableRow size="sm">
-          <span>{t("request_handle:status_request")}</span>
+          <span className="fw-bold">{t("request_handle:status_request")}</span>
         </DataTableRow>
         <DataTableRow className="nk-tb-col-tools" />
       </DataTableHead>
@@ -174,6 +180,21 @@ function TableRequestHandle(props) {
                               <span>{t("request_handle:approved_timeline")}</span>
                             </DropdownItem>
                           </li>
+                          {item.attachFiles && (
+                            <li>
+                              <DropdownItem
+                                tag="a"
+                                href="#attach"
+                                onClick={(ev) => {
+                                  ev.preventDefault();
+                                  onDownload(item.attachFiles);
+                                }}
+                              >
+                                <Icon name="download"></Icon>
+                                <span>{t("request_handle:download_attach_file")}</span>
+                              </DropdownItem>
+                            </li>
+                          )}
                         </ul>
                       </DropdownMenu>
                     </UncontrolledDropdown>

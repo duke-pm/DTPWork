@@ -98,10 +98,18 @@ export default function (state = initialState, action = {}) {
         errorRefresh: true,
       };
 
-    case types.START_SIGN_IN:
+    case types.RESET_SIGN_IN:
       return {
         ...state,
         submitting: false,
+        successSignIn: false,
+        errorSignIn: false,
+        errorHelperSignIn: "",
+      };
+    case types.START_SIGN_IN:
+      return {
+        ...state,
+        submitting: true,
         successSignIn: false,
         errorSignIn: false,
         errorHelperSignIn: "",
@@ -231,6 +239,38 @@ export default function (state = initialState, action = {}) {
         successUpdatePass: false,
         errorUpdatePass: true,
         errorHelperUpdatePass: payload,
+      };
+    case types.RESET_CHANGE_PASSWORD:
+      return {
+        ...state,
+        submittingChangePass: false,
+        successChangePass: false,
+        errorChangePass: false,
+        errorHelperChangePass: "",
+      };
+    case types.START_CHANGE_PASSWORD:
+      return {
+        ...state,
+        submittingChangePass: true,
+        successChangePass: false,
+        errorChangePass: false,
+        errorHelperChangePass: "",
+      };
+    case types.SUCCESS_CHANGE_PASSWORD:
+      return {
+        ...state,
+        submittingChangePass: false,
+        successChangePass: true,
+        errorChangePass: false,
+        errorHelperChangePass: "",
+      };
+    case types.ERROR_CHANGE_PASSWORD:
+      return {
+        ...state,
+        submittingChangePass: false,
+        successChangePass: false,
+        errorChangePass: true,
+        errorHelperChangePass: payload,
       };
     
 

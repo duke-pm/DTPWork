@@ -7,6 +7,8 @@ import {RedirectAs404} from "../utils/Utils";
 
 import Homepage from "../pages/dtp-work/homepage";
 
+import ChangePassword from "../pages/dtp-work/account/change_password";
+
 import AssetsManagement from "../pages/dtp-work/assets/assets_management";
 import RequestAssets from "../pages/dtp-work/assets/list_request";
 import RequestAssetsHandle from "../pages/dtp-work/assets/list_request_handle";
@@ -270,6 +272,11 @@ const Pages = () => {
         <Route exact
           path={`${process.env.PUBLIC_URL}/`}
           component={Homepage}
+        />
+
+        <Route exact
+          path={`${process.env.PUBLIC_URL}/change-password`}
+          component={ChangePassword}
         />
 
         <Route exact
