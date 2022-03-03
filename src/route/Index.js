@@ -284,11 +284,11 @@ const Pages = () => {
           component={AssetsManagement}
         />
          <Route exact
-          path={`${process.env.PUBLIC_URL}/tai-san/danh-sach-de-xuat`}
+          path={`${process.env.PUBLIC_URL}/list-request`}
           component={RequestAssets}
         />
         <Route exact
-          path={`${process.env.PUBLIC_URL}/tai-san/de-xuat-can-xu-ly`}
+          path={`${process.env.PUBLIC_URL}/list-request-handle`}
           component={RequestAssetsHandle}
         />
 

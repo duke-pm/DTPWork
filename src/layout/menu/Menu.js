@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
 import { NavLink, Link } from "react-router-dom";
 import menu from "./MenuData";
 import Icon from "../../components/icon/Icon";
 import classNames from "classnames";
+import * as Actions from "redux/actions";
 
 const MenuHeading = ({ heading }) => {
   return (
@@ -175,56 +176,6 @@ const MenuItem = ({ icon, link, text, sub, subPanel, panel, newTab, ...props }) 
   );
 };
 
-const PanelItem = ({ icon, link, text, subPanel, index, data, setMenuData, ...props }) => {
-  const menuItemClass = classNames({
-    "nk-menu-item": true,
-  });
-
-  if (data === menu) {
-    return (
-      <li className={menuItemClass}>
-        <Link
-          to={`${process.env.PUBLIC_URL}${link}`}
-          className="nk-menu-link"
-          onClick={() => setMenuData([menu[index]])}
-        >
-          {icon ? (
-            <span className="nk-menu-icon">
-              <Icon name={icon} />
-            </span>
-          ) : null}
-          <span className="nk-menu-text">{text}</span>
-        </Link>
-      </li>
-    );
-  } else {
-    return (
-      <React.Fragment>
-        {subPanel.map((item) => (
-          <MenuItem key={item.text} link={item.link} icon={item.icon} text={item.text} sub={item.subMenu} />
-        ))}
-        <MenuHeading heading="Return to" />
-        <li className={menuItemClass}>
-          <Link to={`${process.env.PUBLIC_URL}/`} className="nk-menu-link" onClick={() => setMenuData(menu)}>
-            <span className="nk-menu-icon">
-              <Icon name="dashlite-alt" />
-            </span>
-            <span className="nk-menu-text">Main Dashboard</span>
-          </Link>
-        </li>
-        <li className={menuItemClass}>
-          <Link to={`${process.env.PUBLIC_URL}/`} className="nk-menu-link" onClick={() => setMenuData(menu)}>
-            <span className="nk-menu-icon">
-              <Icon name="layers-fill" />
-            </span>
-            <span className="nk-menu-text">All Components</span>
-          </Link>
-        </li>
-      </React.Fragment>
-    );
-  }
-};
-
 const MenuSub = ({ icon, link, text, sub, ...props }) => {
   return (
     <ul className="nk-menu-sub" style={props.style}>
@@ -246,6 +197,7 @@ const Menu = () => {
   const {t} = useTranslation();
 
   /** Use redux */
+  const dispatch = useDispatch();
   const authState = useSelector(({auth}) => auth);
 
   /** Use state */
@@ -258,40 +210,43 @@ const Menu = () => {
 
     if (valMenuAuth) {
       valMenuAuth = valMenuAuth.lstPermissionItem[0];
-      let tmpMenu = null, tmpMenuItem = {};
+      let tmpMenu = null, tmpMenuItem = null;
 
       for (let i = 0; i < valMenuAuth.lstPermissionItem.length; i++) {
         tmpMenu = valMenuAuth.lstPermissionItem[i];
-        tmpMenuItem = {};
-        tmpMenuItem["icon"] = tmpMenu.icon;
-        tmpMenuItem["text"] = tmpMenu.menuName;
-        tmpMenuItem["active"] = false;
-        if (tmpMenu.lstPermissionItem.length > 0) {
-          let tmpMenu1 = null, tmpMenuItem1 = {}, tmpSubMenu = [];
+        if (tmpMenu.isWeb && tmpMenu.isAccess) {
+          tmpMenuItem = {};
+          tmpMenuItem["menuID"] = tmpMenu.menuID;
+          tmpMenuItem["icon"] = tmpMenu.icon;
+          tmpMenuItem["text"] = tmpMenu.menuName;
+          tmpMenuItem["isRead"] = tmpMenu.isRead;
+          tmpMenuItem["isWrite"] = tmpMenu.isWrite;
+          tmpMenuItem["active"] = false;
+          if (tmpMenu.lstPermissionItem.length > 0) {
+            let tmpMenu1 = null, tmpMenuItem1 = null, tmpSubMenu = [];
 
-          for (let j = 0; j < tmpMenu.lstPermissionItem.length; j++) {
-            tmpMenu1 = tmpMenu.lstPermissionItem[j];
-            tmpMenuItem1 = {};
-            tmpMenuItem1["text"] = tmpMenu1.menuName;
-            tmpMenuItem1["link"] = tmpMenu1.url;
-            tmpSubMenu.push(tmpMenuItem1);
+            for (let j = 0; j < tmpMenu.lstPermissionItem.length; j++) {
+              tmpMenu1 = tmpMenu.lstPermissionItem[j];
+              if (tmpMenu1.isWeb && tmpMenu1.isAccess) {
+                tmpMenuItem1 = {};
+                tmpMenuItem1["menuID"] = tmpMenu1.menuID;
+                tmpMenuItem1["text"] = tmpMenu1.menuName;
+                tmpMenuItem1["isRead"] = tmpMenu1.isRead;
+                tmpMenuItem1["isWrite"] = tmpMenu1.isWrite;
+                tmpMenuItem1["link"] = tmpMenu1.url;
+                tmpSubMenu.push(tmpMenuItem1);
+              }
+            }
+            tmpMenuItem["subMenu"] = tmpSubMenu;
           }
-          tmpMenuItem["subMenu"] = tmpSubMenu;
         }
-        valMenuData.push(tmpMenuItem);
+        tmpMenuItem && valMenuData.push(tmpMenuItem);
       }
     }
+    console.log('[LOG] ===  ===> ', valMenuData);
+    dispatch(Actions.updateMenu(valMenuData));
     setMenuData(valMenuData);
     setLoading(false);
-
-    // data.forEach((item, index) => {
-    //   if (item.panel) {
-    //     let found = item.subPanel.find((sPanel) => process.env.PUBLIC_URL + sPanel.link === window.location.pathname);
-    //     if (found) {
-    //       setMenuData([menu[index]]);
-    //     }
-    //   }
-    // });
   }, []);
 
   return (

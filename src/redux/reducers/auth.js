@@ -46,6 +46,8 @@ export const initialState = {
     groupID: null,
     lstMenu: null,
   },
+
+  menu: null,
 };
 
 export default function (state = initialState, action = {}) {
@@ -114,6 +116,11 @@ export default function (state = initialState, action = {}) {
         errorSignIn: false,
         errorHelperSignIn: "",
       };
+    case types.UPDATE_MENU:
+      return {
+        ...state,
+        menu: payload,
+      };
     case types.SUCCESS_SIGN_IN:
       return {
         ...state,
@@ -136,7 +143,7 @@ export default function (state = initialState, action = {}) {
           jobTitle: payload.jobTitle,
           groupID: payload.groupID,
           lstMenu: payload.lstMenu || state.data.lstMenu,
-        }
+        },
       };
     case types.ERROR_SIGN_IN:
       return {

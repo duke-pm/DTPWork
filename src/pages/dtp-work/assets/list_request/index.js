@@ -106,6 +106,7 @@ function RequestAssets(props) {
       count: 0,
     },
   ]);
+  const [isWrite, setIsWrite] = useState(false);
   const [loading, setLoading] = useState({
     main: true,
     search: false,
@@ -118,7 +119,6 @@ function RequestAssets(props) {
     details: false,
     process: false,
   });
-  const [searchText, setSearchText] = useState("");
   const [rangeDate, setRangeDate] = useState({
     start: new Date(moment().startOf('month').format('YYYY/MM/DD')),
     end: new Date(moment().endOf('month').format('YYYY/MM/DD')),
@@ -289,7 +289,6 @@ function RequestAssets(props) {
       let tmpTabs = [...tabs];
       tmpTabs[idxTab].page = 1;
       setTabs(tmpTabs);
-      setSearchText(tmpTabs[idxTab].search);
       setFilterTab(idxTab);
       // Call api
       onStartGetData(
@@ -331,14 +330,13 @@ function RequestAssets(props) {
       // Update active page of tab
       let tmpTabs = [...tabs];
       tmpTabs[idxTab].page = 1;
-      tmpTabs[idxTab].search = searchText;
       setTabs(tmpTabs);
       // Call api
       onStartGetData(
         undefined,
         undefined,
         idxTab,
-        searchText,
+        tmpTabs[idxTab].search,
         tmpTabs[idxTab].typeRequest,
         tmpTabs[idxTab].statusRequest,
         1,
@@ -405,12 +403,30 @@ function RequestAssets(props) {
     toast(error, {type: "error"});
   };
 
+  const onCheckWrite = fMenuRequest => {
+    if (fMenuRequest) {
+      setIsWrite(fMenuRequest.isWrite);
+    }
+    onCheckLocal();
+  };
+
   /**
    ** LIFE CYCLE
    */
   useEffect(() => {
     if (loading.main && authState["successSignIn"]) {
-      onCheckLocal();
+      let fMenuRequest = null;
+      if (authState["menu"] && authState["menu"].length > 0) {
+        for (let item of authState["menu"]) {
+          if (item.subMenu && item.subMenu.length > 0) {
+            fMenuRequest = item.subMenu.find(f => f.link === "/list-request");
+            if (fMenuRequest) {
+              return onCheckWrite(fMenuRequest);
+            }
+          }
+        }
+      }
+      if (!fMenuRequest) onCheckLocal();
     }
   }, [
     loading.main,
@@ -453,33 +469,35 @@ function RequestAssets(props) {
             </BlockHeadContent>
             <BlockHeadContent>
               <div className="toggle-wrap nk-block-tools-toggle">
-                <ul className="nk-block-tools g-3">
-                  <li className="nk-block-tools-opt">
-                    <Button
-                      className="toggle btn-icon d-md-none"
-                      color="primary"
-                      onClick={onToggleAdd}
-                    >
-                      <Icon name="plus"></Icon>
-                    </Button>
-                    <Button
-                      className="toggle d-none d-md-inline-flex"
-                      color="primary"
-                      onClick={onToggleAdd}
-                    >
-                      <Icon name="plus"></Icon>
-                      {filterTab === 0 && (
-                        <span>{t("request_approved:add_assets")}</span>
-                      )}
-                      {filterTab === 1 && (
-                        <span>{t("request_approved:add_damage")}</span>
-                      )}
-                      {filterTab === 2 && (
-                        <span>{t("request_approved:add_lost")}</span>
-                      )}
-                    </Button>
-                  </li>
-                </ul>
+                {isWrite && (
+                  <ul className="nk-block-tools g-3">
+                    <li className="nk-block-tools-opt">
+                      <Button
+                        className="toggle btn-icon d-md-none"
+                        color="primary"
+                        onClick={onToggleAdd}
+                      >
+                        <Icon name="plus"></Icon>
+                      </Button>
+                      <Button
+                        className="toggle d-none d-md-inline-flex"
+                        color="primary"
+                        onClick={onToggleAdd}
+                      >
+                        <Icon name="plus"></Icon>
+                        {filterTab === 0 && (
+                          <span>{t("request_approved:add_assets")}</span>
+                        )}
+                        {filterTab === 1 && (
+                          <span>{t("request_approved:add_damage")}</span>
+                        )}
+                        {filterTab === 2 && (
+                          <span>{t("request_approved:add_lost")}</span>
+                        )}
+                      </Button>
+                    </li>
+                  </ul>
+                )}
               </div>
             </BlockHeadContent>
           </BlockBetween>

@@ -17,6 +17,7 @@ export const ERROR_REFRESH_TOKEN = "[AUTH] ERROR_REFRESH_TOKEN";
 /** SIGN OUT */
 export const SIGN_OUT = "[AUTH] SIGN_OUT";
 /** SIGN IN */
+export const UPDATE_MENU = "[AUTH] UPDATE_MENU";
 export const RESET_SIGN_IN = "[AUTH] RESET_SIGN_IN";
 export const START_SIGN_IN = "[AUTH] START_SIGN_IN";
 export const SUCCESS_SIGN_IN = "[AUTH] SUCCESS_SIGN_IN";

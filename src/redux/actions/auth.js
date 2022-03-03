@@ -60,6 +60,11 @@ export const fSuccessSignIn = (data, isRefresh = false) => {
   return {type: types.SUCCESS_SIGN_IN, payload};
 };
 
+export const updateMenu = data => ({
+  type: types.UPDATE_MENU,
+  payload: data,
+});
+
 export const fFetchSignIn = params => {
   return dispatch => {
     dispatch({type: types.START_SIGN_IN});
