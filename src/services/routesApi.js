@@ -11,6 +11,11 @@ const Routes = {
     GET_ALL: "/MasterData/GetDataForForm",
     GET_ASSETS_BY_USER: "/Assets/GetListByUser",
   },
+  MANAGEMENT: {
+    EMPLOYEE_GROUP: "/UserGroup/GetList",
+    UDPATE_EMPLOYEE_GROUP: "/UserGroup/Modify",
+    REMOVE_EMPLOYEE_GROUP: "/UserGroup/remove",
+  },
   APPROVED: {
     LIST_ASSETS: "/Assets/GetList",
     HISTORY_ASSET: "/Assets/GetHistoryByID",
@@ -38,14 +43,6 @@ const Routes = {
     EXPORT_REQUEST_DAMAGE: "/RQAsset/ExportRequestDamage",
     
   },
-  // APPROVED: {
-  //   LIST_REQUEST: "/RQAsset/GetList",
-  //   REQUEST_DETAIL: "/RQAsset/GetByID",
-  //   ADD_REQUEST: "/RQAsset/CreateAllocation",
-  //   ADD_REQUEST_LOST_DAMAGE: "/RQAsset/CreateHandling",
-  //   APPROVED_REQUEST: "/RequestApprove/Approve",
-  //   REJECT_REQUEST: "/RequestApprove/Approve",
-  // },
   // PROJECT_MANAGEMENT: {
   //   LIST_PROJECT: "/Project/GetList",
   //   LIST_TASK: "/Task/GetList",

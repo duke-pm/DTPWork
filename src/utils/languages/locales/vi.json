@@ -66,7 +66,9 @@
     "create_request_allow": "Thành công thêm mới đề xuất cấp phát tài sản!",
     "create_request_damage": "Thành công thêm mới đề xuất báo hỏng tài sản!",
     "create_request_lost": "Thành công thêm mới đề xuất báo mất tài sản!",
-    "change_password": "Thành công đổi mật khẩu mới!"
+    "change_password": "Thành công đổi mật khẩu mới!",
+    "create_employee_group": "Thành công thêm mới nhóm người dùng!",
+    "update_employee_group": "Thành công cập nhật nhóm người dùng!"
   },
   "error": {
     "title": "Lỗi!!!",
@@ -121,6 +123,29 @@
     "confirm_des_1": "Bạn thực sự muốn cập nhật mật khẩu mới này?",
     "confirm_des_2": "Nếu thành công, bạn sẽ cần đăng nhập lại để có thể tiếp tục sử dụng!"
   },
+  "management": {
+    "title": "Quản trị",
+    "employee_group": "Nhóm người dùng",
+    "employee_list": "Danh sách người dùng",
+    "menu": "Thiết lập menu",
+    "role_functional": "Phân quyền chức năng",
+    "approved_line": "Thiết lập line phê duyệt",
+    "approved_level": "Thiết lập level phê duyệt",
+
+    "add_employee_group": "Thêm mới nhóm người dùng",
+    "update_employee_group": "Cập nhật nhóm người dùng",
+    "informations": "Thông tin cơ bản",
+    "code_group": "Mã nhóm",
+    "name_group": "Tên nhóm",
+    "holder_name_group": "Tên nhóm...",
+    "description": "Mô tả",
+    "holder_description": "Mô tả nhóm...",
+    "active": "Khả dụng",
+    "inactive": "Không khả dụng"
+  },
+
+
+
   "account": {
     "title": "Tài khoản",
     "view_profile": "Xem hồ sơ",

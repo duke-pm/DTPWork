@@ -36,12 +36,13 @@ const TabItem = ({
   tab = "1",
   curTab = 0,
   label = "",
+  disabled = false,
   onChange = () => null,
 }) => {
   return (
     <li className={`${index === curTab && "active"}`}>
       <a href={index !== curTab ? `#tab_${tab}` : undefined}
-        onClick={(ev) => onChange(ev, index)}>
+        onClick={(ev) => !disabled && onChange(ev, index)}>
         <span className={`sub-text ${index === curTab && "text-primary"}`}>
           {label}
         </span>
@@ -142,6 +143,7 @@ function AssetsManagement(props) {
     liquidation: false,
     reuse: false,
   });
+  const [isWrite, setIsWrite] = useState(false);
   const [filterTab, setFilterTab] = useState(0);
   const [updateItem, setUpdateItem] = useState(null);
   const [updateHistory, setUpdateHistory] = useState(null);
@@ -405,12 +407,25 @@ function AssetsManagement(props) {
    ** LIFE CYCLE
    */
   useEffect(() => {
-    if (loading.main && authState["successSignIn"]) {
-      onStartGetData();
+    if (loading.main && authState["successSignIn"] && authState["menu"]) {
+      let fMenuRequest = null;
+      if (authState["menu"].length > 0) {
+        for (let item of authState["menu"]) {
+          if (item.subMenu && item.subMenu.length > 0) {
+            fMenuRequest = item.subMenu.find(f => f.link === Routes.requestsApproved);
+            if (fMenuRequest) {
+              setIsWrite(fMenuRequest.isWrite);
+              return onStartGetData();
+            }
+          }
+        }
+      }
+      if (!fMenuRequest) onStartGetData();
     }
   }, [
     loading.main,
-    authState["successSignIn"]
+    authState["successSignIn"],
+    authState["menu"],
   ]);
 
   useEffect(() => {
@@ -477,6 +492,7 @@ function AssetsManagement(props) {
                         color="light"
                         outline
                         className="btn-white"
+                        disabled={disabled}
                         onClick={onExportData}>
                         <Icon name="download-cloud"></Icon>
                         <span>{t("common:export")}</span>
@@ -488,6 +504,7 @@ function AssetsManagement(props) {
                       <Button
                         className="toggle btn-icon d-md-none"
                         color="secondary"
+                        disabled={disabled}
                         onClick={onGetEmployee}
                       >
                         <Icon name="reload-alt"></Icon>
@@ -495,6 +512,7 @@ function AssetsManagement(props) {
                       <Button
                         className="toggle d-none d-md-inline-flex"
                         color="secondary"
+                        disabled={disabled}
                         onClick={onGetEmployee}
                       >
                         {loading.getData && (
@@ -505,11 +523,12 @@ function AssetsManagement(props) {
                       </Button>
                     </li>
                   )}
-                  {filterTab === 0 && (
+                  {filterTab === 0 && isWrite && (
                     <li className="nk-block-tools-opt">
                       <Button
                         className="toggle btn-icon d-md-none"
                         color="primary"
+                        disabled={disabled}
                         onClick={() => toggleView("add")}
                       >
                         <Icon name="plus"></Icon>
@@ -517,6 +536,7 @@ function AssetsManagement(props) {
                       <Button
                         className="toggle d-none d-md-inline-flex"
                         color="primary"
+                        disabled={disabled}
                         onClick={() => toggleView("add")}
                       >
                         <Icon name="plus"></Icon>
@@ -544,6 +564,7 @@ function AssetsManagement(props) {
                           index={index}
                           tab={item.id}
                           curTab={filterTab}
+                          disabled={disabled}
                           label={`${item.label} (${item.count !== undefined
                             ? item.count
                             : item.countDamage + " - " + item.countLost
@@ -561,7 +582,7 @@ function AssetsManagement(props) {
                         href="#search"
                         onClick={(ev) => {
                           ev.preventDefault();
-                          toggleView("search", null);
+                          !disabled && toggleView("search", null);
                         }}
                         className="btn btn-icon search-toggle toggle-search"
                       >
@@ -576,6 +597,7 @@ function AssetsManagement(props) {
                   <div className="search-content">
                     <Button
                       className="search-back btn-icon toggle-search active"
+                      disabled={disabled}
                       onClick={(ev) => {
                         ev.preventDefault();
                         toggleView("search");
@@ -586,12 +608,17 @@ function AssetsManagement(props) {
                     <input
                       type="text"
                       className="border-transparent form-focus-none form-control"
+                      disabled={disabled}
                       value={tabs[filterTab].search}
                       placeholder={t("common:search")}
+                      onKeyDown={ev => {
+                        if (ev.key === "Enter") onSearch(ev, filterTab);
+                      }}
                       onChange={onChangeSearch}
                     />
                     <Button
                       className="search-submit"
+                      disabled={disabled}
                       onClick={ev => onSearch(ev, filterTab)}
                     >
                       <Icon name="search"></Icon>

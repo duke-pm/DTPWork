@@ -353,7 +353,7 @@ function RequestAssetsHandle(props) {
                         href="#search"
                         onClick={(ev) => {
                           ev.preventDefault();
-                          toggleView("search");
+                          !disabled && toggleView("search");
                         }}
                         className="btn btn-icon search-toggle toggle-search"
                       >
@@ -365,6 +365,7 @@ function RequestAssetsHandle(props) {
                       <div className="toggle-wrap">
                         <Button
                           className={`btn-icon btn-trigger toggle ${sm ? "active" : ""}`}
+                          disabled={disabled}
                           onClick={toggleSm}
                         >
                           <Icon name="menu-right"></Icon>
@@ -372,7 +373,7 @@ function RequestAssetsHandle(props) {
                         <div className={`toggle-content ${sm ? "content-active" : ""}`}>
                           <ul className="btn-toolbar gx-1">
                             <li className="toggle-close">
-                              <Button className="btn-icon btn-trigger toggle" onClick={toggleSm}>
+                              <Button className="btn-icon btn-trigger toggle" disabled={disabled} onClick={toggleSm}>
                                 <Icon name="arrow-left"></Icon>
                               </Button>
                             </li>
@@ -444,6 +445,7 @@ function RequestAssetsHandle(props) {
                                                   id="allowType"
                                                   name="allowType"
                                                   type="checkbox"
+                                                  disabled={disabled}
                                                   value={1}
                                                   checked={formData.type.includes(1)}
                                                   onChange={onChangeType}
@@ -460,6 +462,7 @@ function RequestAssetsHandle(props) {
                                                   id="damageType"
                                                   name="damageType"
                                                   type="checkbox"
+                                                  disabled={disabled}
                                                   value={2}
                                                   checked={formData.type.includes(2)}
                                                   onChange={onChangeType}
@@ -476,6 +479,7 @@ function RequestAssetsHandle(props) {
                                                   id="lostType"
                                                   name="lostType"
                                                   type="checkbox"
+                                                  disabled={disabled}
                                                   value={3}
                                                   checked={formData.type.includes(3)}
                                                   onChange={onChangeType}
@@ -491,11 +495,11 @@ function RequestAssetsHandle(props) {
                                     </Row>
                                   </div>
                                   <div className="dropdown-foot between">
-                                    <Button color="primary" onClick={onSearchFilter}>
+                                    <Button color="primary" disabled={disabled} onClick={onSearchFilter}>
                                       <Icon name="filter"></Icon>
                                       <span>{t("common:filter")}</span>
                                     </Button>
-                                    <Button className="btn-dim" color="secondary" onClick={onResetFilter}>
+                                    <Button className="btn-dim" disabled={disabled} color="secondary" onClick={onResetFilter}>
                                       <Icon name="undo"></Icon>
                                       <span>{t("common:reset")}</span>
                                     </Button>
@@ -515,6 +519,7 @@ function RequestAssetsHandle(props) {
                   <div className="search-content">
                     <Button
                       className="search-back btn-icon toggle-search active"
+                      disabled={disabled}
                       onClick={(ev) => {
                         ev.preventDefault();
                         toggleView("search");
@@ -525,12 +530,17 @@ function RequestAssetsHandle(props) {
                     <input
                       type="text"
                       className="border-transparent form-focus-none form-control"
+                      disabled={disabled}
                       value={formData.search}
                       placeholder={t("common:search")}
+                      onKeyDown={ev => {
+                        if (ev.key === "Enter") onSearch(ev);
+                      }}
                       onChange={onChangeSearch}
                     />
                     <Button
                       className="search-submit btn-icon"
+                      disabled={disabled}
                       onClick={onSearch}
                     >
                       <Icon name="search"></Icon>
@@ -539,12 +549,14 @@ function RequestAssetsHandle(props) {
                 </div>
               </div>
             </div>
+            
             {/** Data table */}
             <TableRequestHandle
               dataRequest={data.requests}
               onApproved={onApproved}
               onProcess={onProcess}
             />
+
             {/** Paging table */}
             <PreviewAltCard>
               {disabled ? (

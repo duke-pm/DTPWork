@@ -35,6 +35,7 @@ import AddAllowForm from "./form/AddAllow";
 import AddDamLosForm from "./form/AddDamLos";
 /** COMMON */
 import Configs from "configs";
+import Routes from "route/routes";
 import Constants from "utils/constants";
 import {getLocalStorage, setLocalStorage} from "utils/Utils";
 /** REDUX */
@@ -45,12 +46,13 @@ const TabItem = ({
   tab = "1",
   curTab = 0,
   label = "",
+  disabled = false,
   onChange = () => null,
 }) => {
   return (
     <li className={`${index === curTab && "active"}`}>
       <a href={index !== curTab ? `#tab_${tab}` : undefined}
-        onClick={(ev) => onChange(ev, index)}>
+        onClick={(ev) => !disabled && onChange(ev, index)}>
         <span className={`sub-text ${index === curTab && "text-primary"}`}>{label}</span>
       </a>
     </li>
@@ -403,25 +405,19 @@ function RequestAssets(props) {
     toast(error, {type: "error"});
   };
 
-  const onCheckWrite = fMenuRequest => {
-    if (fMenuRequest) {
-      setIsWrite(fMenuRequest.isWrite);
-    }
-    onCheckLocal();
-  };
-
   /**
    ** LIFE CYCLE
    */
   useEffect(() => {
-    if (loading.main && authState["successSignIn"]) {
+    if (loading.main && authState["successSignIn"] && authState["menu"]) {
       let fMenuRequest = null;
-      if (authState["menu"] && authState["menu"].length > 0) {
+      if (authState["menu"].length > 0) {
         for (let item of authState["menu"]) {
           if (item.subMenu && item.subMenu.length > 0) {
-            fMenuRequest = item.subMenu.find(f => f.link === "/list-request");
+            fMenuRequest = item.subMenu.find(f => f.link === Routes.requestsApproved);
             if (fMenuRequest) {
-              return onCheckWrite(fMenuRequest);
+              setIsWrite(fMenuRequest.isWrite);
+              return onCheckLocal();
             }
           }
         }
@@ -430,7 +426,8 @@ function RequestAssets(props) {
     }
   }, [
     loading.main,
-    authState["successSignIn"]
+    authState["successSignIn"],
+    authState["menu"],
   ]);
 
   useEffect(() => {
@@ -475,6 +472,7 @@ function RequestAssets(props) {
                       <Button
                         className="toggle btn-icon d-md-none"
                         color="primary"
+                        disabled={disabled}
                         onClick={onToggleAdd}
                       >
                         <Icon name="plus"></Icon>
@@ -482,6 +480,7 @@ function RequestAssets(props) {
                       <Button
                         className="toggle d-none d-md-inline-flex"
                         color="primary"
+                        disabled={disabled}
                         onClick={onToggleAdd}
                       >
                         <Icon name="plus"></Icon>
@@ -517,6 +516,7 @@ function RequestAssets(props) {
                           index={index}
                           tab={item.id}
                           curTab={filterTab}
+                          disabled={disabled}
                           label={`${item.label} (${item.count})`}
                           onChange={onChangeTab}
                         />
@@ -531,7 +531,7 @@ function RequestAssets(props) {
                         href="#search"
                         onClick={(ev) => {
                           ev.preventDefault();
-                          toggleView("search");
+                          !disabled && toggleView("search");
                         }}
                         className="btn btn-icon search-toggle toggle-search"
                       >
@@ -543,6 +543,7 @@ function RequestAssets(props) {
                       <div className="toggle-wrap">
                         <Button
                           className={`btn-icon btn-trigger toggle ${sm ? "active" : ""}`}
+                          disabled={disabled}
                           onClick={toggleSm}
                         >
                           <Icon name="menu-right"></Icon>
@@ -550,7 +551,7 @@ function RequestAssets(props) {
                         <div className={`toggle-content ${sm ? "content-active" : ""}`}>
                           <ul className="btn-toolbar gx-1">
                             <li className="toggle-close">
-                              <Button className="btn-icon btn-trigger toggle" onClick={toggleSm}>
+                              <Button className="btn-icon btn-trigger toggle" disabled={disabled} onClick={toggleSm}>
                                 <Icon name="arrow-left"></Icon>
                               </Button>
                             </li>
@@ -622,6 +623,7 @@ function RequestAssets(props) {
                                                   id="wait"
                                                   name="wait"
                                                   type="checkbox"
+                                                  disabled={disabled}
                                                   value={1}
                                                   checked={tabs[filterTab].statusRequest.includes(1)}
                                                   onChange={onChangeStatus}
@@ -638,6 +640,7 @@ function RequestAssets(props) {
                                                   id="approved"
                                                   name="approved"
                                                   type="checkbox"
+                                                  disabled={disabled}
                                                   value={2}
                                                   checked={tabs[filterTab].statusRequest.includes(2)}
                                                   onChange={onChangeStatus}
@@ -669,11 +672,11 @@ function RequestAssets(props) {
                                     </Row>
                                   </div>
                                   <div className="dropdown-foot between">
-                                    <Button color="primary" onClick={onSearchFilter}>
+                                    <Button color="primary" disabled={disabled} onClick={onSearchFilter}>
                                       <Icon name="filter"></Icon>
                                       <span>{t("common:filter")}</span>
                                     </Button>
-                                    <Button className="btn-dim" color="secondary" onClick={onResetFilter}>
+                                    <Button className="btn-dim" color="secondary" disabled={disabled} onClick={onResetFilter}>
                                       <Icon name="undo"></Icon>
                                       <span>{t("common:reset")}</span>
                                     </Button>
@@ -704,8 +707,12 @@ function RequestAssets(props) {
                     <input
                       type="text"
                       className="border-transparent form-focus-none form-control"
+                      disabled={disabled}
                       value={tabs[filterTab].search}
                       placeholder={t("common:search")}
+                      onKeyDown={ev => {
+                        if (ev.key === "Enter") onSearch(ev, filterTab);
+                      }}
                       onChange={onChangeSearch}
                     />
                     <Button

@@ -3,11 +3,14 @@ import {Switch, Route} from "react-router-dom";
 // import {CustomerProvider} from "../pages/panel/e-commerce/customer/CustomerContext";
 // import {ProductContextProvider} from "../pages/pre-built/products/ProductContext";
 // import {UserContextProvider} from "../pages/pre-built/user-manage/UserContext";
+import Routes from "./routes";
 import {RedirectAs404} from "../utils/Utils";
 
 import Homepage from "../pages/dtp-work/homepage";
 
 import ChangePassword from "../pages/dtp-work/account/change_password";
+
+import EmployeeGroup from "../pages/dtp-work/management/employee_group";
 
 import AssetsManagement from "../pages/dtp-work/assets/assets_management";
 import RequestAssets from "../pages/dtp-work/assets/list_request";
@@ -269,28 +272,20 @@ const Pages = () => {
         <Route exact path={`${process.env.PUBLIC_URL}/email-template`} component={EmailTemplate}></Route>
         <Route exact path={`${process.env.PUBLIC_URL}/nioicon`} component={NioIconPage}></Route> */}
         {/* <Route exact path={`${process.env.PUBLIC_URL}/svg-icons`} component={SVGIconPage}></Route> */}
-        <Route exact
-          path={`${process.env.PUBLIC_URL}/`}
-          component={Homepage}
-        />
 
-        <Route exact
-          path={`${process.env.PUBLIC_URL}/change-password`}
-          component={ChangePassword}
-        />
+        {/** Dashboard route */}
+        <Route exact path={`${process.env.PUBLIC_URL}${Routes.dashboard}`} component={Homepage} />
 
-        <Route exact
-          path={`${process.env.PUBLIC_URL}/assets-management`}
-          component={AssetsManagement}
-        />
-         <Route exact
-          path={`${process.env.PUBLIC_URL}/list-request`}
-          component={RequestAssets}
-        />
-        <Route exact
-          path={`${process.env.PUBLIC_URL}/list-request-handle`}
-          component={RequestAssetsHandle}
-        />
+        {/** Account route */}
+        <Route exact path={`${process.env.PUBLIC_URL}${Routes.changePassword}`} component={ChangePassword} />
+
+        {/** Management route */}
+        <Route exact path={`${process.env.PUBLIC_URL}${Routes.employeeGroup}`} component={EmployeeGroup} />
+
+        {/** Approved route */}
+        <Route exact path={`${process.env.PUBLIC_URL}${Routes.assetsManagement}`} component={AssetsManagement}/>
+        <Route exact path={`${process.env.PUBLIC_URL}${Routes.requestsApproved}`} component={RequestAssets} />
+        <Route exact path={`${process.env.PUBLIC_URL}${Routes.requestsApprovedHandle}`} component={RequestAssetsHandle} />
 
         <Route component={RedirectAs404}></Route>
       </Switch>

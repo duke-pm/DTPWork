@@ -243,7 +243,6 @@ const Menu = () => {
         tmpMenuItem && valMenuData.push(tmpMenuItem);
       }
     }
-    console.log('[LOG] ===  ===> ', valMenuData);
     dispatch(Actions.updateMenu(valMenuData));
     setMenuData(valMenuData);
     setLoading(false);

@@ -5,7 +5,7 @@ import * as Actions from "redux/actions";
 /**
  ** Master data module
  */
- export const fUpdateSupplier = data => ({
+export const fUpdateSupplier = data => ({
   type: types.UPDATE_MASTER_SUPPLIER,
   payload: data,
 });

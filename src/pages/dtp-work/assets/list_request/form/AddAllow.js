@@ -625,6 +625,7 @@ function AddAllowForm(props) {
             </Row>
           </div>
         </Block>
+        
         <Block>
           <div className="data-head d-flex justify-content-between">
             <h6 className="overline-title mb-0">

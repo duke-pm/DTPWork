@@ -18,8 +18,7 @@ import {
 } from "components/Component";
 /** COMMON */
 import Configs from "configs";
-import Routes from "services/routesApi";
-import {getCookies, findUpper} from "utils/Utils";
+import {findUpper} from "utils/Utils";
 
 function TableRequestHandle(props) {
   const {t} = useTranslation();
@@ -205,8 +204,7 @@ function TableRequestHandle(props) {
         )})
         : null}
     </DataTableBody>
-  )
-
+  );
 }
 
 export default TableRequestHandle;
