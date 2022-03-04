@@ -204,44 +204,40 @@ const Menu = () => {
   const [loading, setLoading] = useState(true);
   const [data, setMenuData] = useState([]);
 
+  const onPrepareMenu = data => {
+    let tmpMenu = null, tmpMenuItem = null, tmpMenus = [], tmpSubMenu = [];
+    if (data.length > 0) {
+      for (let i = 0; i < data.length; i++) {
+        tmpMenu = data[i];
+        if (tmpMenu.isWeb && tmpMenu.isAccess) {
+          tmpMenuItem = {};
+          tmpMenuItem["menuID"] = tmpMenu.menuID || "";
+          tmpMenuItem["icon"] = tmpMenu.icon || "";
+          tmpMenuItem["text"] = tmpMenu.menuName || "";
+          tmpMenuItem["isRead"] = tmpMenu.isRead || false;
+          tmpMenuItem["isWrite"] = tmpMenu.isWrite || false;
+          tmpMenuItem["link"] = tmpMenu.url || "";
+          tmpMenuItem["active"] = false;
+          tmpSubMenu = onPrepareMenu(tmpMenu.lstPermissionItem);
+          if (tmpSubMenu) {
+            tmpMenuItem["subMenu"] = tmpSubMenu;
+          }
+          tmpMenus.push(tmpMenuItem);
+        }
+      }
+      return tmpMenus;
+    } else {
+      return null;
+    }
+  };
+
   useEffect(() => {
     let valMenuData = [{heading: t("common:function")}],
       valMenuAuth = authState["data"].lstMenu;
 
-    if (valMenuAuth) {
-      valMenuAuth = valMenuAuth.lstPermissionItem[0];
-      let tmpMenu = null, tmpMenuItem = null;
-
-      for (let i = 0; i < valMenuAuth.lstPermissionItem.length; i++) {
-        tmpMenu = valMenuAuth.lstPermissionItem[i];
-        if (tmpMenu.isWeb && tmpMenu.isAccess) {
-          tmpMenuItem = {};
-          tmpMenuItem["menuID"] = tmpMenu.menuID;
-          tmpMenuItem["icon"] = tmpMenu.icon;
-          tmpMenuItem["text"] = tmpMenu.menuName;
-          tmpMenuItem["isRead"] = tmpMenu.isRead;
-          tmpMenuItem["isWrite"] = tmpMenu.isWrite;
-          tmpMenuItem["active"] = false;
-          if (tmpMenu.lstPermissionItem.length > 0) {
-            let tmpMenu1 = null, tmpMenuItem1 = null, tmpSubMenu = [];
-
-            for (let j = 0; j < tmpMenu.lstPermissionItem.length; j++) {
-              tmpMenu1 = tmpMenu.lstPermissionItem[j];
-              if (tmpMenu1.isWeb && tmpMenu1.isAccess) {
-                tmpMenuItem1 = {};
-                tmpMenuItem1["menuID"] = tmpMenu1.menuID;
-                tmpMenuItem1["text"] = tmpMenu1.menuName;
-                tmpMenuItem1["isRead"] = tmpMenu1.isRead;
-                tmpMenuItem1["isWrite"] = tmpMenu1.isWrite;
-                tmpMenuItem1["link"] = tmpMenu1.url;
-                tmpSubMenu.push(tmpMenuItem1);
-              }
-            }
-            tmpMenuItem["subMenu"] = tmpSubMenu;
-          }
-        }
-        tmpMenuItem && valMenuData.push(tmpMenuItem);
-      }
+    if (valMenuAuth && valMenuAuth.lstPermissionItem) {
+      let dataMenu = onPrepareMenu(valMenuAuth.lstPermissionItem[0].lstPermissionItem);
+      valMenuData = [...valMenuData, ...dataMenu];
     }
     dispatch(Actions.updateMenu(valMenuData));
     setMenuData(valMenuData);

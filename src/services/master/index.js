@@ -1,6 +1,7 @@
 import jwtServiceConfig from "../jwtServiceConfig";
 import Routes from "../routesApi";
 import API from "../axios";
+import {log} from "utils/Utils";
 
 export default {
   getAll: params => {
@@ -10,7 +11,7 @@ export default {
       
       API.get(jwtServiceConfig.baseURL + Routes.MASTER_DATA.GET_ALL, tmpConfigs)
         .then(response => {
-          console.log("FETCH MASTER DATA => ", response);
+          log("FETCH MASTER DATA => ", response);
           if (response.status === 200 && response.data) {
             resolve(response.data);
           } else {
@@ -18,7 +19,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("ERROR MASTER DATA => ", error);
+          log("ERROR MASTER DATA => ", error);
           reject(error.response ? error.response.data : error);
         });
     });
@@ -30,7 +31,7 @@ export default {
       
       API.get(jwtServiceConfig.baseURL + Routes.MASTER_DATA.GET_ASSETS_BY_USER, tmpConfigs)
         .then(response => {
-          console.log("FETCH ASSETS BY USER => ", response);
+          log("FETCH ASSETS BY USER => ", response);
           if (response.status === 200 && response.data) {
             resolve(response.data);
           } else {
@@ -38,7 +39,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("ERROR ASSETS BY USER => ", error);
+          log("ERROR ASSETS BY USER => ", error);
           reject(error.response ? error.response.data : error);
         });
     });

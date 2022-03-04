@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
 import DatePicker from "react-datepicker";
 import SimpleBar from "simplebar-react";
-import {Form, FormGroup, Label} from "reactstrap";
+import {Form, FormGroup, Label, Spinner} from "reactstrap";
 import moment from "moment";
 /** COMMON */
 import {
@@ -22,6 +22,7 @@ import AssetInformations from "../components/AssetInformations";
 import EmployeeInformations from "../components/EmployeeInformations";
 /** COMMON */
 import Configs from "configs";
+import {log} from "utils/Utils";
 /** REDUX */
 import * as Actions from "redux/actions";
 
@@ -115,7 +116,7 @@ function LiquidationForm(props) {
   };
 
   const onSetFormDataDetails = (data, dataH) => {
-    console.log('[LOG] === onSetFormDataDetails ===> ', data);
+    log('[LOG] === onSetFormDataDetails ===> ', data);
     setDataItem({
       id: data.assetID,
       code: data.assetCode,
@@ -175,7 +176,7 @@ function LiquidationForm(props) {
         RefreshToken: authState["data"]["refreshToken"],
         Lang: commonState["language"],
       };
-      console.log('[LOG] === onFormSubmit ===> ', params);
+      log('[LOG] === onFormSubmit ===> ', params);
       dispatch(Actions.fFetchLiquidationAssets(params, history));
     }
     if (updateHistory) {
@@ -192,7 +193,7 @@ function LiquidationForm(props) {
         RefreshToken: authState["data"]["refreshToken"],
         Lang: commonState["language"],
       };
-      console.log('[LOG] === onFormSubmit ===> ', params);
+      log('[LOG] === onFormSubmit ===> ', params);
       dispatch(Actions.fFetchUpdateProcess(params, history));
     }
   };
@@ -211,7 +212,7 @@ function LiquidationForm(props) {
   };
 
   const onError = (type, error) => {
-    console.log('[LOG] === onError ===> ', error);
+    log('[LOG] === onError ===> ', error);
     if (type === "Liquidation") {
       onResetData();
       onClose(false, error);
@@ -342,7 +343,7 @@ function LiquidationForm(props) {
                     disabled={disabled}
                   >
                     {disabled && (
-                      <div className="spinner-border spinner-border-sm text-white" role="status" />
+                      <Spinner size="sm" color="light" />
                     )}
                     {!loading.liquidation && !loading.history && <Icon name="save"></Icon>}
                   </Button>
@@ -353,7 +354,7 @@ function LiquidationForm(props) {
                     disabled={disabled}
                   >
                     {disabled && (
-                      <div className="spinner-border spinner-border-sm text-white mr-2" role="status" />
+                      <Spinner className="mr-2" size="sm" color="light" />
                     )}
                     {!loading.liquidation && !loading.history && <Icon name="save"></Icon>}
                     <span>{t("common:save")}</span>

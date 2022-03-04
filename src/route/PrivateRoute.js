@@ -6,6 +6,7 @@ import FieldsAuth from "configs/fieldsAuth";
 import Constants from "utils/constants";
 /** REDUX */
 import * as Actions from "../redux/actions";
+import { Spinner } from "reactstrap";
 
 const auth = localStorage.getItem(Constants.LS_SIGN_IN);
 
@@ -70,8 +71,8 @@ const PrivateRoute = ({ exact, component: Component, ...rest }) => {
             <Redirect to={`${process.env.PUBLIC_URL}/auth-login`}></Redirect>
           )
         ) : (
-          <div className="d-flex justify-content-center align-items-center">
-            <div className="spinner-border" role="status" />
+          <div className="text-center">
+            <Spinner size="sm" color="primary" />
           </div>
         )
       }

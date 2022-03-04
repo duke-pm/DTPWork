@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import {useTranslation} from "react-i18next";
 import {useSelector, useDispatch} from "react-redux";
 /** COMPONENTS */
 import Content from "layout/content/Content";
 import Head from "layout/head/Head";
 /** COMMON */
+import {log} from "utils/Utils";
 /** REDUX */
 import * as Actions from "redux/actions";
 
@@ -37,7 +38,7 @@ function BlankPage(props) {
   };
 
   const onError = error => {
-    console.log('[LOG] === onError ===> ', error);
+    log('[LOG] === onError ===> ', error);
   };
 
   /**
@@ -50,6 +51,7 @@ function BlankPage(props) {
   /**
    ** RENDER
    */
+  const disabled = loading.main || loading.search;
   return (
     <React.Fragment>
       <Head title="Blank Page" />

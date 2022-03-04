@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
 import DatePicker from "react-datepicker";
 import SimpleBar from "simplebar-react";
-import {Form, FormGroup, Label} from "reactstrap";
+import {Form, FormGroup, Label, Spinner} from "reactstrap";
 import moment from "moment";
 /** COMMON */
 import {
@@ -24,7 +24,7 @@ import EmployeeInformations from "../components/EmployeeInformations";
 /** COMMON */
 import Configs from "configs";
 import Routes from "services/routesApi";
-import {getCookies} from "utils/Utils";
+import {getCookies, log} from "utils/Utils";
 /** REDUX */
 import * as Actions from "redux/actions";
 
@@ -274,7 +274,7 @@ function ApprovedForm(props) {
         RefreshToken: authState["data"]["refreshToken"],
         Lang: commonState["language"],
       };
-      console.log('[LOG] === onFormSubmit ===> ', params);
+      log('[LOG] === onFormSubmit ===> ', params);
       if (isApproved) {
         dispatch(Actions.fFetchApprovedAssets(params, history));
       }
@@ -296,7 +296,7 @@ function ApprovedForm(props) {
         RefreshToken: authState["data"]["refreshToken"],
         Lang: commonState["language"],
       };
-      console.log('[LOG] === onFormSubmit ===> ', params);
+      log('[LOG] === onFormSubmit ===> ', params);
       dispatch(Actions.fFetchUpdateProcess(params, history));
     }
   };
@@ -350,7 +350,7 @@ function ApprovedForm(props) {
   };
 
   const onError = (type, error) => {
-    console.log('[LOG] === onError ===> ', error);
+    log('[LOG] === onError ===> ', error);
     if (type === "Approved" || type === "Recall" || type === "History") {
       onResetData();
       onClose(false, error);
@@ -526,7 +526,7 @@ function ApprovedForm(props) {
                     disabled={disabled}
                   >
                     {disabled && (
-                      <div className="spinner-border spinner-border-sm text-white" />
+                      <Spinner size="sm" color="light" />
                     )}
                     {!loading.approved && !loading.recall && !loading.history && <Icon name="save"></Icon>}
                   </Button>
@@ -537,7 +537,7 @@ function ApprovedForm(props) {
                     disabled={disabled}
                   >
                     {disabled && (
-                      <div className="spinner-border spinner-border-sm text-white mr-2" />
+                      <Spinner className="mr-2" size="sm" color="light" />
                     )}
                     {!loading.approved && !loading.recall && !loading.history && <Icon name="save"></Icon>}
                     <span>{t("common:save")}</span>

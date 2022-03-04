@@ -16,20 +16,21 @@ import {
   DataTableRow,
   DataTableBody,
   Icon,
+  UserAvatar,
 } from "components/Component";
 /** COMMON */
-import {log} from "utils/Utils";
+import {findUpper, log} from "utils/Utils";
 /** REDUX */
 import * as Actions from "redux/actions";
 
-function TableEmployeeGroup(props) {
+function TableEmployee(props) {
   const {t} = useTranslation();
   const {
     isWrite,
     history,
     commonState,
     authState,
-    dataGroup,
+    dataEmployee,
     onUpdate,
   } = props;
 
@@ -39,35 +40,36 @@ function TableEmployeeGroup(props) {
 
   /** Use state */
   const [loading, setLoading] = useState(false);
-  const [choosedGroup, setChoosedGroup] = useState(null);
-  const [data, setData] = useState(dataGroup);
+  const [choosedEmployee, setChoosedEmployee] = useState(null);
+  const [data, setData] = useState(dataEmployee);
 
   /**
    ** FUNCTIONS
    */
-  const onChangeInactive = group => {
+  const onChangeInactive = employee => {
     setLoading(true);
-    setChoosedGroup(group.groupID);
+    setChoosedEmployee(employee.userID);
     let params = {
-      ...group,
-      Inactive: !group.inactive,
+      ...employee,
+      Inactive: !employee.inactive,
+      
       RefreshToken: authState["data"]["refreshToken"],
       Lang: commonState["language"],
     };
-    dispatch(Actions.fFetchUpdateEmployeeGroup(params, history));
+    dispatch(Actions.fFetchUpdateEmployee(params, history));
   };
 
   const onSuccess = () => {
-    dispatch(Actions.resetEmployeeGroup());
-    setChoosedGroup(null);
+    dispatch(Actions.resetEmployee());
+    setChoosedEmployee(null);
     setLoading(false);
-    toast(t("success:update_employee_group"), {type: "success"});
+    toast(t("success:update_employee"), {type: "success"});
   };
 
   const onError = error => {
     log('[LOG] === onError ===> ', error);
-    dispatch(Actions.resetEmployeeGroup());
-    setChoosedGroup(null);
+    dispatch(Actions.resetEmployee());
+    setChoosedEmployee(null);
     setLoading(false);
     toast(error, {type: "error"});
   };
@@ -76,27 +78,27 @@ function TableEmployeeGroup(props) {
    ** LIFE CYCLE
    */
   useEffect(() => {
-    setData(dataGroup);
-  }, [dataGroup]);
+    setData(dataEmployee);
+  }, [dataEmployee]);
 
   useEffect(() => {
-    if (loading && choosedGroup) {
-      if (!managementState["submittingUpdateEmpGro"]) {
-        if (managementState["successUpdateEmpGro"] && !managementState["errorUpdateEmpGro"]) {
+    if (loading && choosedEmployee) {
+      if (!managementState["submittingUpdateEmp"]) {
+        if (managementState["successUpdateEmp"] && !managementState["errorUpdateEmp"]) {
           return onSuccess();
         }
-        if (!managementState["successUpdateEmpGro"] && managementState["errorUpdateEmpGro"]) {
-          return onError(managementState["errorHelperUpdateEmpGro"]);
+        if (!managementState["successUpdateEmp"] && managementState["errorUpdateEmp"]) {
+          return onError(managementState["errorHelperUpdateEmp"]);
         }
       }
     }
   }, [
     loading,
-    choosedGroup,
-    managementState["submittingUpdateEmpGro"],
-    managementState["successUpdateEmpGro"],
-    managementState["errorUpdateEmpGro"],
-  ])
+    choosedEmployee,
+    managementState["submittingUpdateEmp"],
+    managementState["successUpdateEmp"],
+    managementState["errorUpdateEmp"],
+  ]);
 
   /**
    ** RENDER
@@ -105,13 +107,16 @@ function TableEmployeeGroup(props) {
     <DataTableBody compact>
       <DataTableHead className="nk-tb-item">
         <DataTableRow size="sm">
-          <span className="fw-bold">{t("management:code_group")}</span>
+          <span className="fw-bold">{t("management:code_employee")}</span>
+        </DataTableRow>
+        <DataTableRow size="sm">
+          <span className="fw-bold">{t("management:username_employee")}</span>
         </DataTableRow>
         <DataTableRow>
-          <span className="fw-bold">{t("management:name_group")}</span>
+          <span className="fw-bold">{t("management:full_name_employee")}</span>
         </DataTableRow>
-        <DataTableRow size="md">
-          <span className="fw-bold">{t("management:description")}</span>
+        <DataTableRow>
+          <span className="fw-bold">{t("management:group_employee")}</span>
         </DataTableRow>
         <DataTableRow>
           <span className="fw-bold">{t("management:active")}</span>
@@ -122,33 +127,44 @@ function TableEmployeeGroup(props) {
       {data.length > 0
         ? data.map((item, index) => {
           return (
-            <DataTableItem key={item.groupID + "_emp_group_" + index}>
+            <DataTableItem key={item.userID + "_emp_group_" + index}>
               <DataTableRow size="sm">
-                <span className="tb-lead text-primary">#{item.groupID}</span>
+                <span className="tb-lead text-primary">#{item.userID}</span>
+              </DataTableRow>
+              <DataTableRow size="sm">
+                <span className={`${!item.inactive && "tb-lead"}`}>{item.userName}</span>
               </DataTableRow>
               <DataTableRow>
-                <span className={`${!item.inactive && "tb-lead"}`}>{item.groupName}</span>
-              </DataTableRow>
-              <DataTableRow size="md">
-                <span>{item.description}</span>
+                <div className="user-card">
+                  <UserAvatar className="sm" text={findUpper(item.fullName)} />
+                  <div className="user-info">
+                    <span className={`tb-lead ${item.inactive && "text-gray"}`}>
+                      {item.fullName}
+                    </span>
+                    <span>{item.email}</span>
+                  </div>
+                </div>
               </DataTableRow>
               <DataTableRow>
-                {loading && item.groupID === choosedGroup && (
+                <span>{item.groupName}</span>
+              </DataTableRow>
+              <DataTableRow>
+                {loading && item.userID === choosedEmployee && (
                   <Spinner size="sm" color="primary" />
                 )}
-                {(!loading || (loading && item.groupID !== choosedGroup)) && (
+                {(!loading || (loading && item.userID !== choosedEmployee)) && (
                   <div className="form-control-wrap">
                     <div className="custom-control custom-control-sm custom-checkbox">
                       <input
                         className="custom-control-input form-control"
-                        id={`check_${item.groupID}`}
-                        name={`check_${item.groupID}`}
+                        id={`check_${item.userID}`}
+                        name={`check_${item.userID}`}
                         type="checkbox"
                         disabled={loading || !isWrite}
                         checked={!item.inactive}
                         onChange={() => onChangeInactive(item)}
                       />
-                      <label className="custom-control-label" htmlFor={`check_${item.groupID}`}>
+                      <label className="custom-control-label" htmlFor={`check_${item.userID}`}>
                         {""}
                       </label>
                     </div>
@@ -192,4 +208,4 @@ function TableEmployeeGroup(props) {
   );
 };
 
-export default TableEmployeeGroup;
+export default TableEmployee;

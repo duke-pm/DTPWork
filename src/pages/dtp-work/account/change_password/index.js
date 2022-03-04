@@ -20,6 +20,7 @@ import {
 } from "../../../../components/Component";
 /** COMMON */
 import Constants from "utils/constants";
+import {log} from "utils/Utils";
 /** REDUX */
 import * as Actions from "redux/actions";
 
@@ -115,7 +116,7 @@ function ChangePassword(props) {
   };
 
   const onError = error => {
-    console.log('[LOG] === onError ===> ', error);
+    log('[LOG] === onError ===> ', error);
     setLoading(false);
     toast(error || t("error:change_password"), {type: "error"});
   };

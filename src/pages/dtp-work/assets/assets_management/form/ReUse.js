@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
 import DatePicker from "react-datepicker";
 import SimpleBar from "simplebar-react";
-import {Form, FormGroup, Label} from "reactstrap";
+import {Form, FormGroup, Label, Spinner} from "reactstrap";
 import NumberFormat from 'react-number-format';
 import moment from "moment";
 /** COMMON */
@@ -22,6 +22,7 @@ import {
 import AssetInformations from "../components/AssetInformations";
 /** COMMON */
 import Configs from "configs";
+import {log} from "utils/Utils";
 /** REDUX */
 import * as Actions from "redux/actions";
 
@@ -120,7 +121,7 @@ function ReUseForm(props) {
   };
 
   const onSetFormDataDetails = (data, dataH) => {
-    console.log('[LOG] === onSetFormDataDetails ===> ', data);
+    log('[LOG] === onSetFormDataDetails ===> ', data);
     if (!dataH) {
       setDataItem({
         id: data.assetID,
@@ -203,7 +204,7 @@ function ReUseForm(props) {
         RefreshToken: authState["data"]["refreshToken"],
         Lang: commonState["language"],
       };
-      console.log('[LOG] === onFormSubmit ===> ', params);
+      log('[LOG] === onFormSubmit ===> ', params);
       dispatch(Actions.fFetchReuseAssets(params, history));
     }
     if (updateHistory) {
@@ -223,7 +224,7 @@ function ReUseForm(props) {
         RefreshToken: authState["data"]["refreshToken"],
         Lang: commonState["language"],
       };
-      console.log('[LOG] === onFormSubmit ===> ', params);
+      log('[LOG] === onFormSubmit ===> ', params);
       dispatch(Actions.fFetchUpdateProcess(params, history));
     }
   };
@@ -242,7 +243,7 @@ function ReUseForm(props) {
   };
 
   const onError = (type, error) => {
-    console.log('[LOG] === onError ===> ', error);
+    log('[LOG] === onError ===> ', error);
     if (type === "Reuse") {
       onResetData();
       onClose(false, error);
@@ -373,7 +374,7 @@ function ReUseForm(props) {
                     disabled={disabled}
                   >
                     {(loading.reuse || loading.history) && (
-                      <div className="spinner-border spinner-border-sm text-white" role="status" />
+                      <Spinner size="sm" color="light" />
                     )}
                     {!loading.reuse && !loading.history && <Icon name="save"></Icon>}
                   </Button>
@@ -384,7 +385,7 @@ function ReUseForm(props) {
                     disabled={disabled}
                   >
                     {(loading.reuse || loading.history) && (
-                      <div className="spinner-border spinner-border-sm text-white mr-2" role="status" />
+                      <Spinner className="mr-2" size="sm" color="light" />
                     )}
                     {!loading.reuse && !loading.history && <Icon name="save"></Icon>}
                     <span>{t("common:save")}</span>

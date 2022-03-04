@@ -5,10 +5,11 @@ import {useHistory} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import {toast} from "react-toastify";
 import {
+  UncontrolledDropdown,
   DropdownMenu,
   DropdownToggle,
   FormGroup,
-  UncontrolledDropdown,
+  Spinner,
 } from "reactstrap";
 import moment from "moment";
 /** COMPONENTS */
@@ -33,7 +34,7 @@ import ProcessModal from "./modal/Process";
 /** COMMON */
 import Configs from "configs";
 import Constants from "utils/constants";
-import {getLocalStorage, setLocalStorage} from "utils/Utils";
+import {getLocalStorage, setLocalStorage, log} from "utils/Utils";
 /** REDUX */
 import * as Actions from "redux/actions";
 
@@ -286,7 +287,7 @@ function RequestAssetsHandle(props) {
   };
 
   const onError = error => {
-    console.log('[LOG] === Error ===> ', error);
+    log('[LOG] === Error ===> ', error);
     setLoading({main: false, search: false});
     toast(error, {type: "error"});
   };
@@ -561,7 +562,7 @@ function RequestAssetsHandle(props) {
             <PreviewAltCard>
               {disabled ? (
                 <div className="text-center">
-                  <div className="spinner-border spinner-border-sm text-primary" />
+                  <Spinner size="sm" color="primary" />
                 </div>
               ) : 
                 data.requests.length > 0 ? (

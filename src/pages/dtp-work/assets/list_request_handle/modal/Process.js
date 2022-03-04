@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {useTranslation} from "react-i18next";
 import {useSelector} from "react-redux";
-import {Modal, ModalBody} from "reactstrap";
+import {Modal, ModalBody, Spinner} from "reactstrap";
 import PerfectScrollbar from 'react-perfect-scrollbar';
 /** COMMON */
 import {
@@ -111,7 +111,7 @@ function ProcessModal(props) {
           <div className="mt-3">
             {loading && (
               <div className="text-center">
-                <div className="spinner-border spinner-border-sm text-primary" />
+                <Spinner size="sm" color="primary" />
               </div>
             )}
             {!loading && (

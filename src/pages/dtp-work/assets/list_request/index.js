@@ -3,10 +3,11 @@ import {useTranslation} from "react-i18next";
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {
+  UncontrolledDropdown,
   DropdownMenu,
   DropdownToggle,
   FormGroup,
-  UncontrolledDropdown,
+  Spinner,
 } from "reactstrap";
 import DatePicker from "react-datepicker";
 import {toast} from "react-toastify";
@@ -37,7 +38,7 @@ import AddDamLosForm from "./form/AddDamLos";
 import Configs from "configs";
 import Routes from "route/routes";
 import Constants from "utils/constants";
-import {getLocalStorage, setLocalStorage} from "utils/Utils";
+import {getLocalStorage, setLocalStorage, log} from "utils/Utils";
 /** REDUX */
 import * as Actions from "redux/actions";
 
@@ -400,7 +401,7 @@ function RequestAssets(props) {
   };
 
   const onError = error => {
-    console.log('[LOG] === Error ===> ', error);
+    log('[LOG] === Error ===> ', error);
     setLoading({main: false, search: false});
     toast(error, {type: "error"});
   };
@@ -748,8 +749,8 @@ function RequestAssets(props) {
             {/** Paging table */}
             <PreviewAltCard className={`${tabs[filterTab].count > 0 && "border-top"}`}>
               {disabled ? (
-                <div className="d-flex justify-content-center">
-                  <div className="spinner-border text-primary" />
+                <div className="text-center">
+                  <Spinner size="sm" color="primary" />
                 </div>
               ) : 
               tabs[filterTab].data.length > 0 ? (

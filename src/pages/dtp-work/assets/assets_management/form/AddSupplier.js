@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import {useTranslation} from "react-i18next";
 import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
-import {Form, FormGroup, Modal, ModalBody} from "reactstrap";
+import {Form, FormGroup, Modal, ModalBody, Spinner} from "reactstrap";
 import {toast} from "react-toastify";
 /** COMMON */
 import {
@@ -16,6 +16,8 @@ import {
   Row,
   Col,
 } from "components/Component";
+/** COMMON */
+import {log} from "utils/Utils";
 /** REDUX */
 import * as Actions from "redux/actions";
 
@@ -93,7 +95,7 @@ function AddSupplier(props) {
 
   const onError = error => {
     dispatch(Actions.fResetCreateAssets());
-    console.log('[LOG] === onError ===> ', error);
+    log('[LOG] === onError ===> ', error);
     toast(error || t("error:create_supplier"), {type: "error"});
     setLoading({submit: false});
   };
@@ -315,10 +317,10 @@ function AddSupplier(props) {
                 disabled={disabled}
               >
                 {disabled && (
-                  <div className="spinner-border spinner-border-sm text-white mr-2" role="status" />
+                  <Spinner className="mr-2" size="sm" color="light" />
                 )}
-                {!disabled && <Icon name="plus" />}
-                <span>{t("common:add_new")}</span>
+                {!disabled && <Icon name="save" />}
+                <span>{t("common:save")}</span>
               </Button>
               {/* <Button
                 className="ml-3"

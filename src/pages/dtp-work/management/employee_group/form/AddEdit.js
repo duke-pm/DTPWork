@@ -17,6 +17,8 @@ import {
   Row,
   Col,
 } from "components/Component";
+/** COMMON */
+import {log} from "utils/Utils";
 /** REDUX */
 import * as Actions from "redux/actions";
 
@@ -80,8 +82,8 @@ function AddEditForm(props) {
     setLoading({...loading, submit: true});
     let params = {
       GroupID: !isUpdate ? "0" : formData.id,
-      GroupName: formData.name,
-      Description: formData.description,
+      GroupName: formData.name.trim(),
+      Description: formData.description.trim(),
       Inactive: formData.inactive,
       RefreshToken: authState["data"]["refreshToken"],
       Lang: commonState["language"],
@@ -103,7 +105,7 @@ function AddEditForm(props) {
   };
 
   const onError = error => {
-    console.log('[LOG] === onError ===> ', error);
+    log('[LOG] === onError ===> ', error);
     setLoading({main: false, submit: false});
     toast(error, {type: "error"});
   };
@@ -137,6 +139,7 @@ function AddEditForm(props) {
       }
     }
   }, [
+    isUpdate,
     loading.submit,
     managementState["submittingCreateEmpGro"],
     managementState["successCreateEmpGro"],
@@ -155,6 +158,7 @@ function AddEditForm(props) {
       }
     }
   }, [
+    isUpdate,
     loading.submit,
     managementState["submittingUpdateEmpGro"],
     managementState["successUpdateEmpGro"],
@@ -185,60 +189,31 @@ function AddEditForm(props) {
             </BlockHeadContent>
             <BlockHeadContent>
               <ul className="nk-block-tools g-3">
-                {!isUpdate && (
-                  <li className="nk-block-tools-opt">
-                    <Button
-                      className="toggle btn-icon d-md-none"
-                      color="primary"
-                      type="submit"
-                      disabled={disabled}
-                    >
-                      {disabled && (
-                        <Spinner className="mr-1" size="sm" color="light" />
-                      )}
-                      {!loading.main && !loading.submit && <Icon name="plus" />}
-                    </Button>
-                    <Button
-                      className="toggle d-none d-md-inline-flex"
-                      color="primary"
-                      type="submit"
-                      disabled={disabled}
-                    >
-                      {disabled && (
-                        <Spinner className="mr-1" size="sm" color="light" />
-                      )}
-                      {!loading.main && !loading.submit && <Icon name="plus" />}
-                      <span>{t("common:add_new")}</span>
-                    </Button>
-                  </li>
-                )}
-                {isUpdate && (
-                  <li className="nk-block-tools-opt">
-                    <Button
-                      className="toggle btn-icon d-md-none"
-                      color="primary"
-                      type="submit"
-                      disabled={disabled}
-                    >
-                      {disabled && (
-                        <Spinner className="mr-1" size="sm" color="light" />
-                      )}
-                      {!loading.main && !loading.submit && <Icon name="edit" />}
-                    </Button>
-                    <Button
-                      className="toggle d-none d-md-inline-flex"
-                      color="primary"
-                      type="submit"
-                      disabled={disabled}
-                    >
-                      {disabled && (
-                        <Spinner className="mr-1" size="sm" color="light" />
-                      )}
-                      {!loading.main && !loading.submit && <Icon name="edit" />}
-                      <span>{t("common:update")}</span>
-                    </Button>
-                  </li>
-                )}
+                <li className="nk-block-tools-opt">
+                  <Button
+                    className="toggle btn-icon d-md-none"
+                    color="primary"
+                    type="submit"
+                    disabled={disabled}
+                  >
+                    {disabled && (
+                      <Spinner className="mr-1" size="sm" color="light" />
+                    )}
+                    {!loading.main && !loading.submit && <Icon name="save" />}
+                  </Button>
+                  <Button
+                    className="toggle d-none d-md-inline-flex"
+                    color="primary"
+                    type="submit"
+                    disabled={disabled}
+                  >
+                    {disabled && (
+                      <Spinner className="mr-1" size="sm" color="light" />
+                    )}
+                    {!loading.main && !loading.submit && <Icon name="save" />}
+                    <span>{t("common:save")}</span>
+                  </Button>
+                </li>
               </ul>
             </BlockHeadContent>
           </BlockBetween>

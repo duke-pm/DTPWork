@@ -8,6 +8,7 @@ import {
   DropdownItem,
   Modal,
   ModalBody,
+  Spinner,
 } from "reactstrap";
 import moment from "moment";
 /** COMPONENTS */
@@ -30,7 +31,7 @@ import {
 /** COMMON */
 import Configs from "configs";
 import Routes from "services/routesApi";
-import {getCookies, numberFormat, findUpper} from "utils/Utils";
+import {getCookies, numberFormat, findUpper, log} from "utils/Utils";
 /** REDUX */
 import * as Actions from "redux/actions";
 
@@ -101,7 +102,7 @@ function TableAssets(props) {
   };
 
   const onError = e => {
-    console.log('[LOG] ===  ===> ', e);
+    log('[LOG] ===  ===> ', e);
     setLoading({history: false});
   };
 
@@ -619,7 +620,7 @@ function TableAssets(props) {
 
             {loading.history && (
               <div className="text-center mt-3">
-                <div className="spinner-border spinner-border-sm text-primary" />
+                <Spinner size="sm" color="primary" />
               </div>
             )}
             {!loading.history && formData?.history.length > 0 && (

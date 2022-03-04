@@ -1,13 +1,14 @@
 import jwtServiceConfig from "../jwtServiceConfig";
 import Routes from "../routesApi";
 import API from "../axios";
+import {log} from "utils/Utils";
 
 export default {
   signIn: params => {
     return new Promise((resolve, reject) => {
       API.post(jwtServiceConfig.baseURL + Routes.AUTHENTICATION.LOGIN, params)
         .then(response => {
-          console.log("FETCH USER LOGIN => ", response);
+          log("FETCH USER LOGIN => ", response);
           if (response.status === 200 && response.data) {
             resolve(response.data);
           } else {
@@ -15,7 +16,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("ERROR USER LOGIN => ", error);
+          log("ERROR USER LOGIN => ", error);
           reject(error.response ? error.response.data : error);
         });
     });
@@ -27,7 +28,7 @@ export default {
         params,
       )
         .then(response => {
-          console.log("FETCH REFRESH TOKEN => ", response);
+          log("FETCH REFRESH TOKEN => ", response);
           if (response.status === 200 && response.data) {
             resolve(response.data);
           } else {
@@ -35,7 +36,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("ERROR REFRESH TOKEN => ", error);
+          log("ERROR REFRESH TOKEN => ", error);
           reject(error.response ? error.response.data : error);
         });
     });
@@ -47,7 +48,7 @@ export default {
         params,
       )
         .then(response => {
-          console.log("FETCH CHANGE PASSWORD => ", response);
+          log("FETCH CHANGE PASSWORD => ", response);
           if (response.status === 200 && response.data) {
             resolve(response.data);
           } else {
@@ -55,7 +56,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("ERROR CHANGE PASSWORD => ", error);
+          log("ERROR CHANGE PASSWORD => ", error);
           reject(error.response ? error.response.data : error);
         });
     });
@@ -67,7 +68,7 @@ export default {
         params,
       )
         .then(response => {
-          console.log("FETCH UDPATE PASSWORD => ", response);
+          log("FETCH UDPATE PASSWORD => ", response);
           if (response.status === 200 && response.data) {
             resolve(response.data);
           } else {
@@ -75,7 +76,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("ERROR UDPATE PASSWORD => ", error);
+          log("ERROR UDPATE PASSWORD => ", error);
           reject(error.response ? error.response.data : error);
         });
     });
@@ -94,7 +95,7 @@ export default {
         tmpConfigs,
       )
         .then(response => {
-          console.log("FETCH FORGOT PASSWORD => ", response);
+          log("FETCH FORGOT PASSWORD => ", response);
           if (response.status === 200 && response.data) {
             resolve(response.data);
           } else {
@@ -102,7 +103,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("ERROR FORGOT PASSWORD => ", error);
+          log("ERROR FORGOT PASSWORD => ", error);
           reject(error.response ? error.response.data : error);
         });
     });
@@ -121,7 +122,7 @@ export default {
         tmpConfigs,
       )
         .then(response => {
-          console.log("FETCH CHECK TOKEN PASSWORD => ", response);
+          log("FETCH CHECK TOKEN PASSWORD => ", response);
           if (response.status === 200 && response.data) {
             resolve(response.data);
           } else {
@@ -129,7 +130,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("ERROR CHECK TOKEN PASSWORD => ", error);
+          log("ERROR CHECK TOKEN PASSWORD => ", error);
           reject(error.response ? error.response.data : error);
         });
     });

@@ -1,6 +1,7 @@
 import jwtServiceConfig from "../jwtServiceConfig";
 import Routes from "../routesApi";
 import API from "../axios";
+import {log} from "utils/Utils";
 
 export default {
   listAssets: params => {
@@ -15,7 +16,7 @@ export default {
 
       API.get(jwtServiceConfig.baseURL + Routes.APPROVED.LIST_ASSETS, tmpConfigs)
         .then(response => {
-          console.log("FETCH LIST ASSETS => ", response);
+          log("FETCH LIST ASSETS => ", response);
           if (response.status === 200 && response.data) {
             resolve(response.data);
           } else {
@@ -23,7 +24,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("ERROR LIST ASSETS => ", error);
+          log("ERROR LIST ASSETS => ", error);
           reject(error.response ? error.response.data : error);
         });
     });
@@ -35,7 +36,7 @@ export default {
 
       API.get(jwtServiceConfig.baseURL + Routes.APPROVED.HISTORY_ASSET, tmpConfigs)
         .then(response => {
-          console.log("FETCH HISTORY ASSETS => ", response);
+          log("FETCH HISTORY ASSETS => ", response);
           if (response.status === 200 && response.data) {
             resolve(response.data);
           } else {
@@ -43,7 +44,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("ERROR HISTORY ASSETS => ", error);
+          log("ERROR HISTORY ASSETS => ", error);
           reject(error.response ? error.response.data : error);
         });
     });
@@ -52,7 +53,7 @@ export default {
     return new Promise((resolve, reject) => {
       API.get(jwtServiceConfig.baseURL + Routes.APPROVED.DATA_EMPLOYEE, {params: {}})
         .then(response => {
-          console.log("FETCH DATA EMPLOYEE => ", response);
+          log("FETCH DATA EMPLOYEE => ", response);
           if (response.status === 200 && response.data) {
             resolve(response.data);
           } else {
@@ -60,7 +61,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("ERROR DATA EMPLOYEE => ", error);
+          log("ERROR DATA EMPLOYEE => ", error);
           reject(error.response ? error.response.data : error);
         });
     });
@@ -69,7 +70,7 @@ export default {
     return new Promise((resolve, reject) => {
       API.post(jwtServiceConfig.baseURL + Routes.APPROVED.CREATE_ASSETS, params)
         .then(response => {
-          console.log("FETCH CREATE ASSETS => ", response);
+          log("FETCH CREATE ASSETS => ", response);
           if (response.status === 200 && response.data) {
             resolve(response.data);
           } else {
@@ -77,7 +78,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("ERROR CREATE ASSETS => ", error);
+          log("ERROR CREATE ASSETS => ", error);
           reject(error.response ? error.response.data : error);
         });
     });
@@ -86,7 +87,7 @@ export default {
     return new Promise((resolve, reject) => {
       API.put(jwtServiceConfig.baseURL + Routes.APPROVED.UPDATE_ASSETS, params)
         .then(response => {
-          console.log("FETCH UPDATE ASSETS => ", response);
+          log("FETCH UPDATE ASSETS => ", response);
           if (response.status === 200 && response.data) {
             resolve(response.data);
           } else {
@@ -94,7 +95,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("ERROR UPDATE ASSETS => ", error);
+          log("ERROR UPDATE ASSETS => ", error);
           reject(error.response ? error.response.data : error);
         });
     });
@@ -114,7 +115,7 @@ export default {
 
       API.post(jwtServiceConfig.baseURL + Routes.APPROVED.APPROVED_ASSETS, formData)
         .then(response => {
-          console.log("FETCH APPROVED ASSETS => ", response);
+          log("FETCH APPROVED ASSETS => ", response);
           if (response.status === 200 && response.data) {
             resolve(response.data);
           } else {
@@ -122,7 +123,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("ERROR APPROVED ASSETS => ", error);
+          log("ERROR APPROVED ASSETS => ", error);
           reject(error.response ? error.response.data : error);
         });
     });
@@ -142,7 +143,7 @@ export default {
 
       API.post(jwtServiceConfig.baseURL + Routes.APPROVED.RECALL_ASSETS, formData)
         .then(response => {
-          console.log("FETCH RECALL ASSETS => ", response);
+          log("FETCH RECALL ASSETS => ", response);
           if (response.status === 200 && response.data) {
             resolve(response.data);
           } else {
@@ -150,7 +151,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("ERROR RECALL ASSETS => ", error);
+          log("ERROR RECALL ASSETS => ", error);
           reject(error.response ? error.response.data : error);
         });
     });
@@ -172,7 +173,7 @@ export default {
 
       API.post(jwtServiceConfig.baseURL + Routes.APPROVED.REPAIR_ASSETS, formData)
         .then(response => {
-          console.log("FETCH REPAIR ASSETS => ", response);
+          log("FETCH REPAIR ASSETS => ", response);
           if (response.status === 200 && response.data) {
             resolve(response.data);
           } else {
@@ -180,7 +181,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("ERROR REPAIR ASSETS => ", error);
+          log("ERROR REPAIR ASSETS => ", error);
           reject(error.response ? error.response.data : error);
         });
     });
@@ -200,7 +201,7 @@ export default {
 
       API.post(jwtServiceConfig.baseURL + Routes.APPROVED.LIQUIDATION_ASSETS, formData)
         .then(response => {
-          console.log("FETCH LIQUIDATION ASSETS => ", response);
+          log("FETCH LIQUIDATION ASSETS => ", response);
           if (response.status === 200 && response.data) {
             resolve(response.data);
           } else {
@@ -208,7 +209,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("ERROR LIQUIDATION ASSETS => ", error);
+          log("ERROR LIQUIDATION ASSETS => ", error);
           reject(error.response ? error.response.data : error);
         });
     });
@@ -231,7 +232,7 @@ export default {
 
       API.post(jwtServiceConfig.baseURL + Routes.APPROVED.REUSE_ASSETS, formData)
         .then(response => {
-          console.log("FETCH REUSE ASSETS => ", response);
+          log("FETCH REUSE ASSETS => ", response);
           if (response.status === 200 && response.data) {
             resolve(response.data);
           } else {
@@ -239,7 +240,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("ERROR REUSE ASSETS => ", error);
+          log("ERROR REUSE ASSETS => ", error);
           reject(error.response ? error.response.data : error);
         });
     });
@@ -248,7 +249,7 @@ export default {
     return new Promise((resolve, reject) => {
       API.post(jwtServiceConfig.baseURL + Routes.APPROVED.CREATE_SUPPLIER, params)
         .then(response => {
-          console.log("FETCH CREATE SUPPLIER => ", response);
+          log("FETCH CREATE SUPPLIER => ", response);
           if (response.status === 200 && response.data) {
             resolve(response.data);
           } else {
@@ -256,7 +257,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("ERROR CREATE SUPPLIER => ", error);
+          log("ERROR CREATE SUPPLIER => ", error);
           reject(error.response ? error.response.data : error);
         });
     });
@@ -279,7 +280,7 @@ export default {
 
       API.post(jwtServiceConfig.baseURL + Routes.APPROVED.UPDATE_PROCESS, formData)
         .then(response => {
-          console.log("FETCH UPDATE PROCESS => ", response);
+          log("FETCH UPDATE PROCESS => ", response);
           if (response.status === 200 && response.data) {
             resolve(response.data);
           } else {
@@ -287,7 +288,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("ERROR UPDATE PROCESS => ", error);
+          log("ERROR UPDATE PROCESS => ", error);
           reject(error.response ? error.response.data : error);
         });
     });
@@ -307,7 +308,7 @@ export default {
 
       API.get(jwtServiceConfig.baseURL + Routes.APPROVED.LIST_REQUEST, tmpConfigs)
         .then(response => {
-          console.log("FETCH LIST REQUEST => ", response);
+          log("FETCH LIST REQUEST => ", response);
           if (response.status === 200 && response.data) {
             resolve(response.data);
           } else {
@@ -315,7 +316,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("ERROR LIST REQUEST => ", error);
+          log("ERROR LIST REQUEST => ", error);
           reject(error.response ? error.response.data : error);
         });
     });
@@ -324,7 +325,7 @@ export default {
     return new Promise((resolve, reject) => {
       API.post(jwtServiceConfig.baseURL + Routes.APPROVED.CREATE_REQUEST_ALLOW, params)
         .then(response => {
-          console.log("FETCH CREATE REQUEST ALLOW => ", response);
+          log("FETCH CREATE REQUEST ALLOW => ", response);
           if (response.status === 200 && response.data) {
             resolve(response.data);
           } else {
@@ -332,7 +333,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("ERROR CREATE REQUEST ALLOW => ", error);
+          log("ERROR CREATE REQUEST ALLOW => ", error);
           reject(error.response ? error.response.data : error);
         });
     });
@@ -352,7 +353,7 @@ export default {
 
       API.post(jwtServiceConfig.baseURL + Routes.APPROVED.CREATE_REQUEST_DAM_LOS, formData)
         .then(response => {
-          console.log("FETCH CREATE REQUEST DAMLOS => ", response);
+          log("FETCH CREATE REQUEST DAMLOS => ", response);
           if (response.status === 200 && response.data) {
             resolve(response.data);
           } else {
@@ -360,7 +361,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("ERROR CREATE REQUEST DAMLOS => ", error);
+          log("ERROR CREATE REQUEST DAMLOS => ", error);
           reject(error.response ? error.response.data : error);
         });
     });
@@ -369,7 +370,7 @@ export default {
     return new Promise((resolve, reject) => {
       API.post(jwtServiceConfig.baseURL + Routes.APPROVED.APPROVED_REQUEST, params)
         .then(response => {
-          console.log("FETCH APPROVED REQUEST => ", response);
+          log("FETCH APPROVED REQUEST => ", response);
           if (response.status === 200 && response.data) {
             resolve(response.data);
           } else {
@@ -377,7 +378,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("ERROR APPROVED REQUEST => ", error);
+          log("ERROR APPROVED REQUEST => ", error);
           reject(error.response ? error.response.data : error);
         });
     });

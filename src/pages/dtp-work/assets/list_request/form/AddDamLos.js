@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
 import DatePicker from "react-datepicker";
 import SimpleBar from "simplebar-react";
-import {Form, FormGroup, Label} from "reactstrap";
+import {Form, FormGroup, Label, Spinner} from "reactstrap";
 import moment from "moment";
 /** COMPONENTS */
 import {
@@ -19,6 +19,8 @@ import {
   Col,
   RSelect,
 } from "components/Component";
+/** COMMON */
+import {log} from "utils/Utils";
 /** REDUX */
 import * as Actions from "redux/actions";
 
@@ -148,7 +150,7 @@ function AddDamLosForm(props) {
         AssetID: formData.assets.value,
         FileUpload: formData.file,
       };
-      console.log('[LOG] === onFormSubmit ===> ', params);
+      log('[LOG] === onFormSubmit ===> ', params);
       dispatch(Actions.fFetchCreateRequest("dam_los", params, history));
     }
   };
@@ -193,7 +195,7 @@ function AddDamLosForm(props) {
   };
 
   const onError = (type, error) => {
-    console.log('[LOG] === onError ===> ', error);
+    log('[LOG] === onError ===> ', error);
     setLoading({main: false, submit: false});
     if (type === "Create") {
       onResetData();
@@ -289,9 +291,9 @@ function AddDamLosForm(props) {
                     disabled={disabled}
                   >
                     {loading.submit && (
-                      <div className="spinner-border spinner-border-sm text-white" />
+                      <Spinner size="sm" color="light" />
                     )}
-                    {!loading.submit && <Icon name="plus" />}
+                    {!loading.submit && <Icon name="save" />}
                   </Button>
                   <Button
                     className="toggle d-none d-md-inline-flex"
@@ -300,10 +302,10 @@ function AddDamLosForm(props) {
                     disabled={disabled}
                   >
                     {loading.submit && (
-                      <div className="spinner-border spinner-border-sm text-white mr-2" />
+                      <Spinner className="mr-2" size="sm" color="light" />
                     )}
-                    {!loading.submit && <Icon name="plus" />}
-                    <span>{t("common:add_new")}</span>
+                    {!loading.submit && <Icon name="save" />}
+                    <span>{t("common:save")}</span>
                   </Button>
                 </li>
               </ul>

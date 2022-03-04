@@ -14,7 +14,12 @@ const Routes = {
   MANAGEMENT: {
     EMPLOYEE_GROUP: "/UserGroup/GetList",
     UDPATE_EMPLOYEE_GROUP: "/UserGroup/Modify",
-    REMOVE_EMPLOYEE_GROUP: "/UserGroup/remove",
+
+    EMPLOYEE_LIST: "/User/GetList",
+    UDPATE_EMPLOYEE: "/User/Modify",
+
+    MENU_LIST: "/Menu/GetList",
+    UDPATE_MENU: "/Menu/Modify",
   },
   APPROVED: {
     LIST_ASSETS: "/Assets/GetList",

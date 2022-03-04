@@ -11,6 +11,8 @@ import Homepage from "../pages/dtp-work/homepage";
 import ChangePassword from "../pages/dtp-work/account/change_password";
 
 import EmployeeGroup from "../pages/dtp-work/management/employee_group";
+import EmployeeList from "../pages/dtp-work/management/employee_list";
+import MenuManagement from "../pages/dtp-work/management/menu";
 
 import AssetsManagement from "../pages/dtp-work/assets/assets_management";
 import RequestAssets from "../pages/dtp-work/assets/list_request";
@@ -281,6 +283,8 @@ const Pages = () => {
 
         {/** Management route */}
         <Route exact path={`${process.env.PUBLIC_URL}${Routes.employeeGroup}`} component={EmployeeGroup} />
+        <Route exact path={`${process.env.PUBLIC_URL}${Routes.employeeList}`} component={EmployeeList} />
+        <Route exact path={`${process.env.PUBLIC_URL}${Routes.menuManagement}`} component={MenuManagement} />
 
         {/** Approved route */}
         <Route exact path={`${process.env.PUBLIC_URL}${Routes.assetsManagement}`} component={AssetsManagement}/>

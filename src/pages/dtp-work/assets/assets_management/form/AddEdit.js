@@ -5,7 +5,7 @@ import {useForm} from "react-hook-form";
 import DatePicker from "react-datepicker";
 import SimpleBar from "simplebar-react";
 import NumberFormat from 'react-number-format';
-import {Form, FormGroup} from "reactstrap";
+import {Form, FormGroup, Spinner} from "reactstrap";
 import {toast} from "react-toastify";
 import moment from "moment";
 /** COMPONENTS */
@@ -22,6 +22,8 @@ import {
   RSelect,
 } from "components/Component";
 import AddSupplier from "./AddSupplier";
+/** COMMON */
+import {log} from "utils/Utils";
 /** REDUX */
 import * as Actions from "redux/actions";
 
@@ -232,7 +234,7 @@ function AddEditForm(props) {
   };
 
   const onSetFormDataDetails = data => {
-    console.log('[LOG] === onSetFormDataDetails ===> ', data);
+    log('[LOG] === onSetFormDataDetails ===> ', data);
     let fSupplier = masterState["supplier"].find(f => f.supplierID === data.suppiler);
     let fDept = masterState["department"].find(f => f.deptCode == data.deptCodeManager);
     setFormData({
@@ -371,7 +373,7 @@ function AddEditForm(props) {
         Lang: commonState["language"],
         RefreshToken: authState["data"]["refreshToken"],
       };
-      console.log('[LOG] === onFormSubmit ADD ===> ', params);
+      log('[LOG] === onFormSubmit ADD ===> ', params);
       dispatch(Actions.fFetchCreateAssets(params, history));
     } else {
       setLoading({...loading, submit: true});
@@ -396,7 +398,7 @@ function AddEditForm(props) {
         Lang: commonState["language"],
         RefreshToken: authState["data"]["refreshToken"],
       };
-      console.log('[LOG] === onFormSubmit UPDATE ===> ', params);
+      log('[LOG] === onFormSubmit UPDATE ===> ', params);
       dispatch(Actions.fFetchUpdateAssets(params, history));
     }
   };
@@ -440,7 +442,7 @@ function AddEditForm(props) {
   };
 
   const onError = (type, error) => {
-    console.log('[LOG] === onError ===> ', error);
+    log('[LOG] === onError ===> ', error);
     setLoading({main: false, submit: false});
     if (type === "Create" || type === "Update") {
       onResetData();
@@ -579,9 +581,9 @@ function AddEditForm(props) {
                     disabled={disabled}
                   >
                     {loading.submit && (
-                      <div className="spinner-border spinner-border-sm text-white" />
+                      <Spinner size="sm" color="light" />
                     )}
-                    {!loading.submit && <Icon name={`${isAdd ? "plus" : "edit"}`} />}
+                    {!loading.submit && <Icon name="save" />}
                   </Button>
                   <Button
                     className="toggle d-none d-md-inline-flex"
@@ -590,10 +592,10 @@ function AddEditForm(props) {
                     disabled={disabled}
                   >
                     {loading.submit && (
-                      <div className="spinner-border spinner-border-sm text-white mr-2" />
+                      <Spinner className="mr-2" size="sm" color="light" />
                     )}
-                    {!loading.submit && <Icon name={`${isAdd ? "plus" : "edit"}`} />}
-                    <span>{t(isAdd ? "common:add_new" : "common:update")}</span>
+                    {!loading.submit && <Icon name="save" />}
+                    <span>{t("common:save")}</span>
                   </Button>
                 </li>
               </ul>

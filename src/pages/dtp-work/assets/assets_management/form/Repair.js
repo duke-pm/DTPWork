@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
 import DatePicker from "react-datepicker";
 import SimpleBar from "simplebar-react";
-import {Form, FormGroup, Label} from "reactstrap";
+import {Form, FormGroup, Label, Spinner} from "reactstrap";
 import NumberFormat from 'react-number-format';
 import moment from "moment";
 /** COMMON */
@@ -22,6 +22,7 @@ import {
 import AssetInformations from "../components/AssetInformations";
 /** COMMON */
 import Configs from "configs";
+import {log} from "utils/Utils";
 /** REDUX */
 import * as Actions from "redux/actions";
 
@@ -117,7 +118,7 @@ function RepairForm(props) {
   };
 
   const onSetFormDataDetails = (data, dataH) => {
-    console.log('[LOG] === onSetFormDataDetails ===> ', data);
+    log('[LOG] === onSetFormDataDetails ===> ', data);
     if (!dataH) {
       setDataItem({
         id: data.assetID,
@@ -192,7 +193,7 @@ function RepairForm(props) {
         RefreshToken: authState["data"]["refreshToken"],
         Lang: commonState["language"],
       };
-      console.log('[LOG] === onFormSubmit ===> ', params);
+      log('[LOG] === onFormSubmit ===> ', params);
       dispatch(Actions.fFetchRepairAssets(params, history));
     }
     if (updateHistory) {
@@ -212,7 +213,7 @@ function RepairForm(props) {
         RefreshToken: authState["data"]["refreshToken"],
         Lang: commonState["language"],
       };
-      console.log('[LOG] === onFormSubmit ===> ', params);
+      log('[LOG] === onFormSubmit ===> ', params);
       dispatch(Actions.fFetchUpdateProcess(params, history));
     }
   };
@@ -231,7 +232,7 @@ function RepairForm(props) {
   };
 
   const onError = (type, error) => {
-    console.log('[LOG] === onError ===> ', error);
+    log('[LOG] === onError ===> ', error);
     if (type === "Repair") {
       onResetData();
       onClose(false, error);
@@ -362,7 +363,7 @@ function RepairForm(props) {
                     disabled={disabled}
                   >
                     {disabled && (
-                      <div className="spinner-border spinner-border-sm text-white" role="status" />
+                      <Spinner size="sm" color="light" />
                     )}
                     {!loading.repair && !loading.history && <Icon name="save"></Icon>}
                   </Button>
@@ -373,7 +374,7 @@ function RepairForm(props) {
                     disabled={disabled}
                   >
                     {disabled && (
-                      <div className="spinner-border spinner-border-sm text-white mr-2" role="status" />
+                      <Spinner className="mr-2" size="sm" color="light" />
                     )}
                     {!loading.repair && !loading.history && <Icon name="save"></Icon>}
                     <span>{t("common:save")}</span>

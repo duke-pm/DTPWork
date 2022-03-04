@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import {useTranslation} from "react-i18next";
 import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
-import {Form, FormGroup, Modal, ModalBody, Collapse} from "reactstrap";
+import {Form, FormGroup, Modal, ModalBody, Collapse, Spinner} from "reactstrap";
 import moment from "moment";
 /** COMMON */
 import {
@@ -564,7 +564,7 @@ function ApprovedForm(props) {
                   onClick={onConfirm}
                 >
                   {disabled && (
-                    <div className="spinner-border spinner-border-sm text-white" role="status" />
+                    <Spinner size="sm" color="light" />
                   )}
                   {!disabled && <Icon name="check" />}
                   <span>{t("common:confirm")}</span>

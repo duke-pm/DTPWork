@@ -5,7 +5,7 @@ import {useForm} from "react-hook-form";
 import DatePicker from "react-datepicker";
 import SimpleBar from "simplebar-react";
 import NumberFormat from 'react-number-format';
-import {Form, FormGroup} from "reactstrap";
+import {Form, FormGroup, Spinner} from "reactstrap";
 import moment from "moment";
 /** COMPONENTS */
 import {
@@ -25,6 +25,8 @@ import {
   RSelect,
   TooltipComponent,
 } from "components/Component";
+/** COMMON */
+import {log} from "utils/Utils";
 /** REDUX */
 import * as Actions from "redux/actions";
 
@@ -228,7 +230,7 @@ function AddAllowForm(props) {
       RefreshToken: authState["data"]["refreshToken"],
       Lang: commonState["language"],
     };
-    console.log('[LOG] === onFormSubmit ===> ', params);
+    log('[LOG] === onFormSubmit ===> ', params);
     dispatch(Actions.fFetchCreateRequest("allow", params, history));
   };
 
@@ -261,7 +263,7 @@ function AddAllowForm(props) {
   };
 
   const onError = (type, error) => {
-    console.log('[LOG] === onError ===> ', error);
+    log('[LOG] === onError ===> ', error);
     setLoading({main: false, submit: false});
     if (type === "Create") {
       onResetData();
@@ -348,7 +350,7 @@ function AddAllowForm(props) {
                     disabled={disabled}
                   >
                     {loading.submit && (
-                      <div className="spinner-border spinner-border-sm text-white" />
+                      <Spinner size="sm" color="light" />
                     )}
                     {!loading.submit && <Icon name="plus" />}
                   </Button>
@@ -359,7 +361,7 @@ function AddAllowForm(props) {
                     disabled={disabled}
                   >
                     {loading.submit && (
-                      <div className="spinner-border spinner-border-sm text-white mr-2" />
+                      <Spinner className="mr-2" size="sm" color="light" />
                     )}
                     {!loading.submit && <Icon name="plus" />}
                     <span>{t("common:add_new")}</span>

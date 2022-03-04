@@ -18,7 +18,7 @@ import {
   Icon,
   Button,
 } from "components/Component";
-import TableEmployeeGroup from "./table";
+import TableEmployee from "./table";
 import AddEditForm from "./form/AddEdit";
 /** COMMON */
 import Configs from "configs";
@@ -27,7 +27,7 @@ import {log} from "utils/Utils";
 /** REDUX */
 import * as Actions from "redux/actions";
 
-function EmployeeGroup(props) {
+function EmployeeList(props) {
   const {t} = useTranslation();
   const history = useHistory();
 
@@ -109,8 +109,8 @@ function EmployeeGroup(props) {
     }
   };
 
-  const onUpdateGroup = group => {
-    setUpdateItem(group);
+  const onUpdateEmployee = employee => {
+    setUpdateItem(employee);
     toggleView("update");
   };
 
@@ -125,13 +125,13 @@ function EmployeeGroup(props) {
       RefreshToken: authState["data"]["refreshToken"],
       Lang: commonState["language"],
     };
-    dispatch(Actions.fFetchEmployeeGroup(params, history));
+    dispatch(Actions.fFetchEmployeeList(params, history));
   };
 
   const onSuccess = () => {
     let tmpData = {...data};
-    tmpData.list = managementState["employeeGroup"];
-    tmpData.count = managementState["numEmployeeGroup"];
+    tmpData.list = managementState["employee"];
+    tmpData.count = managementState["numEmployee"];
     setData(tmpData);
     setLoading({main: false, search: false});
   };
@@ -142,7 +142,6 @@ function EmployeeGroup(props) {
   };
 
   const onCloseForm = type => {
-    dispatch(Actions.resetEmployeeGroup());
     toggleView();
     if (type === "Create") {
       setLoading({...loading, search: true});
@@ -163,7 +162,7 @@ function EmployeeGroup(props) {
       if (authState["menu"].length > 0) {
         for (let item of authState["menu"]) {
           if (item.subMenu && item.subMenu.length > 0) {
-            fMenuRequest = item.subMenu.find(f => f.link === Routes.employeeGroup);
+            fMenuRequest = item.subMenu.find(f => f.link === Routes.employeeList);
             if (fMenuRequest) {
               setIsWrite(fMenuRequest.isWrite);
               return onStartGetData();
@@ -181,21 +180,21 @@ function EmployeeGroup(props) {
 
   useEffect(() => {
     if (loading.main || loading.search) {
-      if (!managementState["submittingEmpGro"]) {
-        if (managementState["successEmpGro"] && !managementState["errorEmpGro"]) {
+      if (!managementState["submittingEmp"]) {
+        if (managementState["successEmp"] && !managementState["errorEmp"]) {
           return onSuccess();
         }
-        if (!managementState["successEmpGro"] && managementState["errorEmpGro"]) {
-          return onError(managementState["errorHelperEmpGro"]);
+        if (!managementState["successEmp"] && managementState["errorEmp"]) {
+          return onError(managementState["errorHelperEmp"]);
         }
       }
     }
   }, [
     loading.main,
     loading.search,
-    managementState["submittingEmpGro"],
-    managementState["successEmpGro"],
-    managementState["errorEmpGro"],
+    managementState["submittingEmp"],
+    managementState["successEmp"],
+    managementState["errorEmp"],
   ]);
 
   /**
@@ -211,7 +210,7 @@ function EmployeeGroup(props) {
         <BlockHead size="sm">
           <BlockBetween>
             <BlockHeadContent>
-              <BlockTitle tag="h4">{t("management:employee_group")}</BlockTitle>
+              <BlockTitle tag="h4">{t("management:employee_list")}</BlockTitle>
             </BlockHeadContent>
             <BlockHeadContent>
               <div className="toggle-wrap nk-block-tools-toggle">
@@ -300,13 +299,13 @@ function EmployeeGroup(props) {
             </div>
 
             {/** Data table */}
-            <TableEmployeeGroup
+            <TableEmployee
               isWrite={isWrite}
               history={history}
               commonState={commonState}
               authState={authState}
-              dataGroup={data.list}
-              onUpdate={onUpdateGroup}
+              dataEmployee={data.list}
+              onUpdate={onUpdateEmployee}
             />
 
             {/** Paging table */}
@@ -332,6 +331,7 @@ function EmployeeGroup(props) {
           </DataTable>
         </Block>
 
+        {/** Forms */}
         <AddEditForm
           show={view.add || view.update}
           history={history}
@@ -349,4 +349,4 @@ function EmployeeGroup(props) {
   );
 };
 
-export default EmployeeGroup;
+export default EmployeeList;

@@ -3,6 +3,7 @@ import {useTranslation} from "react-i18next";
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {toast} from "react-toastify";
+import {Spinner} from "reactstrap";
 /** COMPONENTS */
 import Content from "layout/content/Content";
 import Head from "layout/head/Head";
@@ -26,8 +27,8 @@ import LiquidationForm from "./form/Liquidation";
 import ReUseForm from "./form/ReUse";
 /** COMMON */
 import Configs from "configs";
-import Routes from "services/routesApi";
-import {getCookies} from "utils/Utils";
+import Routes from "route/routes";
+import {getCookies, log} from "utils/Utils";
 /** REDUX */
 import * as Actions from "redux/actions";
 
@@ -398,7 +399,7 @@ function AssetsManagement(props) {
   };
 
   const onError = error => {
-    console.log('[LOG] === Error ===> ', error);
+    log('[LOG] === Error ===> ', error);
     setLoading({main: false, search: false, getData: false});
     toast(error, {type: "error"});
   };
@@ -412,7 +413,7 @@ function AssetsManagement(props) {
       if (authState["menu"].length > 0) {
         for (let item of authState["menu"]) {
           if (item.subMenu && item.subMenu.length > 0) {
-            fMenuRequest = item.subMenu.find(f => f.link === Routes.requestsApproved);
+            fMenuRequest = item.subMenu.find(f => f.link === Routes.assetsManagement);
             if (fMenuRequest) {
               setIsWrite(fMenuRequest.isWrite);
               return onStartGetData();
@@ -516,7 +517,7 @@ function AssetsManagement(props) {
                         onClick={onGetEmployee}
                       >
                         {loading.getData && (
-                          <div className="spinner-border spinner-border-sm text-white mr-2" role="status" />
+                          <Spinner className="mr-2" color="light" size="sm" />
                         )}
                         {!loading.getData && <Icon className="mr-1" name="reload-alt"></Icon>}
                         <span>{t("assets:get_data")}</span>
@@ -658,8 +659,8 @@ function AssetsManagement(props) {
             {/** Paging table */}
             <PreviewAltCard className={`${tabs[filterTab].count > 0 && "border-top"}`}>
               {disabled ? (
-                <div className="d-flex justify-content-center">
-                  <div className="spinner-border text-primary" />
+                <div className="text-center">
+                  <Spinner size="sm" color="primary" />
                 </div>
               ) : 
               tabs[filterTab].data.length > 0 ? (

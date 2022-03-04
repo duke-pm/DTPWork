@@ -34,7 +34,7 @@ export const findUpper = (string) => {
   }
   if (extractedString.length > 1) {
     const reversed = extractedString.reverse();
-    return reversed[0] + reversed[1];
+    return reversed[1] + reversed[0];
   } else {
     return extractedString[0];
   }
@@ -198,3 +198,7 @@ export const removeLocalStorage = (key) => {
 export const clearLocalStorage = () => {
   return localStorage.clear();
 };
+
+export const log = (...msgs) => {
+  if (process.env.NODE_ENV === 'development') console.log(...msgs);
+}
