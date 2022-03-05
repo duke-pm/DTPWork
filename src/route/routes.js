@@ -9,6 +9,7 @@ const Routes = {
   employeeGroup: "/quan-tri/nhom-nguoi-dung",
   employeeList: "/quan-tri/danh-sach-nguoi-dung",
   menuManagement: "/quan-tri/thiet-lap-menu",
+  roleFunctional: "/quan-tri/phan-quyen-chuc-nang",
 
   /** Approved routes */
   assetsManagement: "/assets-management",

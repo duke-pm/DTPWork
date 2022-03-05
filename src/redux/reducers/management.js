@@ -10,6 +10,9 @@ export const initialState = {
   submittingMenu: false,
   submittingCreateMenu: false,
   submittingUpdateMenu: false,
+  submittingRole: false,
+  submittingFilterRole: false,
+  submittingUpdateRole: false,
 
   successEmpGro: false,
   errorEmpGro: false,
@@ -47,6 +50,18 @@ export const initialState = {
   errorUpdateMenu: false,
   errorHelperUpdateMenu: "",
 
+  successRole: false,
+  errorRole: false,
+  errorHelperRole: "",
+
+  successFilterRole: false,
+  errorFilterRole: false,
+  errorHelperFilterRole: "",
+
+  successUpdateRole: false,
+  errorUpdateRole: false,
+  errorHelperUpdateRole: "",
+
   employeeGroup: [],
   numEmployeeGroup: 0,
 
@@ -55,6 +70,8 @@ export const initialState = {
 
   menu: [],
   numMenu: 0,
+
+  role: [],
 };
 
 export default function (state = initialState, action = {}) {
@@ -121,6 +138,25 @@ export default function (state = initialState, action = {}) {
 
       };
 
+    case types.RESET_ROLE:
+        return {
+          ...state,
+          submittingRole: false,
+          successRole: false,
+          errorRole: false,
+          errorHelperRole: "",
+  
+          submittingFilterRole: false,
+          successFilterRole: false,
+          errorFilterRole: false,
+          errorHelperFilterRole: "",
+  
+          submittingUpdateRole: false,
+          successUpdateRole: false,
+          errorUpdateRole: false,
+          errorHelperUpdateRole: "",
+        };
+  
     /** List employee group */
     case types.START_EMPLOYEE_GROUP:
       return {
@@ -412,6 +448,95 @@ export default function (state = initialState, action = {}) {
       menu: tmpMenu,
     };
 
+    /** List role */
+    case types.START_ROLE_LIST:
+      return {
+        ...state,
+        submittingRole: true,
+        successRole: false,
+        errorRole: false,
+        errorHelperRole: "",
+      };
+
+    case types.ERROR_ROLE_LIST:
+      return {
+        ...state,
+        submittingRole: false,
+        successRole: false,
+        errorRole: true,
+        errorHelperRole: payload,
+      };
+
+    case types.SUCCESS_ROLE_LIST:
+      return {
+        ...state,
+        submittingRole: false,
+        successRole: true,
+        errorRole: false,
+        errorHelperRole: "",
+
+        role: payload,
+      };
+
+    /** Filter role */
+    case types.START_FILTER_ROLE:
+      return {
+        ...state,
+        submittingFilterRole: true,
+        successFilterRole: false,
+        errorFilterRole: false,
+        errorHelperFilterRole: "",
+      };
+
+    case types.ERROR_FILTER_ROLE:
+      return {
+        ...state,
+        submittingFilterRole: false,
+        successFilterRole: false,
+        errorFilterRole: true,
+        errorHelperFilterRole: payload,
+      };
+
+    case types.SUCCESS_FILTER_ROLE:
+      return {
+        ...state,
+        submittingFilterRole: false,
+        successFilterRole: true,
+        errorFilterRole: false,
+        errorHelperFilterRole: "",
+
+        role: payload,
+      };
+
+    /** Update role */
+    case types.START_UPDATE_ROLE:
+      return {
+        ...state,
+        submittingUpdateRole: true,
+        successUpdateRole: false,
+        errorUpdateRole: false,
+        errorHelperUpdateRole: "",
+      };
+
+    case types.ERROR_UPDATE_ROLE:
+      return {
+        ...state,
+        submittingUpdateRole: false,
+        successUpdateRole: false,
+        errorUpdateRole: true,
+        errorHelperUpdateRole: payload,
+      };
+
+    case types.SUCCESS_UPDATE_ROLE:
+    return {
+      ...state,
+      submittingUpdateRole: false,
+      successUpdateRole: true,
+      errorUpdateRole: false,
+      errorHelperUpdateRole: "",
+
+      menu: payload,
+    };
 
     default:
       return state;

@@ -20,6 +20,9 @@ const Routes = {
 
     MENU_LIST: "/Menu/GetList",
     UDPATE_MENU: "/Menu/Modify",
+
+    ROLE_LIST: "/Permission/GetList",
+    UDPATE_ROLE: "/Permission/Modify",
   },
   APPROVED: {
     LIST_ASSETS: "/Assets/GetList",

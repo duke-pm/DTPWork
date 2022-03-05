@@ -142,6 +142,7 @@ function EmployeeList(props) {
   };
 
   const onCloseForm = type => {
+    dispatch(Actions.resetEmployee());
     toggleView();
     if (type === "Create") {
       setLoading({...loading, search: true});

@@ -328,3 +328,112 @@ export const fFetchUpdateMenu = (params, history) => {
       });
   };
 };
+
+//** Role */
+export const resetRole = () => ({
+  type: types.RESET_ROLE,
+});
+
+export const fErrorRoleList = error => ({
+  type: types.ERROR_ROLE_LIST,
+  payload: error,
+});
+
+export const fSuccessRoleList = data => ({
+  type: types.SUCCESS_ROLE_LIST,
+  payload: data,
+});
+
+export const fFetchRoleList = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_ROLE_LIST});
+
+    Services.management.getRoleList(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessRoleList(res.data));
+        } else {
+          return dispatch(fErrorRoleList(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorRoleList(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};
+
+export const fErrorFilterRole = error => ({
+  type: types.ERROR_FILTER_ROLE,
+  payload: error,
+});
+
+export const fSuccessFilterRole = () => ({
+  type: types.SUCCESS_FILTER_ROLE,
+});
+
+export const fFetchFilterRole = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_FILTER_ROLE});
+
+    Services.management.getRoleList(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessFilterRole(res.data));
+        } else {
+          return dispatch(fErrorFilterRole(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorFilterRole(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};
+
+export const fErrorUpdateRole = error => ({
+  type: types.ERROR_UPDATE_ROLE,
+  payload: error,
+});
+
+export const fSuccessUpdateRole = data => ({
+  type: types.SUCCESS_UPDATE_ROLE,
+  payload: data,
+});
+
+export const fFetchUpdateRole = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_UPDATE_ROLE});
+
+    Services.management.updateRole(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessUpdateRole(res.data));
+        } else {
+          return dispatch(fErrorUpdateRole(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorUpdateRole(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};

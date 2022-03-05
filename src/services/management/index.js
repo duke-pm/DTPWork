@@ -132,4 +132,45 @@ export default {
         });
     });
   },
+
+  /** Rolw */
+  getRoleList: params => {
+    return new Promise((resolve, reject) => {
+      let tmpConfigs = {params: {}};
+      tmpConfigs.params.GroupID = params["GroupID"];
+      tmpConfigs.params.UserID = params["UserID"];
+      tmpConfigs.params.IsWebOrMobile = params["IsWebOrMobile"];
+      
+      API.get(jwtServiceConfig.baseURL + Routes.MANAGEMENT.ROLE_LIST, tmpConfigs)
+        .then(response => {
+          log("FETCH ROLE LIST => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          log("ERROR ROLE LIST => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
+  updateRole: params => {
+    return new Promise((resolve, reject) => {
+      API.post(jwtServiceConfig.baseURL + Routes.MANAGEMENT.UDPATE_ROLE, params)
+        .then(response => {
+          log("FETCH UPDATE ROLE => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          log("ERROR UPDATE ROLE => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
 };

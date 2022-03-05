@@ -142,6 +142,7 @@ function MenuManagement(props) {
   };
 
   const onCloseForm = type => {
+    dispatch(Actions.resetMenu());
     toggleView();
     if (type === "Create") {
       setLoading({...loading, search: true});

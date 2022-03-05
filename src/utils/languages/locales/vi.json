@@ -73,7 +73,8 @@
     "create_employee": "Thành công thêm mới người dùng!",
     "update_employee": "Thành công cập nhật người dùng!",
     "create_menu": "Thành công thêm mới danh mục!",
-    "update_menu": "Thành công cập nhật danh mục!"
+    "update_menu": "Thành công cập nhật danh mục!",
+    "role_functional": "Thành công cập nhật phân quyền chức năng!"
   },
   "error": {
     "title": "Lỗi!!!",
@@ -131,8 +132,10 @@
   "management": {
     "title": "Quản trị",
     "employee_group": "Nhóm người dùng",
+    "holder_employee_group": "Nhóm người dùng...",
     "employee_list": "Danh sách người dùng",
-    "menu": "Thiết lập menu",
+    "holder_employee_list": "Danh sách người dùng...",
+    "menu": "Thiết lập danh mục",
     "role_functional": "Phân quyền chức năng",
     "approved_line": "Thiết lập line phê duyệt",
     "approved_level": "Thiết lập level phê duyệt",
@@ -183,10 +186,10 @@
     "update_menu": "Cập nhật danh mục",
     "informations_web": "Thông tin web",
     "informations_mobile": "Thông tin mobile",
-    "name_menu": "Tên hiển thị",
-    "holder_name_menu": "Tên hiển thị...",
-    "type_menu": "Loại",
-    "holder_type_menu": "Loại...",
+    "name_menu": "Tên danh mục",
+    "holder_name_menu": "Tên danh mục...",
+    "type_menu": "Loại danh mục",
+    "holder_type_menu": "Loại danh mục...",
     "parent_menu": "Quan hệ",
     "holder_parent_menu": "Quan hệ...",
     "web_icon": "Web icon",
@@ -200,7 +203,11 @@
     "for_web": "Web",
     "for_mobile": "Mobile",
     "order": "Sắp xếp",
-    "holder_order": "Sắp xếp..."
+    "holder_order": "Sắp xếp...",
+
+    "is_access": "Truy cập",
+    "is_read": "Xem",
+    "is_write": "Chỉnh sửa"
   },
   "account": {
     "title": "Tài khoản",
