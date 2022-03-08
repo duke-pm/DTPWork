@@ -14,6 +14,8 @@ import EmployeeGroup from "../pages/dtp-work/management/employee_group";
 import EmployeeList from "../pages/dtp-work/management/employee_list";
 import MenuManagement from "../pages/dtp-work/management/menu";
 import RoleFunctional from "pages/dtp-work/management/role_functional";
+import ApprovedLines from "pages/dtp-work/management/approved_lines";
+import ApprovedLevels from "pages/dtp-work/management/approved_levels";
 
 import AssetsManagement from "../pages/dtp-work/assets/assets_management";
 import RequestAssets from "../pages/dtp-work/assets/list_request";
@@ -287,6 +289,8 @@ const Pages = () => {
         <Route exact path={`${process.env.PUBLIC_URL}${Routes.employeeList}`} component={EmployeeList} />
         <Route exact path={`${process.env.PUBLIC_URL}${Routes.menuManagement}`} component={MenuManagement} />
         <Route exact path={`${process.env.PUBLIC_URL}${Routes.roleFunctional}`} component={RoleFunctional} />
+        <Route exact path={`${process.env.PUBLIC_URL}${Routes.approvedLines}`} component={ApprovedLines} />
+        <Route exact path={`${process.env.PUBLIC_URL}${Routes.approvedLevels}`} component={ApprovedLevels} />
 
         {/** Approved route */}
         <Route exact path={`${process.env.PUBLIC_URL}${Routes.assetsManagement}`} component={AssetsManagement}/>

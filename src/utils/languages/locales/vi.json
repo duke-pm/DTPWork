@@ -74,7 +74,13 @@
     "update_employee": "Thành công cập nhật người dùng!",
     "create_menu": "Thành công thêm mới danh mục!",
     "update_menu": "Thành công cập nhật danh mục!",
-    "role_functional": "Thành công cập nhật phân quyền chức năng!"
+    "update_role_functional": "Thành công cập nhật phân quyền chức năng!",
+    "create_approved_lines": "Thành công thêm mới line phê duyệt!",
+    "update_approved_lines": "Thành công cập nhật line phê duyệt!",
+    "remove_approved_lines": "Thành công xóa line phê duyệt!",
+    "create_approved_levels": "Thành công thêm mới level phê duyệt!",
+    "update_approved_levels": "Thành công cập nhật level phê duyệt!",
+    "remove_approved_levels": "Thành công xóa level phê duyệt!"
   },
   "error": {
     "title": "Lỗi!!!",
@@ -207,7 +213,30 @@
 
     "is_access": "Truy cập",
     "is_read": "Xem",
-    "is_write": "Chỉnh sửa"
+    "is_write": "Chỉnh sửa",
+
+    "add_approved_lines": "Thêm mới line phê duyệt",
+    "update_approved_lines": "Cập nhật line phê duyệt",
+    "code_line": "Mã line",
+    "holder_code_line": "Mã line...",
+    "holder_name_code_line": "Mô tả...",
+    "confirm_remove_line_title": "Xác nhận?",
+    "confirm_remove_line_des_1": "Bạn thực sự muốn xóa line phê duyệt",
+    "confirm_remove_line_des_2": "này?",
+
+    "add_approved_levels": "Thêm mới level phê duyệt",
+    "update_approved_levels": "Cập nhật level phê duyệt",
+    "holder_level": "Người phê duyệt...",
+    "level_number": "Level",
+    "holder_job_title_level": "Chức vụ...",
+    "informations_level": "Chi tiết level",
+    "informations_line": "Line phê duyệt",
+    "holder_informations_line": "Line phê duyệt...",
+    "group_functional": "Nhóm chức năng",
+    "holder_group_functional": "Nhóm chức năng...",
+    "confirm_remove_level_title": "Xác nhận?",
+    "confirm_remove_level_des_1": "Bạn thực sự muốn xóa level phê duyệt của line ",
+    "confirm_remove_level_des_2": "này?"
   },
   "account": {
     "title": "Tài khoản",

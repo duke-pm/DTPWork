@@ -1,38 +1,19 @@
 import React, {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
-import {useDispatch, useSelector} from "react-redux";
-import {
-  UncontrolledDropdown,
-  DropdownMenu,
-  DropdownToggle,
-  DropdownItem,
-  Spinner
-} from "reactstrap";
-import {toast} from "react-toastify";
 /** COMPONENTS */
 import {
   DataTableHead,
-  DataTableItem,
   DataTableRow,
   DataTableBody,
-  Icon,
-  UserAvatar,
 } from "components/Component";
-/** COMMON */
-import {findUpper, log} from "utils/Utils";
-/** REDUX */
-import * as Actions from "redux/actions";
 import RowTable from "../components/RowTable";
 
 function TableRoleFunctional(props) {
   const {t} = useTranslation();
   const {
-    isWrite,
-    history,
-    commonState,
-    authState,
+    loading,
+    disabled,
     dataRole,
-    onUpdate,
   } = props;
 
   /** Use state */
@@ -48,9 +29,11 @@ function TableRoleFunctional(props) {
   /**
    ** RENDER
    */
+  let padding = 0;
   return (
     <DataTableBody compact>
       <DataTableHead className="nk-tb-item">
+        <DataTableRow className="nk-tb-col-check" />
         <DataTableRow>
           <span className="fw-bold">{t("management:name_menu")}</span>
         </DataTableRow>
@@ -69,8 +52,14 @@ function TableRoleFunctional(props) {
         ? data?.lstPermissionItem.map((item, index) => {
           return (
             <RowTable
+              key={item.menuID + "_menu_" + index}
+              className=""
+              padding={padding}
+              disabled={disabled}
+              loading={loading}
               index={index}
               data={item}
+              onChangeParent={null}
             />
           )})
         : null

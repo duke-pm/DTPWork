@@ -26,6 +26,7 @@ import * as Actions from "redux/actions";
 
 function AddEditForm(props) {
   const {t} = useTranslation();
+  const {errors, register, clearErrors, handleSubmit} = useForm();
   const {
     show,
     history,
@@ -38,7 +39,6 @@ function AddEditForm(props) {
 
   /** Use redux */
   const dispatch = useDispatch();
-  const masterState = useSelector(({master}) => master);
   const managementState = useSelector(({management}) => management);
 
   /** Use state */
@@ -210,6 +210,9 @@ function AddEditForm(props) {
     if (loading.main && authState["successSignIn"] && show) {
       onGetMenuData();
     }
+    if (!show) {
+      clearErrors();
+    }
   }, [
     show,
     loading.main,
@@ -218,15 +221,16 @@ function AddEditForm(props) {
 
   useEffect(() => {
     if (dataSelect.parents.length > 0) {
-      if (updateItem) {
+      if (isUpdate) {
         onSetFormDataDetails(updateItem);
       } else {
+        onResetData();
         setLoading({...loading, main: false});
       }
     }
   }, [
     dataSelect.parents,
-    updateItem,
+    isUpdate,
   ]);
 
   useEffect(() => {
@@ -270,7 +274,6 @@ function AddEditForm(props) {
   /**
    ** RENDER
    */
-  const {errors, register, handleSubmit} = useForm();
   const disabled = loading.main || loading.submit;
   return (
     <SimpleBar
@@ -299,7 +302,7 @@ function AddEditForm(props) {
                     disabled={disabled}
                   >
                     {disabled && (
-                      <Spinner className="mr-1" size="sm" color="light" />
+                      <Spinner size="sm" color="light" />
                     )}
                     {!loading.main && !loading.submit && <Icon name="save" />}
                   </Button>

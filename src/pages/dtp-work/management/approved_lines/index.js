@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from "react";
+import {useHistory} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {useSelector, useDispatch} from "react-redux";
-import {useHistory} from "react-router-dom";
-import {Spinner} from "reactstrap";
+import {Spinner, Modal, ModalBody} from "reactstrap";
+import {toast} from "react-toastify";
 /** COMPONENTS */
 import Content from "layout/content/Content";
 import Head from "layout/head/Head";
@@ -18,7 +19,7 @@ import {
   Icon,
   Button,
 } from "components/Component";
-import TableEmployeeGroup from "./table";
+import TableApprovedLines from "./table";
 import AddEditForm from "./form/AddEdit";
 /** COMMON */
 import Configs from "configs";
@@ -27,7 +28,7 @@ import {log} from "utils/Utils";
 /** REDUX */
 import * as Actions from "redux/actions";
 
-function EmployeeGroup(props) {
+function ApprovedLines(props) {
   const {t} = useTranslation();
   const history = useHistory();
 
@@ -41,12 +42,14 @@ function EmployeeGroup(props) {
   const [loading, setLoading] = useState({
     main: true,
     search: false,
+    remove: false,
   });
   const [isWrite, setIsWrite] = useState(false);
   const [view, setView] = useState({
     search: false,
     add: false,
     update: false,
+    confirm: false,
   });
   const [updateItem, setUpdateItem] = useState(null);
   const [textSearch, setTextSearch] = useState("");
@@ -69,6 +72,7 @@ function EmployeeGroup(props) {
         search: type === "search" ? true : false,
         add: type === "add" ? true : false,
         update: type === "update" ? true : false,
+        confirm: type === "confirm" ? true : false,
       });
       if (!type && updateItem) setUpdateItem(null);
     }
@@ -98,7 +102,7 @@ function EmployeeGroup(props) {
     }
   };
 
-  const onSearch = () => {
+  const onSearch = e => {
     if (!loading.search) {
       setLoading({...loading, search: true});
       // Update params
@@ -113,9 +117,14 @@ function EmployeeGroup(props) {
     }
   };
 
-  const onUpdateGroup = group => {
-    setUpdateItem(group);
+  const onUpdateLines = line => {
+    setUpdateItem(line);
     toggleView("update");
+  };
+
+  const onRemoveLines = line => {
+    setUpdateItem(line);
+    toggleView("confirm");
   };
 
   const onStartGetData = (
@@ -126,27 +135,32 @@ function EmployeeGroup(props) {
       Search: search,
       PageNum: page,
       PageSize: Configs.perPage,
-      RefreshToken: authState["data"]["refreshToken"],
-      Lang: commonState["language"],
     };
-    dispatch(Actions.fFetchEmployeeGroup(params, history));
+    dispatch(Actions.fFetchApprovedLines(params, history));
   };
 
-  const onSuccess = () => {
+  const onSuccess = type => {
+    dispatch(Actions.resetApprovedLines());
+    if (type === "Remove") {
+      setView({...view, confirm: false});
+      toast(t("success:remove_approved_lines"), {type: "success"});
+    }
     let tmpData = {...data};
-    tmpData.list = managementState["employeeGroup"];
-    tmpData.count = managementState["numEmployeeGroup"];
+    tmpData.list = managementState["approvedLines"];
+    tmpData.count = managementState["numApprovedLines"];
     setData(tmpData);
     setLoading({main: false, search: false});
   };
 
   const onError = error => {
+    dispatch(Actions.resetApprovedLines());
     log('[LOG] === onError ===> ', error);
+    toast(error, {type: "error"});
     setLoading({main: false, search: false});
   };
 
   const onCloseForm = type => {
-    dispatch(Actions.resetEmployeeGroup());
+    dispatch(Actions.resetApprovedLines());
     toggleView();
     if (type === "Create") {
       setLoading({...loading, search: true});
@@ -158,6 +172,14 @@ function EmployeeGroup(props) {
     }
   };
 
+  const onConfirmRemove = () => {
+    setLoading({...loading, remove: true});
+    let params = {
+      RoleID: updateItem ? updateItem.roleID : "0",
+    };
+    dispatch(Actions.fFetchRemoveApprovedLines(params, history));
+  };
+
   /**
    ** LIFE CYCLE
    */
@@ -165,9 +187,10 @@ function EmployeeGroup(props) {
     if (loading.main && authState["successSignIn"] && authState["menu"]) {
       let fMenuRequest = null;
       if (authState["menu"].length > 0) {
-        for (let item of authState["menu"]) {
+        let item = null;
+        for (item of authState["menu"]) {
           if (item.subMenu && item.subMenu.length > 0) {
-            fMenuRequest = item.subMenu.find(f => f.link === Routes.employeeGroup);
+            fMenuRequest = item.subMenu.find(f => f.link === Routes.approvedLines);
             if (fMenuRequest) {
               setIsWrite(fMenuRequest.isWrite);
               return onStartGetData();
@@ -185,21 +208,40 @@ function EmployeeGroup(props) {
 
   useEffect(() => {
     if (loading.main || loading.search) {
-      if (!managementState["submittingEmpGro"]) {
-        if (managementState["successEmpGro"] && !managementState["errorEmpGro"]) {
+      if (!managementState["submittingApprovedLines"]) {
+        if (managementState["successApprovedLines"] && !managementState["errorApprovedLines"]) {
           return onSuccess();
         }
-        if (!managementState["successEmpGro"] && managementState["errorEmpGro"]) {
-          return onError(managementState["errorHelperEmpGro"]);
+        if (!managementState["successApprovedLines"] && managementState["errorApprovedLines"]) {
+          setView({...view, confirm: false});
+          return onError(managementState["errorHelperApprovedLines"]);
         }
       }
     }
   }, [
     loading.main,
     loading.search,
-    managementState["submittingEmpGro"],
-    managementState["successEmpGro"],
-    managementState["errorEmpGro"],
+    managementState["submittingApprovedLines"],
+    managementState["successApprovedLines"],
+    managementState["errorApprovedLines"],
+  ]);
+
+  useEffect(() => {
+    if (loading.remove) {
+      if (!managementState["submittingRemoveApprovedLines"]) {
+        if (managementState["successRemoveApprovedLines"] && !managementState["errorRemoveApprovedLines"]) {
+          return onSuccess("Remove");
+        }
+        if (!managementState["successRemoveApprovedLines"] && managementState["errorRemoveApprovedLines"]) {
+          return onError(managementState["errorHelperRemoveApprovedLines"]);
+        }
+      }
+    }
+  }, [
+    loading.remove,
+    managementState["submittingRemoveApprovedLines"],
+    managementState["successRemoveApprovedLines"],
+    managementState["errorRemoveApprovedLines"],
   ]);
 
   /**
@@ -209,13 +251,13 @@ function EmployeeGroup(props) {
   return (
     <React.Fragment>
       <Head title={t("management:title")} />
-
+      
       <Content>
         {/** Header table */}
         <BlockHead size="sm">
           <BlockBetween>
             <BlockHeadContent>
-              <BlockTitle tag="h4">{t("management:employee_group")}</BlockTitle>
+              <BlockTitle tag="h4">{t("management:approved_line")}</BlockTitle>
             </BlockHeadContent>
             <BlockHeadContent>
               <div className="toggle-wrap nk-block-tools-toggle">
@@ -276,7 +318,7 @@ function EmployeeGroup(props) {
                   <div className="search-content">
                     <Button
                       className="search-back btn-icon toggle-search active"
-                      disabled={disabled}
+                      disabled={loading.search}
                       onClick={(ev) => {
                         ev.preventDefault();
                         toggleView("search");
@@ -297,7 +339,7 @@ function EmployeeGroup(props) {
                     />
                     <Button
                       className="search-submit btn-icon"
-                      disabled={disabled}
+                      disabled={loading.search}
                       onClick={onSearch}
                     >
                       <Icon name="search"></Icon>
@@ -308,13 +350,14 @@ function EmployeeGroup(props) {
             </div>
 
             {/** Data table */}
-            <TableEmployeeGroup
+            <TableApprovedLines
               isWrite={isWrite}
               history={history}
               commonState={commonState}
               authState={authState}
-              dataGroup={data.list}
-              onUpdate={onUpdateGroup}
+              dataLines={data.list}
+              onUpdate={onUpdateLines}
+              onRemove={onRemoveLines}
             />
 
             {/** Paging table */}
@@ -350,6 +393,55 @@ function EmployeeGroup(props) {
           updateItem={updateItem}
           onClose={onCloseForm}
         />
+        
+        <Modal
+          className="modal-dialog-centered"
+          isOpen={view.confirm}
+          size="sm"
+          toggle={loading.remove ? undefined : toggleView}
+        >
+          <ModalBody className="modal-body-sm text-center">
+            <div className="nk-modal">
+              <Icon className="nk-modal-icon icon-circle icon-circle-xxl ni ni-alert bg-warning"></Icon>
+              <h4 className="nk-modal-title">{t("management:confirm_remove_line_title")}</h4>
+              <div className="nk-modal-text">
+                <div className="sub-text-sm">
+                  {t("management:confirm_remove_line_des_1")}
+                  <span className="fw-bold"> #{updateItem?.roleCode} </span>
+                  {t("management:confirm_remove_line_des_2")}
+                </div>
+              </div>
+              <div className="d-flex justify-content-center">
+                <div className="nk-modal-action mr-2">
+                  <Button
+                    color="danger"
+                    size="lg"
+                    disabled={loading.remove}
+                    onClick={onConfirmRemove}
+                  >
+                    {loading.remove && (
+                      <Spinner className="mr-1" size="sm" color="light" />
+                    )}
+                    {!loading.remove && <Icon name="trash" />}
+                    <span>{t("common:remove")}</span>
+                  </Button>
+                </div>
+                <div className="nk-modal-action ml-2">
+                  <Button
+                    className="btn-dim"
+                    color="gray"
+                    size="lg"
+                    disabled={loading.remove}
+                    onClick={toggleView}
+                  >
+                    <Icon name="cross" />
+                    <span>{t("common:close")}</span>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </ModalBody>
+        </Modal>
 
         {view.add && <div className="toggle-overlay" onClick={toggleView}></div>}
         {view.update && <div className="toggle-overlay" onClick={toggleView}></div>}
@@ -358,4 +450,4 @@ function EmployeeGroup(props) {
   );
 };
 
-export default EmployeeGroup;
+export default ApprovedLines;

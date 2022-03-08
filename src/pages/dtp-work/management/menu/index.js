@@ -98,13 +98,17 @@ function MenuManagement(props) {
     }
   };
 
-  const onSearch = e => {
+  const onSearch = () => {
     if (!loading.search) {
       setLoading({...loading, search: true});
+      // Update params
+      let tmpData = {...data};
+      tmpData.page = 1;
+      setData(tmpData);
       // Call api
       onStartGetData(
         textSearch,
-        data.page,
+        1,
       );
     }
   };
@@ -221,6 +225,7 @@ function MenuManagement(props) {
                       <Button
                         className="toggle btn-icon d-md-none"
                         color="primary"
+                        disabled={disabled}
                         onClick={() => toggleView("add")}
                       >
                         <Icon name="plus"></Icon>
@@ -228,6 +233,7 @@ function MenuManagement(props) {
                       <Button
                         className="toggle d-none d-md-inline-flex"
                         color="primary"
+                        disabled={disabled}
                         onClick={() => toggleView("add")}
                       >
                         <Icon name="plus"></Icon>
@@ -254,7 +260,7 @@ function MenuManagement(props) {
                         href="#search"
                         onClick={(ev) => {
                           ev.preventDefault();
-                          toggleView("search");
+                          !disabled && toggleView("search");
                         }}
                         className="btn btn-icon search-toggle toggle-search"
                       >
@@ -270,6 +276,7 @@ function MenuManagement(props) {
                   <div className="search-content">
                     <Button
                       className="search-back btn-icon toggle-search active"
+                      disabled={disabled}
                       onClick={(ev) => {
                         ev.preventDefault();
                         toggleView("search");
@@ -290,6 +297,7 @@ function MenuManagement(props) {
                     />
                     <Button
                       className="search-submit btn-icon"
+                      disabled={disabled}
                       onClick={onSearch}
                     >
                       <Icon name="search"></Icon>

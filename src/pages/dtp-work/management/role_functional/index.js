@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import {useTranslation} from "react-i18next";
 import {useSelector, useDispatch} from "react-redux";
 import {useHistory} from "react-router-dom";
-import {Spinner, FormGroup} from "reactstrap";
+import {Spinner} from "reactstrap";
 import {toast} from "react-toastify";
 /** COMPONENTS */
 import Content from "layout/content/Content";
@@ -17,16 +17,13 @@ import {
   Icon,
   Button,
   RSelect,
-  Row,
-  Col,
 } from "components/Component";
+import TableRoleFunctional from "./table";
 /** COMMON */
-import Configs from "configs";
 import Routes from "route/routes";
 import {log} from "utils/Utils";
 /** REDUX */
 import * as Actions from "redux/actions";
-import TableRoleFunctional from "./table";
 
 function RoleFunctional(props) {
   const {t} = useTranslation();
@@ -43,11 +40,13 @@ function RoleFunctional(props) {
   const [loading, setLoading] = useState({
     main: true,
     search: false,
+    update: false,
   });
   const [isWrite, setIsWrite] = useState(false);
   const [dataSelect, setDataSelect] = useState({
     groups: [],
     employees: [],
+    employeesNotParse: [],
   });
   const [formData, setFormData] = useState({
     group: "",
@@ -60,8 +59,24 @@ function RoleFunctional(props) {
   /**
    ** FUNCTIONS
    */
-  const onChangeSelect = e =>
-    setFormData({...formData, [e.key]: e.value});
+  const onChangeSelect = e => {
+    if (e.key === "group") {
+      setFormData({...formData, [e.key]: e.value});
+      let fEmployees = dataSelect.employeesNotParse.filter(f =>
+        f.group === e.value.value);
+      if (fEmployees.length > 0) {
+        setDataSelect({...dataSelect, employees: fEmployees});
+      } else {
+        setDataSelect({...dataSelect, employees: []});
+      }
+      setLoading({...loading, search: true});
+      onStartGetData(e.value.value, 0);
+    } else if (e.key === "employee") {
+      setFormData({...formData, [e.key]: e.value});
+      setLoading({...loading, search: true});
+      onStartGetData(formData.group.value, e.value.value, 0);
+    }
+  };
 
   const onGetMasterData = () => {
     let params = {
@@ -72,10 +87,13 @@ function RoleFunctional(props) {
     dispatch(Actions.fFetchMasterData(params, history));
   };
 
-  const onStartGetData = () => {
+  const onStartGetData = (
+    groupID = 0,
+    userID = 0,
+  ) => {
     let params = {
-      GroupID: 0,
-      UserID: 0,
+      GroupID: groupID,
+      UserID: userID,
       IsWebOrMobile: 0,
       RefreshToken: authState["data"]["refreshToken"],
       Lang: commonState["language"],
@@ -83,12 +101,17 @@ function RoleFunctional(props) {
     dispatch(Actions.fFetchRoleList(params, history));
   };
 
-  const onFilterRole = () => {
-    
-  };
-
   const onUpdateRole = () => {
-  
+    setLoading({...loading, update: true});
+    let tmpRole = managementState["role"];
+    let params = {
+      GroupID: formData.group?.value || 0,
+      UserID: formData.employee?.value || 0,
+      lstPermissionItem: tmpRole.lstPermissionItem,
+      RefreshToken: authState["data"]["refreshToken"],
+      Lang: commonState["language"],
+    };
+    dispatch(Actions.fFetchUpdateRole(params, history));
   };
 
   const onSuccess = type => {
@@ -97,27 +120,31 @@ function RoleFunctional(props) {
         return {value: item.groupID, label: item.groupName};
       });
       let tmpDataEmployees = masterState["users"].map(item => {
-        return {value: item.empID, label: item.empName};
+        return {value: item.empID, label: item.empName, group: item.groupID};
       });
       setDataSelect({
+        ...dataSelect,
+        employeesNotParse: [...dataSelect.employeesNotParse, ...tmpDataEmployees],
         groups: [...dataSelect.groups, ...tmpDataGroups],
-        employees: [...dataSelect.employees, ...tmpDataEmployees],
       });
     }
     if (type === "Search") {
       setData({...data, role: managementState["role"]["lstPermissionItem"][0]});
-      setLoading({main: false, submit: false});
+      setLoading({main: false, submit: false, update: false});
+      dispatch(Actions.resetRole());
     }
     if (type === "Update") {
-      toast(t("success:role_functional"), {type: "success"});
-      setLoading({main: false, submit: false});
+      toast(t("success:update_role_functional"), {type: "success"});
+      setLoading({main: false, submit: false, update: false});
+      dispatch(Actions.resetRole());
     }
   };
 
   const onError = error => {
     log('[LOG] === onError ===> ', error);
-    setLoading({main: false, submit: false});
+    setLoading({main: false, submit: false, update: false});
     toast(error, {type: "error"});
+    dispatch(Actions.resetRole());
   };
 
   /**
@@ -127,7 +154,8 @@ function RoleFunctional(props) {
     if (loading.main && authState["successSignIn"] && authState["menu"]) {
       let fMenuRequest = null;
       if (authState["menu"].length > 0) {
-        for (let item of authState["menu"]) {
+        let item = null;
+        for (item of authState["menu"]) {
           if (item.subMenu && item.subMenu.length > 0) {
             fMenuRequest = item.subMenu.find(f => f.link === Routes.roleFunctional);
             if (fMenuRequest) {
@@ -191,10 +219,28 @@ function RoleFunctional(props) {
     managementState["errorRole"],
   ]);
 
+  useEffect(() => {
+    if (loading.update) {
+      if (!managementState["submittingUpdateRole"]) {
+        if (managementState["successUpdateRole"] && !managementState["errorUpdateRole"]) {
+          return onSuccess("Update");
+        }
+        if (!managementState["successUpdateRole"] && managementState["errorUpdateRole"]) {
+          return onError(managementState["errorHelperUpdateRole"]);
+        }
+      }
+    }
+  }, [
+    loading.update,
+    managementState["submittingUpdateRole"],
+    managementState["successUpdateRole"],
+    managementState["errorUpdateRole"],
+  ]);
+
   /**
    ** RENDER
    */
-  const disabled = loading.main || loading.search;
+  const disabled = loading.main || loading.search || loading.update;
   return (
     <React.Fragment>
       <Head title={t("management:title")} />
@@ -214,16 +260,20 @@ function RoleFunctional(props) {
                       <Button
                         className="toggle btn-icon d-md-none"
                         color="primary"
+                        disabled={disabled || (!formData.group && !formData.employee)}
                         onClick={onUpdateRole}
                       >
-                        <Icon name="save"></Icon>
+                        {loading.update && <Spinner color="light" size="sm" />}
+                        {!loading.update && <Icon name="save" />}
                       </Button>
                       <Button
                         className="toggle d-none d-md-inline-flex"
                         color="primary"
+                        disabled={disabled || (!formData.group && !formData.employee)}
                         onClick={onUpdateRole}
                       >
-                        <Icon name="save"></Icon>
+                        {loading.update && <Spinner className="mr-1" color="light" size="sm" />}
+                        {!loading.update && <Icon name="save" />}
                         <span>{t("common:save")}</span>
                       </Button>
                     </li>
@@ -264,23 +314,6 @@ function RoleFunctional(props) {
                         onChange={e => onChangeSelect({key: "employee", value: e})}
                       />
                     </li>
-                    <li className="nk-block-tools-opt">
-                      <Button
-                        className="btn-dim toggle btn-icon d-md-none"
-                        color="secondary"
-                        onClick={onFilterRole}
-                      >
-                        <Icon name="filter"></Icon>
-                      </Button>
-                      <Button
-                        className="btn-dim toggle d-none d-md-inline-flex"
-                        color="secondary"
-                        onClick={onFilterRole}
-                      >
-                        <Icon name="filter"></Icon>
-                        <span>{t("common:filter")}</span>
-                      </Button>
-                    </li>
                   </ul>
                 </div>
               </div>
@@ -288,12 +321,9 @@ function RoleFunctional(props) {
 
             {/** Data table */}
             <TableRoleFunctional
-              isWrite={isWrite}
-              history={history}
-              commonState={commonState}
-              authState={authState}
+              loading={disabled}
+              disabled={!formData.group}
               dataRole={data.role}
-              onUpdate={onUpdateRole}
             />
           </DataTable>
         </Block>

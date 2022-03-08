@@ -23,6 +23,14 @@ const Routes = {
 
     ROLE_LIST: "/Permission/GetList",
     UDPATE_ROLE: "/Permission/Modify",
+
+    APPROVED_LINES: "/RoleApproval/GetList",
+    UDPATE_APPROVED_LINES: "/RoleApproval/Modify",
+    REMOVE_APPROVED_LINES: "/RoleApproval/Remove",
+
+    APPROVED_LEVELS: "/LevelApproval/GetList",
+    UDPATE_APPROVED_LEVELS: "/LevelApproval/Modify",
+    REMOVE_APPROVED_LEVELS: "/LevelApproval/Remove",
   },
   APPROVED: {
     LIST_ASSETS: "/Assets/GetList",

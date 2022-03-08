@@ -11,8 +11,16 @@ export const initialState = {
   submittingCreateMenu: false,
   submittingUpdateMenu: false,
   submittingRole: false,
-  submittingFilterRole: false,
+  submittingUpdateRoleLocal: false,
   submittingUpdateRole: false,
+  submittingApprovedLines: false,
+  submittingCreateApprovedLines: false,
+  submittingUpdateApprovedLines: false,
+  submittingRemoveApprovedLines: false,
+  submittingApprovedLevels: false,
+  submittingCreateApprovedLevels: false,
+  submittingUpdateApprovedLevels: false,
+  submittingRemoveApprovedLevels: false,
 
   successEmpGro: false,
   errorEmpGro: false,
@@ -54,13 +62,41 @@ export const initialState = {
   errorRole: false,
   errorHelperRole: "",
 
-  successFilterRole: false,
-  errorFilterRole: false,
-  errorHelperFilterRole: "",
-
   successUpdateRole: false,
   errorUpdateRole: false,
   errorHelperUpdateRole: "",
+
+  successApprovedLines: false,
+  errorApprovedLines: false,
+  errorHelperApprovedLines: "",
+
+  successCreateApprovedLines: false,
+  errorCreateApprovedLines: false,
+  errorHelperCreateApprovedLines: "",
+
+  successUpdateApprovedLines: false,
+  errorUpdateApprovedLines: false,
+  errorHelperUpdateApprovedLines: "",
+
+  successRemoveApprovedLines: false,
+  errorRemoveApprovedLines: false,
+  errorHelperRemoveApprovedLines: "",
+
+  successApprovedLevels: false,
+  errorApprovedLevels: false,
+  errorHelperApprovedLevels: "",
+
+  successCreateApprovedLevels: false,
+  errorCreateApprovedLevels: false,
+  errorHelperCreateApprovedLevels: "",
+
+  successUpdateApprovedLevels: false,
+  errorUpdateApprovedLevels: false,
+  errorHelperUpdateApprovedLevels: "",
+
+  successRemoveApprovedLevels: false,
+  errorRemoveApprovedLevels: false,
+  errorHelperRemoveApprovedLevels: "",
 
   employeeGroup: [],
   numEmployeeGroup: 0,
@@ -72,6 +108,34 @@ export const initialState = {
   numMenu: 0,
 
   role: [],
+
+  approvedLines: [],
+  numApprovedLines: 0,
+
+  approvedLevels: [],
+  numApprovedLevels: 0,
+};
+
+const findRole = (data, menuID, update) => {
+  let tmpData = null, i = 0, tmp = null;
+  for (i = 0; i < data.length; i++) {
+    if (data[i].menuID === menuID) {
+      tmp = data[i];
+      tmp.isAccess = update.access;
+      tmp.isRead = update.read;
+      tmp.isWrite = update.write;
+      data[i] = tmp;
+      return data;
+    }
+    if (data[i].lstPermissionItem.length > 0) {
+      tmpData = findRole(data[i].lstPermissionItem, menuID, update);
+      if (tmpData) {
+        data[i].lstPermissionItem = tmpData;
+        return data;
+      }
+    }
+  }
+  return null;
 };
 
 export default function (state = initialState, action = {}) {
@@ -146,17 +210,60 @@ export default function (state = initialState, action = {}) {
           errorRole: false,
           errorHelperRole: "",
   
-          submittingFilterRole: false,
-          successFilterRole: false,
-          errorFilterRole: false,
-          errorHelperFilterRole: "",
-  
           submittingUpdateRole: false,
           successUpdateRole: false,
           errorUpdateRole: false,
           errorHelperUpdateRole: "",
         };
   
+    case types.RESET_APPROVED_LINES:
+      return {
+        ...state,
+        submittingApprovedLines: false,
+        successApprovedLines: false,
+        errorApprovedLines: false,
+        errorHelperApprovedLines: "",
+
+        submittingCreateApprovedLines: false,
+        successCreateApprovedLines: false,
+        errorCreateApprovedLines: false,
+        errorHelperCreateApprovedLines: "",
+
+        submittingUpdateApprovedLines: false,
+        successUpdateApprovedLines: false,
+        errorUpdateApprovedLines: false,
+        errorHelperUpdateApprovedLines: "",
+
+        submittingRemoveApprovedLines: false,
+        successRemoveApprovedLines: false,
+        errorRemoveApprovedLines: false,
+        errorHelperRemoveApprovedLines: "",
+      };
+
+    case types.RESET_APPROVED_LINES:
+      return {
+        ...state,
+        submittingApprovedLevels: false,
+        successApprovedLevels: false,
+        errorApprovedLevels: false,
+        errorHelperApprovedLevels: "",
+
+        submittingCreateApprovedLevels: false,
+        successCreateApprovedLevels: false,
+        errorCreateApprovedLevels: false,
+        errorHelperCreateApprovedLevels: "",
+
+        submittingUpdateApprovedLevels: false,
+        successUpdateApprovedLevels: false,
+        errorUpdateApprovedLevels: false,
+        errorHelperUpdateApprovedLevels: "",
+
+        submittingRemoveApprovedLevels: false,
+        successRemoveApprovedLevels: false,
+        errorRemoveApprovedLevels: false,
+        errorHelperRemoveApprovedLevels: "",
+      };
+
     /** List employee group */
     case types.START_EMPLOYEE_GROUP:
       return {
@@ -478,34 +585,18 @@ export default function (state = initialState, action = {}) {
         role: payload,
       };
 
-    /** Filter role */
-    case types.START_FILTER_ROLE:
+    /** Update role local */
+    case types.UPDATE_ROLE_LOCAL:
+      let tmpRoles = state.role;
+      let tmpData = findRole(
+        tmpRoles.lstPermissionItem[0].lstPermissionItem,
+        payload.menuID,
+        payload.update,
+      );
+      tmpRoles.lstPermissionItem[0].lstPermissionItem = tmpData;
       return {
         ...state,
-        submittingFilterRole: true,
-        successFilterRole: false,
-        errorFilterRole: false,
-        errorHelperFilterRole: "",
-      };
-
-    case types.ERROR_FILTER_ROLE:
-      return {
-        ...state,
-        submittingFilterRole: false,
-        successFilterRole: false,
-        errorFilterRole: true,
-        errorHelperFilterRole: payload,
-      };
-
-    case types.SUCCESS_FILTER_ROLE:
-      return {
-        ...state,
-        submittingFilterRole: false,
-        successFilterRole: true,
-        errorFilterRole: false,
-        errorHelperFilterRole: "",
-
-        role: payload,
+        role: tmpRoles,
       };
 
     /** Update role */
@@ -537,6 +628,278 @@ export default function (state = initialState, action = {}) {
 
       menu: payload,
     };
+
+    /** List approved lines */
+    case types.START_APPROVED_LINES:
+      return {
+        ...state,
+        submittingApprovedLines: true,
+        successApprovedLines: false,
+        errorApprovedLines: false,
+        errorHelperApprovedLines: "",
+      };
+
+    case types.ERROR_APPROVED_LINES:
+      return {
+        ...state,
+        submittingApprovedLines: false,
+        successApprovedLines: false,
+        errorApprovedLines: true,
+        errorHelperApprovedLines: payload,
+      };
+
+    case types.SUCCESS_APPROVED_LINES:
+      return {
+        ...state,
+        submittingApprovedLines: false,
+        successApprovedLines: true,
+        errorApprovedLines: false,
+        errorHelperApprovedLines: "",
+
+        approvedLines: payload.data,
+        numApprovedLines: payload.count,
+      };
+
+    /** Create approved lines */
+    case types.START_CREATE_APPROVED_LINES:
+      return {
+        ...state,
+        submittingCreateApprovedLines: true,
+        successCreateApprovedLines: false,
+        errorCreateApprovedLines: false,
+        errorHelperCreateApprovedLines: "",
+      };
+
+    case types.ERROR_CREATE_APPROVED_LINES:
+      return {
+        ...state,
+        submittingCreateApprovedLines: false,
+        successCreateApprovedLines: false,
+        errorCreateApprovedLines: true,
+        errorHelperCreateApprovedLines: payload,
+      };
+
+    case types.SUCCESS_CREATE_APPROVED_LINES:
+      return {
+        ...state,
+        submittingCreateApprovedLines: false,
+        successCreateApprovedLines: true,
+        errorCreateApprovedLines: false,
+        errorHelperCreateApprovedLines: "",
+      };
+
+    /** Update approved lines */
+    case types.START_UPDATE_APPROVED_LINES:
+      return {
+        ...state,
+        submittingUpdateApprovedLines: true,
+        successUpdateApprovedLines: false,
+        errorUpdateApprovedLines: false,
+        errorHelperUpdateApprovedLines: "",
+      };
+
+    case types.ERROR_UPDATE_APPROVED_LINES:
+      return {
+        ...state,
+        submittingUpdateApprovedLines: false,
+        successUpdateApprovedLines: false,
+        errorUpdateApprovedLines: true,
+        errorHelperUpdateApprovedLines: payload,
+      };
+
+    case types.SUCCESS_UPDATE_APPROVED_LINES:
+      let tmpApprovedLines = state.approvedLines;
+      let fIdxApprovedLines = tmpApprovedLines.findIndex(f => f.roleID === payload.roleID);
+      if (fIdxApprovedLines !== -1) {
+        tmpApprovedLines[fIdxApprovedLines] = payload;
+      } else {
+        tmpApprovedLines.push(payload);
+      }
+
+    return {
+      ...state,
+      submittingUpdateApprovedLines: false,
+      successUpdateApprovedLines: true,
+      errorUpdateApprovedLines: false,
+      errorHelperUpdateApprovedLines: "",
+
+      approvedLines: tmpApprovedLines,
+    };
+
+    /** Remove approved lines */
+    case types.START_REMOVE_APPROVED_LINES:
+      return {
+        ...state,
+        submittingRemoveApprovedLines: true,
+        successRemoveApprovedLines: false,
+        errorRemoveApprovedLines: false,
+        errorHelperRemoveApprovedLines: "",
+      };
+
+    case types.ERROR_REMOVE_APPROVED_LINES:
+      return {
+        ...state,
+        submittingRemoveApprovedLines: false,
+        successRemoveApprovedLines: false,
+        errorRemoveApprovedLines: true,
+        errorHelperRemoveApprovedLines: payload,
+      };
+
+    case types.SUCCESS_REMOVE_APPROVED_LINES:
+      let tmpAL = state.approvedLines,
+        tmpNumAL = state.numApprovedLines;
+      let fAL = tmpAL.findIndex(f => f.roleID === payload.roleID);
+      if (fAL !== -1) {
+        tmpAL.splice(fAL, 1);
+        tmpNumAL -= 1;
+      }
+
+      return {
+        ...state,
+        submittingRemoveApprovedLines: false,
+        successRemoveApprovedLines: true,
+        errorRemoveApprovedLines: false,
+        errorHelperRemoveApprovedLines: "",
+
+        approvedLines: tmpAL,
+        numApprovedLines: tmpNumAL,
+      };
+
+      /** List approved levels */
+    case types.START_APPROVED_LEVELS:
+      return {
+        ...state,
+        submittingApprovedLevels: true,
+        successApprovedLevels: false,
+        errorApprovedLevels: false,
+        errorHelperApprovedLevels: "",
+      };
+
+    case types.ERROR_APPROVED_LEVELS:
+      return {
+        ...state,
+        submittingApprovedLevels: false,
+        successApprovedLevels: false,
+        errorApprovedLevels: true,
+        errorHelperApprovedLevels: payload,
+      };
+
+    case types.SUCCESS_APPROVED_LEVELS:
+      return {
+        ...state,
+        submittingApprovedLevels: false,
+        successApprovedLevels: true,
+        errorApprovedLevels: false,
+        errorHelperApprovedLevels: "",
+
+        approvedLevels: payload.data,
+        numApprovedLevels: payload.count,
+      };
+
+    /** Create approved levels */
+    case types.START_CREATE_APPROVED_LEVELS:
+      return {
+        ...state,
+        submittingCreateApprovedLevels: true,
+        successCreateApprovedLevels: false,
+        errorCreateApprovedLevels: false,
+        errorHelperCreateApprovedLevels: "",
+      };
+
+    case types.ERROR_CREATE_APPROVED_LEVELS:
+      return {
+        ...state,
+        submittingCreateApprovedLevels: false,
+        successCreateApprovedLevels: false,
+        errorCreateApprovedLevels: true,
+        errorHelperCreateApprovedLevels: payload,
+      };
+
+    case types.SUCCESS_CREATE_APPROVED_LEVELS:
+      return {
+        ...state,
+        submittingCreateApprovedLevels: false,
+        successCreateApprovedLevels: true,
+        errorCreateApprovedLevels: false,
+        errorHelperCreateApprovedLevels: "",
+      };
+
+    /** Update approved levels */
+    case types.START_UPDATE_APPROVED_LEVELS:
+      return {
+        ...state,
+        submittingUpdateApprovedLevels: true,
+        successUpdateApprovedLevels: false,
+        errorUpdateApprovedLevels: false,
+        errorHelperUpdateApprovedLevels: "",
+      };
+
+    case types.ERROR_UPDATE_APPROVED_LEVELS:
+      return {
+        ...state,
+        submittingUpdateApprovedLevels: false,
+        successUpdateApprovedLevels: false,
+        errorUpdateApprovedLevels: true,
+        errorHelperUpdateApprovedLevels: payload,
+      };
+
+    case types.SUCCESS_UPDATE_APPROVED_LEVELS:
+      let tmpApprovedLevels = state.approvedLevels;
+      let fIdxApprovedLevels= tmpApprovedLevels.findIndex(f => f.absID === payload[0].absID);
+      if (fIdxApprovedLevels !== -1) {
+        tmpApprovedLevels[fIdxApprovedLevels] = payload[0];
+      } else {
+        tmpApprovedLevels.push(payload[0]);
+      }
+
+    return {
+      ...state,
+      submittingUpdateApprovedLevels: false,
+      successUpdateApprovedLevels: true,
+      errorUpdateApprovedLevels: false,
+      errorHelperUpdateApprovedLevels: "",
+
+      approvedLevels: tmpApprovedLevels,
+    };
+
+    /** Remove approved levels */
+    case types.START_REMOVE_APPROVED_LEVELS:
+      return {
+        ...state,
+        submittingRemoveApprovedLevels: true,
+        successRemoveApprovedLevels: false,
+        errorRemoveApprovedLevels: false,
+        errorHelperRemoveApprovedLevels: "",
+      };
+
+    case types.ERROR_REMOVE_APPROVED_LEVELS:
+      return {
+        ...state,
+        submittingRemoveApprovedLevels: false,
+        successRemoveApprovedLevels: false,
+        errorRemoveApprovedLevels: true,
+        errorHelperRemoveApprovedLevels: payload,
+      };
+
+    case types.SUCCESS_REMOVE_APPROVED_LEVELS:
+      let tmpALV = state.approvedLevels,
+        tmpNumALV = state.numApprovedLevels;
+      let fALV = tmpALV.findIndex(f => f.absID === payload.absID);
+      if (fALV !== -1) {
+        tmpALV.splice(fALV, 1);
+        tmpNumALV -= 1;
+      }
+
+      return {
+        ...state,
+        submittingRemoveApprovedLevels: false,
+        successRemoveApprovedLevels: true,
+        errorRemoveApprovedLevels: false,
+        errorHelperRemoveApprovedLevels: "",
+
+        approvedLevels: tmpALV,
+        numApprovedLevels: tmpNumALV,
+      };
 
     default:
       return state;

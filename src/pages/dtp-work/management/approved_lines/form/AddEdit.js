@@ -46,16 +46,16 @@ function AddEditForm(props) {
   });
   const [formData, setFormData] = useState({
     id: -1,
+    code: "",
     name: "",
-    description: "",
     inactive: false,
   });
 
   /**
    ** FUNCTIONS
    */
-  const onChangeInput = e =>
-    setFormData({...formData, [e.target.name]: e.target.value});
+   const onChangeInput = e =>
+   setFormData({...formData, [e.target.name]: e.target.value});
 
   const onChangeCheckbox = () =>
     setFormData({...formData, inactive: !formData.inactive});
@@ -63,18 +63,18 @@ function AddEditForm(props) {
   const onResetData = () => {
     setFormData({
       id: -1,
+      code: "",
       name: "",
-      description: "",
       inactive: false,
     });
   };
 
-  const onSetDataDetails = group => {
+  const onSetDataDetails = role => {
     setFormData({
-      id: group.groupID,
-      name: group.groupName,
-      description: group.description,
-      inactive: group.inactive,
+      id: role.roleID,
+      code: role.roleCode,
+      name: role.roleName,
+      inactive: role.inactive,
     });
     setLoading({...loading, main: false});
   };
@@ -82,24 +82,24 @@ function AddEditForm(props) {
   const onFormSubmit = () => {
     setLoading({...loading, submit: true});
     let params = {
-      GroupID: !isUpdate ? "0" : formData.id,
-      GroupName: formData.name.trim(),
-      Description: formData.description.trim(),
+      RoleID: !isUpdate ? "0" : formData.id,
+      RoleCode: formData.code.trim(),
+      RoleName: formData.name.trim(),
       Inactive: formData.inactive,
       RefreshToken: authState["data"]["refreshToken"],
       Lang: commonState["language"],
     };
     if (!isUpdate) {
-      dispatch(Actions.fFetchCreateEmployeeGroup(params, history));
+      dispatch(Actions.fFetchCreateApprovedLines(params, history));
     } else {
-      dispatch(Actions.fFetchUpdateEmployeeGroup(params, history));
+      dispatch(Actions.fFetchUpdateApprovedLines(params, history));
     }
   };
 
   const onSuccess = type => {
     setLoading({main: false, submit: false});
-    let message = "success:create_employee_group";
-    if (type === "Update") message = "success:update_employee_group";
+    let message = "success:create_approved_lines";
+    if (type === "Update") message = "success:update_approved_lines";
     toast(t(message), {type: "success"});
     onResetData();
     onClose(type);
@@ -132,40 +132,40 @@ function AddEditForm(props) {
 
   useEffect(() => {
     if (loading.submit && !isUpdate) {
-      if (!managementState["submittingCreateEmpGro"]) {
-        if (managementState["successCreateEmpGro"] && !managementState["errorCreateEmpGro"]) {
+      if (!managementState["submittingCreateApprovedLines"]) {
+        if (managementState["successCreateApprovedLines"] && !managementState["errorCreateApprovedLines"]) {
           return onSuccess("Create");
         }
-        if (!managementState["successCreateEmpGro"] && managementState["errorCreateEmpGro"]) {
-          return onError(managementState["errorHelperCreateEmpGro"]);
+        if (!managementState["successCreateApprovedLines"] && managementState["errorCreateApprovedLines"]) {
+          return onError(managementState["errorHelperCreateApprovedLines"]);
         }
       }
     }
   }, [
     isUpdate,
     loading.submit,
-    managementState["submittingCreateEmpGro"],
-    managementState["successCreateEmpGro"],
-    managementState["errorCreateEmpGro"],
+    managementState["submittingCreateApprovedLines"],
+    managementState["successCreateApprovedLines"],
+    managementState["errorCreateApprovedLines"],
   ]);
 
   useEffect(() => {
     if (loading.submit && isUpdate) {
-      if (!managementState["submittingUpdateEmpGro"]) {
-        if (managementState["successUpdateEmpGro"] && !managementState["errorUpdateEmpGro"]) {
+      if (!managementState["submittingUpdateApprovedLines"]) {
+        if (managementState["successUpdateApprovedLines"] && !managementState["errorUpdateApprovedLines"]) {
           return onSuccess("Update");
         }
-        if (!managementState["successUpdateEmpGro"] && managementState["errorUpdateEmpGro"]) {
-          return onError(managementState["errorHelperUpdateEmpGro"]);
+        if (!managementState["successUpdateApprovedLines"] && managementState["errorUpdateApprovedLines"]) {
+          return onError(managementState["errorHelperUpdateApprovedLines"]);
         }
       }
     }
   }, [
     isUpdate,
     loading.submit,
-    managementState["submittingUpdateEmpGro"],
-    managementState["successUpdateEmpGro"],
-    managementState["errorUpdateEmpGro"],
+    managementState["submittingUpdateApprovedLines"],
+    managementState["successUpdateApprovedLines"],
+    managementState["errorUpdateApprovedLines"],
   ]);
 
   /**
@@ -183,10 +183,10 @@ function AddEditForm(props) {
           <BlockBetween>
             <BlockHeadContent>
               {!isUpdate && (
-                <BlockTitle tag="h4">{t("management:add_employee_group")}</BlockTitle>
+                <BlockTitle tag="h4">{t("management:add_approved_lines")}</BlockTitle>
               )}
               {isUpdate && (
-                <BlockTitle tag="h4">{t("management:update_employee_group")}</BlockTitle>
+                <BlockTitle tag="h4">{t("management:update_approved_lines")}</BlockTitle>
               )}
             </BlockHeadContent>
             <BlockHeadContent>
@@ -227,11 +227,36 @@ function AddEditForm(props) {
           </div>
           <div className="mt-3">
             <Row className="g-3">
-              <Col size="12">
+              <Col md="4">
+                <FormGroup>
+                  <div className="form-label-group">
+                    <label className="form-label" htmlFor="code">
+                      {t("management:code_line")} <span className="text-danger">*</span>
+                    </label>
+                  </div>
+                  <div className="form-control-wrap">
+                    <input
+                      ref={register({ required: t("validate:empty") })}
+                      className="form-control"
+                      type="text"
+                      id="code"
+                      name="code"
+                      disabled={disabled}
+                      value={formData.code}
+                      placeholder={t("management:holder_code_line")}
+                      onChange={onChangeInput}
+                    />
+                    {errors.code && (
+                      <span className="invalid">{errors.code.message}</span>
+                    )}
+                  </div>
+                </FormGroup>
+              </Col>
+              <Col md="8">
                 <FormGroup>
                   <div className="form-label-group">
                     <label className="form-label" htmlFor="name">
-                      {t("management:name_group")} <span className="text-danger">*</span>
+                      {t("management:description")} <span className="text-danger">*</span>
                     </label>
                   </div>
                   <div className="form-control-wrap">
@@ -243,7 +268,7 @@ function AddEditForm(props) {
                       name="name"
                       disabled={disabled}
                       value={formData.name}
-                      placeholder={t("management:holder_name_group")}
+                      placeholder={t("management:holder_name_code_line")}
                       onChange={onChangeInput}
                     />
                     {errors.name && (
@@ -252,29 +277,8 @@ function AddEditForm(props) {
                   </div>
                 </FormGroup>
               </Col>
-              <Col size="12">
-                <FormGroup>
-                  <div className="form-label-group">
-                    <label className="form-label" htmlFor="description">
-                      {t("management:description")}
-                    </label>
-                  </div>
-                  <div className="form-control-wrap">
-                    <textarea
-                      className="no-resize form-control"
-                      type="text"
-                      id="description"
-                      name="description"
-                      disabled={disabled}
-                      value={formData.description}
-                      placeholder={t("management:holder_description")}
-                      onChange={onChangeInput}
-                    />
-                  </div>
-                </FormGroup>
-              </Col>
               {isUpdate && (
-                <Col md="4">
+                <Col size="12">
                   <FormGroup>
                     <div className="form-control-wrap">
                       <div className="custom-control custom-checkbox">

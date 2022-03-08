@@ -21,3 +21,29 @@
 	@extend .border-top-0;
 	@extend .border-bottom-0;
 }
+.ml-6{
+  margin-left: 6rem;
+}
+.ml-7{
+  margin-left: 9rem;
+}
+.ml-8{
+  margin-left: 6rem;
+}
+.ml-9{
+  margin-left: 6rem;
+}
+.ml-10{
+  margin-left: 12rem;
+}
+.border-table-item{
+	position: absolute;
+	top: 0%;
+	left: 60%;
+	overflow: hidden;
+	width: 1px;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	border-right: 1px solid $border-light;
+}

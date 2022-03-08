@@ -31,6 +31,10 @@ export const initialState = {
   projectPriority: [],
   bkColor: [],
   bkReSource: [],
+  roles: [],
+  typeGroups: [],
+  titleApproval: [],
+  userApproval: [],
 };
 
 export default function (state = initialState, action = {}) {
@@ -80,6 +84,10 @@ export default function (state = initialState, action = {}) {
         projectPriority: payload.projectPriority || state["projectPriority"],
         bkColor: payload.bkColor || state["bkColor"],
         bkReSource: payload.bkReSource || state["bkReSource"],
+        roles: payload.roles || state["roles"],
+        typeGroups: payload.typeGroups || state["typeGroups"],
+        titleApproval: payload.titleApproval || state["titleApproval"],
+        userApproval: payload.userApproval || state["userApproval"],
       };
 
     case types.UPDATE_MASTER_SUPPLIER:

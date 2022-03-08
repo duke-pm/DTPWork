@@ -25,6 +25,7 @@ import * as Actions from "redux/actions";
 
 function AddEditForm(props) {
   const {t} = useTranslation();
+  const {errors, register, clearErrors, handleSubmit} = useForm();
   const {
     show,
     history,
@@ -328,9 +329,12 @@ function AddEditForm(props) {
     if (!loading.main && updateItem && show) {
       onSetFormDataDetails(updateItem);
     }
+    if (!show) {
+      clearErrors();
+    }
   }, [
-    loading.main,
     show,
+    loading.main,
     updateItem,
   ]);
 
@@ -394,7 +398,6 @@ function AddEditForm(props) {
   /**
    ** RENDER
    */
-  const {errors, register, handleSubmit} = useForm();
   const disabled = loading.main || loading.submit;
   return (
     <SimpleBar
@@ -423,7 +426,7 @@ function AddEditForm(props) {
                     disabled={disabled}
                   >
                     {disabled && (
-                      <Spinner className="mr-1" size="sm" color="light" />
+                      <Spinner size="sm" color="light" />
                     )}
                     {!loading.main && !loading.submit && <Icon name="save" />}
                   </Button>

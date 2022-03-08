@@ -173,4 +173,127 @@ export default {
         });
     });
   },
+
+  /** Approved lines */
+  getApprovedLines: params => {
+    return new Promise((resolve, reject) => {
+      let tmpConfigs = {params: {}};
+      tmpConfigs.params.Search = params["Search"];
+      tmpConfigs.params.PageSize = params["PageSize"];
+      tmpConfigs.params.PageNum = params["PageNum"];
+      
+      API.get(jwtServiceConfig.baseURL + Routes.MANAGEMENT.APPROVED_LINES, tmpConfigs)
+        .then(response => {
+          log("FETCH APPROVED LINES => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          log("ERROR APPROVED LINES => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
+  updateApprovedLines: params => {
+    return new Promise((resolve, reject) => {
+      API.put(jwtServiceConfig.baseURL + Routes.MANAGEMENT.UDPATE_APPROVED_LINES, params)
+        .then(response => {
+          log("FETCH UPDATE APPROVED LINES => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          log("ERROR UPDATE APPROVED LINES => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
+  removeApprovedLines: params => {
+    return new Promise((resolve, reject) => {
+      let tmpConfigs = {params: {}};
+      tmpConfigs.params.RoleID = params["RoleID"];
+
+      API.get(jwtServiceConfig.baseURL + Routes.MANAGEMENT.REMOVE_APPROVED_LINES, tmpConfigs)
+        .then(response => {
+          log("FETCH REMOVE APPROVED LINES => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          log("ERROR REMOVE APPROVED LINES => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
+
+  /** Approved levels */
+  getApprovedLevels: params => {
+    return new Promise((resolve, reject) => {
+      let tmpConfigs = {params: {}};
+      tmpConfigs.params.Search = params["Search"];
+      tmpConfigs.params.PageSize = params["PageSize"];
+      tmpConfigs.params.PageNum = params["PageNum"];
+      
+      API.get(jwtServiceConfig.baseURL + Routes.MANAGEMENT.APPROVED_LEVELS, tmpConfigs)
+        .then(response => {
+          log("FETCH APPROVED LEVELS => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          log("ERROR APPROVED LEVELS => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
+  updateApprovedLevels: params => {
+    return new Promise((resolve, reject) => {
+      API.put(jwtServiceConfig.baseURL + Routes.MANAGEMENT.UDPATE_APPROVED_LEVELS, params)
+        .then(response => {
+          log("FETCH UPDATE APPROVED LEVELS => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          log("ERROR UPDATE APPROVED LEVELS => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
+  removeApprovedLevels: params => {
+    return new Promise((resolve, reject) => {
+      let tmpConfigs = {params: {}};
+      tmpConfigs.params.AbsID = params["AbsID"];
+      tmpConfigs.params.Lang = params["Lang"];
+
+      API.get(jwtServiceConfig.baseURL + Routes.MANAGEMENT.REMOVE_APPROVED_LEVELS, tmpConfigs)
+        .then(response => {
+          log("FETCH REMOVE APPROVED LEVELS => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          log("ERROR REMOVE APPROVED LEVELS => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
 };

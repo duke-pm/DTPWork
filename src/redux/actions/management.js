@@ -369,39 +369,10 @@ export const fFetchRoleList = (params, history) => {
   };
 };
 
-export const fErrorFilterRole = error => ({
-  type: types.ERROR_FILTER_ROLE,
-  payload: error,
+export const updateRoleLocal = data => ({
+  type: types.UPDATE_ROLE_LOCAL,
+  payload: {menuID: data.menuID, update: data.update},
 });
-
-export const fSuccessFilterRole = () => ({
-  type: types.SUCCESS_FILTER_ROLE,
-});
-
-export const fFetchFilterRole = (params, history) => {
-  return dispatch => {
-    dispatch({type: types.START_FILTER_ROLE});
-
-    Services.management.getRoleList(params)
-      .then(res => {
-        if (!res.isError) {
-          return dispatch(fSuccessFilterRole(res.data));
-        } else {
-          return dispatch(fErrorFilterRole(res.errorMessage));
-        }
-      })
-      .catch(error => {
-        dispatch(fErrorFilterRole(error));
-        if (error.message && error.message.search("Authorization") !== -1) {
-          let tmp = {
-            RefreshToken: params.RefreshToken,
-            Lang: params.Lang,
-          };
-          return dispatch(Actions.fFetchRefreshToken(tmp, history));
-        }
-      });
-  };
-};
 
 export const fErrorUpdateRole = error => ({
   type: types.ERROR_UPDATE_ROLE,
@@ -427,6 +398,294 @@ export const fFetchUpdateRole = (params, history) => {
       })
       .catch(error => {
         dispatch(fErrorUpdateRole(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};
+
+//** Approved lines */
+export const resetApprovedLines = () => ({
+  type: types.RESET_APPROVED_LINES,
+});
+
+export const fErrorApprovedLines = error => ({
+  type: types.ERROR_APPROVED_LINES,
+  payload: error,
+});
+
+export const fSuccessApprovedLines = (data, count) => ({
+  type: types.SUCCESS_APPROVED_LINES,
+  payload: {data, count},
+});
+
+export const fFetchApprovedLines = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_APPROVED_LINES});
+
+    Services.management.getApprovedLines(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessApprovedLines(res.data || [], res.totalRow));
+        } else {
+          return dispatch(fErrorApprovedLines(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorApprovedLines(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};
+
+export const fErrorCreateApprovedLines = error => ({
+  type: types.ERROR_CREATE_APPROVED_LINES,
+  payload: error,
+});
+
+export const fSuccessCreateApprovedLines = () => ({
+  type: types.SUCCESS_CREATE_APPROVED_LINES,
+});
+
+export const fFetchCreateApprovedLines = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_CREATE_APPROVED_LINES});
+
+    Services.management.updateApprovedLines(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessCreateApprovedLines());
+        } else {
+          return dispatch(fErrorCreateApprovedLines(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorCreateApprovedLines(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};
+
+export const fErrorUpdateApprovedLines = error => ({
+  type: types.ERROR_UPDATE_APPROVED_LINES,
+  payload: error,
+});
+
+export const fSuccessUpdateApprovedLines = data => ({
+  type: types.SUCCESS_UPDATE_APPROVED_LINES,
+  payload: data,
+});
+
+export const fFetchUpdateApprovedLines = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_UPDATE_APPROVED_LINES});
+
+    Services.management.updateApprovedLines(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessUpdateApprovedLines(res.data));
+        } else {
+          return dispatch(fErrorUpdateApprovedLines(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorUpdateApprovedLines(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};
+
+export const fErrorRemoveApprovedLines = error => ({
+  type: types.ERROR_REMOVE_APPROVED_LINES,
+  payload: error,
+});
+
+export const fSuccessRemoveApprovedLines = roleID => ({
+  type: types.SUCCESS_REMOVE_APPROVED_LINES,
+  payload: {roleID},
+});
+
+export const fFetchRemoveApprovedLines = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_REMOVE_APPROVED_LINES});
+
+    Services.management.removeApprovedLines(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessRemoveApprovedLines(params.RoleID));
+        } else {
+          return dispatch(fErrorRemoveApprovedLines(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorRemoveApprovedLines(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};
+
+//** Approved levels */
+export const resetApprovedLevels = () => ({
+  type: types.RESET_APPROVED_LEVELS,
+});
+
+export const fErrorApprovedLevels = error => ({
+  type: types.ERROR_APPROVED_LEVELS,
+  payload: error,
+});
+
+export const fSuccessApprovedLevels = (data, count) => ({
+  type: types.SUCCESS_APPROVED_LEVELS,
+  payload: {data, count},
+});
+
+export const fFetchApprovedLevels = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_APPROVED_LEVELS});
+
+    Services.management.getApprovedLevels(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessApprovedLevels(res.data || [], res.totalRow));
+        } else {
+          return dispatch(fErrorApprovedLevels(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorApprovedLevels(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};
+
+export const fErrorCreateApprovedLevels = error => ({
+  type: types.ERROR_CREATE_APPROVED_LEVELS,
+  payload: error,
+});
+
+export const fSuccessCreateApprovedLevels = () => ({
+  type: types.SUCCESS_CREATE_APPROVED_LEVELS,
+});
+
+export const fFetchCreateApprovedLevels = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_CREATE_APPROVED_LEVELS});
+
+    Services.management.updateApprovedLevels(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessCreateApprovedLevels());
+        } else {
+          return dispatch(fErrorCreateApprovedLevels(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorCreateApprovedLevels(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};
+
+export const fErrorUpdateApprovedLevels = error => ({
+  type: types.ERROR_UPDATE_APPROVED_LEVELS,
+  payload: error,
+});
+
+export const fSuccessUpdateApprovedLevels = data => ({
+  type: types.SUCCESS_UPDATE_APPROVED_LEVELS,
+  payload: data,
+});
+
+export const fFetchUpdateApprovedLevels = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_UPDATE_APPROVED_LEVELS});
+
+    Services.management.updateApprovedLevels(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessUpdateApprovedLevels(res.data));
+        } else {
+          return dispatch(fErrorUpdateApprovedLevels(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorUpdateApprovedLevels(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};
+
+export const fErrorRemoveApprovedLevels = error => ({
+  type: types.ERROR_REMOVE_APPROVED_LEVELS,
+  payload: error,
+});
+
+export const fSuccessRemoveApprovedLevels = absID => ({
+  type: types.SUCCESS_REMOVE_APPROVED_LEVELS,
+  payload: {absID},
+});
+
+export const fFetchRemoveApprovedLevels = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_REMOVE_APPROVED_LEVELS});
+
+    Services.management.removeApprovedLevels(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessRemoveApprovedLevels(params.AbsID));
+        } else {
+          return dispatch(fErrorRemoveApprovedLevels(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorRemoveApprovedLevels(error));
         if (error.message && error.message.search("Authorization") !== -1) {
           let tmp = {
             RefreshToken: params.RefreshToken,
