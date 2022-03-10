@@ -31,6 +31,8 @@ export const initialState = {
   projectPriority: [],
   bkColor: [],
   bkReSource: [],
+  bkResourceGroup: [],
+  bkIcon: [],
   roles: [],
   typeGroups: [],
   titleApproval: [],
@@ -41,6 +43,19 @@ export default function (state = initialState, action = {}) {
   const {type, payload} = action;
 
   switch (type) {
+    case types.RESET_MASTER_DATA:
+      return {
+        ...state,
+        submittingGetAll: false,
+        successGetAll: false,
+        errorGetAll: false,
+        errorHelperGetAll: "",
+
+        submittingAssetsByUser: false,
+        successAssetsByUser: false,
+        errorAssetsByUser: false,
+        errorHelperAssetsByUser: "",
+      };
     case types.START_MASTER_GET_ALL:
       return {
         ...state,
@@ -84,6 +99,8 @@ export default function (state = initialState, action = {}) {
         projectPriority: payload.projectPriority || state["projectPriority"],
         bkColor: payload.bkColor || state["bkColor"],
         bkReSource: payload.bkReSource || state["bkReSource"],
+        bkResourceGroup: payload.bkResourceGroup || state["bkResourceGroup"],
+        bkIcon: payload.bkIcon || state["bkIcon"],
         roles: payload.roles || state["roles"],
         typeGroups: payload.typeGroups || state["typeGroups"],
         titleApproval: payload.titleApproval || state["titleApproval"],

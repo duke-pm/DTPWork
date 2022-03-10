@@ -6,7 +6,6 @@ import {
   DropdownMenu,
   DropdownToggle,
   DropdownItem,
-  Spinner
 } from "reactstrap";
 import {toast} from "react-toastify";
 /** COMPONENTS */
@@ -16,7 +15,6 @@ import {
   DataTableRow,
   DataTableBody,
   Icon,
-  UserAvatar,
 } from "components/Component";
 /** COMMON */
 import {log} from "utils/Utils";
@@ -159,73 +157,58 @@ function TableMenu(props) {
                 <span>{item.mName}</span>
               </DataTableRow>
               <DataTableRow>
-                {loading && idChkInactive === choosedMenu && (
-                  <Spinner size="sm" color="primary" />
-                )}
-                {(!loading || (loading && idChkInactive !== choosedMenu)) && (
-                  <div className="form-control-wrap">
-                    <div className="custom-control custom-control-sm custom-checkbox">
-                      <input
-                        className="custom-control-input form-control"
-                        id={idChkInactive}
-                        name={idChkInactive}
-                        type="checkbox"
-                        disabled={loading || !isWrite || item.typeID === 1}
-                        checked={!item.inactive}
-                        onChange={() => onChangeCheck("inactive", idChkInactive, item)}
-                      />
-                      <label className="custom-control-label" htmlFor={idChkInactive}>
-                        {""}
-                      </label>
-                    </div>
+                <div className="form-control-wrap">
+                  <div className="custom-control custom-control-sm custom-checkbox">
+                    <input
+                      className="custom-control-input form-control"
+                      id={idChkInactive}
+                      name={idChkInactive}
+                      type="checkbox"
+                      disabled={loading || !isWrite || item.typeID === 1}
+                      checked={!item.inactive}
+                      onChange={() => onChangeCheck("inactive", idChkInactive, item)}
+                    />
+                    <label className="custom-control-label" htmlFor={idChkInactive}>
+                      {""}
+                    </label>
                   </div>
-                )}
+                </div>
               </DataTableRow>
               <DataTableRow>
-                {loading && idChkWeb === choosedMenu && (
-                  <Spinner size="sm" color="primary" />
-                )}
-                {(!loading || (idChkWeb !== choosedMenu)) && (
-                  <div className="form-control-wrap">
-                    <div className="custom-control custom-control-sm custom-checkbox">
-                      <input
-                        className="custom-control-input form-control"
-                        id={idChkWeb}
-                        name={idChkWeb}
-                        type="checkbox"
-                        disabled={loading || !isWrite || item.typeID === 1}
-                        checked={item.isWeb}
-                        onChange={() => onChangeCheck("web", idChkWeb, item)}
-                      />
-                      <label className="custom-control-label" htmlFor={idChkWeb}>
-                        {""}
-                      </label>
-                    </div>
+                <div className="form-control-wrap">
+                  <div className="custom-control custom-control-sm custom-checkbox">
+                    <input
+                      className="custom-control-input form-control"
+                      id={idChkWeb}
+                      name={idChkWeb}
+                      type="checkbox"
+                      disabled={loading || !isWrite || item.typeID === 1}
+                      checked={item.isWeb}
+                      onChange={() => onChangeCheck("web", idChkWeb, item)}
+                    />
+                    <label className="custom-control-label" htmlFor={idChkWeb}>
+                      {""}
+                    </label>
                   </div>
-                )}
+                </div>
               </DataTableRow>
               <DataTableRow>
-                {loading && idChkMobile === choosedMenu && (
-                  <Spinner size="sm" color="primary" />
-                )}
-                {(!loading || (idChkMobile !== choosedMenu)) && (
-                  <div className="form-control-wrap">
-                    <div className="custom-control custom-control-sm custom-checkbox">
-                      <input
-                        className="custom-control-input form-control"
-                        id={idChkMobile}
-                        name={idChkMobile}
-                        type="checkbox"
-                        disabled={loading || !isWrite || item.typeID === 1}
-                        checked={item.isMobile}
-                        onChange={() => onChangeCheck("mobile", idChkMobile, item)}
-                      />
-                      <label className="custom-control-label" htmlFor={idChkMobile}>
-                        {""}
-                      </label>
-                    </div>
+                <div className="form-control-wrap">
+                  <div className="custom-control custom-control-sm custom-checkbox">
+                    <input
+                      className="custom-control-input form-control"
+                      id={idChkMobile}
+                      name={idChkMobile}
+                      type="checkbox"
+                      disabled={loading || !isWrite || item.typeID === 1}
+                      checked={item.isMobile}
+                      onChange={() => onChangeCheck("mobile", idChkMobile, item)}
+                    />
+                    <label className="custom-control-label" htmlFor={idChkMobile}>
+                      {""}
+                    </label>
                   </div>
-                )}
+                </div>
               </DataTableRow>
               {isWrite && (
                 <DataTableRow className="nk-tb-col-tools">

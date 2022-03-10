@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import {useHistory} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {useSelector, useDispatch} from "react-redux";
-import {Spinner, Modal, ModalBody} from "reactstrap";
+import {Spinner} from "reactstrap";
 import {toast} from "react-toastify";
 /** COMPONENTS */
 import Content from "layout/content/Content";
@@ -18,15 +18,16 @@ import {
   PreviewAltCard,
   Icon,
   Button,
+  AlertConfirm,
 } from "components/Component";
 import TableApprovedLevels from "./table";
+import AddEditForm from "./form/AddEdit";
 /** COMMON */
 import Configs from "configs";
 import Routes from "route/routes";
 import {log} from "utils/Utils";
 /** REDUX */
 import * as Actions from "redux/actions";
-import AddEditForm from "./form/AddEdit";
 
 function ApprovedLevels(props) {
   const {t} = useTranslation();
@@ -247,7 +248,7 @@ function ApprovedLevels(props) {
   /**
    ** RENDER
    */
-  const disabled = loading.main || loading.search;
+  const disabled = loading.main || loading.search || loading.remove;
   return (
     <React.Fragment>
       <Head title={t("management:title")} />
@@ -392,54 +393,20 @@ function ApprovedLevels(props) {
           onClose={onCloseForm}
         />
 
-        <Modal
-          className="modal-dialog-centered"
-          isOpen={view.confirm}
-          size="sm"
-          toggle={loading.remove ? undefined : toggleView}
-        >
-          <ModalBody className="modal-body-sm text-center">
-            <div className="nk-modal">
-              <Icon className="nk-modal-icon icon-circle icon-circle-xxl ni ni-alert bg-warning"></Icon>
-              <h4 className="nk-modal-title">{t("management:confirm_remove_level_title")}</h4>
-              <div className="nk-modal-text">
-                <div className="sub-text-sm">
-                  {t("management:confirm_remove_level_des_1")}
-                  <span className="fw-bold"> #{updateItem?.roleCode} </span>
-                  {t("management:confirm_remove_level_des_2")}
-                </div>
-              </div>
-              <div className="d-flex justify-content-center">
-                <div className="nk-modal-action mr-2">
-                  <Button
-                    color="danger"
-                    size="lg"
-                    disabled={loading.remove}
-                    onClick={onConfirmRemove}
-                  >
-                    {loading.remove && (
-                      <Spinner className="mr-1" size="sm" color="light" />
-                    )}
-                    {!loading.remove && <Icon name="trash" />}
-                    <span>{t("common:remove")}</span>
-                  </Button>
-                </div>
-                <div className="nk-modal-action ml-2">
-                  <Button
-                    className="btn-dim"
-                    color="gray"
-                    size="lg"
-                    disabled={loading.remove}
-                    onClick={toggleView}
-                  >
-                    <Icon name="cross" />
-                    <span>{t("common:close")}</span>
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </ModalBody>
-        </Modal>
+        <AlertConfirm
+          loading={loading.remove}
+          show={view.confirm}
+          title={t("management:confirm_remove_level_title")}
+          content={
+            <>
+              {t("management:confirm_remove_level_des_1")}
+              <span className="fw-bold"> #{updateItem?.roleCode} </span>
+              {t("management:confirm_remove_level_des_2")}
+            </>
+          }
+          onConfirm={onConfirmRemove}
+          onClose={toggleView}
+        />
 
         {view.add && <div className="toggle-overlay" onClick={toggleView}></div>}
         {view.update && <div className="toggle-overlay" onClick={toggleView}></div>}

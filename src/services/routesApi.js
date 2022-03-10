@@ -57,7 +57,22 @@ const Routes = {
     EXPORT_RECALL_ASSETS: "/RQAsset/ExportRequestRecovery",
     EXPORT_REQUEST_ALLOW: "/RQAsset/ExportRequestAllocation",
     EXPORT_REQUEST_DAMAGE: "/RQAsset/ExportRequestDamage",
+  },
+  BOOKING: {
+    LIST_BOOKING: "/TransBooking/GetList",
+    UPDATE_BOOKING: "/TransBooking/Modify",
+    REMOVE_BOOKING: "/TransBooking/Remove",
+    BOOKING_RESOURCE: "/TransBooking/GetListResource",
+
+    LIST_GROUP_RESOURCE: "/BKResourceGroup/GetList",
+    UPDATE_GROUP_RESOURCE: "/BKResourceGroup/Modify",
+    REMOVE_GROUP_RESOURCE: "/BKResourceGroup/Remove",
+    LIST_RESOURCE: "/BKResource/GetList",
+    UPDATE_RESOURCE: "/BKResource/Modify",
+    REMOVE_RESOURCE: "/BKResource/Remove",
+
     
+    BOOKING_DETAIL: "/TransBooking/GetByID",
   },
   // PROJECT_MANAGEMENT: {
   //   LIST_PROJECT: "/Project/GetList",
@@ -68,14 +83,7 @@ const Routes = {
   //   TASK_WATCHER: "/TaskWatcher/Modify",
   //   PROJECT_OVERVIEW: "/Project/GetListOverview",
   // },
-  // BOOKING: {
-  //   LIST_BOOKING: "/TransBooking/GetList",
-  //   ADD_BOOKING: "/TransBooking/Modify",
-  //   UPDATE_BOOKING: "/TransBooking/Modify",
-  //   REMOVE_BOOKING: "/TransBooking/Remove",
-  //   BOOKING_DETAIL: "/TransBooking/GetByID",
-  //   BOOKING_RESOURCE: "/TransBooking/GetListResource",
-  // },
+  
 };
 
 export default Routes;

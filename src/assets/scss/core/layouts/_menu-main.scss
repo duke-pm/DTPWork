@@ -118,7 +118,7 @@ $menu-main-sub-toggle-icon-rtl: $ni-chevron-left !default;
             color: $menu-link-color-hover;
             background: $white;
             .is-light &{
-                background: $menu-link-background-hover;
+                // background: $menu-link-background-hover;
             }
             @if($menu_dark_option==true) {
                 .is-dark & {

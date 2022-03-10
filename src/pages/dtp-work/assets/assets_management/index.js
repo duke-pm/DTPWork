@@ -154,7 +154,7 @@ function AssetsManagement(props) {
    */
   const onChangeSearch = (e) => {
     let tmpTabs = [...tabs];
-    tmpTabs[filterTab].search = e.target.value.trim();
+    tmpTabs[filterTab].search = e.target.value;
     setTabs(tmpTabs);
   };
 
@@ -170,9 +170,6 @@ function AssetsManagement(props) {
   const toggleView = (type, callback) => {
     if (type === "search" && view.search) {
       setView({...view, search: false});
-      if (tabs[filterTab].search === "") {
-        onSearch(null, filterTab);
-      }
     } else {
       if ((type === "update" || type === "approved" ||
       type === "recall" || type === "repair" ||

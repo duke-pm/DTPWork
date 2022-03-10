@@ -18,6 +18,12 @@ const Routes = {
   requestsApproved: "/list-request",
   requestsApprovedHandle: "/list-request-handle",
 
+  /** Booking routes */
+  allBookings: "/booking/bookings",
+
+  groupResources: "/booking/resource-group/resource-group-page",
+  resources: "/booking/resource/resource-page"
+  
 };
 
 export default Routes;

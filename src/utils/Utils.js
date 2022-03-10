@@ -26,17 +26,11 @@ export const checkForm = (formData) => {
 //Function that returns the first or first two letters from a name
 export const findUpper = (string) => {
   let extractedString = [];
-
-  for (var i = 0; i < string.length; i++) {
-    if (string.charAt(i) === string.charAt(i).toUpperCase() && string.charAt(i) !== " ") {
-      extractedString.push(string.charAt(i));
-    }
-  }
+  extractedString = string.split(" ");
   if (extractedString.length > 1) {
-    const reversed = extractedString.reverse();
-    return reversed[1] + reversed[0];
+    return extractedString[extractedString.length - 2].charAt(0) + extractedString[extractedString.length - 1].charAt(0);
   } else {
-    return extractedString[0];
+    return string.charAt(0);
   }
 };
 

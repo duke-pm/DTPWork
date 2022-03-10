@@ -133,7 +133,7 @@ export default {
     });
   },
 
-  /** Rolw */
+  /** Role */
   getRoleList: params => {
     return new Promise((resolve, reject) => {
       let tmpConfigs = {params: {}};

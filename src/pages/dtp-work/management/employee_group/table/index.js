@@ -6,7 +6,6 @@ import {
   DropdownMenu,
   DropdownToggle,
   DropdownItem,
-  Spinner
 } from "reactstrap";
 import {toast} from "react-toastify";
 /** COMPONENTS */
@@ -133,27 +132,22 @@ function TableEmployeeGroup(props) {
                 <span>{item.description}</span>
               </DataTableRow>
               <DataTableRow>
-                {loading && item.groupID === choosedGroup && (
-                  <Spinner size="sm" color="primary" />
-                )}
-                {(!loading || (loading && item.groupID !== choosedGroup)) && (
-                  <div className="form-control-wrap">
-                    <div className="custom-control custom-control-sm custom-checkbox">
-                      <input
-                        className="custom-control-input form-control"
-                        id={`check_${item.groupID}`}
-                        name={`check_${item.groupID}`}
-                        type="checkbox"
-                        disabled={loading || !isWrite}
-                        checked={!item.inactive}
-                        onChange={() => onChangeInactive(item)}
-                      />
-                      <label className="custom-control-label" htmlFor={`check_${item.groupID}`}>
-                        {""}
-                      </label>
-                    </div>
+                <div className="form-control-wrap">
+                  <div className="custom-control custom-control-sm custom-checkbox">
+                    <input
+                      className="custom-control-input form-control"
+                      id={`check_${item.groupID}`}
+                      name={`check_${item.groupID}`}
+                      type="checkbox"
+                      disabled={loading || !isWrite}
+                      checked={!item.inactive}
+                      onChange={() => onChangeInactive(item)}
+                    />
+                    <label className="custom-control-label" htmlFor={`check_${item.groupID}`}>
+                      {""}
+                    </label>
                   </div>
-                )}
+                </div>
               </DataTableRow>
               {isWrite && (
                 <DataTableRow className="nk-tb-col-tools">

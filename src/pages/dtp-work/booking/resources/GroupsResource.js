@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import {useHistory} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {useSelector, useDispatch} from "react-redux";
-import {Spinner, Modal, ModalBody} from "reactstrap";
+import {Spinner} from "reactstrap";
 import {toast} from "react-toastify";
 /** COMPONENTS */
 import Content from "layout/content/Content";
@@ -18,9 +18,10 @@ import {
   PreviewAltCard,
   Icon,
   Button,
+  AlertConfirm,
 } from "components/Component";
-import TableApprovedLines from "./table";
-import AddEditForm from "./form/AddEdit";
+import TableGroupResource from "../table/GroupsResource";
+import AddEditGroupResrcForm from "../form/AddEditGroupResrc";
 /** COMMON */
 import Configs from "configs";
 import Routes from "route/routes";
@@ -28,15 +29,15 @@ import {log} from "utils/Utils";
 /** REDUX */
 import * as Actions from "redux/actions";
 
-function ApprovedLines(props) {
+function GroupsResource(props) {
   const {t} = useTranslation();
   const history = useHistory();
 
   /** Use redux */
   const dispatch = useDispatch();
-  const commonState = useSelector(({common}) => common);
   const authState = useSelector(({auth}) => auth);
-  const managementState = useSelector(({management}) => management);
+  const commonState = useSelector(({common}) => common);
+  const bookingState = useSelector(({booking}) => booking);
 
   /** Use state */
   const [loading, setLoading] = useState({
@@ -51,13 +52,13 @@ function ApprovedLines(props) {
     update: false,
     confirm: false,
   });
-  const [updateItem, setUpdateItem] = useState(null);
   const [textSearch, setTextSearch] = useState("");
   const [data, setData] = useState({
     list: [],
     count: 0,
     page: 1,
   });
+  const [updateItem, setUpdateItem] = useState(null);
 
   /**
    ** FUNCTIONS
@@ -117,50 +118,50 @@ function ApprovedLines(props) {
     }
   };
 
-  const onUpdateLines = line => {
-    setUpdateItem(line);
+  const onUpdateGroup = group => {
+    setUpdateItem(group);
     toggleView("update");
   };
 
-  const onRemoveLines = line => {
-    setUpdateItem(line);
+  const onRemoveGroup = group => {
+    setUpdateItem(group);
     toggleView("confirm");
   };
 
   const onStartGetData = (
-    search = textSearch,
-    page = data.page,
+    search = "",
+    page = 1,
   ) => {
     let params = {
       Search: search,
       PageNum: page,
       PageSize: Configs.perPage,
     };
-    dispatch(Actions.fFetchApprovedLines(params, history));
+    dispatch(Actions.fFetchGroupResource(params, history));
   };
 
   const onSuccess = type => {
-    dispatch(Actions.resetApprovedLines());
+    dispatch(Actions.resetResource());
     if (type === "Remove") {
       setView({...view, confirm: false});
-      toast(t("success:remove_approved_lines"), {type: "success"});
+      toast(t("success:remove_group_resource"), {type: "success"});
     }
     let tmpData = {...data};
-    tmpData.list = managementState["approvedLines"];
-    tmpData.count = managementState["numApprovedLines"];
+    tmpData.list = bookingState["groupResrc"];
+    tmpData.count = bookingState["numGroupResrc"];
     setData(tmpData);
     setLoading({main: false, search: false});
   };
 
   const onError = error => {
-    dispatch(Actions.resetApprovedLines());
+    dispatch(Actions.resetResource());
     log('[LOG] === onError ===> ', error);
     toast(error, {type: "error"});
     setLoading({main: false, search: false});
   };
 
   const onCloseForm = type => {
-    dispatch(Actions.resetApprovedLines());
+    dispatch(Actions.resetResource());
     toggleView();
     if (type === "Create") {
       setLoading({...loading, search: true});
@@ -175,9 +176,9 @@ function ApprovedLines(props) {
   const onConfirmRemove = () => {
     setLoading({...loading, remove: true});
     let params = {
-      RoleID: updateItem ? updateItem.roleID : "0",
+      GroupID: updateItem ? updateItem.groupID : "0",
     };
-    dispatch(Actions.fFetchRemoveApprovedLines(params, history));
+    dispatch(Actions.fFetchRemoveGroupResource(params, history));
   };
 
   /**
@@ -187,13 +188,22 @@ function ApprovedLines(props) {
     if (loading.main && authState["successSignIn"] && authState["menu"]) {
       let fMenuRequest = null;
       if (authState["menu"].length > 0) {
-        let item = null;
-        for (item of authState["menu"]) {
+        for (let item of authState["menu"]) {
           if (item.subMenu && item.subMenu.length > 0) {
-            fMenuRequest = item.subMenu.find(f => f.link === Routes.approvedLines);
+            fMenuRequest = item.subMenu.find(f => f.link === Routes.groupResources);
             if (fMenuRequest) {
               setIsWrite(fMenuRequest.isWrite);
               return onStartGetData();
+            } else {
+              for (let itemS of item.subMenu) {
+                if (itemS.subMenu && itemS.subMenu.length > 0) {
+                  fMenuRequest = itemS.subMenu.find(f => f.link === Routes.groupResources);
+                  if (fMenuRequest) {
+                    setIsWrite(fMenuRequest.isWrite);
+                    return onStartGetData();
+                  }
+                }
+              }
             }
           }
         }
@@ -208,56 +218,56 @@ function ApprovedLines(props) {
 
   useEffect(() => {
     if (loading.main || loading.search) {
-      if (!managementState["submittingApprovedLines"]) {
-        if (managementState["successApprovedLines"] && !managementState["errorApprovedLines"]) {
+      if (!bookingState["submittingGroupResrc"]) {
+        if (bookingState["successGroupResrc"] && !bookingState["errorGroupResrc"]) {
           return onSuccess();
         }
-        if (!managementState["successApprovedLines"] && managementState["errorApprovedLines"]) {
-          return onError(managementState["errorHelperApprovedLines"]);
+        if (!bookingState["successGroupResrc"] && bookingState["errorGroupResrc"]) {
+          return onError(bookingState["errorHelperGroupResrc"]);
         }
       }
     }
   }, [
     loading.main,
     loading.search,
-    managementState["submittingApprovedLines"],
-    managementState["successApprovedLines"],
-    managementState["errorApprovedLines"],
+    bookingState["submittingGroupResrc"],
+    bookingState["successGroupResrc"],
+    bookingState["errorGroupResrc"],
   ]);
 
   useEffect(() => {
     if (loading.remove) {
-      if (!managementState["submittingRemoveApprovedLines"]) {
-        if (managementState["successRemoveApprovedLines"] && !managementState["errorRemoveApprovedLines"]) {
+      if (!bookingState["submittingRemoveGroupResrc"]) {
+        if (bookingState["successRemoveGroupResrc"] && !bookingState["errorRemoveGroupResrc"]) {
           return onSuccess("Remove");
         }
-        if (!managementState["successRemoveApprovedLines"] && managementState["errorRemoveApprovedLines"]) {
+        if (!bookingState["successRemoveGroupResrc"] && bookingState["errorRemoveGroupResrc"]) {
           setView({...view, confirm: false});
-          return onError(managementState["errorHelperRemoveApprovedLines"]);
+          return onError(bookingState["errorHelperRemoveGroupResrc"]);
         }
       }
     }
   }, [
     loading.remove,
-    managementState["submittingRemoveApprovedLines"],
-    managementState["successRemoveApprovedLines"],
-    managementState["errorRemoveApprovedLines"],
+    bookingState["submittingRemoveGroupResrc"],
+    bookingState["successRemoveGroupResrc"],
+    bookingState["errorRemoveGroupResrc"],
   ]);
 
   /**
    ** RENDER
    */
-  const disabled = loading.main || loading.search;
+  const disabled = loading.main || loading.search || loading.remove;
   return (
     <React.Fragment>
-      <Head title={t("management:title")} />
-      
+      <Head title={t("all_booking:main_title")} />
+
       <Content>
         {/** Header table */}
         <BlockHead size="sm">
           <BlockBetween>
             <BlockHeadContent>
-              <BlockTitle tag="h4">{t("management:approved_line")}</BlockTitle>
+              <BlockTitle tag="h4">{t("group_resources:title")}</BlockTitle>
             </BlockHeadContent>
             <BlockHeadContent>
               <div className="toggle-wrap nk-block-tools-toggle">
@@ -350,14 +360,12 @@ function ApprovedLines(props) {
             </div>
 
             {/** Data table */}
-            <TableApprovedLines
+            <TableGroupResource
+              loading={disabled}
               isWrite={isWrite}
-              history={history}
-              commonState={commonState}
-              authState={authState}
-              dataLines={data.list}
-              onUpdate={onUpdateLines}
-              onRemove={onRemoveLines}
+              dataGroups={data.list}
+              onUpdate={onUpdateGroup}
+              onRemove={onRemoveGroup}
             />
 
             {/** Paging table */}
@@ -384,7 +392,7 @@ function ApprovedLines(props) {
         </Block>
 
         {/** Forms */}
-        <AddEditForm
+        <AddEditGroupResrcForm
           show={view.add || view.update}
           history={history}
           isUpdate={view.update}
@@ -393,55 +401,21 @@ function ApprovedLines(props) {
           updateItem={updateItem}
           onClose={onCloseForm}
         />
-        
-        <Modal
-          className="modal-dialog-centered"
-          isOpen={view.confirm}
-          size="sm"
-          toggle={loading.remove ? undefined : toggleView}
-        >
-          <ModalBody className="modal-body-sm text-center">
-            <div className="nk-modal">
-              <Icon className="nk-modal-icon icon-circle icon-circle-xxl ni ni-alert bg-warning"></Icon>
-              <h4 className="nk-modal-title">{t("management:confirm_remove_line_title")}</h4>
-              <div className="nk-modal-text">
-                <div className="sub-text-sm">
-                  {t("management:confirm_remove_line_des_1")}
-                  <span className="fw-bold"> #{updateItem?.roleCode} </span>
-                  {t("management:confirm_remove_line_des_2")}
-                </div>
-              </div>
-              <div className="d-flex justify-content-center">
-                <div className="nk-modal-action mr-2">
-                  <Button
-                    color="danger"
-                    size="lg"
-                    disabled={loading.remove}
-                    onClick={onConfirmRemove}
-                  >
-                    {loading.remove && (
-                      <Spinner className="mr-1" size="sm" color="light" />
-                    )}
-                    {!loading.remove && <Icon name="trash" />}
-                    <span>{t("common:remove")}</span>
-                  </Button>
-                </div>
-                <div className="nk-modal-action ml-2">
-                  <Button
-                    className="btn-dim"
-                    color="gray"
-                    size="lg"
-                    disabled={loading.remove}
-                    onClick={toggleView}
-                  >
-                    <Icon name="cross" />
-                    <span>{t("common:close")}</span>
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </ModalBody>
-        </Modal>
+
+        <AlertConfirm
+          loading={loading.remove}
+          show={view.confirm}
+          title={t("group_resources:confirm_remove_gres_title")}
+          content={
+            <>
+              {t("group_resources:confirm_remove_gres_des_1")}
+              <span className="fw-bold"> #{updateItem?.groupID} </span>
+              {t("group_resources:confirm_remove_gres_des_2")}
+            </>
+          }
+          onConfirm={onConfirmRemove}
+          onClose={toggleView}
+        />
 
         {view.add && <div className="toggle-overlay" onClick={toggleView}></div>}
         {view.update && <div className="toggle-overlay" onClick={toggleView}></div>}
@@ -450,4 +424,4 @@ function ApprovedLines(props) {
   );
 };
 
-export default ApprovedLines;
+export default GroupsResource;

@@ -374,7 +374,7 @@ function AddEditForm(props) {
           return onSuccess("MasterData");
         }
         if (!masterState["successGetAll"] && masterState["errorGetAll"]) {
-          return onError("MasterData", masterState["errorHelperGetAll"]);
+          return onError(masterState["errorHelperGetAll"]);
         }
       }
     }

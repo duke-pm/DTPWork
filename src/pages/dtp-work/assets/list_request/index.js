@@ -123,8 +123,8 @@ function RequestAssets(props) {
     process: false,
   });
   const [rangeDate, setRangeDate] = useState({
-    start: new Date(moment().startOf('month').format('YYYY/MM/DD')),
-    end: new Date(moment().endOf('month').format('YYYY/MM/DD')),
+    start: new Date(moment().startOf('month').format("YYYY/MM/DD")),
+    end: new Date(moment().endOf('month').format("YYYY/MM/DD")),
   });
   const [filterTab, setFilterTab] = useState(0);
   const [updateItem, setUpdateItem] = useState(null);
@@ -137,7 +137,7 @@ function RequestAssets(props) {
 
   const onChangeSearch = (e) => {
     let tmpTabs = [...tabs];
-    tmpTabs[filterTab].search = e.target.value.trim();
+    tmpTabs[filterTab].search = e.target.value;
     setTabs(tmpTabs);
   };
 
@@ -173,9 +173,6 @@ function RequestAssets(props) {
   const toggleView = type => {
     if (type === "search" && view.search) {
       setView({...view, search: false});
-      if (tabs[filterTab].search === "") {
-        onSearch(null, filterTab);
-      }
     } else {
       setView({
         search: type === "search" ? true : false,
@@ -209,6 +206,7 @@ function RequestAssets(props) {
   };
 
   const onResetFilter = () => {
+    let fFromToDate = getLocalStorage(Constants.LS_FROM_TO_REQUEST);
     let tmpTabs = [...tabs];
     let tmpFormData = tmpTabs[filterTab];
     tmpFormData = {
@@ -218,8 +216,12 @@ function RequestAssets(props) {
     tmpTabs[filterTab] = tmpFormData;
     setTabs(tmpTabs);
     setRangeDate({
-      start: new Date(moment().startOf('month').format('YYYY/MM/DD')),
-      end: new Date(moment().endOf('month').format('YYYY/MM/DD')),
+      start: new Date(fFromToDate
+        ? fFromToDate.start
+        : moment().startOf('month').format("YYYY/MM/DD")),
+      end: new Date(fFromToDate
+        ? fFromToDate.end
+        : moment().endOf('month').format("YYYY/MM/DD")),
     });
   };
 
@@ -356,8 +358,8 @@ function RequestAssets(props) {
       setTabs(tmpTabs);
       // Save to local storage
       setLocalStorage(Constants.LS_FROM_TO_REQUEST, {
-        start: moment(rangeDate.start).format('YYYY/MM/DD'),
-        end: moment(rangeDate.end).format('YYYY/MM/DD'),
+        start: moment(rangeDate.start).format("YYYY/MM/DD"),
+        end: moment(rangeDate.end).format("YYYY/MM/DD"),
       });
       // Call api
       onStartGetData(

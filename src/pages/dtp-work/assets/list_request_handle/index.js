@@ -64,8 +64,8 @@ function RequestAssetsHandle(props) {
     type: [1, 2, 3],
     status: [1, 2, 3, 4],
     search: "",
-    rangeStart: new Date(moment().startOf('month').format('YYYY/MM/DD')),
-    rangeEnd: new Date(moment().endOf('month').format('YYYY/MM/DD')),
+    rangeStart: new Date(moment().startOf('month').format("YYYY/MM/DD")),
+    rangeEnd: new Date(moment().endOf('month').format("YYYY/MM/DD")),
   });
   const [data, setData] = useState({
     requests: [],
@@ -79,7 +79,7 @@ function RequestAssetsHandle(props) {
    */
   const toggleSm = () => updateSm(!sm);
 
-  const onChangeSearch = e => setFormData({...formData, search: e.target.value.trim()});
+  const onChangeSearch = e => setFormData({...formData, search: e.target.value});
 
   const onChangeDate = (type, date) => setFormData({...formData, [type]: date});
 
@@ -104,11 +104,16 @@ function RequestAssetsHandle(props) {
   };
 
   const onResetFilter = () => {
+    let fFromToDate = getLocalStorage(Constants.LS_FROM_TO_REQUEST_HANDLE);
     setFormData({
       ...formData,
       type: [1, 2, 3],
-      rangeStart: new Date(moment().startOf('month').format('YYYY/MM/DD')),
-      rangeEnd: new Date(moment().endOf('month').format('YYYY/MM/DD')),
+      rangeStart: new Date(fFromToDate
+        ? fFromToDate.start
+        : moment().startOf('month').format("YYYY/MM/DD")),
+      rangeEnd: new Date(fFromToDate
+        ? fFromToDate.end
+        : moment().endOf('month').format("YYYY/MM/DD")),
     });
   };
 
@@ -122,9 +127,6 @@ function RequestAssetsHandle(props) {
   const toggleView = type => {
     if (type === "search" && view.search) {
       setView({...view, search: false});
-      if (formData.search === "") {
-        onSearch();
-      }
     } else {
       setView({
         search: type === "search" ? true : false,
@@ -167,8 +169,8 @@ function RequestAssetsHandle(props) {
       setFormData(tmpFormData);
       // Save to local storage
       setLocalStorage(Constants.LS_FROM_TO_REQUEST_HANDLE, {
-        start: moment(formData.rangeStart).format('YYYY/MM/DD'),
-        end: moment(formData.rangeEnd).format('YYYY/MM/DD'),
+        start: moment(formData.rangeStart).format("YYYY/MM/DD"),
+        end: moment(formData.rangeEnd).format("YYYY/MM/DD"),
       });
       // Call api
       onStartGetData(
@@ -236,8 +238,8 @@ function RequestAssetsHandle(props) {
   };
 
   const onStartGetData = (
-    fromDate = moment().startOf('month').format('YYYY/MM/DD'),
-    toDate = moment().endOf('month').format('YYYY/MM/DD'),
+    fromDate = moment().startOf('month').format("YYYY/MM/DD"),
+    toDate = moment().endOf('month').format("YYYY/MM/DD"),
     search = "",
     type = [1, 2, 3],
     status = [1, 2, 3, 4],

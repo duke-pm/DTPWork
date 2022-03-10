@@ -21,6 +21,10 @@ import AssetsManagement from "../pages/dtp-work/assets/assets_management";
 import RequestAssets from "../pages/dtp-work/assets/list_request";
 import RequestAssetsHandle from "../pages/dtp-work/assets/list_request_handle";
 
+import AllBookings from "../pages/dtp-work/booking/list/AllBookings";
+import GroupResources from "../pages/dtp-work/booking/resources/GroupsResource";
+import Resources from "../pages/dtp-work/booking/resources/Resources";
+
 // import Homepage from "../pages/Homepage";
 // import Sales from "../pages/Sales";
 // import Analytics from "../pages/Analytics";
@@ -296,6 +300,11 @@ const Pages = () => {
         <Route exact path={`${process.env.PUBLIC_URL}${Routes.assetsManagement}`} component={AssetsManagement}/>
         <Route exact path={`${process.env.PUBLIC_URL}${Routes.requestsApproved}`} component={RequestAssets} />
         <Route exact path={`${process.env.PUBLIC_URL}${Routes.requestsApprovedHandle}`} component={RequestAssetsHandle} />
+
+        {/** Booking route */}
+        <Route path={`${process.env.PUBLIC_URL}${Routes.allBookings}`} component={AllBookings} />
+        <Route exact path={`${process.env.PUBLIC_URL}${Routes.groupResources}`} component={GroupResources} />
+        <Route exact path={`${process.env.PUBLIC_URL}${Routes.resources}`} component={Resources} />
 
         <Route component={RedirectAs404}></Route>
       </Switch>

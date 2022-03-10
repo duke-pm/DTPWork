@@ -37,6 +37,7 @@ import { OverlineTitle } from "./text/Text";
 import Progress from "./progress/Progress";
 import Sidebar from "./sidebar/Sidebar";
 import RSelect from "./select/ReactSelect";
+import AlertConfirm from "./alert_confirm/AlertConfirm";
 
 export {
   Accordian,
@@ -90,4 +91,5 @@ export {
   PreviewAltCard,
   RSelect,
   Progress,
+  AlertConfirm,
 };
