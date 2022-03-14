@@ -3,6 +3,9 @@ import * as types from "../actions/types";
 export const initialState = {
   submittingGetAll: false,
   submittingAssetsByUser: false,
+  submittingUsersByLogin: false,
+  submittingSubProjects: false,
+  submittingSubTasks: false,
 
   successGetAll: false,
   errorGetAll: false,
@@ -11,6 +14,18 @@ export const initialState = {
   successAssetsByUser: false,
   errorAssetsByUser: false,
   errorHelperAssetsByUser: "",
+
+  successUsersByLogin: false,
+  errorUsersByLogin: false,
+  errorHelperUsersByLogin: "",
+
+  successSubProjects: false,
+  errorSubProjects: false,
+  errorHelperSubProjects: "",
+
+  successSubTasks: false,
+  errorSubTasks: false,
+  errorHelperSubTasks: "",
 
   region: [],
   department: [],
@@ -29,6 +44,7 @@ export const initialState = {
   projectSector: [],
   projectComponent: [],
   projectPriority: [],
+  projectGrade: [],
   bkColor: [],
   bkReSource: [],
   bkResourceGroup: [],
@@ -37,6 +53,10 @@ export const initialState = {
   typeGroups: [],
   titleApproval: [],
   userApproval: [],
+
+  usersByLogin: [],
+  subProjects: [],
+  subTasks: [],
 };
 
 export default function (state = initialState, action = {}) {
@@ -55,6 +75,21 @@ export default function (state = initialState, action = {}) {
         successAssetsByUser: false,
         errorAssetsByUser: false,
         errorHelperAssetsByUser: "",
+
+        submittingUsersByLogin: false,
+        successUsersByLogin: false,
+        errorUsersByLogin: false,
+        errorHelperUsersByLogin: "",
+
+        submittingSubProjects: false,
+        successSubProjects: false,
+        errorSubProjects: false,
+        errorHelperSubProjects: "",
+
+        submittingSubTasks: false,
+        successSubTasks: false,
+        errorSubTasks: false,
+        errorHelperSubTasks: "",
       };
     case types.START_MASTER_GET_ALL:
       return {
@@ -97,6 +132,7 @@ export default function (state = initialState, action = {}) {
         projectSector: payload.projectSector || state["projectSector"],
         projectComponent: payload.projectComponent || state["projectComponent"],
         projectPriority: payload.projectPriority || state["projectPriority"],
+        projectGrade: payload.projectGrade || state["projectGrade"],
         bkColor: payload.bkColor || state["bkColor"],
         bkReSource: payload.bkReSource || state["bkReSource"],
         bkResourceGroup: payload.bkResourceGroup || state["bkResourceGroup"],
@@ -138,6 +174,87 @@ export default function (state = initialState, action = {}) {
         errorHelperAssetsByUser: "",
 
         assetByUser: payload || [],
+      };
+
+    case types.START_USERS_BY_LOGIN:
+      return {
+        ...state,
+        submittingUsersByLogin: true,
+        successUsersByLogin: false,
+        errorUsersByLogin: false,
+        errorHelperUsersByLogin: "",
+      };
+    case types.ERROR_USERS_BY_LOGIN:
+      return {
+        ...state,
+        submittingUsersByLogin: false,
+        successUsersByLogin: false,
+        errorUsersByLogin: true,
+        errorHelperUsersByLogin: payload,
+      };
+    case types.SUCCESS_USERS_BY_LOGIN:
+      return {
+        ...state,
+        submittingUsersByLogin: false,
+        successUsersByLogin: true,
+        errorUsersByLogin: false,
+        errorHelperUsersByLogin: "",
+
+        usersByLogin: payload || state.usersByLogin,
+      };
+
+    case types.START_PROJECTS_SUB:
+      return {
+        ...state,
+        submittingSubProjects: true,
+        successSubProjects: false,
+        errorSubProjects: false,
+        errorHelperSubProjects: "",
+      };
+    case types.ERROR_PROJECTS_SUB:
+      return {
+        ...state,
+        submittingSubProjects: false,
+        successSubProjects: false,
+        errorSubProjects: true,
+        errorHelperSubProjects: payload,
+      };
+    case types.SUCCESS_PROJECTS_SUB:
+      return {
+        ...state,
+        submittingSubProjects: false,
+        successSubProjects: true,
+        errorSubProjects: false,
+        errorHelperSubProjects: "",
+
+        subProjects: payload || state.subProjects,
+      };
+
+    case types.START_TASKS_SUB:
+      return {
+        ...state,
+        submittingSubTasks: true,
+        successSubTasks: false,
+        errorSubTasks: false,
+        errorHelperSubTasks: "",
+      };
+    case types.ERROR_TASKS_SUB:
+      return {
+        ...state,
+        submittingSubTasks: false,
+        successSubTasks: false,
+        errorSubTasks: true,
+        errorHelperSubTasks: payload,
+      };
+    case types.SUCCESS_TASKS_SUB:
+      return {
+        ...state,
+        submittingSubTasks: false,
+        successSubTasks: true,
+        errorSubTasks: false,
+        errorHelperSubTasks: "",
+
+        subTasks: payload || state.subTasks,
       };
 
     default:

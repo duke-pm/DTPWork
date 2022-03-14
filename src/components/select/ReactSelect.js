@@ -10,6 +10,9 @@ const RSelect = ({ ...props }) => {
         className={`react-select-container ${props.className ? props.className : ""}`}
         classNamePrefix="react-select"
         noOptionsMessage={() => <span>{t("common:no_data_select")}</span>}
+        isClearable={true}
+        isSearchable={true}
+        backspaceRemovesValue={true}
         {...props}
       />
       {props.error && (

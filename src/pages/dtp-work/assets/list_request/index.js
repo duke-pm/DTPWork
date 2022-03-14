@@ -205,25 +205,25 @@ function RequestAssets(props) {
     }
   };
 
-  const onResetFilter = () => {
-    let fFromToDate = getLocalStorage(Constants.LS_FROM_TO_REQUEST);
-    let tmpTabs = [...tabs];
-    let tmpFormData = tmpTabs[filterTab];
-    tmpFormData = {
-      ...tmpFormData,
-      statusRequest: [1, 2, 3, 4],
-    };
-    tmpTabs[filterTab] = tmpFormData;
-    setTabs(tmpTabs);
-    setRangeDate({
-      start: new Date(fFromToDate
-        ? fFromToDate.start
-        : moment().startOf('month').format("YYYY/MM/DD")),
-      end: new Date(fFromToDate
-        ? fFromToDate.end
-        : moment().endOf('month').format("YYYY/MM/DD")),
-    });
-  };
+  // const onResetFilter = () => {
+  //   let fFromToDate = getLocalStorage(Constants.LS_FROM_TO_REQUEST);
+  //   let tmpTabs = [...tabs];
+  //   let tmpFormData = tmpTabs[filterTab];
+  //   tmpFormData = {
+  //     ...tmpFormData,
+  //     statusRequest: [1, 2, 3, 4],
+  //   };
+  //   tmpTabs[filterTab] = tmpFormData;
+  //   setTabs(tmpTabs);
+  //   setRangeDate({
+  //     start: new Date(fFromToDate
+  //       ? fFromToDate.start
+  //       : moment().startOf('month').format("YYYY/MM/DD")),
+  //     end: new Date(fFromToDate
+  //       ? fFromToDate.end
+  //       : moment().endOf('month').format("YYYY/MM/DD")),
+  //   });
+  // };
 
   const onProcess = dataRequest => {
     toggleView("process");
@@ -679,10 +679,10 @@ function RequestAssets(props) {
                                       <Icon name="filter"></Icon>
                                       <span>{t("common:filter")}</span>
                                     </Button>
-                                    <Button className="btn-dim" color="secondary" disabled={disabled} onClick={onResetFilter}>
+                                    {/* <Button className="btn-dim" color="secondary" disabled={disabled} onClick={onResetFilter}>
                                       <Icon name="undo"></Icon>
                                       <span>{t("common:reset")}</span>
-                                    </Button>
+                                    </Button> */}
                                   </div>
                                 </DropdownMenu>
                               </UncontrolledDropdown>

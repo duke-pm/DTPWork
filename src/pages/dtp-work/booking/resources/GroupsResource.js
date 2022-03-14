@@ -136,6 +136,8 @@ function GroupsResource(props) {
       Search: search,
       PageNum: page,
       PageSize: Configs.perPage,
+      RefreshToken: authState["data"]["refreshToken"],
+      Lang: commonState["language"],
     };
     dispatch(Actions.fFetchGroupResource(params, history));
   };
@@ -177,6 +179,8 @@ function GroupsResource(props) {
     setLoading({...loading, remove: true});
     let params = {
       GroupID: updateItem ? updateItem.groupID : "0",
+      RefreshToken: authState["data"]["refreshToken"],
+      Lang: commonState["language"],
     };
     dispatch(Actions.fFetchRemoveGroupResource(params, history));
   };

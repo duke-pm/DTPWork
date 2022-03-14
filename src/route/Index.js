@@ -25,6 +25,9 @@ import AllBookings from "../pages/dtp-work/booking/list/AllBookings";
 import GroupResources from "../pages/dtp-work/booking/resources/GroupsResource";
 import Resources from "../pages/dtp-work/booking/resources/Resources";
 
+import ListProjects from "../pages/dtp-work/project/list/Project";
+import ListTasks from "pages/dtp-work/project/list/Task";
+
 // import Homepage from "../pages/Homepage";
 // import Sales from "../pages/Sales";
 // import Analytics from "../pages/Analytics";
@@ -305,6 +308,11 @@ const Pages = () => {
         <Route path={`${process.env.PUBLIC_URL}${Routes.allBookings}`} component={AllBookings} />
         <Route exact path={`${process.env.PUBLIC_URL}${Routes.groupResources}`} component={GroupResources} />
         <Route exact path={`${process.env.PUBLIC_URL}${Routes.resources}`} component={Resources} />
+
+        {/** Project route */}
+        <Route path={`${process.env.PUBLIC_URL}${Routes.projects}`} component={ListProjects} />
+        <Route path={`${process.env.PUBLIC_URL}${Routes.tasks}/:projectID`} component={ListTasks} />
+        <Route path={`${process.env.PUBLIC_URL}${Routes.taskDetails}/:taskID`} component={ListTasks} />
 
         <Route component={RedirectAs404}></Route>
       </Switch>

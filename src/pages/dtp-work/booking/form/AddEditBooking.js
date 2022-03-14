@@ -293,7 +293,7 @@ function AddEditBookingForm(props) {
   /**
    ** LIFE CYCLE
    */
-   useEffect(() => {
+  useEffect(() => {
     if (loading.main && authState["successSignIn"] && show) {
       onGetMasterData();
     }

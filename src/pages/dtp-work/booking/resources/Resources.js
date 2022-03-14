@@ -136,6 +136,8 @@ function Resources(props) {
       Search: search,
       PageNum: page,
       PageSize: Configs.perPage,
+      RefreshToken: authState["data"]["refreshToken"],
+      Lang: commonState["language"],
     };
     dispatch(Actions.fFetchResource(params, history));
   };
@@ -177,6 +179,8 @@ function Resources(props) {
     setLoading({...loading, remove: true});
     let params = {
       ResourceID: updateItem ? updateItem.resourceID : "0",
+      RefreshToken: authState["data"]["refreshToken"],
+      Lang: commonState["language"],
     };
     dispatch(Actions.fFetchRemoveResource(params, history));
   };

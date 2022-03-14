@@ -10,6 +10,9 @@ const Routes = {
   MASTER_DATA: {
     GET_ALL: "/MasterData/GetDataForForm",
     GET_ASSETS_BY_USER: "/Assets/GetListByUser",
+    GET_USERS_BY_LOGIN: "/User/GetListByUserLogin",
+    GET_PROJECTS_FOR_SUB: "/Project/GetListProjectForSub",
+    GET_TASKS_FOR_SUB: "/Task/GetListForSub",
   },
   MANAGEMENT: {
     EMPLOYEE_GROUP: "/UserGroup/GetList",
@@ -70,19 +73,25 @@ const Routes = {
     LIST_RESOURCE: "/BKResource/GetList",
     UPDATE_RESOURCE: "/BKResource/Modify",
     REMOVE_RESOURCE: "/BKResource/Remove",
-
     
-    BOOKING_DETAIL: "/TransBooking/GetByID",
+    // BOOKING_DETAIL: "/TransBooking/GetByID",
   },
-  // PROJECT_MANAGEMENT: {
-  //   LIST_PROJECT: "/Project/GetList",
-  //   LIST_TASK: "/Task/GetList",
-  //   TASK_DETAIL: "/Task/GetByID",
-  //   TASK_UPDATE: "/Task/UpdateTaskInfo",
-  //   TASK_COMMENT: "/TaskActivity/Modify",
-  //   TASK_WATCHER: "/TaskWatcher/Modify",
-  //   PROJECT_OVERVIEW: "/Project/GetListOverview",
-  // },
+  PROJECT: {
+    LIST_PROJECT: "/Project/GetList",
+    UPDATE_PROJECT: "/Project/Modify",
+    REMOVE_PROJECT: "/Project/Delete",
+    EXPORT_PROJECT: "/Project/ExportProjectDetail",
+
+    LIST_TASK: "/Task/GetList",
+    UPDATE_TASK: "/Task/Modify",
+    REMOVE_TASK: "/Task/Delete",
+
+    TASK_DETAIL: "/Task/GetByID",
+    TASK_UPDATE: "/Task/UpdateTaskInfo",
+    TASK_COMMENT: "/TaskActivity/Modify",
+    TASK_WATCHER: "/TaskWatcher/Modify",
+    PROJECT_OVERVIEW: "/Project/GetListOverview",
+  },
   
 };
 

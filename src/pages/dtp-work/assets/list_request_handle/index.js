@@ -103,19 +103,19 @@ function RequestAssetsHandle(props) {
     setFormData(tmpFormData);
   };
 
-  const onResetFilter = () => {
-    let fFromToDate = getLocalStorage(Constants.LS_FROM_TO_REQUEST_HANDLE);
-    setFormData({
-      ...formData,
-      type: [1, 2, 3],
-      rangeStart: new Date(fFromToDate
-        ? fFromToDate.start
-        : moment().startOf('month').format("YYYY/MM/DD")),
-      rangeEnd: new Date(fFromToDate
-        ? fFromToDate.end
-        : moment().endOf('month').format("YYYY/MM/DD")),
-    });
-  };
+  // const onResetFilter = () => {
+  //   let fFromToDate = getLocalStorage(Constants.LS_FROM_TO_REQUEST_HANDLE);
+  //   setFormData({
+  //     ...formData,
+  //     type: [1, 2, 3],
+  //     rangeStart: new Date(fFromToDate
+  //       ? fFromToDate.start
+  //       : moment().startOf('month').format("YYYY/MM/DD")),
+  //     rangeEnd: new Date(fFromToDate
+  //       ? fFromToDate.end
+  //       : moment().endOf('month').format("YYYY/MM/DD")),
+  //   });
+  // };
 
   const paginate = pageNumber => {
     if (pageNumber !== formData.page) {
@@ -502,10 +502,10 @@ function RequestAssetsHandle(props) {
                                       <Icon name="filter"></Icon>
                                       <span>{t("common:filter")}</span>
                                     </Button>
-                                    <Button className="btn-dim" disabled={disabled} color="secondary" onClick={onResetFilter}>
+                                    {/* <Button className="btn-dim" disabled={disabled} color="secondary" onClick={onResetFilter}>
                                       <Icon name="undo"></Icon>
                                       <span>{t("common:reset")}</span>
-                                    </Button>
+                                    </Button> */}
                                   </div>
                                 </DropdownMenu>
                               </UncontrolledDropdown>

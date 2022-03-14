@@ -135,6 +135,8 @@ function ApprovedLines(props) {
       Search: search,
       PageNum: page,
       PageSize: Configs.perPage,
+      RefreshToken: authState["data"]["refreshToken"],
+      Lang: commonState["language"],
     };
     dispatch(Actions.fFetchApprovedLines(params, history));
   };

@@ -1,5 +1,6 @@
 import {Redirect} from "react-router-dom";
 import Cookies from 'js-cookie';
+import moment from "moment";
 
 //url for production
 export var url = "";
@@ -196,3 +197,13 @@ export const clearLocalStorage = () => {
 export const log = (...msgs) => {
   if (process.env.NODE_ENV === 'development') console.log(...msgs);
 }
+
+export const durationDay = (start, end) => {
+	const result = moment().diff(start, "days") - moment().diff(end, "days") + 1;
+	return result;
+};
+
+export const expiredDate = end => {
+	const result = moment().diff(end, "days");
+	return result;
+};

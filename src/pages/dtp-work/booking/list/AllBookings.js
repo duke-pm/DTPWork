@@ -186,6 +186,8 @@ function AllBookings(props) {
       IsMyBooking: formData.isMyBooking,
       PageNum: page,
       PageSize: Configs.perPage,
+      RefreshToken: authState["data"]["refreshToken"],
+      Lang: commonState["language"],
     };
     dispatch(Actions.fFetchAllBooking(params, history));
   };
@@ -355,6 +357,8 @@ function AllBookings(props) {
     setLoading({...loading, remove: true});
     let params = {
       BookID: updateItem ? updateItem.bookID : "0",
+      RefreshToken: authState["data"]["refreshToken"],
+      Lang: commonState["language"],
     };
     dispatch(Actions.fFetchRemoveBooking(params, history));
     if (isCalendar) toggleView();

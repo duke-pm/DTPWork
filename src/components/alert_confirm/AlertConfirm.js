@@ -23,13 +23,13 @@ function AlertConfirm({
    */
   return (
     <Modal
-      className="modal-md"
+      className="modal-sm"
       isOpen={show}
       toggle={loading ? undefined : onClose}
     >
-      <ModalBody className="modal-body-md text-center">
+      <ModalBody className="modal-body-sm text-center">
         <div className="nk-modal">
-          <Icon className="nk-modal-icon icon-circle icon-circle-xxl ni ni-cross bg-danger"></Icon>
+          <Icon className="nk-modal-icon icon-circle icon-circle-xxl ni ni-question bg-warning"></Icon>
           <h4 className="nk-modal-title">{title}</h4>
           <div className="nk-modal-text">
             <div className="sub-text-sm">

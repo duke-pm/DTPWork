@@ -136,6 +136,8 @@ function ApprovedLevels(props) {
       Search: search,
       PageNum: page,
       PageSize: Configs.perPage,
+      RefreshToken: authState["data"]["refreshToken"],
+      Lang: commonState["language"],
     };
     dispatch(Actions.fFetchApprovedLevels(params, history));
   };
@@ -176,7 +178,9 @@ function ApprovedLevels(props) {
   const onConfirmRemove = () => {
     setLoading({...loading, remove: true});
     let params = {
-      AbsID: updateItem ? updateItem.absID : "0",
+      AbsID: updateItem?.absID || "0",
+      RefreshToken: authState["data"]["refreshToken"],
+      Lang: commonState["language"],
     };
     dispatch(Actions.fFetchRemoveApprovedLevels(params, history));
   };

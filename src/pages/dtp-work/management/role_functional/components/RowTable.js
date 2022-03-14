@@ -22,6 +22,7 @@ function RowTable(props) {
     onChangeParent,
   } = props;
 
+  /** Use redux */
   const dispatch = useDispatch();
 
   /** Use state */

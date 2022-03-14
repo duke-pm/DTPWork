@@ -22,8 +22,12 @@ const Routes = {
   allBookings: "/booking/bookings",
 
   groupResources: "/booking/resource-group/resource-group-page",
-  resources: "/booking/resource/resource-page"
-  
+  resources: "/booking/resource/resource-page",
+
+  /** Project routes */
+  projects: "/projects/view",
+  tasks: "/projects",
+  taskDetails: "/tasks",
 };
 
 export default Routes;

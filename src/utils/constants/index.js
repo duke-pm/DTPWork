@@ -1,3 +1,21 @@
+const typeTask = {
+	PHASE: 1,
+	TASK: 2,
+	MILESTONE: 3,
+};
+const typeTaskColor = {
+	PHASE: '#FF9500',
+	MILESTONE: '#34C759',
+	TASK: '#007AFF'
+};
+const priorityColor = {
+	H: "danger",
+	M: "info",
+	L: "warning",
+	N: "primary",
+	I: "success",
+};
+
 const Constants = {
   DEFAULT_LANGUAGE: "vi",
 
@@ -8,6 +26,8 @@ const Constants = {
   LS_FROM_TO_REQUEST_HANDLE: "LS_FROM_TO_REQUEST_HANDLE",
   LS_FROM_TO_ALL_BOOKINGS: "LS_FROM_TO_ALL_BOOKINGS",
   LS_VIEW_BOOKING: "LS_VIEW_BOOKING",
+  LS_FILTER_PROJECTS: "LS_FILTER_PROJECTS",
+  LS_FILTER_TASKS: "LS_FILTER_TASKS",
 
   DATA_TIME_BOOKING: [
     {value: "00:00", label: "00:00"},
@@ -59,6 +79,10 @@ const Constants = {
     {value: "23:00", label: "23:00"},
     {value: "23:30", label: "23:30"},
   ],
+
+  TYPE_TASK: typeTask,
+  TYPE_TASK_COLOR: typeTaskColor,
+  PRIORITY_TASK_COLOR: priorityColor,
 };
 
 export default Constants;

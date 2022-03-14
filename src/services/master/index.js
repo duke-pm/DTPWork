@@ -44,4 +44,60 @@ export default {
         });
     });
   },
+  getUsersByLogin: () => {
+    return new Promise((resolve, reject) => {
+      
+      API.get(jwtServiceConfig.baseURL + Routes.MASTER_DATA.GET_USERS_BY_LOGIN)
+        .then(response => {
+          log("FETCH USERS BY LOGIN => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          log("ERROR USERS BY LOGIN => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
+  getSubProjects: () => {
+    return new Promise((resolve, reject) => {
+      
+      API.get(jwtServiceConfig.baseURL + Routes.MASTER_DATA.GET_PROJECTS_FOR_SUB)
+        .then(response => {
+          log("FETCH SUB PROJECTS => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          log("ERROR SUB PROJECTS => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
+  getSubTasks: params => {
+    return new Promise((resolve, reject) => {
+      let tmpConfigs = {params: {}};
+      tmpConfigs.params.PrjID = params["PrjID"];
+      
+      API.get(jwtServiceConfig.baseURL + Routes.MASTER_DATA.GET_TASKS_FOR_SUB, tmpConfigs)
+        .then(response => {
+          log("FETCH SUB TASKS => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          log("ERROR SUB TASKS => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
 };

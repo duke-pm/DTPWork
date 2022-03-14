@@ -6,6 +6,7 @@ import auth from "./auth";
 import management from "./management";
 import approved from "./approved";
 import booking from "./booking";
+import project from "./project";
 
 export default combineReducers({
   common,
@@ -13,5 +14,5 @@ export default combineReducers({
   auth,
   management,
   approved,
-  booking,
+  project,
 });

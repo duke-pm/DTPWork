@@ -4,6 +4,7 @@ import authentication from "./authentication";
 import management from "./management";
 import approved from "./approved";
 import booking from "./booking";
+import project from "./project";
 
 const Services = {
   master,
@@ -11,6 +12,7 @@ const Services = {
   management,
   approved,
   booking,
+  project,
 };
 
 export default Services;
