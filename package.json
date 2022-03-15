@@ -19,6 +19,7 @@
     "chart.js": "^2.9.4",
     "chartjs": "^0.3.24",
     "classnames": "^2.3.1",
+    "frappe-gantt-react": "^0.2.2",
     "html-react-parser": "^1.2.8",
     "i18next": "^21.6.11",
     "js-cookie": "^3.0.1",

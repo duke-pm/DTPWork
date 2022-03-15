@@ -126,7 +126,8 @@
     "create_supplier": "Không thể thêm mới nhà cung cấp! Vui lòng thử lại sau!",
     "new_password_same_old": "Mật khẩu mới trùng với mật khẩu cũ!",
     "confirm_password_not_same": "Nhập lại mật khẩu không đúng!",
-    "change_password": "Đổi mật khẩu không thành công!"
+    "change_password": "Đổi mật khẩu không thành công!",
+    "update_date_task": "Không thể cập nhật ngày của task đã đóng hoặc bị hủy!"
   },
   "sign_in": {
     "title": "Đăng nhập",
@@ -773,6 +774,8 @@
     "filter_task": "Lọc task",
     "delay": "Trễ",
     "copy_of": "Bản sao của",
+    "grant_chart": "Sơ đồ Gantt của dự án",
+    "list": "Danh sách",
     "confirm_remove_task_title": "Xác nhận?",
     "confirm_remove_task_des_1": "Bạn thực sự muốn xóa Task số",
     "confirm_remove_task_des_2": "này?"

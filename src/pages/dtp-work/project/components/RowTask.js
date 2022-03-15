@@ -91,8 +91,7 @@ function RowTask(props) {
             </div>
           </DataTableRow>
         ) : (
-          <DataTableRow className="nk-tb-col-check">
-          </DataTableRow>
+          <DataTableRow className="nk-tb-col-check" />
         )}
         <DataTableRow>
           <NavLink
@@ -100,7 +99,7 @@ function RowTask(props) {
             <span className={`tb-lead ${className + padding}`}>{data.taskName}</span>
           </NavLink>
         </DataTableRow>
-        <DataTableRow>
+        <DataTableRow size="sm">
           <span className="fw-bold"
             style={{
               color: Constants.TYPE_TASK_COLOR[data.typeName],
@@ -109,7 +108,7 @@ function RowTask(props) {
             {data.typeName}
           </span>
         </DataTableRow>
-        <DataTableRow>
+        <DataTableRow size="md">
           {data.taskTypeID !== 3 && (
             <>
               <span
@@ -125,12 +124,12 @@ function RowTask(props) {
             </>
           )}
         </DataTableRow>
-        <DataTableRow size="sm">
+        <DataTableRow size="lg">
           <span className={`text-${Constants.PRIORITY_TASK_COLOR[data.priority]}`}>
             {data.priorityName}
           </span>
         </DataTableRow>
-        <DataTableRow size="sm">
+        <DataTableRow size="lg">
           {data.startDate && data.endDate && (
             <div className="d-flex justify-content-start align-items-center" id="duration">
               <div className="user-info">
@@ -166,7 +165,7 @@ function RowTask(props) {
             </div>
           )}
         </DataTableRow>
-        <DataTableRow>
+        <DataTableRow size="lg">
           <div className="project-list-progress">
             <Progress
               id={`per_${data.taskID}`}
@@ -178,7 +177,7 @@ function RowTask(props) {
             </UncontrolledTooltip>
           </div>
         </DataTableRow>
-        <DataTableRow size="sm">
+        <DataTableRow size="md">
           <div className="user-card">
             <UserAvatar className="sm" text={findUpper(data.ownerName)} />
             <div className="user-info">

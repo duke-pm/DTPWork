@@ -27,6 +27,7 @@ const Routes = {
   /** Project routes */
   projects: "/projects/view",
   tasks: "/projects",
+  ganttTasks: "/projects/gantt-chart",
   taskDetails: "/tasks",
 };
 

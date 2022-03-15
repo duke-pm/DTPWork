@@ -191,6 +191,43 @@ export const fFetchListTask = (params, history) => {
   };
 };
 
+export const fErrorListTaskAll = error => ({
+  type: types.ERROR_LIST_TASK_ALL,
+  payload: error,
+});
+
+export const fSuccessListTaskAll = data => ({
+  type: types.SUCCESS_LIST_TASK_ALL,
+  payload: data,
+});
+
+export const fFetchListTaskAll = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_LIST_TASK_ALL});
+
+    Services.project.listTaskAll(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessListTaskAll(
+            res.data.listTask || []
+          ));
+        } else {
+          return dispatch(fErrorListTaskAll(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorListTaskAll(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};
+
 export const fErrorCreateTask = error => ({
   type: types.ERROR_CREATE_TASK,
   payload: error,
@@ -249,6 +286,40 @@ export const fFetchUpdateTask = (params, history) => {
       })
       .catch(error => {
         dispatch(fErrorUpdateTask(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};
+
+export const fErrorUpdateGanttTask = error => ({
+  type: types.ERROR_UPDATE_GANTT_TASK,
+  payload: error,
+});
+
+export const fSuccessUpdateGanttTask = () => ({
+  type: types.SUCCESS_UPDATE_GANTT_TASK,
+});
+
+export const fFetchUpdateGanttTask = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_UPDATE_GANTT_TASK});
+
+    Services.project.updateGanttTask(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessUpdateGanttTask());
+        } else {
+          return dispatch(fErrorUpdateGanttTask(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorUpdateGanttTask(error));
         if (error.message && error.message.search("Authorization") !== -1) {
           let tmp = {
             RefreshToken: params.RefreshToken,

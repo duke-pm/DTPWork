@@ -83,7 +83,9 @@ const Routes = {
     EXPORT_PROJECT: "/Project/ExportProjectDetail",
 
     LIST_TASK: "/Task/GetList",
+    LIST_TASK_ALL: "/Task/GetListAll",
     UPDATE_TASK: "/Task/Modify",
+    UPDATE_GANTT_TASK: "/Task/UpdateGrantt",
     REMOVE_TASK: "/Task/Delete",
 
     TASK_DETAIL: "/Task/GetByID",

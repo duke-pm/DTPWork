@@ -116,6 +116,39 @@ export default {
         });
     });
   },
+  listTaskAll: params => {
+    return new Promise((resolve, reject) => {
+      let tmpConfigs = {params: {}};
+      if (params["TaskID"]) {
+        tmpConfigs.params.TaskID = params["TaskID"];
+      }
+      tmpConfigs.params.PrjID = params["PrjID"];
+      tmpConfigs.params.StatusID = params["StatusID"];
+      tmpConfigs.params.OwnerID = params["OwnerID"];
+      tmpConfigs.params.SectorID = params["SectorID"];
+      tmpConfigs.params.Search = params["Search"];
+      tmpConfigs.params.PageSize = params["PageSize"];
+      tmpConfigs.params.PageNum = params["PageNum"];
+      tmpConfigs.params.Lang = params["Lang"];
+
+      API.get(
+        jwtServiceConfig.baseURL + Routes.PROJECT.LIST_TASK_ALL,
+        tmpConfigs,
+      )
+        .then(response => {
+          log("FETCH LIST TASK ALL => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          log("ERROR LIST TASK ALL => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
   updateTask: params => {
     return new Promise((resolve, reject) => {
       API.post(
@@ -156,6 +189,26 @@ export default {
         })
         .catch(error => {
           log("ERROR REMOVE TASK => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
+  updateGanttTask: params => {
+    return new Promise((resolve, reject) => {
+      API.put(
+        jwtServiceConfig.baseURL + Routes.PROJECT.UPDATE_GANTT_TASK,
+        params,
+      )
+        .then(response => {
+          log("FETCH UPDATE GANTT TASK => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          log("ERROR UPDATE GANTT TASK => ", error);
           reject(error.response ? error.response.data : error);
         });
     });

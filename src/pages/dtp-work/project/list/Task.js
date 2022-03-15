@@ -30,6 +30,7 @@ import {
   Col,
   RSelect,
   AlertConfirm,
+  TooltipComponent,
 } from "components/Component";
 import TableTask from "../table/Task";
 import AddEditTaskForm from "../form/AddEditTask";
@@ -41,9 +42,8 @@ import {getLocalStorage, log, setLocalStorage} from "utils/Utils";
 /** REDUX */
 import * as Actions from "redux/actions";
 
-function ListTasks(props) {
+function ListTasks({history}) {
   const {t} = useTranslation();
-  const history = useHistory();
   const {projectID = null} = useParams();
 
   /** Use redux */
@@ -110,6 +110,10 @@ function ListTasks(props) {
       if (!type && updateItem) setUpdateItem(null);
       if (!type && createType) setCreateType(null);
     }
+  };
+
+  const onActiveChart = () => {
+    history.push(`${Routes.ganttTasks}/${projectID}`);
   };
 
   const paginate = pageNumber => {
@@ -283,6 +287,7 @@ function ListTasks(props) {
   };
 
   const onError = error => {
+    dispatch(Actions.resetTask());
     log('[LOG] === onError ===> ', error);
     toast(error, {type: "error"});
     setLoading({main: false, search: false});
@@ -554,10 +559,6 @@ function ListTasks(props) {
                                       <Icon name="filter"></Icon>
                                       <span>{t("common:filter")}</span>
                                     </Button>
-                                    {/* <Button className="btn-dim" color="secondary" disabled={disabled} onClick={onResetFilter}>
-                                      <Icon name="undo"></Icon>
-                                      <span>{t("common:reset")}</span>
-                                    </Button> */}
                                   </div>
                                 </DropdownMenu>
                               </UncontrolledDropdown>
@@ -565,6 +566,17 @@ function ListTasks(props) {
                           </ul>
                         </div>
                       </div>
+                    </li>
+                    <li className="btn-toolbar-sep"></li>
+                    <li onClick={onActiveChart}>
+                      <TooltipComponent
+                        tag="a"
+                        containerClassName="btn btn-trigger btn-icon"
+                        id="chart"
+                        icon="chart-up"
+                        direction="top"
+                        text={`${t("task:grant_chart")} #${projectID}`}
+                      />
                     </li>
                   </ul>
                 </div>
@@ -606,8 +618,7 @@ function ListTasks(props) {
                 </div>
               </div>
             </div>
-
-            {/** Data table */}
+            
             <TableTask
               isWrite={isWrite}
               disabled={disabled}

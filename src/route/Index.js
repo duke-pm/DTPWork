@@ -27,6 +27,7 @@ import Resources from "../pages/dtp-work/booking/resources/Resources";
 
 import ListProjects from "../pages/dtp-work/project/list/Project";
 import ListTasks from "pages/dtp-work/project/list/Task";
+import GanttTasks from "pages/dtp-work/project/chart/GanttTasks";
 
 // import Homepage from "../pages/Homepage";
 // import Sales from "../pages/Sales";
@@ -305,14 +306,15 @@ const Pages = () => {
         <Route exact path={`${process.env.PUBLIC_URL}${Routes.requestsApprovedHandle}`} component={RequestAssetsHandle} />
 
         {/** Booking route */}
-        <Route path={`${process.env.PUBLIC_URL}${Routes.allBookings}`} component={AllBookings} />
+        <Route exact path={`${process.env.PUBLIC_URL}${Routes.allBookings}`} component={AllBookings} />
         <Route exact path={`${process.env.PUBLIC_URL}${Routes.groupResources}`} component={GroupResources} />
         <Route exact path={`${process.env.PUBLIC_URL}${Routes.resources}`} component={Resources} />
 
         {/** Project route */}
-        <Route path={`${process.env.PUBLIC_URL}${Routes.projects}`} component={ListProjects} />
-        <Route path={`${process.env.PUBLIC_URL}${Routes.tasks}/:projectID`} component={ListTasks} />
-        <Route path={`${process.env.PUBLIC_URL}${Routes.taskDetails}/:taskID`} component={ListTasks} />
+        <Route exact path={`${process.env.PUBLIC_URL}${Routes.projects}`} component={ListProjects} />
+        <Route exact path={`${process.env.PUBLIC_URL}${Routes.tasks}/:projectID`} component={ListTasks} />
+        <Route exact path={`${process.env.PUBLIC_URL}${Routes.ganttTasks}/:projectID`} component={GanttTasks} />
+        <Route exact path={`${process.env.PUBLIC_URL}${Routes.taskDetails}/:taskID`} component={ListTasks} />
 
         <Route component={RedirectAs404}></Route>
       </Switch>

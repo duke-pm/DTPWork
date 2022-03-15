@@ -50,3 +50,33 @@
 .max-w-200{
 	max-width: 200px;
 }
+
+.MILESTONE .bar{
+	fill: #34C759 !important;
+	opacity: 0.5;
+}
+.PHASE .bar{
+	fill: #FF9500 !important;
+	opacity: 0.5;
+}
+.TASK .bar{
+	fill: #007AFF !important;
+	opacity: 0.5;
+}
+.DURATION .bar{
+	fill: #f5deab !important;
+	opacity: 0.5;
+}
+
+.MILESTONE .bar-progress{
+	fill: #34C759 !important;
+}
+.PHASE .bar-progress{
+	fill: #FF9500 !important;
+}
+.TASK .bar-progress{
+	fill: #007AFF !important;
+}
+.DURATION .bar-progress{
+	fill: #f5deab !important;
+}

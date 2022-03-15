@@ -41,22 +41,22 @@ function TableTask(props) {
         <DataTableRow>
           <span className="fw-bold">{t("task:name")}</span>
         </DataTableRow>
-        <DataTableRow>
+        <DataTableRow size="sm">
           <span className="fw-bold">{t("task:type")}</span>
         </DataTableRow>
-        <DataTableRow>
+        <DataTableRow size="md">
           <span className="fw-bold">{t("task:status")}</span>
         </DataTableRow>
-        <DataTableRow size="sm">
+        <DataTableRow size="lg">
           <span className="fw-bold">{t("task:priority")}</span>
         </DataTableRow>
-        <DataTableRow size="sm">
+        <DataTableRow size="lg">
           <span className="fw-bold">{t("task:start_end_date")}</span>
         </DataTableRow>
-        <DataTableRow>
+        <DataTableRow size="lg">
           <span className="fw-bold">{t("task:progress")}</span>
         </DataTableRow>
-        <DataTableRow size="sm">
+        <DataTableRow size="md">
           <span className="fw-bold">{t("task:assign")}</span>
         </DataTableRow>
         {isWrite && <DataTableRow className="nk-tb-col-tools" />}

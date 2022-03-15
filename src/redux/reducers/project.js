@@ -1,3 +1,5 @@
+import moment from "moment";
+import {expiredDate} from "utils/Utils";
 import * as types from "../actions/types";
 
 export const initialState = {
@@ -6,8 +8,10 @@ export const initialState = {
   submittingUpdateProject: false,
   submittingRemoveProject: false,
   submittingListTask: false,
+  submittingListTaskAll: false,
   submittingCreateTask: false,
   submittingUpdateTask: false,
+  submittingUpdateGanttTask: false,
   submittingRemoveTask: false,
 
   successListProject: false,
@@ -30,6 +34,10 @@ export const initialState = {
   errorListTask: false,
   errorHelperListTask: "",
 
+  successListTaskAll: false,
+  errorListTaskAll: false,
+  errorHelperListTaskAll: "",
+
   successCreateTask: false,
   errorCreateTask: false,
   errorHelperCreateTask: "",
@@ -37,6 +45,10 @@ export const initialState = {
   successUpdateTask: false,
   errorUpdateTask: false,
   errorHelperUpdateTask: "",
+
+  successUpdateGanttTask: false,
+  errorUpdateGanttTask: false,
+  errorHelperUpdateGanttTask: "",
 
   successRemoveTask: false,
   errorRemoveTask: false,
@@ -46,6 +58,7 @@ export const initialState = {
   numProjects: [],
 
   tasks: [],
+  ganttTasks: [],
   numTasks: [],
 };
 
@@ -85,6 +98,11 @@ export default function (state = initialState, action = {}) {
       errorListTask: false,
       errorHelperListTask: "",
 
+      submittingListTaskAll: false,
+      successListTaskAll: false,
+      errorListTaskAll: false,
+      errorHelperListTaskAll: "",
+
       submittingCreateTask: false,
       successCreateTask: false,
       errorCreateTask: false,
@@ -94,6 +112,11 @@ export default function (state = initialState, action = {}) {
       successUpdateTask: false,
       errorUpdateTask: false,
       errorHelperUpdateTask: "",
+
+      submittingUpdateGanttTask: false,
+      successUpdateGanttTask: false,
+      errorUpdateGanttTask: false,
+      errorHelperUpdateGanttTask: "",
 
       submittingRemoveTask: false,
       successRemoveTask: false,
@@ -244,6 +267,60 @@ export default function (state = initialState, action = {}) {
         numTasks: payload.count,
       };
 
+    case types.START_LIST_TASK_ALL:
+      return {
+        ...state,
+        submittingListTaskAll: true,
+        successListTaskAll: false,
+        errorListTaskAll: false,
+        errorHelperListTaskAll: "",
+      };
+
+    case types.ERROR_LIST_TASK_ALL:
+      return {
+        ...state,
+        submittingListTaskAll: false,
+        successListTaskAll: false,
+        errorListTaskAll: true,
+        errorHelperListTaskAll: payload,
+      };
+
+    case types.SUCCESS_LIST_TASK_ALL:
+      let newTasks = payload;
+      newTasks = newTasks.reduce(
+        (arr, curr) => [
+          ...arr,
+          {
+            ...curr,
+            id: JSON.stringify(curr.taskID),
+            name: curr.taskName,
+            start: moment(curr.startDate).format('YYYY-MM-DD'),
+            end: moment(curr.endDate).format('YYYY-MM-DD'),
+            progress: curr.percentage,
+            dependencies: curr.parentID === 0 ? '' : JSON.stringify(curr.parentID),
+            custom_class:
+              expiredDate(curr.endDate) > 0 &&
+              curr.statusID !== 5 &&
+              curr.statusID !== 6 &&
+              curr.statusID !== 7 &&
+              curr.typeName === 'TASK'
+                ? 'DURATION'
+                : curr.typeName,
+          },
+        ],
+        [],
+      );
+
+      return {
+        ...state,
+        submittingListTaskAll: false,
+        successListTaskAll: true,
+        errorListTaskAll: false,
+        errorHelperListTaskAll: "",
+
+        ganttTasks: newTasks,
+      };
+
     case types.START_CREATE_TASK:
       return {
         ...state,
@@ -306,6 +383,34 @@ export default function (state = initialState, action = {}) {
         errorHelperUpdateTask: "",
 
         tasks: tmpTask,
+      };
+
+
+    case types.START_UPDATE_GANTT_TASK:
+      return {
+        ...state,
+        submittingUpdateGanttTask: true,
+        successUpdateGanttTask: false,
+        errorUpdateGanttTask: false,
+        errorHelperUpdateGanttTask: "",
+      };
+
+    case types.ERROR_UPDATE_GANTT_TASK:
+      return {
+        ...state,
+        submittingUpdateGanttTask: false,
+        successUpdateGanttTask: false,
+        errorUpdateGanttTask: true,
+        errorHelperUpdateGanttTask: payload,
+      };
+
+    case types.SUCCESS_UPDATE_GANTT_TASK:
+      return {
+        ...state,
+        submittingUpdateGanttTask: false,
+        successUpdateGanttTask: true,
+        errorUpdateGanttTask: false,
+        errorHelperUpdateGanttTask: "",
       };
 
     case types.START_REMOVE_TASK:
