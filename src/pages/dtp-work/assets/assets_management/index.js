@@ -50,7 +50,7 @@ const TabItem = ({
       </a>
     </li>
   )
-}
+};
 
 let callbackF = null;
 
@@ -610,7 +610,7 @@ function AssetsManagement(props) {
                       value={tabs[filterTab].search}
                       placeholder={t("common:search")}
                       onKeyDown={ev => {
-                        if (ev.key === "Enter") onSearch(ev, filterTab);
+                        if (ev.code === "Enter") onSearch(ev, filterTab);
                       }}
                       onChange={onChangeSearch}
                     />

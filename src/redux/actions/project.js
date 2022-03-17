@@ -364,3 +364,264 @@ export const fFetchRemoveTask = (params, history) => {
       });
   };
 };
+
+export const fErrorTaskDetails = error => ({
+  type: types.ERROR_TASK_DETAILS,
+  payload: error,
+});
+
+export const fSuccessTaskDetails = data => ({
+  type: types.SUCCESS_TASK_DETAILS,
+  payload: data,
+});
+
+export const fFetchTaskDetails = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_TASK_DETAILS});
+
+    Services.project.taskDetails(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessTaskDetails(res.data));
+        } else {
+          return dispatch(fErrorTaskDetails(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorTaskDetails(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};
+
+export const fErrorCreateComment = error => ({
+  type: types.ERROR_CREATE_COMMENT,
+  payload: error,
+});
+
+export const fSuccessCreateComment = data => ({
+  type: types.SUCCESS_CREATE_COMMENT,
+  payload: data,
+});
+
+export const fFetchCreateComment = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_CREATE_COMMENT});
+
+    Services.project.createComment(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessCreateComment(res.data));
+        } else {
+          return dispatch(fErrorCreateComment(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorCreateComment(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};
+
+export const fErrorFollow = error => ({
+  type: types.ERROR_FOLLOW,
+  payload: error,
+});
+
+export const fSuccessFollow = (data, userName) => ({
+  type: types.SUCCESS_FOLLOW,
+  payload: {data, userName},
+});
+
+export const fFetchFollow = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_FOLLOW});
+
+    Services.project.follow(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessFollow(res.data, params.UserName));
+        } else {
+          return dispatch(fErrorFollow(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorFollow(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};
+
+export const fErrorChangeProgressTask = error => ({
+  type: types.ERROR_CHANGE_PROGRESS_TASK,
+  payload: error,
+});
+
+export const fSuccessChangeProgressTask = data => ({
+  type: types.SUCCESS_CHANGE_PROGRESS_TASK,
+  payload: data,
+});
+
+export const fFetchChangeProgressTask = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_CHANGE_PROGRESS_TASK});
+
+    Services.project.taskUpdate(params)
+      .then(res => {
+        if (!res.isError) {
+          let dataTask = null;
+          if (res.data.length > 0) {
+            dataTask = {
+              status: {
+                statusID: res.data[0].statusID,
+                statusName: res.data[0].statusName,
+                colorCode: res.data[0].colorCode,
+                colorDarkCode: res.data[0].colorDarkCode,
+                colorOpacityCode: res.data[0].colorOpacityCode,
+              },
+              percentage: res.data[0].percentage,
+            };
+          } else {
+            dataTask = {
+              status: {
+                statusID: res.data.statusID,
+                statusName: res.data.statusName,
+                colorCode: res.data.colorCode,
+                colorDarkCode: res.data.colorDarkCode,
+                colorOpacityCode: res.data.colorOpacityCode,
+              },
+              percentage: res.data.percentage,
+            };
+          }
+          return dispatch(fSuccessChangeProgressTask(dataTask));
+        } else {
+          return dispatch(fErrorChangeProgressTask(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorChangeProgressTask(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};
+
+export const fErrorChangeStatusTask = error => ({
+  type: types.ERROR_CHANGE_STATUS_TASK,
+  payload: error,
+});
+
+export const fSuccessChangeStatusTask = data => ({
+  type: types.SUCCESS_CHANGE_STATUS_TASK,
+  payload: data,
+});
+
+export const fFetchChangeStatusTask = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_CHANGE_STATUS_TASK});
+
+    Services.project.taskUpdate(params)
+      .then(res => {
+        if (!res.isError) {
+          let dataTask = null;
+          if (res.data.length > 0) {
+            dataTask = {
+              status: {
+                statusID: res.data[0].statusID,
+                statusName: res.data[0].statusName,
+                colorCode: res.data[0].colorCode,
+                colorDarkCode: res.data[0].colorDarkCode,
+                colorOpacityCode: res.data[0].colorOpacityCode,
+              },
+              percentage: res.data[0].percentage,
+            };
+          } else {
+            dataTask = {
+              status: {
+                statusID: res.data.statusID,
+                statusName: res.data.statusName,
+                colorCode: res.data.colorCode,
+                colorDarkCode: res.data.colorDarkCode,
+                colorOpacityCode: res.data.colorOpacityCode,
+              },
+              percentage: res.data.percentage,
+            };
+          }
+          return dispatch(fSuccessChangeStatusTask(dataTask));
+        } else {
+          return dispatch(fErrorChangeStatusTask(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorChangeStatusTask(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};
+
+export const fErrorProjectsOverview = error => ({
+  type: types.ERROR_PROJECTS_OVERVIEW,
+  payload: error,
+});
+
+export const fSuccessProjectsOverview = projects => ({
+  type: types.SUCCESS_PROJECTS_OVERVIEW,
+  payload: projects,
+});
+
+export const fFetchProjectsOverview = (params, history) => {
+  return dispatch => {
+    dispatch({type: types.START_PROJECTS_OVERVIEW});
+
+    Services.project.listProjectsOverview(params)
+      .then(res => {
+        if (!res.isError) {
+          return dispatch(fSuccessProjectsOverview({
+            data: res.data,
+            rows: res.totalRow || 0,
+          }));
+        } else {
+          return dispatch(fErrorProjectsOverview(res.errorMessage));
+        }
+      })
+      .catch(error => {
+        dispatch(fErrorProjectsOverview(error));
+        if (error.message && error.message.search("Authorization") !== -1) {
+          let tmp = {
+            RefreshToken: params.RefreshToken,
+            Lang: params.Lang,
+          };
+          return dispatch(Actions.fFetchRefreshToken(tmp, history));
+        }
+      });
+  };
+};

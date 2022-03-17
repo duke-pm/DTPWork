@@ -6,41 +6,17 @@ import {
   DataTableRow,
   DataTableBody,
 } from "components/Component";
-import RowProject from "../components/RowProject";
-import { getCookies } from "utils/Utils";
-import Configs from "configs";
-import Routes from "services/routesApi";
+import RowProjectsOverview from "../components/RowProjectsOverview";
 
-function TableProject(props) {
+function TableProjectsOverview(props) {
   const {t} = useTranslation();
   const {
-    isWrite,
     disabled,
     dataProjects,
-    onDetails,
-    onUpdate,
-    onClone,
-    onRemove,
   } = props;
 
   /** Use state */
   const [data, setData] = useState(dataProjects);
-
-  /**
-   ** FUNCTIONS
-   */
-  const onExportExecl = pj => {
-    let tmpAccessToken = getCookies("access_token");
-    if (tmpAccessToken) {
-      let params = {
-        UserToken: tmpAccessToken,
-        PrjID: pj.prjID,
-      }
-      window.location = `${Configs.hostAPI}/${Configs.prefixAPI}${
-        Routes.PROJECT.EXPORT_PROJECT
-      }?value=${JSON.stringify(params)}`;
-    }
-	};
 
   /**
    ** LIFE CYCLE
@@ -64,39 +40,29 @@ function TableProject(props) {
           <span className="fw-bold">{t("project:status")}</span>
         </DataTableRow>
         <DataTableRow size="md">
-          <span className="fw-bold">{t("project:public")}</span>
-        </DataTableRow>
-        <DataTableRow size="md">
           <span className="fw-bold">{t("project:priority")}</span>
         </DataTableRow>
         <DataTableRow size="sm">
           <span className="fw-bold">{t("project:start_end_date")}</span>
         </DataTableRow>
         <DataTableRow size="md">
-          <span className="fw-bold">{t("project:inspection")}</span>
+          <span className="fw-bold">{t("task:progress")}</span>
         </DataTableRow>
-        <DataTableRow size="sm">
+        <DataTableRow size="md">
           <span className="fw-bold">{t("project:owner")}</span>
         </DataTableRow>
-        {isWrite && <DataTableRow className="nk-tb-col-tools" />}
       </DataTableHead>
 
       {data.length > 0
         ? data.map((item, index) => {
           return (
-            <RowProject
-              key={item.prjID + "_prj_" + index}
+            <RowProjectsOverview
+              key={item.itemID + "_prj_" + index}
               className=""
-              isWrite={isWrite}
               disabled={disabled}
               padding={padding}
               index={index}
               data={item}
-              onDetails={onDetails}
-              onUpdate={onUpdate}
-              onClone={onClone}
-              onExport={onExportExecl}
-              onRemove={onRemove}
             />
           )  
         })
@@ -105,4 +71,4 @@ function TableProject(props) {
   );
 };
 
-export default TableProject;
+export default TableProjectsOverview;

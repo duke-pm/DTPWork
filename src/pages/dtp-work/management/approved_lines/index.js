@@ -335,7 +335,7 @@ function ApprovedLines(props) {
                       disabled={disabled}
                       placeholder={t("common:search")}
                       onKeyDown={ev => {
-                        if (ev.key === "Enter") onSearch();
+                        if (ev.code === "Enter") onSearch();
                       }}
                       onChange={onChangeSearch}
                     />

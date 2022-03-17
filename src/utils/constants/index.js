@@ -16,6 +16,98 @@ const priorityColor = {
 	I: "success",
 };
 
+const svgIcon = {
+  reCheck: {
+    svg: (
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 90">
+        <path
+          fill="#fff"
+          stroke="#6576ff"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M26 70.78V24.5a7 7 0 017-7h36a9 9 0 019 9v49a7 7 0 01-7 7H16.55s9.17-3.61 9.45-11.72z"
+        ></path>
+        <path
+          fill="#e3e7fe"
+          stroke="#6576ff"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M7 30.5h19v43.4a8.6 8.6 0 01-8.6 8.6h-3.8A8.6 8.6 0 015 73.9V32.5a2 2 0 012-2z"
+        ></path>
+        <circle
+          cx="71.5"
+          cy="21"
+          r="13.5"
+          fill="#fff"
+          stroke="#6576ff"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+        ></circle>
+        <rect width="16" height="8" x="34" y="33.5" fill="#c4cefe" rx="1" ry="1"></rect>
+        <path
+          fill="none"
+          stroke="#c4cefe"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M35 46.5L67 46.5"
+        ></path>
+        <path
+          fill="none"
+          stroke="#c4cefe"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M35 53.5L67 53.5"
+        ></path>
+        <path
+          fill="none"
+          stroke="#c4cefe"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M35 59.5L67 59.5"
+        ></path>
+        <path
+          fill="none"
+          stroke="#c4cefe"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M35 64.5L67 64.5"
+        ></path>
+        <path
+          fill="none"
+          stroke="#c4cefe"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M35 71.5L51 71.5"
+        ></path>
+        <path
+          fill="none"
+          stroke="#6576ff"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M75.24 23.79a5.2 5.2 0 01-6.42 2.57 5.78 5.78 0 01-3.26-7.25 5.25 5.25 0 016.8-3.47 5.35 5.35 0 012 1.34l2.75 2.75"
+        ></path>
+        <path
+          fill="none"
+          stroke="#6576ff"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M77.75 16.61L77.75 20.61 73.75 20.61"
+        ></path>
+      </svg>
+    ),
+  }
+};
+
 const Constants = {
   DEFAULT_LANGUAGE: "vi",
 
@@ -28,6 +120,7 @@ const Constants = {
   LS_VIEW_BOOKING: "LS_VIEW_BOOKING",
   LS_FILTER_PROJECTS: "LS_FILTER_PROJECTS",
   LS_FILTER_TASKS: "LS_FILTER_TASKS",
+  LS_FILTER_PROJECTS_OVERVIEW: "LS_FILTER_PROJECTS_OVERVIEW",
 
   DATA_TIME_BOOKING: [
     {value: "00:00", label: "00:00"},
@@ -83,6 +176,10 @@ const Constants = {
   TYPE_TASK: typeTask,
   TYPE_TASK_COLOR: typeTaskColor,
   PRIORITY_TASK_COLOR: priorityColor,
+
+  SVG_ICON: {
+    RE_CHECK: svgIcon.reCheck.svg,
+  }
 };
 
 export default Constants;

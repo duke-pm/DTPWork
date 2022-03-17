@@ -48,7 +48,7 @@ function GanttTasks({history}) {
    ** FUNCTIONS
    */
   const onUnActiveChart = () => {
-    history.push(`${Routes.tasks}/${projectID}`);
+    history.replace(`${Routes.tasks}/${projectID}`);
   };
 
   const onHandleChangeDate = (task, start, end) => {

@@ -28,6 +28,7 @@ const Routes = {
   projects: "/projects/view",
   tasks: "/projects",
   ganttTasks: "/projects/gantt-chart",
+  projectsOverview: "/projects-overview",
   taskDetails: "/tasks",
 };
 

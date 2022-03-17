@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 
-const InputSwitch = ({ label, id, checked }) => {
-  const [inputCheck, setCheck] = useState(checked ? true : false);
-
+const InputSwitch = ({ disabled, label, id, checked, onChange }) => {
   return (
-    <React.Fragment>
+    <div className="custom-control custom-control-sm custom-checkbox">
       <input
-        type="checkbox"
-        className="custom-control-input"
-        defaultChecked={inputCheck}
-        onClick={() => setCheck(!inputCheck)}
+        className="custom-control-input form-control"
         id={id}
+        name={id}
+        type="checkbox"
+        disabled={disabled}
+        checked={checked}
+        onChange={onChange}
       />
       <label className="custom-control-label" htmlFor={id}>
         {label}
       </label>
-    </React.Fragment>
+    </div>
   );
 };
 

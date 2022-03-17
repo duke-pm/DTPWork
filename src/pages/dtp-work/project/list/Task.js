@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {useTranslation} from "react-i18next";
-import {useHistory, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {
   UncontrolledDropdown,
   DropdownMenu,
@@ -113,7 +113,7 @@ function ListTasks({history}) {
   };
 
   const onActiveChart = () => {
-    history.push(`${Routes.ganttTasks}/${projectID}`);
+    history.replace(`${Routes.ganttTasks}/${projectID}`);
   };
 
   const paginate = pageNumber => {
@@ -210,8 +210,8 @@ function ListTasks({history}) {
     toggleView("add");
   };
 
-  const onOverview = tk => {
-    setUpdateItem(tk);
+  const onOverview = tkID => {
+    history.push(`${process.env.PUBLIC_URL}${Routes.taskDetails}/${tkID}`);
   };
 
   const onUpdate = tk => {
@@ -287,6 +287,7 @@ function ListTasks({history}) {
   };
 
   const onError = error => {
+    dispatch(Actions.resetMasterData());
     dispatch(Actions.resetTask());
     log('[LOG] === onError ===> ', error);
     toast(error, {type: "error"});
@@ -394,7 +395,7 @@ function ListTasks({history}) {
         <BlockHead size="sm">
           <BlockBetween>
             <BlockHeadContent>
-              <BlockTitle tag="h4">{t("task:title")}</BlockTitle>
+              <BlockTitle tag="h4">{`${t("task:title")} #${projectID}`}</BlockTitle>
             </BlockHeadContent>
             <BlockHeadContent>
               <div className="toggle-wrap nk-block-tools-toggle">
@@ -556,7 +557,8 @@ function ListTasks({history}) {
                                   </div>
                                   <div className="dropdown-foot between">
                                     <Button color="primary" disabled={disabled} onClick={onSearchFilter}>
-                                      <Icon name="filter"></Icon>
+                                      {loading.search && <Spinner className="mr-1" size="sm" color="light" />}
+                                      {!loading.search && <Icon name="filter"></Icon>}
                                       <span>{t("common:filter")}</span>
                                     </Button>
                                   </div>
@@ -601,7 +603,7 @@ function ListTasks({history}) {
                       value={formData.search}
                       placeholder={t("common:search")}
                       onKeyDown={ev => {
-                        if (ev.key === "Enter") onSearch();
+                        if (ev.code === "Enter") onSearch();
                       }}
                       onChange={onChangeSearch}
                     />

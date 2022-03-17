@@ -13,6 +13,13 @@ export const initialState = {
   submittingUpdateTask: false,
   submittingUpdateGanttTask: false,
   submittingRemoveTask: false,
+  submittingTaskDetails: false,
+  submittingCreateComment: false,
+  submittingFollow: false,
+  submittingRecieveEmail: false,
+  submittingChangeStatusTask: false,
+  submittingChangeProgressTask: false,
+  submittingProjectsOverview: false,
 
   successListProject: false,
   errorListProject: false,
@@ -54,12 +61,49 @@ export const initialState = {
   errorRemoveTask: false,
   errorHelperRemoveTask: "",
 
+  successTaskDetails: false,
+  errorTaskDetails: false,
+  errorHelperTaskDetails: "",
+
+  successCreateComment: false,
+  errorCreateComment: false,
+  errorHelperCreateComment: "",
+
+  successFollow: false,
+  errorFollow: false,
+  errorHelperFollow: "",
+
+  successRecieveEmail: false,
+  errorRecieveEmail: false,
+  errorHelperRecieveEmail: "",
+
+  successChangeStatusTask: false,
+  errorChangeStatusTask: false,
+  errorHelperChangeStatusTask: "",
+
+  successChangeProgressTask: false,
+  errorChangeProgressTask: false,
+  errorHelperChangeProgressTask: "",
+
+  successProjectsOverview: false,
+  errorProjectsOverview: false,
+  errorHelperProjectsOverview: "",
+
   projects: [],
-  numProjects: [],
+  numProjects: 0,
 
   tasks: [],
   ganttTasks: [],
-  numTasks: [],
+  numTasks: 0,
+
+  overview: null,
+  activities: [],
+  watchers: [],
+  isWatched: false,
+  isReceivedEmail: false,
+
+  projectsOverview: [],
+  pagesOverview: 0,
 };
 
 export default function (state = initialState, action = {}) {
@@ -88,6 +132,11 @@ export default function (state = initialState, action = {}) {
         successRemoveProject: false,
         errorRemoveProject: false,
         errorHelperRemoveProject: "",
+
+        submittingProjectsOverview: false,
+        successProjectsOverview: false,
+        errorProjectsOverview: false,
+        errorHelperProjectsOverview: "",
       };
     
     case types.RESET_TASK:
@@ -122,6 +171,36 @@ export default function (state = initialState, action = {}) {
       successRemoveTask: false,
       errorRemoveTask: false,
       errorHelperRemoveTask: "",
+
+      submittingTaskDetails: false,
+      successTaskDetails: false,
+      errorTaskDetails: false,
+      errorHelperTaskDetails: "",
+
+      submittingCreateComment: false,
+      successCreateComment: false,
+      errorCreateComment: false,
+      errorHelperCreateComment: "",
+
+      submittingFollow: false,
+      successFollow: false,
+      errorFollow: false,
+      errorHelperFollow: "",
+
+      submittingRecieveEmail: false,
+      successRecieveEmail: false,
+      errorRecieveEmail: false,
+      errorHelperRecieveEmail: "",
+
+      submittingChangeStatusTask: false,
+      successChangeStatusTask: false,
+      errorChangeStatusTask: false,
+      errorHelperChangeStatusTask: "",
+
+      submittingChangeProgressTask: false,
+      successChangeProgressTask: false,
+      errorChangeProgressTask: false,
+      errorHelperChangeProgressTask: "",
     };
 
     /** Projects - List */
@@ -385,7 +464,6 @@ export default function (state = initialState, action = {}) {
         tasks: tmpTask,
       };
 
-
     case types.START_UPDATE_GANTT_TASK:
       return {
         ...state,
@@ -440,6 +518,238 @@ export default function (state = initialState, action = {}) {
         errorHelperRemoveTask: "",
       };
     
+    case types.START_TASK_DETAILS:
+      return {
+        ...state,
+        submittingTaskDetails: true,
+        successTaskDetails: false,
+        errorTaskDetails: false,
+        errorHelperTaskDetails: "",
+      };
+
+    case types.ERROR_TASK_DETAILS:
+      return {
+        ...state,
+        submittingTaskDetails: false,
+        successTaskDetails: false,
+        errorTaskDetails: true,
+        errorHelperTaskDetails: payload,
+      };
+
+    case types.SUCCESS_TASK_DETAILS:
+      return {
+        ...state,
+        submittingTaskDetails: false,
+        successTaskDetails: true,
+        errorTaskDetails: false,
+        errorHelperTaskDetails: "",
+
+        overview: payload.detail,
+        activities: payload.activities,
+        watchers: payload.watcher,
+        isWatched: payload.isWatched,
+        isReceivedEmail: payload.isReceivedEmail,
+      };
+
+    case types.START_CREATE_COMMENT:
+      return {
+        ...state,
+        submittingCreateComment: true,
+        successCreateComment: false,
+        errorCreateComment: false,
+        errorHelperCreateComment: "",
+      };
+
+    case types.ERROR_CREATE_COMMENT:
+      return {
+        ...state,
+        submittingCreateComment: false,
+        successCreateComment: false,
+        errorCreateComment: true,
+        errorHelperCreateComment: payload,
+      };
+
+    case types.SUCCESS_CREATE_COMMENT:
+      let tmpActivities = state["activities"];
+      let tmpActivities2 = payload;
+      
+      return {
+        ...state,
+        submittingCreateComment: false,
+        successCreateComment: true,
+        errorCreateComment: false,
+        errorHelperCreateComment: "",
+
+        activities: tmpActivities.concat(tmpActivities2),
+      };
+
+    case types.START_FOLLOW:
+      return {
+        ...state,
+        submittingFollow: true,
+        successFollow: false,
+        errorFollow: false,
+        errorHelperFollow: "",
+      };
+
+    case types.ERROR_FOLLOW:
+      return {
+        ...state,
+        submittingFollow: false,
+        successFollow: false,
+        errorFollow: true,
+        errorHelperFollow: payload,
+      };
+
+    case types.SUCCESS_FOLLOW:
+      let tmpWatchers = state["watchers"];
+      let tmpIsWatched = state["isWatched"];
+      let tmpIsReceivedEmail = state["isReceivedEmail"];
+      let tmpWatchers2 = null;
+
+      if (payload.data.watcher) {
+        tmpIsWatched = true;
+        if (payload.userName) {
+          //for follow
+          tmpWatchers2 = payload.data.watcher;
+          tmpIsReceivedEmail = true;
+        } else {
+          //for get email
+          tmpIsReceivedEmail = payload.data.isReceivedEmail;
+          let find = tmpWatchers.findIndex(
+            f => f.lineNum === payload.data.watcher.lineNum,
+          );
+          if (find !== -1) {
+            tmpWatchers[find] = payload.data.watcher;
+          }
+        }
+      } else {
+        //for unfollow
+        tmpWatchers = tmpWatchers.filter(
+          item => item.lineNum !== payload.data.lineNum,
+        );
+        tmpIsWatched = payload.data.isWatched;
+        tmpIsReceivedEmail = payload.data.isReceivedEmail;
+      }
+      
+      return {
+        ...state,
+        submittingFollow: false,
+        successFollow: true,
+        errorFollow: false,
+        errorHelperFollow: "",
+
+        watchers: tmpWatchers2 ? tmpWatchers.concat(tmpWatchers2) : tmpWatchers,
+        isWatched: tmpIsWatched,
+        isReceivedEmail: tmpIsReceivedEmail,
+      };
+
+    case types.START_CHANGE_PROGRESS_TASK:
+      return {
+        ...state,
+        submittingChangeProgressTask: true,
+        successChangeProgressTask: false,
+        errorChangeProgressTask: false,
+        errorHelperChangeProgressTask: "",
+      };
+
+    case types.ERROR_CHANGE_PROGRESS_TASK:
+      return {
+        ...state,
+        submittingChangeProgressTask: false,
+        successChangeProgressTask: false,
+        errorChangeProgressTask: true,
+        errorHelperChangeProgressTask: payload,
+      };
+
+    case types.SUCCESS_CHANGE_PROGRESS_TASK:
+      let tmpTaskPer = state["overview"];
+      // Update task detail
+      tmpTaskPer.statusID = payload.status.statusID;
+      tmpTaskPer.statusName = payload.status.statusName;
+      tmpTaskPer.colorCode = payload.status.colorCode;
+      tmpTaskPer.colorDarkCode = payload.status.colorCode;
+      tmpTaskPer.colorOpacityCode = payload.status.colorOpacityCode;
+      tmpTaskPer.percentage = payload.percentage;
+      
+      return {
+        ...state,
+        submittingChangeProgressTask: false,
+        successChangeProgressTask: true,
+        errorChangeProgressTask: false,
+        errorHelperChangeProgressTask: "",
+
+        overview: tmpTaskPer,
+      };
+  
+    case types.START_CHANGE_STATUS_TASK:
+      return {
+        ...state,
+        submittingChangeStatusTask: true,
+        successChangeStatusTask: false,
+        errorChangeStatusTask: false,
+        errorHelperChangeStatusTask: "",
+      };
+
+    case types.ERROR_CHANGE_STATUS_TASK:
+      return {
+        ...state,
+        submittingChangeStatusTask: false,
+        successChangeStatusTask: false,
+        errorChangeStatusTask: true,
+        errorHelperChangeStatusTask: payload,
+      };
+
+    case types.SUCCESS_CHANGE_STATUS_TASK:
+      let tmpTaskSta = state["overview"];
+      // Update task detail
+      tmpTaskSta.statusID = payload.status.statusID;
+      tmpTaskSta.statusName = payload.status.statusName;
+      tmpTaskSta.colorCode = payload.status.colorCode;
+      tmpTaskSta.colorDarkCode = payload.status.colorCode;
+      tmpTaskSta.colorOpacityCode = payload.status.colorOpacityCode;
+      tmpTaskSta.percentage = payload.percentage;
+      
+      return {
+        ...state,
+        submittingChangeStatusTask: false,
+        successChangeStatusTask: true,
+        errorChangeStatusTask: false,
+        errorHelperChangeStatusTask: "",
+
+        overview: tmpTaskSta,
+      };
+
+    case types.START_PROJECTS_OVERVIEW:
+      return {
+        ...state,
+        submittingProjectsOverview: true,
+        successProjectsOverview: false,
+        errorProjectsOverview: false,
+        errorHelperProjectsOverview: "",
+      };
+
+    case types.ERROR_PROJECTS_OVERVIEW:
+      return {
+        ...state,
+        submittingProjectsOverview: false,
+        successProjectsOverview: false,
+        errorProjectsOverview: true,
+        errorHelperProjectsOverview: payload,
+      };
+
+    case types.SUCCESS_PROJECTS_OVERVIEW:
+      return {
+        ...state,
+        submittingProjectsOverview: false,
+        successProjectsOverview: true,
+        errorProjectsOverview: false,
+        errorHelperProjectsOverview: "",
+
+        projectsOverview: payload.data,
+        pagesOverview: payload.pages,
+      };
+  
     default:
       return state;
   };

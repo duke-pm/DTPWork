@@ -15,4 +15,5 @@ export default combineReducers({
   management,
   approved,
   project,
+  booking,
 });

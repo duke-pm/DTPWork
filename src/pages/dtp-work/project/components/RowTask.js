@@ -203,7 +203,7 @@ function RowTask(props) {
                           href="#overview"
                           onClick={(ev) => {
                             ev.preventDefault();
-                            !disabled && onOverview(data);
+                            !disabled && onOverview(data.taskID);
                           }}
                         >
                           <Icon name="eye"></Icon>

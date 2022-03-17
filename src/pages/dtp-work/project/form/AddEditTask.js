@@ -45,7 +45,7 @@ function AddEditTaskForm(props) {
   const {t} = useTranslation();
   const {errors, register, clearErrors, handleSubmit} = useForm();
   const {
-    show,
+    show = false, 
     history,
     isUpdate,
     isClone,
@@ -241,7 +241,7 @@ function AddEditTaskForm(props) {
   const onFormSubmit = () => {
     let isError = onValidate();
     if (!isError) {
-      // setLoading({...loading, submit: true});
+      setLoading({...loading, submit: true});
       let tmpEmps = "";
       if (formData.members && formData.members.length > 0) {
         tmpEmps = formData.members.map(item => item.value);
@@ -274,17 +274,17 @@ function AddEditTaskForm(props) {
         Lang: commonState["language"],
       };
       console.log('[LOG] === onFormSubmit ===> ', params);
-      // if (isClone) {
-      //   params.TaskID = "0";
-      //   return dispatch(Actions.fFetchCreateTask(params, history));
-      // }
-      // if (!isUpdate) {
-      //   params.TaskTypeID = createType;
-      //   dispatch(Actions.fFetchCreateTask(params, history));
-      // } else {
-      //   params.AttachFiles = formData.file?.id === "history" ? "" : formData.file;
-      //   dispatch(Actions.fFetchUpdateTask(params, history));
-      // }
+      if (isClone) {
+        params.TaskID = "0";
+        return dispatch(Actions.fFetchCreateTask(params, history));
+      }
+      if (!isUpdate) {
+        params.TaskTypeID = createType;
+        dispatch(Actions.fFetchCreateTask(params, history));
+      } else {
+        params.AttachFiles = formData.file?.id === "history" ? "" : formData.file;
+        dispatch(Actions.fFetchUpdateTask(params, history));
+      }
     }
   };
 

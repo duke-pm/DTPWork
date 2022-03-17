@@ -537,7 +537,7 @@ function RequestAssetsHandle(props) {
                       value={formData.search}
                       placeholder={t("common:search")}
                       onKeyDown={ev => {
-                        if (ev.key === "Enter") onSearch(ev);
+                        if (ev.code === "Enter") onSearch(ev);
                       }}
                       onChange={onChangeSearch}
                     />

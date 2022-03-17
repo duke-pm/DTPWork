@@ -31,6 +31,7 @@ function RowProject(props) {
     padding,
     index,
     data,
+    onDetails,
     onUpdate,
     onClone,
     onExport,
@@ -202,6 +203,19 @@ function RowProject(props) {
                       <li>
                         <DropdownItem
                           tag="a"
+                          href="#details"
+                          onClick={(ev) => {
+                            ev.preventDefault();
+                            !disabled && onDetails(data.prjID);
+                          }}
+                        >
+                          <Icon name="eye"></Icon>
+                          <span>{t("common:details")}</span>
+                        </DropdownItem>
+                      </li>
+                      <li>
+                        <DropdownItem
+                          tag="a"
                           href="#update"
                           onClick={(ev) => {
                             ev.preventDefault();
@@ -281,6 +295,7 @@ function RowProject(props) {
             padding={padding + 2}
             index={index}
             data={item}
+            onDetails={onDetails}
             onUpdate={onUpdate}
             onClone={onClone}
             onExport={onExport}

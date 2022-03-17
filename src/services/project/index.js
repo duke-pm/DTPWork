@@ -81,6 +81,47 @@ export default {
         });
     });
   },
+  listProjectsOverview: params => {
+    return new Promise((resolve, reject) => {
+      let tmpConfigs = {params: {}};
+      tmpConfigs.params.Year = params["Year"];
+      if (params["FromDate"]) {
+        tmpConfigs.params.FromDate = params["FromDate"];
+      }
+      if (params["ToDate"]) {
+        tmpConfigs.params.ToDate = params["ToDate"];
+      }
+      if (params["StatusID"]) {
+        tmpConfigs.params.StatusID = params["StatusID"];
+      }
+      if (params["OwnerID"]) {
+        tmpConfigs.params.OwnerID = params["OwnerID"];
+      }
+      if (params["SectorID"]) {
+        tmpConfigs.params.SectorID = params["SectorID"];
+      }
+      tmpConfigs.params.PageSize = params["PageSize"];
+      tmpConfigs.params.PageNum = params["PageNum"];
+      tmpConfigs.params.Lang = params["Lang"];
+
+      API.get(
+        jwtServiceConfig.baseURL + Routes.PROJECT.PROJECT_OVERVIEW,
+        tmpConfigs,
+      )
+        .then(response => {
+          log("FETCH LIST PROJECT OVERVIEW => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          log("ERROR LIST PROJECT OVERVIEW => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
 
   /** Task */
   listTask: params => {
@@ -151,9 +192,32 @@ export default {
   },
   updateTask: params => {
     return new Promise((resolve, reject) => {
+      const formData = new FormData();
+      formData.append("TaskID", params.TaskID);
+      formData.append("TaskName", params.TaskName);
+      formData.append("TaskTypeID", params.TaskTypeID);
+      formData.append("PrjID", params.PrjID);
+      formData.append("ParentID", params.ParentID);
+      formData.append("Descr", params.Descr);
+      formData.append("StartDate", params.StartDate);
+      formData.append("EndDate", params.EndDate);
+      formData.append("Owner", params.Owner);
+      formData.append("Priority", params.Priority);
+      formData.append("StatusID", params.StatusID);
+      formData.append("SectorID", params.SectorID);
+      formData.append("Grade", params.Grade);
+      formData.append("Component", params.Component);
+      formData.append("Author", params.Author);
+      formData.append("OriginPublisher", params.OriginPublisher);
+      formData.append("OwnershipDTP", params.OwnershipDTP);
+      formData.append("AttachFiles", params.AttachFiles);
+      formData.append("Percentage", params.Percentage);
+      formData.append("Version", params.Version);
+      formData.append("LstUserInvited", params.LstUserInvited);
+
       API.post(
         jwtServiceConfig.baseURL + Routes.PROJECT.UPDATE_TASK,
-        params,
+        formData,
       )
         .then(response => {
           log("FETCH UPDATE TASK => ", response);
@@ -213,4 +277,89 @@ export default {
         });
     });
   },
+  taskDetails: params => {
+    return new Promise((resolve, reject) => {
+      let tmpConfigs = {params: {}};
+      tmpConfigs.params.TaskID = params["TaskID"];
+      tmpConfigs.params.Lang = params["Lang"];
+
+      API.get(
+        jwtServiceConfig.baseURL + Routes.PROJECT.TASK_DETAILS,
+        tmpConfigs,
+      )
+        .then(response => {
+          log("FETCH TASK DETAILS => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          log("ERROR TASK DETAILS => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
+  createComment: params => {
+    return new Promise((resolve, reject) => {
+      API.post(
+        jwtServiceConfig.baseURL + Routes.PROJECT.TASK_COMMENT,
+        params,
+      )
+        .then(response => {
+          console.log("FETCH TASK COMMENT => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          console.log("ERROR TASK COMMENT => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
+  follow: params => {
+    return new Promise((resolve, reject) => {
+      API.post(
+        jwtServiceConfig.baseURL + Routes.PROJECT.TASK_WATCHER,
+        params,
+      )
+        .then(response => {
+          console.log("FETCH TASK WATCHER => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          console.log("ERROR TASK WATCHER => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
+  taskUpdate: params => {
+    return new Promise((resolve, reject) => {
+      API.put(
+        jwtServiceConfig.baseURL + Routes.PROJECT.TASK_UPDATE,
+        params,
+      )
+        .then(response => {
+          console.log("FETCH TASK UPDATE => ", response);
+          if (response.status === 200 && response.data) {
+            resolve(response.data);
+          } else {
+            reject(response.statusText);
+          }
+        })
+        .catch(error => {
+          console.log("ERROR TASK UPDATE => ", error);
+          reject(error.response ? error.response.data : error);
+        });
+    });
+  },
+
 };

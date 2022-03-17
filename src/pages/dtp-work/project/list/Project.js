@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {useTranslation} from "react-i18next";
-import {useHistory} from "react-router-dom";
 import {
   UncontrolledDropdown,
   DropdownMenu,
@@ -41,9 +40,8 @@ import {getLocalStorage, log, setLocalStorage} from "utils/Utils";
 /** REDUX */
 import * as Actions from "redux/actions";
 
-function ListProjects(props) {
+function ListProjects({history}) {
   const {t} = useTranslation();
-  const history = useHistory();
 
   /** Use redux */
   const dispatch = useDispatch();
@@ -195,6 +193,10 @@ function ListProjects(props) {
       // Call api
       onStartGetData();
     }
+  };
+
+  const onDetails = pjID => {
+    history.push(`${process.env.PUBLIC_URL}${Routes.tasks}/${pjID}`);
   };
 
   const onUpdate = pj => {
@@ -542,7 +544,8 @@ function ListProjects(props) {
                                   </div>
                                   <div className="dropdown-foot between">
                                     <Button color="primary" disabled={disabled} onClick={onSearchFilter}>
-                                      <Icon name="filter"></Icon>
+                                      {loading.search && <Spinner className="mr-1" size="sm" color="light" />}
+                                      {!loading.search && <Icon name="filter"></Icon>}
                                       <span>{t("common:filter")}</span>
                                     </Button>
                                     {/* <Button className="btn-dim" color="secondary" disabled={disabled} onClick={onResetFilter}>
@@ -580,7 +583,7 @@ function ListProjects(props) {
                       value={formData.search}
                       placeholder={t("common:search")}
                       onKeyDown={ev => {
-                        if (ev.key === "Enter") onSearch();
+                        if (ev.code === "Enter") onSearch();
                       }}
                       onChange={onChangeSearch}
                     />
@@ -603,6 +606,7 @@ function ListProjects(props) {
               isWrite={isWrite}
               disabled={disabled}
               dataProjects={data.list}
+              onDetails={onDetails}
               onUpdate={onUpdate}
               onClone={onClone}
               onRemove={onRemove}

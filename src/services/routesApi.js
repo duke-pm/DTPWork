@@ -87,8 +87,8 @@ const Routes = {
     UPDATE_TASK: "/Task/Modify",
     UPDATE_GANTT_TASK: "/Task/UpdateGrantt",
     REMOVE_TASK: "/Task/Delete",
+    TASK_DETAILS: "/Task/GetByID",
 
-    TASK_DETAIL: "/Task/GetByID",
     TASK_UPDATE: "/Task/UpdateTaskInfo",
     TASK_COMMENT: "/TaskActivity/Modify",
     TASK_WATCHER: "/TaskWatcher/Modify",
