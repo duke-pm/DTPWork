@@ -103,7 +103,14 @@ function AllBookings({history}) {
     if (isCalendar) {
       setLoading({...loading, search: true});
       setLocalStorage(Constants.LS_VIEW_BOOKING, "list");
-      onGetDataList();
+      let start = new Date(moment().startOf('month').format("YYYY/MM/DD"));
+      let end = new Date(moment().endOf('month').format("YYYY/MM/DD"))
+      setFormData({
+        ...formData,
+        rangeStart: new Date(moment().startOf('month').format("YYYY/MM/DD")),
+        rangeEnd: new Date(moment().endOf('month').format("YYYY/MM/DD")),
+      });
+      onStartGetData(start, end);
     } else {
       setLocalStorage(Constants.LS_VIEW_BOOKING, "calendar");
     }
