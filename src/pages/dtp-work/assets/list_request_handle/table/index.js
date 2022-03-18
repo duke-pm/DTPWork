@@ -23,6 +23,7 @@ import {findUpper} from "../../../../../utils/Utils";
 function TableRequestHandle(props) {
   const {t} = useTranslation();
   const {
+    isWrite,
     dataRequest,
     onApproved,
     onProcess,
@@ -153,19 +154,21 @@ function TableRequestHandle(props) {
                       </DropdownToggle>
                       <DropdownMenu right>
                         <ul className="link-list-opt no-bdr">
-                          <li>
-                            <DropdownItem
-                              tag="a"
-                              href="#actions"
-                              onClick={(ev) => {
-                                ev.preventDefault();
-                                onApproved(item);
-                              }}
-                            >
-                              <Icon name="check-circle-cut"></Icon>
-                              <span>{t("request_handle:approved_action")}</span>
-                            </DropdownItem>
-                          </li>
+                          {isWrite && (
+                            <li>
+                              <DropdownItem
+                                tag="a"
+                                href="#actions"
+                                onClick={(ev) => {
+                                  ev.preventDefault();
+                                  onApproved(item);
+                                }}
+                              >
+                                <Icon name="check-circle-cut"></Icon>
+                                <span>{t("request_handle:approved_action")}</span>
+                              </DropdownItem>
+                            </li>
+                          )}
                           <li>
                             <DropdownItem
                               tag="a"

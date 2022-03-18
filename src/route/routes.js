@@ -20,15 +20,14 @@ const Routes = {
 
   /** Booking routes */
   allBookings: "/booking/bookings",
-
-  groupResources: "/booking/resource-group/resource-group-page",
-  resources: "/booking/resource/resource-page",
+  groupResources: "/booking/resource-groups",
+  resources: "/booking/resources",
 
   /** Project routes */
-  projects: "/projects/view",
+  projects: "/project/projects",
+  projectsOverview: "/project/projects-overview",
   tasks: "/projects",
   ganttTasks: "/projects/gantt-chart",
-  projectsOverview: "/projects-overview",
   taskDetails: "/tasks",
 };
 

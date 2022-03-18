@@ -201,12 +201,12 @@ function TableAssets(props) {
           </DataTableRow>
         )}
         {(idxTab !== 1 && idxTab !== 2 && idxTab !== 3 && idxTab !== 5) && (
-          <DataTableRow size="md">
+          <DataTableRow size="lg">
             <span className="fw-bold">{t("assets:user_manager")}</span>
           </DataTableRow>
         )}
         {(idxTab !== 5) && (
-          <DataTableRow size="md">
+          <DataTableRow size="lg">
             <span className="fw-bold">{t("assets:region")}</span>
           </DataTableRow>
         )}
@@ -294,7 +294,7 @@ function TableAssets(props) {
                 </DataTableRow>
               )}
               {(idxTab !== 1 && idxTab !== 2 && idxTab !== 3 && idxTab !== 5) && (
-                <DataTableRow size="md">
+                <DataTableRow size="lg">
                   {item.empName && (
                     <div className="user-card">
                       <UserAvatar className="sm" text={findUpper(item.empName)} />
@@ -307,7 +307,7 @@ function TableAssets(props) {
                 </DataTableRow>
               )}
               {(idxTab !== 5) && (
-                <DataTableRow size="md">
+                <DataTableRow size="lg">
                   <span>{item.regionName || "-"}</span>
                 </DataTableRow>
               )}
@@ -325,7 +325,7 @@ function TableAssets(props) {
                 <DataTableRow className="nk-tb-col-tools">
                   <ul className="nk-tb-actions gx-1">
                     <li>
-                      {((idxTab === 0 || idxTab === 2) && item.isProcessing)
+                      {(item.statusID === 5 && !item.isProcessing)
                       ? (
                         <TooltipComponent
                           tag="a"
@@ -333,7 +333,19 @@ function TableAssets(props) {
                           iconClass="text-danger"
                           icon="info"
                           direction="top"
-                          id="tooltipProcess"
+                          id={"tooltip_lost_" + index}
+                          text={t("assets:asset_was_lost")}
+                        />
+                      )
+                      : ((idxTab === 0 || idxTab === 2) && item.isProcessing)
+                      ? (
+                        <TooltipComponent
+                          tag="a"
+                          containerClassName="btn btn-trigger btn-icon"
+                          iconClass="text-danger"
+                          icon="info"
+                          direction="top"
+                          id={"tooltip_" + index}
                           text={item.requestTypeName}
                         />
                       ) : item.statusID !== 5 ? (
@@ -443,58 +455,71 @@ function TableAssets(props) {
                 <DataTableRow className="nk-tb-col-tools">
                   <ul className="nk-tb-actions gx-1">
                     <li>
-                      <UncontrolledDropdown>
-                        {item.statusID === 4 && (
-                          <DropdownToggle tag="a" className="btn btn-icon dropdown-toggle btn-trigger">
-                            <Icon name="more-h"></Icon>
-                          </DropdownToggle>
-                        )}
-                        {item.statusID == 4 && (
-                          <DropdownMenu right>
-                            <ul className="link-list-opt no-bdr">
-                              <li>
-                                <DropdownItem
-                                  tag="a"
-                                  href="#dropdownViewDetails"
-                                  onClick={(ev) => {
-                                    ev.preventDefault();
-                                    onGetDetailsData(item);
-                                  }}
-                                >
-                                  <Icon name="eye"></Icon>
-                                  <span>{t("assets:view_details")}</span>
-                                </DropdownItem>
-                              </li>
-                              <li>
-                                <DropdownItem
-                                  tag="a"
-                                  href="#dropdownRecall"
-                                  onClick={(ev) => {
-                                    ev.preventDefault();
-                                    onLiquidationItem(item);
-                                  }}
-                                >
-                                  <Icon name="money"></Icon>
-                                  <span>{t("assets:liquidation_assets")}</span>
-                                </DropdownItem>
-                              </li>
-                              <li>
-                                <DropdownItem
-                                  tag="a"
-                                  href="#dropdownRepair"
-                                  onClick={(ev) => {
-                                    ev.preventDefault();
-                                    onRepairItem(item);
-                                  }}
-                                >
-                                  <Icon name="setting"></Icon>
-                                  <span>{t("assets:repair_assets")}</span>
-                                </DropdownItem>
-                              </li>
-                            </ul>
-                          </DropdownMenu>
-                        )}
-                      </UncontrolledDropdown>
+                      {(item.statusID === 5 && !item.isProcessing)
+                      ? (
+                        <TooltipComponent
+                          tag="a"
+                          containerClassName="btn btn-trigger btn-icon"
+                          iconClass="text-danger"
+                          icon="info"
+                          direction="top"
+                          id={"tooltip_lost_" + index}
+                          text={t("assets:asset_was_lost")}
+                        />
+                      ) : (
+                        <UncontrolledDropdown>
+                          {item.statusID === 4 && (
+                            <DropdownToggle tag="a" className="btn btn-icon dropdown-toggle btn-trigger">
+                              <Icon name="more-h"></Icon>
+                            </DropdownToggle>
+                          )}
+                          {item.statusID == 4 && (
+                            <DropdownMenu right>
+                              <ul className="link-list-opt no-bdr">
+                                <li>
+                                  <DropdownItem
+                                    tag="a"
+                                    href="#dropdownViewDetails"
+                                    onClick={(ev) => {
+                                      ev.preventDefault();
+                                      onGetDetailsData(item);
+                                    }}
+                                  >
+                                    <Icon name="eye"></Icon>
+                                    <span>{t("assets:view_details")}</span>
+                                  </DropdownItem>
+                                </li>
+                                <li>
+                                  <DropdownItem
+                                    tag="a"
+                                    href="#dropdownRecall"
+                                    onClick={(ev) => {
+                                      ev.preventDefault();
+                                      onLiquidationItem(item);
+                                    }}
+                                  >
+                                    <Icon name="money"></Icon>
+                                    <span>{t("assets:liquidation_assets")}</span>
+                                  </DropdownItem>
+                                </li>
+                                <li>
+                                  <DropdownItem
+                                    tag="a"
+                                    href="#dropdownRepair"
+                                    onClick={(ev) => {
+                                      ev.preventDefault();
+                                      onRepairItem(item);
+                                    }}
+                                  >
+                                    <Icon name="setting"></Icon>
+                                    <span>{t("assets:repair_assets")}</span>
+                                  </DropdownItem>
+                                </li>
+                              </ul>
+                            </DropdownMenu>
+                          )}
+                        </UncontrolledDropdown>
+                      )}
                     </li>
                   </ul>
                 </DataTableRow>
@@ -539,25 +564,25 @@ function TableAssets(props) {
             </div>
             <div className="mt-3">
               <Row className="g-3">
-                <Col md="3">
+                <Col xs="6" sm="6" md="6" lg="3">
                   <div className="profile-ud plain">
                     <span className="profile-ud-label fw-bold">{t("assets:code")}</span>
                     <span className="profile-ud-value text-primary">{formData?.assetCode}</span>
                   </div>
                 </Col>
-                <Col md="3">
+                <Col xs="6" sm="6" md="6" lg="3">
                   <div className="profile-ud plain">
                     <span className="profile-ud-label fw-bold">{t("assets:name")}</span>
                     <span className="profile-ud-value">{formData?.assetName}</span>
                   </div>
                 </Col>
-                <Col md="3">
+                <Col xs="6" sm="6" md="6" lg="3">
                   <div className="profile-ud plain">
                     <span className="profile-ud-label fw-bold">{t("assets:group")}</span>
                     <span className="profile-ud-value">{formData?.groupName}</span>
                   </div>
                 </Col>
-                <Col md="3">
+                <Col xs="6" sm="6" md="6" lg="3">
                   <div className="profile-ud plain">
                     <span className="profile-ud-label fw-bold">{t("assets:status")}</span>
                     <span className="profile-ud-value">
@@ -592,7 +617,7 @@ function TableAssets(props) {
                     </span>
                   </div>
                 </Col>
-                <Col md="3">
+                <Col xs="6" sm="6" md="6" lg="3">
                   <div className="profile-ud plain">
                     <span className="profile-ud-label fw-bold">{t("assets:origin_price")}</span>
                     <span className="profile-ud-value">
@@ -600,7 +625,7 @@ function TableAssets(props) {
                     </span>
                   </div>
                 </Col>
-                <Col md="3">
+                <Col xs="6" sm="6" md="6" lg="3">
                   <div className="profile-ud plain">
                     <span className="profile-ud-label fw-bold">{t("assets:purchase_date")}</span>
                     <span className="profile-ud-value">
@@ -608,7 +633,7 @@ function TableAssets(props) {
                     </span>
                   </div>
                 </Col>
-                <Col md="6">
+                <Col xs="6" sm="6" md="6" lg="3">
                   <div className="profile-ud plain">
                     <span className="profile-ud-label fw-bold">{t("assets:description")}</span>
                     <span className="profile-ud-value">

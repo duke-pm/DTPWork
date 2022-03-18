@@ -10,10 +10,13 @@ import {
   BlockHeadContent,
   BlockBetween,
   BlockTitle,
+  UserAvatar,
   Icon,
   Row,
   Col,
 } from "../../../../../components/Component";
+/** COMMON */
+import {findUpper} from "../../../../../utils/Utils";
 
 const statusClassName = {
 	"-1": "primary",
@@ -142,7 +145,12 @@ function ProcessModal(props) {
                                   itemT.levelApproval !== 0
                                     ? (" (" + itemT.titleApprove + ") ")
                                     : ""}`}:</span>
-                                <span className="profile-ud-value text-primary fw-bold">{itemT.personApproveName}</span>
+                                <div className="user-card">
+                                  <UserAvatar className="sm" text={findUpper(itemT.personApproveName)} />
+                                  <div className="user-info">
+                                    <span className="profile-ud-value text-primary fw-bold">{itemT.personApproveName}</span>
+                                  </div>
+                                </div>
                               </div>
                               <div className="profile-ud plain mt-2">
                                 <span className="profile-ud-label fw-bold">{t("approved_process:status")}:</span>

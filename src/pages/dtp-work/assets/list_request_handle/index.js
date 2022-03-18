@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {useTranslation} from "react-i18next";
 import {useDispatch, useSelector} from "react-redux";
-import {useHistory} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import {toast} from "react-toastify";
 import {
@@ -33,14 +32,19 @@ import ApprovedForm from "./modal/Approved";
 import ProcessModal from "./modal/Process";
 /** COMMON */
 import Configs from "../../../../configs";
+import Routes from "../../../../route/routes";
 import Constants from "../../../../utils/constants";
-import {getLocalStorage, setLocalStorage, log} from "../../../../utils/Utils";
+import {
+  getLocalStorage,
+  setLocalStorage,
+  log,
+  checkIsWrite,
+} from "../../../../utils/Utils";
 /** REDUX */
 import * as Actions from "../../../../redux/actions";
 
-function RequestAssetsHandle(props) {
+function RequestAssetsHandle({history}) {
   const {t} = useTranslation();
-  const history = useHistory();
 
   /** Use redux */
   const dispatch = useDispatch();
@@ -54,6 +58,7 @@ function RequestAssetsHandle(props) {
     search: false,
   });
   const [sm, updateSm] = useState(false);
+  const [isWrite, setIsWrite] = useState(false);
   const [view, setView] = useState({
     search: false,
     approved: false,
@@ -102,20 +107,6 @@ function RequestAssetsHandle(props) {
     }
     setFormData(tmpFormData);
   };
-
-  // const onResetFilter = () => {
-  //   let fFromToDate = getLocalStorage(Constants.LS_FROM_TO_REQUEST_HANDLE);
-  //   setFormData({
-  //     ...formData,
-  //     type: [1, 2, 3],
-  //     rangeStart: new Date(fFromToDate
-  //       ? fFromToDate.start
-  //       : moment().startOf('month').format("YYYY/MM/DD")),
-  //     rangeEnd: new Date(fFromToDate
-  //       ? fFromToDate.end
-  //       : moment().endOf('month').format("YYYY/MM/DD")),
-  //   });
-  // };
 
   const paginate = pageNumber => {
     if (pageNumber !== formData.page) {
@@ -298,12 +289,15 @@ function RequestAssetsHandle(props) {
    ** LIFE CYCLE
    */
   useEffect(() => {
-    if (loading.main && authState["successSignIn"]) {
-      onCheckLocal();
+    if (loading.main && authState["successSignIn"] && authState["menu"]) {
+      let menu = checkIsWrite(authState["menu"], Routes.requestsApprovedHandle);
+      if (menu) setIsWrite(menu.isWrite);
+      return onCheckLocal();
     }
   }, [
     loading.main,
-    authState["successSignIn"]
+    authState["successSignIn"],
+    authState["menu"]
   ]);
 
   useEffect(() => {
@@ -502,10 +496,6 @@ function RequestAssetsHandle(props) {
                                       <Icon name="filter"></Icon>
                                       <span>{t("common:filter")}</span>
                                     </Button>
-                                    {/* <Button className="btn-dim" disabled={disabled} color="secondary" onClick={onResetFilter}>
-                                      <Icon name="undo"></Icon>
-                                      <span>{t("common:reset")}</span>
-                                    </Button> */}
                                   </div>
                                 </DropdownMenu>
                               </UncontrolledDropdown>
@@ -555,6 +545,7 @@ function RequestAssetsHandle(props) {
             
             {/** Data table */}
             <TableRequestHandle
+              isWrite={isWrite}
               dataRequest={data.requests}
               onApproved={onApproved}
               onProcess={onProcess}
@@ -589,6 +580,7 @@ function RequestAssetsHandle(props) {
           history={history}
           commonState={commonState}
           authState={authState}
+          isWrite={isWrite}
           updateItem={updateItem}
           dataDetails={detailsItem}
           onClose={onCloseAddEditForm}

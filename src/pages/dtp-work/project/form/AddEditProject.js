@@ -198,7 +198,7 @@ function AddEditProjectForm(props) {
         RefreshToken: authState["data"]["refreshToken"],
         Lang: commonState["language"],
       };
-      console.log('[LOG] === onFormSubmit ===> ', params);
+      log('[LOG] === onFormSubmit ===> ', params);
       if (isClone) {
         params.PrjID = "0";
         return dispatch(Actions.fFetchCreateProject(params, history));

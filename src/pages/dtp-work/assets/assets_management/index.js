@@ -1,8 +1,9 @@
-import React, {useState, useEffect} from "react";
+import React, {useMemo, useState, useEffect} from "react";
 import {useTranslation} from "react-i18next";
 import {useDispatch, useSelector} from "react-redux";
-import {toast} from "react-toastify";
+import {useLocation} from "react-router-dom";
 import {Spinner, TabContent, TabPane} from "reactstrap";
+import {toast} from "react-toastify";
 /** COMPONENTS */
 import Content from "../../../../layout/content/Content";
 import Head from "../../../../layout/head/Head";
@@ -44,7 +45,7 @@ const TabItem = ({
 }) => {
   return (
     <li className={`${index === curTab && "active"}`}>
-      <a href={index !== curTab ? `#tab_${tab}` : undefined}
+      <a href={index !== curTab ? `${Routes.assetsManagement}?tabIdx=${tab}` : undefined}
         onClick={(ev) => !disabled && onChange(ev, index)}>
         <span className={`sub-text ${index === curTab && "text-primary"}`}>
           {label}
@@ -54,8 +55,15 @@ const TabItem = ({
   )
 };
 
-function AssetsManagement({history}) {
+function useQuery() {
+  const {search} = useLocation();
+  return useMemo(() => new URLSearchParams(search), [search]);
+};
+
+function AssetsManagement({history, params}) {
   const {t} = useTranslation();
+  const query = useQuery();
+  let tabIdx = query.get("tabIdx");
 
   /** Use redux */
   const dispatch = useDispatch();
@@ -150,7 +158,7 @@ function AssetsManagement({history}) {
     reuse: false,
   });
   const [isWrite, setIsWrite] = useState(false);
-  const [filterTab, setFilterTab] = useState(0);
+  const [filterTab, setFilterTab] = useState(Number(query.get("tabIdx")));
   const [updateItem, setUpdateItem] = useState(null);
   const [updateHistory, setUpdateHistory] = useState(null);
 
@@ -197,10 +205,10 @@ function AssetsManagement({history}) {
   };
 
   const onStartGetData = (
-    idxActive = 0,
-    statusID = "0",
-    page = 1,
-    search = "",
+    idxActive = filterTab,
+    statusID = tabs[filterTab].id,
+    page = tabs[filterTab].page,
+    search = tabs[filterTab].search,
   ) => {
     let tabActive = tabs[idxActive];
     let params = {
@@ -208,8 +216,8 @@ function AssetsManagement({history}) {
       Search: search,
       SortColumn: "",
       SortDirection: "desc",
-      PageSize: Configs.perPage,
       PageNum: page,
+      PageSize: Configs.perPage,
       RefreshToken: authState["data"]["refreshToken"],
       Lang: commonState["language"],
     };
@@ -236,6 +244,7 @@ function AssetsManagement({history}) {
   const onChangeTab = (ev, idxTab) => {
     ev && ev.preventDefault();
     if (!loading.search && filterTab !== idxTab) {
+      history.replace(`${Routes.assetsManagement}?tabIdx=${idxTab}`);
       setLoading({...loading, search: true});
       // Update active tab
       let tmpTabs = [...tabs];
@@ -410,6 +419,13 @@ function AssetsManagement({history}) {
    ** LIFE CYCLE
    */
   useEffect(() => {
+    if (!tabIdx || tabIdx > 5 || typeof tabIdx !== "number") {
+      setFilterTab(0);
+      history.replace(`${Routes.assetsManagement}?tabIdx=0`);
+    }
+  }, []);
+
+  useEffect(() => {
     if (loading.main && authState["successSignIn"] && authState["menu"]) {
       let menu = checkIsWrite(authState["menu"], Routes.assetsManagement);
       if (menu) setIsWrite(menu.isWrite);
@@ -469,304 +485,307 @@ function AssetsManagement({history}) {
     <React.Fragment>
       <Head title={t("assets:title")}></Head>
       
-      <Content>
-        {/** Header table */}
-        <BlockHead size="sm">
-          <BlockBetween>
-            <BlockHeadContent>
-              <BlockTitle tag="h4">{t("assets:assets_management")}</BlockTitle>
-            </BlockHeadContent>
-            <BlockHeadContent>
-              <div className="toggle-wrap nk-block-tools-toggle">
-                <ul className="nk-block-tools g-3">
-                  {filterTab === 0 && (
-                    <li>
-                      <Button
-                        color="light"
-                        outline
-                        className="btn-white"
-                        disabled={disabled}
-                        onClick={onExportData}>
-                        <Icon name="download-cloud"></Icon>
-                        <span>{t("common:export")}</span>
-                      </Button>
-                    </li>
-                  )}
-                  {showGetData && (
-                    <li className="nk-block-tools-opt">
-                      <Button
-                        className="toggle btn-icon d-md-none"
-                        color="secondary"
-                        disabled={disabled}
-                        onClick={onGetEmployee}
-                      >
-                        <Icon name="reload-alt"></Icon>
-                      </Button>
-                      <Button
-                        className="toggle d-none d-md-inline-flex"
-                        color="secondary"
-                        disabled={disabled}
-                        onClick={onGetEmployee}
-                      >
-                        {loading.getData && <Spinner color="light" size="sm" />}
-                        {!loading.getData && <Icon name="reload-alt"></Icon>}
-                        <span>{t("assets:get_data")}</span>
-                      </Button>
-                    </li>
-                  )}
-                  {filterTab === 0 && isWrite && (
-                    <li className="nk-block-tools-opt">
-                      <Button
-                        className="toggle btn-icon d-md-none"
-                        color="primary"
-                        disabled={disabled}
-                        onClick={() => toggleView("add")}
-                      >
-                        <Icon name="plus"></Icon>
-                      </Button>
-                      <Button
-                        className="toggle d-none d-md-inline-flex"
-                        color="primary"
-                        disabled={disabled}
-                        onClick={() => toggleView("add")}
-                      >
-                        <Icon name="plus"></Icon>
-                        <span>{t("common:add_new")}</span>
-                      </Button>
-                    </li>
-                  )}
-                </ul>
-              </div>
-            </BlockHeadContent>
-          </BlockBetween>
-        </BlockHead>
-
-        {/** Content table */}
-        <Block>
-          <DataTable className="card-stretch">
-            <div className="card-inner position-relative card-tools-toggle">
-              <div className="card-title-group">
-                <div className="card-tools">
-                  <ul className="card-tools-nav">
-                    {tabs.map((item, index) => {
-                      return (
-                        <TabItem
-                          key={item.id + "_tab_" + index}
-                          index={index}
-                          tab={item.id}
-                          curTab={filterTab}
+      {!loading.main && (
+        <Content>
+          {/** Header table */}
+          <BlockHead size="sm">
+            <BlockBetween>
+              <BlockHeadContent>
+                <BlockTitle tag="h4">{t("assets:assets_management")}</BlockTitle>
+              </BlockHeadContent>
+              <BlockHeadContent>
+                <div className="toggle-wrap nk-block-tools-toggle">
+                  <ul className="nk-block-tools g-3">
+                    {filterTab === 0 && (
+                      <li>
+                        <Button
+                          color="light"
+                          outline
+                          className="btn-white"
                           disabled={disabled}
-                          label={`${item.label} (${item.count !== undefined
-                            ? item.count
-                            : item.countDamage + " - " + item.countLost
-                          })`}
-                          onChange={onChangeTab}
-                        />
-                      )
-                    })}
+                          onClick={onExportData}>
+                          <Icon name="download-cloud"></Icon>
+                          <span>{t("common:export")}</span>
+                        </Button>
+                      </li>
+                    )}
+                    {showGetData && (
+                      <li className="nk-block-tools-opt">
+                        <Button
+                          className="toggle btn-icon d-md-none"
+                          color="secondary"
+                          disabled={disabled}
+                          onClick={onGetEmployee}
+                        >
+                          <Icon name="reload-alt"></Icon>
+                        </Button>
+                        <Button
+                          className="toggle d-none d-md-inline-flex"
+                          color="secondary"
+                          disabled={disabled}
+                          onClick={onGetEmployee}
+                        >
+                          {loading.getData && <Spinner color="light" size="sm" />}
+                          {!loading.getData && <Icon name="reload-alt"></Icon>}
+                          <span>{t("assets:get_data")}</span>
+                        </Button>
+                      </li>
+                    )}
+                    {filterTab === 0 && isWrite && (
+                      <li className="nk-block-tools-opt">
+                        <Button
+                          className="toggle btn-icon d-md-none"
+                          color="primary"
+                          disabled={disabled}
+                          onClick={() => toggleView("add")}
+                        >
+                          <Icon name="plus"></Icon>
+                        </Button>
+                        <Button
+                          className="toggle d-none d-md-inline-flex"
+                          color="primary"
+                          disabled={disabled}
+                          onClick={() => toggleView("add")}
+                        >
+                          <Icon name="plus"></Icon>
+                          <span>{t("common:add_new")}</span>
+                        </Button>
+                      </li>
+                    )}
                   </ul>
                 </div>
-                <div className="card-tools">
-                  <ul className="btn-toolbar">
-                    <li>
-                      <a
-                        href="#search"
+              </BlockHeadContent>
+            </BlockBetween>
+          </BlockHead>
+
+          {/** Content table */}
+          <Block>
+            <DataTable className="card-stretch">
+              <div className="card-inner position-relative card-tools-toggle">
+                <div className="card-title-group">
+                  <div className="card-tools">
+                    <ul className="card-tools-nav">
+                      {tabs.map((item, index) => {
+                        return (
+                          <TabItem
+                            key={item.id + "_tab_" + index}
+                            index={index}
+                            tab={item.ibTab}
+                            curTab={filterTab}
+                            disabled={disabled}
+                            label={`${item.label} (${item.count !== undefined
+                              ? item.count
+                              : item.countDamage + " - " + item.countLost
+                            })`}
+                            onChange={onChangeTab}
+                          />
+                        )
+                      })}
+                    </ul>
+                  </div>
+                  <div className="card-tools">
+                    <ul className="btn-toolbar">
+                      <li>
+                        <a
+                          href="#search"
+                          onClick={(ev) => {
+                            ev.preventDefault();
+                            !disabled && toggleView("search", null);
+                          }}
+                          className="btn btn-icon search-toggle toggle-search"
+                        >
+                          <Icon name="search"></Icon>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div className={`card-search search-wrap ${view.search && "active"}`}>
+                  <div className="card-body">
+                    <div className="search-content">
+                      <Button
+                        className="search-back btn-icon toggle-search active"
+                        disabled={disabled}
                         onClick={(ev) => {
                           ev.preventDefault();
-                          !disabled && toggleView("search", null);
+                          toggleView("search");
                         }}
-                        className="btn btn-icon search-toggle toggle-search"
+                      >
+                        <Icon name="arrow-left"></Icon>
+                      </Button>
+                      <input
+                        type="text"
+                        className="border-transparent form-focus-none form-control"
+                        disabled={disabled}
+                        value={tabs[filterTab].search}
+                        placeholder={t("common:search")}
+                        autoFocus={true}
+                        onKeyDown={ev => {
+                          if (ev.code === "Enter" && !disabled) {
+                            onSearch(ev, filterTab);
+                          }
+                        }}
+                        onChange={onChangeSearch}
+                      />
+                      <Button
+                        className="search-submit"
+                        disabled={disabled}
+                        onClick={ev => onSearch(ev, filterTab)}
                       >
                         <Icon name="search"></Icon>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div className={`card-search search-wrap ${view.search && "active"}`}>
-                <div className="card-body">
-                  <div className="search-content">
-                    <Button
-                      className="search-back btn-icon toggle-search active"
-                      disabled={disabled}
-                      onClick={(ev) => {
-                        ev.preventDefault();
-                        toggleView("search");
-                      }}
-                    >
-                      <Icon name="arrow-left"></Icon>
-                    </Button>
-                    <input
-                      type="text"
-                      className="border-transparent form-focus-none form-control"
-                      disabled={disabled}
-                      value={tabs[filterTab].search}
-                      placeholder={t("common:search")}
-                      onKeyDown={ev => {
-                        if (ev.code === "Enter" && !disabled) {
-                          onSearch(ev, filterTab);
-                        }
-                      }}
-                      onChange={onChangeSearch}
-                    />
-                    <Button
-                      className="search-submit"
-                      disabled={disabled}
-                      onClick={ev => onSearch(ev, filterTab)}
-                    >
-                      <Icon name="search"></Icon>
-                    </Button>
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/** Data table */}
-            {/* <div className="tab-content">
-              {tabs.map((itemT, indexT) => {
-                return (
-                  <div className={`tab-pane ${filterTab === indexT && "active"}`}
-                    key={`tab_${itemT.id}_${indexT}`}>
-                    {!loading.main && !loading.search && (
-                      <TableAssets
-                        history={history}
-                        commonState={commonState}
-                        authState={authState}
-                        idxTab={indexT}
-                        dataAssets={itemT.data}
-                        onChangePage={onChangePage}
-                        onUpdateItem={onUpdateItem}
-                        onUpdateHistory={onUpdateHistory}
-                        onApprovedRecallItem={onApprovedRecallItem}
-                        onRepairItem={onRepairItem}
-                        onLiquidationItem={onLiquidationItem}
-                        onReuseItem={onReuseItem}
-                      />
-                    )}
+              {/** Data table */}
+              {/* <div className="tab-content">
+                {tabs.map((itemT, indexT) => {
+                  return (
+                    <div className={`tab-pane ${filterTab === indexT && "active"}`}
+                      key={`tab_${itemT.id}_${indexT}`}>
+                      {!loading.main && !loading.search && (
+                        <TableAssets
+                          history={history}
+                          commonState={commonState}
+                          authState={authState}
+                          idxTab={indexT}
+                          dataAssets={itemT.data}
+                          onChangePage={onChangePage}
+                          onUpdateItem={onUpdateItem}
+                          onUpdateHistory={onUpdateHistory}
+                          onApprovedRecallItem={onApprovedRecallItem}
+                          onRepairItem={onRepairItem}
+                          onLiquidationItem={onLiquidationItem}
+                          onReuseItem={onReuseItem}
+                        />
+                      )}
+                    </div>
+                  )
+                })}
+              </div> */}
+              <TabContent activeTab={filterTab + ""}>
+                {tabs.map((itemT, indexT) => {
+                  return (
+                    <TabPane key={`tab_${itemT.id}_${indexT}`} tabId={itemT.ibTab}>
+                      {!loading.main && !loading.search && (
+                        <TableAssets
+                          history={history}
+                          commonState={commonState}
+                          authState={authState}
+                          idxTab={indexT}
+                          dataAssets={itemT.data}
+                          onChangePage={onChangePage}
+                          onUpdateItem={onUpdateItem}
+                          onUpdateHistory={onUpdateHistory}
+                          onApprovedRecallItem={onApprovedRecallItem}
+                          onRepairItem={onRepairItem}
+                          onLiquidationItem={onLiquidationItem}
+                          onReuseItem={onReuseItem}
+                        />
+                      )}
+                    </TabPane>
+                  )
+                })}
+              </TabContent>
+
+              {/** Paging table */}
+              <PreviewAltCard className={`${tabs[filterTab].count > 0 && "border-top"}`}>
+                {disabled ? (
+                  <div className="text-center">
+                    <Spinner size="sm" color="primary" />
                   </div>
-                )
-              })}
-            </div> */}
-            <TabContent activeTab={filterTab + ""}>
-              {tabs.map((itemT, indexT) => {
-                return (
-                  <TabPane key={`tab_${itemT.id}_${indexT}`} tabId={itemT.ibTab}>
-                    {!loading.main && !loading.search && (
-                      <TableAssets
-                        history={history}
-                        commonState={commonState}
-                        authState={authState}
-                        idxTab={indexT}
-                        dataAssets={itemT.data}
-                        onChangePage={onChangePage}
-                        onUpdateItem={onUpdateItem}
-                        onUpdateHistory={onUpdateHistory}
-                        onApprovedRecallItem={onApprovedRecallItem}
-                        onRepairItem={onRepairItem}
-                        onLiquidationItem={onLiquidationItem}
-                        onReuseItem={onReuseItem}
-                      />
-                    )}
-                  </TabPane>
-                )
-              })}
-            </TabContent>
+                ) : 
+                tabs[filterTab].data.length > 0 ? (
+                  <PaginationComponent
+                    itemPerPage={Configs.perPage}
+                    totalItems={filterTab !== 4
+                      ? tabs[filterTab].count
+                      : (tabs[filterTab].countDamage + tabs[filterTab].countLost)}
+                    currentPage={tabs[filterTab].page}
+                    paginate={paginate}
+                  />
+                ) : (
+                  <div className="text-center">
+                    <span className="text-silent">{t("common:no_data")}</span>
+                  </div>
+                )}
+              </PreviewAltCard>
+            </DataTable>
+          </Block>
 
-            {/** Paging table */}
-            <PreviewAltCard className={`${tabs[filterTab].count > 0 && "border-top"}`}>
-              {disabled ? (
-                <div className="text-center">
-                  <Spinner size="sm" color="primary" />
-                </div>
-              ) : 
-              tabs[filterTab].data.length > 0 ? (
-                <PaginationComponent
-                  itemPerPage={Configs.perPage}
-                  totalItems={filterTab !== 4
-                    ? tabs[filterTab].count
-                    : (tabs[filterTab].countDamage + tabs[filterTab].countLost)}
-                  currentPage={tabs[filterTab].page}
-                  paginate={paginate}
-                />
-              ) : (
-                <div className="text-center">
-                  <span className="text-silent">{t("common:no_data")}</span>
-                </div>
-              )}
-            </PreviewAltCard>
-          </DataTable>
-        </Block>
-
-        {/** Forms */}
-        <AddEditForm
-          show={view.add || view.update}
-          isAdd={view.add}
-          isUpdate={view.update}
-          history={history}
-          commonState={commonState}
-          authState={authState}
-          updateItem={updateItem}
-          onClose={onCloseAddEditForm}
-        />
-
-        {(view.approved || view.recall) && (
-          <ApprovedForm
-            show={view.approved || view.recall}
-            isApproved={view.approved}
-            isRecall={view.recall}
+          {/** Forms */}
+          <AddEditForm
+            show={view.add || view.update}
+            isAdd={view.add}
+            isUpdate={view.update}
             history={history}
             commonState={commonState}
             authState={authState}
             updateItem={updateItem}
-            updateHistory={updateHistory}
             onClose={onCloseAddEditForm}
           />
-        )}
 
-        {view.repair && (
-          <RepairForm
-            show={view.repair}
-            history={history}
-            commonState={commonState}
-            authState={authState}
-            updateItem={updateItem}
-            updateHistory={updateHistory}
-            onClose={onCloseAddEditForm}
-          />
-        )}
+          {(view.approved || view.recall) && (
+            <ApprovedForm
+              show={view.approved || view.recall}
+              isApproved={view.approved}
+              isRecall={view.recall}
+              history={history}
+              commonState={commonState}
+              authState={authState}
+              updateItem={updateItem}
+              updateHistory={updateHistory}
+              onClose={onCloseAddEditForm}
+            />
+          )}
 
-        {view.liquidation && (
-          <LiquidationForm
-            show={view.liquidation}
-            history={history}
-            commonState={commonState}
-            authState={authState}
-            updateItem={updateItem}
-            updateHistory={updateHistory}
-            onClose={onCloseAddEditForm}
-          />
-        )}
+          {view.repair && (
+            <RepairForm
+              show={view.repair}
+              history={history}
+              commonState={commonState}
+              authState={authState}
+              updateItem={updateItem}
+              updateHistory={updateHistory}
+              onClose={onCloseAddEditForm}
+            />
+          )}
 
-        {view.reuse && (
-          <ReUseForm
-            show={view.reuse}
-            history={history}
-            commonState={commonState}
-            authState={authState}
-            updateItem={updateItem}
-            updateHistory={updateHistory}
-            onClose={onCloseAddEditForm}
-          />
-        )}
+          {view.liquidation && (
+            <LiquidationForm
+              show={view.liquidation}
+              history={history}
+              commonState={commonState}
+              authState={authState}
+              updateItem={updateItem}
+              updateHistory={updateHistory}
+              onClose={onCloseAddEditForm}
+            />
+          )}
 
-        {view.add && <div className="toggle-overlay" onClick={toggleView}></div>}
-        {view.update && <div className="toggle-overlay" onClick={() => toggleView("update", true)}></div>}
-        {view.approved && <div className="toggle-overlay" onClick={() => toggleView("approved", true)}></div>}
-        {view.recall && <div className="toggle-overlay" onClick={() => toggleView("recall", true)}></div>}
-        {view.repair && <div className="toggle-overlay" onClick={() => toggleView("repair", true)}></div>}
-        {view.liquidation && <div className="toggle-overlay" onClick={() => toggleView("liquidation", true)}></div>}
-        {view.reuse && <div className="toggle-overlay" onClick={() => toggleView("reuse", true)}></div>}
-      </Content>
+          {view.reuse && (
+            <ReUseForm
+              show={view.reuse}
+              history={history}
+              commonState={commonState}
+              authState={authState}
+              updateItem={updateItem}
+              updateHistory={updateHistory}
+              onClose={onCloseAddEditForm}
+            />
+          )}
+
+          {view.add && <div className="toggle-overlay" onClick={toggleView}></div>}
+          {view.update && <div className="toggle-overlay" onClick={() => toggleView("update", true)}></div>}
+          {view.approved && <div className="toggle-overlay" onClick={() => toggleView("approved", true)}></div>}
+          {view.recall && <div className="toggle-overlay" onClick={() => toggleView("recall", true)}></div>}
+          {view.repair && <div className="toggle-overlay" onClick={() => toggleView("repair", true)}></div>}
+          {view.liquidation && <div className="toggle-overlay" onClick={() => toggleView("liquidation", true)}></div>}
+          {view.reuse && <div className="toggle-overlay" onClick={() => toggleView("reuse", true)}></div>}
+        </Content>
+      )}
     </React.Fragment>
   );
 };

@@ -555,8 +555,8 @@ function ApprovedForm(props) {
 
         <AssetInformations data={dataItem} />
 
-        <Block>
-          {isRecall && !updateHistory && (
+        {isRecall && !updateHistory && (
+          <Block>
             <EmployeeInformations
               data={{
                 employeeCode: dataItem?.employeeCode,
@@ -566,8 +566,10 @@ function ApprovedForm(props) {
                 region: dataItem?.region,
               }}
             />
-          )}
-          {isRecall && updateHistory && (
+          </Block>
+        )}
+        {isRecall && updateHistory && (
+          <Block>
             <EmployeeInformations
               data={{
                 employeeCode: updateHistory?.empCode,
@@ -577,8 +579,10 @@ function ApprovedForm(props) {
                 region: updateHistory?.regionName,
               }}
             />
-          )}
-          {isApproved && updateHistory && (
+          </Block>
+        )}
+        {isApproved && updateHistory && (
+          <Block>
             <EmployeeInformations
               data={{
                 employeeCode: updateHistory?.empCode,
@@ -588,22 +592,17 @@ function ApprovedForm(props) {
                 region: updateHistory?.regionName,
               }}
             />
-          )}
-        </Block>
+          </Block>
+        )}
 
-        {(isApproved || isRecall) && (
+        {isApproved && !isRecall && (
         <Block>
           <div className="data-head">
-            {isApproved && (
-              <h6 className="overline-title">{t("approved_assets:information_approved")}</h6>
-            )}
-            {isRecall && (
-              <h6 className="overline-title">{t("approved_assets:information_recall")}</h6>
-            )}
+            <h6 className="overline-title">{t("approved_assets:information_approved")}</h6>
           </div>
           <div className="mt-3">
             <Row className="g-3">
-              {isApproved && !updateHistory && (
+              {!updateHistory && (
                 <Col md="4">
                   <FormGroup>
                     <div className="form-label-group">
@@ -627,7 +626,7 @@ function ApprovedForm(props) {
                   </FormGroup>
                 </Col>
               )}
-              {isApproved && !updateHistory && (
+              {!updateHistory && (
                 <Col md="8">
                   <FormGroup>
                     <div className="form-label-group">
@@ -649,7 +648,7 @@ function ApprovedForm(props) {
                   </FormGroup>
                 </Col>
               )}
-              {isApproved && !updateHistory && (
+              {!updateHistory && (
                 <Col md="4">
                   <FormGroup>
                     <div className="form-label-group">
@@ -658,6 +657,9 @@ function ApprovedForm(props) {
                       </label>
                     </div>
                     <div className="form-control-wrap">
+                      <div className="form-icon form-icon-left">
+                        <Icon name="account-setting"></Icon>
+                      </div>
                       <input
                         className="form-control"
                         type="text"
@@ -671,7 +673,7 @@ function ApprovedForm(props) {
                   </FormGroup>
                 </Col>
               )}
-              {isApproved && !updateHistory && (
+              {!updateHistory && (
                 <Col md="4">
                   <FormGroup>
                     <div className="form-label-group">
@@ -692,7 +694,7 @@ function ApprovedForm(props) {
                   </FormGroup>
                 </Col>
               )}
-              {isApproved && !updateHistory && (
+              {!updateHistory && (
                 <Col md="4">
                   <FormGroup>
                     <div className="form-label-group">
@@ -750,6 +752,7 @@ function ApprovedForm(props) {
                   </div>
                 </FormGroup>
               </Col>
+
               <Col size="12">
                 <FormGroup>
                   <div className="form-label-group">
@@ -776,7 +779,7 @@ function ApprovedForm(props) {
         </Block>
         )}
 
-        {isRecall && !updateHistory && (
+        {!isApproved && isRecall && !updateHistory && (
           <Block>
             <div className="data-head">
               <h6 className="overline-title">{t("approved_assets:information_recall")}</h6>

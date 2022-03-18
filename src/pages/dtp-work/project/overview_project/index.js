@@ -220,7 +220,7 @@ function ProjectsOverview({history}) {
       RefreshToken: authState["data"]["refreshToken"],
       Lang: commonState["language"],
     };
-    console.log('[LOG] ===  ===> ', params);
+    log('[LOG] ===  ===> ', params);
     dispatch(Actions.fFetchProjectsOverview(params, history));
   };
 

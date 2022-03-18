@@ -455,8 +455,13 @@ function AddEditForm(props) {
    ** LIFE CYCLE 
    */
   useEffect(() => {
-    if (loading.main && authState["successSignIn"] && show) {
+    if (show) {
       clearErrors();
+    }
+  }, [show]);
+
+  useEffect(() => {
+    if (loading.main && authState["successSignIn"] && show) {
       onGetMasterData();
     }
   }, [
@@ -618,6 +623,9 @@ function AddEditForm(props) {
                     </label>
                   </div>
                   <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="monitor"></Icon>
+                    </div>
                     <input
                       ref={register({ required: t("validate:empty") })}
                       className="form-control"
@@ -675,6 +683,9 @@ function AddEditForm(props) {
                       </label>
                     </div>
                     <div className="form-control-wrap">
+                      <div className="form-icon form-icon-left">
+                        <Icon name="list-ol"></Icon>
+                      </div>
                       <input
                         className="form-control"
                         type="number"
@@ -761,11 +772,38 @@ function AddEditForm(props) {
               <Col md="4">
                 <FormGroup>
                   <div className="form-label-group">
+                    <label className="form-label" htmlFor="assetOriginPrice">
+                      {t("add_assets:origin_price")}
+                    </label>
+                  </div>
+                  <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="sign-vnd"></Icon>
+                    </div>
+                    <NumberFormat
+                      className="form-control"
+                      name={"assetOriginPrice"}
+                      value={formData.assetOriginPrice}
+                      placeholder={t("add_assets:holder_origin_price")}
+                      thousandSeparator
+                      prefix=""
+                      onValueChange={val =>
+                        onInputChange({target: {name: "assetOriginPrice", value: val.floatValue}})}
+                    />
+                  </div>
+                </FormGroup>
+              </Col>
+              <Col md="4">
+                <FormGroup>
+                  <div className="form-label-group">
                     <label className="form-label" htmlFor="assetInsuranceDate">
                       {t("add_assets:insurance_date")}
                     </label>
                   </div>
                   <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="calendar"></Icon>
+                    </div>
                     <input
                       className="form-control"
                       type="number"
@@ -783,32 +821,14 @@ function AddEditForm(props) {
               <Col md="4">
                 <FormGroup>
                   <div className="form-label-group">
-                    <label className="form-label" htmlFor="assetOriginPrice">
-                      {t("add_assets:origin_price")}
-                    </label>
-                  </div>
-                  <div className="form-control-wrap">
-                    <NumberFormat
-                      className="form-control"
-                      name={"assetOriginPrice"}
-                      value={formData.assetOriginPrice}
-                      placeholder={t("add_assets:holder_origin_price")}
-                      thousandSeparator
-                      prefix="đ "
-                      onValueChange={val =>
-                        onInputChange({target: {name: "assetOriginPrice", value: val.floatValue}})}
-                    />
-                  </div>
-                </FormGroup>
-              </Col>
-              <Col md="4">
-                <FormGroup>
-                  <div className="form-label-group">
                     <label className="form-label" htmlFor="assetDepreciationDate">
                       {t("add_assets:depreciation_date")}
                     </label>
                   </div>
                   <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="calendar"></Icon>
+                    </div>
                     <input
                       className="form-control"
                       type="number"
@@ -966,6 +986,9 @@ function AddEditForm(props) {
                       </label>
                     </div>
                     <div className="form-control-wrap">
+                      <div className="form-icon form-icon-left">
+                        <Icon name="code"></Icon>
+                      </div>
                       <input
                         className="form-control"
                         disabled={true}

@@ -22,13 +22,14 @@ import {
   DataTableItem,
   DataTableRow,
   DataTableBody,
+  UserAvatar,
   Icon,
   Button,
   Row,
   Col,
 } from "../../../../../components/Component";
 /** COMMON */
-import {numberFormat} from "../../../../../utils/Utils";
+import {numberFormat, findUpper} from "../../../../../utils/Utils";
 /** REDUX */
 import * as Actions from "../../../../../redux/actions";
 
@@ -39,6 +40,7 @@ function ApprovedForm(props) {
     show,
     authState,
     commonState,
+    isWrite,
     updateItem,
     dataDetails,
     onClose,
@@ -76,6 +78,7 @@ function ApprovedForm(props) {
   };
 
   const onChangeRadio = val => {
+    setError({reason: null});
     setFormData({...formData, approved: val});
   };
 
@@ -204,13 +207,20 @@ function ApprovedForm(props) {
                   <Col md="6">
                     <div className="profile-ud plain">
                       <span className="profile-ud-label fw-bold">{t("request_details:code_employee")}</span>
-                      <span className="profile-ud-value text-primary">#{dataRequest?.empCode || "-"}</span>
+                      <span className="profile-ud-value text-primary">{dataRequest?.empCode || "-"}</span>
                     </div>
                   </Col>
                   <Col md="6">
                     <div className="profile-ud plain">
                       <span className="profile-ud-label fw-bold">{t("request_details:name_employee")}</span>
-                      <span className="profile-ud-value">{dataRequest?.fullName || "-"}</span>
+                      {dataRequest?.fullName && (
+                        <div className="user-card">
+                          <UserAvatar className="sm" text={findUpper(dataRequest?.fullName)} />
+                          <div className="user-info">
+                            <span>{dataRequest?.fullName}</span>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </Col>
                   <Col md="6">
@@ -427,96 +437,98 @@ function ApprovedForm(props) {
               </Block>
             )}
 
-            <Block>
-              <div className="data-head">
-                <h6 className="overline-title">{t("approved_action:information_approved")}</h6>
-              </div>
-              <div className="mt-3">
-                <Row className="g-3">
-                  <Col size="3" />
-                  <Col size="3">
-                    <div className="preview-block">
-                      <div className="custom-control custom-radio">
-                        <input
-                          className="custom-control-input form-control"
-                          type="radio"
-                          id="radioApproved"
-                          name="radioApproved"
-                          disabled={disabled}
-                          checked={formData.approved === 1}
-                          onChange={() => onChangeRadio(1)}
-                        />
-                        <label
-                          className={`custom-control-label ${formData.approved === 1 && "fw-bold"}`}
-                          htmlFor="radioApproved">
-                          {t("common:approved")}
-                        </label>
-                      </div>
-                    </div>
-                  </Col>
-                  <Col size="3">
-                    <div className="preview-block">
-                      <div className="custom-control custom-radio">
-                        <input
-                          className="custom-control-input form-control"
-                          type="radio"
-                          id="radioReject"
-                          name="radioReject"
-                          disabled={disabled}
-                          checked={formData.approved === 2}
-                          onChange={() => onChangeRadio(2)}
-                        />
-                        <label
-                          className={`custom-control-label ${formData.approved === 2 && "fw-bold"}`}
-                          htmlFor="radioReject">
-                          {t("common:reject")}
-                        </label>
-                      </div>
-                    </div>
-                  </Col>
-                  <Col size="3" />
-                  <Col size="12">
-                    <Collapse isOpen={formData.approved === 2}>
-                      <FormGroup>
-                        <div className="form-label-group">
-                          <label className="form-label" htmlFor="reason">
-                            {t("approved_action:confirm_reject_des")} <span className="text-danger">*</span>
+            {isWrite && (
+              <Block>
+                <div className="data-head">
+                  <h6 className="overline-title">{t("approved_action:information_approved")}</h6>
+                </div>
+                <div className="mt-3">
+                  <Row className="g-3">
+                    <Col size="3" />
+                    <Col size="3">
+                      <div className="preview-block">
+                        <div className="custom-control custom-radio">
+                          <input
+                            className="custom-control-input form-control"
+                            type="radio"
+                            id="radioApproved"
+                            name="radioApproved"
+                            disabled={disabled}
+                            checked={formData.approved === 1}
+                            onChange={() => onChangeRadio(1)}
+                          />
+                          <label
+                            className={`custom-control-label ${formData.approved === 1 && "fw-bold"}`}
+                            htmlFor="radioApproved">
+                            {t("common:approved")}
                           </label>
                         </div>
-                        <div className="form-control-wrap">
-                          <textarea
-                            className="no-resize form-control"
-                            type="text"
-                            id="reason"
-                            name="reason"
+                      </div>
+                    </Col>
+                    <Col size="3">
+                      <div className="preview-block">
+                        <div className="custom-control custom-radio">
+                          <input
+                            className="custom-control-input form-control"
+                            type="radio"
+                            id="radioReject"
+                            name="radioReject"
                             disabled={disabled}
-                            value={formData.reason}
-                            placeholder={t("approved_action:holder_confirm_reject_des")}
-                            onChange={onChangeInput}
+                            checked={formData.approved === 2}
+                            onChange={() => onChangeRadio(2)}
                           />
-                          {error.reason && (
-                            <span className="invalid">{error.reason.message}</span>
-                          )}
+                          <label
+                            className={`custom-control-label ${formData.approved === 2 && "fw-bold"}`}
+                            htmlFor="radioReject">
+                            {t("common:reject")}
+                          </label>
                         </div>
-                      </FormGroup>
-                    </Collapse>
-                    <div className="nk-divider divider sm"></div>
-                  </Col>
+                      </div>
+                    </Col>
+                    <Col size="3" />
+                    <Col size="12">
+                      <Collapse isOpen={formData.approved === 2}>
+                        <FormGroup>
+                          <div className="form-label-group">
+                            <label className="form-label" htmlFor="reason">
+                              {t("approved_action:confirm_reject_des")} <span className="text-danger">*</span>
+                            </label>
+                          </div>
+                          <div className="form-control-wrap">
+                            <textarea
+                              className="no-resize form-control"
+                              type="text"
+                              id="reason"
+                              name="reason"
+                              disabled={disabled}
+                              value={formData.reason}
+                              placeholder={t("approved_action:holder_confirm_reject_des")}
+                              onChange={onChangeInput}
+                            />
+                            {error.reason && (
+                              <span className="invalid">{error.reason.message}</span>
+                            )}
+                          </div>
+                        </FormGroup>
+                      </Collapse>
+                      <div className="nk-divider divider sm"></div>
+                    </Col>
 
-                  <Col size="12">
-                    <Button
-                      color="primary"
-                      type="submit"
-                      disabled={disabled}
-                    >
-                      <Icon name="send" />
-                      <span>{t("common:send")}</span>
-                    </Button>
-                  </Col>
-                </Row>
-              </div>
-              
-            </Block>
+                    <Col size="12">
+                      <Button
+                        color="primary"
+                        type="submit"
+                        disabled={disabled}
+                      >
+                        <Icon name="send" />
+                        <span>{t("common:send")}</span>
+                      </Button>
+                    </Col>
+                  </Row>
+                </div>
+                
+              </Block>
+            )}
           </ModalBody>
         </Form>
       </Modal>
@@ -529,8 +541,11 @@ function ApprovedForm(props) {
       >
         <ModalBody className="modal-body-sm text-center">
           <div className="nk-modal">
-            <Icon className="nk-modal-icon icon-circle icon-circle-xxl ni ni-alert bg-warning"></Icon>
-            <h4 className="nk-modal-title">{t("approved_action:confirm_approved_title")}</h4>
+            <Icon className="nk-modal-icon icon-circle icon-circle-xxl ni ni-question bg-warning"></Icon>
+            {formData.approved === 1 &&
+              <h4 className="nk-modal-title">{t("approved_action:confirm_approved_title_1")}</h4>}
+            {formData.approved === 2 &&
+              <h4 className="nk-modal-title">{t("approved_action:confirm_approved_title_2")}</h4>}
             <div className="nk-modal-text">
               {formData.approved === 1 && (
                 <div className="sub-text-sm">
@@ -579,6 +594,7 @@ function ApprovedForm(props) {
               </div>
               <div className="nk-modal-action ml-2">
                 <Button
+                  className="btn-dim"
                   color="danger"
                   size="lg"
                   disabled={disabled}

@@ -273,7 +273,7 @@ function AddEditTaskForm(props) {
         RefreshToken: authState["data"]["refreshToken"],
         Lang: commonState["language"],
       };
-      console.log('[LOG] === onFormSubmit ===> ', params);
+      log('[LOG] === onFormSubmit ===> ', params);
       if (isClone) {
         params.TaskID = "0";
         return dispatch(Actions.fFetchCreateTask(params, history));

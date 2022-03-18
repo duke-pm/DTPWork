@@ -169,7 +169,7 @@ function AddAllowForm(props) {
       inPlaning: true,
       reason: "",
       supplier: "",
-      assets: [],
+      assets: [{des: "", amount: "", price: "", total: ""}],
     });
   };
 
@@ -275,6 +275,13 @@ function AddAllowForm(props) {
   /**
    ** LIFE CYCLE
    */
+  useEffect(() => {
+    if (show) {
+      clearErrors();
+      onResetData();
+    }
+  }, [show]);
+
   useEffect(() => {
     if (loading.main && authState["successSignIn"] && show) {
       clearErrors();
@@ -645,7 +652,7 @@ function AddAllowForm(props) {
           </div>
           {error.assets && (
             <div className="d-flex align-items-center">
-              <Icon className="text-danger" name="alert-circle" />
+              <Icon className="text-danger" name="alert-circle-fill" />
               <span className="text-danger ml-1">{error.assets.message}</span>
             </div>
           )}

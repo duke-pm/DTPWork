@@ -18,7 +18,7 @@ import {
 } from "../../../../components/Component";
 /** COMMON */
 import Routes from "../../../../route/routes";
-import {log} from "../../../../utils/Utils";
+import {checkIsWrite, log} from "../../../../utils/Utils";
 /** REDUX */
 import * as Actions from "../../../../redux/actions";
 
@@ -121,19 +121,9 @@ function GanttTasks({history}) {
    */
    useEffect(() => {
     if (loading.main && authState["successSignIn"] && authState["menu"]) {
-      let fMenuRequest = null;
-      if (authState["menu"].length > 0) {
-        for (let item of authState["menu"]) {
-          if (item.subMenu && item.subMenu.length > 0) {
-            fMenuRequest = item.subMenu.find(f => f.link === Routes.projects);
-            if (fMenuRequest) {
-              setIsWrite(fMenuRequest.isWrite);
-              return onStartGetData();
-            }
-          }
-        }
-      }
-      if (!fMenuRequest) onStartGetData();
+      let menu = checkIsWrite(authState["menu"], Routes.projects);
+      if (menu) setIsWrite(menu.isWrite);
+      return onStartGetData();
     }
   }, [
     loading.main,

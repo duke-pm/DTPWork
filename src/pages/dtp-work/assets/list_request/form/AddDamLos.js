@@ -208,6 +208,14 @@ function AddDamLosForm(props) {
    ** LIFE CYCLE
    */
   useEffect(() => {
+    if (show) {
+      clearErrors();
+      setError({assets: null});
+      onResetData();
+    }
+  }, [show]);
+
+  useEffect(() => {
     if (loading.main && authState["successSignIn"] && show) {
       clearErrors();
       onGetMasterData();

@@ -250,7 +250,7 @@ function AddEditBookingForm(props) {
         RefreshToken: authState["data"]["refreshToken"],
         Lang: commonState["language"],
       };
-      console.log('[LOG] === onFormSubmit ===> ', params);
+      log('[LOG] === onFormSubmit ===> ', params);
       if (!isUpdate) {
         dispatch(Actions.fFetchCreateBooking(params, history));
       } else {

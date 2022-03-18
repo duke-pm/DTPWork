@@ -5,7 +5,9 @@ import {
   Block,
   Row,
   Col,
+  UserAvatar,
 } from "../../../../../components/Component";
+import {findUpper} from "../../../../../utils/Utils";
 
 function EmployeeInformations(props) {
   const {t} = useTranslation();
@@ -38,7 +40,15 @@ function EmployeeInformations(props) {
           <Col md="4">
             <div className="profile-ud plain">
               <span className="profile-ud-label fw-bold">{t("approved_assets:employee")}</span>
-              <span className="profile-ud-value">{data?.employee || "-"}</span>
+              {data?.employee && (
+                <div className="user-card">
+                  <UserAvatar className="sm" text={findUpper(data?.employee)} />
+                  <div className="user-info">
+                    <span>{data?.employee}</span>
+                  </div>
+                </div>
+              )}
+              {!data?.employee && <span>{"-"}</span>}
             </div>
           </Col>
           <Col md="4">

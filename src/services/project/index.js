@@ -308,7 +308,7 @@ export default {
         params,
       )
         .then(response => {
-          console.log("FETCH TASK COMMENT => ", response);
+          log("FETCH TASK COMMENT => ", response);
           if (response.status === 200 && response.data) {
             resolve(response.data);
           } else {
@@ -316,7 +316,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("ERROR TASK COMMENT => ", error);
+          log("ERROR TASK COMMENT => ", error);
           reject(error.response ? error.response.data : error);
         });
     });
@@ -328,7 +328,7 @@ export default {
         params,
       )
         .then(response => {
-          console.log("FETCH TASK WATCHER => ", response);
+          log("FETCH TASK WATCHER => ", response);
           if (response.status === 200 && response.data) {
             resolve(response.data);
           } else {
@@ -336,7 +336,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("ERROR TASK WATCHER => ", error);
+          log("ERROR TASK WATCHER => ", error);
           reject(error.response ? error.response.data : error);
         });
     });
@@ -348,7 +348,7 @@ export default {
         params,
       )
         .then(response => {
-          console.log("FETCH TASK UPDATE => ", response);
+          log("FETCH TASK UPDATE => ", response);
           if (response.status === 200 && response.data) {
             resolve(response.data);
           } else {
@@ -356,7 +356,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log("ERROR TASK UPDATE => ", error);
+          log("ERROR TASK UPDATE => ", error);
           reject(error.response ? error.response.data : error);
         });
     });

@@ -57,7 +57,7 @@
   "validate": {
     "empty": "Mục này không thể trống!",
     "format_email": "E-mail không đúng định dạng!",
-    "empty_assets": "Vui lòng chọn tài sản yêu cầu!",
+    "empty_assets": "Vui lòng thêm tài sản yêu cầu!",
     "number_large_than_one": "Số lượng phải bằng hoặc lớn hơn 1!",
     "from_large_than_to": "Thời gian từ ngày phải nhỏ hơn đến ngày!",
     "minimum_time_is_30": "Thời gian tối thiểu là 30 phút!"
@@ -275,6 +275,9 @@
     "confirm_remove_level_des_1": "Bạn thực sự muốn xóa level phê duyệt của line ",
     "confirm_remove_level_des_2": "này?"
   },
+  "dashboard": {
+    "main_title": "Tổng quan"
+  },
   "account": {
     "title": "Tài khoản",
     "view_profile": "Xem hồ sơ",
@@ -322,7 +325,8 @@
     "reuse_assets": "Đưa vào sử dụng lại",
     "export_report": "In biên bản",
     "download_attach_file": "Tải file đính kèm",
-    "update_file": "Cập nhật quy trình"
+    "update_file": "Cập nhật quy trình",
+    "asset_was_lost": "Tài sản đã mất"
   },
   "add_assets": {
     "title": "Thêm mới Tài sản",
@@ -502,7 +506,8 @@
     "origin_price_assets": "Nguyên giá",
     "status_assets": "Trạng thái",
     "information_approved": "Thông tin duyệt đơn",
-    "confirm_approved_title": "Lưu thông tin này?",
+    "confirm_approved_title_1": "Phê duyệt đơn này?",
+    "confirm_approved_title_2": "Từ chối đơn này?",
     "confirm_approved_des_1": "Bạn thực sự muốn phê duyệt ",
     "confirm_reject_des_1": "Bạn thực sự muốn từ chối ",
     "confirm_approved_assets_des_2": "Đơn cấp phát số #",
@@ -553,10 +558,10 @@
     "assets_title": "Chi tiết Đề xuất cấp phát",
     "damage_title": "Chi tiết Đề xuất báo hỏng",
     "lost_title": "Chi tiết Đề xuất báo mất",
-    "information_employee": "Thông tin nhân viên",
+    "information_employee": "Thông tin nhân viên đề xuất",
     "request_date": "Ngày yêu cầu",
     "code_employee": "Mã số",
-    "name_employee": "Tên nhân viên",
+    "name_employee": "Nhân viên",
     "department_employee": "Bộ phận",
     "region_employee": "Khu vực",
     "information_assets_approved": "Thông tin đề xuất",

@@ -36,7 +36,7 @@ import AddEditProjectForm from "../form/AddEditProject";
 import Configs from "../../../../configs";
 import Routes from "../../../../route/routes";
 import Constants from "../../../../utils/constants";
-import {getLocalStorage, log, setLocalStorage} from "../../../../utils/Utils";
+import {checkIsWrite, getLocalStorage, log, setLocalStorage} from "../../../../utils/Utils";
 /** REDUX */
 import * as Actions from "../../../../redux/actions";
 
@@ -318,19 +318,9 @@ function ListProjects({history}) {
    */
   useEffect(() => {
     if (loading.main && authState["successSignIn"] && authState["menu"]) {
-      let fMenuRequest = null;
-      if (authState["menu"].length > 0) {
-        for (let item of authState["menu"]) {
-          if (item.subMenu && item.subMenu.length > 0) {
-            fMenuRequest = item.subMenu.find(f => f.link === Routes.projects);
-            if (fMenuRequest) {
-              setIsWrite(fMenuRequest.isWrite);
-              return onCheckLocal();
-            }
-          }
-        }
-      }
-      if (!fMenuRequest) onCheckLocal();
+      let menu = checkIsWrite(authState["menu"], Routes.projects);
+      if (menu) setIsWrite(menu.isWrite);
+      return onCheckLocal();
     }
   }, [
     loading.main,

@@ -35,19 +35,19 @@ function AssetInformations(props) {
       </div>
       <div className="mt-3">
         <Row className="g-3">
-          <Col md="4">
+          <Col xs="6" sm="6" md="4">
             <div className="profile-ud plain">
               <span className="profile-ud-label fw-bold">{t("approved_assets:code")}</span>
               <span className="profile-ud-value text-primary">{data?.code}</span>
             </div>
           </Col>
-          <Col md="4">
+          <Col xs="6" sm="6" md="4">
             <div className="profile-ud plain">
               <span className="profile-ud-label fw-bold">{t("approved_assets:name")}</span>
               <span className="profile-ud-value">{data?.name}</span>
             </div>
           </Col>
-          <Col md="4">
+          <Col xs="6" sm="6" md="4">
             <div className="profile-ud plain">
               <span className="profile-ud-label fw-bold">{t("approved_assets:group")}</span>
               <span className="profile-ud-value">{data?.group}</span>
@@ -107,7 +107,7 @@ function AssetInformations(props) {
           <Col md="4">
             <div className="profile-ud plain">
               <span className="profile-ud-label fw-bold">{t("approved_assets:description")}</span>
-              <span className="profile-ud-value">{data?.description}</span>
+              <span className="profile-ud-value">{data?.description || "-"}</span>
             </div>
           </Col>
         </Row>

@@ -13,19 +13,19 @@ import {
   Col,
   BlockBetween,
 } from "../../../components/Component";
+import { useTranslation } from "react-i18next";
 
 const Homepage = () => {
+  const {t} = useTranslation();
   const [sm, updateSm] = useState(false);
   return (
     <React.Fragment>
-      <Head title="Homepage"></Head>
+      <Head title={t("dashboard:main_title")}></Head>
       <Content>
         <BlockHead size="sm">
           <BlockBetween>
             <BlockHeadContent>
-              <BlockTitle page tag="h3">
-                Dashboard
-              </BlockTitle>
+              <BlockTitle tag="h4">{t("dashboard:main_title")}</BlockTitle>
             </BlockHeadContent>
             
           </BlockBetween>

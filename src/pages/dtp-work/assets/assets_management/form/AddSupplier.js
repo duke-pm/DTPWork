@@ -111,8 +111,10 @@ function AddSupplier(props) {
    ** LIFE CYCLE
    */
   useEffect(() => {
-    clearErrors();
-  }, []);
+    if (show) {
+      clearErrors();
+    }
+  }, [show]);
 
   useEffect(() => {
     if (loading.submit && show) {
@@ -172,6 +174,9 @@ function AddSupplier(props) {
                       </label>
                     </div>
                     <div className="form-control-wrap">
+                      <div className="form-icon form-icon-left">
+                        <Icon name="building"></Icon>
+                      </div>
                       <input
                         ref={register({ required: t("validate:empty") })}
                         className="form-control"
@@ -197,6 +202,9 @@ function AddSupplier(props) {
                       </label>
                     </div>
                     <div className="form-control-wrap">
+                      <div className="form-icon form-icon-left">
+                        <Icon name="location"></Icon>
+                      </div>
                       <input
                         ref={register({ required: t("validate:empty") })}
                         className="form-control"
@@ -222,6 +230,9 @@ function AddSupplier(props) {
                       </label>
                     </div>
                     <div className="form-control-wrap">
+                      <div className="form-icon form-icon-left">
+                        <Icon name="mail"></Icon>
+                      </div>
                       <input
                         ref={register({
                           pattern: {
@@ -252,6 +263,9 @@ function AddSupplier(props) {
                       </label>
                     </div>
                     <div className="form-control-wrap">
+                      <div className="form-icon form-icon-left">
+                        <Icon name="call"></Icon>
+                      </div>
                       <input
                         className="form-control"
                         type="number"
@@ -273,6 +287,9 @@ function AddSupplier(props) {
                       </label>
                     </div>
                     <div className="form-control-wrap">
+                      <div className="form-icon form-icon-left">
+                        <Icon name="user"></Icon>
+                      </div>
                       <input
                         ref={register({ required: t("validate:empty") })}
                         className="form-control"
@@ -298,6 +315,9 @@ function AddSupplier(props) {
                       </label>
                     </div>
                     <div className="form-control-wrap">
+                      <div className="form-icon form-icon-left">
+                        <Icon name="call"></Icon>
+                      </div>
                       <input
                         className="form-control"
                         type="number"

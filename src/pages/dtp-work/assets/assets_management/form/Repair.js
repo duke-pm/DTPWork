@@ -428,6 +428,9 @@ function RepairForm(props) {
                     </label>
                   </div>
                   <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="building"></Icon>
+                    </div>
                     <input
                       ref={register({ required: t("validate:empty") })}
                       className="form-control"
@@ -453,6 +456,9 @@ function RepairForm(props) {
                     </label>
                   </div>
                   <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="sign-vnd"></Icon>
+                    </div>
                     <NumberFormat
                       className="form-control"
                       name="repairCost"
