@@ -3,7 +3,7 @@ import {useTranslation} from "react-i18next";
 import {useSelector} from "react-redux";
 import {Modal, ModalBody, Spinner} from "reactstrap";
 import PerfectScrollbar from 'react-perfect-scrollbar';
-/** COMMON */
+/** COMPONENTS */
 import {
   Block,
   BlockHead,
@@ -13,7 +13,7 @@ import {
   Icon,
   Row,
   Col,
-} from "components/Component";
+} from "../../../../../components/Component";
 
 const statusClassName = {
 	"-1": "primary",

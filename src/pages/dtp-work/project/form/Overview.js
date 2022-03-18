@@ -28,12 +28,12 @@ import {
   TooltipComponent,
   InputSwitch,
   AlertConfirm,
-} from "components/Component";
+} from "../../../../components/Component";
 /** COMMON */
-import Constants from "utils/constants";
-import {log, findUpper} from "utils/Utils";
+import Constants from "../../../../utils/constants";
+import {log, findUpper} from "../../../../utils/Utils";
 /** REDUX */
-import * as Actions from "redux/actions";
+import * as Actions from "../../../../redux/actions";
 
 const STATUS_REJECT = 7;
 const STATUS_FINISHED = 5;

@@ -3,21 +3,33 @@ import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
 import {useForm} from "react-hook-form";
 import {Link} from "react-router-dom";
-import {Form, FormGroup, Spinner, Col, Row} from "reactstrap";
+import {
+  Form,
+  FormGroup,
+  Spinner,
+  Col,
+  Row,
+} from "reactstrap";
 /** COMPONENTS */
 import {
-  Block, BlockContent, BlockDes, BlockHead, BlockTitle,
-  Button, PreviewCard,
-} from "components/Component";
-import PageContainer from "layout/page-container/PageContainer";
-import Head from "layout/head/Head";
+  Block,
+  BlockContent,
+  BlockDes,
+  BlockHead,
+  BlockTitle,
+  PreviewCard,
+  Button,
+} from "../../components/Component";
+import PageContainer from "../../layout/page-container/PageContainer";
+import Head from "../../layout/head/Head";
 import AuthFooter from "./AuthFooter";
 /** COMMON */
 import SuccessCheck from "./SuccessCheck";
-import Logo from "images/logo.png";
-import LogoDark from "images/logo-dark.png";
+import ErrorCheck from "./ErrorCheck";
+import Logo from "../../images/logo.png";
+import LogoDark from "../../images/logo-dark.png";
 /** REDUX */
-import * as Actions from "redux/actions";
+import * as Actions from "../../redux/actions";
 
 /** All init */
 const INPUT_NAME = {
@@ -46,8 +58,8 @@ const ForgotPassword = () => {
     if (valEmail !== "") {
       setLoading(true);
       let params = {
-        Lang: commonState["language"],
         Email: valEmail.toLowerCase(),
+        Lang: commonState["language"],
       };
       dispatch(Actions.fFetchForgotPassword(params));
     }
@@ -66,6 +78,7 @@ const ForgotPassword = () => {
    ** LIFE CYCLE
    */
   useEffect(() => {
+    setError("");
     dispatch(Actions.resetForgotPassword());
   }, []);
 
@@ -95,6 +108,7 @@ const ForgotPassword = () => {
   return (
     <React.Fragment>
       <Head title={t("forgot_password:title")} />
+
       <PageContainer>
         <Block className="nk-block-middle nk-auth-body  wide-xs">
           <div className="brand-logo pb-4 text-center">
@@ -108,10 +122,11 @@ const ForgotPassword = () => {
             <PreviewCard className="card-bordered" bodyClass="card-inner-lg">
               <BlockHead>
                 <BlockContent>
-                  <BlockTitle tag="h5">{t("forgot_password:title")}</BlockTitle>
+                  <BlockTitle tag="h4">{t("forgot_password:title")}</BlockTitle>
                   <BlockDes><p>{t("forgot_password:sub_title")}</p></BlockDes>
                 </BlockContent>
               </BlockHead>
+
               <Form className="is-alter" onSubmit={handleSubmit(onFormSubmit)}>
                 <FormGroup>
                   <div className="form-label-group">
@@ -141,28 +156,36 @@ const ForgotPassword = () => {
                   </div>
                 </FormGroup>
                 <FormGroup>
-                  <Button size="lg" className="btn-block" type="submit" color="primary" disabled={loading}>
-                    {loading ? <Spinner size="sm" color="light" /> : t("forgot_password:btn_send")}
+                  <Button
+                    className="btn-block"
+                    type="submit"
+                    size="lg"
+                    color="primary"
+                    disabled={loading}>
+                    {loading
+                      ? <Spinner size="sm" color="light" />
+                      : <span>{t("forgot_password:btn_send")}</span>
+                    }
                   </Button>
                 </FormGroup>
               </Form>
               <div className="form-note-s2 text-center pt-4">
                 <Link to={loading ? "#" : `${process.env.PUBLIC_URL}/auth-login`}>
-                  <strong>{t("forgot_password:return_sign_in")}</strong>
+                  <span>{t("forgot_password:return_sign_in")}</span>
                 </Link>
               </div>
             </PreviewCard>
           )}
 
-          {success && (
+          {success && !errorVal && (
             <PreviewCard className="card-bordered" bodyClass="card-inner-lg">
               <Row>
                 <Col lg="5" md="5" sm="4" xs="4">{SuccessCheck}</Col>
                 <Col lg="7" md="7" sm="8" xs="8" className="d-flex flex-column justify-content-center">
                   <BlockHead>
                     <BlockContent className="flex-column align-items-center">
-                      <BlockTitle tag="h5">{t("success:send_reset_link_title")}</BlockTitle>
-                      <BlockDes><p>{t("success:send_reset_link_sub_title")}</p></BlockDes>
+                      <BlockTitle tag="h4">{t("success:send_reset_link_title")}</BlockTitle>
+                      <BlockDes>{t("success:send_reset_link_sub_title")}</BlockDes>
                     </BlockContent>
                   </BlockHead>
                 </Col>
@@ -170,24 +193,29 @@ const ForgotPassword = () => {
               
               <div className="form-note-s2 text-center pt-4">
                 <Link to={`${process.env.PUBLIC_URL}/auth-login`}>
-                  <strong>{t("forgot_password:return_sign_in")}</strong>
+                  <span>{t("forgot_password:return_sign_in")}</span>
                 </Link>
               </div>
             </PreviewCard>
           )}
 
-          {errorVal && (
+          {!success && errorVal && (
             <PreviewCard className="card-bordered" bodyClass="card-inner-lg">
-              <BlockHead>
-                <BlockContent className="d-flex flex-column align-items-center">
-                  <h3 className="nk-error-title">{t("error:title")}</h3>
-                  <BlockDes><p>{errorVal}</p></BlockDes>
-                </BlockContent>
-              </BlockHead>
+              <Row>
+                <Col lg="5" md="5" sm="4" xs="4">{ErrorCheck}</Col>
+                <Col lg="7" md="7" sm="8" xs="8" className="d-flex flex-column justify-content-center">
+                  <BlockHead>
+                    <BlockContent className="d-flex flex-column align-items-center">
+                      <BlockTitle tag="h4">{t("error:title")}</BlockTitle>
+                      <BlockDes>{errorVal}</BlockDes>
+                    </BlockContent>
+                  </BlockHead>
+                </Col>
+              </Row>
             
               <div className="form-note-s2 text-center pt-4">
                 <Link to={`${process.env.PUBLIC_URL}/auth-login`}>
-                  <strong>{t("forgot_password:return_sign_in")}</strong>
+                  <span>{t("forgot_password:return_sign_in")}</span>
                 </Link>
               </div>
             </PreviewCard>

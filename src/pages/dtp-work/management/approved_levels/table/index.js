@@ -13,7 +13,7 @@ import {
   DataTableRow,
   DataTableBody,
   Icon,
-} from "components/Component";
+} from "../../../../../components/Component";
 
 function TableApprovedLevels(props) {
   const {t} = useTranslation();

@@ -1,12 +1,11 @@
 import React, {useState, useEffect} from "react";
 import {useTranslation} from "react-i18next";
 import {useSelector, useDispatch} from "react-redux";
-import {useHistory} from "react-router-dom";
 import {Spinner} from "reactstrap";
 import {toast} from "react-toastify";
 /** COMPONENTS */
-import Content from "layout/content/Content";
-import Head from "layout/head/Head";
+import Content from "../../../../layout/content/Content";
+import Head from "../../../../layout/head/Head";
 import {
   Block,
   BlockHead,
@@ -17,17 +16,16 @@ import {
   Icon,
   Button,
   RSelect,
-} from "components/Component";
+} from "../../../../components/Component";
 import TableRoleFunctional from "./table";
 /** COMMON */
-import Routes from "route/routes";
-import {log} from "utils/Utils";
+import Routes from "../../../../route/routes";
+import {log} from "../../../../utils/Utils";
 /** REDUX */
-import * as Actions from "redux/actions";
+import * as Actions from "../../../../redux/actions";
 
-function RoleFunctional(props) {
+function RoleFunctional({history}) {
   const {t} = useTranslation();
-  const history = useHistory();
 
   /** Use redux */
   const dispatch = useDispatch();

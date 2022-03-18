@@ -6,8 +6,8 @@ import {FrappeGantt} from 'frappe-gantt-react';
 import {toast} from "react-toastify";
 import moment from "moment";
 /** COMPONENTS */
-import Content from "layout/content/Content";
-import Head from "layout/head/Head";
+import Content from "../../../../layout/content/Content";
+import Head from "../../../../layout/head/Head";
 import {
   Block,
   BlockHead,
@@ -15,12 +15,12 @@ import {
   BlockTitle,
   DataTable,
   TooltipComponent,
-} from "components/Component";
+} from "../../../../components/Component";
 /** COMMON */
-import Routes from "route/routes";
-import {log} from "utils/Utils";
+import Routes from "../../../../route/routes";
+import {log} from "../../../../utils/Utils";
 /** REDUX */
-import * as Actions from "redux/actions";
+import * as Actions from "../../../../redux/actions";
 
 function GanttTasks({history}) {
   const {t} = useTranslation();

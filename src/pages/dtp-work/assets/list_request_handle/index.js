@@ -13,8 +13,8 @@ import {
 } from "reactstrap";
 import moment from "moment";
 /** COMPONENTS */
-import Content from "layout/content/Content";
-import Head from "layout/head/Head";
+import Content from "../../../../layout/content/Content";
+import Head from "../../../../layout/head/Head";
 import {
   Block,
   BlockHead,
@@ -27,16 +27,16 @@ import {
   Button,
   Row,
   Col,
-} from "components/Component";
+} from "../../../../components/Component";
 import TableRequestHandle from "./table";
 import ApprovedForm from "./modal/Approved";
 import ProcessModal from "./modal/Process";
 /** COMMON */
-import Configs from "configs";
-import Constants from "utils/constants";
-import {getLocalStorage, setLocalStorage, log} from "utils/Utils";
+import Configs from "../../../../configs";
+import Constants from "../../../../utils/constants";
+import {getLocalStorage, setLocalStorage, log} from "../../../../utils/Utils";
 /** REDUX */
-import * as Actions from "redux/actions";
+import * as Actions from "../../../../redux/actions";
 
 function RequestAssetsHandle(props) {
   const {t} = useTranslation();

@@ -2,7 +2,14 @@ import React, {useState, useEffect} from "react";
 import {useTranslation} from "react-i18next";
 import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
-import {Form, FormGroup, Modal, ModalBody, Collapse, Spinner} from "reactstrap";
+import {
+  Form,
+  FormGroup,
+  Modal,
+  ModalBody,
+  Collapse,
+  Spinner,
+} from "reactstrap";
 import moment from "moment";
 /** COMMON */
 import {
@@ -19,11 +26,11 @@ import {
   Button,
   Row,
   Col,
-} from "components/Component";
+} from "../../../../../components/Component";
 /** COMMON */
-import {numberFormat} from "utils/Utils";
+import {numberFormat} from "../../../../../utils/Utils";
 /** REDUX */
-import * as Actions from "redux/actions";
+import * as Actions from "../../../../../redux/actions";
 
 function ApprovedForm(props) {
   const {t} = useTranslation();

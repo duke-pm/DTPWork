@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
 import {
@@ -9,16 +9,17 @@ import {
 } from "reactstrap";
 import moment from "moment";
 /** COMPONENTS */
-import {Row, Col} from "components/Component";
+import {Row, Col} from "../../components/Component";
 /** COMMON */
-import Constants from "utils/constants";
-import EnglishFlag from "images/flags/english.png";
-import VietnamFlag from "images/flags/vietnam.png";
+import Constants from "../../utils/constants";
+import EnglishFlag from "../../images/flags/english.png";
+import VietnamFlag from "../../images/flags/vietnam.png";
 /** REDUX */
-import * as Actions from "redux/actions";
+import * as Actions from "../../redux/actions";
 
 const AuthFooter = () => {
   const {t, i18n} = useTranslation();
+  const TITLE_FOOTER = `${moment().year()} DTP Workspace. All Rights Reserved.`;
 
   /** Use redux */
   const dispatch = useDispatch();
@@ -63,7 +64,7 @@ const AuthFooter = () => {
                       <li>
                         <DropdownItem
                           tag="a"
-                          href="#dropdownitem"
+                          href="#dd_en"
                           onClick={(ev) => {
                             ev.preventDefault();
                             onChangeLanguage("en");
@@ -71,13 +72,15 @@ const AuthFooter = () => {
                           className="language-item"
                         >
                           <img src={EnglishFlag} alt="" className="language-flag" />
-                          <span className="language-name">{t("common:language_english")}</span>
+                          <span className="language-name">
+                            {t("common:language_english")}
+                          </span>
                         </DropdownItem>
                       </li>
                       <li>
                         <DropdownItem
                           tag="a"
-                          href="#dropdownitem"
+                          href="#dd_vi"
                           onClick={(ev) => {
                             ev.preventDefault();
                             onChangeLanguage("vi");
@@ -85,7 +88,9 @@ const AuthFooter = () => {
                           className="language-item"
                         >
                           <img src={VietnamFlag} alt="" className="language-flag" />
-                          <span className="language-name">{t("common:language_vietnam")}</span>
+                          <span className="language-name">
+                            {t("common:language_vietnam")}
+                          </span>
                         </DropdownItem>
                       </li>
                     </ul>
@@ -96,7 +101,7 @@ const AuthFooter = () => {
           </Col>
           <Col lg="6">
             <div className="nk-block-content text-center text-lg-left">
-              <p className="text-soft">&copy; {`${moment().year()} DTP Workspace. All Rights Reserved.`}</p>
+              <p className="text-soft">&copy; {TITLE_FOOTER}</p>
             </div>
           </Col>
         </Row>

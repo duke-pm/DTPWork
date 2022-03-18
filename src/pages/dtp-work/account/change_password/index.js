@@ -2,8 +2,14 @@ import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
 import {useForm} from "react-hook-form";
-import {Link, useHistory} from "react-router-dom";
-import {Form, FormGroup, Spinner, Modal, ModalBody} from "reactstrap";
+import {Link} from "react-router-dom";
+import {
+  Form,
+  FormGroup,
+  Spinner,
+  Modal,
+  ModalBody,
+} from "reactstrap";
 import {toast} from "react-toastify";
 /** COMPONENTS */
 import Head from "../../../../layout/head/Head";
@@ -19,14 +25,13 @@ import {
   PreviewCard,
 } from "../../../../components/Component";
 /** COMMON */
-import Constants from "utils/constants";
-import {log} from "utils/Utils";
+import Constants from "../../../../utils/constants";
+import {log} from "../../../../utils/Utils";
 /** REDUX */
-import * as Actions from "redux/actions";
+import * as Actions from "../../../../redux/actions";
 
-function ChangePassword(props) {
+function ChangePassword({history}) {
   const {t} = useTranslation();
-  const history = useHistory();
 
   /** Use redux */
   const dispatch = useDispatch();

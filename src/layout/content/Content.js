@@ -1,6 +1,6 @@
 import React from "react";
 
-const Content = ({ ...props }) => {
+const Content = ({...props}) => {
   return (
     <div className="nk-content">
       <div className="container-fluid">

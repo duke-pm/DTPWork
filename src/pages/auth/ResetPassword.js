@@ -6,18 +6,24 @@ import {Link, useParams} from "react-router-dom";
 import {Form, FormGroup, Spinner, Col, Row} from "reactstrap";
 /** COMPONENTS */
 import {
-  Block, BlockContent, BlockDes, BlockHead, BlockTitle,
-  Button, PreviewCard, Icon,
-} from "components/Component";
-import PageContainer from "layout/page-container/PageContainer";
-import Head from "layout/head/Head";
+  Block,
+  BlockHead,
+  BlockContent,
+  BlockTitle,
+  BlockDes,
+  PreviewCard,
+  Button,
+  Icon,
+} from "../../components/Component";
+import PageContainer from "../../layout/page-container/PageContainer";
+import Head from "../../layout/head/Head";
 import AuthFooter from "./AuthFooter";
 /** COMMON */
 import SuccessCheck from "./SuccessCheck";
-import Logo from "images/logo.png";
-import LogoDark from "images/logo-dark.png";
+import Logo from "../../images/logo.png";
+import LogoDark from "../../images/logo-dark.png";
 /** REDUX */
-import * as Actions from "redux/actions";
+import * as Actions from "../../redux/actions";
 
 /** All init */
 const INPUT_NAME = {

@@ -18,13 +18,13 @@ import {
   BlockBetween,
   Row,
   Col,
-} from "components/Component";
+} from "../../../../../components/Component";
 import AssetInformations from "../components/AssetInformations";
 /** COMMON */
-import Configs from "configs";
-import {log} from "utils/Utils";
+import Configs from "../../../../../configs";
+import {log} from "../../../../../utils/Utils";
 /** REDUX */
-import * as Actions from "redux/actions";
+import * as Actions from "../../../../../redux/actions";
 
 const CustomDateInput = forwardRef(({ value, onClick, onChange }, ref) => (
   <div onClick={onClick} ref={ref}>
@@ -42,6 +42,7 @@ const CustomDateInput = forwardRef(({ value, onClick, onChange }, ref) => (
 
 function ReUseForm(props) {
   const {t} = useTranslation();
+  const {errors, register, clearErrors, handleSubmit} = useForm();
   const {
     show,
     history,
@@ -264,6 +265,12 @@ function ReUseForm(props) {
    ** LIFE CYCLE 
    */
   useEffect(() => {
+    if (show) {
+      clearErrors();
+    }
+  }, [show]);
+
+  useEffect(() => {
     if (!updateHistory && updateItem && show) {
       onSetFormDataDetails(updateItem);
     }
@@ -323,9 +330,7 @@ function ReUseForm(props) {
   /**
    ** RENDER 
    */
-   const {errors, register, handleSubmit} = useForm();
-   const disabled = loading.main || loading.reuse || loading.history;
- 
+  const disabled = loading.main || loading.reuse || loading.history;
   return (
     <SimpleBar
       className={`nk-add-assets toggle-slide toggle-slide-right toggle-screen-any ${

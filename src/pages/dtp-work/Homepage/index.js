@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+/** COMPONENTS */
 import Head from "../../../layout/head/Head";
 import Content from "../../../layout/content/Content";
 import {

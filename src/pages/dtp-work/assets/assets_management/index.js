@@ -1,12 +1,11 @@
 import React, {useState, useEffect} from "react";
 import {useTranslation} from "react-i18next";
 import {useDispatch, useSelector} from "react-redux";
-import {useHistory} from "react-router-dom";
 import {toast} from "react-toastify";
-import {Spinner} from "reactstrap";
+import {Spinner, TabContent, TabPane} from "reactstrap";
 /** COMPONENTS */
-import Content from "layout/content/Content";
-import Head from "layout/head/Head";
+import Content from "../../../../layout/content/Content";
+import Head from "../../../../layout/head/Head";
 import {
   Block,
   BlockHead,
@@ -18,7 +17,7 @@ import {
   PreviewAltCard,
   Icon,
   Button,
-} from "components/Component";
+} from "../../../../components/Component";
 import TableAssets from "./table";
 import AddEditForm from "./form/AddEdit";
 import ApprovedForm from "./form/Approved";
@@ -26,11 +25,14 @@ import RepairForm from "./form/Repair";
 import LiquidationForm from "./form/Liquidation";
 import ReUseForm from "./form/ReUse";
 /** COMMON */
-import Configs from "configs";
-import Routes from "route/routes";
-import {getCookies, log} from "utils/Utils";
+import Configs from "../../../../configs";
+import RoutesApi from "../../../../services/routesApi";
+import Routes from "../../../../route/routes";
+import {checkIsWrite, getCookies, log} from "../../../../utils/Utils";
 /** REDUX */
-import * as Actions from "redux/actions";
+import * as Actions from "../../../../redux/actions";
+
+let callbackF = null;
 
 const TabItem = ({
   index = 0,
@@ -52,11 +54,8 @@ const TabItem = ({
   )
 };
 
-let callbackF = null;
-
-function AssetsManagement(props) {
+function AssetsManagement({history}) {
   const {t} = useTranslation();
-  const history = useHistory();
 
   /** Use redux */
   const dispatch = useDispatch();
@@ -67,6 +66,7 @@ function AssetsManagement(props) {
   /** Use state */
   const [tabs, setTabs] = useState([
     {
+      ibTab: "0",
       id: "0",
       label: t("assets:all"),
       type: "listAssetsAll",
@@ -77,6 +77,7 @@ function AssetsManagement(props) {
       count: 0,
     },
     {
+      ibTab: "1",
       id: "1",
       label: t("assets:not_use"),
       type: "listAssetsNotUse",
@@ -87,6 +88,7 @@ function AssetsManagement(props) {
       count: 0,
     },
     {
+      ibTab: "2",
       id: "2",
       label: t("assets:using"),
       type: "listAssetsUsing",
@@ -97,6 +99,7 @@ function AssetsManagement(props) {
       count: 0,
     },
     {
+      ibTab: "3",
       id: "3",
       label: t("assets:repair_insurance"),
       type: "listAssetsRepair",
@@ -107,6 +110,7 @@ function AssetsManagement(props) {
       count: 0,
     },
     {
+      ibTab: "4",
       id: "4",
       label: t("assets:damage_lost"),
       type: "listAssetsDamageLost",
@@ -119,6 +123,7 @@ function AssetsManagement(props) {
       countLost: 0
     },
     {
+      ibTab: "5",
       id: "6",
       label: t("assets:liquidation"),
       type: "listAssetsLiquidation",
@@ -200,11 +205,11 @@ function AssetsManagement(props) {
     let tabActive = tabs[idxActive];
     let params = {
       StatusID: statusID,
-      PageSize: Configs.perPage,
-      PageNum: page,
       Search: search,
       SortColumn: "",
       SortDirection: "desc",
+      PageSize: Configs.perPage,
+      PageNum: page,
       RefreshToken: authState["data"]["refreshToken"],
       Lang: commonState["language"],
     };
@@ -229,7 +234,7 @@ function AssetsManagement(props) {
   };
 
   const onChangeTab = (ev, idxTab) => {
-    ev.preventDefault();
+    ev && ev.preventDefault();
     if (!loading.search && filterTab !== idxTab) {
       setLoading({...loading, search: true});
       // Update active tab
@@ -344,7 +349,7 @@ function AssetsManagement(props) {
         UserToken: tmpAccessToken
       }
       window.location = `${Configs.hostAPI}/${Configs.prefixAPI}${
-        Routes.APPROVED.EXPORT_ASSETS
+        RoutesApi.APPROVED.EXPORT_ASSETS
       }?value=${JSON.stringify(params)}`;
     }
   };
@@ -406,19 +411,9 @@ function AssetsManagement(props) {
    */
   useEffect(() => {
     if (loading.main && authState["successSignIn"] && authState["menu"]) {
-      let fMenuRequest = null;
-      if (authState["menu"].length > 0) {
-        for (let item of authState["menu"]) {
-          if (item.subMenu && item.subMenu.length > 0) {
-            fMenuRequest = item.subMenu.find(f => f.link === Routes.assetsManagement);
-            if (fMenuRequest) {
-              setIsWrite(fMenuRequest.isWrite);
-              return onStartGetData();
-            }
-          }
-        }
-      }
-      if (!fMenuRequest) onStartGetData();
+      let menu = checkIsWrite(authState["menu"], Routes.assetsManagement);
+      if (menu) setIsWrite(menu.isWrite);
+      return onStartGetData();
     }
   }, [
     loading.main,
@@ -468,12 +463,12 @@ function AssetsManagement(props) {
   /** 
    ** RENDER
    */
-  const showGetData = authState["data"].groupID === "1" ||
-    authState["data"].groupID === "6";
+  const showGetData = ["1", "6"].includes(authState["data"].groupID);
   const disabled = loading.main || loading.search;
   return (
     <React.Fragment>
       <Head title={t("assets:title")}></Head>
+      
       <Content>
         {/** Header table */}
         <BlockHead size="sm">
@@ -513,10 +508,8 @@ function AssetsManagement(props) {
                         disabled={disabled}
                         onClick={onGetEmployee}
                       >
-                        {loading.getData && (
-                          <Spinner className="mr-2" color="light" size="sm" />
-                        )}
-                        {!loading.getData && <Icon className="mr-1" name="reload-alt"></Icon>}
+                        {loading.getData && <Spinner color="light" size="sm" />}
+                        {!loading.getData && <Icon name="reload-alt"></Icon>}
                         <span>{t("assets:get_data")}</span>
                       </Button>
                     </li>
@@ -610,7 +603,9 @@ function AssetsManagement(props) {
                       value={tabs[filterTab].search}
                       placeholder={t("common:search")}
                       onKeyDown={ev => {
-                        if (ev.code === "Enter") onSearch(ev, filterTab);
+                        if (ev.code === "Enter" && !disabled) {
+                          onSearch(ev, filterTab);
+                        }
                       }}
                       onChange={onChangeSearch}
                     />
@@ -627,7 +622,7 @@ function AssetsManagement(props) {
             </div>
 
             {/** Data table */}
-            <div className="tab-content">
+            {/* <div className="tab-content">
               {tabs.map((itemT, indexT) => {
                 return (
                   <div className={`tab-pane ${filterTab === indexT && "active"}`}
@@ -651,7 +646,31 @@ function AssetsManagement(props) {
                   </div>
                 )
               })}
-            </div>
+            </div> */}
+            <TabContent activeTab={filterTab + ""}>
+              {tabs.map((itemT, indexT) => {
+                return (
+                  <TabPane key={`tab_${itemT.id}_${indexT}`} tabId={itemT.ibTab}>
+                    {!loading.main && !loading.search && (
+                      <TableAssets
+                        history={history}
+                        commonState={commonState}
+                        authState={authState}
+                        idxTab={indexT}
+                        dataAssets={itemT.data}
+                        onChangePage={onChangePage}
+                        onUpdateItem={onUpdateItem}
+                        onUpdateHistory={onUpdateHistory}
+                        onApprovedRecallItem={onApprovedRecallItem}
+                        onRepairItem={onRepairItem}
+                        onLiquidationItem={onLiquidationItem}
+                        onReuseItem={onReuseItem}
+                      />
+                    )}
+                  </TabPane>
+                )
+              })}
+            </TabContent>
 
             {/** Paging table */}
             <PreviewAltCard className={`${tabs[filterTab].count > 0 && "border-top"}`}>
@@ -678,6 +697,7 @@ function AssetsManagement(props) {
           </DataTable>
         </Block>
 
+        {/** Forms */}
         <AddEditForm
           show={view.add || view.update}
           isAdd={view.add}

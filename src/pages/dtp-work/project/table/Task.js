@@ -5,7 +5,7 @@ import {
   DataTableHead,
   DataTableRow,
   DataTableBody,
-} from "components/Component";
+} from "../../../../components/Component";
 import RowTask from "../components/RowTask";
 
 function TableTask(props) {

@@ -2,7 +2,13 @@ import React, {useState, useEffect} from "react";
 import {useTranslation} from "react-i18next";
 import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
-import {Form, FormGroup, Modal, ModalBody, Spinner} from "reactstrap";
+import {
+  Form,
+  FormGroup,
+  Modal,
+  ModalBody,
+  Spinner,
+} from "reactstrap";
 import {toast} from "react-toastify";
 /** COMMON */
 import {
@@ -15,14 +21,15 @@ import {
   BlockBetween,
   Row,
   Col,
-} from "components/Component";
+} from "../../../../../components/Component";
 /** COMMON */
-import {log} from "utils/Utils";
+import {log} from "../../../../../utils/Utils";
 /** REDUX */
-import * as Actions from "redux/actions";
+import * as Actions from "../../../../../redux/actions";
 
 function AddSupplier(props) {
   const {t} = useTranslation();
+  const {errors, register, clearErrors, handleSubmit} = useForm();
   const {
     history,
     show,
@@ -103,7 +110,9 @@ function AddSupplier(props) {
   /**
    ** LIFE CYCLE
    */
-
+  useEffect(() => {
+    clearErrors();
+  }, []);
 
   useEffect(() => {
     if (loading.submit && show) {
@@ -127,7 +136,6 @@ function AddSupplier(props) {
   /**
    ** RENDER
    */
-  const {errors, register, handleSubmit} = useForm();
   const disabled = loading.submit;
   return (
     <Modal

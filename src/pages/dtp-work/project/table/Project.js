@@ -5,11 +5,12 @@ import {
   DataTableHead,
   DataTableRow,
   DataTableBody,
-} from "components/Component";
+} from "../../../../components/Component";
 import RowProject from "../components/RowProject";
-import { getCookies } from "utils/Utils";
-import Configs from "configs";
-import Routes from "services/routesApi";
+/** COMMON */
+import Configs from "../../../../configs";
+import Routes from "../../../../services/routesApi";
+import {getCookies} from "../../../../utils/Utils";
 
 function TableProject(props) {
   const {t} = useTranslation();

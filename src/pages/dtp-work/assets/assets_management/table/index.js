@@ -27,13 +27,13 @@ import {
   Row,
   Col,
   UserAvatar,
-} from "components/Component";
+} from "../../../../../components/Component";
 /** COMMON */
-import Configs from "configs";
-import Routes from "services/routesApi";
-import {getCookies, numberFormat, findUpper, log} from "utils/Utils";
+import Configs from "../../../../../configs";
+import Routes from "../../../../../services/routesApi";
+import {getCookies, numberFormat, findUpper, log} from "../../../../../utils/Utils";
 /** REDUX */
-import * as Actions from "redux/actions";
+import * as Actions from "../../../../../redux/actions";
 
 function TableAssets(props) {
   const {t} = useTranslation();
@@ -295,7 +295,15 @@ function TableAssets(props) {
               )}
               {(idxTab !== 1 && idxTab !== 2 && idxTab !== 3 && idxTab !== 5) && (
                 <DataTableRow size="md">
-                  <span>{item.empName || "-"}</span>
+                  {item.empName && (
+                    <div className="user-card">
+                      <UserAvatar className="sm" text={findUpper(item.empName)} />
+                      <div className="user-info">
+                        <span className="tb-lead">{item.empName}</span>
+                      </div>
+                    </div>
+                  )}
+                  {!item.empName && <span>{"-"}</span>}
                 </DataTableRow>
               )}
               {(idxTab !== 5) && (

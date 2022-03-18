@@ -6,9 +6,9 @@ import {
   DataTableRow,
   Icon,
   Button,
-} from "components/Component";
+} from "../../../../../components/Component";
 /** REDUX */
-import * as Actions from "redux/actions";
+import * as Actions from "../../../../../redux/actions";
 
 function RowTable(props) {
   const {

@@ -17,11 +17,11 @@ import {
   Icon,
   Button,
   UserAvatar,
-} from "components/Component";
+} from "../../../../components/Component";
 /** COMMON */
-import Routes from "route/routes";
-import Constants from "utils/constants";
-import {durationDay, expiredDate, findUpper} from "utils/Utils";
+import Routes from "../../../../route/routes";
+import Constants from "../../../../utils/constants";
+import {durationDay, expiredDate, findUpper} from "../../../../utils/Utils";
 
 function RowTask(props) {
   const {t} = useTranslation();

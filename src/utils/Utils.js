@@ -207,3 +207,21 @@ export const expiredDate = end => {
 	const result = moment().diff(end, "days");
 	return result;
 };
+
+export const checkIsWrite = (menu, route) => {
+  let item = null, fMenuRequest = null;
+  if (menu.length > 0) {
+    for (item of menu) {
+      if (item.link && item.link === route) {
+        return item;
+      }
+      if (item.subMenu && item.subMenu.length > 0) {
+        fMenuRequest = checkIsWrite(item.subMenu, route);
+        if (fMenuRequest) {
+          return fMenuRequest;
+        }
+      }
+    }
+  }
+  return fMenuRequest;
+};

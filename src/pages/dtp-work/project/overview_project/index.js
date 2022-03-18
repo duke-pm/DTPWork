@@ -1,4 +1,4 @@
-import React, {forwardRef, useState, useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import {useTranslation} from "react-i18next";
 import {useSelector, useDispatch} from "react-redux";
 import {
@@ -9,9 +9,11 @@ import {
   Spinner,
 } from "reactstrap";
 import DatePicker from "react-datepicker";
+import {toast} from "react-toastify";
+import moment from "moment";
 /** COMPONENTS */
-import Content from "layout/content/Content";
-import Head from "layout/head/Head";
+import Content from "../../../../layout/content/Content";
+import Head from "../../../../layout/head/Head";
 import {
   Block,
   BlockHead,
@@ -25,32 +27,14 @@ import {
   Row,
   Col,
   RSelect,
-  BlockBetween,
-  AlertConfirm,
-} from "components/Component";
+} from "../../../../components/Component";
+import TableProjectsOverview from "../table/ProjectsOverview";
 /** COMMON */
-import {getLocalStorage, log, setLocalStorage} from "utils/Utils";
+import Configs from "../../../../configs";
+import Constants from "../../../../utils/constants";
+import {getLocalStorage, log, setLocalStorage} from "../../../../utils/Utils";
 /** REDUX */
 import * as Actions from "redux/actions";
-import Constants from "utils/constants";
-import moment from "moment";
-import Configs from "configs";
-import { toast } from "react-toastify";
-import TableProjectsOverview from "../table/ProjectsOverview";
-
-const CustomDateInput = forwardRef(({ value, onClick, onChange }, ref) => (
-  <div onClick={onClick} ref={ref}>
-    <div className="form-icon form-icon-left">
-      <Icon name="calendar"></Icon>
-    </div>
-    <input
-      className="form-control date-picker"
-      type="text"
-      value={moment(value).format("DD/MM/YYYY")}
-      onChange={onChange}
-    />
-  </div>
-));
 
 function ProjectsOverview({history}) {
   const {t} = useTranslation();

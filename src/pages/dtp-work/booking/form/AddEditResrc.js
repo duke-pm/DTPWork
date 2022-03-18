@@ -17,11 +17,11 @@ import {
   Row,
   Col,
   RSelect,
-} from "components/Component";
+} from "../../../../components/Component";
 /** COMMON */
-import {log} from "utils/Utils";
+import {log} from "../../../../utils/Utils";
 /** REDUX */
-import * as Actions from "redux/actions";
+import * as Actions from "../../../../redux/actions";
 
 function AddEditResrcForm(props) {
   const {t} = useTranslation();

@@ -14,11 +14,11 @@ import {
   Icon,
   Button,
   UserAvatar,
-} from "components/Component";
+} from "../../../../components/Component";
 /** COMMON */
-import Routes from "route/routes";
-import {durationDay, expiredDate, findUpper} from "utils/Utils";
-import Constants from "utils/constants";
+import Routes from "../../../../route/routes";
+import {durationDay, expiredDate, findUpper} from "../../../../utils/Utils";
+import Constants from "../../../../utils/constants";
 
 function RowProjectsOverview(props) {
   const {t} = useTranslation();

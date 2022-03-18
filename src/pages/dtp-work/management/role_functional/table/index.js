@@ -5,7 +5,7 @@ import {
   DataTableHead,
   DataTableRow,
   DataTableBody,
-} from "components/Component";
+} from "../../../../../components/Component";
 import RowTable from "../components/RowTable";
 
 function TableRoleFunctional(props) {

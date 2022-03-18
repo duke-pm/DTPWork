@@ -3,19 +3,25 @@ import {useTranslation} from "react-i18next";
 import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
 import {Link} from "react-router-dom";
-import {
-  Block, BlockContent, BlockDes, BlockHead, BlockTitle,
-  Button, Icon, PreviewCard,
-} from "../../components/Component";
-import {Form, FormGroup, Spinner, Alert} from "reactstrap";
+import {Form, FormGroup, Spinner} from "reactstrap";
 import {toast} from "react-toastify";
 /** COMPONENTS */
+import {
+  Block,
+  BlockHead,
+  BlockContent,
+  BlockTitle,
+  BlockDes,
+  PreviewCard,
+  Button,
+  Icon,
+} from "../../components/Component";
 import PageContainer from "../../layout/page-container/PageContainer";
 import Head from "../../layout/head/Head";
 import AuthFooter from "./AuthFooter";
 /** COMMON */
-import FieldsAuth from "configs/fieldsAuth";
-import Constants from "utils/constants";
+import FieldsAuth from "../../configs/fieldsAuth";
+import Constants from "../../utils/constants";
 import Logo from "../../images/logo.png";
 import LogoDark from "../../images/logo-dark.png";
 /** REDUX */
@@ -45,6 +51,8 @@ const Login = () => {
   /**
    ** FUNCTIONS 
    */
+  const togglePassState = () => setPassState(!passState);
+
   const onCheckLocalStorage = () => {
     /** Check language */
     let localLanguage = localStorage.getItem(Constants.LS_LANGUAGE);
@@ -69,21 +77,25 @@ const Login = () => {
     setLoading({main: false, submit: false});
   };
 
-  const onFormSubmit = formData => {
+  const onForm = formData => {
     let valUsername = formData[INPUT_NAME.USER_NAME].trim(),
       valPassword = formData[INPUT_NAME.PASSWORD].trim();
     if (valUsername !== "" && valPassword !== "") {
-      setLoading({...loading, submit: true});
-      let params = {
-        Username: valUsername,
-        Password: valPassword,
-        TypeLogin: 1,
-        Lang: commonState["language"],
-      }
-      dispatch(Actions.fFetchSignIn(params));
+      onSubmitLogin(valUsername, valPassword);
     } else {
       toast(t("error:wrong_username_password"), {type: "error"});
     }
+  };
+
+  const onSubmitLogin = (userName, password) => {
+    setLoading({...loading, submit: true});
+    let params = {
+      Username: userName,
+      Password: password,
+      TypeLogin: 1,
+      Lang: commonState["language"],
+    }
+    dispatch(Actions.fFetchSignIn(params));
   };
 
   const onGoToHomepage = () => {
@@ -138,6 +150,7 @@ const Login = () => {
   return (
     <React.Fragment>
       <Head title={t("sign_in:title")} />
+
       <PageContainer>
         <Block className="nk-block-middle nk-auth-body wide-xs">
           <div className="brand-logo pb-4 text-center">
@@ -151,12 +164,11 @@ const Login = () => {
             <BlockHead>
               <BlockContent>
                 <BlockTitle tag="h4">{t("sign_in:head_title")}</BlockTitle>
-                <BlockDes>
-                  <p>{t("sign_in:sub_title")}</p>
-                </BlockDes>
+                <BlockDes>{t("sign_in:sub_title")}</BlockDes>
               </BlockContent>
             </BlockHead>
-            <Form className="is-alter" onSubmit={handleSubmit(onFormSubmit)}>
+
+            <Form className="is-alter" onSubmit={handleSubmit(onForm)}>
               <FormGroup>
                 <div className="form-label-group">
                   <label className="form-label" htmlFor={INPUT_NAME.USER_NAME}>
@@ -193,18 +205,21 @@ const Login = () => {
                 <div className="form-control-wrap">
                   <a
                     href="#"
-                    onClick={(ev) => {
-                      ev.preventDefault();
-                      setPassState(!passState);
-                    }}
-                    className={`form-icon lg form-icon-right passcode-switch ${passState ? "is-hidden" : "is-shown"}`}
+                    onClick={togglePassState}
+                    className={`form-icon lg form-icon-right passcode-switch ${passState
+                      ? "is-hidden"
+                      : "is-shown"
+                    }`}
                   >
                     <Icon name="eye" className="passcode-icon icon-show"></Icon>
                     <Icon name="eye-off" className="passcode-icon icon-hide"></Icon>
                   </a>
                   <input
                     ref={register({ required: t("validate:empty") })}
-                    className={`form-control-lg form-control ${passState ? "is-hidden" : "is-shown"}`}
+                    className={`form-control-lg form-control ${passState
+                      ? "is-hidden"
+                      : "is-shown"
+                    }`}
                     id={INPUT_NAME.PASSWORD}
                     name={INPUT_NAME.PASSWORD}
                     type={passState ? "text" : "password"}
@@ -218,13 +233,16 @@ const Login = () => {
               </FormGroup>
               <FormGroup>
                 <Button
-                  size="lg"
                   className="btn-block"
                   type="submit"
+                  size="lg"
                   color="primary"
                   disabled={disabledInput}
                 >
-                  {disabledInput ? <Spinner size="sm" color="light" /> : t("sign_in:title")}
+                  {disabledInput
+                    ? <Spinner size="sm" color="light" />
+                    : <span>{t("sign_in:title")}</span>
+                  }
                 </Button>
               </FormGroup>
             </Form>

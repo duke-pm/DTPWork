@@ -19,12 +19,12 @@ import {
   Row,
   Col,
   RSelect,
-} from "components/Component";
+} from "../../../../components/Component";
 /** COMMON */
-import Constants from "utils/constants";
-import {log} from "utils/Utils";
+import Constants from "../../../../utils/constants";
+import {log} from "../../../../utils/Utils";
 /** REDUX */
-import * as Actions from "redux/actions";
+import * as Actions from "../../../../redux/actions";
 
 const CustomDateInput = forwardRef(({ value, onClick, onChange }, ref) => (
   <div onClick={onClick} ref={ref}>

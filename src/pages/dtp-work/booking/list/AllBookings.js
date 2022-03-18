@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {useTranslation} from "react-i18next";
 import {useDispatch, useSelector} from "react-redux";
-import {useHistory} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import {
   UncontrolledDropdown,
@@ -14,8 +13,8 @@ import {
 import {toast} from "react-toastify";
 import moment from "moment";
 /** COMPONENTS */
-import Content from "layout/content/Content";
-import Head from "layout/head/Head";
+import Content from "../../../../layout/content/Content";
+import Head from "../../../../layout/head/Head";
 import {
   Block,
   BlockHead,
@@ -32,21 +31,20 @@ import {
   AlertConfirm,
   BlockBetween,
   TooltipComponent,
-} from "components/Component";
+} from "../../../../components/Component";
 import TableBookings from "../table/Bookings";
 import CalendarBooking from "../calendar";
 import AddEditBookingForm from "../form/AddEditBooking";
 /** COMMON */
-import Configs from "configs";
-import Routes from "route/routes";
-import Constants from "utils/constants";
-import {getLocalStorage, setLocalStorage, log} from "utils/Utils";
+import Configs from "../../../../configs";
+import Routes from "../../../../route/routes";
+import Constants from "../../../../utils/constants";
+import {getLocalStorage, setLocalStorage, log} from "../../../../utils/Utils";
 /** REDUX */
-import * as Actions from "redux/actions";
+import * as Actions from "../../../../redux/actions";
 
-function AllBookings(props) {
+function AllBookings({history}) {
   const {t} = useTranslation();
-  const history = useHistory();
 
   /** Use redux */
   const dispatch = useDispatch();

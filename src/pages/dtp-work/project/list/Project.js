@@ -12,8 +12,8 @@ import DatePicker from "react-datepicker";
 import {toast} from "react-toastify";
 import moment from "moment";
 /** COMPONENTS */
-import Content from "layout/content/Content";
-import Head from "layout/head/Head";
+import Content from "../../../../layout/content/Content";
+import Head from "../../../../layout/head/Head";
 import {
   Block,
   BlockHead,
@@ -29,16 +29,16 @@ import {
   RSelect,
   BlockBetween,
   AlertConfirm,
-} from "components/Component";
+} from "../../../../components/Component";
 import TableProject from "../table/Project";
 import AddEditProjectForm from "../form/AddEditProject";
 /** COMMON */
-import Configs from "configs";
-import Routes from "route/routes";
-import Constants from "utils/constants";
-import {getLocalStorage, log, setLocalStorage} from "utils/Utils";
+import Configs from "../../../../configs";
+import Routes from "../../../../route/routes";
+import Constants from "../../../../utils/constants";
+import {getLocalStorage, log, setLocalStorage} from "../../../../utils/Utils";
 /** REDUX */
-import * as Actions from "redux/actions";
+import * as Actions from "../../../../redux/actions";
 
 function ListProjects({history}) {
   const {t} = useTranslation();

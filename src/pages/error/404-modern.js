@@ -3,8 +3,9 @@ import {useTranslation} from "react-i18next";
 import {Link} from "react-router-dom";
 /** COMPONENTS */
 import {Button} from "../../components/Component";
-import ErrorImage from "../../images/gfx/error-404.svg";
 import PageContainer from "../../layout/page-container/PageContainer";
+/** COMMON */
+import ErrorImage from "../../images/gfx/error-404.svg";
 
 const Error404Modern = () => {
   const {t} = useTranslation();

@@ -2,9 +2,13 @@ import React from "react";
 import {useTranslation} from "react-i18next";
 import moment from "moment";
 /** COMMON */
-import {Block, Row, Col} from "components/Component";
+import {
+  Block,
+  Row,
+  Col,
+} from "../../../../../components/Component";
 /** COMMON */
-import {numberFormat} from "utils/Utils";
+import {numberFormat} from "../../../../../utils/Utils";
 
 function AssetInformations(props) {
   const {t} = useTranslation();
@@ -21,6 +25,9 @@ function AssetInformations(props) {
     },
   } = props;
 
+  /**
+   ** RENDER
+   */
   return (
     <Block>
       <div className="data-head">

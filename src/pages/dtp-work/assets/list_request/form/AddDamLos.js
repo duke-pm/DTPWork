@@ -18,11 +18,11 @@ import {
   Row,
   Col,
   RSelect,
-} from "components/Component";
+} from "../../../../../components/Component";
 /** COMMON */
-import {log} from "utils/Utils";
+import {log} from "../../../../../utils/Utils";
 /** REDUX */
-import * as Actions from "redux/actions";
+import * as Actions from "../../../../../redux/actions";
 
 const CustomDateInput = forwardRef(({ value, onClick, onChange, disabled }, ref) => (
   <div onClick={onClick} ref={ref}>
@@ -41,6 +41,7 @@ const CustomDateInput = forwardRef(({ value, onClick, onChange, disabled }, ref)
 
 function AddDamLosForm(props) {
   const {t} = useTranslation();
+  const {errors, register, clearErrors, handleSubmit} = useForm();
   const {
     show,
     typeRequest,
@@ -208,6 +209,7 @@ function AddDamLosForm(props) {
    */
   useEffect(() => {
     if (loading.main && authState["successSignIn"] && show) {
+      clearErrors();
       onGetMasterData();
     }
   }, [
@@ -262,7 +264,6 @@ function AddDamLosForm(props) {
   /**
    ** RENDER
    */
-  const {errors, register, handleSubmit} = useForm();
   const disabled = loading.main || loading.submit;
   return (
     <SimpleBar

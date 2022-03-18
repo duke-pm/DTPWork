@@ -16,11 +16,11 @@ import {
   DataTableBody,
   Icon,
   UserAvatar,
-} from "components/Component";
+} from "../../../../../components/Component";
 /** COMMON */
-import {findUpper, log} from "utils/Utils";
+import {findUpper, log} from "../../../../../utils/Utils";
 /** REDUX */
-import * as Actions from "redux/actions";
+import * as Actions from "../../../../../redux/actions";
 
 function TableEmployee(props) {
   const {t} = useTranslation();

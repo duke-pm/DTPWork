@@ -15,9 +15,9 @@ import {
   DataTableBody,
   Icon,
   UserAvatar,
-} from "components/Component";
+} from "../../../../components/Component";
 /** COMMON */
-import {findUpper} from "utils/Utils";
+import {findUpper} from "../../../../utils/Utils";
 
 function TableResource(props) {
   const {t} = useTranslation();

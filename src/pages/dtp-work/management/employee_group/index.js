@@ -1,11 +1,10 @@
 import React, {useState, useEffect} from "react";
 import {useTranslation} from "react-i18next";
 import {useSelector, useDispatch} from "react-redux";
-import {useHistory} from "react-router-dom";
 import {Spinner} from "reactstrap";
 /** COMPONENTS */
-import Content from "layout/content/Content";
-import Head from "layout/head/Head";
+import Content from "../../../../layout/content/Content";
+import Head from "../../../../layout/head/Head";
 import {
   Block,
   BlockHead,
@@ -17,19 +16,18 @@ import {
   PreviewAltCard,
   Icon,
   Button,
-} from "components/Component";
+} from "../../../../components/Component";
 import TableEmployeeGroup from "./table";
 import AddEditForm from "./form/AddEdit";
 /** COMMON */
-import Configs from "configs";
-import Routes from "route/routes";
-import {log} from "utils/Utils";
+import Configs from "../../../../configs";
+import Routes from "../../../../route/routes";
+import {log} from "../../../../utils/Utils";
 /** REDUX */
-import * as Actions from "redux/actions";
+import * as Actions from "../../../../redux/actions";
 
-function EmployeeGroup(props) {
+function EmployeeGroup({history}) {
   const {t} = useTranslation();
-  const history = useHistory();
 
   /** Use redux */
   const dispatch = useDispatch();

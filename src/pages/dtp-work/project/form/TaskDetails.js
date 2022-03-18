@@ -4,18 +4,18 @@ import {useSelector, useDispatch} from "react-redux";
 import {useParams} from "react-router-dom";
 import {toast} from "react-toastify";
 /** COMPONENTS */
-import Head from "layout/head/Head";
-import Content from "layout/content/Content";
-import ContentAlt from "layout/content/ContentAlt";
-import {Row, Col, Icon, Button} from "components/Component";
+import Head from "../../../../layout/head/Head";
+import Content from "../../../../layout/content/Content";
+import ContentAlt from "../../../../layout/content/ContentAlt";
+import {Row, Col, Icon, Button} from "../../../../components/Component";
 import Overview from "./Overview";
 import Activities from "./Activities";
 /** COMMON */
-import Routes from "route/routes";
-import Constants from "utils/constants";
-import {log} from "utils/Utils";
+import Routes from "../../../../route/routes";
+import Constants from "../../../../utils/constants";
+import {log} from "../../../../utils/Utils";
 /** REDUX */
-import * as Actions from "redux/actions";
+import * as Actions from "../../../../redux/actions";
 
 function TaskDetails({history}) {
   const {t} = useTranslation();

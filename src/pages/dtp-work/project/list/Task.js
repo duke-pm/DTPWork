@@ -13,8 +13,8 @@ import {
 import {toast} from "react-toastify";
 import moment from "moment";
 /** COMPONENTS */
-import Content from "layout/content/Content";
-import Head from "layout/head/Head";
+import Content from "../../../../layout/content/Content";
+import Head from "../../../../layout/head/Head";
 import {
   Block,
   BlockHead,
@@ -31,16 +31,16 @@ import {
   RSelect,
   AlertConfirm,
   TooltipComponent,
-} from "components/Component";
+} from "../../../../components/Component";
 import TableTask from "../table/Task";
 import AddEditTaskForm from "../form/AddEditTask";
 /** COMMON */
-import Configs from "configs";
-import Routes from "route/routes";
-import Constants from "utils/constants";
-import {getLocalStorage, log, setLocalStorage} from "utils/Utils";
+import Configs from "../../../../configs";
+import Routes from "../../../../route/routes";
+import Constants from "../../../../utils/constants";
+import {getLocalStorage, log, setLocalStorage} from "../../../../utils/Utils";
 /** REDUX */
-import * as Actions from "redux/actions";
+import * as Actions from "../../../../redux/actions";
 
 function ListTasks({history}) {
   const {t} = useTranslation();

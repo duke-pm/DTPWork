@@ -1,6 +1,6 @@
 import React from "react";
-import {Icon, UserAvatar} from "components/Component";
-import {findUpper} from "utils/Utils";
+import {UserAvatar} from "../../../../components/Component";
+import {findUpper} from "../../../../utils/Utils";
 
 export const MeChat = ({idx, item}) => {
   // let slitTime = item.date.split(" - ");

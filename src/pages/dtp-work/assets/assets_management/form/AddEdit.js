@@ -20,12 +20,12 @@ import {
   Row,
   Col,
   RSelect,
-} from "components/Component";
+} from "../../../../../components/Component";
 import AddSupplier from "./AddSupplier";
 /** COMMON */
-import {log} from "utils/Utils";
+import {log} from "../../../../../utils/Utils";
 /** REDUX */
-import * as Actions from "redux/actions";
+import * as Actions from "../../../../../redux/actions";
 
 const CustomDateInput = forwardRef(({ value, onClick, onChange }, ref) => (
   <div onClick={onClick} ref={ref}>
@@ -43,6 +43,7 @@ const CustomDateInput = forwardRef(({ value, onClick, onChange }, ref) => (
 
 function AddEditForm(props) {
   const {t} = useTranslation();
+  const { errors, register, clearErrors, handleSubmit } = useForm();
   const {
     show,
     isAdd,
@@ -455,6 +456,7 @@ function AddEditForm(props) {
    */
   useEffect(() => {
     if (loading.main && authState["successSignIn"] && show) {
+      clearErrors();
       onGetMasterData();
     }
   }, [
@@ -533,7 +535,6 @@ function AddEditForm(props) {
   /**
    ** RENDER 
    */
-  const { errors, register, handleSubmit } = useForm();
   const disabled = loading.main || loading.submit;
   return (
     <SimpleBar

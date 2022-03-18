@@ -1,6 +1,6 @@
 import React from "react";
 
-const ContentAlt = ({ ...props }) => {
+const ContentAlt = ({...props}) => {
   return (
     <div className="nk-content p-0">
       <div className="nk-content-inner">

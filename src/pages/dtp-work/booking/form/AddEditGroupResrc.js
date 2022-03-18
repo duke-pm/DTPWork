@@ -16,11 +16,11 @@ import {
   Button,
   Row,
   Col,
-} from "components/Component";
+} from "../../../../components/Component";
 /** COMMON */
-import {log} from "utils/Utils";
+import {log} from "../../../../utils/Utils";
 /** REDUX */
-import * as Actions from "redux/actions";
+import * as Actions from "../../../../redux/actions";
 
 function AddEditGroupResrcForm(props) {
   const {t} = useTranslation();

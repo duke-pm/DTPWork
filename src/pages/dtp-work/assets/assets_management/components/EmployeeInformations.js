@@ -1,7 +1,11 @@
 import React from "react";
 import {useTranslation} from "react-i18next";
-/** COMMON */
-import {Block, Row, Col} from "components/Component";
+/** COMPONENTS */
+import {
+  Block,
+  Row,
+  Col,
+} from "../../../../../components/Component";
 
 function EmployeeInformations(props) {
   const {t} = useTranslation();
@@ -15,6 +19,9 @@ function EmployeeInformations(props) {
     },
   } = props;
 
+  /**
+   ** RENDER
+   */
   return (
     <Block>
       <div className="data-head">

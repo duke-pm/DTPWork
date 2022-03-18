@@ -17,11 +17,11 @@ import {
   Row,
   Col,
   Button,
-} from "components/Component";
+} from "../../../../../components/Component";
 /** COMMON */
-import Configs from "configs";
-import Routes from "services/routesApi";
-import {getCookies, numberFormat} from "utils/Utils";
+import Configs from "../../../../../configs";
+import Routes from "../../../../../services/routesApi";
+import {getCookies, numberFormat} from "../../../../../utils/Utils";
 
 function DetailsModal(props) {
   const {t} = useTranslation();

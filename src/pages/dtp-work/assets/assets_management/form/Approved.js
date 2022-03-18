@@ -4,7 +4,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
 import DatePicker from "react-datepicker";
 import SimpleBar from "simplebar-react";
-import {Form, FormGroup, Label, Spinner} from "reactstrap";
+import {
+  Form,
+  FormGroup,
+  Label,
+  Spinner,
+} from "reactstrap";
 import moment from "moment";
 /** COMMON */
 import {
@@ -18,15 +23,15 @@ import {
   Row,
   Col,
   RSelect,
-} from "components/Component";
+} from "../../../../../components/Component";
 import AssetInformations from "../components/AssetInformations";
 import EmployeeInformations from "../components/EmployeeInformations";
 /** COMMON */
-import Configs from "configs";
-import Routes from "services/routesApi";
-import {getCookies, log} from "utils/Utils";
+import Configs from "../../../../../configs";
+import Routes from "../../../../../services/routesApi";
+import {getCookies, log} from "../../../../../utils/Utils";
 /** REDUX */
-import * as Actions from "redux/actions";
+import * as Actions from "../../../../../redux/actions";
 
 const CustomDateInput = forwardRef(({ value, onClick, onChange }, ref) => (
   <div onClick={onClick} ref={ref}>

@@ -15,10 +15,10 @@ import {
   DataTableBody,
   Icon,
   UserAvatar,
-} from "components/Component";
+} from "../../../../../components/Component";
 /** COMMON */
-import Configs from "configs";
-import {findUpper} from "utils/Utils";
+import Configs from "../../../../../configs";
+import {findUpper} from "../../../../../utils/Utils";
 
 function TableRequestHandle(props) {
   const {t} = useTranslation();

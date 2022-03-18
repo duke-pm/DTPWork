@@ -9,7 +9,7 @@ import {
   UncontrolledTooltip,
   Badge,
 } from "reactstrap";
-import moment, { duration } from "moment";
+import moment from "moment";
 /** COMPONENTS */
 import {
   DataTableItem,
@@ -17,10 +17,10 @@ import {
   Icon,
   Button,
   UserAvatar,
-} from "components/Component";
+} from "../../../../components/Component";
 /** COMMON */
-import Routes from "route/routes";
-import {durationDay, expiredDate, findUpper} from "utils/Utils";
+import Routes from "../../../../route/routes";
+import {durationDay, expiredDate, findUpper} from "../../../../utils/Utils";
 
 function RowProject(props) {
   const {t} = useTranslation();

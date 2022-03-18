@@ -15,11 +15,11 @@ import {
   DataTableRow,
   Icon,
   UserAvatar,
-} from "components/Component";
+} from "../../../../../components/Component";
 /** COMMON */
-import Configs from "configs";
-import Routes from "services/routesApi";
-import {getCookies, findUpper} from "utils/Utils";
+import Configs from "../../../../../configs";
+import Routes from "../../../../../services/routesApi";
+import {getCookies, findUpper} from "../../../../../utils/Utils";
 
 function TableRequest(props) {
   const {t} = useTranslation();

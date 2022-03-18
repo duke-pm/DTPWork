@@ -15,16 +15,16 @@ import {
   BlockTitle,
   Icon,
   Button,
-} from "components/Component";
+} from "../../../../components/Component";
 import {
   MeChat,
   MetaChat,
   YouChat,
 } from "../components/CommentPartials";
 /** COMMON */
-import {log} from "utils/Utils";
+import {log} from "../../../../utils/Utils";
 /** REDUX */
-import * as Actions from "redux/actions";
+import * as Actions from "../../../../redux/actions";
 
 function Activities(props) {
   const {t} = useTranslation();

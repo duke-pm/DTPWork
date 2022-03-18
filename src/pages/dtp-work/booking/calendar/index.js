@@ -26,9 +26,9 @@ import {
   Row,
   Col,
   UserAvatar,
-} from "components/Component";
+} from "../../../../components/Component";
 /** COMMON */
-import {findUpper} from "utils/Utils";
+import {findUpper} from "../../../../utils/Utils";
 
 const EventView = (event) => {
   const [mouseEnter, setMouseEnter] = useState(false);
