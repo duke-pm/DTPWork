@@ -6,7 +6,7 @@ import Menu from "../menu/Menu";
 import Toggle from "./Toggle";
 
 const Sidebar = ({ fixed, theme, className, sidebarToggle, ...props }) => {
-  const [collapseSidebar, setSidebar] = useState(true);
+  const [collapseSidebar, setSidebar] = useState(false);
   const [mouseEnter, setMouseEnter] = useState(false);
 
   const toggleCollapse = () => {
