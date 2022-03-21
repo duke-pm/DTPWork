@@ -118,7 +118,7 @@ function TableRequestHandle(props) {
                     <span className="tb-lead">
                       {item.personRequest}
                     </span>
-                    <span>{item.jobTitle}</span>
+                    <span className="ff-italic fs-10px">{item.jobTitle}</span>
                   </div>
                 </div>
               </DataTableRow>

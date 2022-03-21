@@ -46,12 +46,14 @@ function Overview(props) {
   const {
     isLoading,
     isWrite,
+    isSidebar,
     history,
     commonState,
     authState,
     masterState,
     projectState,
     onGoBack,
+    toggleSideBar,
   } = props;
 
   /** Use redux */
@@ -465,31 +467,32 @@ function Overview(props) {
   };
   return (
     <SimpleBar className="px-4 py-3 nk-chat" style={{overflowY: "scroll"}}>
-      <Button
-        color="light"
-        outline
-        className="bg-white d-none d-sm-inline-flex"
-        onClick={onGoBack}>
-        <Icon name="arrow-left"></Icon>
-        <span>{t("common:back")}</span>
-      </Button>
-      <Button
-        color="light"
-        outline
-        className="btn-icon bg-white d-inline-flex d-sm-none"
-        onClick={onGoBack}>
-        <Icon name="arrow-left"></Icon>
-      </Button>
-
       <BlockHead className="mt-2">
         <BlockHeadContent>
           <div className="d-flex justify-content-between align-items-start">
-            <BlockTitle tag="h4" className="mr-3">
-              <span className="mr-1" style={{color: Constants.TYPE_TASK_COLOR[data.overview?.typeName]}}>
-                {data.overview?.typeName}
-              </span> {data.overview?.taskName}
-            </BlockTitle>
-            <div className="d-flex flex-column align-items-end">
+            <div className="d-flex align-items-center">
+              <Button
+                color="light"
+                outline
+                className="bg-white d-none d-sm-inline-flex"
+                onClick={onGoBack}>
+                <Icon name="arrow-left"></Icon>
+                <span>{t("common:back")}</span>
+              </Button>
+              <Button
+                color="light"
+                outline
+                className="btn-icon bg-white d-inline-flex d-sm-none"
+                onClick={onGoBack}>
+                <Icon name="arrow-left"></Icon>
+              </Button>
+              <BlockTitle tag="h4" className="mr-3">
+                <span className="mr-1 ml-2" style={{color: Constants.TYPE_TASK_COLOR[data.overview?.typeName]}}>
+                  {data.overview?.typeName}
+                </span> {data.overview?.taskName}
+              </BlockTitle>
+            </div>
+            <div className="d-flex align-items-center">
               <Button
                 className={`d-none d-sm-inline-flex ${data.watch ? "" : "btn-dim"}`}
                 color="primary"
@@ -512,9 +515,15 @@ function Overview(props) {
                   <Icon name={`${data.watch ? "eye-off" : "eye"}`}></Icon>
                 )}
               </Button>
+              <Button
+                className={`btn-icon btn-dim ml-2 ${isSidebar ? "active" : ""}`}
+                color="gray"
+                onClick={toggleSideBar}>
+                <Icon name="chat" />
+              </Button>
             </div>
           </div>
-          <BlockDes className="text-soft">
+          <BlockDes className="text-soft pt-2">
             <ul className="list-inline">
               <li>
                 <span className="text-primary">#{

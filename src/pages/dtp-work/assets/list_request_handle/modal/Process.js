@@ -84,7 +84,7 @@ function ProcessModal(props) {
     <Modal
       className="modal-dialog-centered"
       isOpen={show}
-      size="lg"
+      size="md"
       toggle={onClose}>
       <ModalBody>
         <BlockHead>
@@ -123,19 +123,23 @@ function ProcessModal(props) {
                   {data.process.length > 0 && data.process.map((itemT, indexT) => {
                     return (
                       <Row className="timeline-item" key={itemT.levelApproval + "_timeline_" + indexT}>
-                        <div className={`timeline-status bg-${
-                          statusClassName[itemT.statusID]} ${itemT.statusID === null ? "is-outline" : ""}`} />
-                        <Col md="3">
+                        <Col sm="1"  md="1">
+                          <div className={`timeline-status bg-${
+                            statusClassName[itemT.statusID]} ${itemT.statusID === null ? "is-outline" : ""}`}
+                          />
+                        </Col>
+                        <Col sm="3" md="3">
                           {itemT.approveDate && (
-                            <div className={`text-center rounded bg-${statusClassName[itemT.statusID]}-dim py-1`}>
+                            <div className={`text-center rounded bg-${statusClassName[itemT.statusID]}-dim py-1 d-flex flex-column`}>
                               <span className={`text-${statusClassName[itemT.statusID]}`}>{itemT.approveDate}</span>
-                              <span className={`text-${statusClassName[itemT.statusID]}`}>{" - "}</span>
                               <span className={`text-${statusClassName[itemT.statusID]}`}>{itemT.approveTime}</span>
                             </div>
                           )}
                         </Col>
-                        <Icon name="clock" />
-                        <Col md="6">
+                        <Col sm="1"  md="1">
+                          <Icon name="clock" />
+                        </Col>
+                        <Col sm="7"  md="7">
                           <div className="timeline-data">
                             <div className="timeline-des">
                               <div className="profile-ud plain">

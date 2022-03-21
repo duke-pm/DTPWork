@@ -500,17 +500,17 @@ function AllBookings({history}) {
                 <div className="card-tools">
                   <ul className="list-status">
                     <li>
-                      <Badge className="badge badge-dim badge-pill" color="warning">
+                      <Badge className="badge badge-pill" color="warning">
                         {`${bookingState["headerBooking"].countPending} ${t("all_booking:not_happen_status")}`}
                       </Badge>
                     </li>
                     <li>
-                      <Badge className="badge badge-dim badge-pill" color="success">
+                      <Badge className="badge badge-pill" color="success">
                         {`${bookingState["headerBooking"].countHappening} ${t("all_booking:happening_status")}`}
                       </Badge>
                     </li>
                     <li>
-                      <Badge className="badge badge-dim badge-pill" color="primary">
+                      <Badge className="badge badge-pill" color="secondary">
                         {`${bookingState["headerBooking"].countHappened} ${t("all_booking:happened_status")}`}
                       </Badge>
                     </li>

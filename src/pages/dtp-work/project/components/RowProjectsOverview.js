@@ -47,10 +47,10 @@ function RowProjectsOverview(props) {
       statusColor = "warning";
       break;
     case 3:
-      statusColor = "success";
+      statusColor = "primary";
       break;
     case 4:
-      statusColor = "primary";
+      statusColor = "success";
       break;
     case 5:
       statusColor = "gray";

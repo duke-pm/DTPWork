@@ -124,7 +124,7 @@ function TableRequest(props) {
                     <span className="tb-lead">
                       {itemR.fullName}
                     </span>
-                    <span>{itemR.jobTitle}</span>
+                    <span className="ff-italic fs-10px">{itemR.jobTitle}</span>
                   </div>
                 </div>
               </DataTableRow>

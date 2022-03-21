@@ -116,13 +116,14 @@ function CalendarBooking(props) {
   const onPrepareData = () => {
     let tmpEves = [],
       strStatus = "",
-      arrbooking = dataBookings;
-    for (let i of arrbooking) {
+      arrbooking = dataBookings,
+      i = null;
+    for (i of arrbooking) {
       strStatus = i.statusID === 1
         ? "warning"
         : i.statusID === 2
           ? "success"
-          : "primary";
+          : "secondary";
       let eve = {
         id: "event-id-" + i.bookID,
         bookID: i.bookID,

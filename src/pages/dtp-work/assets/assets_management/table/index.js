@@ -637,7 +637,7 @@ function TableAssets(props) {
                   <div className="profile-ud plain">
                     <span className="profile-ud-label fw-bold">{t("assets:description")}</span>
                     <span className="profile-ud-value">
-                      {formData?.descr}
+                      {formData?.descr || "-"}
                     </span>
                   </div>
                 </Col>

@@ -2,7 +2,9 @@ import React, {useState, useEffect} from "react";
 import {useTranslation} from "react-i18next";
 import {useSelector, useDispatch} from "react-redux";
 import {useParams} from "react-router-dom";
+import SimpleBar from "simplebar-react";
 import {toast} from "react-toastify";
+import classNames from "classnames";
 /** COMPONENTS */
 import Head from "../../../../layout/head/Head";
 import Content from "../../../../layout/content/Content";
@@ -33,6 +35,9 @@ function TaskDetails({history}) {
     main: true,
     search: false,
   });
+  const [view, setView] = useState({
+    sideBar: false,
+  });
   const [isWrite, setIsWrite] = useState(false);
   const [data, setData] = useState({
     task: null,
@@ -41,6 +46,18 @@ function TaskDetails({history}) {
   /**
    ** FUNCTIONS
    */
+  const toggleSideBar = () => {
+    setView({...view, sideBar: !view.sideBar});
+  };
+
+  const resizeFunc = () => {
+    if (window.innerWidth > 1550) {
+      setView({...view, sideBar: true});
+    } else {
+      setView({...view, sideBar: false});
+    }
+  };
+
   const onGoBack = () => history.goBack();
 
   const onGetMasterData = () => {
@@ -83,6 +100,11 @@ function TaskDetails({history}) {
   /**
    ** LIFE CYCLE
    */
+  useEffect(() => {
+    window.addEventListener("resize", resizeFunc);
+    resizeFunc();
+  }, []);
+
   useEffect(() => {
     if (loading.main && authState["successSignIn"] && authState["menu"]) {
       let menu = checkIsWrite(authState["menu"], Routes.projects);
@@ -134,6 +156,11 @@ function TaskDetails({history}) {
   /**
    ** RENDER
    */
+  const chatBodyClass = classNames({
+    "nk-chat-body": true,
+    "profile-shown": view.sideBar && window.innerWidth > 1550,
+  });
+
   return (
     <React.Fragment>
       <Head title={t("project:main_title")} />
@@ -175,34 +202,36 @@ function TaskDetails({history}) {
 
       {!loading.main && data.task && (
         <ContentAlt>
-          <Row className="g-0">
-            <Col md="8">
-              <Overview
+          <div className={chatBodyClass}>
+            <Overview
+              isLoading={loading.main}
+              isWrite={isWrite}
+              isSidebar={view.sideBar}
+              history={history}
+              commonState={commonState}
+              authState={authState}
+              masterState={masterState}
+              projectState={projectState}
+              onGoBack={onGoBack}
+              toggleSideBar={toggleSideBar}
+            />
+
+            <SimpleBar className={`nk-chat-profile ${view.sideBar ? "visible" : ""}`}>
+              <Activities
                 isLoading={loading.main}
                 isWrite={isWrite}
                 history={history}
                 commonState={commonState}
                 authState={authState}
-                masterState={masterState}
+                taskID={data.task.taskID}
                 projectState={projectState}
-                onGoBack={onGoBack}
               />
-            </Col>
+            </SimpleBar>
 
-            <Col md="4" className="pl-0 pr-0">
-              <div className="border-left">
-                <Activities
-                  isLoading={loading.main}
-                  isWrite={isWrite}
-                  history={history}
-                  commonState={commonState}
-                  authState={authState}
-                  taskID={data.task.taskID}
-                  projectState={projectState}
-                />
-              </div>
-            </Col>
-          </Row>
+            {window.innerWidth < 1550 && view.sideBar && (
+              <div onClick={toggleSideBar} className="nk-chat-profile-overlay" />
+            )}
+          </div>
         </ContentAlt>
       )}
     </React.Fragment>

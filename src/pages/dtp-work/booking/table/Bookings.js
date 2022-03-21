@@ -45,19 +45,19 @@ function TableBookings(props) {
   return (
     <DataTableBody compact>
       <DataTableHead className="nk-tb-item">
-        <DataTableRow>
+        <DataTableRow size="md">
           <span className="fw-bold">{t("all_booking:code")}</span>
         </DataTableRow>
-        <DataTableRow className="max-w-200" size="md">
+        <DataTableRow>
           <span className="fw-bold">{t("all_booking:name_booking")}</span>
         </DataTableRow>
         <DataTableRow>
           <span className="fw-bold">{t("all_booking:time_use")}</span>
         </DataTableRow>
-        <DataTableRow size="sm">
+        <DataTableRow size="md">
           <span className="fw-bold">{t("all_booking:resource")}</span>
         </DataTableRow>
-        <DataTableRow size="sm">
+        <DataTableRow size="md">
           <span className="fw-bold">{t("all_booking:created_user")}</span>
         </DataTableRow>
         <DataTableRow size="md">
@@ -77,7 +77,7 @@ function TableBookings(props) {
               statusColor = "success";
               break;
             case 3:
-              statusColor = "primary";
+              statusColor = "secondary";
               break;
             default:
               statusColor = "warning";
@@ -86,10 +86,10 @@ function TableBookings(props) {
 
           return (
             <DataTableItem key={item.bookID + "_booking_" + index}>
-              <DataTableRow>
+              <DataTableRow size="md">
                 <span className="tb-lead text-primary">#{item.bookID}</span>
               </DataTableRow>
-              <DataTableRow className="max-w-200" size="md">
+              <DataTableRow>
                 <span className="tb-lead">{item.purpose}</span>
               </DataTableRow>
               <DataTableRow>
@@ -98,18 +98,18 @@ function TableBookings(props) {
                     <span className="tb-lead">
                       {item.strStartDateTime.split(" - ")[0]}
                     </span>
-                    <span>{item.strStartDateTime.split(" - ")[1]}</span>
+                    <span className="ff-italic fs-10px">{item.strStartDateTime.split(" - ")[1]}</span>
                   </div>
                   <Icon name="arrow-right mx-1" />
                   <div className="user-info">
                     <span className="tb-lead">
                       {item.strEndDateTime.split(" - ")[0]}
                     </span>
-                    <span>{item.strEndDateTime.split(" - ")[1]}</span>
+                    <span className="ff-italic fs-10px">{item.strEndDateTime.split(" - ")[1]}</span>
                   </div>
                 </div>
               </DataTableRow>
-              <DataTableRow size="sm">
+              <DataTableRow size="md">
                 <Badge
                   style={{backgroundColor: item.color}}
                   className="badge badge-dim badge-pill"
@@ -117,7 +117,7 @@ function TableBookings(props) {
                   {item.resourceName}  
                 </Badge>
               </DataTableRow>
-              <DataTableRow size="sm">
+              <DataTableRow size="md">
                 <div className="user-card">
                   <UserAvatar className="sm" text={findUpper(item.ownerName)} />
                   <div className="user-info">

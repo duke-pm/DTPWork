@@ -53,7 +53,7 @@ function TableProject(props) {
   /**
    ** RENDER
    */
-  let padding = 10;
+  let padding = 0;
   return (
     <DataTableBody compact>
       <DataTableHead className="nk-tb-item">
