@@ -827,6 +827,7 @@
     "holder_to": "đến",
     "holder_change_progress": "*TIẾN ĐỘ (%) được thay đổi từ",
     "holder_change_status": "*TRẠNG THÁI được thay đổi từ",
+    "holder_change_date": "*THỜI GIAN được thay đổi từ",
     "holder_comment": "Ý kiến của bạn...",
     "list_watchers": "Danh sách nhân viên theo dõi task",
     "recieve_email_noti": "Nhận e-mail thông báo khi thành viên có thay đổi thông tin",

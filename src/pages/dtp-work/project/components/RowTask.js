@@ -170,6 +170,7 @@ function RowTask(props) {
             <Progress
               id={`per_${data.taskID}`}
               className="progress-pill progress-md bg-light"
+              animated
               value={data.percentage}
             ></Progress>
             <UncontrolledTooltip autohide={true} placement="top" target={`per_${data.taskID}`}>

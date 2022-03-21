@@ -39,6 +39,11 @@ function GanttTasks({history}) {
     submit: false,
   });
   const [isWrite, setIsWrite] = useState(false);
+  const [date, setDate] = useState({
+    task: "",
+    start: "",
+    end: "",
+  })
   const [data, setData] = useState({
     list: [],
     count: 0,
@@ -51,8 +56,22 @@ function GanttTasks({history}) {
     history.replace(`${Routes.tasks}/${projectID}`);
   };
 
+  const onResetData = () => {
+    setDate({
+      task: "",
+      start: "",
+      end: "",
+    });
+  };
+
   const onHandleChangeDate = (task, start, end) => {
     if (isWrite && task.status !== 5 && task.status !== 7) {
+      setDate({
+        task: task.id,
+        start: moment(start).format('DD/MM/YYYY'),
+        end: moment(end).format('DD/MM/YYYY'),
+      });
+      setLoading({...loading, submit: true});
       let newData = [
 				...[],
 				{
@@ -61,7 +80,6 @@ function GanttTasks({history}) {
           EndDate: moment(end).format('YYYY-MM-DD'),
         },
 			];
-      setLoading({...loading, submit: true});
       let params = {
         LstUpdateInfo: newData,
         RefreshToken: authState["data"]["refreshToken"],
@@ -94,6 +112,25 @@ function GanttTasks({history}) {
     dispatch(Actions.fFetchListTaskAll(params, history));
   };
 
+  const onUpdateActivitiesDate = () => {
+    let comment = `* ${t("task_details:holder_change_date")} ${
+      date.start
+    } ${t("task_details:holder_change_to")} ${
+      date.end
+    }.`;
+    
+    let params = {
+      LineNum: 0,
+      TaskID: date.task,
+      Comments: comment,
+      RefreshToken: authState["data"]["refreshToken"],
+      Lang: commonState["language"],
+    };
+    dispatch(Actions.fFetchCreateComment(params, history));
+    onResetData();
+    return;
+  };
+
   const onSuccess = type => {
     dispatch(Actions.resetTask());
     if (type === "Gantt") {
@@ -106,6 +143,7 @@ function GanttTasks({history}) {
       toast(t("success:update_task"), {type: "success"});
       setLoading({...loading, search: true, submit: false});
       onStartGetData();
+      onUpdateActivitiesDate();
     }
   };
 
