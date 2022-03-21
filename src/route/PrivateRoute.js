@@ -5,7 +5,7 @@ import {Spinner} from "reactstrap";
 /** COMMON */
 import FieldsAuth from "configs/fieldsAuth";
 import Constants from "utils/constants";
-import {encodeData, decodeData, log} from "utils/Utils";
+import {decodeData} from "utils/Utils";
 /** REDUX */
 import * as Actions from "../redux/actions";
 
@@ -30,30 +30,21 @@ const PrivateRoute = ({ exact, component: Component, ...rest }) => {
     }
 
     /** Check info sign in */
-    let lEncodeSignin = localStorage.getItem(Constants.LS_U_P);
-    if (lEncodeSignin && !authState["data"]["accessToken"]) {
-      lEncodeSignin = decodeData(lEncodeSignin);
-      onSubmitLogin(lEncodeSignin.userName, lEncodeSignin.password);
+    let localSignIn = localStorage.getItem(Constants.LS_SIGN_IN);
+    if (localSignIn && !authState["data"]["accessToken"]) {
+      localSignIn = decodeData(localSignIn);
+      let i, tmpDataLogin = {tokenInfo: {}, lstMenu: {}};
+      for (i = 0; i < FieldsAuth.length; i++) {
+        tmpDataLogin.tokenInfo[FieldsAuth[i].key] =
+          localSignIn[FieldsAuth[i].value];
+      }
+      tmpDataLogin["lstMenu"] = localSignIn["lstMenu"];
+      dispatch(Actions.fSuccessSignIn(tmpDataLogin));
+      setLoading(false);
     } else {
-      localStorage.removeItem(Constants.LS_SIGN_IN);
+      localStorage.removeItem(Constants.LS_U_P);
       setLoading(false);
     }
-  };
-
-  const onSubmitLogin = (userName, password) => {
-    let params = {
-      Username: userName,
-      Password: password,
-      TypeLogin: 1,
-      Lang: "vi",
-    }
-    dispatch(Actions.fFetchSignIn(params));
-  };
-
-  const onSaveLocalData = () => {
-    let encodeSI = encodeData(authState["data"]);
-    localStorage.setItem(Constants.LS_SIGN_IN, encodeSI);
-    setLoading(false);
   };
 
   /**
@@ -62,27 +53,6 @@ const PrivateRoute = ({ exact, component: Component, ...rest }) => {
   useEffect(() => {
     onCheckLocalStorage();
   }, []);
-
-  useEffect(() => {
-    if (loading) {
-      if (!authState["submitting"]) {
-        if (authState["successSignIn"] && !authState["errorSignIn"]) {
-          return onSaveLocalData();
-        }
-
-        if (!authState["successSignIn"] && authState["errorSignIn"]) {
-          localStorage.removeItem(Constants.LS_U_P);
-          localStorage.removeItem(Constants.LS_SIGN_IN);
-          return setLoading(false);
-        }
-      }
-    }
-  }, [
-    loading,
-    authState["submitting"],
-    authState["successSignIn"],
-    authState["errorSignIn"]
-  ]);
 
   /**
    ** RENDER

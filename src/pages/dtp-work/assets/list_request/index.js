@@ -419,9 +419,15 @@ function RequestAssets({history}) {
    ** LIFE CYCLE
    */
   useEffect(() => {
-    if (!tabIdx || tabIdx > 2 || typeof tabIdx !== "number") {
-      setFilterTab(0);
-      history.replace(`${Routes.requestsApproved}?tabIdx=0`);
+    if (!tabIdx || tabIdx > 2) {
+      let tmp = Number(tabIdx);
+      if (typeof tmp === "number") {
+        setFilterTab(tmp);
+        history.replace(`${Routes.requestsApproved}?tabIdx=${tmp}`);
+      } else {
+        setFilterTab(0);
+        history.replace(`${Routes.requestsApproved}?tabIdx=0`);
+      }
     }
   }, []);
 

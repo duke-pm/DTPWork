@@ -419,9 +419,15 @@ function AssetsManagement({history, params}) {
    ** LIFE CYCLE
    */
   useEffect(() => {
-    if (!tabIdx || tabIdx > 5 || typeof tabIdx !== "number") {
-      setFilterTab(0);
-      history.replace(`${Routes.assetsManagement}?tabIdx=0`);
+    if (!tabIdx || tabIdx > 5) {
+      let tmp = Number(tabIdx);
+      if (typeof tmp === "number") {
+        setFilterTab(tmp);
+        history.replace(`${Routes.assetsManagement}?tabIdx=${tmp}`);
+      } else {
+        setFilterTab(0);
+        history.replace(`${Routes.assetsManagement}?tabIdx=0`);
+      }
     }
   }, []);
 
