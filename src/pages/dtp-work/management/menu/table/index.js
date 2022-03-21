@@ -182,7 +182,7 @@ function TableMenu(props) {
                       id={idChkWeb}
                       name={idChkWeb}
                       type="checkbox"
-                      disabled={loading || !isWrite || item.typeID === 1}
+                      disabled={loading || !isWrite || item.typeID === 1 || item.inactive}
                       checked={item.isWeb}
                       onChange={() => onChangeCheck("web", idChkWeb, item)}
                     />
@@ -200,7 +200,7 @@ function TableMenu(props) {
                       id={idChkMobile}
                       name={idChkMobile}
                       type="checkbox"
-                      disabled={loading || !isWrite || item.typeID === 1}
+                      disabled={loading || !isWrite || item.typeID === 1 || item.inactive}
                       checked={item.isMobile}
                       onChange={() => onChangeCheck("mobile", idChkMobile, item)}
                     />

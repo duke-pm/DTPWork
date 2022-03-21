@@ -140,7 +140,9 @@ function TableEmployee(props) {
                     <span className={`tb-lead ${item.inactive && "text-gray"}`}>
                       {item.fullName}
                     </span>
-                    <span>{item.email}</span>
+                    <span className={`ff-italic fs-10px ${item.inactive && "text-gray"}`}>
+                      {item.email}
+                    </span>
                   </div>
                 </div>
               </DataTableRow>

@@ -42,17 +42,17 @@ function RowTable(props) {
   };
 
   const onCheckParent = status => {
-    if (data.countChild > 0) {
+    if (data.lstPermissionItem.length > 0) {
       let childs = data.lstPermissionItem, tmpTrue = [];
       tmpTrue = childs.filter(f => f.isAccess === status);
 
       if (tmpTrue.length === 0) {
         setCheckAll(status);
       }
-      if (tmpTrue.length > 0 && tmpTrue.length < data.countChild) {
+      if (tmpTrue.length > 0 && tmpTrue.length < data.lstPermissionItem.length) {
         setCheck({...check, access: true});
       }
-      if (tmpTrue.length > 0 && tmpTrue.length === data.countChild) {
+      if (tmpTrue.length > 0 && tmpTrue.length === data.lstPermissionItem.length) {
         setCheck({...check, access: status});
         setCheckAll(status);
       }
@@ -197,9 +197,7 @@ function RowTable(props) {
           </DataTableRow>
         ) : (
           <DataTableRow className="nk-tb-col-check">
-            <div className="border-table-item">
-
-            </div>
+            <div className="border-table-item" />
           </DataTableRow>
         )}
         <DataTableRow>

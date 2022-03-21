@@ -119,6 +119,7 @@ function AddEditForm(props) {
       if (isUpdate) {
         onSetDataDetails(updateItem);
       } else {
+        clearErrors();
         onResetData();
         setLoading({...loading, main: false});
       }

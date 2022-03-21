@@ -348,6 +348,26 @@ function AddEditForm(props) {
    ** LIFE CYCLE
    */
   useEffect(() => {
+    if (!show) {
+      onResetData();
+      setError({
+        group: null,
+        line: null,
+        selUser1: null,
+        selTitle1: null,
+        selUser2: null,
+        selTitle2: null,
+        selUser3: null,
+        selTitle3: null,
+        selUser4: null,
+        selTitle4: null,
+        selUser5: null,
+        selTitle5: null,
+      });
+    }
+  }, [show]);
+
+  useEffect(() => {
     if (loading.main && authState["successSignIn"] && show) {
       onGetMasterData();
     }
@@ -567,9 +587,8 @@ function AddEditForm(props) {
                 <Row className="g-3 align-items-center" key={`row_level_${indexL}`}>
                   <Col md="2">
                     <span className="fw-bold">
-                      {`${t("management:level_number")} ${itemL.LevelID}`}
+                      {`${t("management:level_number")} ${itemL.LevelID}`} {indexL === 0 && <span className="text-danger">*</span>}
                     </span>
-                    {indexL === 0 && <span className="text-danger">*</span>}
                   </Col>
                   <Col md="5">
                     <FormGroup>

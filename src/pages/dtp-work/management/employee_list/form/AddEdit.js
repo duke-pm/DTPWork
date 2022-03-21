@@ -316,6 +316,13 @@ function AddEditForm(props) {
    ** LIFE CYCLE
    */
   useEffect(() => {
+    if (!show) {
+      onResetData();
+      clearErrors();
+    }
+  }, [show]);
+
+  useEffect(() => {
     if (loading.main && authState["successSignIn"] && show) {
       onGetMasterData();
     }
@@ -326,16 +333,13 @@ function AddEditForm(props) {
   ]);
 
   useEffect(() => {
-    if (!loading.main && updateItem && show) {
+    if (!loading.main && isUpdate && show) {
       onSetFormDataDetails(updateItem);
-    }
-    if (!show) {
-      clearErrors();
     }
   }, [
     show,
     loading.main,
-    updateItem,
+    isUpdate,
   ]);
 
   useEffect(() => {

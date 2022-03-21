@@ -53,7 +53,7 @@ function TableProject(props) {
   /**
    ** RENDER
    */
-  let padding = 0;
+  let padding = 10;
   return (
     <DataTableBody compact>
       <DataTableHead className="nk-tb-item">
@@ -87,7 +87,6 @@ function TableProject(props) {
           return (
             <RowProject
               key={item.prjID + "_prj_" + index}
-              className=""
               isWrite={isWrite}
               disabled={disabled}
               padding={padding}

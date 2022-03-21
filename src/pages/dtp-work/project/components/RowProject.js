@@ -27,7 +27,6 @@ function RowProject(props) {
   const {
     isWrite,
     disabled,
-    className,
     padding,
     index,
     data,
@@ -78,7 +77,7 @@ function RowProject(props) {
       <DataTableItem key={data.prjID + "_project_" + index}>
         {data.countChild > 0 ? (
           <DataTableRow className="nk-tb-col-check">
-            <div className={`${className + padding}`}>
+            <div>
               <Button
                 className={`${!viewChild && "btn-dim"}`}
                 size="sm"
@@ -96,14 +95,14 @@ function RowProject(props) {
           {data.countTask > 0 && (
             <NavLink
               to={`${process.env.PUBLIC_URL}${Routes.tasks}/${data.prjID}`}>
-              <span className={`tb-lead ${className + padding}`}>{data.prjName}</span>
+              <span className={`tb-lead`} style={{paddingLeft: `${padding}px`}}>{data.prjName}</span>
             </NavLink>
           )}
           {data.countTask === 0 && (
             <a
               href="#project"
               onClick={data.countChild > 0 ? onChangeView : undefined}>
-              <span className={`tb-lead ${className + padding}`}>{data.prjName}</span>
+              <span className={`tb-lead`} style={{paddingLeft: `${padding}px`}}>{data.prjName}</span>
             </a>
           )}
         </DataTableRow>
@@ -289,10 +288,9 @@ function RowProject(props) {
         return (
           <RowProject
             key={item.prjID + "_prj_" + index}
-            className="ml-"
             isWrite={isWrite}
             disabled={disabled}
-            padding={padding + 2}
+            padding={padding + 10}
             index={index}
             data={item}
             onDetails={onDetails}
