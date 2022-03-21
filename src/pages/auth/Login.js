@@ -20,8 +20,8 @@ import PageContainer from "../../layout/page-container/PageContainer";
 import Head from "../../layout/head/Head";
 import AuthFooter from "./AuthFooter";
 /** COMMON */
-import FieldsAuth from "../../configs/fieldsAuth";
 import Constants from "../../utils/constants";
+import {encodeData, decodeData} from "utils/Utils";
 import Logo from "../../images/logo.png";
 import LogoDark from "../../images/logo-dark.png";
 /** REDUX */
@@ -46,12 +46,22 @@ const Login = () => {
     main: true,
     submit: false,
   });
+  const [formData, setFormData] = useState({
+    userName: "",
+    password: "",
+  })
   const [passState, setPassState] = useState(false);
 
   /**
    ** FUNCTIONS 
    */
-  const togglePassState = () => setPassState(!passState);
+  const onChangeInput = e => {
+    setFormData({...formData, [e.target.name]: e.target.value})
+  };
+
+  const togglePassState = () => {
+    setPassState(!passState);
+  };
 
   const onCheckLocalStorage = () => {
     /** Check language */
@@ -62,33 +72,32 @@ const Login = () => {
     }
 
     /** Check info sign in */
-    let localSignIn = localStorage.getItem(Constants.LS_SIGN_IN);
-    if (localSignIn && !authState["data"]["accessToken"]) {
-      localSignIn = JSON.parse(localSignIn);
-      let i, tmpDataLogin = {tokenInfo: {}, lstMenu: {}};
-      for (i = 0; i < FieldsAuth.length; i++) {
-        tmpDataLogin.tokenInfo[FieldsAuth[i].key] =
-        localSignIn[FieldsAuth[i].value];
-      }
-      tmpDataLogin["lstMenu"] = localSignIn["lstMenu"];
-      dispatch(Actions.fSuccessSignIn(tmpDataLogin));
-      onGoToHomepage();
+    let lEncodeSignin = localStorage.getItem(Constants.LS_U_P);
+    if (lEncodeSignin && !authState["data"]["accessToken"]) {
+      lEncodeSignin = decodeData(lEncodeSignin);
+      setFormData({
+        userName: lEncodeSignin.userName,
+        password: lEncodeSignin.password,
+      });
+      onSubmitLogin(lEncodeSignin.userName, lEncodeSignin.password);
+    } else {
+      localStorage.removeItem(Constants.LS_SIGN_IN);
+      setLoading({main: false, submit: false});
     }
-    setLoading({main: false, submit: false});
   };
 
-  const onForm = formData => {
-    let valUsername = formData[INPUT_NAME.USER_NAME].trim(),
-      valPassword = formData[INPUT_NAME.PASSWORD].trim();
+  const onForm = () => {
+    let valUsername = formData.userName.trim(),
+      valPassword = formData.password.trim();
     if (valUsername !== "" && valPassword !== "") {
+      setLoading({...loading, submit: true});
       onSubmitLogin(valUsername, valPassword);
     } else {
-      toast(t("error:wrong_username_password"), {type: "error"});
+      toast(t("error:wrong_username_password"), {type: "warning"});
     }
   };
 
   const onSubmitLogin = (userName, password) => {
-    setLoading({...loading, submit: true});
     let params = {
       Username: userName,
       Password: password,
@@ -96,6 +105,16 @@ const Login = () => {
       Lang: commonState["language"],
     }
     dispatch(Actions.fFetchSignIn(params));
+  };
+
+  const onSaveLocalData = () => {
+    let encodeSI = encodeData(authState["data"]);
+    localStorage.setItem(Constants.LS_SIGN_IN, encodeSI);
+
+    let encodeUP = encodeData(formData);
+    localStorage.setItem(Constants.LS_U_P, encodeUP);
+
+    onGoToHomepage();
   };
 
   const onGoToHomepage = () => {
@@ -124,8 +143,7 @@ const Login = () => {
     if (loading.main || loading.submit) {
       if (!authState["submitting"]) {
         if (authState["successSignIn"] && !authState["errorSignIn"]) {
-          localStorage.setItem(Constants.LS_SIGN_IN, JSON.stringify(authState["data"]));
-          return onGoToHomepage();
+          return onSaveLocalData();
         }
 
         if (!authState["successSignIn"] && authState["errorSignIn"]) {
@@ -171,28 +189,30 @@ const Login = () => {
             <Form className="is-alter" onSubmit={handleSubmit(onForm)}>
               <FormGroup>
                 <div className="form-label-group">
-                  <label className="form-label" htmlFor={INPUT_NAME.USER_NAME}>
+                  <label className="form-label" htmlFor="userName">
                   {t("sign_in:user_name")}
                   </label>
                 </div>
                 <div className="form-control-wrap">
                   <input
-                    ref={register({ required: t("validate:empty") })}
+                    ref={register({required: t("validate:empty")})}
                     className="form-control-lg form-control"
-                    id={INPUT_NAME.USER_NAME}
-                    name={INPUT_NAME.USER_NAME}
+                    id="userName"
+                    name="userName"
                     type="text"
-                    placeholder={t("sign_in:holder_user_name")}
                     disabled={disabledInput}
+                    value={formData.userName}
+                    placeholder={t("sign_in:holder_user_name")}
+                    onChange={onChangeInput}
                   />
-                  {errors[INPUT_NAME.USER_NAME] && (
-                    <span className="invalid">{errors[INPUT_NAME.USER_NAME].message}</span>
+                  {errors.userName && (
+                    <span className="invalid">{errors.userName.message}</span>
                   )}
                 </div>
               </FormGroup>
               <FormGroup>
                 <div className="form-label-group">
-                  <label className="form-label" htmlFor={INPUT_NAME.PASSWORD}>
+                  <label className="form-label" htmlFor="password">
                     {t("sign_in:password")}
                   </label>
                   <Link
@@ -215,19 +235,21 @@ const Login = () => {
                     <Icon name="eye-off" className="passcode-icon icon-hide"></Icon>
                   </a>
                   <input
-                    ref={register({ required: t("validate:empty") })}
+                    ref={register({required: t("validate:empty")})}
                     className={`form-control-lg form-control ${passState
                       ? "is-hidden"
                       : "is-shown"
                     }`}
-                    id={INPUT_NAME.PASSWORD}
-                    name={INPUT_NAME.PASSWORD}
+                    id="password"
+                    name="password"
                     type={passState ? "text" : "password"}
-                    placeholder={t("sign_in:holder_password")}
                     disabled={disabledInput}
+                    value={formData.password}
+                    placeholder={t("sign_in:holder_password")}
+                    onChange={onChangeInput}
                   />
-                  {errors[INPUT_NAME.PASSWORD] && (
-                    <span className="invalid">{errors[INPUT_NAME.PASSWORD].message}</span>
+                  {errors.password && (
+                    <span className="invalid">{errors.password.message}</span>
                   )}
                 </div>
               </FormGroup>

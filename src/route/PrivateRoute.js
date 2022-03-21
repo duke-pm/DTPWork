@@ -1,14 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Route, Redirect, useParams} from "react-router-dom";
+import {Spinner} from "reactstrap";
 /** COMMON */
 import FieldsAuth from "configs/fieldsAuth";
 import Constants from "utils/constants";
+import {encodeData, decodeData, log} from "utils/Utils";
 /** REDUX */
 import * as Actions from "../redux/actions";
-import { Spinner } from "reactstrap";
-
-const auth = localStorage.getItem(Constants.LS_SIGN_IN);
 
 const PrivateRoute = ({ exact, component: Component, ...rest }) => {
   const {tokenData} = useParams();
@@ -31,20 +30,30 @@ const PrivateRoute = ({ exact, component: Component, ...rest }) => {
     }
 
     /** Check info sign in */
-    let localSignIn = localStorage.getItem(Constants.LS_SIGN_IN);
-    if (localSignIn && !authState["data"]["accessToken"]) {
-      localSignIn = JSON.parse(localSignIn);
-      let i, tmpDataLogin = {tokenInfo: {}, lstMenu: {}};
-      for (i = 0; i < FieldsAuth.length; i++) {
-        tmpDataLogin.tokenInfo[FieldsAuth[i].key] =
-          localSignIn[FieldsAuth[i].value];
-      }
-      tmpDataLogin["lstMenu"] = localSignIn["lstMenu"];
-      dispatch(Actions.fSuccessSignIn(tmpDataLogin));
-      setLoading(false);
+    let lEncodeSignin = localStorage.getItem(Constants.LS_U_P);
+    if (lEncodeSignin && !authState["data"]["accessToken"]) {
+      lEncodeSignin = decodeData(lEncodeSignin);
+      onSubmitLogin(lEncodeSignin.userName, lEncodeSignin.password);
     } else {
+      localStorage.removeItem(Constants.LS_SIGN_IN);
       setLoading(false);
     }
+  };
+
+  const onSubmitLogin = (userName, password) => {
+    let params = {
+      Username: userName,
+      Password: password,
+      TypeLogin: 1,
+      Lang: "vi",
+    }
+    dispatch(Actions.fFetchSignIn(params));
+  };
+
+  const onSaveLocalData = () => {
+    let encodeSI = encodeData(authState["data"]);
+    localStorage.setItem(Constants.LS_SIGN_IN, encodeSI);
+    setLoading(false);
   };
 
   /**
@@ -54,9 +63,31 @@ const PrivateRoute = ({ exact, component: Component, ...rest }) => {
     onCheckLocalStorage();
   }, []);
 
+  useEffect(() => {
+    if (loading) {
+      if (!authState["submitting"]) {
+        if (authState["successSignIn"] && !authState["errorSignIn"]) {
+          return onSaveLocalData();
+        }
+
+        if (!authState["successSignIn"] && authState["errorSignIn"]) {
+          localStorage.removeItem(Constants.LS_U_P);
+          localStorage.removeItem(Constants.LS_SIGN_IN);
+          return setLoading(false);
+        }
+      }
+    }
+  }, [
+    loading,
+    authState["submitting"],
+    authState["successSignIn"],
+    authState["errorSignIn"]
+  ]);
+
   /**
    ** RENDER
    */
+  const auth = localStorage.getItem(Constants.LS_SIGN_IN);
   return (
     <Route
       exact={exact ? true : false}

@@ -719,10 +719,8 @@ function TableAssets(props) {
                         <div className="user-card">
                           <UserAvatar className="sm" text={findUpper(itemH.empName)} />
                           <div className="user-info">
-                            <span className="tb-lead">
-                              {itemH.empName}
-                            </span>
-                            <span>{itemH.jobTitle}</span>
+                            <span className="tb-lead">{itemH.empName}</span>
+                            <span className="ff-italic fs-10px">{itemH.jobTitle}</span>
                           </div>
                         </div>
                       </DataTableRow>

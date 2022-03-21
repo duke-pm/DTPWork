@@ -108,6 +108,7 @@ function ChangePassword({history}) {
 
   const onSuccess = () => {
     dispatch(Actions.resetChangePassword());
+    localStorage.removeItem(Constants.LS_U_P);
     localStorage.removeItem(Constants.LS_SIGN_IN);
     setLoading(false);
     toast(t("success:change_password"), {type: "success"});

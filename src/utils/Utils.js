@@ -1,6 +1,9 @@
 import {Redirect} from "react-router-dom";
+import CryptoJS from "crypto-js";
 import Cookies from 'js-cookie';
 import moment from "moment";
+/** COMMON */
+import Constants from "./constants";
 
 //url for production
 export var url = "";
@@ -224,4 +227,18 @@ export const checkIsWrite = (menu, route) => {
     }
   }
   return fMenuRequest;
+};
+
+export const encodeData = data => {
+  let encode = CryptoJS.AES.encrypt(JSON.stringify(data), Constants.LS_U_P).toString();
+  // log("Encode Data: " + encode);
+  return encode;
+};
+
+export const decodeData = encode => {
+  let bytes = CryptoJS.AES.decrypt(encode, Constants.LS_U_P);
+  let decode = bytes.toString(CryptoJS.enc.Utf8);
+  decode = JSON.parse(decode);
+  // log("Decode Data: " + decode);
+  return decode;
 };

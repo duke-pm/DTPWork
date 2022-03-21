@@ -575,6 +575,7 @@ function RequestAssetsHandle({history}) {
           </DataTable>
         </Block>
 
+        {/** Forms */}
         <ApprovedForm
           show={view.approved}
           history={history}

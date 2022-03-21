@@ -202,6 +202,7 @@ export const fFetchRefreshToken = (params, history) => {
           return dispatch(fSuccessSignIn(res.data, true));
         } else {
           dispatch({type: types.ERROR_REFRESH_TOKEN});
+          localStorage.removeItem(Constants.LS_U_P);
           localStorage.removeItem(Constants.LS_SIGN_IN);
           dispatch(fErrorSignIn("error"));
           dispatch(Actions.fSignout());

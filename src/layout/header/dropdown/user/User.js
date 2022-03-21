@@ -20,6 +20,7 @@ const User = () => {
   const toggle = () => setOpen((prevState) => !prevState);
 
   const handleSignout = () => {
+    localStorage.removeItem(Constants.LS_U_P);
     localStorage.removeItem(Constants.LS_SIGN_IN);
   };
 
