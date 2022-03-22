@@ -26,9 +26,9 @@ const Routes = {
   /** Project routes */
   projects: "/project/projects",
   projectsOverview: "/project/projects-overview",
-  tasks: "/projects",
-  ganttTasks: "/projects/gantt-chart",
-  taskDetails: "/tasks",
+  tasks: "/project/tasks",
+  ganttTasks: "/project/gantt-chart",
+  taskDetails: "/project/task",
 };
 
 export default Routes;

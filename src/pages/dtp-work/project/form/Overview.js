@@ -205,7 +205,6 @@ function Overview(props) {
         taskDetail.statusName
       }.`;
     }
-    log("[LOG] === onUpdateActivities ===> ", comment);
     
     let params = {
       LineNum: 0,
@@ -240,7 +239,6 @@ function Overview(props) {
         taskDetail.percentage
       }%.`;
     }
-    log("[LOG] === onUpdateActivities ===> ", comment);
     
     let params = {
       LineNum: 0,
@@ -486,8 +484,8 @@ function Overview(props) {
                 onClick={onGoBack}>
                 <Icon name="arrow-left"></Icon>
               </Button>
-              <BlockTitle tag="h4" className="mr-3">
-                <span className="mr-1 ml-2" style={{color: Constants.TYPE_TASK_COLOR[data.overview?.typeName]}}>
+              <BlockTitle tag="h4" className="mr-3 ml-2">
+                <span style={{color: Constants.TYPE_TASK_COLOR[data.overview?.typeName]}}>
                   {data.overview?.typeName}
                 </span> {data.overview?.taskName}
               </BlockTitle>
