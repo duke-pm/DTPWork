@@ -272,7 +272,7 @@ function ChangePassword({history}) {
                 </Button>
                 <div className="form-note-s2 text-center pt-4">
                   <Link to={`${process.env.PUBLIC_URL}/`}>
-                    <strong>{t("common:cancel")}</strong>
+                    <strong>{t("common:close")}</strong>
                   </Link>
                 </div>
               </FormGroup>

@@ -19,6 +19,7 @@ import {
   BlockTitle,
   PreviewCard,
   Button,
+  Icon,
 } from "../../components/Component";
 import PageContainer from "../../layout/page-container/PageContainer";
 import Head from "../../layout/head/Head";
@@ -135,6 +136,9 @@ const ForgotPassword = () => {
                     </label>
                   </div>
                   <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="at" />
+                    </div>
                     <input
                       ref={register({
                         required: t("validate:empty"),
@@ -143,7 +147,7 @@ const ForgotPassword = () => {
                           message: t("validate:format_email"),
                         },
                       })}
-                      className="form-control form-control-lg"
+                      className="form-control"
                       id={INPUT_NAME.EMAIL}
                       name={INPUT_NAME.EMAIL}
                       type={INPUT_NAME.EMAIL}
@@ -155,19 +159,16 @@ const ForgotPassword = () => {
                     )}
                   </div>
                 </FormGroup>
-                <FormGroup>
-                  <Button
-                    className="btn-block"
-                    type="submit"
-                    size="lg"
-                    color="primary"
-                    disabled={loading}>
-                    {loading
-                      ? <Spinner size="sm" color="light" />
-                      : <span>{t("forgot_password:btn_send")}</span>
-                    }
-                  </Button>
-                </FormGroup>
+                <Button
+                  className="btn-block"
+                  type="submit"
+                  color="primary"
+                  disabled={loading}>
+                  {loading
+                    ? <Spinner size="sm" color="light" />
+                    : <span>{t("forgot_password:btn_send")}</span>
+                  }
+                </Button>
               </Form>
               <div className="form-note-s2 text-center pt-4">
                 <Link to={loading ? "#" : `${process.env.PUBLIC_URL}/auth-login`}>
@@ -184,7 +185,7 @@ const ForgotPassword = () => {
                 <Col lg="7" md="7" sm="8" xs="8" className="d-flex flex-column justify-content-center">
                   <BlockHead>
                     <BlockContent className="flex-column align-items-center">
-                      <BlockTitle tag="h4">{t("success:send_reset_link_title")}</BlockTitle>
+                      <BlockTitle tag="h4" className="text-success">{t("success:send_reset_link_title")}</BlockTitle>
                       <BlockDes>{t("success:send_reset_link_sub_title")}</BlockDes>
                     </BlockContent>
                   </BlockHead>
@@ -206,7 +207,7 @@ const ForgotPassword = () => {
                 <Col lg="7" md="7" sm="8" xs="8" className="d-flex flex-column justify-content-center">
                   <BlockHead>
                     <BlockContent className="d-flex flex-column align-items-center">
-                      <BlockTitle tag="h4">{t("error:title")}</BlockTitle>
+                      <BlockTitle tag="h4" className="text-danger">{t("error:title")}</BlockTitle>
                       <BlockDes>{errorVal}</BlockDes>
                     </BlockContent>
                   </BlockHead>

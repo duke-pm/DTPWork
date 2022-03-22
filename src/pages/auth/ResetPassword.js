@@ -3,7 +3,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
 import {useForm} from "react-hook-form";
 import {Link, useParams} from "react-router-dom";
-import {Form, FormGroup, Spinner, Col, Row} from "reactstrap";
+import {
+  Form,
+  FormGroup,
+  Spinner,
+  Col,
+  Row,
+} from "reactstrap";
 /** COMPONENTS */
 import {
   Block,
@@ -201,14 +207,16 @@ const ResetPassword = () => {
                     )}
                   </div>
                 </FormGroup>
-                <FormGroup>
-                  <Button size="lg" className="btn-block" type="submit" color="primary" disabled={disabledInput}>
-                    {(loading.check || loading.submit)
-                      ? <Spinner size="sm" color="light" />
-                      : t("reset_password:btn_send")
-                    }
-                  </Button>
-                </FormGroup>
+                <Button
+                  className="btn-block"
+                  type="submit"
+                  color="primary"
+                  disabled={disabledInput}>
+                  {(loading.check || loading.submit)
+                    ? <Spinner size="sm" color="light" />
+                    : t("reset_password:btn_send")
+                  }
+                </Button>
               </Form>
               <div className="form-note-s2 text-center pt-4">
                 <Link to={disabledInput ? "#" : `${process.env.PUBLIC_URL}/auth-login`}>
@@ -225,8 +233,8 @@ const ResetPassword = () => {
                 <Col lg="7" md="7" sm="8" xs="8" className="d-flex flex-column justify-content-center">
                   <BlockHead>
                     <BlockContent>
-                      <BlockTitle tag="h5">{t("success:send_reset_pass_title")}</BlockTitle>
-                      <BlockDes><p>{t("success:send_reset_pass_sub_title")}</p></BlockDes>
+                      <BlockTitle tag="h4" className="text-success">{t("success:send_reset_pass_title")}</BlockTitle>
+                      <BlockDes>{t("success:send_reset_pass_sub_title")}</BlockDes>
                     </BlockContent>
                   </BlockHead>
                 </Col>
@@ -244,8 +252,8 @@ const ResetPassword = () => {
             <PreviewCard className="card-bordered" bodyClass="card-inner-lg">
               <BlockHead>
                 <BlockContent className="d-flex flex-column align-items-center">
-                  <h3 className="nk-error-title">{t("error:title")}</h3>
-                  <BlockDes><p>{errorVal}</p></BlockDes>
+                  <BlockTitle tag="h4" className="text-danger">{t("error:title")}</BlockTitle>
+                  <BlockDes>{errorVal}</BlockDes>
                 </BlockContent>
               </BlockHead>
             

@@ -196,7 +196,7 @@ const Login = () => {
                 <div className="form-control-wrap">
                   <input
                     ref={register({required: t("validate:empty")})}
-                    className="form-control-lg form-control"
+                    className="form-control"
                     id="userName"
                     name="userName"
                     type="text"
@@ -236,7 +236,7 @@ const Login = () => {
                   </a>
                   <input
                     ref={register({required: t("validate:empty")})}
-                    className={`form-control-lg form-control ${passState
+                    className={`form-control ${passState
                       ? "is-hidden"
                       : "is-shown"
                     }`}
@@ -253,20 +253,17 @@ const Login = () => {
                   )}
                 </div>
               </FormGroup>
-              <FormGroup>
-                <Button
-                  className="btn-block"
-                  type="submit"
-                  size="lg"
-                  color="primary"
-                  disabled={disabledInput}
-                >
-                  {disabledInput
-                    ? <Spinner size="sm" color="light" />
-                    : <span>{t("sign_in:title")}</span>
-                  }
-                </Button>
-              </FormGroup>
+              <Button
+                className="btn-block"
+                type="submit"
+                color="primary"
+                disabled={disabledInput}
+              >
+                {disabledInput
+                  ? <Spinner size="sm" color="light" />
+                  : <span>{t("sign_in:title")}</span>
+                }
+              </Button>
             </Form>
           </PreviewCard>
         </Block>

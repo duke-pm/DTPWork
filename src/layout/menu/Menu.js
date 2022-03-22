@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
 import { NavLink, Link } from "react-router-dom";
-import menu from "./MenuData";
 import Icon from "../../components/icon/Icon";
 import classNames from "classnames";
 import * as Actions from "redux/actions";
