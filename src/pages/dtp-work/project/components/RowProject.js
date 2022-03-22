@@ -77,32 +77,29 @@ function RowProject(props) {
       <DataTableItem key={data.prjID + "_project_" + index}>
         {data.countChild > 0 ? (
           <DataTableRow className="nk-tb-col-check">
-            <div>
-              <Button
-                className={`${!viewChild && "btn-dim"}`}
-                size="sm"
-                color="primary"
-                onClick={onChangeView}>
-                <Icon name={viewChild ? "minus" : "plus"} />  
-              </Button>
-            </div>
+            <Button
+              className={`${!viewChild && "btn-dim"}`}
+              size="sm"
+              color="primary"
+              onClick={onChangeView}>
+              <Icon name={viewChild ? "minus" : "plus"} />  
+            </Button>
           </DataTableRow>
         ) : (
-          <DataTableRow className="nk-tb-col-check">
-          </DataTableRow>
+          <DataTableRow className="nk-tb-col-check" />
         )}
         <DataTableRow>
           {data.countTask > 0 && (
             <NavLink
               to={`${process.env.PUBLIC_URL}${Routes.tasks}/${data.prjID}`}>
-              <span className={`tb-lead`} style={{paddingLeft: `${padding}px`}}>{data.prjName}</span>
+              <span className="tb-lead fw-bold" style={{paddingLeft: `${padding}px`}}>{data.prjName}</span>
             </NavLink>
           )}
           {data.countTask === 0 && (
             <a
               href="#project"
               onClick={data.countChild > 0 ? onChangeView : undefined}>
-              <span className={`tb-lead`} style={{paddingLeft: `${padding}px`}}>{data.prjName}</span>
+              <span className="tb-lead fw-bold" style={{paddingLeft: `${padding}px`}}>{data.prjName}</span>
             </a>
           )}
         </DataTableRow>

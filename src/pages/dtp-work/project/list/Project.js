@@ -39,6 +39,7 @@ import Constants from "../../../../utils/constants";
 import {checkIsWrite, getLocalStorage, log, setLocalStorage} from "../../../../utils/Utils";
 /** REDUX */
 import * as Actions from "../../../../redux/actions";
+import RowSelectStatus from "../components/RowSelectStatus";
 
 function ListProjects({history}) {
   const {t} = useTranslation();
@@ -216,10 +217,12 @@ function ListProjects({history}) {
 
   const onGetMasterData = () => {
     let params = {
+      ListType: "PrjStatus",
       RefreshToken: authState["data"]["refreshToken"],
       Lang: commonState["language"],
     }
     dispatch(Actions.fFetchUsersByLogin(params, history));
+    dispatch(Actions.fFetchMasterData(params, history));
   };
 
   const onStartGetData = (
@@ -245,7 +248,7 @@ function ListProjects({history}) {
   const onSuccess = type => {
     if (type === "MasterData") {
       dispatch(Actions.resetMasterData());
-      let tmpUsers = masterState["users"].map(item => {
+      let tmpUsers = masterState["usersByLogin"].map(item => {
         return {value: item.empID, label: item.empName};
       });
       let tmpPrjStatus = masterState["projectStatus"].map(item => {
@@ -330,11 +333,13 @@ function ListProjects({history}) {
 
   useEffect(() => {
     if (loading.main) {
-      if (!masterState["submittingGetAll"]) {
-        if (masterState["successGetAll"] && !masterState["errorGetAll"]) {
+      if (!masterState["submittingGetAll"] && !masterState["submittingUsersByLogin"]) {
+        if (masterState["successGetAll"] && !masterState["errorGetAll"] &&
+          masterState["successUsersByLogin"] && !masterState["errorUsersByLogin"]) {
           return onSuccess("MasterData");
         }
-        if (!masterState["successGetAll"] && masterState["errorGetAll"]) {
+        if (!masterState["successGetAll"] && masterState["errorGetAll"] &&
+          !masterState["successUsersByLogin"] && masterState["errorUsersByLogin"]) {
           return onError(masterState["errorHelperGetAll"]);
         }
       }
@@ -342,8 +347,11 @@ function ListProjects({history}) {
   }, [
     loading.main,
     masterState["submittingGetAll"],
+    masterState["submittingUsersByLogin"],
     masterState["successGetAll"],
+    masterState["successUsersByLogin"],
     masterState["errorGetAll"],
+    masterState["errorUsersByLogin"],
   ]);
 
   useEffect(() => {
@@ -510,6 +518,7 @@ function ListProjects({history}) {
                                             options={dataSelect.status}
                                             value={formData.statusID}
                                             placeholder={t("project:holder_status")}
+                                            formatOptionLabel={RowSelectStatus}
                                             onChange={e => onChangeSelect({key: "statusID", value: e})}
                                           />
                                         </FormGroup>
@@ -538,10 +547,6 @@ function ListProjects({history}) {
                                       {!loading.search && <Icon name="filter"></Icon>}
                                       <span>{t("common:filter")}</span>
                                     </Button>
-                                    {/* <Button className="btn-dim" color="secondary" disabled={disabled} onClick={onResetFilter}>
-                                      <Icon name="undo"></Icon>
-                                      <span>{t("common:reset")}</span>
-                                    </Button> */}
                                   </div>
                                 </DropdownMenu>
                               </UncontrolledDropdown>

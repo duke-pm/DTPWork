@@ -66,8 +66,7 @@ function TableTask(props) {
         ? data.map((item, index) => {
           return (
             <RowTask
-              key={item.prjID + "_prj_" + index}
-              className=""
+              key={item.prjID + "_task_" + index}
               isWrite={isWrite}
               disabled={disabled}
               padding={padding}

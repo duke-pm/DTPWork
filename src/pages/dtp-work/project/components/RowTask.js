@@ -28,7 +28,6 @@ function RowTask(props) {
   const {
     isWrite,
     disabled,
-    className,
     padding,
     index,
     data,
@@ -80,15 +79,13 @@ function RowTask(props) {
       <DataTableItem key={data.taskID + "_task_" + index}>
         {data.countChild > 0 ? (
           <DataTableRow className="nk-tb-col-check">
-            <div className={`${className + padding}`}>
-              <Button
-                className={`${!viewChild && "btn-dim"}`}
-                size="sm"
-                color="primary"
-                onClick={onChangeView}>
-                <Icon name={viewChild ? "minus" : "plus"} />  
-              </Button>
-            </div>
+            <Button
+              className={`${!viewChild && "btn-dim"}`}
+              size="sm"
+              color="primary"
+              onClick={onChangeView}>
+              <Icon name={viewChild ? "minus" : "plus"} />  
+            </Button>
           </DataTableRow>
         ) : (
           <DataTableRow className="nk-tb-col-check" />
@@ -96,7 +93,7 @@ function RowTask(props) {
         <DataTableRow>
           <NavLink
             to={`${process.env.PUBLIC_URL}${Routes.taskDetails}/${data.taskID}`}>
-            <span className={`tb-lead ${className + padding}`}>{data.taskName}</span>
+            <span className="tb-lead fw-bold" style={{paddingLeft: `${padding}px`}}>{data.taskName}</span>
           </NavLink>
         </DataTableRow>
         <DataTableRow size="sm">
@@ -271,7 +268,7 @@ function RowTask(props) {
             className="ml-"
             isWrite={isWrite}
             disabled={disabled}
-            padding={padding + 2}
+            padding={padding + 10}
             index={index}
             data={item}
             onOverview={onOverview}

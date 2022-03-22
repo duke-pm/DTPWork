@@ -34,6 +34,7 @@ import Constants from "../../../../utils/constants";
 import {log, findUpper} from "../../../../utils/Utils";
 /** REDUX */
 import * as Actions from "../../../../redux/actions";
+import RowSelectStatus from "../components/RowSelectStatus";
 
 const STATUS_REJECT = 7;
 const STATUS_FINISHED = 5;
@@ -416,41 +417,6 @@ function Overview(props) {
       break;
   };
 
-  const formatStatusLabel = ({label, value, customAbbreviation}) => {
-    let color = "info";
-    switch (value) {
-      case 2:
-        color = "warning";
-        break;
-      case 3:
-        color = "success";
-        break;
-      case 4:
-        color = "primary";
-        break;
-      case 5:
-        color = "gray";
-        break;
-      case 6:
-        color = "warning";
-        break;
-      case 7:
-        color = "danger";
-        break;
-      default:
-        color = "info";
-        break;
-    };
-    return (
-      <div style={{ display: "flex" }}>
-        <span className={`text-${color}`}>{label}</span>
-        <div style={{ marginLeft: "10px", color: "#ccc" }}>
-          {customAbbreviation}
-        </div>
-      </div>
-    );
-  };
-
   const disabled = isLoading || loading.submitStatus ||
     loading.submitProgress || loading.submitRecieve ||
     loading.submitFollow || !isWrite;
@@ -514,10 +480,10 @@ function Overview(props) {
                 )}
               </Button>
               <Button
-                className={`btn-icon btn-dim ml-2 ${isSidebar ? "active" : ""}`}
-                color="gray"
+                className="btn-icon btn-dim ml-2"
+                color="secondary"
                 onClick={toggleSideBar}>
-                <Icon name="chat" />
+                <Icon name={isSidebar ? "arrow-right" : "arrow-left"} />
               </Button>
             </div>
           </div>
@@ -582,7 +548,7 @@ function Overview(props) {
                       options={dataSelect.status}
                       value={data.status}
                       placeholder={t("task_details:holder_status")}
-                      formatOptionLabel={formatStatusLabel}
+                      formatOptionLabel={RowSelectStatus}
                       onChange={onChangeSelect}
                     />
                   </div>

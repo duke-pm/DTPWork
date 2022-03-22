@@ -41,6 +41,7 @@ import Constants from "../../../../utils/constants";
 import {checkIsWrite, getLocalStorage, log, setLocalStorage} from "../../../../utils/Utils";
 /** REDUX */
 import * as Actions from "../../../../redux/actions";
+import RowSelectStatus from "../components/RowSelectStatus";
 
 function ListTasks({history}) {
   const {t} = useTranslation();
@@ -231,10 +232,11 @@ function ListTasks({history}) {
 
   const onGetMasterData = () => {
     let params = {
-      ListType: "Users,PrjSector,PrjStatus",
+      ListType: "PrjSector,PrjStatus",
       RefreshToken: authState["data"]["refreshToken"],
       Lang: commonState["language"],
     }
+    dispatch(Actions.fFetchUsersByLogin(params, history));
     dispatch(Actions.fFetchMasterData(params, history));
   };
 
@@ -265,7 +267,7 @@ function ListTasks({history}) {
       let tmpPrjStatus = masterState["projectStatus"].map(item => {
         return {value: item.statusID, label: item.statusName};
       });
-      let tmpUsers = masterState["users"].map(item => {
+      let tmpUsers = masterState["usersByLogin"].map(item => {
         return {value: item.empID, label: item.empName};
       });
       let tmpPrjSector = masterState["projectSector"].map(item => {
@@ -337,11 +339,13 @@ function ListTasks({history}) {
 
   useEffect(() => {
     if (loading.main) {
-      if (!masterState["submittingGetAll"]) {
-        if (masterState["successGetAll"] && !masterState["errorGetAll"]) {
+      if (!masterState["submittingGetAll"] && !masterState["submittingUsersByLogin"]) {
+        if (masterState["successGetAll"] && !masterState["errorGetAll"] &&
+          masterState["successUsersByLogin"] && !masterState["errorUsersByLogin"]) {
           return onSuccess("MasterData");
         }
-        if (!masterState["successGetAll"] && masterState["errorGetAll"]) {
+        if (!masterState["successGetAll"] && masterState["errorGetAll"] &&
+          !masterState["successUsersByLogin"] && masterState["errorUsersByLogin"]) {
           return onError(masterState["errorHelperGetAll"]);
         }
       }
@@ -349,8 +353,11 @@ function ListTasks({history}) {
   }, [
     loading.main,
     masterState["submittingGetAll"],
+    masterState["submittingUsersByLogin"],
     masterState["successGetAll"],
+    masterState["successUsersByLogin"],
     masterState["errorGetAll"],
+    masterState["errorUsersByLogin"],
   ]);
 
   useEffect(() => {
@@ -507,6 +514,7 @@ function ListTasks({history}) {
                                             options={dataSelect.status}
                                             value={formData.statusID}
                                             placeholder={t("task:holder_status")}
+                                            formatOptionLabel={RowSelectStatus}
                                             onChange={e => onChangeSelect({key: "statusID", value: e})}
                                           />
                                         </FormGroup>
