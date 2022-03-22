@@ -134,7 +134,7 @@
     "create_assets": "Không thể thêm mới tài sản! Vui lòng thử lại sau!",
     "create_supplier": "Không thể thêm mới nhà cung cấp! Vui lòng thử lại sau!",
     "new_password_same_old": "Mật khẩu mới trùng với mật khẩu cũ!",
-    "confirm_password_not_same": "Nhập lại mật khẩu không đúng!",
+    "confirm_password_not_same": "Bạn cần nhập lại giống với mật khẩu mới!",
     "change_password": "Đổi mật khẩu không thành công!",
     "update_date_task": "Không thể cập nhật ngày của task đã đóng hoặc bị hủy!"
   },

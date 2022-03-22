@@ -38,6 +38,7 @@ import Progress from "./progress/Progress";
 import Sidebar from "./sidebar/Sidebar";
 import RSelect from "./select/ReactSelect";
 import AlertConfirm from "./alert_confirm/AlertConfirm";
+import CInput from "./c_input";
 
 export {
   Accordian,
@@ -92,4 +93,5 @@ export {
   RSelect,
   Progress,
   AlertConfirm,
+  CInput,
 };
