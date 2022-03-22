@@ -338,6 +338,9 @@ function AddEditForm(props) {
                     </label>
                   </div>
                   <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="view-list-fill" />
+                    </div>
                     <input
                       ref={register({ required: t("validate:empty") })}
                       className="form-control"
@@ -403,6 +406,9 @@ function AddEditForm(props) {
                     </label>
                   </div>
                   <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="sort-v" />
+                    </div>
                     <input
                       className="form-control"
                       type="text"
@@ -434,6 +440,9 @@ function AddEditForm(props) {
                     </label>
                   </div>
                   <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="b-si" />
+                    </div>
                     <input
                       className="form-control"
                       type="text"
@@ -455,6 +464,9 @@ function AddEditForm(props) {
                     </label>
                   </div>
                   <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="link-alt" />
+                    </div>
                     <input
                       className="form-control"
                       type="text"
@@ -486,6 +498,9 @@ function AddEditForm(props) {
                     </label>
                   </div>
                   <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="b-si" />
+                    </div>
                     <input
                       className="form-control"
                       type="text"
@@ -507,6 +522,9 @@ function AddEditForm(props) {
                     </label>
                   </div>
                   <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="link-alt" />
+                    </div>
                     <input
                       className="form-control"
                       type="text"

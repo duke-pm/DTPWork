@@ -466,6 +466,9 @@ function AddEditForm(props) {
                     </label>
                   </div>
                   <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="user-circle" />
+                    </div>
                     <input
                       ref={register({ required: t("validate:empty") })}
                       className="form-control"
@@ -512,6 +515,9 @@ function AddEditForm(props) {
                     </label>
                   </div>
                   <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="text" />
+                    </div>
                     <input
                       ref={register({ required: t("validate:empty") })}
                       className="form-control"
@@ -537,6 +543,9 @@ function AddEditForm(props) {
                     </label>
                   </div>
                   <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="text" />
+                    </div>
                     <input
                       ref={register({ required: t("validate:empty") })}
                       className="form-control"
@@ -562,6 +571,9 @@ function AddEditForm(props) {
                     </label>
                   </div>
                   <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="at" />
+                    </div>
                     <input
                       ref={register({
                         required: t("validate:empty"),
@@ -593,6 +605,9 @@ function AddEditForm(props) {
                     </label>
                   </div>
                   <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="mobile" />
+                    </div>
                     <input
                       className="form-control"
                       type="number"

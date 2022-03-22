@@ -269,7 +269,7 @@ function Activities(props) {
               <li>
                 <Button
                   color="primary"
-                  disabled={disabled}
+                  disabled={disabled || inputText.trim() === ""}
                   className="btn-round btn-icon"
                   onClick={onTextSubmit}>
                   <Icon name="send-alt"></Icon>

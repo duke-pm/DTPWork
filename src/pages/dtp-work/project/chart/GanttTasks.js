@@ -113,7 +113,7 @@ function GanttTasks({history}) {
   };
 
   const onUpdateActivitiesDate = () => {
-    let comment = `* ${t("task_details:holder_change_date")} ${
+    let comment = `${t("task_details:holder_change_date")} ${
       date.start
     } ${t("task_details:holder_change_to")} ${
       date.end

@@ -336,6 +336,9 @@ function AddDamLosForm(props) {
                     </label>
                   </div>
                   <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="user" />
+                    </div>
                     <input
                       className="form-control"
                       type="text"

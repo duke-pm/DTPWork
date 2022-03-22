@@ -123,11 +123,9 @@ function ProcessModal(props) {
                   {data.process.length > 0 && data.process.map((itemT, indexT) => {
                     return (
                       <Row className="timeline-item" key={itemT.levelApproval + "_timeline_" + indexT}>
-                        <Col sm="1"  md="1">
-                          <div className={`timeline-status bg-${
-                            statusClassName[itemT.statusID]} ${itemT.statusID === null ? "is-outline" : ""}`}
-                          />
-                        </Col>
+                        <div className={`timeline-status bg-${
+                          statusClassName[itemT.statusID]} ${itemT.statusID === null ? "is-outline" : ""}`}
+                        />
                         <Col sm="3" md="3">
                           {itemT.approveDate && (
                             <div className={`text-center rounded bg-${statusClassName[itemT.statusID]}-dim py-1 d-flex flex-column`}>

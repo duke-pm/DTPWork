@@ -235,6 +235,9 @@ function AddEditForm(props) {
                     </label>
                   </div>
                   <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="user-list" />
+                    </div>
                     <input
                       ref={register({ required: t("validate:empty") })}
                       className="form-control"

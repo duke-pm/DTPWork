@@ -441,6 +441,9 @@ function AddEditBookingForm(props) {
                     </label>
                   </div>
                   <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="chat-circle" />
+                    </div>
                     <input
                       ref={register({ required: t("validate:empty") })}
                       className="form-control"

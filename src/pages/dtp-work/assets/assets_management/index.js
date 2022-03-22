@@ -505,9 +505,9 @@ function AssetsManagement({history, params}) {
                     {filterTab === 0 && (
                       <li>
                         <Button
+                          className="btn-white"
                           color="light"
                           outline
-                          className="btn-white"
                           disabled={disabled}
                           onClick={onExportData}>
                           <Icon name="download-cloud"></Icon>
@@ -523,7 +523,8 @@ function AssetsManagement({history, params}) {
                           disabled={disabled}
                           onClick={onGetEmployee}
                         >
-                          <Icon name="reload-alt"></Icon>
+                          {loading.getData && <Spinner color="light" size="sm" />}
+                          {!loading.getData && <Icon name="reload-alt"></Icon>}
                         </Button>
                         <Button
                           className="toggle d-none d-md-inline-flex"

@@ -550,6 +550,9 @@ function AddEditTaskForm(props) {
                     </label>
                   </div>
                   <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="text" />
+                    </div>
                     <input
                       ref={register({ required: t("validate:empty") })}
                       className="form-control"
@@ -794,6 +797,9 @@ function AddEditTaskForm(props) {
                     </label>
                   </div>
                   <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="user" />
+                    </div>
                     <input
                       className="form-control"
                       type="text"
@@ -815,6 +821,9 @@ function AddEditTaskForm(props) {
                     </label>
                   </div>
                   <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="user" />
+                    </div>
                     <input
                       className="form-control"
                       type="text"
@@ -836,6 +845,9 @@ function AddEditTaskForm(props) {
                     </label>
                   </div>
                   <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="user" />
+                    </div>
                     <input
                       className="form-control"
                       type="text"

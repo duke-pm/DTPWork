@@ -307,6 +307,9 @@ function AddEditGroupResrcForm(props) {
                     </label>
                   </div>
                   <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="building" />
+                    </div>
                     <input
                       ref={register({ required: t("validate:empty") })}
                       className="form-control"
@@ -353,7 +356,7 @@ function AddEditGroupResrcForm(props) {
                     </label>
                   </div>
                   <div className="form-control-wrap">
-                    <ul className="custom-control-group form-control">
+                    <ul className="custom-control-group">
                       {dataSelect.icons.map((itemI, indexI) => {
                         return (
                           <li key={`sel_icon_${indexI}`}>

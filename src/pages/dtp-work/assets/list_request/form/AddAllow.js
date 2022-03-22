@@ -394,6 +394,9 @@ function AddAllowForm(props) {
                     </label>
                   </div>
                   <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="user" />
+                    </div>
                     <input
                       className="form-control"
                       type="text"
@@ -504,6 +507,9 @@ function AddAllowForm(props) {
                     </label>
                   </div>
                   <div className="form-control-wrap">
+                    <div className="form-icon form-icon-left">
+                      <Icon name="building" />
+                    </div>
                     <input
                       className="form-control"
                       type="text"
@@ -682,6 +688,9 @@ function AddAllowForm(props) {
                         <DataTableItem key={"_asset_item_" + indexA}>
                           <DataTableRow>
                             <div className="form-control-wrap">
+                              <div className="form-icon form-icon-left">
+                                <Icon name="monitor" />
+                              </div>
                               <input
                                 ref={register({ required: t("validate:empty") })}
                                 className="form-control"
@@ -700,6 +709,9 @@ function AddAllowForm(props) {
                           </DataTableRow>
                           <DataTableRow>
                             <div className="form-control-wrap">
+                              <div className="form-icon form-icon-left">
+                                <Icon name="list-ol" />
+                              </div>
                               <input
                                 ref={register({
                                   required: t("validate:empty"),
@@ -724,6 +736,9 @@ function AddAllowForm(props) {
                           </DataTableRow>
                           <DataTableRow>
                             <div className="form-control-wrap">
+                              <div className="form-icon form-icon-left">
+                                <Icon name="sign-vnd" />
+                              </div>
                               <NumberFormat
                                 className="form-control"
                                 name="price"
@@ -738,6 +753,9 @@ function AddAllowForm(props) {
                           </DataTableRow>
                           <DataTableRow>
                             <div className="form-control-wrap">
+                              <div className="form-icon form-icon-left">
+                                <Icon name="sign-vnd" />
+                              </div>
                               <NumberFormat
                                 className="form-control"
                                 name="total"
