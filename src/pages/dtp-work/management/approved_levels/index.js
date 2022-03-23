@@ -260,17 +260,15 @@ function ApprovedLevels({history}) {
                         className="toggle btn-icon d-md-none"
                         color="primary"
                         disabled={disabled}
-                        onClick={() => toggleView("add")}
-                      >
-                        <Icon name="plus"></Icon>
+                        onClick={() => toggleView("add")}>
+                        <Icon name="plus" />
                       </Button>
                       <Button
                         className="toggle d-none d-md-inline-flex"
                         color="primary"
                         disabled={disabled}
-                        onClick={() => toggleView("add")}
-                      >
-                        <Icon name="plus"></Icon>
+                        onClick={() => toggleView("add")}>
+                        <Icon name="plus" />
                         <span>{t("common:add_new")}</span>
                       </Button>
                     </li>

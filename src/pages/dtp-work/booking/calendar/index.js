@@ -8,7 +8,6 @@ import listPlugin from "@fullcalendar/list";
 import bootstrapPlugin from "@fullcalendar/bootstrap";
 import viLocale from '@fullcalendar/core/locales/vi';
 import enLocale from '@fullcalendar/core/locales/en-gb';
-import {t} from "i18next";
 import {
   Badge,
   Popover,
@@ -31,6 +30,7 @@ import {
 import {findUpper} from "../../../../utils/Utils";
 
 const EventView = (event) => {
+  const {t} = useTranslation();
   const [mouseEnter, setMouseEnter] = useState(false);
   const {title, extendedProps, publicId} = event.event.event._def;
   return (
