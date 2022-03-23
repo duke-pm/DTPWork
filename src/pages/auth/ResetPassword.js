@@ -190,8 +190,8 @@ const ResetPassword = () => {
                       }}
                       className={`form-icon lg form-icon-right passcode-switch ${passState ? "is-hidden" : "is-shown"}`}
                     >
-                      <Icon name="eye" className="passcode-icon icon-show"></Icon>
-                      <Icon name="eye-off" className="passcode-icon icon-hide"></Icon>
+                      <Icon name="eye" className="passcode-icon icon-show"/>
+                      <Icon name="eye-off" className="passcode-icon icon-hide"/>
                     </a>
                     <input
                       ref={register({ required: t("validate:empty") })}

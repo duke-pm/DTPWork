@@ -192,7 +192,7 @@ function RowProject(props) {
               <li>
                 <UncontrolledDropdown>
                   <DropdownToggle tag="a" className="btn btn-icon dropdown-toggle btn-trigger">
-                    <Icon name="more-h"></Icon>
+                    <Icon name="more-h"/>
                   </DropdownToggle>
                   <DropdownMenu right>
                     <ul className="link-list-opt no-bdr">
@@ -205,7 +205,7 @@ function RowProject(props) {
                             !disabled && onDetails(data.prjID);
                           }}
                         >
-                          <Icon name="eye"></Icon>
+                          <Icon name="eye"/>
                           <span>{t("common:details")}</span>
                         </DropdownItem>
                       </li>
@@ -218,7 +218,7 @@ function RowProject(props) {
                             !disabled && onUpdate(data);
                           }}
                         >
-                          <Icon name="edit"></Icon>
+                          <Icon name="edit"/>
                           <span>{t("common:update")}</span>
                         </DropdownItem>
                       </li>
@@ -232,7 +232,7 @@ function RowProject(props) {
                               !disabled && onClone(data);
                             }}
                           >
-                            <Icon name="copy"></Icon>
+                            <Icon name="copy"/>
                             <span>{t("common:clone")}</span>
                           </DropdownItem>
                         </li>
@@ -248,7 +248,7 @@ function RowProject(props) {
                                 !disabled && onExport(data);
                               }}
                             >
-                              <Icon name="download"></Icon>
+                              <Icon name="download"/>
                               <span>{t("common:export")}</span>
                             </DropdownItem>
                           </li>
@@ -267,7 +267,7 @@ function RowProject(props) {
                                 !disabled && onRemove(data);
                               }}
                             >
-                              <Icon name="trash"></Icon>
+                              <Icon name="trash"/>
                               <span>{t("common:remove")}</span>
                             </DropdownItem>
                           </li>

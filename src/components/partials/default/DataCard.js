@@ -19,7 +19,7 @@ const DataCard = ({ title, amount, percentChange, up, chart: ChartComponent }) =
             </div>
             <div className="info">
               <span className={`change ${up ? "up text-success" : "down text-danger"}`}>
-                <Icon name={`arrow-long-${up ? "up" : "down"}`}></Icon>
+                <Icon name={`arrow-long-${up ? "up" : "down"}`}/>
                 {percentChange}%
               </span>
               <span> vs. last week</span>

@@ -18,6 +18,7 @@ import {
   Icon,
   Button,
   AlertConfirm,
+  Loading,
 } from "../../../../components/Component";
 import TableApprovedLevels from "./table";
 import AddEditForm from "./form/AddEdit";
@@ -289,14 +290,12 @@ function ApprovedLevels({history}) {
                   <ul className="btn-toolbar gx-1">
                     <li>
                       <a
-                        href="#search"
+                        className="btn btn-icon search-toggle toggle-search cursor-pointer"
                         onClick={(ev) => {
                           ev.preventDefault();
                           !disabled && toggleView("search");
-                        }}
-                        className="btn btn-icon search-toggle toggle-search"
-                      >
-                        <Icon name="search"></Icon>
+                        }}>
+                        <Icon name="search" />
                       </a>
                     </li>
                   </ul>
@@ -312,13 +311,13 @@ function ApprovedLevels({history}) {
                       onClick={(ev) => {
                         ev.preventDefault();
                         toggleView("search");
-                      }}
-                    >
-                      <Icon name="arrow-left"></Icon>
+                      }}>
+                      <Icon name="arrow-left" />
                     </Button>
                     <input
                       type="text"
                       className="border-transparent form-focus-none form-control"
+                      autoFocus={true}
                       value={textSearch}
                       disabled={disabled}
                       placeholder={t("common:search")}
@@ -330,9 +329,8 @@ function ApprovedLevels({history}) {
                     <Button
                       className="search-submit btn-icon"
                       disabled={loading.search}
-                      onClick={onSearch}
-                    >
-                      <Icon name="search"></Icon>
+                      onClick={onSearch}>
+                      <Icon name="search" />
                     </Button>
                   </div>
                 </div>
@@ -342,6 +340,7 @@ function ApprovedLevels({history}) {
             {/** Data table */}
             <TableApprovedLevels
               disabled={disabled}
+              loading={loading.main || loading.search}
               isWrite={isWrite}
               dataLevels={data.list}
               onUpdate={onUpdateLevels}
@@ -350,11 +349,7 @@ function ApprovedLevels({history}) {
 
             {/** Paging table */}
             <PreviewAltCard>
-              {disabled ? (
-                <div className="text-center">
-                  <Spinner size="sm" color="primary" />
-                </div>
-              ) : 
+            {!disabled ? (
               data.list.length > 0 ? (
                 <PaginationComponent
                   itemPerPage={Configs.perPage}
@@ -366,40 +361,45 @@ function ApprovedLevels({history}) {
                 <div className="text-center">
                   <span className="text-silent">{t("common:no_data")}</span>
                 </div>
-              )}
+              )) : (
+              <div className="text-center">
+                <Spinner size="sm" color="primary" />
+              </div>
+            )}
             </PreviewAltCard>
           </DataTable>
         </Block>
-
-        {/** Forms */}
-        <AddEditForm
-          show={view.add || view.update}
-          history={history}
-          isUpdate={view.update}
-          authState={authState}
-          commonState={commonState}
-          updateItem={updateItem}
-          onClose={onCloseForm}
-        />
-
-        <AlertConfirm
-          loading={loading.remove}
-          show={view.confirm}
-          title={t("management:confirm_remove_level_title")}
-          content={
-            <>
-              {t("management:confirm_remove_level_des_1")}
-              <span className="fw-bold"> #{updateItem?.roleCode} </span>
-              {t("management:confirm_remove_level_des_2")}
-            </>
-          }
-          onConfirm={onConfirmRemove}
-          onClose={toggleView}
-        />
-
-        {view.add && <div className="toggle-overlay" onClick={toggleView}></div>}
-        {view.update && <div className="toggle-overlay" onClick={toggleView}></div>}
       </Content>
+
+      {/** Forms */}
+      <AddEditForm
+        show={view.add || view.update}
+        history={history}
+        isUpdate={view.update}
+        authState={authState}
+        commonState={commonState}
+        updateItem={updateItem}
+        onClose={onCloseForm}
+      />
+
+      <AlertConfirm
+        loading={loading.remove}
+        show={view.confirm}
+        title={t("management:confirm_remove_level_title")}
+        content={
+          <>
+            {t("management:confirm_remove_level_des_1")}
+            <span className="fw-bold"> #{updateItem?.roleCode} </span>
+            {t("management:confirm_remove_level_des_2")}
+          </>
+        }
+        onConfirm={onConfirmRemove}
+        onClose={toggleView}
+      />
+
+      {view.add && <div className="toggle-overlay" onClick={toggleView}></div>}
+      {view.update && <div className="toggle-overlay" onClick={toggleView}></div>}
+      <Loading show={loading.main || loading.remove} />
     </React.Fragment>
   );
 };

@@ -33,7 +33,7 @@ import * as Actions from "../../../../../redux/actions";
 const CustomDateInput = forwardRef(({ value, onClick, onChange, disabled }, ref) => (
   <div onClick={onClick} ref={ref}>
     <div className="form-icon form-icon-left">
-      <Icon name="calendar"></Icon>
+      <Icon name="calendar"/>
     </div>
     <input
       className="form-control date-picker"
@@ -466,7 +466,7 @@ function AddAllowForm(props) {
                   </div>
                   <div className="form-control-wrap">
                     <div className="form-icon form-icon-left">
-                      <Icon name="calendar"></Icon>
+                      <Icon name="calendar"/>
                     </div>
                     <DatePicker
                       className="form-control date-picker"
@@ -652,7 +652,7 @@ function AddAllowForm(props) {
               onClick={onAddRowAssets}
               className="link link-sm"
             >
-              <Icon name="plus-circle"></Icon>
+              <Icon name="plus-circle"/>
               <span>{t("add_request_assets:add_assets")}</span>
             </a>
           </div>

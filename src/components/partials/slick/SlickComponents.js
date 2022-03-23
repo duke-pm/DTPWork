@@ -10,7 +10,7 @@ export const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
     type="button"
   >
     <a href="#prev" className="slick-prev" onClick={(ev) => ev.preventDefault()}>
-      <Icon name="chevron-left"></Icon>
+      <Icon name="chevron-left"/>
     </a>
   </div>
 );
@@ -24,7 +24,7 @@ export const SlickArrowRight = ({ currentSlide, slideCount, ...props }) => (
     type="button"
   >
     <a href="#next" className="slick-next" onClick={(ev) => ev.preventDefault()}>
-      <Icon name="chevron-right"></Icon>
+      <Icon name="chevron-right"/>
     </a>
   </div>
 );

@@ -174,7 +174,7 @@ function TaskDetails({history}) {
                 outline
                 className="bg-white d-none d-sm-inline-flex"
                 onClick={onGoBack}>
-                <Icon name="arrow-left"></Icon>
+                <Icon name="arrow-left"/>
                 <span>{t("common:back")}</span>
               </Button>
               <Button
@@ -182,7 +182,7 @@ function TaskDetails({history}) {
                 outline
                 className="btn-icon bg-white d-inline-flex d-sm-none"
                 onClick={onGoBack}>
-                <Icon name="arrow-left"></Icon>
+                <Icon name="arrow-left"/>
               </Button>
             </Col>
             <Col xs="8" md="8" lg="6">

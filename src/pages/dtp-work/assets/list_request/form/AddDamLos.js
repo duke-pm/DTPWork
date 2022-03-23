@@ -27,7 +27,7 @@ import * as Actions from "../../../../../redux/actions";
 const CustomDateInput = forwardRef(({ value, onClick, onChange, disabled }, ref) => (
   <div onClick={onClick} ref={ref}>
     <div className="form-icon form-icon-left">
-      <Icon name="calendar"></Icon>
+      <Icon name="calendar"/>
     </div>
     <input
       className="form-control date-picker"
@@ -408,7 +408,7 @@ function AddDamLosForm(props) {
                   </div>
                   <div className="form-control-wrap">
                     <div className="form-icon form-icon-left">
-                      <Icon name="calendar"></Icon>
+                      <Icon name="calendar"/>
                     </div>
                     <DatePicker
                       className="form-control date-picker"

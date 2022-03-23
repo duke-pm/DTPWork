@@ -17,28 +17,28 @@ const StoreStatistics = () => {
               <div className="title">Orders</div>
               <div className="count">1,795</div>
             </div>
-            <Icon name="bag" className="bg-primary-dim"></Icon>
+            <Icon name="bag" className="bg-primary-dim"/>
           </li>
           <li className="item">
             <div className="info">
               <div className="title">Customers</div>
               <div className="count">2,327</div>
             </div>
-            <Icon name="users" className="bg-info-dim"></Icon>
+            <Icon name="users" className="bg-info-dim"/>
           </li>
           <li className="item">
             <div className="info">
               <div className="title">Products</div>
               <div className="count">674</div>
             </div>
-            <Icon name="box" className="bg-pink-dim"></Icon>
+            <Icon name="box" className="bg-pink-dim"/>
           </li>
           <li className="item">
             <div className="info">
               <div className="title">Categories</div>
               <div className="count">68</div>
             </div>
-            <Icon name="server" className="bg-purple-dim"></Icon>
+            <Icon name="server" className="bg-purple-dim"/>
           </li>
         </ul>
       </div>

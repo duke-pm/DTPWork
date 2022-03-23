@@ -36,7 +36,7 @@ import * as Actions from "../../../../../redux/actions";
 const CustomDateInput = forwardRef(({ value, onClick, onChange }, ref) => (
   <div onClick={onClick} ref={ref}>
     <div className="form-icon form-icon-left">
-      <Icon name="calendar"></Icon>
+      <Icon name="calendar"/>
     </div>
     <input
       className="form-control date-picker"
@@ -510,7 +510,7 @@ function ApprovedForm(props) {
                     disabled={disabled}
                     onClick={onResetData}
                   >
-                    <Icon name="undo"></Icon>
+                    <Icon name="undo"/>
                   </Button>
                   <Button
                     className="toggle d-none d-md-inline-flex"
@@ -519,7 +519,7 @@ function ApprovedForm(props) {
                     disabled={disabled}
                     onClick={onResetData}
                   >
-                    <Icon name="undo"></Icon>
+                    <Icon name="undo"/>
                     <span>{t("common:reset")}</span>
                   </Button>
                 </li> */}
@@ -533,7 +533,7 @@ function ApprovedForm(props) {
                     {disabled && (
                       <Spinner size="sm" color="light" />
                     )}
-                    {!loading.approved && !loading.recall && !loading.history && <Icon name="save"></Icon>}
+                    {!loading.approved && !loading.recall && !loading.history && <Icon name="save"/>}
                   </Button>
                   <Button
                     className="toggle d-none d-md-inline-flex"
@@ -544,7 +544,7 @@ function ApprovedForm(props) {
                     {disabled && (
                       <Spinner className="mr-2" size="sm" color="light" />
                     )}
-                    {!loading.approved && !loading.recall && !loading.history && <Icon name="save"></Icon>}
+                    {!loading.approved && !loading.recall && !loading.history && <Icon name="save"/>}
                     <span>{t("common:save")}</span>
                   </Button>
                 </li>
@@ -612,7 +612,7 @@ function ApprovedForm(props) {
                     </div>
                     <div className="form-control-wrap" style={{zIndex: 1000}}>
                       <div className="form-icon form-icon-left">
-                        <Icon name="calendar"></Icon>
+                        <Icon name="calendar"/>
                       </div>
                       <DatePicker
                         selected={formData.approvedDate}
@@ -658,7 +658,7 @@ function ApprovedForm(props) {
                     </div>
                     <div className="form-control-wrap">
                       <div className="form-icon form-icon-left">
-                        <Icon name="account-setting"></Icon>
+                        <Icon name="account-setting"/>
                       </div>
                       <input
                         className="form-control"
@@ -745,7 +745,7 @@ function ApprovedForm(props) {
                         disabled={disabled}
                         onClick={onDownloadAttachFile}
                       >
-                        <Icon name="download"></Icon>
+                        <Icon name="download"/>
                         <span>{t("common:download")}</span>
                       </Button>
                     )}
@@ -795,7 +795,7 @@ function ApprovedForm(props) {
                     </div>
                     <div className="form-control-wrap">
                       <div className="form-icon form-icon-left">
-                        <Icon name="calendar"></Icon>
+                        <Icon name="calendar"/>
                       </div>
                       <DatePicker
                         selected={formData.approvedDate}

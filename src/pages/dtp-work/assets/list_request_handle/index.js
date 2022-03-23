@@ -349,14 +349,13 @@ function RequestAssetsHandle({history}) {
                   <ul className="btn-toolbar gx-1">
                     <li>
                       <a
-                        href="#search"
                         onClick={(ev) => {
                           ev.preventDefault();
                           !disabled && toggleView("search");
                         }}
-                        className="btn btn-icon search-toggle toggle-search"
+                        className="btn btn-icon search-toggle toggle-search cursor-pointer"
                       >
-                        <Icon name="search"></Icon>
+                        <Icon name="search"/>
                       </a>
                     </li>
                     <li className="btn-toolbar-sep"></li>
@@ -367,20 +366,20 @@ function RequestAssetsHandle({history}) {
                           disabled={disabled}
                           onClick={toggleSm}
                         >
-                          <Icon name="menu-right"></Icon>
+                          <Icon name="menu-right"/>
                         </Button>
                         <div className={`toggle-content ${sm ? "content-active" : ""}`}>
                           <ul className="btn-toolbar gx-1">
                             <li className="toggle-close">
                               <Button className="btn-icon btn-trigger toggle" disabled={disabled} onClick={toggleSm}>
-                                <Icon name="arrow-left"></Icon>
+                                <Icon name="arrow-left"/>
                               </Button>
                             </li>
                             <li>
                               <UncontrolledDropdown>
                                 <DropdownToggle tag="a" className="btn btn-trigger btn-icon dropdown-toggle">
                                   <div className="dot dot-primary"></div>
-                                  <Icon name="filter-alt"></Icon>
+                                  <Icon name="filter-alt"/>
                                 </DropdownToggle>
                                 <DropdownMenu
                                   right
@@ -495,7 +494,7 @@ function RequestAssetsHandle({history}) {
                                   </div>
                                   <div className="dropdown-foot between">
                                     <Button color="primary" disabled={disabled} onClick={onSearchFilter}>
-                                      <Icon name="filter"></Icon>
+                                      <Icon name="filter"/>
                                       <span>{t("common:filter")}</span>
                                     </Button>
                                   </div>
@@ -520,7 +519,7 @@ function RequestAssetsHandle({history}) {
                         toggleView("search");
                       }}
                     >
-                      <Icon name="arrow-left"></Icon>
+                      <Icon name="arrow-left"/>
                     </Button>
                     <input
                       type="text"
@@ -538,7 +537,7 @@ function RequestAssetsHandle({history}) {
                       disabled={disabled}
                       onClick={onSearch}
                     >
-                      <Icon name="search"></Icon>
+                      <Icon name="search"/>
                     </Button>
                   </div>
                 </div>

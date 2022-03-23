@@ -13,13 +13,13 @@ const UserActivity = () => {
             <h6 className="title">User Activities</h6>
             <p>
               In last In last {userActivity === "day" ? "30 days" : userActivity === "month" ? "3 months" : "15 days"}{" "}
-              <Icon name="info"></Icon>
+              <Icon name="info"/>
             </p>
           </CardTitle>
           <div className="card-tools mt-n1 mr-n1">
             <UncontrolledDropdown>
               <DropdownToggle tag="a" className="dropdown-toggle btn btn-icon btn-trigger">
-                <Icon name="more-h"></Icon>
+                <Icon name="more-h"/>
               </DropdownToggle>
               <DropdownMenu right>
                 <ul className="link-list-opt no-bdr">
@@ -63,7 +63,7 @@ const UserActivity = () => {
         </div>
         <div className="user-activity-group g-4">
           <div className="user-activity">
-            <Icon name="users"></Icon>
+            <Icon name="users"/>
             <div className="info">
               <span className="amount">
                 {" "}
@@ -81,7 +81,7 @@ const UserActivity = () => {
             </div>
           </div>
           <div className="user-activity">
-            <Icon name="users"></Icon>
+            <Icon name="users"/>
             <div className="info">
               <span className="amount"> {userActivity === "day" ? "49" : userActivity === "month" ? "250" : "10"}</span>
               <span className="title">Referral Join</span>

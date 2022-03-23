@@ -66,7 +66,7 @@ const User = () => {
         <div className="dropdown-inner">
           <LinkList>
             <a href={`${process.env.PUBLIC_URL}/auth-login`} onClick={handleSignout}>
-              <Icon name="signout"></Icon>
+              <Icon name="signout"/>
               <span className="pl-2">{t("account:sign_out")}</span>
             </a>
           </LinkList>

@@ -16,6 +16,7 @@ import {
   Icon,
   Button,
   RSelect,
+  Loading,
 } from "../../../../components/Component";
 import TableRoleFunctional from "./table";
 /** COMMON */
@@ -248,8 +249,7 @@ function RoleFunctional({history}) {
                         className="toggle btn-icon d-md-none"
                         color="primary"
                         disabled={disabled || (!formData.group && !formData.employee)}
-                        onClick={onUpdateRole}
-                      >
+                        onClick={onUpdateRole}>
                         {loading.update && <Spinner color="light" size="sm" />}
                         {!loading.update && <Icon name="save" />}
                       </Button>
@@ -257,9 +257,8 @@ function RoleFunctional({history}) {
                         className="toggle d-none d-md-inline-flex"
                         color="primary"
                         disabled={disabled || (!formData.group && !formData.employee)}
-                        onClick={onUpdateRole}
-                      >
-                        {loading.update && <Spinner className="mr-1" color="light" size="sm" />}
+                        onClick={onUpdateRole}>
+                        {loading.update && <Spinner color="light" size="sm" />}
                         {!loading.update && <Icon name="save" />}
                         <span>{t("common:save")}</span>
                       </Button>
@@ -315,6 +314,8 @@ function RoleFunctional({history}) {
           </DataTable>
         </Block>
       </Content>
+
+      <Loading show={loading.main || loading.search} />
     </React.Fragment>
   );
 };

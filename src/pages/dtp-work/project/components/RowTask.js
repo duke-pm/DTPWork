@@ -191,7 +191,7 @@ function RowTask(props) {
               <li>
                 <UncontrolledDropdown>
                   <DropdownToggle tag="a" className="btn btn-icon dropdown-toggle btn-trigger">
-                    <Icon name="more-h"></Icon>
+                    <Icon name="more-h"/>
                   </DropdownToggle>
                   <DropdownMenu right>
                     <ul className="link-list-opt no-bdr">
@@ -204,7 +204,7 @@ function RowTask(props) {
                             !disabled && onOverview(data.taskID);
                           }}
                         >
-                          <Icon name="eye"></Icon>
+                          <Icon name="eye"/>
                           <span>{t("task:overview")}</span>
                         </DropdownItem>
                       </li>
@@ -217,7 +217,7 @@ function RowTask(props) {
                             !disabled && onUpdate(data);
                           }}
                         >
-                          <Icon name="edit"></Icon>
+                          <Icon name="edit"/>
                           <span>{t("common:update")}</span>
                         </DropdownItem>
                       </li>
@@ -232,7 +232,7 @@ function RowTask(props) {
                                 !disabled && onClone(data);
                               }}
                             >
-                              <Icon name="copy"></Icon>
+                              <Icon name="copy"/>
                               <span>{t("common:clone")}</span>
                             </DropdownItem>
                           </li>
@@ -246,7 +246,7 @@ function RowTask(props) {
                                   !disabled && onRemove(data);
                                 }}
                               >
-                                <Icon name="trash"></Icon>
+                                <Icon name="trash"/>
                                 <span>{t("common:remove")}</span>
                               </DropdownItem>
                             </li>

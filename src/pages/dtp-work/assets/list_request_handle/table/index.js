@@ -150,7 +150,7 @@ function TableRequestHandle(props) {
                   <li>
                     <UncontrolledDropdown>
                       <DropdownToggle tag="a" className="btn btn-icon dropdown-toggle btn-trigger">
-                        <Icon name="more-h"></Icon>
+                        <Icon name="more-h"/>
                       </DropdownToggle>
                       <DropdownMenu right>
                         <ul className="link-list-opt no-bdr">
@@ -163,7 +163,7 @@ function TableRequestHandle(props) {
                                   ev.preventDefault();
                                   onApproved(item);
                                 }}>
-                                <Icon name="check-circle-cut"></Icon>
+                                <Icon name="check-circle-cut"/>
                                 <span>{t("request_handle:approved_action")}</span>
                               </DropdownItem>
                             </li>
@@ -176,7 +176,7 @@ function TableRequestHandle(props) {
                                 ev.preventDefault();
                                 onProcess(item);
                               }}>
-                              <Icon name="list-check"></Icon>
+                              <Icon name="list-check"/>
                               <span>{t("request_handle:approved_timeline")}</span>
                             </DropdownItem>
                           </li>
@@ -189,7 +189,7 @@ function TableRequestHandle(props) {
                                   ev.preventDefault();
                                   onDownload(item.attachFiles);
                                 }}>
-                                <Icon name="download"></Icon>
+                                <Icon name="download"/>
                                 <span>{t("request_handle:download_attach_file")}</span>
                               </DropdownItem>
                             </li>

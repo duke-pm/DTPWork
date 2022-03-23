@@ -16,6 +16,7 @@ import {
   PreviewAltCard,
   Icon,
   Button,
+  Loading,
 } from "../../../../components/Component";
 import TableMenu from "./table";
 import AddEditForm from "./form/AddEdit";
@@ -216,7 +217,7 @@ function MenuManagement({history}) {
                         disabled={disabled}
                         onClick={() => toggleView("add")}
                       >
-                        <Icon name="plus"></Icon>
+                        <Icon name="plus"/>
                       </Button>
                       <Button
                         className="toggle d-none d-md-inline-flex"
@@ -224,7 +225,7 @@ function MenuManagement({history}) {
                         disabled={disabled}
                         onClick={() => toggleView("add")}
                       >
-                        <Icon name="plus"></Icon>
+                        <Icon name="plus"/>
                         <span>{t("common:add_new")}</span>
                       </Button>
                     </li>
@@ -245,14 +246,12 @@ function MenuManagement({history}) {
                   <ul className="btn-toolbar gx-1">
                     <li>
                       <a
-                        href="#search"
                         onClick={(ev) => {
                           ev.preventDefault();
                           !disabled && toggleView("search");
                         }}
-                        className="btn btn-icon search-toggle toggle-search"
-                      >
-                        <Icon name="search"></Icon>
+                        className="btn btn-icon search-toggle toggle-search cursor-pointer">
+                        <Icon name="search"/>
                       </a>
                     </li>
                   </ul>
@@ -268,13 +267,13 @@ function MenuManagement({history}) {
                       onClick={(ev) => {
                         ev.preventDefault();
                         toggleView("search");
-                      }}
-                    >
-                      <Icon name="arrow-left"></Icon>
+                      }}>
+                      <Icon name="arrow-left"/>
                     </Button>
                     <input
                       type="text"
                       className="border-transparent form-focus-none form-control"
+                      autoFocus={true}
                       value={textSearch}
                       disabled={disabled}
                       placeholder={t("common:search")}
@@ -286,9 +285,8 @@ function MenuManagement({history}) {
                     <Button
                       className="search-submit btn-icon"
                       disabled={disabled}
-                      onClick={onSearch}
-                    >
-                      <Icon name="search"></Icon>
+                      onClick={onSearch}>
+                      <Icon name="search"/>
                     </Button>
                   </div>
                 </div>
@@ -297,6 +295,7 @@ function MenuManagement({history}) {
 
             {/** Data table */}
             <TableMenu
+              loadingForm={disabled}
               isWrite={isWrite}
               history={history}
               commonState={commonState}
@@ -307,11 +306,7 @@ function MenuManagement({history}) {
 
             {/** Paging table */}
             <PreviewAltCard>
-              {disabled ? (
-                <div className="text-center">
-                  <Spinner size="sm" color="primary" />
-                </div>
-              ) : 
+            {!disabled ? (
               data.list.length > 0 ? (
                 <PaginationComponent
                   itemPerPage={Configs.perPage}
@@ -323,25 +318,30 @@ function MenuManagement({history}) {
                 <div className="text-center">
                   <span className="text-silent">{t("common:no_data")}</span>
                 </div>
-              )}
+              )) : (
+              <div className="text-center">
+                <Spinner size="sm" color="primary" />
+              </div>
+            )}
             </PreviewAltCard>
           </DataTable>
         </Block>
-
-        {/** Forms */}
-        <AddEditForm
-          show={view.add || view.update}
-          history={history}
-          isUpdate={view.update}
-          authState={authState}
-          commonState={commonState}
-          updateItem={updateItem}
-          onClose={onCloseForm}
-        />
-
-        {view.add && <div className="toggle-overlay" onClick={toggleView}></div>}
-        {view.update && <div className="toggle-overlay" onClick={toggleView}></div>}
       </Content>
+
+      {/** Forms */}
+      <AddEditForm
+        show={view.add || view.update}
+        history={history}
+        isUpdate={view.update}
+        authState={authState}
+        commonState={commonState}
+        updateItem={updateItem}
+        onClose={onCloseForm}
+      />
+
+      {view.add && <div className="toggle-overlay" onClick={toggleView}></div>}
+      {view.update && <div className="toggle-overlay" onClick={toggleView}></div>}
+      <Loading show={disabled} />
     </React.Fragment>
   );
 };

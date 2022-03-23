@@ -38,7 +38,7 @@ function AlertConfirm({
       </ModalHeader>
       <ModalBody className="modal-body-sm text-center">
         <div className="nk-modal">
-          <Icon className="nk-modal-icon icon-circle-xxl ni ni-question"></Icon>
+          <Icon className="nk-modal-icon icon-circle-xxl ni ni-question"/>
           <div className="mt-4">
             <span>{content}</span>
           </div>

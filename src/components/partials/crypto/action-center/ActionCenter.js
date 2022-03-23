@@ -16,7 +16,7 @@ const ActionCenter = () => {
             <div className="card-tools mr-n1">
               <UncontrolledDropdown>
                 <DropdownToggle tag="a" className="dropdown-toggle btn btn-icon btn-trigger">
-                  <Icon name="more-h"></Icon>
+                  <Icon name="more-h"/>
                 </DropdownToggle>
                 <DropdownMenu right>
                   <ul className="link-list-opt no-bdr">
@@ -28,7 +28,7 @@ const ActionCenter = () => {
                           ev.preventDefault();
                         }}
                       >
-                        <Icon name="setting"></Icon>
+                        <Icon name="setting"/>
                         <span>Action Settings</span>
                       </DropdownItem>
                     </li>
@@ -40,7 +40,7 @@ const ActionCenter = () => {
                           ev.preventDefault();
                         }}
                       >
-                        <Icon name="notify"></Icon>
+                        <Icon name="notify"/>
                         <span>Push Notification</span>
                       </DropdownItem>
                     </li>
@@ -53,7 +53,7 @@ const ActionCenter = () => {
         <div className="card-inner">
           <div className="nk-wg-action">
             <div className="nk-wg-action-content">
-              <Icon name="cc-alt-fill"></Icon>
+              <Icon name="cc-alt-fill"/>
               <div className="title">Pending Buy/Sell Orders</div>
               <p>
                 We have still <strong>40 buy orders</strong> and <strong>12 sell orders</strong>, thats need to review
@@ -61,35 +61,35 @@ const ActionCenter = () => {
               </p>
             </div>
             <Button className="btn-icon btn-trigger mr-n2">
-              <Icon name="forward-ios"></Icon>
+              <Icon name="forward-ios"/>
             </Button>
           </div>
         </div>
         <div className="card-inner">
           <div className="nk-wg-action">
             <div className="nk-wg-action-content">
-              <Icon name="help-fill"></Icon>
+              <Icon name="help-fill"/>
               <div className="title">Support Messages</div>
               <p>
                 Here is <strong>18 new</strong> support message.{" "}
               </p>
             </div>
             <Button className="btn-icon btn-trigger mr-n2">
-              <Icon name="forward-ios"></Icon>
+              <Icon name="forward-ios"/>
             </Button>
           </div>
         </div>
         <div className="card-inner">
           <div className="nk-wg-action">
             <div className="nk-wg-action-content">
-              <Icon name="wallet-fill"></Icon>
+              <Icon name="wallet-fill"/>
               <div className="title">Upcoming Deposit</div>
               <p>
                 Here is <strong>7 upcoming</strong> deposit need to review.
               </p>
             </div>
             <Button className="btn-icon btn-trigger mr-n2">
-              <Icon name="forward-ios"></Icon>
+              <Icon name="forward-ios"/>
             </Button>
           </div>
         </div>

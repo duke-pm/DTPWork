@@ -18,11 +18,11 @@ const NicoIconCard = ({ iconName, tag, ...props }) => {
         <div className={`preview-icon-box card ${copy ? "clipboard-success" : ""}`}>
           <CopyToClipboard text={text}>
             <Button type="button" className="btn-icon btn-clipboard clipboard-init clipboard-text" onClick={handleCopy}>
-              <Icon name="copy"></Icon>
+              <Icon name="copy"/>
             </Button>
           </CopyToClipboard>
           <div className="preview-icon-wrap">
-            <Icon name={iconName}></Icon>
+            <Icon name={iconName}/>
           </div>
           <span className="preview-icon- name">{iconName}</span>
           <span className="clipboard-success-message text-primary">Copied</span>

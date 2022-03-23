@@ -24,6 +24,7 @@ import * as Actions from "../../../../../redux/actions";
 function TableApprovedLines(props) {
   const {t} = useTranslation();
   const {
+    loadingForm,
     isWrite,
     history,
     commonState,
@@ -116,7 +117,7 @@ function TableApprovedLines(props) {
         {isWrite && <DataTableRow className="nk-tb-col-tools" />}
       </DataTableHead>
 
-      {data.length > 0
+      {(!loadingForm && data.length > 0)
         ? data.map((item, index) => {
           return (
             <DataTableItem key={item.roleID + "_app_line_" + index}>
@@ -150,7 +151,7 @@ function TableApprovedLines(props) {
                     <li>
                       <UncontrolledDropdown>
                         <DropdownToggle tag="a" className="btn btn-icon dropdown-toggle btn-trigger">
-                          <Icon name="more-h"></Icon>
+                          <Icon name="more-h"/>
                         </DropdownToggle>
                         <DropdownMenu right>
                           <ul className="link-list-opt no-bdr">
@@ -163,7 +164,7 @@ function TableApprovedLines(props) {
                                   !loading && onUpdate(item);
                                 }}
                               >
-                                <Icon name="edit"></Icon>
+                                <Icon name="edit"/>
                                 <span>{t("common:update")}</span>
                               </DropdownItem>
                             </li>
@@ -176,7 +177,7 @@ function TableApprovedLines(props) {
                                   !loading && onRemove(item);
                                 }}
                               >
-                                <Icon name="trash"></Icon>
+                                <Icon name="trash"/>
                                 <span>{t("common:remove")}</span>
                               </DropdownItem>
                             </li>

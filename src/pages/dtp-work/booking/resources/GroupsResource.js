@@ -262,14 +262,14 @@ function GroupsResource({history}) {
                         color="primary"
                         disabled={disabled}
                         onClick={() => toggleView("add")}>
-                        <Icon name="plus"></Icon>
+                        <Icon name="plus"/>
                       </Button>
                       <Button
                         className="toggle d-none d-md-inline-flex"
                         color="primary"
                         disabled={disabled}
                         onClick={() => toggleView("add")}>
-                        <Icon name="plus"></Icon>
+                        <Icon name="plus"/>
                         <span>{t("common:add_new")}</span>
                       </Button>
                     </li>
@@ -295,7 +295,7 @@ function GroupsResource({history}) {
                           ev.preventDefault();
                           !disabled && toggleView("search");
                         }}>
-                        <Icon name="search"></Icon>
+                        <Icon name="search"/>
                       </a>
                     </li>
                   </ul>

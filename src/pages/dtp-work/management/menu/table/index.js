@@ -24,6 +24,7 @@ import * as Actions from "../../../../../redux/actions";
 function TableMenu(props) {
   const {t} = useTranslation();
   const {
+    loadingForm,
     isWrite,
     history,
     commonState,
@@ -134,7 +135,7 @@ function TableMenu(props) {
         {isWrite && <DataTableRow className="nk-tb-col-tools" />}
       </DataTableHead>
 
-      {data.length > 0
+      {(!loadingForm && data.length > 0)
         ? data.map((item, index) => {
           idChkInactive = `check_active_${item.menuID}`;
           idChkWeb = `check_web_${item.menuID}` ;
@@ -217,7 +218,7 @@ function TableMenu(props) {
                       <li>
                         <UncontrolledDropdown>
                           <DropdownToggle tag="a" className="btn btn-icon dropdown-toggle btn-trigger">
-                            <Icon name="more-h"></Icon>
+                            <Icon name="more-h"/>
                           </DropdownToggle>
                           <DropdownMenu right>
                             <ul className="link-list-opt no-bdr">
@@ -230,7 +231,7 @@ function TableMenu(props) {
                                     !loading && onUpdate(item);
                                   }}
                                 >
-                                  <Icon name="edit"></Icon>
+                                  <Icon name="edit"/>
                                   <span>{t("common:update")}</span>
                                 </DropdownItem>
                               </li>

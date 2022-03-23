@@ -18,7 +18,7 @@ const Orders = () => {
               <div className="amount">329</div>
               <div className="info text-right">
                 <span className="change up text-danger">
-                  <Icon name="arrow-long-up"></Icon>4.63%
+                  <Icon name="arrow-long-up"/>4.63%
                 </span>
                 <br />
                 <span>vs. last week</span>

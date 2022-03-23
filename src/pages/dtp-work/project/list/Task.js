@@ -400,10 +400,10 @@ function ListTasks({history}) {
                   <ul className="nk-block-tools g-3">
                     <UncontrolledDropdown direction="left">
                       <DropdownToggle className="toggle btn-action d-md-none" color="primary">
-                        <Icon name="plus"></Icon>
+                        <Icon name="plus"/>
                       </DropdownToggle>
                       <DropdownToggle className="btn-action toggle d-none d-md-inline-flex" color="primary">
-                        <Icon name="plus"></Icon>
+                        <Icon name="plus"/>
                         <span>{t("common:add_new")}</span>
                       </DropdownToggle>
                       <DropdownMenu>
@@ -457,14 +457,13 @@ function ListTasks({history}) {
                   <ul className="btn-toolbar gx-1">
                     <li>
                       <a
-                        href="#search"
                         onClick={(ev) => {
                           ev.preventDefault();
                           !disabled && toggleView("search");
                         }}
-                        className="btn btn-icon search-toggle toggle-search"
+                        className="btn btn-icon search-toggle toggle-search cursor-pointer"
                       >
-                        <Icon name="search"></Icon>
+                        <Icon name="search"/>
                       </a>
                     </li>
                     <li className="btn-toolbar-sep"></li>
@@ -475,20 +474,20 @@ function ListTasks({history}) {
                           disabled={disabled}
                           onClick={toggleSm}
                         >
-                          <Icon name="menu-right"></Icon>
+                          <Icon name="menu-right"/>
                         </Button>
                         <div className={`toggle-content ${sm ? "content-active" : ""}`}>
                           <ul className="btn-toolbar gx-1">
                             <li className="toggle-close">
                               <Button className="btn-icon btn-trigger toggle" disabled={disabled} onClick={toggleSm}>
-                                <Icon name="arrow-left"></Icon>
+                                <Icon name="arrow-left"/>
                               </Button>
                             </li>
                             <li>
                               <UncontrolledDropdown>
                                 <DropdownToggle tag="a" className="btn btn-trigger btn-icon dropdown-toggle">
                                   <div className="dot dot-primary"></div>
-                                  <Icon name="filter-alt"></Icon>
+                                  <Icon name="filter-alt"/>
                                 </DropdownToggle>
                                 <DropdownMenu
                                   right
@@ -556,7 +555,7 @@ function ListTasks({history}) {
                                   <div className="dropdown-foot between">
                                     <Button color="primary" disabled={disabled} onClick={onSearchFilter}>
                                       {loading.search && <Spinner className="mr-1" size="sm" color="light" />}
-                                      {!loading.search && <Icon name="filter"></Icon>}
+                                      {!loading.search && <Icon name="filter"/>}
                                       <span>{t("common:filter")}</span>
                                     </Button>
                                   </div>
@@ -592,7 +591,7 @@ function ListTasks({history}) {
                         toggleView("search");
                       }}
                     >
-                      <Icon name="arrow-left"></Icon>
+                      <Icon name="arrow-left"/>
                     </Button>
                     <input
                       type="text"
@@ -612,7 +611,7 @@ function ListTasks({history}) {
                         onSearch();
                       }}
                     >
-                      <Icon name="search"></Icon>
+                      <Icon name="search"/>
                     </Button>
                   </div>
                 </div>

@@ -91,7 +91,7 @@ const BrowserUser = () => {
             <DataTableItem key={item.id}>
               <DataTableRow>
                 <div className="icon-text">
-                  <Icon className={`text-${item.theme}`} name="globe"></Icon>
+                  <Icon className={`text-${item.theme}`} name="globe"/>
                   <span className="tb-lead">{item.browser}</span>
                 </div>
               </DataTableRow>

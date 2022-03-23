@@ -27,21 +27,21 @@ const StoreVisitors = () => {
               <div className="title">Monthly</div>
               <div className="amount amount-sm">9.28K</div>
               <div className="change up">
-                <Icon name="arrow-long-up"></Icon>4.63%
+                <Icon name="arrow-long-up"/>4.63%
               </div>
             </div>
             <div className="data">
               <div className="title">Weekly</div>
               <div className="amount amount-sm">2.69K</div>
               <div className="change down">
-                <Icon name="arrow-long-down"></Icon>1.92%
+                <Icon name="arrow-long-down"/>1.92%
               </div>
             </div>
             <div className="data">
               <div className="title">Daily (Avg)</div>
               <div className="amount amount-sm">0.94K</div>
               <div className="change up">
-                <Icon name="arrow-long-up"></Icon>3.45%
+                <Icon name="arrow-long-up"/>3.45%
               </div>
             </div>
           </div>

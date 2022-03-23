@@ -503,7 +503,7 @@ function RequestAssets({history}) {
                         disabled={disabled}
                         onClick={onToggleAdd}
                       >
-                        <Icon name="plus"></Icon>
+                        <Icon name="plus"/>
                       </Button>
                       <Button
                         className="toggle d-none d-md-inline-flex"
@@ -511,7 +511,7 @@ function RequestAssets({history}) {
                         disabled={disabled}
                         onClick={onToggleAdd}
                       >
-                        <Icon name="plus"></Icon>
+                        <Icon name="plus"/>
                         {filterTab === 0 && (
                           <span>{t("request_approved:add_assets")}</span>
                         )}
@@ -556,14 +556,13 @@ function RequestAssets({history}) {
                   <ul className="btn-toolbar gx-1">
                     <li>
                       <a
-                        href="#search"
                         onClick={(ev) => {
                           ev.preventDefault();
                           !disabled && toggleView("search");
                         }}
-                        className="btn btn-icon search-toggle toggle-search"
+                        className="btn btn-icon search-toggle toggle-search cursor-pointer"
                       >
-                        <Icon name="search"></Icon>
+                        <Icon name="search"/>
                       </a>
                     </li>
                     <li className="btn-toolbar-sep"></li>
@@ -574,20 +573,20 @@ function RequestAssets({history}) {
                           disabled={disabled}
                           onClick={toggleSm}
                         >
-                          <Icon name="menu-right"></Icon>
+                          <Icon name="menu-right"/>
                         </Button>
                         <div className={`toggle-content ${sm ? "content-active" : ""}`}>
                           <ul className="btn-toolbar gx-1">
                             <li className="toggle-close">
                               <Button className="btn-icon btn-trigger toggle" disabled={disabled} onClick={toggleSm}>
-                                <Icon name="arrow-left"></Icon>
+                                <Icon name="arrow-left"/>
                               </Button>
                             </li>
                             <li>
                               <UncontrolledDropdown>
                                 <DropdownToggle tag="a" className="btn btn-trigger btn-icon dropdown-toggle">
                                   <div className="dot dot-primary"></div>
-                                  <Icon name="filter-alt"></Icon>
+                                  <Icon name="filter-alt"/>
                                 </DropdownToggle>
                                 <DropdownMenu
                                   right
@@ -701,7 +700,7 @@ function RequestAssets({history}) {
                                   </div>
                                   <div className="dropdown-foot between">
                                     <Button color="primary" disabled={disabled} onClick={onSearchFilter}>
-                                      <Icon name="filter"></Icon>
+                                      <Icon name="filter"/>
                                       <span>{t("common:filter")}</span>
                                     </Button>
                                   </div>
@@ -726,7 +725,7 @@ function RequestAssets({history}) {
                         toggleView("search");
                       }}
                     >
-                      <Icon name="arrow-left"></Icon>
+                      <Icon name="arrow-left"/>
                     </Button>
                     <input
                       type="text"
@@ -743,7 +742,7 @@ function RequestAssets({history}) {
                       className="search-submit btn-icon"
                       onClick={ev => onSearch(ev, filterTab)}
                     >
-                      <Icon name="search"></Icon>
+                      <Icon name="search"/>
                     </Button>
                   </div>
                 </div>

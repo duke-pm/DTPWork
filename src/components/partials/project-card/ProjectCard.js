@@ -33,7 +33,7 @@ export const ProjectHead = ({ color, initial, title, subtitle }) => {
       </a>
       <UncontrolledDropdown>
         <DropdownToggle tag="a" className="btn btn-icon btn-trigger">
-          <Icon name="more-h"></Icon>
+          <Icon name="more-h"/>
         </DropdownToggle>
         <DropdownMenu right>
           <ul className="link-list-opt no-bdr">
@@ -44,7 +44,7 @@ export const ProjectHead = ({ color, initial, title, subtitle }) => {
                   ev.preventDefault();
                 }}
               >
-                <Icon name="eye"></Icon>
+                <Icon name="eye"/>
                 <span>View Project</span>
               </a>
             </li>
@@ -55,7 +55,7 @@ export const ProjectHead = ({ color, initial, title, subtitle }) => {
                   ev.preventDefault();
                 }}
               >
-                <Icon name="edit"></Icon>
+                <Icon name="edit"/>
                 <span>Edit Project</span>
               </a>
             </li>
@@ -66,7 +66,7 @@ export const ProjectHead = ({ color, initial, title, subtitle }) => {
                   ev.preventDefault();
                 }}
               >
-                <Icon name="check-round-cut"></Icon>
+                <Icon name="check-round-cut"/>
                 <span>Mark As Done</span>
               </a>
             </li>
@@ -85,7 +85,7 @@ export const ProjectBody = ({ desc, task, percentage, team, date }) => {
       <div className="project-progress">
         <div className="project-progress-details">
           <div className="project-progress-task">
-            <Icon name="check-round-cut"></Icon>
+            <Icon name="check-round-cut"/>
             <span>{task} Tasks</span>
           </div>
           <div className="project-progress-percent">{percentage}%</div>
@@ -112,7 +112,7 @@ export const ProjectBody = ({ desc, task, percentage, team, date }) => {
             days > 10 ? "light" : days <= 10 && days >= 2 ? "warning" : days === 1 ? "danger" : days === 0 && "success"
           }`}
         >
-          <Icon name="clock"></Icon>
+          <Icon name="clock"/>
           <span>{days === 0 ? "Done" : days === 1 ? "Due Tomorrow" : days + " Days Left"}</span>
         </span>
       </div>

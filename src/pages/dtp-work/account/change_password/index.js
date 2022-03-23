@@ -177,8 +177,8 @@ function ChangePassword({history}) {
                     onClick={togglePassState}
                     className={`form-icon lg form-icon-right passcode-switch ${passState ? "is-hidden" : "is-shown"}`}
                   >
-                    <Icon name="eye" className="passcode-icon icon-show"></Icon>
-                    <Icon name="eye-off" className="passcode-icon icon-hide"></Icon>
+                    <Icon name="eye" className="passcode-icon icon-show"/>
+                    <Icon name="eye-off" className="passcode-icon icon-hide"/>
                   </a>
                   <input
                     ref={register({ required: t("validate:empty") })}
@@ -207,8 +207,8 @@ function ChangePassword({history}) {
                     onClick={togglePassState}
                     className={`form-icon lg form-icon-right passcode-switch ${passState ? "is-hidden" : "is-shown"}`}
                   >
-                    <Icon name="eye" className="passcode-icon icon-show"></Icon>
-                    <Icon name="eye-off" className="passcode-icon icon-hide"></Icon>
+                    <Icon name="eye" className="passcode-icon icon-show"/>
+                    <Icon name="eye-off" className="passcode-icon icon-hide"/>
                   </a>
                   <input
                     ref={register({ required: t("validate:empty") })}
@@ -240,8 +240,8 @@ function ChangePassword({history}) {
                     onClick={togglePassState}
                     className={`form-icon lg form-icon-right passcode-switch ${passState ? "is-hidden" : "is-shown"}`}
                   >
-                    <Icon name="eye" className="passcode-icon icon-show"></Icon>
-                    <Icon name="eye-off" className="passcode-icon icon-hide"></Icon>
+                    <Icon name="eye" className="passcode-icon icon-show"/>
+                    <Icon name="eye-off" className="passcode-icon icon-hide"/>
                   </a>
                   <input
                     ref={register({ required: t("validate:empty") })}
@@ -290,7 +290,7 @@ function ChangePassword({history}) {
       >
         <ModalBody className="modal-body-sm text-center">
           <div className="nk-modal">
-            <Icon className="nk-modal-icon icon-circle icon-circle-xxl ni ni-alert bg-warning"></Icon>
+            <Icon className="nk-modal-icon icon-circle icon-circle-xxl ni ni-alert bg-warning"/>
             <h4 className="nk-modal-title">{t("change_password:confirm_title")}</h4>
             <div className="nk-modal-text">
               <div className="sub-text-sm d-flex flex-column align-items-start">

@@ -102,10 +102,10 @@ const OrderActivity = () => {
               <DataTableRow className="nk-tb-orders-type">
                 <ul className="icon-overlap">
                   <li>
-                    <Icon name={item.icon1}></Icon>
+                    <Icon name={item.icon1}/>
                   </li>
                   <li>
-                    <Icon name={item.icon2}></Icon>
+                    <Icon name={item.icon2}/>
                   </li>
                 </ul>
               </DataTableRow>

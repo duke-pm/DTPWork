@@ -150,7 +150,7 @@ function TableRequest(props) {
                 <ul className="nk-tb-actions gx-1">
                   <UncontrolledDropdown>
                     <DropdownToggle tag="a" className="btn btn-icon dropdown-toggle btn-trigger">
-                      <Icon name="more-h"></Icon>
+                      <Icon name="more-h"/>
                     </DropdownToggle>
                     <DropdownMenu right>
                       <ul className="link-list-opt no-bdr">
@@ -162,7 +162,7 @@ function TableRequest(props) {
                               ev.preventDefault();
                               onDetails(itemR);
                             }}>
-                            <Icon name="eye"></Icon>
+                            <Icon name="eye"/>
                             <span>{t("request_approved:view_details")}</span>
                           </DropdownItem>
                         </li>
@@ -174,7 +174,7 @@ function TableRequest(props) {
                               ev.preventDefault();
                               onProcess(itemR);
                             }}>
-                            <Icon name="list-check"></Icon>
+                            <Icon name="list-check"/>
                             <span>{t("request_approved:approved_timeline")}</span>
                           </DropdownItem>
                         </li>
@@ -186,7 +186,7 @@ function TableRequest(props) {
                               ev.preventDefault();
                               onExportExcel(itemR.requestID);
                             }}>
-                            <Icon name="download"></Icon>
+                            <Icon name="download"/>
                             <span>{t("request_approved:export_file")}</span>
                           </DropdownItem>
                         </li>
@@ -199,7 +199,7 @@ function TableRequest(props) {
                                 ev.preventDefault();
                                 onDownload(itemR.attachFiles);
                               }}>
-                              <Icon name="download"></Icon>
+                              <Icon name="download"/>
                               <span>{t("request_approved:download_attach_file")}</span>
                             </DropdownItem>
                           </li>

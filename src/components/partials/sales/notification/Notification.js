@@ -33,7 +33,7 @@ const Notifications = () => {
                 <li className="timeline-item" key={item.id}>
                   <div className={`timeline-status ${item.fill} ${item.outline ? "is-outline" : ""}`}></div>
                   <div className="timeline-date">
-                    {item.date} <Icon name="alarm-alt"></Icon>
+                    {item.date} <Icon name="alarm-alt"/>
                   </div>
                   <div className="timeline-data">
                     <h6 className="timeline-title">{item.text}</h6>

@@ -27,7 +27,7 @@ const OrderOverview = () => {
         <div className="card-tools mt-n1 mr-n1">
           <UncontrolledDropdown>
             <DropdownToggle tag="a" className="dropdown-toggle btn btn-icon btn-trigger">
-              <Icon name="more-h"></Icon>
+              <Icon name="more-h"/>
             </DropdownToggle>
             <DropdownMenu right>
               <ul className="link-list-opt no-bdr">
@@ -82,7 +82,7 @@ const OrderOverview = () => {
                     </strong>
                   </div>
                   <div className="title">
-                    <Icon name="arrow-down-left"></Icon> Buy Orders
+                    <Icon name="arrow-down-left"/> Buy Orders
                   </div>
                 </div>
               </Col>
@@ -100,7 +100,7 @@ const OrderOverview = () => {
                     </strong>
                   </div>
                   <div className="title">
-                    <Icon name="arrow-up-left"></Icon> Sell Orders
+                    <Icon name="arrow-up-left"/> Sell Orders
                   </div>
                 </div>
               </Col>

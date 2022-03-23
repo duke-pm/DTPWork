@@ -115,7 +115,7 @@ const TrafficChannel = () => {
                 <span className="tb-sub">
                   <span>{item.change}%</span>{" "}
                   <span className={`change ${item.changeDifference}`}>
-                    <Icon name={`arrow-long-${item.changeDifference}`}></Icon>
+                    <Icon name={`arrow-long-${item.changeDifference}`}/>
                   </span>
                 </span>
               </DataTableRow>

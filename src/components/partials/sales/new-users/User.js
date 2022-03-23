@@ -9,7 +9,7 @@ const NewsUsers = () => {
     return (
       <UncontrolledDropdown>
         <DropdownToggle tag="a" className="dropdown-toggle btn btn-icon btn-trigger mr-n1">
-          <Icon name="more-h"></Icon>
+          <Icon name="more-h"/>
         </DropdownToggle>
         <DropdownMenu right>
           <ul className="link-list-opt no-bdr">
@@ -21,7 +21,7 @@ const NewsUsers = () => {
                   ev.preventDefault();
                 }}
               >
-                <Icon name="setting"></Icon>
+                <Icon name="setting"/>
                 <span>Action Settings</span>
               </DropdownItem>
             </li>
@@ -33,7 +33,7 @@ const NewsUsers = () => {
                   ev.preventDefault();
                 }}
               >
-                <Icon name="notify"></Icon>
+                <Icon name="notify"/>
                 <span>Use Notification</span>
               </DropdownItem>
             </li>

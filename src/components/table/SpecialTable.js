@@ -9,7 +9,7 @@ export const SpecialTable = ({ action, isCompact, data }) => {
     return (
       <UncontrolledDropdown>
         <DropdownToggle tag="a" className="text-soft dropdown-toggle btn btn-icon btn-trigger">
-          <Icon name="more-h"></Icon>
+          <Icon name="more-h"/>
         </DropdownToggle>
         <DropdownMenu right>
           <ul className="link-list-plain">
@@ -183,7 +183,7 @@ export const OrderTable = () => {
     return (
       <UncontrolledDropdown>
         <DropdownToggle tag="a" className="text-soft dropdown-toggle btn btn-icon btn-trigger">
-          <Icon name="more-h"></Icon>
+          <Icon name="more-h"/>
         </DropdownToggle>
         <DropdownMenu right>
           <ul className="link-list-plain">
@@ -330,7 +330,7 @@ export const LoginLogTable = () => {
                     }}
                     className="link-cross mr-sm-n1"
                   >
-                    <Icon name="cross"></Icon>
+                    <Icon name="cross"/>
                   </a>
                 )}
               </td>

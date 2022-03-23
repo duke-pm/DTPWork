@@ -145,7 +145,7 @@ function TableBookings(props) {
                     <li>
                       <UncontrolledDropdown>
                         <DropdownToggle tag="a" className="btn btn-icon dropdown-toggle btn-trigger">
-                          <Icon name="more-h"></Icon>
+                          <Icon name="more-h"/>
                         </DropdownToggle>
                         <DropdownMenu right>
                           <ul className="link-list-opt no-bdr">
@@ -157,7 +157,7 @@ function TableBookings(props) {
                                   ev.preventDefault();
                                   !disabled && onUpdate(item);
                                 }}>
-                                <Icon name="edit"></Icon>
+                                <Icon name="edit"/>
                                 <span>{t("common:update")}</span>
                               </DropdownItem>
                             </li>
@@ -169,7 +169,7 @@ function TableBookings(props) {
                                   ev.preventDefault();
                                   !disabled && onRemove(item);
                                 }}>
-                                <Icon name="trash"></Icon>
+                                <Icon name="trash"/>
                                 <span>{t("common:remove")}</span>
                               </DropdownItem>
                             </li>

@@ -541,7 +541,7 @@ function AddEditBookingForm(props) {
                     <Col size="6">
                       <>
                         <div className="form-icon form-icon-left">
-                          <Icon name="calendar"></Icon>
+                          <Icon name="calendar"/>
                         </div>
                         <DatePicker
                           selected={formData.start.date}
@@ -577,7 +577,7 @@ function AddEditBookingForm(props) {
                     <Col size="6">
                       <>
                         <div className="form-icon form-icon-left">
-                          <Icon name="calendar"></Icon>
+                          <Icon name="calendar"/>
                         </div>
                         <DatePicker
                           selected={formData.end.date}

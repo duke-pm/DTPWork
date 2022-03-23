@@ -356,7 +356,7 @@ function TableAssets(props) {
                       ) : item.statusID !== 5 ? (
                         <UncontrolledDropdown>
                           <DropdownToggle tag="a" className="btn btn-icon dropdown-toggle btn-trigger">
-                            <Icon name="more-h"></Icon>
+                            <Icon name="more-h"/>
                           </DropdownToggle>
                           <DropdownMenu right>
                             <ul className="link-list-opt no-bdr">
@@ -369,7 +369,7 @@ function TableAssets(props) {
                                     onGetDetailsData(item);
                                   }}
                                 >
-                                  <Icon name="eye"></Icon>
+                                  <Icon name="eye"/>
                                   <span>{t("assets:view_details")}</span>
                                 </DropdownItem>
                               </li>
@@ -383,7 +383,7 @@ function TableAssets(props) {
                                       onApprovedRecallItem("approved", item);
                                     }}
                                   >
-                                    <Icon name="clipboad-check"></Icon>
+                                    <Icon name="clipboad-check"/>
                                     <span>{t("assets:approved_assets")}</span>
                                   </DropdownItem>
                                 </li>
@@ -398,7 +398,7 @@ function TableAssets(props) {
                                       onApprovedRecallItem("recall", item);
                                     }}
                                   >
-                                    <Icon name="undo"></Icon>
+                                    <Icon name="undo"/>
                                     <span>{t("assets:recall_assets")}</span>
                                   </DropdownItem>
                                 </li>
@@ -413,7 +413,7 @@ function TableAssets(props) {
                                       onRepairItem(item);
                                     }}
                                   >
-                                    <Icon name="setting"></Icon>
+                                    <Icon name="setting"/>
                                     <span>{t("assets:repair_assets")}</span>
                                   </DropdownItem>
                                 </li>
@@ -428,7 +428,7 @@ function TableAssets(props) {
                                       onLiquidationItem(item);
                                     }}
                                   >
-                                    <Icon name="money"></Icon>
+                                    <Icon name="money"/>
                                     <span>{t("assets:liquidation_assets")}</span>
                                   </DropdownItem>
                                 </li>
@@ -443,7 +443,7 @@ function TableAssets(props) {
                                       onReuseItem(item);
                                     }}
                                   >
-                                    <Icon name="undo"></Icon>
+                                    <Icon name="undo"/>
                                     <span>{t("assets:reuse_assets")}</span>
                                   </DropdownItem>
                                 </li>
@@ -475,7 +475,7 @@ function TableAssets(props) {
                         <UncontrolledDropdown>
                           {item.statusID === 4 && (
                             <DropdownToggle tag="a" className="btn btn-icon dropdown-toggle btn-trigger">
-                              <Icon name="more-h"></Icon>
+                              <Icon name="more-h"/>
                             </DropdownToggle>
                           )}
                           {item.statusID == 4 && (
@@ -490,7 +490,7 @@ function TableAssets(props) {
                                       onGetDetailsData(item);
                                     }}
                                   >
-                                    <Icon name="eye"></Icon>
+                                    <Icon name="eye"/>
                                     <span>{t("assets:view_details")}</span>
                                   </DropdownItem>
                                 </li>
@@ -503,7 +503,7 @@ function TableAssets(props) {
                                       onLiquidationItem(item);
                                     }}
                                   >
-                                    <Icon name="money"></Icon>
+                                    <Icon name="money"/>
                                     <span>{t("assets:liquidation_assets")}</span>
                                   </DropdownItem>
                                 </li>
@@ -516,7 +516,7 @@ function TableAssets(props) {
                                       onRepairItem(item);
                                     }}
                                   >
-                                    <Icon name="setting"></Icon>
+                                    <Icon name="setting"/>
                                     <span>{t("assets:repair_assets")}</span>
                                   </DropdownItem>
                                 </li>
@@ -553,7 +553,7 @@ function TableAssets(props) {
                 className="link link-sm cursor-pointer text-primary"
                 onClick={onUpdateAsset}>
                 <span>{t("assets:update_assets")}</span>
-                <Icon name="edit"></Icon>
+                <Icon name="edit"/>
               </a>
             </div>
             <div className="mt-3">
@@ -741,7 +741,7 @@ function TableAssets(props) {
                             <li>
                               <UncontrolledDropdown>
                                 <DropdownToggle tag="a" className="btn btn-icon dropdown-toggle btn-trigger">
-                                  <Icon name="more-h"></Icon>
+                                  <Icon name="more-h"/>
                                 </DropdownToggle>
                                 <DropdownMenu right>
                                   <ul className="link-list-opt no-bdr">
@@ -754,7 +754,7 @@ function TableAssets(props) {
                                             ev.preventDefault();
                                             onExportReport(itemH.transStatus);
                                           }}>
-                                          <Icon name="download-cloud"></Icon>
+                                          <Icon name="download-cloud"/>
                                           <span>{t("assets:export_report")}</span>
                                         </DropdownItem>
                                       </li>
@@ -768,7 +768,7 @@ function TableAssets(props) {
                                             ev.preventDefault();
                                             onDownloadFile(itemH.attachFiles);
                                           }}>
-                                          <Icon name="download"></Icon>
+                                          <Icon name="download"/>
                                           <span>{t("assets:download_attach_file")}</span>
                                         </DropdownItem>
                                       </li>
@@ -781,7 +781,7 @@ function TableAssets(props) {
                                           ev.preventDefault();
                                           onUpdateHis(itemH);
                                         }}>
-                                        <Icon name="edit-alt"></Icon>
+                                        <Icon name="edit-alt"/>
                                         <span>{t("assets:update_file")}</span>
                                       </DropdownItem>
                                     </li>

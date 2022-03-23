@@ -24,7 +24,7 @@ const TransactionTable = () => {
     return (
       <UncontrolledDropdown>
         <DropdownToggle tag="a" className="text-soft dropdown-toggle btn btn-icon btn-trigger">
-          <Icon name="more-h"></Icon>
+          <Icon name="more-h"/>
         </DropdownToggle>
         <DropdownMenu right>
           <ul className="link-list-plain">

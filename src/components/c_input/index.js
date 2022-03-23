@@ -95,8 +95,8 @@ const CInput = ({
                 : "is-shown"
               }`}
             >
-              <Icon name="eye" className="passcode-icon icon-show"></Icon>
-              <Icon name="eye-off" className="passcode-icon icon-hide"></Icon>
+              <Icon name="eye" className="passcode-icon icon-show"/>
+              <Icon name="eye-off" className="passcode-icon icon-hide"/>
             </a>
           )}
           {type !== "textarea"

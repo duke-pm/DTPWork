@@ -35,7 +35,7 @@ const WebsitePerformance = () => {
             <div className="analytic-wp-text">
               <div className="amount amount-sm">23.59%</div>
               <div className="change up">
-                <Icon name="arrow-long-up"></Icon>4.5%
+                <Icon name="arrow-long-up"/>4.5%
               </div>
               <div className="subtitle">vs. last month</div>
             </div>
@@ -52,7 +52,7 @@ const WebsitePerformance = () => {
             <div className="analytic-wp-text">
               <div className="amount amount-sm">5.48</div>
               <div className="change down">
-                <Icon name="arrow-long-down"></Icon>1.48%
+                <Icon name="arrow-long-down"/>1.48%
               </div>
               <div className="subtitle">vs. last month</div>
             </div>
@@ -69,7 +69,7 @@ const WebsitePerformance = () => {
             <div className="analytic-wp-text">
               <div className="amount amount-sm">549</div>
               <div className="change up">
-                <Icon name="arrow-long-up"></Icon>6.8%
+                <Icon name="arrow-long-up"/>6.8%
               </div>
               <div className="subtitle">vs. last month</div>
             </div>
@@ -86,7 +86,7 @@ const WebsitePerformance = () => {
             <div className="analytic-wp-text">
               <div className="amount amount-sm">3m 35s</div>
               <div className="change up">
-                <Icon name="arrow-long-up"></Icon>1.4%
+                <Icon name="arrow-long-up"/>1.4%
               </div>
               <div className="subtitle">vs. last month</div>
             </div>

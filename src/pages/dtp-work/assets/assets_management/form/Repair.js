@@ -29,7 +29,7 @@ import * as Actions from "../../../../../redux/actions";
 const CustomDateInput = forwardRef(({ value, onClick, onChange }, ref) => (
   <div onClick={onClick} ref={ref}>
     <div className="form-icon form-icon-left">
-      <Icon name="calendar"></Icon>
+      <Icon name="calendar"/>
     </div>
     <input
       className="form-control date-picker"
@@ -347,7 +347,7 @@ function RepairForm(props) {
                     disabled={disabled}
                     onClick={onResetData}
                   >
-                    <Icon name="undo"></Icon>
+                    <Icon name="undo"/>
                   </Button>
                   <Button
                     className="toggle d-none d-md-inline-flex"
@@ -356,7 +356,7 @@ function RepairForm(props) {
                     disabled={disabled}
                     onClick={onResetData}
                   >
-                    <Icon name="undo"></Icon>
+                    <Icon name="undo"/>
                     <span>{t("common:reset")}</span>
                   </Button>
                 </li> */}
@@ -370,7 +370,7 @@ function RepairForm(props) {
                     {disabled && (
                       <Spinner size="sm" color="light" />
                     )}
-                    {!loading.repair && !loading.history && <Icon name="save"></Icon>}
+                    {!loading.repair && !loading.history && <Icon name="save"/>}
                   </Button>
                   <Button
                     className="toggle d-none d-md-inline-flex"
@@ -381,7 +381,7 @@ function RepairForm(props) {
                     {disabled && (
                       <Spinner className="mr-2" size="sm" color="light" />
                     )}
-                    {!loading.repair && !loading.history && <Icon name="save"></Icon>}
+                    {!loading.repair && !loading.history && <Icon name="save"/>}
                     <span>{t("common:save")}</span>
                   </Button>
                 </li>
@@ -407,7 +407,7 @@ function RepairForm(props) {
                   </div>
                   <div className="form-control-wrap">
                     <div className="form-icon form-icon-left">
-                      <Icon name="calendar"></Icon>
+                      <Icon name="calendar"/>
                     </div>
                     <DatePicker
                       selected={formData.repairDate}
@@ -429,7 +429,7 @@ function RepairForm(props) {
                   </div>
                   <div className="form-control-wrap">
                     <div className="form-icon form-icon-left">
-                      <Icon name="building"></Icon>
+                      <Icon name="building"/>
                     </div>
                     <input
                       ref={register({ required: t("validate:empty") })}
@@ -457,7 +457,7 @@ function RepairForm(props) {
                   </div>
                   <div className="form-control-wrap">
                     <div className="form-icon form-icon-left">
-                      <Icon name="sign-vnd"></Icon>
+                      <Icon name="sign-vnd"/>
                     </div>
                     <NumberFormat
                       className="form-control"
@@ -505,7 +505,7 @@ function RepairForm(props) {
                         disabled={disabled}
                         onClick={onDownloadAttachFile}
                       >
-                        <Icon name="download"></Icon>
+                        <Icon name="download"/>
                         <span>{t("common:download")}</span>
                       </Button>
                     )}

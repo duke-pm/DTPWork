@@ -29,7 +29,7 @@ import * as Actions from "../../../../redux/actions";
 const CustomDateInput = forwardRef(({ value, onClick, onChange }, ref) => (
   <div onClick={onClick} ref={ref}>
     <div className="form-icon form-icon-left">
-      <Icon name="calendar"></Icon>
+      <Icon name="calendar"/>
     </div>
     <input
       className="form-control date-picker"

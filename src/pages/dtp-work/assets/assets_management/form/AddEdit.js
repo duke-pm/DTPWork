@@ -30,7 +30,7 @@ import * as Actions from "../../../../../redux/actions";
 const CustomDateInput = forwardRef(({ value, onClick, onChange }, ref) => (
   <div onClick={onClick} ref={ref}>
     <div className="form-icon form-icon-left">
-      <Icon name="calendar"></Icon>
+      <Icon name="calendar"/>
     </div>
     <input
       className="form-control date-picker"
@@ -598,7 +598,7 @@ function AddEditForm(props) {
                   </div>
                   <div className="form-control-wrap">
                     <div className="form-icon form-icon-left">
-                      <Icon name="monitor"></Icon>
+                      <Icon name="monitor"/>
                     </div>
                     <input
                       ref={register({required: t("validate:empty")})}
@@ -630,7 +630,7 @@ function AddEditForm(props) {
                         toggleView("supplier");
                       }}>
                       <span>{t("add_assets:add_supplier")}</span>
-                      <Icon name="plus-circle"></Icon>
+                      <Icon name="plus-circle"/>
                     </a>
                   </div>
                   <div className="form-control-wrap">
@@ -656,7 +656,7 @@ function AddEditForm(props) {
                     </div>
                     <div className="form-control-wrap">
                       <div className="form-icon form-icon-left">
-                        <Icon name="list-ol"></Icon>
+                        <Icon name="list-ol"/>
                       </div>
                       <input
                         className="form-control"
@@ -706,7 +706,7 @@ function AddEditForm(props) {
                   </div>
                   <div className="form-control-wrap">
                     <div className="form-icon form-icon-left">
-                      <Icon name="calendar"></Icon>
+                      <Icon name="calendar"/>
                     </div>
                     <DatePicker
                       selected={formData.assetPurchaseDate}
@@ -728,7 +728,7 @@ function AddEditForm(props) {
                   </div>
                   <div className="form-control-wrap">
                     <div className="form-icon form-icon-left">
-                      <Icon name="calendar"></Icon>
+                      <Icon name="calendar"/>
                     </div>
                     <DatePicker
                       selected={formData.assetEffectiveDate}
@@ -750,7 +750,7 @@ function AddEditForm(props) {
                   </div>
                   <div className="form-control-wrap">
                     <div className="form-icon form-icon-left">
-                      <Icon name="sign-vnd"></Icon>
+                      <Icon name="sign-vnd"/>
                     </div>
                     <NumberFormat
                       className="form-control"
@@ -774,7 +774,7 @@ function AddEditForm(props) {
                   </div>
                   <div className="form-control-wrap">
                     <div className="form-icon form-icon-left">
-                      <Icon name="calendar"></Icon>
+                      <Icon name="calendar"/>
                     </div>
                     <input
                       className="form-control"
@@ -799,7 +799,7 @@ function AddEditForm(props) {
                   </div>
                   <div className="form-control-wrap">
                     <div className="form-icon form-icon-left">
-                      <Icon name="calendar"></Icon>
+                      <Icon name="calendar"/>
                     </div>
                     <input
                       className="form-control"
@@ -959,7 +959,7 @@ function AddEditForm(props) {
                     </div>
                     <div className="form-control-wrap">
                       <div className="form-icon form-icon-left">
-                        <Icon name="code"></Icon>
+                        <Icon name="code"/>
                       </div>
                       <input
                         className="form-control"

@@ -440,7 +440,7 @@ function Overview(props) {
                 outline
                 className="bg-white d-none d-sm-inline-flex"
                 onClick={onGoBack}>
-                <Icon name="arrow-left"></Icon>
+                <Icon name="arrow-left"/>
                 <span>{t("common:back")}</span>
               </Button>
               <Button
@@ -448,7 +448,7 @@ function Overview(props) {
                 outline
                 className="btn-icon bg-white d-inline-flex d-sm-none"
                 onClick={onGoBack}>
-                <Icon name="arrow-left"></Icon>
+                <Icon name="arrow-left"/>
               </Button>
               <BlockTitle tag="h4" className="mr-3 ml-2">
                 <span style={{color: Constants.TYPE_TASK_COLOR[data.overview?.typeName]}}>
@@ -465,7 +465,7 @@ function Overview(props) {
               >
                 {loading.submitFollow && <Spinner size="sm" color="primary" />}
                 {!loading.submitFollow && (
-                  <Icon name={`${data.watch ? "eye-off" : "eye"}`}></Icon>
+                  <Icon name={`${data.watch ? "eye-off" : "eye"}`}/>
                 )}
                 {data.watch && <span>{t("task_details:unfollow")}</span>}
                 {!data.watch && <span>{t("task_details:follow")}</span>}
@@ -476,7 +476,7 @@ function Overview(props) {
                 onClick={toggleWatch}>
                 {loading.submitFollow && <Spinner size="sm" color="primary" />}
                 {!loading.submitFollow && (
-                  <Icon name={`${data.watch ? "eye-off" : "eye"}`}></Icon>
+                  <Icon name={`${data.watch ? "eye-off" : "eye"}`}/>
                 )}
               </Button>
               <Button
@@ -570,7 +570,7 @@ function Overview(props) {
                       }}
                       className="search-toggle toggle-search"
                     >
-                      <Icon name="edit-alt"></Icon>
+                      <Icon name="edit-alt"/>
                     </a>
                   )}
                   {loading.submitProgress && <Spinner size="sm" color="primary" />}
@@ -609,14 +609,14 @@ function Overview(props) {
                         color="success"
                         disabled={disabled}
                         onClick={onCheckProgress}>
-                        <Icon name="check"></Icon>
+                        <Icon name="check"/>
                       </Button>
                       <Button
                         className="btn-icon btn-dim ml-1"
                         color="danger"
                         disabled={disabled}
                         onClick={toggleView}>
-                        <Icon name="cross"></Icon>
+                        <Icon name="cross"/>
                       </Button>
                     </div>
                   )}

@@ -24,6 +24,7 @@ import * as Actions from "../../../../../redux/actions";
 function TableEmployeeGroup(props) {
   const {t} = useTranslation();
   const {
+    loadingForm,
     isWrite,
     history,
     commonState,
@@ -118,7 +119,7 @@ function TableEmployeeGroup(props) {
         {isWrite && <DataTableRow className="nk-tb-col-tools" />}
       </DataTableHead>
 
-      {data.length > 0
+      {(!loadingForm && data.length > 0)
         ? data.map((item, index) => {
           return (
             <DataTableItem key={item.groupID + "_emp_group_" + index}>
@@ -155,7 +156,7 @@ function TableEmployeeGroup(props) {
                     <li>
                       <UncontrolledDropdown>
                         <DropdownToggle tag="a" className="btn btn-icon dropdown-toggle btn-trigger">
-                          <Icon name="more-h"></Icon>
+                          <Icon name="more-h"/>
                         </DropdownToggle>
                         <DropdownMenu right>
                           <ul className="link-list-opt no-bdr">
@@ -168,7 +169,7 @@ function TableEmployeeGroup(props) {
                                   !loading && onUpdate(item);
                                 }}
                               >
-                                <Icon name="edit"></Icon>
+                                <Icon name="edit"/>
                                 <span>{t("common:update")}</span>
                               </DropdownItem>
                             </li>

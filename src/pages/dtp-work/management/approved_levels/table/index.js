@@ -19,6 +19,7 @@ function TableApprovedLevels(props) {
   const {t} = useTranslation();
   const {
     disabled,
+    loading,
     isWrite,
     dataLevels,
     onUpdate,
@@ -68,7 +69,7 @@ function TableApprovedLevels(props) {
         {isWrite && <DataTableRow className="nk-tb-col-tools" />}
       </DataTableHead>
 
-      {data.length > 0
+      {(!loading && data.length > 0)
         ? data.map((item, index) => {
           return (
             <DataTableItem key={item.absID + "_app_level_" + index}>
@@ -97,7 +98,7 @@ function TableApprovedLevels(props) {
                     <li>
                       <UncontrolledDropdown>
                         <DropdownToggle tag="a" className="btn btn-icon dropdown-toggle btn-trigger">
-                          <Icon name="more-h"></Icon>
+                          <Icon name="more-h"/>
                         </DropdownToggle>
                         <DropdownMenu right>
                           <ul className="link-list-opt no-bdr">
@@ -110,7 +111,7 @@ function TableApprovedLevels(props) {
                                   !disabled && onUpdate(item);
                                 }}
                               >
-                                <Icon name="edit"></Icon>
+                                <Icon name="edit"/>
                                 <span>{t("common:update")}</span>
                               </DropdownItem>
                             </li>
@@ -123,7 +124,7 @@ function TableApprovedLevels(props) {
                                   !disabled && onRemove(item);
                                 }}
                               >
-                                <Icon name="trash"></Icon>
+                                <Icon name="trash"/>
                                 <span>{t("common:remove")}</span>
                               </DropdownItem>
                             </li>

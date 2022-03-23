@@ -104,7 +104,7 @@ const TrafficSources = () => {
         </div>
         <div className="card-inner card-inner-md bg-light">
           <div className="card-note">
-            <Icon className="info-fill"></Icon>
+            <Icon className="info-fill"/>
             <span>Traffic channels have beed generating the most traffics over past days.</span>
           </div>
         </div>

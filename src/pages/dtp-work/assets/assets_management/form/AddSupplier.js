@@ -163,7 +163,7 @@ function AddSupplier(props) {
                     </div>
                     <div className="form-control-wrap">
                       <div className="form-icon form-icon-left">
-                        <Icon name="building"></Icon>
+                        <Icon name="building"/>
                       </div>
                       <input
                         ref={register({ required: t("validate:empty") })}
@@ -191,7 +191,7 @@ function AddSupplier(props) {
                     </div>
                     <div className="form-control-wrap">
                       <div className="form-icon form-icon-left">
-                        <Icon name="location"></Icon>
+                        <Icon name="location"/>
                       </div>
                       <input
                         ref={register({ required: t("validate:empty") })}
@@ -219,7 +219,7 @@ function AddSupplier(props) {
                     </div>
                     <div className="form-control-wrap">
                       <div className="form-icon form-icon-left">
-                        <Icon name="mail"></Icon>
+                        <Icon name="mail"/>
                       </div>
                       <input
                         ref={register({
@@ -252,7 +252,7 @@ function AddSupplier(props) {
                     </div>
                     <div className="form-control-wrap">
                       <div className="form-icon form-icon-left">
-                        <Icon name="call"></Icon>
+                        <Icon name="call"/>
                       </div>
                       <input
                         className="form-control"
@@ -276,7 +276,7 @@ function AddSupplier(props) {
                     </div>
                     <div className="form-control-wrap">
                       <div className="form-icon form-icon-left">
-                        <Icon name="user"></Icon>
+                        <Icon name="user"/>
                       </div>
                       <input
                         ref={register({ required: t("validate:empty") })}
@@ -304,7 +304,7 @@ function AddSupplier(props) {
                     </div>
                     <div className="form-control-wrap">
                       <div className="form-icon form-icon-left">
-                        <Icon name="call"></Icon>
+                        <Icon name="call"/>
                       </div>
                       <input
                         className="form-control"

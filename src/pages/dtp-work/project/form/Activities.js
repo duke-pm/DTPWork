@@ -208,7 +208,7 @@ function Activities(props) {
         <div className="nk-chat-body">
           <div className="nk-chat-blank">
             <div className="nk-chat-blank-icon">
-              <Icon name="chat" className="icon-circle icon-circle-xxl bg-white"></Icon>
+              <Icon name="chat" className="icon-circle icon-circle-xxl bg-white"/>
             </div>
             <div className="nk-chat-blank-btn">
               <Button color="primary" disabled={disabled} onClick={onStartComment}>
@@ -272,7 +272,7 @@ function Activities(props) {
                   disabled={disabled || inputText.trim() === ""}
                   className="btn-round btn-icon"
                   onClick={onTextSubmit}>
-                  <Icon name="send-alt"></Icon>
+                  <Icon name="send-alt"/>
                 </Button>
               </li>
             </ul>

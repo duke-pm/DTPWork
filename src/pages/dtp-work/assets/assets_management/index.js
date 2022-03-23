@@ -510,7 +510,7 @@ function AssetsManagement({history, params}) {
                         outline
                         disabled={disabled}
                         onClick={onExportData}>
-                        <Icon name="download-cloud"></Icon>
+                        <Icon name="download-cloud"/>
                         <span>{t("common:export")}</span>
                       </Button>
                     </li>
@@ -524,7 +524,7 @@ function AssetsManagement({history, params}) {
                         onClick={onGetEmployee}
                       >
                         {loading.getData && <Spinner color="light" size="sm" />}
-                        {!loading.getData && <Icon name="reload-alt"></Icon>}
+                        {!loading.getData && <Icon name="reload-alt"/>}
                       </Button>
                       <Button
                         className="toggle d-none d-md-inline-flex"
@@ -533,7 +533,7 @@ function AssetsManagement({history, params}) {
                         onClick={onGetEmployee}
                       >
                         {loading.getData && <Spinner color="light" size="sm" />}
-                        {!loading.getData && <Icon name="reload-alt"></Icon>}
+                        {!loading.getData && <Icon name="reload-alt"/>}
                         <span>{t("assets:get_data")}</span>
                       </Button>
                     </li>
@@ -546,7 +546,7 @@ function AssetsManagement({history, params}) {
                         disabled={disabled}
                         onClick={() => toggleView("add")}
                       >
-                        <Icon name="plus"></Icon>
+                        <Icon name="plus"/>
                       </Button>
                       <Button
                         className="toggle d-none d-md-inline-flex"
@@ -554,7 +554,7 @@ function AssetsManagement({history, params}) {
                         disabled={disabled}
                         onClick={() => toggleView("add")}
                       >
-                        <Icon name="plus"></Icon>
+                        <Icon name="plus"/>
                         <span>{t("common:add_new")}</span>
                       </Button>
                     </li>
@@ -594,14 +594,13 @@ function AssetsManagement({history, params}) {
                   <ul className="btn-toolbar">
                     <li>
                       <a
-                        href="#search"
                         onClick={(ev) => {
                           ev.preventDefault();
                           !disabled && toggleView("search", null);
                         }}
-                        className="btn btn-icon search-toggle toggle-search"
+                        className="btn btn-icon search-toggle toggle-search cursor-pointer"
                       >
-                        <Icon name="search"></Icon>
+                        <Icon name="search"/>
                       </a>
                     </li>
                   </ul>
@@ -618,7 +617,7 @@ function AssetsManagement({history, params}) {
                         toggleView("search");
                       }}
                     >
-                      <Icon name="arrow-left"></Icon>
+                      <Icon name="arrow-left"/>
                     </Button>
                     <input
                       type="text"
@@ -639,7 +638,7 @@ function AssetsManagement({history, params}) {
                       disabled={disabled}
                       onClick={ev => onSearch(ev, filterTab)}
                     >
-                      <Icon name="search"></Icon>
+                      <Icon name="search"/>
                     </Button>
                   </div>
                 </div>

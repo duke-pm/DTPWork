@@ -333,7 +333,7 @@ function ProjectsOverview({history}) {
                         <UncontrolledDropdown>
                           <DropdownToggle tag="a" className="btn btn-trigger btn-icon dropdown-toggle">
                             <div className="dot dot-primary"></div>
-                            <Icon name="filter-alt"></Icon>
+                            <Icon name="filter-alt"/>
                           </DropdownToggle>
                           <DropdownMenu
                             right
@@ -369,7 +369,7 @@ function ProjectsOverview({history}) {
                                     </label>
                                     <div className="form-control-wrap">
                                       <div className="form-icon form-icon-left">
-                                        <Icon name="calendar"></Icon>
+                                        <Icon name="calendar"/>
                                       </div>
                                       <DatePicker
                                         className="form-control"
@@ -392,7 +392,7 @@ function ProjectsOverview({history}) {
                                     </label>
                                     <div className="form-control-wrap">
                                       <div className="form-icon form-icon-left">
-                                        <Icon name="calendar"></Icon>
+                                        <Icon name="calendar"/>
                                       </div>
                                       <DatePicker
                                         className="form-control"
@@ -462,7 +462,7 @@ function ProjectsOverview({history}) {
                             <div className="dropdown-foot between">
                               <Button color="primary" disabled={disabled} onClick={onSearchFilter}>
                                 {loading.search && <Spinner className="mr-1" size="sm" color="light" />}
-                                {!loading.search && <Icon name="filter"></Icon>}
+                                {!loading.search && <Icon name="filter"/>}
                                 <span>{t("common:filter")}</span>
                               </Button>
                             </div>
