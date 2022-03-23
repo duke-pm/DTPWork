@@ -5,19 +5,17 @@ import {useForm} from "react-hook-form";
 import {
   Form,
   FormGroup,
-  Modal,
-  ModalBody,
   Collapse,
   Spinner,
+  Modal,
+  ModalBody,
+  ModalHeader,
+  ModalFooter,
 } from "reactstrap";
 import moment from "moment";
 /** COMMON */
 import {
   Block,
-  BlockHead,
-  BlockHeadContent,
-  BlockBetween,
-  BlockTitle,
   DataTableHead,
   DataTableItem,
   DataTableRow,
@@ -172,32 +170,18 @@ function ApprovedForm(props) {
   return (
     <>
       <Modal
-        className="modal-dialog-centered"
         isOpen={show}
+        className="modal-dialog-centered"
+        modalClassName="zoom"
         size="lg"
-        toggle={() => disabled ? null : onFormCancel(false)}>
+        toggle={disabled ? undefined : () => onFormCancel(false)}>
+        <ModalHeader className="fc-event-secondary" toggle={disabled ? undefined : () => onFormCancel(false)}>
+          {dataRequest?.requestTypeID === 1 && t("approved_action:approved_assets")}
+          {dataRequest?.requestTypeID === 2 && t("approved_action:approved_damage")}
+          {dataRequest?.requestTypeID === 3 && t("approved_action:approved_lost")}
+        </ModalHeader>
         <Form className="is-alter" onSubmit={handleSubmit(onFormSubmit)}>
           <ModalBody>
-            <BlockHead>
-              <BlockBetween>
-                <BlockHeadContent>
-                  {dataRequest?.requestTypeID === 1 && (
-                    <BlockTitle tag="h4">{t("approved_action:approved_assets")}</BlockTitle>
-                  )}
-                  {dataRequest?.requestTypeID === 2 && (
-                    <BlockTitle tag="h4">{t("approved_action:approved_damage")}</BlockTitle>
-                  )}
-                  {dataRequest?.requestTypeID === 3 && (
-                    <BlockTitle tag="h4">{t("approved_action:approved_lost")}</BlockTitle>
-                  )}
-                </BlockHeadContent>
-                <a href="#cancel" className="close">
-                  {" "}
-                  <Icon name="cross-sm" onClick={() => disabled ? null : onFormCancel(false)} />
-                </a>
-              </BlockBetween>
-            </BlockHead>
-
             <Block>
               <div className="data-head">
                 <h6 className="overline-title">{t("request_details:information_employee")}</h6>
@@ -511,18 +495,6 @@ function ApprovedForm(props) {
                           </div>
                         </FormGroup>
                       </Collapse>
-                      <div className="nk-divider divider sm"></div>
-                    </Col>
-
-                    <Col size="12">
-                      <Button
-                        color="primary"
-                        type="submit"
-                        disabled={disabled}
-                      >
-                        <Icon name="send" />
-                        <span>{t("common:send")}</span>
-                      </Button>
                     </Col>
                   </Row>
                 </div>
@@ -530,83 +502,77 @@ function ApprovedForm(props) {
               </Block>
             )}
           </ModalBody>
+          {isWrite && (
+            <ModalFooter>
+              <Button
+                color="primary"
+                type="submit"
+                disabled={disabled}
+              >
+                {disabled && <Spinner size="sm" color="light" />}
+                {!disabled && <Icon name="send" />}
+                <span>{t("common:send")}</span>
+              </Button>
+            </ModalFooter>
+          )}
         </Form>
       </Modal>
 
       <Modal
-        className="modal-dialog-centered"
         isOpen={view.confirm}
+        className="modal-dialog-centered"
+        modalClassName="zoom"
         size="sm"
         toggle={disabled ? undefined : toggleConfirm}
       >
-        <ModalBody className="modal-body-sm text-center">
+        <ModalHeader className="fc-event-secondary" toggle={disabled ? undefined : toggleConfirm}>
+          {formData.approved === 1 &&
+            t("approved_action:confirm_approved_title_1")}
+          {formData.approved === 2 &&
+            t("approved_action:confirm_approved_title_2")}
+        </ModalHeader>
+        <ModalBody className="modal-body-md text-center">
           <div className="nk-modal">
-            <Icon className="nk-modal-icon icon-circle icon-circle-xxl ni ni-question bg-warning"></Icon>
-            {formData.approved === 1 &&
-              <h4 className="nk-modal-title">{t("approved_action:confirm_approved_title_1")}</h4>}
-            {formData.approved === 2 &&
-              <h4 className="nk-modal-title">{t("approved_action:confirm_approved_title_2")}</h4>}
-            <div className="nk-modal-text">
+            <Icon className="nk-modal-icon icon-circle-xxl ni ni-question" />
+            <div className="mt-4 d-flex flex-column align-items-start">
               {formData.approved === 1 && (
-                <div className="sub-text-sm">
-                  {t("approved_action:confirm_approved_des_1")}
+                <>
+                  <li className="text-left">{t("approved_action:confirm_approved_des_1")}
+                  <strong className="fw-bold">{dataRequest?.requestTypeID === 1
+                    ? t("approved_action:confirm_approved_assets_des_2")
+                    : dataRequest?.requestTypeID === 2
+                      ? t("approved_action:confirm_approved_damage_des_2")
+                      : t("approved_action:confirm_approved_lost_des_2")}{dataRequest?.requestID}
+                  </strong>{t("approved_action:confirm_approved_des_3")}
+                  <strong className="fw-bold">{dataRequest?.fullName}</strong>?</li>
+                </>
+              )}
+              {formData.approved === 2 && (
+                <>
+                  <li className="text-left">{t("approved_action:confirm_reject_des_1")}
                   <span className="fw-bold">{dataRequest?.requestTypeID === 1
                     ? t("approved_action:confirm_approved_assets_des_2")
                     : dataRequest?.requestTypeID === 2
                       ? t("approved_action:confirm_approved_damage_des_2")
                       : t("approved_action:confirm_approved_lost_des_2")}{dataRequest?.requestID}
                   </span>{t("approved_action:confirm_approved_des_3")}
-                  <span className="fw-bold">{dataRequest?.fullName}</span>?
-                </div>
+                  <span className="fw-bold">{dataRequest?.fullName}</span>?</li>
+                  <li>{`${t("approved_action:confirm_reject_des")}: ${formData.reason}.`}</li>
+                </>
               )}
-              {formData.approved === 2 && (
-                <div className="sub-text-sm">
-                  {t("approved_action:confirm_reject_des_1")}
-                  <span className="fw-bold">{dataRequest?.requestTypeID === 1
-                    ? t("approved_action:confirm_approved_assets_des_2")
-                    : dataRequest?.requestTypeID === 2
-                      ? t("approved_action:confirm_approved_damage_des_2")
-                      : t("approved_action:confirm_approved_lost_des_2")}{dataRequest?.requestID}
-                  </span>{t("approved_action:confirm_approved_des_3")}
-                  <span className="fw-bold">{dataRequest?.fullName}</span>?
-                </div>
-              )}
-              {formData.approved === 2 && (
-                <span className="sub-text-sm">
-                  {`${t("approved_action:confirm_reject_des")}: ${formData.reason}.`}
-                </span>
-              )}
-            </div>
-            <div className="d-flex justify-content-center">
-              <div className="nk-modal-action mr-2">
-                <Button
-                  color="success"
-                  size="lg"
-                  disabled={disabled}
-                  onClick={onConfirm}
-                >
-                  {disabled && (
-                    <Spinner size="sm" color="light" />
-                  )}
-                  {!disabled && <Icon name="check" />}
-                  <span>{t("common:confirm")}</span>
-                </Button>
-              </div>
-              <div className="nk-modal-action ml-2">
-                <Button
-                  className="btn-dim"
-                  color="danger"
-                  size="lg"
-                  disabled={disabled}
-                  onClick={toggleConfirm}
-                >
-                  <Icon name="cross" />
-                  <span>{t("common:close")}</span>
-                </Button>
-              </div>
             </div>
           </div>
         </ModalBody>
+        <ModalFooter className="center">
+          <Button
+            color="primary"
+            disabled={disabled}
+            onClick={onConfirm}>
+            {disabled && <Spinner size="sm" color="light" />}
+            {!disabled && <Icon name="check" />}
+            <span>{t("common:confirm")}</span>
+          </Button>
+        </ModalFooter>
       </Modal>
     </>
   );

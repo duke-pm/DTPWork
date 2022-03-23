@@ -2,24 +2,24 @@ import React, {forwardRef, useState, useEffect} from "react";
 import {useTranslation} from "react-i18next";
 import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
+import {Form, FormGroup, Spinner} from "reactstrap";
+import {toast} from "react-toastify";
 import DatePicker from "react-datepicker";
 import SimpleBar from "simplebar-react";
 import NumberFormat from 'react-number-format';
-import {Form, FormGroup, Spinner} from "reactstrap";
-import {toast} from "react-toastify";
 import moment from "moment";
 /** COMPONENTS */
 import {
   Block,
   BlockHead,
   BlockHeadContent,
+  BlockBetween,
   BlockTitle,
+  RSelect,
   Icon,
   Button,
-  BlockBetween,
   Row,
   Col,
-  RSelect,
 } from "../../../../../components/Component";
 import AddSupplier from "./AddSupplier";
 /** COMMON */
@@ -110,6 +110,24 @@ function AddEditForm(props) {
   /**
    ** FUNCTIONS 
    */
+  const onInputChange = e => {
+    setFormData({...formData, [e.target.name]: e.target.value});
+  };
+
+  const onChangeCheckbox = e => {
+    setFormData({...formData, assetInactive: !formData.assetInactive})
+  };
+
+  const onDateChange = (key, value) => {
+    setFormData({...formData, [key]: value});
+  };
+
+  const toggleView = type => {
+    setView({
+      supplier: type === "supplier" ? true : false,
+    });
+  };
+
   const onFormSupplierCancel = isSuccess => {
     if (isSuccess) {
       setLoading({...loading, main: true});
@@ -117,10 +135,6 @@ function AddEditForm(props) {
       onGetMasterData();
     }
     setView({supplier: false});
-  };
-
-  const onInputChange = e => {
-    setFormData({...formData, [e.target.name]: e.target.value});
   };
 
   const onChangeSelect = (nextInput, e, pos) => {
@@ -131,10 +145,7 @@ function AddEditForm(props) {
       group: null,
       assets: null,
     });
-    if (!nextInput) {
-      return setFormData({...formData, [e.key]: e.value});
-    }
-
+    if (!nextInput) return setFormData({...formData, [e.key]: e.value});
     if (nextInput && e.key) {
       pos !== 4 && setDisables({...disables, [nextInput]: false});
 
@@ -226,18 +237,12 @@ function AddEditForm(props) {
     }
   };
 
-  const onChangeCheckbox = e => {
-    setFormData({...formData, assetInactive: !formData.assetInactive})
-  };
-
-  const onDateChange = (key, value) => {
-    setFormData({...formData, [key]: value});
-  };
-
   const onSetFormDataDetails = data => {
-    log('[LOG] === onSetFormDataDetails ===> ', data);
-    let fSupplier = masterState["supplier"].find(f => f.supplierID === data.suppiler);
-    let fDept = masterState["department"].find(f => f.deptCode == data.deptCodeManager);
+    let fSupplier = masterState["supplier"].find(f =>
+      f.supplierID === data.suppiler);
+    let fDept = masterState["department"].find(f =>
+      f.deptCode == data.deptCodeManager);
+
     setFormData({
       ...formData,
       assetName: data?.assetName || "",
@@ -318,7 +323,6 @@ function AddEditForm(props) {
       group: null,
       assets: null,
     };
-    setError(tmpError);
     if (!formData.assetDepartment) {
       isError = true;
       tmpError.department = {message: t("validate:empty")};
@@ -339,7 +343,7 @@ function AddEditForm(props) {
       isError = true;
       tmpError.assets = {message: t("validate:empty")};
     }
-    isError && setError(tmpError);
+    setError(tmpError);
     return isError;
   };
 
@@ -374,7 +378,6 @@ function AddEditForm(props) {
         Lang: commonState["language"],
         RefreshToken: authState["data"]["refreshToken"],
       };
-      log('[LOG] === onFormSubmit ADD ===> ', params);
       dispatch(Actions.fFetchCreateAssets(params, history));
     } else {
       setLoading({...loading, submit: true});
@@ -399,13 +402,13 @@ function AddEditForm(props) {
         Lang: commonState["language"],
         RefreshToken: authState["data"]["refreshToken"],
       };
-      log('[LOG] === onFormSubmit UPDATE ===> ', params);
       dispatch(Actions.fFetchUpdateAssets(params, history));
     }
   };
 
   const onSuccess = type => {
     if (type === "MasterData") {
+      dispatch(Actions.resetMasterData());
       let tmpDataSup = masterState["supplier"].map(item => {
         return {value: item.supplierID, label: item.supplierName};
       });
@@ -434,6 +437,7 @@ function AddEditForm(props) {
       });
     }
     if (type === "Create" || type === "Update") {
+      dispatch(Actions.fResetCreateAssets());
       onResetData();
       onClose(true, type === "Create"
         ? t("success:create_assets")
@@ -444,6 +448,8 @@ function AddEditForm(props) {
 
   const onError = (type, error) => {
     log('[LOG] === onError ===> ', error);
+    dispatch(Actions.resetMasterData());
+    dispatch(Actions.fResetCreateAssets());
     setLoading({main: false, submit: false});
     if (type === "Create" || type === "Update") {
       onResetData();
@@ -455,9 +461,7 @@ function AddEditForm(props) {
    ** LIFE CYCLE 
    */
   useEffect(() => {
-    if (show) {
-      clearErrors();
-    }
+    if (show) clearErrors();
   }, [show]);
 
   useEffect(() => {
@@ -545,8 +549,7 @@ function AddEditForm(props) {
     <SimpleBar
       className={`nk-add-assets toggle-slide toggle-slide-right toggle-screen-any ${
         show ? "content-active" : ""
-      }`}
-    >
+      }`}>
       <Form className="is-alter" onSubmit={handleSubmit(onFormSubmit)}>
         <BlockHead>
           <BlockBetween>
@@ -556,50 +559,21 @@ function AddEditForm(props) {
             </BlockHeadContent>
             <BlockHeadContent>
               <ul className="nk-block-tools g-3">
-                {/* {isAdd && (
-                  <li className="nk-block-tools-opt">
-                    <Button
-                      className="toggle btn-icon d-md-none"
-                      color="gray"
-                      type="button"
-                      disabled={disabled}
-                      onClick={onResetData}
-                    >
-                      <Icon name="undo"></Icon>
-                    </Button>
-                    <Button
-                      className="toggle d-none d-md-inline-flex"
-                      color="gray"
-                      type="button"
-                      disabled={disabled}
-                      onClick={onResetData}
-                    >
-                      <Icon name="undo"></Icon>
-                      <span>{t("common:reset")}</span>
-                    </Button>
-                  </li>
-                )} */}
                 <li className="nk-block-tools-opt">
                   <Button
                     className="toggle btn-icon d-md-none"
                     color="primary"
                     type="submit"
-                    disabled={disabled}
-                  >
-                    {loading.submit && (
-                      <Spinner size="sm" color="light" />
-                    )}
+                    disabled={disabled}>
+                    {loading.submit && <Spinner size="sm" color="light" />}
                     {!loading.submit && <Icon name="save" />}
                   </Button>
                   <Button
                     className="toggle d-none d-md-inline-flex"
                     color="primary"
                     type="submit"
-                    disabled={disabled}
-                  >
-                    {loading.submit && (
-                      <Spinner className="mr-2" size="sm" color="light" />
-                    )}
+                    disabled={disabled}>
+                    {loading.submit && <Spinner size="sm" color="light" />}
                     {!loading.submit && <Icon name="save" />}
                     <span>{t("common:save")}</span>
                   </Button>
@@ -627,7 +601,7 @@ function AddEditForm(props) {
                       <Icon name="monitor"></Icon>
                     </div>
                     <input
-                      ref={register({ required: t("validate:empty") })}
+                      ref={register({required: t("validate:empty")})}
                       className="form-control"
                       type="text"
                       id="assetName"
@@ -650,13 +624,11 @@ function AddEditForm(props) {
                       {t("add_assets:supplier")}
                     </label>
                     <a
-                      href="#addsupplier"
+                      className="link link-sm cursor-pointer text-primary"
                       onClick={(ev) => {
                         ev.preventDefault();
-                        setView({supplier: true});
-                      }}
-                      className="link link-sm"
-                    >
+                        toggleView("supplier");
+                      }}>
                       <span>{t("add_assets:add_supplier")}</span>
                       <Icon name="plus-circle"></Icon>
                     </a>

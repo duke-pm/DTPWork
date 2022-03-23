@@ -4,6 +4,9 @@ import Services from "services";
 /**
  ** Assets module
  */
+export const resetListAssets = () => ({
+  type: types.RESET_LIST_ASSETS
+});
 //** All assets */
 export const fErrorListAssets = error => ({
   type: types.ERROR_LIST_ASSETS,

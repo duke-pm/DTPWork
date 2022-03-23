@@ -23,6 +23,7 @@ import {findUpper} from "../../../../../utils/Utils";
 function TableRequestHandle(props) {
   const {t} = useTranslation();
   const {
+    loading,
     isWrite,
     dataRequest,
     onApproved,
@@ -32,6 +33,9 @@ function TableRequestHandle(props) {
   /** Use state */
   const [data, setData] = useState(dataRequest);
 
+  /**
+   ** FUNCTIONS
+   */
   const onDownload = fileDir => {
     window.open(`${Configs.hostAPI}/${fileDir}`, "_blank");
   };
@@ -73,7 +77,7 @@ function TableRequestHandle(props) {
         <DataTableRow className="nk-tb-col-tools" />
       </DataTableHead>
 
-      {data.length > 0
+      {(!loading && data.length > 0)
         ? data.map((item, index) => {
           let statusColor = "gray";
           let typeColor = "gray";
@@ -134,14 +138,10 @@ function TableRequestHandle(props) {
                 </span>
               </DataTableRow>
               <DataTableRow size="sm">
-                <span
-                  className={`dot bg-${statusColor} d-mb-none`}
-                ></span>
-                <span
-                  className={`badge badge-sm badge-dot has-bg badge-${
+                <span className={`dot bg-${statusColor} d-mb-none`} />
+                <span className={`badge badge-sm badge-dot has-bg badge-${
                     statusColor
-                  } d-none d-mb-inline-flex`}
-                >
+                  } d-none d-mb-inline-flex`}>
                   {item.statusName}
                 </span>
               </DataTableRow>
@@ -162,8 +162,7 @@ function TableRequestHandle(props) {
                                 onClick={(ev) => {
                                   ev.preventDefault();
                                   onApproved(item);
-                                }}
-                              >
+                                }}>
                                 <Icon name="check-circle-cut"></Icon>
                                 <span>{t("request_handle:approved_action")}</span>
                               </DropdownItem>
@@ -176,8 +175,7 @@ function TableRequestHandle(props) {
                               onClick={(ev) => {
                                 ev.preventDefault();
                                 onProcess(item);
-                              }}
-                            >
+                              }}>
                               <Icon name="list-check"></Icon>
                               <span>{t("request_handle:approved_timeline")}</span>
                             </DropdownItem>
@@ -190,8 +188,7 @@ function TableRequestHandle(props) {
                                 onClick={(ev) => {
                                   ev.preventDefault();
                                   onDownload(item.attachFiles);
-                                }}
-                              >
+                                }}>
                                 <Icon name="download"></Icon>
                                 <span>{t("request_handle:download_attach_file")}</span>
                               </DropdownItem>

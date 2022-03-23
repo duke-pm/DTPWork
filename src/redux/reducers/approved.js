@@ -111,6 +111,25 @@ export default function (state = initialState, action = {}) {
   const {type, payload} = action;
 
   switch (type) {
+    case types.RESET_LIST_ASSETS:
+      return {
+        ...state,
+        submittingListAssets: false,
+        successListAssets: false,
+        errorListAssets: false,
+        errorHelperListAssets: "",
+
+        submittingHistoryAsset: false,
+        successHistoryAsset: false,
+        errorHistoryAsset: false,
+        errorHelperHistoryAsset: "",
+
+        submittingDataEmployee: false,
+        successDataEmployee: false,
+        errorDataEmployee: false,
+        errorHelperDataEmployee: "",
+      };
+
     //** List assets */
     case types.START_LIST_ASSETS:
       return {

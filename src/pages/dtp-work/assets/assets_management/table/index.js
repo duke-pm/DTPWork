@@ -8,16 +8,13 @@ import {
   DropdownItem,
   Modal,
   ModalBody,
+  ModalHeader,
   Spinner,
 } from "reactstrap";
 import moment from "moment";
 /** COMPONENTS */
 import {
   Block,
-  BlockHead,
-  BlockHeadContent,
-  BlockBetween,
-  BlockTitle,
   DataTableBody,
   DataTableHead,
   DataTableItem,
@@ -31,7 +28,12 @@ import {
 /** COMMON */
 import Configs from "../../../../../configs";
 import Routes from "../../../../../services/routesApi";
-import {getCookies, numberFormat, findUpper, log} from "../../../../../utils/Utils";
+import {
+  getCookies,
+  numberFormat,
+  findUpper,
+  log,
+} from "../../../../../utils/Utils";
 /** REDUX */
 import * as Actions from "../../../../../redux/actions";
 
@@ -41,6 +43,7 @@ function TableAssets(props) {
     history,
     commonState,
     authState,
+    loadingTab,
     idxTab,
     dataAssets,
     onUpdateItem,
@@ -98,11 +101,13 @@ function TableAssets(props) {
   };
 
   const onDone = () => {
+    dispatch(Actions.resetListAssets());
     setLoading({history: false});
   };
 
   const onError = e => {
     log('[LOG] ===  ===> ', e);
+    dispatch(Actions.resetListAssets());
     setLoading({history: false});
   };
 
@@ -221,7 +226,7 @@ function TableAssets(props) {
         <DataTableRow className="nk-tb-col-tools" />
       </DataTableHead>
 
-      {data.length > 0
+      {(!loadingTab && data.length > 0)
         ? data.map((item, index) => {
           let statusColor = "gray";
           switch (item.statusID) {
@@ -358,7 +363,7 @@ function TableAssets(props) {
                               <li>
                                 <DropdownItem
                                   tag="a"
-                                  href="#dropdownViewDetails"
+                                  className="cursor-pointer link link-sm"
                                   onClick={(ev) => {
                                     ev.preventDefault();
                                     onGetDetailsData(item);
@@ -372,7 +377,7 @@ function TableAssets(props) {
                                 <li>
                                   <DropdownItem
                                     tag="a"
-                                    href="#dropdownApproved"
+                                    className="cursor-pointer link link-sm"
                                     onClick={(ev) => {
                                       ev.preventDefault();
                                       onApprovedRecallItem("approved", item);
@@ -387,7 +392,7 @@ function TableAssets(props) {
                                 <li>
                                   <DropdownItem
                                     tag="a"
-                                    href="#dropdownRecall"
+                                    className="cursor-pointer link link-sm"
                                     onClick={(ev) => {
                                       ev.preventDefault();
                                       onApprovedRecallItem("recall", item);
@@ -402,7 +407,7 @@ function TableAssets(props) {
                                 <li>
                                   <DropdownItem
                                     tag="a"
-                                    href="#dropdownRepair"
+                                    className="cursor-pointer link link-sm"
                                     onClick={(ev) => {
                                       ev.preventDefault();
                                       onRepairItem(item);
@@ -417,7 +422,7 @@ function TableAssets(props) {
                                 <li>
                                   <DropdownItem
                                     tag="a"
-                                    href="#dropdownRecall"
+                                    className="cursor-pointer link link-sm"
                                     onClick={(ev) => {
                                       ev.preventDefault();
                                       onLiquidationItem(item);
@@ -432,7 +437,7 @@ function TableAssets(props) {
                                 <li>
                                   <DropdownItem
                                     tag="a"
-                                    href="#dropdownRepair"
+                                    className="cursor-pointer link link-sm"
                                     onClick={(ev) => {
                                       ev.preventDefault();
                                       onReuseItem(item);
@@ -479,7 +484,7 @@ function TableAssets(props) {
                                 <li>
                                   <DropdownItem
                                     tag="a"
-                                    href="#dropdownViewDetails"
+                                    className="cursor-pointer link link-sm"
                                     onClick={(ev) => {
                                       ev.preventDefault();
                                       onGetDetailsData(item);
@@ -492,7 +497,7 @@ function TableAssets(props) {
                                 <li>
                                   <DropdownItem
                                     tag="a"
-                                    href="#dropdownRecall"
+                                    className="cursor-pointer link link-sm"
                                     onClick={(ev) => {
                                       ev.preventDefault();
                                       onLiquidationItem(item);
@@ -505,7 +510,7 @@ function TableAssets(props) {
                                 <li>
                                   <DropdownItem
                                     tag="a"
-                                    href="#dropdownRepair"
+                                    className="cursor-pointer link link-sm"
                                     onClick={(ev) => {
                                       ev.preventDefault();
                                       onRepairItem(item);
@@ -531,35 +536,24 @@ function TableAssets(props) {
 
       {/** Modal asset history */}
       <Modal
-        style={{maxWidth: '1300px', width: '100%'}}
-        className="modal-dialog-centered"
         isOpen={viewHistory}
-        toggle={() => setViewHistory(false)}
-      >
+        className="modal-dialog-centered"
+        modalClassName="zoom"
+        style={{maxWidth: "1300px"}}
+        toggle={() => setViewHistory(false)}>
+        <ModalHeader className="fc-event-secondary" toggle={() => setViewHistory(false)}>
+          {t("assets:informations_details")}
+        </ModalHeader>
         <ModalBody>
-          <BlockHead>
-            <BlockBetween>
-              <BlockHeadContent>
-                <BlockTitle tag="h4">{t("assets:informations_details")}</BlockTitle>
-              </BlockHeadContent>
-              <a href="#cancel" className="close">
-                {" "}
-                <Icon name="cross-sm" onClick={() => setViewHistory(false)} />
-              </a>
-            </BlockBetween>
-          </BlockHead>
-
           {/** Basic informations */}
           <Block>
             <div className="d-flex justify-content-between data-head">
               <h6 className="overline-title mb-0">{t("assets:title_details")}</h6>
               <a
-                className="link link-sm"
-                href="#udpateAsset"
-                onClick={onUpdateAsset}
-              >
+                className="link link-sm cursor-pointer text-primary"
+                onClick={onUpdateAsset}>
                 <span>{t("assets:update_assets")}</span>
-                <Icon name="edit-alt"></Icon>
+                <Icon name="edit"></Icon>
               </a>
             </div>
             <div className="mt-3">
@@ -645,12 +639,11 @@ function TableAssets(props) {
             </div>
           </Block>
 
-          {/** Use process */}
+          {/** Process */}
           <Block>
             <div className="data-head">
               <h6 className="overline-title">{t("assets:use_process")}</h6>
             </div>
-
             {loading.history && (
               <div className="text-center mt-3">
                 <Spinner size="sm" color="primary" />
@@ -731,14 +724,11 @@ function TableAssets(props) {
                         <span>{itemH.regionName}</span>
                       </DataTableRow>
                       <DataTableRow>
-                        <span
-                          className={`dot bg-${statusColor} d-mb-none`}
-                        ></span>
+                        <span className={`dot bg-${statusColor} d-mb-none`} />
                         <span
                           className={`badge badge-sm badge-dot has-bg badge-${
                             statusColor
-                          } d-none d-mb-inline-flex`}
-                        >
+                          } d-none d-mb-inline-flex`}>
                           {itemH.statusName}
                         </span>
                       </DataTableRow>
@@ -759,12 +749,11 @@ function TableAssets(props) {
                                       <li>
                                         <DropdownItem
                                           tag="a"
-                                          href="#exportReport"
+                                          className="cursor-pointer link link-sm"
                                           onClick={(ev) => {
                                             ev.preventDefault();
                                             onExportReport(itemH.transStatus);
-                                          }}
-                                        >
+                                          }}>
                                           <Icon name="download-cloud"></Icon>
                                           <span>{t("assets:export_report")}</span>
                                         </DropdownItem>
@@ -774,12 +763,11 @@ function TableAssets(props) {
                                       <li>
                                         <DropdownItem
                                           tag="a"
-                                          href="#downloadFile"
+                                          className="cursor-pointer link link-sm"
                                           onClick={(ev) => {
                                             ev.preventDefault();
                                             onDownloadFile(itemH.attachFiles);
-                                          }}
-                                        >
+                                          }}>
                                           <Icon name="download"></Icon>
                                           <span>{t("assets:download_attach_file")}</span>
                                         </DropdownItem>
@@ -788,12 +776,11 @@ function TableAssets(props) {
                                     <li>
                                       <DropdownItem
                                         tag="a"
-                                        href="#updateFile"
+                                        className="cursor-pointer link link-sm"
                                         onClick={(ev) => {
                                           ev.preventDefault();
                                           onUpdateHis(itemH);
-                                        }}
-                                      >
+                                        }}>
                                         <Icon name="edit-alt"></Icon>
                                         <span>{t("assets:update_file")}</span>
                                       </DropdownItem>

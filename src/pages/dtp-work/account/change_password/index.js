@@ -282,8 +282,9 @@ function ChangePassword({history}) {
       </Content>
 
       <Modal
-        className="modal-dialog-centered"
         isOpen={view.confirm}
+        className="modal-dialog-centered"
+        modalClassName="zoom"
         size="sm"
         toggle={loading ? undefined : toggleView}
       >
@@ -292,7 +293,7 @@ function ChangePassword({history}) {
             <Icon className="nk-modal-icon icon-circle icon-circle-xxl ni ni-alert bg-warning"></Icon>
             <h4 className="nk-modal-title">{t("change_password:confirm_title")}</h4>
             <div className="nk-modal-text">
-              <div className="sub-text-sm">
+              <div className="sub-text-sm d-flex flex-column align-items-start">
                 <li>{t("change_password:confirm_des_1")}</li>
                 <li>{t("change_password:confirm_des_2")}</li>
               </div>
@@ -301,21 +302,18 @@ function ChangePassword({history}) {
               <div className="nk-modal-action mr-2">
                 <Button
                   color="success"
-                  size="lg"
                   disabled={loading}
                   onClick={onConfirm}
                 >
-                  {loading && (
-                    <Spinner size="sm" color="light" />
-                  )}
+                  {loading && <Spinner size="sm" color="light" />}
                   {!loading && <Icon name="check" />}
                   <span>{t("common:confirm")}</span>
                 </Button>
               </div>
               <div className="nk-modal-action ml-2">
                 <Button
+                  className="btn-dim"
                   color="danger"
-                  size="lg"
                   disabled={loading}
                   onClick={toggleView}
                 >

@@ -1,15 +1,15 @@
 import React, {useState, useEffect} from "react";
 import {useTranslation} from "react-i18next";
 import {useSelector} from "react-redux";
-import {Modal, ModalBody, Spinner} from "reactstrap";
-import PerfectScrollbar from 'react-perfect-scrollbar';
+import {
+  Modal,
+  ModalBody,
+  ModalHeader,
+  Spinner,
+} from "reactstrap";
 /** COMPONENTS */
 import {
   Block,
-  BlockHead,
-  BlockHeadContent,
-  BlockBetween,
-  BlockTitle,
   UserAvatar,
   Icon,
   Row,
@@ -82,31 +82,17 @@ function ProcessModal(props) {
    */
   return (
     <Modal
-      className="modal-dialog-centered"
       isOpen={show}
+      className="modal-dialog-centered"
+      modalClassName="zoom"
       size="md"
       toggle={onClose}>
+      <ModalHeader className="fc-event-secondary" toggle={onClose}>
+        {data.request?.requestTypeID === 1 && t("approved_process:title_assets")}
+        {data.request?.requestTypeID === 2 && t("approved_process:title_damage")}
+        {data.request?.requestTypeID === 3 && t("approved_process:title_lost")}
+      </ModalHeader>
       <ModalBody>
-        <BlockHead>
-          <BlockBetween>
-            <BlockHeadContent>
-              {data.request?.requestTypeID === 1 && (
-                <BlockTitle tag="h4">{t("approved_process:title_assets")}</BlockTitle>
-              )}
-              {data.request?.requestTypeID === 2 && (
-                <BlockTitle tag="h4">{t("approved_process:title_damage")}</BlockTitle>
-              )}
-              {data.request?.requestTypeID === 3 && (
-                <BlockTitle tag="h4">{t("approved_process:title_lost")}</BlockTitle>
-              )}
-            </BlockHeadContent>
-            <a href="#cancel" className="close">
-              {" "}
-              <Icon name="cross-sm" onClick={onClose} />
-            </a>
-          </BlockBetween>
-        </BlockHead>
-
         <Block>
           <div className="data-head">
             <h6 className="overline-title">{t("approved_process:information_process")}</h6>
@@ -118,58 +104,56 @@ function ProcessModal(props) {
               </div>
             )}
             {!loading && (
-              <PerfectScrollbar>
-                <ul className="timeline-list">
-                  {data.process.length > 0 && data.process.map((itemT, indexT) => {
-                    return (
-                      <Row className="timeline-item" key={itemT.levelApproval + "_timeline_" + indexT}>
-                        <div className={`timeline-status bg-${
-                          statusClassName[itemT.statusID]} ${itemT.statusID === null ? "is-outline" : ""}`}
-                        />
-                        <Col sm="3" md="3">
-                          {itemT.approveDate && (
-                            <div className={`text-center rounded bg-${statusClassName[itemT.statusID]}-dim py-1 d-flex flex-column`}>
-                              <span className={`text-${statusClassName[itemT.statusID]}`}>{itemT.approveDate}</span>
-                              <span className={`text-${statusClassName[itemT.statusID]}`}>{itemT.approveTime}</span>
-                            </div>
-                          )}
-                        </Col>
-                        <Col sm="1"  md="1">
-                          <Icon name="clock" />
-                        </Col>
-                        <Col sm="7"  md="7">
-                          <div className="timeline-data">
-                            <div className="timeline-des">
-                              <div className="profile-ud plain">
-                                <span className="profile-ud-label fw-bold">{`${itemT.levelApproval === 0
-                                ? t("approved_process:employee_request")
-                                : t("approved_process:employee_approved")}${
-                                  itemT.levelApproval !== 0
-                                    ? (" (" + itemT.titleApprove + ") ")
-                                    : ""}`}:</span>
-                                <div className="user-card">
-                                  <UserAvatar className="sm" text={findUpper(itemT.personApproveName)} />
-                                  <div className="user-info">
-                                    <span className="profile-ud-value text-primary fw-bold">{itemT.personApproveName}</span>
-                                  </div>
+              <ul className="timeline-list">
+                {data.process.length > 0 && data.process.map((itemT, indexT) => {
+                  return (
+                    <Row className="timeline-item" key={itemT.levelApproval + "_timeline_" + indexT}>
+                      <div className={`timeline-status bg-${
+                        statusClassName[itemT.statusID]} ${itemT.statusID === null ? "is-outline" : ""}`}
+                      />
+                      <Col sm="3" md="3">
+                        {itemT.approveDate && (
+                          <div className={`text-center rounded bg-${statusClassName[itemT.statusID]}-dim py-1 d-flex flex-column`}>
+                            <span className={`text-${statusClassName[itemT.statusID]}`}>{itemT.approveDate}</span>
+                            <span className={`text-${statusClassName[itemT.statusID]}`}>{itemT.approveTime}</span>
+                          </div>
+                        )}
+                      </Col>
+                      <Col sm="1"  md="1">
+                        <Icon name="clock" />
+                      </Col>
+                      <Col sm="7"  md="7">
+                        <div className="timeline-data">
+                          <div className="timeline-des">
+                            <div className="profile-ud plain">
+                              <span className="profile-ud-label fw-bold">{`${itemT.levelApproval === 0
+                              ? t("approved_process:employee_request")
+                              : t("approved_process:employee_approved")}${
+                                itemT.levelApproval !== 0
+                                  ? (" (" + itemT.titleApprove + ") ")
+                                  : ""}`}:</span>
+                              <div className="user-card">
+                                <UserAvatar className="sm" text={findUpper(itemT.personApproveName)} />
+                                <div className="user-info">
+                                  <span className="profile-ud-value text-primary fw-bold">{itemT.personApproveName}</span>
                                 </div>
                               </div>
-                              <div className="profile-ud plain mt-2">
-                                <span className="profile-ud-label fw-bold">{t("approved_process:status")}:</span>
-                                <span className="profile-ud-value">{itemT.statusName || "-"}</span>
-                              </div>
-                              <div className="profile-ud plain mt-2">
-                                <span className="profile-ud-label fw-bold">{t("approved_process:reason")}:</span>
-                                <span className="profile-ud-value">{itemT.reason || "-"}</span>
-                              </div>
+                            </div>
+                            <div className="profile-ud plain mt-2">
+                              <span className="profile-ud-label fw-bold">{t("approved_process:status")}:</span>
+                              <span className="profile-ud-value">{itemT.statusName || "-"}</span>
+                            </div>
+                            <div className="profile-ud plain mt-2">
+                              <span className="profile-ud-label fw-bold">{t("approved_process:reason")}:</span>
+                              <span className="profile-ud-value">{itemT.reason || "-"}</span>
                             </div>
                           </div>
-                        </Col>
-                      </Row>
-                    )
-                  })}
-                </ul>
-              </PerfectScrollbar>
+                        </div>
+                      </Col>
+                    </Row>
+                  )
+                })}
+              </ul>
             )}
           </div>
         </Block>

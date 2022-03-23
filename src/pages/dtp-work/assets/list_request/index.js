@@ -24,6 +24,7 @@ import {
   DataTable,
   PaginationComponent,
   PreviewAltCard,
+  Loading,
   Icon,
   Button,
   Row,
@@ -38,7 +39,12 @@ import AddDamLosForm from "./form/AddDamLos";
 import Configs from "../../../../configs";
 import Routes from "../../../../route/routes";
 import Constants from "../../../../utils/constants";
-import {getLocalStorage, setLocalStorage, log, checkIsWrite} from "../../../../utils/Utils";
+import {
+  getLocalStorage,
+  setLocalStorage,
+  log,
+  checkIsWrite,
+} from "../../../../utils/Utils";
 /** REDUX */
 import * as Actions from "../../../../redux/actions";
 
@@ -256,23 +262,30 @@ function RequestAssets({history}) {
         end: new Date(fFromToDate.end),
       });
       onStartGetData(
+        tabs[filterTab].typeRequest,
         fFromToDate.start,
         fFromToDate.end,
         filterTab,
         tabs[filterTab].search,
-        tabs[filterTab].typeRequest,
       );
     } else {
-      onStartGetData();
+      setLocalStorage(
+        Constants.LS_FROM_TO_REQUEST,
+        JSON.stringify({
+          start: moment(rangeDate.start).format("YYYY/MM/DD"),
+          end: moment(rangeDate.end).format("YYYY/MM/DD"),
+        }),
+      );
+      onStartGetData(tabs[filterTab].typeRequest);
     }
   };
 
   const onStartGetData = (
+    type = 1,
     fromDate = moment(rangeDate.start).format("YYYY-MM-DD"),
     toDate = moment(rangeDate.end).format("YYYY-MM-DD"),
     idxActive = 0,
     search = "",
-    type = 1,
     status = [1, 2, 3, 4],
     page = 1,
   ) => {
@@ -304,11 +317,11 @@ function RequestAssets({history}) {
       setFilterTab(idxTab);
       // Call api
       onStartGetData(
+        tmpTabs[idxTab].typeRequest,
         undefined,
         undefined,
         idxTab,
         tmpTabs[idxTab].search,
-        tmpTabs[idxTab].typeRequest,
         tmpTabs[idxTab].statusRequest,
         1,
       );
@@ -324,11 +337,11 @@ function RequestAssets({history}) {
       setTabs(tmpTabs);
       // Call api
       onStartGetData(
+        tmpTabs[idxTab].typeRequest,
         undefined,
         undefined,
         idxTab,
         tmpTabs[idxTab].search,
-        tmpTabs[idxTab].typeRequest,
         tmpTabs[idxTab].statusRequest,
         newPage,
       );
@@ -345,11 +358,11 @@ function RequestAssets({history}) {
       setTabs(tmpTabs);
       // Call api
       onStartGetData(
+        tmpTabs[idxTab].typeRequest,
         undefined,
         undefined,
         idxTab,
         tmpTabs[idxTab].search,
-        tmpTabs[idxTab].typeRequest,
         tmpTabs[idxTab].statusRequest,
         1,
       );
@@ -370,11 +383,11 @@ function RequestAssets({history}) {
       });
       // Call api
       onStartGetData(
+        tabs[filterTab].typeRequest,
         undefined,
         undefined,
         filterTab,
         tabs[filterTab].search,
-        tabs[filterTab].typeRequest,
         tabs[filterTab].statusRequest,
         1,
       );
@@ -411,8 +424,9 @@ function RequestAssets({history}) {
 
   const onError = error => {
     log('[LOG] === Error ===> ', error);
-    setLoading({main: false, search: false});
+    dispatch(Actions.fResetApprovedRequest());
     toast(error, {type: "error"});
+    setLoading({main: false, search: false});
   };
 
   /**
@@ -471,357 +485,352 @@ function RequestAssets({history}) {
     <React.Fragment>
       <Head title={t("assets:title")}></Head>
 
-      {!loading.main && (
-        <Content>
-          {/** Header table */}
-          <BlockHead size="sm">
-            <BlockBetween>
-              <BlockHeadContent>
-                <BlockTitle tag="h4">{t("request_approved:title")}</BlockTitle>
-              </BlockHeadContent>
-              <BlockHeadContent>
-                <div className="toggle-wrap nk-block-tools-toggle">
-                  {isWrite && (
-                    <ul className="nk-block-tools g-3">
-                      <li className="nk-block-tools-opt">
-                        <Button
-                          className="toggle btn-icon d-md-none"
-                          color="primary"
-                          disabled={disabled}
-                          onClick={onToggleAdd}
-                        >
-                          <Icon name="plus"></Icon>
-                        </Button>
-                        <Button
-                          className="toggle d-none d-md-inline-flex"
-                          color="primary"
-                          disabled={disabled}
-                          onClick={onToggleAdd}
-                        >
-                          <Icon name="plus"></Icon>
-                          {filterTab === 0 && (
-                            <span>{t("request_approved:add_assets")}</span>
-                          )}
-                          {filterTab === 1 && (
-                            <span>{t("request_approved:add_damage")}</span>
-                          )}
-                          {filterTab === 2 && (
-                            <span>{t("request_approved:add_lost")}</span>
-                          )}
-                        </Button>
-                      </li>
-                    </ul>
-                  )}
-                </div>
-              </BlockHeadContent>
-            </BlockBetween>
-          </BlockHead>
-
-          {/** Content table */}
-          <Block>
-            <DataTable className="card-stretch">
-              <div className="card-inner position-relative card-tools-toggle">
-                <div className="card-title-group">
-                  <div className="card-tools">
-                    <ul className="card-tools-nav">
-                      {tabs.map((item, index) => {
-                        return (
-                          <TabItem
-                            key={item.id + "_tab_" + index}
-                            index={index}
-                            tab={item.id}
-                            curTab={filterTab}
-                            disabled={disabled}
-                            label={`${item.label} (${item.count})`}
-                            onChange={onChangeTab}
-                          />
-                        )
-                      })}
-                    </ul>
-                  </div>
-                  <div className="card-tools mr-n1">
-                    <ul className="btn-toolbar gx-1">
-                      <li>
-                        <a
-                          href="#search"
-                          onClick={(ev) => {
-                            ev.preventDefault();
-                            !disabled && toggleView("search");
-                          }}
-                          className="btn btn-icon search-toggle toggle-search"
-                        >
-                          <Icon name="search"></Icon>
-                        </a>
-                      </li>
-                      <li className="btn-toolbar-sep"></li>
-                      <li>
-                        <div className="toggle-wrap">
-                          <Button
-                            className={`btn-icon btn-trigger toggle ${sm ? "active" : ""}`}
-                            disabled={disabled}
-                            onClick={toggleSm}
-                          >
-                            <Icon name="menu-right"></Icon>
-                          </Button>
-                          <div className={`toggle-content ${sm ? "content-active" : ""}`}>
-                            <ul className="btn-toolbar gx-1">
-                              <li className="toggle-close">
-                                <Button className="btn-icon btn-trigger toggle" disabled={disabled} onClick={toggleSm}>
-                                  <Icon name="arrow-left"></Icon>
-                                </Button>
-                              </li>
-                              <li>
-                                <UncontrolledDropdown>
-                                  <DropdownToggle tag="a" className="btn btn-trigger btn-icon dropdown-toggle">
-                                    <div className="dot dot-primary"></div>
-                                    <Icon name="filter-alt"></Icon>
-                                  </DropdownToggle>
-                                  <DropdownMenu
-                                    right
-                                    className="filter-wg dropdown-menu-xl"
-                                    style={{ overflow: "visible" }}
-                                  >
-                                    <div className="dropdown-head">
-                                      <h6>
-                                        {t("request_approved:filter_request").toUpperCase()}
-                                      </h6>
-                                    </div>
-                                    <div className="dropdown-body dropdown-body-rg">
-                                      <Row className="gx-6 gy-3">
-                                        <Col md="6">
-                                          <FormGroup className="form-group" style={{zIndex: 10000}}>
-                                            <label className="overline-title overline-title-alt">
-                                              {t("common:from_date")}
-                                            </label>
-                                            <DatePicker
-                                              className="form-control"
-                                              wrapperClassName="start-m"
-                                              selected={rangeDate.start}
-                                              dateFormat="dd/MM/yyyy"
-                                              startDate={rangeDate.start}
-                                              endDate={rangeDate.end}
-                                              disabled={disabled}
-                                              selectsStart
-                                              onChange={date => onChangeDate("start", date)}
-                                            />
-                                          </FormGroup>
-                                        </Col>
-                                        <Col md="6">
-                                          <FormGroup className="form-group" style={{zIndex: 10000}}>
-                                            <label className="overline-title overline-title-alt">
-                                              {t("common:to_date")}
-                                            </label>
-                                            <DatePicker
-                                              className="form-control"
-                                              wrapperClassName="end-m"
-                                              selected={rangeDate.end}
-                                              dateFormat="dd/MM/yyyy"
-                                              startDate={rangeDate.start}
-                                              endDate={rangeDate.end}
-                                              minDate={rangeDate.start}
-                                              disabled={disabled}
-                                              selectsEnd
-                                              onChange={date => onChangeDate("end", date)}
-                                            />
-                                          </FormGroup>
-                                        </Col>
-                                        <Col size="12">
-                                          <FormGroup className="form-group">
-                                            <label className="overline-title overline-title-alt">
-                                              {t("request_approved:status_request")}
-                                            </label>
-                                            <ul className="custom-control-group g-3 align-center">
-                                              <li>
-                                                <div className="custom-control custom-control-sm custom-checkbox">
-                                                  <input
-                                                    className="custom-control-input form-control"
-                                                    id="wait"
-                                                    name="wait"
-                                                    type="checkbox"
-                                                    disabled={disabled}
-                                                    value={1}
-                                                    checked={tabs[filterTab].statusRequest.includes(1)}
-                                                    onChange={onChangeStatus}
-                                                  />
-                                                  <label className="custom-control-label" htmlFor="wait">
-                                                    {t("request_approved:wait")}
-                                                  </label>
-                                                </div>
-                                              </li>
-                                              <li>
-                                                <div className="custom-control custom-control-sm custom-checkbox">
-                                                  <input
-                                                    className="custom-control-input form-control"
-                                                    id="approved"
-                                                    name="approved"
-                                                    type="checkbox"
-                                                    disabled={disabled}
-                                                    value={2}
-                                                    checked={tabs[filterTab].statusRequest.includes(2)}
-                                                    onChange={onChangeStatus}
-                                                  />
-                                                  <label className="custom-control-label " htmlFor="approved">
-                                                    {t("request_approved:approved")}
-                                                  </label>
-                                                </div>
-                                              </li>
-                                              <li>
-                                                <div className="custom-control custom-control-sm custom-checkbox">
-                                                  <input
-                                                    className="custom-control-input form-control"
-                                                    id="reject"
-                                                    name="reject"
-                                                    type="checkbox"
-                                                    value={4}
-                                                    checked={tabs[filterTab].statusRequest.includes(4)}
-                                                    onChange={onChangeStatus}
-                                                  />
-                                                  <label className="custom-control-label" htmlFor="reject">
-                                                    {t("request_approved:reject")}
-                                                  </label>
-                                                </div>
-                                              </li>
-                                            </ul>
-                                          </FormGroup>
-                                        </Col>
-                                      </Row>
-                                    </div>
-                                    <div className="dropdown-foot between">
-                                      <Button color="primary" disabled={disabled} onClick={onSearchFilter}>
-                                        <Icon name="filter"></Icon>
-                                        <span>{t("common:filter")}</span>
-                                      </Button>
-                                      {/* <Button className="btn-dim" color="secondary" disabled={disabled} onClick={onResetFilter}>
-                                        <Icon name="undo"></Icon>
-                                        <span>{t("common:reset")}</span>
-                                      </Button> */}
-                                    </div>
-                                  </DropdownMenu>
-                                </UncontrolledDropdown>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                
-                <div className={`card-search search-wrap ${view.search && "active"}`}>
-                  <div className="card-body">
-                    <div className="search-content">
+      <Content>
+        {/** Header table */}
+        <BlockHead size="sm">
+          <BlockBetween>
+            <BlockHeadContent>
+              <BlockTitle tag="h4">{t("request_approved:title")}</BlockTitle>
+            </BlockHeadContent>
+            <BlockHeadContent>
+              <div className="toggle-wrap nk-block-tools-toggle">
+                {isWrite && (
+                  <ul className="nk-block-tools g-3">
+                    <li className="nk-block-tools-opt">
                       <Button
-                        className="search-back btn-icon toggle-search active"
+                        className="toggle btn-icon d-md-none"
+                        color="primary"
+                        disabled={disabled}
+                        onClick={onToggleAdd}
+                      >
+                        <Icon name="plus"></Icon>
+                      </Button>
+                      <Button
+                        className="toggle d-none d-md-inline-flex"
+                        color="primary"
+                        disabled={disabled}
+                        onClick={onToggleAdd}
+                      >
+                        <Icon name="plus"></Icon>
+                        {filterTab === 0 && (
+                          <span>{t("request_approved:add_assets")}</span>
+                        )}
+                        {filterTab === 1 && (
+                          <span>{t("request_approved:add_damage")}</span>
+                        )}
+                        {filterTab === 2 && (
+                          <span>{t("request_approved:add_lost")}</span>
+                        )}
+                      </Button>
+                    </li>
+                  </ul>
+                )}
+              </div>
+            </BlockHeadContent>
+          </BlockBetween>
+        </BlockHead>
+
+        {/** Content table */}
+        <Block>
+          <DataTable className="card-stretch">
+            <div className="card-inner position-relative card-tools-toggle">
+              <div className="card-title-group">
+                <div className="card-tools">
+                  <ul className="card-tools-nav">
+                    {tabs.map((item, index) => {
+                      return (
+                        <TabItem
+                          key={item.id + "_tab_" + index}
+                          index={index}
+                          tab={item.id}
+                          curTab={filterTab}
+                          disabled={disabled}
+                          label={`${item.label} (${item.count})`}
+                          onChange={onChangeTab}
+                        />
+                      )
+                    })}
+                  </ul>
+                </div>
+                <div className="card-tools mr-n1">
+                  <ul className="btn-toolbar gx-1">
+                    <li>
+                      <a
+                        href="#search"
                         onClick={(ev) => {
                           ev.preventDefault();
-                          toggleView("search");
+                          !disabled && toggleView("search");
                         }}
-                      >
-                        <Icon name="arrow-left"></Icon>
-                      </Button>
-                      <input
-                        type="text"
-                        className="border-transparent form-focus-none form-control"
-                        disabled={disabled}
-                        value={tabs[filterTab].search}
-                        placeholder={t("common:search")}
-                        onKeyDown={ev => {
-                          if (ev.code === "Enter") onSearch(ev, filterTab);
-                        }}
-                        onChange={onChangeSearch}
-                      />
-                      <Button
-                        className="search-submit btn-icon"
-                        onClick={ev => onSearch(ev, filterTab)}
+                        className="btn btn-icon search-toggle toggle-search"
                       >
                         <Icon name="search"></Icon>
-                      </Button>
-                    </div>
+                      </a>
+                    </li>
+                    <li className="btn-toolbar-sep"></li>
+                    <li>
+                      <div className="toggle-wrap">
+                        <Button
+                          className={`btn-icon btn-trigger toggle ${sm ? "active" : ""}`}
+                          disabled={disabled}
+                          onClick={toggleSm}
+                        >
+                          <Icon name="menu-right"></Icon>
+                        </Button>
+                        <div className={`toggle-content ${sm ? "content-active" : ""}`}>
+                          <ul className="btn-toolbar gx-1">
+                            <li className="toggle-close">
+                              <Button className="btn-icon btn-trigger toggle" disabled={disabled} onClick={toggleSm}>
+                                <Icon name="arrow-left"></Icon>
+                              </Button>
+                            </li>
+                            <li>
+                              <UncontrolledDropdown>
+                                <DropdownToggle tag="a" className="btn btn-trigger btn-icon dropdown-toggle">
+                                  <div className="dot dot-primary"></div>
+                                  <Icon name="filter-alt"></Icon>
+                                </DropdownToggle>
+                                <DropdownMenu
+                                  right
+                                  className="filter-wg dropdown-menu-xl"
+                                  style={{ overflow: "visible" }}
+                                >
+                                  <div className="dropdown-head">
+                                    <h6>
+                                      {t("request_approved:filter_request").toUpperCase()}
+                                    </h6>
+                                  </div>
+                                  <div className="dropdown-body dropdown-body-rg">
+                                    <Row className="gx-6 gy-3">
+                                      <Col md="6">
+                                        <FormGroup className="form-group" style={{zIndex: 10000}}>
+                                          <label className="overline-title overline-title-alt">
+                                            {t("common:from_date")}
+                                          </label>
+                                          <DatePicker
+                                            className="form-control"
+                                            wrapperClassName="start-m"
+                                            selected={rangeDate.start}
+                                            dateFormat="dd/MM/yyyy"
+                                            startDate={rangeDate.start}
+                                            endDate={rangeDate.end}
+                                            disabled={disabled}
+                                            selectsStart
+                                            onChange={date => onChangeDate("start", date)}
+                                          />
+                                        </FormGroup>
+                                      </Col>
+                                      <Col md="6">
+                                        <FormGroup className="form-group" style={{zIndex: 10000}}>
+                                          <label className="overline-title overline-title-alt">
+                                            {t("common:to_date")}
+                                          </label>
+                                          <DatePicker
+                                            className="form-control"
+                                            wrapperClassName="end-m"
+                                            selected={rangeDate.end}
+                                            dateFormat="dd/MM/yyyy"
+                                            startDate={rangeDate.start}
+                                            endDate={rangeDate.end}
+                                            minDate={rangeDate.start}
+                                            disabled={disabled}
+                                            selectsEnd
+                                            onChange={date => onChangeDate("end", date)}
+                                          />
+                                        </FormGroup>
+                                      </Col>
+                                      <Col size="12">
+                                        <FormGroup className="form-group">
+                                          <label className="overline-title overline-title-alt">
+                                            {t("request_approved:status_request")}
+                                          </label>
+                                          <ul className="custom-control-group g-3 align-center">
+                                            <li>
+                                              <div className="custom-control custom-control-sm custom-checkbox">
+                                                <input
+                                                  className="custom-control-input form-control"
+                                                  id="wait"
+                                                  name="wait"
+                                                  type="checkbox"
+                                                  disabled={disabled}
+                                                  value={1}
+                                                  checked={tabs[filterTab].statusRequest.includes(1)}
+                                                  onChange={onChangeStatus}
+                                                />
+                                                <label className="custom-control-label" htmlFor="wait">
+                                                  {t("request_approved:wait")}
+                                                </label>
+                                              </div>
+                                            </li>
+                                            <li>
+                                              <div className="custom-control custom-control-sm custom-checkbox">
+                                                <input
+                                                  className="custom-control-input form-control"
+                                                  id="approved"
+                                                  name="approved"
+                                                  type="checkbox"
+                                                  disabled={disabled}
+                                                  value={2}
+                                                  checked={tabs[filterTab].statusRequest.includes(2)}
+                                                  onChange={onChangeStatus}
+                                                />
+                                                <label className="custom-control-label " htmlFor="approved">
+                                                  {t("request_approved:approved")}
+                                                </label>
+                                              </div>
+                                            </li>
+                                            <li>
+                                              <div className="custom-control custom-control-sm custom-checkbox">
+                                                <input
+                                                  className="custom-control-input form-control"
+                                                  id="reject"
+                                                  name="reject"
+                                                  type="checkbox"
+                                                  value={4}
+                                                  checked={tabs[filterTab].statusRequest.includes(4)}
+                                                  onChange={onChangeStatus}
+                                                />
+                                                <label className="custom-control-label" htmlFor="reject">
+                                                  {t("request_approved:reject")}
+                                                </label>
+                                              </div>
+                                            </li>
+                                          </ul>
+                                        </FormGroup>
+                                      </Col>
+                                    </Row>
+                                  </div>
+                                  <div className="dropdown-foot between">
+                                    <Button color="primary" disabled={disabled} onClick={onSearchFilter}>
+                                      <Icon name="filter"></Icon>
+                                      <span>{t("common:filter")}</span>
+                                    </Button>
+                                  </div>
+                                </DropdownMenu>
+                              </UncontrolledDropdown>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div className={`card-search search-wrap ${view.search && "active"}`}>
+                <div className="card-body">
+                  <div className="search-content">
+                    <Button
+                      className="search-back btn-icon toggle-search active"
+                      onClick={(ev) => {
+                        ev.preventDefault();
+                        toggleView("search");
+                      }}
+                    >
+                      <Icon name="arrow-left"></Icon>
+                    </Button>
+                    <input
+                      type="text"
+                      className="border-transparent form-focus-none form-control"
+                      disabled={disabled}
+                      value={tabs[filterTab].search}
+                      placeholder={t("common:search")}
+                      onKeyDown={ev => {
+                        if (ev.code === "Enter") onSearch(ev, filterTab);
+                      }}
+                      onChange={onChangeSearch}
+                    />
+                    <Button
+                      className="search-submit btn-icon"
+                      onClick={ev => onSearch(ev, filterTab)}
+                    >
+                      <Icon name="search"></Icon>
+                    </Button>
                   </div>
                 </div>
               </div>
+            </div>
 
-              {/** Data table */}
-              <div className="tab-content">
-                {tabs.map((itemT, indexT) => {
-                  return (
-                    <div className={`tab-pane ${filterTab === indexT && "active"}`}
-                      key={"tab_" + itemT.id + indexT}>
-                      {!loading.main && !loading.search && (
-                        <TableRequest
-                          typeRequest={itemT.typeRequest}
-                          dataRequest={itemT.data}
-                          onProcess={onProcess}
-                          onDetails={onDetails}
-                        />
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/** Paging table */}
-              <PreviewAltCard className={`${tabs[filterTab].count > 0 && "border-top"}`}>
-                {disabled ? (
-                  <div className="text-center">
-                    <Spinner size="sm" color="primary" />
+            {/** Data table */}
+            <div className="tab-content">
+              {tabs.map((itemT, indexT) => {
+                return (
+                  <div className={`tab-pane ${filterTab === indexT && "active"}`}
+                    key={"tab_" + itemT.id + indexT}>
+                    <TableRequest
+                      loading={disabled}
+                      typeRequest={itemT.typeRequest}
+                      dataRequest={itemT.data}
+                      onProcess={onProcess}
+                      onDetails={onDetails}
+                    />
                   </div>
-                ) : 
-                tabs[filterTab].data.length > 0 ? (
-                  <PaginationComponent
-                    itemPerPage={Configs.perPage}
-                    totalItems={tabs[filterTab].count}
-                    currentPage={tabs[filterTab].page}
-                    paginate={paginate}
-                  />
-                ) : (
-                  <div className="text-center">
-                    <span className="text-silent">{t("common:no_data")}</span>
-                  </div>
-                )}
-              </PreviewAltCard>
-            </DataTable>
-          </Block>
+                );
+              })}
+            </div>
 
-          <ProcessModal
-            show={view.process}
-            dataRequest={updateItem}
-            onClose={toggleView}
-          />
+            {/** Paging table */}
+            <PreviewAltCard className={`${tabs[filterTab].count > 0 && "border-top"}`}>
+            {!disabled ? (
+              tabs[filterTab].data.length > 0 ? (
+                <PaginationComponent
+                  itemPerPage={Configs.perPage}
+                  totalItems={tabs[filterTab].count}
+                  currentPage={tabs[filterTab].page}
+                  paginate={paginate}
+                />
+              ) : (
+                <div className="text-center">
+                  <span className="text-silent">{t("common:no_data")}</span>
+                </div>
+              )) : (
+            <div className="text-center">
+              <Spinner size="sm" color="primary" />
+            </div>
+            )}
+            </PreviewAltCard>
+          </DataTable>
+        </Block>
 
-          <DetailsModal
-            show={view.details}
-            typeRequest={updateItem?.requestTypeID}
-            dataRequest={updateItem}
-            dataDetails={detailsItem}
-            onClose={toggleView}
-          />
+        {/** Forms */}
+        <ProcessModal
+          show={view.process}
+          dataRequest={updateItem}
+          onClose={toggleView}
+        />
 
-          <AddAllowForm
-            show={view.addAllow}
-            history={history}
-            commonState={commonState}
-            authState={authState}
-            onClose={onCloseAddForm}
-          />
+        <DetailsModal
+          show={view.details}
+          typeRequest={updateItem?.requestTypeID}
+          dataRequest={updateItem}
+          dataDetails={detailsItem}
+          onClose={toggleView}
+        />
 
-          <AddDamLosForm
-            show={view.addDamLos}
-            typeRequest={filterTab === 1
-              ? "damage"
-              : filterTab === 2
-                ? "lost"
-                : "allow"}
-            history={history}
-            commonState={commonState}
-            authState={authState}
-            onClose={onCloseAddForm}
-          />
+        <AddAllowForm
+          show={view.addAllow}
+          history={history}
+          commonState={commonState}
+          authState={authState}
+          onClose={onCloseAddForm}
+        />
 
-          {view.addAllow && <div className="toggle-overlay" onClick={toggleView}></div>}
-          {view.addDamLos && <div className="toggle-overlay" onClick={toggleView}></div>}
-        </Content>
-      )}
+        <AddDamLosForm
+          show={view.addDamLos}
+          typeRequest={filterTab === 1
+            ? "damage"
+            : filterTab === 2
+              ? "lost"
+              : "allow"}
+          history={history}
+          commonState={commonState}
+          authState={authState}
+          onClose={onCloseAddForm}
+        />
+      </Content>
+
+      {view.addAllow && <div className="toggle-overlay" onClick={toggleView}></div>}
+      {view.addDamLos && <div className="toggle-overlay" onClick={toggleView}></div>}
+      <Loading show={loading.main} />
     </React.Fragment>
   );
 };

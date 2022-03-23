@@ -19,11 +19,15 @@ import {
 /** COMMON */
 import Configs from "../../../../../configs";
 import Routes from "../../../../../services/routesApi";
-import {getCookies, findUpper} from "../../../../../utils/Utils";
+import {
+  getCookies,
+  findUpper,
+} from "../../../../../utils/Utils";
 
 function TableRequest(props) {
   const {t} = useTranslation();
   const {
+    loading,
     typeRequest,
     dataRequest,
     onDetails,
@@ -89,7 +93,7 @@ function TableRequest(props) {
         <DataTableRow className="nk-tb-col-tools" />
       </DataTableHead>
         
-      {data.length > 0 ?
+      {(!loading && data.length > 0) ?
         data.map((itemR, indexR) => {
           let statusColor = "gray";
           switch (itemR.statusID) {
@@ -135,14 +139,10 @@ function TableRequest(props) {
                 <span>{itemR.regionName}</span>
               </DataTableRow>
               <DataTableRow>
-                <span
-                  className={`dot bg-${statusColor} d-mb-none`}
-                ></span>
-                <span
-                  className={`badge badge-sm badge-dot has-bg badge-${
+                <span className={`dot bg-${statusColor} d-mb-none`} />
+                <span className={`badge badge-sm badge-dot has-bg badge-${
                     statusColor
-                  } d-none d-mb-inline-flex`}
-                >
+                  } d-none d-mb-inline-flex`}>
                   {itemR.statusName}
                 </span>
               </DataTableRow>
@@ -161,8 +161,7 @@ function TableRequest(props) {
                             onClick={(ev) => {
                               ev.preventDefault();
                               onDetails(itemR);
-                            }}
-                          >
+                            }}>
                             <Icon name="eye"></Icon>
                             <span>{t("request_approved:view_details")}</span>
                           </DropdownItem>
@@ -174,8 +173,7 @@ function TableRequest(props) {
                             onClick={(ev) => {
                               ev.preventDefault();
                               onProcess(itemR);
-                            }}
-                          >
+                            }}>
                             <Icon name="list-check"></Icon>
                             <span>{t("request_approved:approved_timeline")}</span>
                           </DropdownItem>
@@ -187,27 +185,25 @@ function TableRequest(props) {
                             onClick={(ev) => {
                               ev.preventDefault();
                               onExportExcel(itemR.requestID);
-                            }}
-                          >
+                            }}>
                             <Icon name="download"></Icon>
                             <span>{t("request_approved:export_file")}</span>
                           </DropdownItem>
                         </li>
                         {itemR.attachFiles && (
-                            <li>
-                              <DropdownItem
-                                tag="a"
-                                href="#attach"
-                                onClick={(ev) => {
-                                  ev.preventDefault();
-                                  onDownload(itemR.attachFiles);
-                                }}
-                              >
-                                <Icon name="download"></Icon>
-                                <span>{t("request_approved:download_attach_file")}</span>
-                              </DropdownItem>
-                            </li>
-                          )}
+                          <li>
+                            <DropdownItem
+                              tag="a"
+                              href="#attach"
+                              onClick={(ev) => {
+                                ev.preventDefault();
+                                onDownload(itemR.attachFiles);
+                              }}>
+                              <Icon name="download"></Icon>
+                              <span>{t("request_approved:download_attach_file")}</span>
+                            </DropdownItem>
+                          </li>
+                        )}
                       </ul>
                     </DropdownMenu>
                   </UncontrolledDropdown>

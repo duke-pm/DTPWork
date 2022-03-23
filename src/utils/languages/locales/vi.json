@@ -174,9 +174,9 @@
     "holder_new_password": "Mật khẩu mới...",
     "confirm_password": "Nhập lại lại mật khẩu",
     "holder_confirm_password": "Nhập lại lại mật khẩu...",
-    "confirm_title": "Cần xác nhận!",
+    "confirm_title": "Xác nhận đổi mật khẩu!",
     "confirm_des_1": "Bạn thực sự muốn cập nhật mật khẩu mới này?",
-    "confirm_des_2": "Nếu thành công, bạn sẽ cần đăng nhập lại để có thể tiếp tục sử dụng!"
+    "confirm_des_2": "Bạn sẽ cần đăng nhập lại để có thể tiếp tục sử dụng!"
   },
   "management": {
     "title": "Quản trị",
@@ -589,7 +589,7 @@
     "type_approved": "cấp phát",
     "type_damage": "báo hỏng",
     "type_lost": "báo mất",
-    "reason": "Lý do",
+    "reason": "Lý do đề xuất",
     "reason_reject": "Lý do từ chối",
     "export_file": "Xuất excel"
   },

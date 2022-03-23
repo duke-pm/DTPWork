@@ -1,11 +1,17 @@
 import React from "react";
 import {useTranslation} from "react-i18next";
-import {Spinner, Modal, ModalBody} from "reactstrap";
+import {
+  Spinner,
+  Modal,
+  ModalBody,
+  ModalHeader,
+  ModalFooter,
+} from "reactstrap";
 /** COMPONENTS */
 import {
   Icon,
   Button,
-} from "components/Component";
+} from "../Component";
 
 function AlertConfirm({
   loading,
@@ -14,7 +20,6 @@ function AlertConfirm({
   content,
   onConfirm,
   onClose,
-  ...props
 }) {
   const {t} = useTranslation();
 
@@ -23,47 +28,40 @@ function AlertConfirm({
    */
   return (
     <Modal
-      className="modal-sm"
       isOpen={show}
-      toggle={loading ? undefined : onClose}
-    >
+      className="modal-dialog-centered"
+      modalClassName="zoom"
+      size="sm"
+      toggle={loading ? undefined : onClose}>
+      <ModalHeader className="fc-event-secondary" toggle={loading ? undefined : onClose}>
+        {title}
+      </ModalHeader>
       <ModalBody className="modal-body-sm text-center">
         <div className="nk-modal">
-          <Icon className="nk-modal-icon icon-circle icon-circle-xxl ni ni-question bg-warning"></Icon>
-          <h4 className="nk-modal-title">{title}</h4>
-          <div className="nk-modal-text">
-            <div className="sub-text-sm">
-              {content}
-            </div>
-          </div>
-          <div className="d-flex justify-content-center">
-            <div className="nk-modal-action mr-2">
-              <Button
-                color="success"
-                size="lg"
-                disabled={loading}
-                onClick={onConfirm}
-              >
-                {loading && (
-                  <Spinner className="mr-1" size="sm" color="light" />
-                )}
-                <span>{t("common:ok")}</span>
-              </Button>
-            </div>
-            <div className="nk-modal-action ml-2">
-              <Button
-                className="btn-dim"
-                color="danger"
-                size="lg"
-                disabled={loading}
-                onClick={onClose}
-              >
-                <span>{t("common:close")}</span>
-              </Button>
-            </div>
+          <Icon className="nk-modal-icon icon-circle-xxl ni ni-question"></Icon>
+          <div className="mt-4">
+            <span>{content}</span>
           </div>
         </div>
       </ModalBody>
+      <ModalFooter>
+        <Button
+          color="success"
+          disabled={loading}
+          onClick={onConfirm}>
+          {loading && <Spinner size="sm" color="light" />}
+          {!loading && <Icon name="check" />}
+          <span>{t("common:confirm")}</span>
+        </Button>
+        <Button
+          className="btn-dim"
+          color="danger"
+          disabled={loading}
+          onClick={onClose}>
+          <Icon name="cross" />
+          <span>{t("common:close")}</span>
+        </Button>
+      </ModalFooter>
     </Modal>
   );
 };

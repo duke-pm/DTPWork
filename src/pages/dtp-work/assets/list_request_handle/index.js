@@ -26,6 +26,7 @@ import {
   Button,
   Row,
   Col,
+  Loading,
 } from "../../../../components/Component";
 import TableRequestHandle from "./table";
 import ApprovedForm from "./modal/Approved";
@@ -281,8 +282,9 @@ function RequestAssetsHandle({history}) {
 
   const onError = error => {
     log('[LOG] === Error ===> ', error);
-    setLoading({main: false, search: false});
+    dispatch(Actions.fResetApprovedRequest());
     toast(error, {type: "error"});
+    setLoading({main: false, search: false});
   };
 
   /**
@@ -545,6 +547,7 @@ function RequestAssetsHandle({history}) {
             
             {/** Data table */}
             <TableRequestHandle
+              loading={disabled}
               isWrite={isWrite}
               dataRequest={data.requests}
               onApproved={onApproved}
@@ -553,24 +556,24 @@ function RequestAssetsHandle({history}) {
 
             {/** Paging table */}
             <PreviewAltCard>
-              {disabled ? (
+            {!disabled ? (
+              data.requests.length > 0 ? (
+                <PaginationComponent
+                  itemPerPage={Configs.perPage}
+                  totalItems={data.count}
+                  currentPage={formData.page}
+                  paginate={paginate}
+                />
+              ) : (
                 <div className="text-center">
-                  <Spinner size="sm" color="primary" />
+                  <span className="text-silent">{t("common:no_data")}</span>
                 </div>
-              ) : 
-                data.requests.length > 0 ? (
-                  <PaginationComponent
-                    itemPerPage={Configs.perPage}
-                    totalItems={data.count}
-                    currentPage={formData.page}
-                    paginate={paginate}
-                  />
-                ) : (
-                  <div className="text-center">
-                    <span className="text-silent">{t("common:no_data")}</span>
-                  </div>
-                )
-              } 
+              ) 
+            ) : (
+              <div className="text-center">
+                <Spinner size="sm" color="primary" />
+              </div>
+            )}
             </PreviewAltCard>
           </DataTable>
         </Block>
@@ -593,6 +596,8 @@ function RequestAssetsHandle({history}) {
           onClose={toggleView}
         />
       </Content>
+
+      <Loading show={loading.main} />
     </React.Fragment>
   )
 };

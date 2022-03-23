@@ -1,6 +1,6 @@
 import React from "react";
 import {useTranslation} from "react-i18next";
-import {Modal, ModalBody} from "reactstrap";
+import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 import moment from "moment";
 /** COMPONENTS */
 import {
@@ -13,6 +13,7 @@ import {
   DataTableItem,
   DataTableRow,
   DataTableBody,
+  UserAvatar,
   Icon,
   Row,
   Col,
@@ -21,7 +22,11 @@ import {
 /** COMMON */
 import Configs from "../../../../../configs";
 import Routes from "../../../../../services/routesApi";
-import {getCookies, numberFormat} from "../../../../../utils/Utils";
+import {
+  getCookies,
+  findUpper,
+  numberFormat,
+} from "../../../../../utils/Utils";
 
 function DetailsModal(props) {
   const {t} = useTranslation();
@@ -60,56 +65,49 @@ function DetailsModal(props) {
    */
   return (
     <Modal
-      className="modal-dialog-centered"
       isOpen={show}
+      className="modal-dialog-centered"
+      modalClassName="zoom"
       size="lg"
       toggle={onClose}>
+      <ModalHeader className="fc-event-secondary" toggle={onClose}>
+        {typeRequest === 1 && t("request_details:assets_title")}
+        {typeRequest === 2 && t("request_details:damage_title")}
+        {typeRequest === 3 && t("request_details:lost_title")}
+      </ModalHeader>
       <ModalBody>
-        <BlockHead>
-          <BlockBetween>
-            <BlockHeadContent>
-              {typeRequest === 1 && (
-                <BlockTitle tag="h4">{t("request_details:assets_title")}</BlockTitle>
-              )}
-              {typeRequest === 2 && (
-                <BlockTitle tag="h4">{t("request_details:damage_title")}</BlockTitle>
-              )}
-              {typeRequest === 3 && (
-                <BlockTitle tag="h4">{t("request_details:lost_title")}</BlockTitle>
-              )}
-            </BlockHeadContent>
-            <a href="#cancel" className="close">
-              {" "}
-              <Icon name="cross-sm" onClick={onClose} />
-            </a>
-          </BlockBetween>
-        </BlockHead>
-
         <Block>
           <div className="data-head">
             <h6 className="overline-title">{t("request_details:information_employee")}</h6>
           </div>
           <div className="mt-3">
             <Row className="g-3">
-              <Col md="6">
+              <Col sm="6" md="6">
                 <div className="profile-ud plain">
                   <span className="profile-ud-label fw-bold">{t("request_details:code_employee")}</span>
-                  <span className="profile-ud-value text-primary">#{dataRequest?.empCode || "-"}</span>
+                  <span className="profile-ud-value text-primary">{dataRequest?.empCode || "-"}</span>
                 </div>
               </Col>
-              <Col md="6">
+              <Col sm="6"  md="6">
                 <div className="profile-ud plain">
                   <span className="profile-ud-label fw-bold">{t("request_details:name_employee")}</span>
-                  <span className="profile-ud-value">{dataRequest?.fullName || "-"}</span>
+                  {dataRequest?.fullName && (
+                    <div className="user-card">
+                      <UserAvatar className="sm" text={findUpper(dataRequest?.fullName)} />
+                      <div className="user-info">
+                        <span>{dataRequest?.fullName}</span>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </Col>
-              <Col md="6">
+              <Col sm="6"  md="6">
                 <div className="profile-ud plain">
                   <span className="profile-ud-label fw-bold">{t("request_details:department_employee")}</span>
                   <span className="profile-ud-value">{dataRequest?.deptName || "-"}</span>
                 </div>
               </Col>
-              <Col md="6">
+              <Col sm="6"  md="6">
                 <div className="profile-ud plain">
                   <span className="profile-ud-label fw-bold">{t("request_details:region_employee")}</span>
                   <span className="profile-ud-value">{dataRequest?.regionName || "-"}</span>
@@ -171,7 +169,7 @@ function DetailsModal(props) {
                               ? "success"
                               : "danger"
                       } d-mb-none`}
-                    ></span>
+                    />
                     <span
                       className={`badge badge-sm badge-dot has-bg badge-${
                         dataRequest?.statusID === 1
@@ -181,8 +179,7 @@ function DetailsModal(props) {
                             : dataRequest?.statusID === 3
                               ? "success"
                               : "danger"
-                      } d-none d-mb-inline-flex`}
-                    >
+                      }`}>
                       {dataRequest?.statusName}
                     </span>
                   </div>
@@ -207,52 +204,49 @@ function DetailsModal(props) {
                   <Col size="12">
                     <div className="profile-ud plain">
                       <span className="profile-ud-label fw-bold">{`${t("request_details:assets")}`}</span>
-                      <span className="profile-ud-value">
-                        <DataTableBody className="border-top" bodyclass="nk-tb-orders">
-                          <DataTableHead>
-                            <DataTableRow size="lg">
-                              <span>{t("request_details:des_assets")}</span>
-                            </DataTableRow>
-                            <DataTableRow size="sm">
-                              <span>{t("request_details:count_assets")}</span>
-                            </DataTableRow>
-                            <DataTableRow size="md">
-                              <span>{t("request_details:price_assets")}</span>
-                            </DataTableRow>
-                            <DataTableRow size="md">
-                              <span>{t("request_details:subtotal")}</span>
-                            </DataTableRow>
-                          </DataTableHead>
-
-                          {dataDetails.map((itemD, indexD) => {
-                            return (
-                              <DataTableItem key={"_asset_item_" + indexD}>
-                                <DataTableRow>
-                                  <span className="tb-lead">{itemD.descr}</span>
-                                </DataTableRow>
-                                <DataTableRow>
-                                  <span className="tb-sub tb-amount">{itemD.qty}</span>
-                                </DataTableRow>
-                                <DataTableRow>
-                                  <span className="tb-sub tb-amount">
-                                    {itemD.unitPrice
-                                      ? numberFormat(itemD.unitPrice)
-                                      : "-"}
-                                  </span>
-                                </DataTableRow>
-                                <DataTableRow>
-                                  <span className="tb-sub tb-amount">
-                                    {itemD.totalAmt
-                                      ? numberFormat(itemD.totalAmt)
-                                      : "-"
-                                    }
-                                  </span>
-                                </DataTableRow>
-                              </DataTableItem>
-                            );
-                          })}
-                        </DataTableBody>
-                      </span>
+                      <DataTableBody compact className="border round mt-1" bodyclass="nk-tb-orders">
+                        <DataTableHead>
+                          <DataTableRow>
+                            <span className="fw-bold">{t("request_details:des_assets")}</span>
+                          </DataTableRow>
+                          <DataTableRow size="md">
+                            <span className="fw-bold">{t("request_details:count_assets")}</span>
+                          </DataTableRow>
+                          <DataTableRow size="md">
+                            <span className="fw-bold">{t("request_details:price_assets")}</span>
+                          </DataTableRow>
+                          <DataTableRow>
+                            <span className="fw-bold">{t("request_details:subtotal")}</span>
+                          </DataTableRow>
+                        </DataTableHead>
+                        {dataDetails.map((itemD, indexD) => {
+                          return (
+                            <DataTableItem key={"_asset_item_" + indexD}>
+                              <DataTableRow>
+                                <span className="tb-lead">{itemD.descr}</span>
+                              </DataTableRow>
+                              <DataTableRow size="md">
+                                <span className="tb-sub tb-amount">{itemD.qty}</span>
+                              </DataTableRow>
+                              <DataTableRow size="md">
+                                <span className="tb-sub tb-amount">
+                                  {itemD.unitPrice
+                                    ? numberFormat(itemD.unitPrice)
+                                    : "-"}
+                                </span>
+                              </DataTableRow>
+                              <DataTableRow>
+                                <span className="tb-sub tb-amount">
+                                  {itemD.totalAmt
+                                    ? numberFormat(itemD.totalAmt)
+                                    : "-"
+                                  }
+                                </span>
+                              </DataTableRow>
+                            </DataTableItem>
+                          );
+                        })}
+                      </DataTableBody>
                     </div>
                   </Col>
                 )}
@@ -354,81 +348,77 @@ function DetailsModal(props) {
 
         {typeRequest !== 1 && (
           <Block>
-          <div className="data-head">
-            <h6 className="overline-title">
-              {`${t("request_details:information_status")} ${
-                typeRequest === 2
-                  ? t("request_details:type_damage")
-                  : t("request_details:type_lost")
-              }`}
-            </h6>
-          </div>
-          <div className="mt-3">
-            <Row className="g-3">
-              <Col md="6">
-                <div className="profile-ud plain">
-                  <span className="profile-ud-label fw-bold">{`${t("request_details:status")}`}</span>
-                  <span
-                    className={`dot bg-${
-                      dataRequest?.statusID === 1
-                        ? "gray"
-                        : dataRequest?.statusID === 2
-                          ? "warning"
-                          : dataRequest?.statusID === 3
-                            ? "success"
-                            : "danger"
-                    } d-mb-none`}
-                  ></span>
-                  <span
-                    className={`badge badge-sm badge-dot has-bg badge-${
-                      dataRequest?.statusID === 1
-                        ? "gray"
-                        : dataRequest?.statusID === 2
-                          ? "warning"
-                          : dataRequest?.statusID === 3
-                            ? "success"
-                            : "danger"
-                    } d-none d-mb-inline-flex`}
-                  >
-                    {dataRequest?.statusName}
-                  </span>
-                </div>
-              </Col>
-              <Col md="6">
-                <div className="profile-ud plain">
-                  <span className="profile-ud-label fw-bold">{`${t("request_details:reason")}`}</span>
-                  <span className="profile-ud-value">{dataRequest?.reason || "-"}</span>
-                </div>
-              </Col>
-              {dataRequest?.statusID === 4 && (
+            <div className="data-head">
+              <h6 className="overline-title">
+                {`${t("request_details:information_status")} ${
+                  typeRequest === 2
+                    ? t("request_details:type_damage")
+                    : t("request_details:type_lost")
+                }`}
+              </h6>
+            </div>
+            <div className="mt-3">
+              <Row className="g-3">
                 <Col md="6">
                   <div className="profile-ud plain">
-                    <span className="profile-ud-label fw-bold">{t("request_details:reason_reject")}:</span>
-                    <span className="profile-ud-value">{dataRequest?.reasonReject || "-"}</span>
+                    <span className="profile-ud-label fw-bold">{`${t("request_details:status")}`}</span>
+                    <span
+                      className={`dot bg-${
+                        dataRequest?.statusID === 1
+                          ? "gray"
+                          : dataRequest?.statusID === 2
+                            ? "warning"
+                            : dataRequest?.statusID === 3
+                              ? "success"
+                              : "danger"
+                      } d-mb-none`}
+                    ></span>
+                    <span
+                      className={`badge badge-sm badge-dot has-bg badge-${
+                        dataRequest?.statusID === 1
+                          ? "gray"
+                          : dataRequest?.statusID === 2
+                            ? "warning"
+                            : dataRequest?.statusID === 3
+                              ? "success"
+                              : "danger"
+                      } d-none d-mb-inline-flex`}
+                    >
+                      {dataRequest?.statusName}
+                    </span>
                   </div>
                 </Col>
-              )}
-            </Row>
-          </div>
-        </Block>
-        )}
-        {typeRequest !== 3 && (
-          <div className="mt-3">
-            <Row className="g-3">
-              <Col size="12">
-                <Button
-                  color="primary"
-                  type="button"
-                  onClick={onExportExcel}
-                >
-                  <Icon name="download" />
-                  <span>{t("common:export")}</span>
-                </Button>
-              </Col>
-            </Row>
-          </div>
+                <Col md="6">
+                  <div className="profile-ud plain">
+                    <span className="profile-ud-label fw-bold">{`${t("request_details:reason")}`}</span>
+                    <span className="profile-ud-value">{dataRequest?.reason || "-"}</span>
+                  </div>
+                </Col>
+                {dataRequest?.statusID === 4 && (
+                  <Col md="6">
+                    <div className="profile-ud plain">
+                      <span className="profile-ud-label fw-bold">{t("request_details:reason_reject")}:</span>
+                      <span className="profile-ud-value">{dataRequest?.reasonReject || "-"}</span>
+                    </div>
+                  </Col>
+                )}
+              </Row>
+            </div>
+          </Block>
         )}
       </ModalBody>
+      {typeRequest !== 3 && (
+        <ModalFooter>
+          <Button
+            color="primary"
+            type="button"
+            onClick={onExportExcel}
+          >
+            <Icon name="download" />
+            <span>{t("common:export")}</span>
+          </Button>
+        </ModalFooter>
+      )}
     </Modal>
   );
 }

@@ -7,18 +7,16 @@ import {
   FormGroup,
   Modal,
   ModalBody,
+  ModalFooter,
+  ModalHeader,
   Spinner,
 } from "reactstrap";
 import {toast} from "react-toastify";
 /** COMMON */
 import {
   Block,
-  BlockHead,
-  BlockHeadContent,
-  BlockTitle,
   Icon,
   Button,
-  BlockBetween,
   Row,
   Col,
 } from "../../../../../components/Component";
@@ -111,9 +109,7 @@ function AddSupplier(props) {
    ** LIFE CYCLE
    */
   useEffect(() => {
-    if (show) {
-      clearErrors();
-    }
+    if (show) clearErrors();
   }, [show]);
 
   useEffect(() => {
@@ -141,25 +137,17 @@ function AddSupplier(props) {
   const disabled = loading.submit;
   return (
     <Modal
-      className="modal-dialog-centered"
       isOpen={show}
+      className="modal-dialog-centered"
+      modalClassName="zoom"
       size="lg"
-      toggle={() => onFormCancel(false)}
-    >
+      toggle={() => onFormCancel(false)}>
       <Form className="is-alter" onSubmit={handleSubmit(onFormSubmit)}>
-        <ModalBody>
-          <BlockHead>
-            <BlockBetween>
-              <BlockHeadContent>
-                <BlockTitle tag="h3">{t("add_assets:create_supplier")}</BlockTitle>
-              </BlockHeadContent>
-              <a href="#cancel" className="close">
-                {" "}
-                <Icon name="cross-sm" onClick={() => onFormCancel(false)} />
-              </a>
-            </BlockBetween>
-          </BlockHead>
+        <ModalHeader className="fc-event-secondary" toggle={() => onFormCancel(false)}>
+          {t("add_assets:create_supplier")}
+        </ModalHeader>
 
+        <ModalBody>
           <Block>
             <div className="data-head">
               <h6 className="overline-title">{t("add_assets:information")}</h6>
@@ -334,35 +322,19 @@ function AddSupplier(props) {
               </Row>
             </div>
           </Block>
-
-          <div className="nk-divider divider md"></div>
-
-          <Row className="g-3">
-            <Col size="12">
-              <Button
-                color="primary"
-                type="submit"
-                disabled={disabled}
-              >
-                {disabled && (
-                  <Spinner className="mr-2" size="sm" color="light" />
-                )}
-                {!disabled && <Icon name="save" />}
-                <span>{t("common:save")}</span>
-              </Button>
-              {/* <Button
-                className="ml-3"
-                color="gray"
-                type="button"
-                disabled={disabled}
-                onClick={onResetData}
-              >
-                <Icon name="undo" />
-                <span>{t("common:reset")}</span>
-              </Button> */}
-            </Col>
-          </Row>
         </ModalBody>
+
+        <ModalFooter>
+          <Button
+            color="primary"
+            type="submit"
+            disabled={disabled}
+          >
+            {disabled && <Spinner size="sm" color="light" />}
+            {!disabled && <Icon name="save" />}
+            <span>{t("common:save")}</span>
+          </Button>
+        </ModalFooter>
       </Form>
     </Modal>
   )
