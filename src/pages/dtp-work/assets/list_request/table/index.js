@@ -95,7 +95,7 @@ function TableRequest(props) {
         
       {(!loading && data.length > 0) ?
         data.map((itemR, indexR) => {
-          let statusColor = "gray";
+          let statusColor = "secondary";
           switch (itemR.statusID) {
             case 2:
               statusColor = "warning";
@@ -107,7 +107,7 @@ function TableRequest(props) {
               statusColor = "danger";
               break;
             default:
-              statusColor = "gray";
+              statusColor = "secondary";
               break;
           };
 

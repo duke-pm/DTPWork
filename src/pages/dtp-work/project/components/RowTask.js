@@ -62,7 +62,7 @@ function RowTask(props) {
       statusColor = "success";
       break;
     case 5:
-      statusColor = "gray";
+      statusColor = "secondary";
       break;
     case 6:
       statusColor = "warning";

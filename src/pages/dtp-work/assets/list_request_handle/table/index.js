@@ -79,8 +79,8 @@ function TableRequestHandle(props) {
 
       {(!loading && data.length > 0)
         ? data.map((item, index) => {
-          let statusColor = "gray";
-          let typeColor = "gray";
+          let statusColor = "secondary";
+          let typeColor = "warning";
           switch (item.statusID) {
             case 2:
               statusColor = "primary";
@@ -92,7 +92,7 @@ function TableRequestHandle(props) {
               statusColor = "danger";
               break;
             default:
-              statusColor = "gray";
+              statusColor = "secondary";
               break;
           };
           switch (item.requestTypeID) {

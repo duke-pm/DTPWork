@@ -228,7 +228,7 @@ function TableAssets(props) {
 
       {(!loadingTab && data.length > 0)
         ? data.map((item, index) => {
-          let statusColor = "gray";
+          let statusColor = "secondary";
           switch (item.statusID) {
             case 2:
               statusColor = "success";
@@ -246,7 +246,7 @@ function TableAssets(props) {
               statusColor = "primary";
               break;
             default:
-              statusColor = "gray";
+              statusColor = "secondary";
               break;
           };
 
