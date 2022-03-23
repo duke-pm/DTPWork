@@ -1,3 +1,4 @@
+import React from "react";
 import {Redirect} from "react-router-dom";
 import CryptoJS from "crypto-js";
 import Cookies from 'js-cookie';
