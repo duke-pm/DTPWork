@@ -65,7 +65,7 @@ function TableGroupResource(props) {
         {isWrite && <DataTableRow className="nk-tb-col-tools" />}
       </DataTableHead>
 
-      {data.length > 0
+      {(!loading && data.length > 0)
         ? data.map((item, index) => {
           return (
             <DataTableItem key={item.groupID + "_gro_res_" + index}>
@@ -100,33 +100,31 @@ function TableGroupResource(props) {
                     <li>
                       <UncontrolledDropdown>
                         <DropdownToggle tag="a" className="btn btn-icon dropdown-toggle btn-trigger">
-                          <Icon name="more-h"></Icon>
+                          <Icon name="more-h" />
                         </DropdownToggle>
                         <DropdownMenu right>
                           <ul className="link-list-opt no-bdr">
                             <li>
                               <DropdownItem
                                 tag="a"
-                                href="#update"
+                                className="cursor-pointer link link-sm"
                                 onClick={(ev) => {
                                   ev.preventDefault();
                                   !loading && onUpdate(item);
-                                }}
-                              >
-                                <Icon name="edit"></Icon>
+                                }}>
+                                <Icon name="edit" />
                                 <span>{t("common:update")}</span>
                               </DropdownItem>
                             </li>
                             <li>
                               <DropdownItem
                                 tag="a"
-                                href="#remove"
+                                className="cursor-pointer link link-sm"
                                 onClick={(ev) => {
                                   ev.preventDefault();
                                   !loading && onRemove(item);
-                                }}
-                              >
-                                <Icon name="trash"></Icon>
+                                }}>
+                                <Icon name="trash" />
                                 <span>{t("common:remove")}</span>
                               </DropdownItem>
                             </li>

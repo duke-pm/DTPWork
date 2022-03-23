@@ -29,7 +29,7 @@ import * as Actions from "../../../../redux/actions";
 const CustomDateInput = forwardRef(({ value, onClick, onChange }, ref) => (
   <div onClick={onClick} ref={ref}>
     <div className="form-icon form-icon-left">
-      <Icon name="calendar"></Icon>
+      <Icon name="calendar" />
     </div>
     <input
       className="form-control date-picker"
@@ -155,7 +155,9 @@ function AddEditBookingForm(props) {
       f.value === bk.strEndTime);
     let fResrc = dataSelect.resources.find(f =>
       f.value === bk.resourceID);
-    let fEmployees = [], i = null, fEmp = null;
+    let fEmployees = [],
+      i = null,
+      fEmp = null;
     if (bk.lstUserJoined.length > 0) {
       for (i of bk.lstUserJoined) {
         fEmp = dataSelect.employees.find(f => f.value === i.userID);
@@ -286,8 +288,10 @@ function AddEditBookingForm(props) {
 
   const onError = error => {
     log('[LOG] === onError ===> ', error);
-    setLoading({main: false, submit: false});
+    dispatch(Actions.resetMasterData());
+    dispatch(Actions.resetBooking());
     toast(error, {type: "error"});
+    setLoading({main: false, submit: false});
   };
 
   /**
@@ -382,8 +386,7 @@ function AddEditBookingForm(props) {
     <SimpleBar
       className={`nk-add-assets toggle-slide toggle-slide-right toggle-screen-any ${
         show ? "content-active" : ""
-      }`}
-    >
+      }`}>
       <Form className="is-alter" onSubmit={handleSubmit(onFormSubmit)}>
         <BlockHead>
           <BlockBetween>
@@ -402,23 +405,17 @@ function AddEditBookingForm(props) {
                     className="toggle btn-icon d-md-none"
                     color="primary"
                     type="submit"
-                    disabled={disabled}
-                  >
-                    {disabled && (
-                      <Spinner size="sm" color="light" />
-                    )}
-                    {!loading.main && !loading.submit && <Icon name="save" />}
+                    disabled={disabled}>
+                    {disabled && <Spinner size="sm" color="light" />}
+                    {!disabled && <Icon name="save" />}
                   </Button>
                   <Button
                     className="toggle d-none d-md-inline-flex"
                     color="primary"
                     type="submit"
-                    disabled={disabled}
-                  >
-                    {disabled && (
-                      <Spinner className="mr-1" size="sm" color="light" />
-                    )}
-                    {!loading.main && !loading.submit && <Icon name="save" />}
+                    disabled={disabled}>
+                    {disabled && <Spinner size="sm" color="light" />}
+                    {!disabled && <Icon name="save" />}
                     <span>{t("common:save")}</span>
                   </Button>
                 </li>
@@ -445,7 +442,7 @@ function AddEditBookingForm(props) {
                       <Icon name="chat-circle" />
                     </div>
                     <input
-                      ref={register({ required: t("validate:empty") })}
+                      ref={register({required: t("validate:empty")})}
                       className="form-control"
                       type="text"
                       id="purpose"

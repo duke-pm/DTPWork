@@ -18,6 +18,7 @@ import {
   Icon,
   Button,
   AlertConfirm,
+  Loading,
 } from "../../../../components/Component";
 import TableResource from "../table/Resources";
 import AddEditResrcForm from "../form/AddEditResrc";
@@ -260,17 +261,15 @@ function Resources({history}) {
                         className="toggle btn-icon d-md-none"
                         color="primary"
                         disabled={disabled}
-                        onClick={() => toggleView("add")}
-                      >
-                        <Icon name="plus"></Icon>
+                        onClick={() => toggleView("add")}>
+                        <Icon name="plus" />
                       </Button>
                       <Button
                         className="toggle d-none d-md-inline-flex"
                         color="primary"
                         disabled={disabled}
-                        onClick={() => toggleView("add")}
-                      >
-                        <Icon name="plus"></Icon>
+                        onClick={() => toggleView("add")}>
+                        <Icon name="plus" />
                         <span>{t("common:add_new")}</span>
                       </Button>
                     </li>
@@ -284,21 +283,19 @@ function Resources({history}) {
         {/** Content table */}
         <Block>
           <DataTable className="card-stretch">
-          <div className="card-inner position-relative card-tools-toggle">
+            <div className="card-inner position-relative card-tools-toggle">
               <div className="card-title-group">
                 <div className="card-tools"></div>
                 <div className="card-tools mr-n1">
                   <ul className="btn-toolbar gx-1">
                     <li>
                       <a
-                        href="#search"
+                        className="btn btn-icon search-toggle toggle-search cursor-pointer"
                         onClick={(ev) => {
                           ev.preventDefault();
                           !disabled && toggleView("search");
-                        }}
-                        className="btn btn-icon search-toggle toggle-search"
-                      >
-                        <Icon name="search"></Icon>
+                        }}>
+                        <Icon name="search" />
                       </a>
                     </li>
                   </ul>
@@ -314,9 +311,8 @@ function Resources({history}) {
                       onClick={(ev) => {
                         ev.preventDefault();
                         toggleView("search");
-                      }}
-                    >
-                      <Icon name="arrow-left"></Icon>
+                      }}>
+                      <Icon name="arrow-left" />
                     </Button>
                     <input
                       type="text"
@@ -332,9 +328,8 @@ function Resources({history}) {
                     <Button
                       className="search-submit btn-icon"
                       disabled={loading.search}
-                      onClick={onSearch}
-                    >
-                      <Icon name="search"></Icon>
+                      onClick={onSearch}>
+                      <Icon name="search" />
                     </Button>
                   </div>
                 </div>
@@ -352,11 +347,7 @@ function Resources({history}) {
             
             {/** Paging table */}
             <PreviewAltCard>
-              {disabled ? (
-                <div className="text-center">
-                  <Spinner size="sm" color="primary" />
-                </div>
-              ) : 
+            {!disabled ? (
               data.list.length > 0 ? (
                 <PaginationComponent
                   itemPerPage={Configs.perPage}
@@ -368,40 +359,45 @@ function Resources({history}) {
                 <div className="text-center">
                   <span className="text-silent">{t("common:no_data")}</span>
                 </div>
-              )}
+              )) : (
+              <div className="text-center">
+                <Spinner size="sm" color="primary" />
+              </div>
+            )}
             </PreviewAltCard>
           </DataTable>
         </Block>
-
-        {/** Forms */}
-        <AddEditResrcForm
-          show={view.add || view.update}
-          history={history}
-          isUpdate={view.update}
-          authState={authState}
-          commonState={commonState}
-          updateItem={updateItem}
-          onClose={onCloseForm}
-        />
-
-        <AlertConfirm
-          loading={loading.remove}
-          show={view.confirm}
-          title={t("resources:confirm_remove_res_title")}
-          content={
-            <>
-              {t("resources:confirm_remove_res_des_1")}
-              <span className="fw-bold"> #{updateItem?.resourceID} </span>
-              {t("resources:confirm_remove_res_des_2")}
-            </>
-          }
-          onConfirm={onConfirmRemove}
-          onClose={toggleView}
-        />
-
-        {view.add && <div className="toggle-overlay" onClick={toggleView}></div>}
-        {view.update && <div className="toggle-overlay" onClick={toggleView}></div>}
       </Content>
+
+      {/** Forms */}
+      <AddEditResrcForm
+        show={view.add || view.update}
+        history={history}
+        isUpdate={view.update}
+        authState={authState}
+        commonState={commonState}
+        updateItem={updateItem}
+        onClose={onCloseForm}
+      />
+
+      <AlertConfirm
+        loading={loading.remove}
+        show={view.confirm}
+        title={t("resources:confirm_remove_res_title")}
+        content={
+          <>
+            {t("resources:confirm_remove_res_des_1")}
+            <span className="fw-bold"> #{updateItem?.resourceID} </span>
+            {t("resources:confirm_remove_res_des_2")}
+          </>
+        }
+        onConfirm={onConfirmRemove}
+        onClose={toggleView}
+      />
+
+      {view.add && <div className="toggle-overlay" onClick={toggleView}></div>}
+      {view.update && <div className="toggle-overlay" onClick={toggleView}></div>}
+      <Loading show={loading.main || loading.remove} />
     </React.Fragment>
   );
 };

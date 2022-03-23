@@ -32,10 +32,13 @@ import {findUpper} from "../../../../utils/Utils";
 
 const EventView = (event) => {
   const [mouseEnter, setMouseEnter] = useState(false);
-  const { title, extendedProps, publicId } = event.event.event._def;
+  const {title, extendedProps, publicId} = event.event.event._def;
   return (
     <React.Fragment>
-      <div id={publicId} onMouseEnter={() => setMouseEnter(true)} onMouseLeave={() => setMouseEnter(false)}>
+      <div
+        id={publicId}
+        onMouseEnter={() => setMouseEnter(true)}
+        onMouseLeave={() => setMouseEnter(false)}>
         {title}
       </div>{" "}
       <Popover placement="bottom" isOpen={mouseEnter} target={publicId}>
@@ -43,7 +46,9 @@ const EventView = (event) => {
         <PopoverBody>
           <div>
             <li>
-              <span className="fw-bold">{t("all_booking:resource")}:</span> <Badge style={{backgroundColor: extendedProps.res.color}}
+              <span className="fw-bold">{t("all_booking:resource")}:</span> <Badge style={{
+                backgroundColor: extendedProps.res.color,
+              }}
                 className="badge badge-dim badge-pill">{extendedProps.res.name}</Badge>
             </li>
             <li>
@@ -58,6 +63,7 @@ const EventView = (event) => {
     </React.Fragment>
   );
 };
+
 const arrLocale = {
   viLocale,
   enLocale,
@@ -92,6 +98,7 @@ function CalendarBooking(props) {
   /** Use redux */
   const bookingState = useSelector(({booking}) => booking);
 
+  /** Use state */
   const [loading, setLoading] = useState(false);
   const [view, setView] = useState({
     info: false,
@@ -101,6 +108,9 @@ function CalendarBooking(props) {
   });
   const [updateItem, setUpdateItem] = useState(null);
 
+  /**
+   ** FUNCTIONS
+   */
   const handleEventClick = info => {
     const bk = data.list.find((item) => item.id === info.event._def.publicId);
     setUpdateItem(bk);
@@ -280,8 +290,7 @@ function CalendarBooking(props) {
                 onClick={() => {
                   toggleView();
                   onUpdate(updateItem.originData);
-                }}
-              >
+                }}>
                 <Icon name="edit" />
                 <span>{t("common:update")}</span>
               </Button>
@@ -293,8 +302,7 @@ function CalendarBooking(props) {
                 onClick={() => {
                   toggleView();
                   onRemove(updateItem);
-                }}
-              >
+                }}>
                 <Icon name="trash" />
                 <span>{t("common:remove")}</span>
               </Button>

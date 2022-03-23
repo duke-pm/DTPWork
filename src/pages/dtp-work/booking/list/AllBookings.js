@@ -31,6 +31,7 @@ import {
   AlertConfirm,
   BlockBetween,
   TooltipComponent,
+  Loading,
 } from "../../../../components/Component";
 import TableBookings from "../table/Bookings";
 import CalendarBooking from "../calendar";
@@ -337,6 +338,7 @@ function AllBookings({history}) {
   };
 
   const onError = error => {
+    dispatch(Actions.resetMasterData());
     dispatch(Actions.resetBooking());
     log('[LOG] === onError ===> ', error);
     toast(error, {type: "error"});
@@ -470,16 +472,14 @@ function AllBookings({history}) {
                         className="toggle btn-icon d-md-none"
                         color="primary"
                         disabled={disabled}
-                        onClick={() => toggleView("add")}
-                      >
+                        onClick={() => toggleView("add")}>
                         <Icon name="plus"></Icon>
                       </Button>
                       <Button
                         className="toggle d-none d-md-inline-flex"
                         color="primary"
                         disabled={disabled}
-                        onClick={() => toggleView("add")}
-                      >
+                        onClick={() => toggleView("add")}>
                         <Icon name="plus"></Icon>
                         <span>{t("common:add_new")}</span>
                       </Button>
@@ -522,17 +522,16 @@ function AllBookings({history}) {
                       <>
                         <li>
                           <a
-                            href="#search"
+                            className="btn btn-icon search-toggle toggle-search cursor-pointer"
                             onClick={(ev) => {
                               ev.preventDefault();
                               !disabled && toggleView("search");
                             }}
-                            className="btn btn-icon search-toggle toggle-search"
                           >
                             <Icon name="search"></Icon>
                           </a>
                         </li>
-                        <li className="btn-toolbar-sep"></li>
+                        <li className="btn-toolbar-sep" />
                       </>
                     )}
                     <li>
@@ -540,14 +539,16 @@ function AllBookings({history}) {
                         <Button
                           className={`btn-icon btn-trigger toggle ${sm ? "active" : ""}`}
                           disabled={disabled}
-                          onClick={toggleSm}
-                        >
+                          onClick={toggleSm}>
                           <Icon name="menu-right"></Icon>
                         </Button>
                         <div className={`toggle-content ${sm ? "content-active" : ""}`}>
                           <ul className="btn-toolbar gx-1">
                             <li className="toggle-close">
-                              <Button className="btn-icon btn-trigger toggle" disabled={disabled} onClick={toggleSm}>
+                              <Button
+                                className="btn-icon btn-trigger toggle"
+                                disabled={disabled}
+                                onClick={toggleSm}>
                                 <Icon name="arrow-left"></Icon>
                               </Button>
                             </li>
@@ -560,12 +561,9 @@ function AllBookings({history}) {
                                 <DropdownMenu
                                   right
                                   className="filter-wg dropdown-menu-xl"
-                                  style={{ overflow: "visible" }}
-                                >
+                                  style={{ overflow: "visible" }}>
                                   <div className="dropdown-head">
-                                    <h6>
-                                      {t("all_booking:filter_bookings").toUpperCase()}
-                                    </h6>
+                                    <h5>{t("all_booking:filter_bookings")}</h5>
                                   </div>
                                   <div className="dropdown-body dropdown-body-rg">
                                     <Row className="gx-6 gy-3">
@@ -651,10 +649,6 @@ function AllBookings({history}) {
                                       <Icon name="filter"></Icon>
                                       <span>{t("common:filter")}</span>
                                     </Button>
-                                    {/* <Button className="btn-dim" disabled={disabled} color="secondary" onClick={onResetFilter}>
-                                      <Icon name="undo"></Icon>
-                                      <span>{t("common:reset")}</span>
-                                    </Button> */}
                                   </div>
                                 </DropdownMenu>
                               </UncontrolledDropdown>
@@ -700,8 +694,7 @@ function AllBookings({history}) {
                       onClick={(ev) => {
                         ev.preventDefault();
                         toggleView("search");
-                      }}
-                    >
+                      }}>
                       <Icon name="arrow-left"></Icon>
                     </Button>
                     <input
@@ -718,8 +711,7 @@ function AllBookings({history}) {
                     <Button
                       className="search-submit btn-icon"
                       disabled={disabled}
-                      onClick={onSearch}
-                    >
+                      onClick={onSearch}>
                       <Icon name="search"></Icon>
                     </Button>
                   </div>
@@ -731,6 +723,7 @@ function AllBookings({history}) {
               <>
                 {/** Data table */}
                 <TableBookings
+                  loading={disabled}
                   isWrite={isWrite}
                   disabled={disabled}
                   dataBookings={data.list}
@@ -740,24 +733,23 @@ function AllBookings({history}) {
 
                 {/** Paging table */}
                 <PreviewAltCard>
-                  {disabled ? (
+                {!disabled ? (
+                  data.list.length > 0 ? (
+                    <PaginationComponent
+                      itemPerPage={Configs.perPage}
+                      totalItems={data.count}
+                      currentPage={formData.page}
+                      paginate={paginate}
+                    />
+                  ) : (
                     <div className="text-center">
-                      <Spinner size="sm" color="primary" />
+                      <span className="text-silent">{t("common:no_data")}</span>
                     </div>
-                  ) : 
-                    data.list.length > 0 ? (
-                      <PaginationComponent
-                        itemPerPage={Configs.perPage}
-                        totalItems={data.count}
-                        currentPage={formData.page}
-                        paginate={paginate}
-                      />
-                    ) : (
-                      <div className="text-center">
-                        <span className="text-silent">{t("common:no_data")}</span>
-                      </div>
-                    )
-                  } 
+                  )) : (
+                  <div className="text-center">
+                    <Spinner size="sm" color="primary" />
+                  </div>
+                )}
                 </PreviewAltCard>
               </>
             )}
@@ -780,37 +772,38 @@ function AllBookings({history}) {
             )}
           </DataTable>
         </Block>
-
-        {/** Forms */}
-        <AddEditBookingForm
-          show={view.add || view.update}
-          history={history}
-          isUpdate={view.update}
-          authState={authState}
-          commonState={commonState}
-          masterState={masterState}
-          updateItem={updateItem}
-          onClose={onCloseForm}
-        />
-
-        <AlertConfirm
-          loading={loading.remove}
-          show={view.confirm}
-          title={t("all_booking:confirm_remove_booking_title")}
-          content={
-            <>
-              {t("all_booking:confirm_remove_booking_des_1")}
-              <span className="fw-bold"> #{updateItem?.bookID} </span>
-              {t("all_booking:confirm_remove_booking_des_2")}
-            </>
-          }
-          onConfirm={onConfirmRemove}
-          onClose={toggleView}
-        />
-
-        {view.add && <div className="toggle-overlay" onClick={toggleView}></div>}
-        {view.update && <div className="toggle-overlay" onClick={toggleView}></div>}
       </Content>
+
+      {/** Forms */}
+      <AddEditBookingForm
+        show={view.add || view.update}
+        history={history}
+        isUpdate={view.update}
+        authState={authState}
+        commonState={commonState}
+        masterState={masterState}
+        updateItem={updateItem}
+        onClose={onCloseForm}
+      />
+
+      <AlertConfirm
+        loading={loading.remove}
+        show={view.confirm}
+        title={t("all_booking:confirm_remove_booking_title")}
+        content={
+          <>
+            {t("all_booking:confirm_remove_booking_des_1")}
+            <span className="fw-bold"> #{updateItem?.bookID} </span>
+            {t("all_booking:confirm_remove_booking_des_2")}
+          </>
+        }
+        onConfirm={onConfirmRemove}
+        onClose={toggleView}
+      />
+
+      {view.add && <div className="toggle-overlay" onClick={toggleView}></div>}
+      {view.update && <div className="toggle-overlay" onClick={toggleView}></div>}
+      <Loading show={loading.main} />
     </React.Fragment>
   );
 };

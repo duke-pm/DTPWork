@@ -22,6 +22,7 @@ import {findUpper} from "../../../../utils/Utils";
 function TableBookings(props) {
   const {t} = useTranslation();
   const {
+    loading,
     isWrite,
     disabled,
     dataBookings,
@@ -69,7 +70,7 @@ function TableBookings(props) {
         {isWrite && <DataTableRow className="nk-tb-col-tools" />}
       </DataTableHead>
 
-      {data.length > 0
+      {(!loading && data.length > 0)
         ? data.map((item, index) => {
           let statusColor = "primary";
           switch (item.statusID) {
@@ -112,8 +113,7 @@ function TableBookings(props) {
               <DataTableRow size="md">
                 <Badge
                   style={{backgroundColor: item.color}}
-                  className="badge badge-dim badge-pill"
-                >
+                  className="badge badge-dim badge-pill">
                   {item.resourceName}  
                 </Badge>
               </DataTableRow>
@@ -131,14 +131,11 @@ function TableBookings(props) {
                 <span>{item.strCrtdDate}</span>
               </DataTableRow>
               <DataTableRow>
-                <span
-                  className={`dot bg-${statusColor} d-mb-none`}
-                ></span>
+                <span className={`dot bg-${statusColor} d-mb-none`} />
                 <span
                   className={`badge badge-sm badge-dot has-bg badge-${
                     statusColor
-                  } d-none d-mb-inline-flex`}
-                >
+                  } d-none d-mb-inline-flex`}>
                   {item.statusName}
                 </span>
               </DataTableRow>
@@ -155,12 +152,11 @@ function TableBookings(props) {
                             <li>
                               <DropdownItem
                                 tag="a"
-                                href="#actions"
+                                className="cursor-pointer link link-sm"
                                 onClick={(ev) => {
                                   ev.preventDefault();
                                   !disabled && onUpdate(item);
-                                }}
-                              >
+                                }}>
                                 <Icon name="edit"></Icon>
                                 <span>{t("common:update")}</span>
                               </DropdownItem>
@@ -168,12 +164,11 @@ function TableBookings(props) {
                             <li>
                               <DropdownItem
                                 tag="a"
-                                href="#process"
+                                className="cursor-pointer link link-sm"
                                 onClick={(ev) => {
                                   ev.preventDefault();
                                   !disabled && onRemove(item);
-                                }}
-                              >
+                                }}>
                                 <Icon name="trash"></Icon>
                                 <span>{t("common:remove")}</span>
                               </DropdownItem>

@@ -18,6 +18,7 @@ import {
   Icon,
   Button,
   AlertConfirm,
+  Loading,
 } from "../../../../components/Component";
 import TableGroupResource from "../table/GroupsResource";
 import AddEditGroupResrcForm from "../form/AddEditGroupResrc";
@@ -260,16 +261,14 @@ function GroupsResource({history}) {
                         className="toggle btn-icon d-md-none"
                         color="primary"
                         disabled={disabled}
-                        onClick={() => toggleView("add")}
-                      >
+                        onClick={() => toggleView("add")}>
                         <Icon name="plus"></Icon>
                       </Button>
                       <Button
                         className="toggle d-none d-md-inline-flex"
                         color="primary"
                         disabled={disabled}
-                        onClick={() => toggleView("add")}
-                      >
+                        onClick={() => toggleView("add")}>
                         <Icon name="plus"></Icon>
                         <span>{t("common:add_new")}</span>
                       </Button>
@@ -291,13 +290,11 @@ function GroupsResource({history}) {
                   <ul className="btn-toolbar gx-1">
                     <li>
                       <a
-                        href="#search"
+                        className="btn btn-icon search-toggle toggle-search cursor-pointer"
                         onClick={(ev) => {
                           ev.preventDefault();
                           !disabled && toggleView("search");
-                        }}
-                        className="btn btn-icon search-toggle toggle-search"
-                      >
+                        }}>
                         <Icon name="search"></Icon>
                       </a>
                     </li>
@@ -314,9 +311,8 @@ function GroupsResource({history}) {
                       onClick={(ev) => {
                         ev.preventDefault();
                         toggleView("search");
-                      }}
-                    >
-                      <Icon name="arrow-left"></Icon>
+                      }}>
+                      <Icon name="arrow-left" />
                     </Button>
                     <input
                       type="text"
@@ -332,9 +328,8 @@ function GroupsResource({history}) {
                     <Button
                       className="search-submit btn-icon"
                       disabled={loading.search}
-                      onClick={onSearch}
-                    >
-                      <Icon name="search"></Icon>
+                      onClick={onSearch}>
+                      <Icon name="search" />
                     </Button>
                   </div>
                 </div>
@@ -352,11 +347,7 @@ function GroupsResource({history}) {
 
             {/** Paging table */}
             <PreviewAltCard>
-              {disabled ? (
-                <div className="text-center">
-                  <Spinner size="sm" color="primary" />
-                </div>
-              ) : 
+            {!disabled ? (
               data.list.length > 0 ? (
                 <PaginationComponent
                   itemPerPage={Configs.perPage}
@@ -368,40 +359,45 @@ function GroupsResource({history}) {
                 <div className="text-center">
                   <span className="text-silent">{t("common:no_data")}</span>
                 </div>
-              )}
+              )) : (
+              <div className="text-center">
+                <Spinner size="sm" color="primary" />
+              </div>
+            )}
             </PreviewAltCard>
           </DataTable>
         </Block>
-
-        {/** Forms */}
-        <AddEditGroupResrcForm
-          show={view.add || view.update}
-          history={history}
-          isUpdate={view.update}
-          authState={authState}
-          commonState={commonState}
-          updateItem={updateItem}
-          onClose={onCloseForm}
-        />
-
-        <AlertConfirm
-          loading={loading.remove}
-          show={view.confirm}
-          title={t("group_resources:confirm_remove_gres_title")}
-          content={
-            <>
-              {t("group_resources:confirm_remove_gres_des_1")}
-              <span className="fw-bold"> #{updateItem?.groupID} </span>
-              {t("group_resources:confirm_remove_gres_des_2")}
-            </>
-          }
-          onConfirm={onConfirmRemove}
-          onClose={toggleView}
-        />
-
-        {view.add && <div className="toggle-overlay" onClick={toggleView}></div>}
-        {view.update && <div className="toggle-overlay" onClick={toggleView}></div>}
       </Content>
+
+      {/** Forms */}
+      <AddEditGroupResrcForm
+        show={view.add || view.update}
+        history={history}
+        isUpdate={view.update}
+        authState={authState}
+        commonState={commonState}
+        updateItem={updateItem}
+        onClose={onCloseForm}
+      />
+
+      <AlertConfirm
+        loading={loading.remove}
+        show={view.confirm}
+        title={t("group_resources:confirm_remove_gres_title")}
+        content={
+          <>
+            {t("group_resources:confirm_remove_gres_des_1")}
+            <span className="fw-bold"> #{updateItem?.groupID} </span>
+            {t("group_resources:confirm_remove_gres_des_2")}
+          </>
+        }
+        onConfirm={onConfirmRemove}
+        onClose={toggleView}
+      />
+
+      {view.add && <div className="toggle-overlay" onClick={toggleView}></div>}
+      {view.update && <div className="toggle-overlay" onClick={toggleView}></div>}
+      <Loading show={loading.main || loading.remove} />
     </React.Fragment>
   );
 };

@@ -141,6 +141,7 @@ function AddEditGroupResrcForm(props) {
         icons: [...dataSelect.icons, ...tmpDataIcons],
       });
     } else {
+      dispatch(Actions.resetResource());
       let message = "success:create_group_resource";
       if (type === "Update") message = "success:update_group_resource";
       toast(t(message), {type: "success"});
@@ -152,8 +153,10 @@ function AddEditGroupResrcForm(props) {
 
   const onError = error => {
     log('[LOG] === onError ===> ', error);
-    setLoading({main: false, submit: false});
+    dispatch(Actions.resetMasterData());
+    dispatch(Actions.resetResource());
     toast(error, {type: "error"});
+    setLoading({main: false, submit: false});
   };
 
   /**
@@ -248,8 +251,7 @@ function AddEditGroupResrcForm(props) {
     <SimpleBar
       className={`nk-add-assets toggle-slide toggle-slide-right toggle-screen-any ${
         show ? "content-active" : ""
-      }`}
-    >
+      }`}>
       <Form className="is-alter" onSubmit={handleSubmit(onFormSubmit)}>
         <BlockHead>
           <BlockBetween>
@@ -268,23 +270,17 @@ function AddEditGroupResrcForm(props) {
                     className="toggle btn-icon d-md-none"
                     color="primary"
                     type="submit"
-                    disabled={disabled}
-                  >
-                    {disabled && (
-                      <Spinner size="sm" color="light" />
-                    )}
-                    {!loading.main && !loading.submit && <Icon name="save" />}
+                    disabled={disabled}>
+                    {disabled && <Spinner size="sm" color="light" />}
+                    {!disabled && <Icon name="save" />}
                   </Button>
                   <Button
                     className="toggle d-none d-md-inline-flex"
                     color="primary"
                     type="submit"
-                    disabled={disabled}
-                  >
-                    {disabled && (
-                      <Spinner className="mr-1" size="sm" color="light" />
-                    )}
-                    {!loading.main && !loading.submit && <Icon name="save" />}
+                    disabled={disabled}>
+                    {disabled && <Spinner size="sm" color="light" />}
+                    {!disabled && <Icon name="save" />}
                     <span>{t("common:save")}</span>
                   </Button>
                 </li>
@@ -311,7 +307,7 @@ function AddEditGroupResrcForm(props) {
                       <Icon name="building" />
                     </div>
                     <input
-                      ref={register({ required: t("validate:empty") })}
+                      ref={register({required: t("validate:empty")})}
                       className="form-control"
                       type="text"
                       id="name"
