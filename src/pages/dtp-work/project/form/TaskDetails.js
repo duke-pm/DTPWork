@@ -9,7 +9,7 @@ import classNames from "classnames";
 import Head from "../../../../layout/head/Head";
 import Content from "../../../../layout/content/Content";
 import ContentAlt from "../../../../layout/content/ContentAlt";
-import {Row, Col, Icon, Button} from "../../../../components/Component";
+import {Row, Col, Icon, Button, Loading} from "../../../../components/Component";
 import Overview from "./Overview";
 import Activities from "./Activities";
 /** COMMON */
@@ -31,10 +31,7 @@ function TaskDetails({history}) {
   const projectState = useSelector(({project}) => project);
 
   /** Use state */
-  const [loading, setLoading] = useState({
-    main: true,
-    search: false,
-  });
+  const [loading, setLoading] = useState(true);
   const [view, setView] = useState({
     sideBar: false,
   });
@@ -85,7 +82,7 @@ function TaskDetails({history}) {
     } else {
       dispatch(Actions.resetTask());
       setData({task: projectState["overview"]});
-      setLoading({main: false, search: false});
+      setLoading(false);
     }
   };
 
@@ -94,7 +91,7 @@ function TaskDetails({history}) {
     dispatch(Actions.resetTask());
     log('[LOG] === onError ===> ', error);
     toast(error, {type: "error"});
-    setLoading({main: false, search: false});
+    setLoading(false);
   };
 
   /**
@@ -106,19 +103,19 @@ function TaskDetails({history}) {
   }, []);
 
   useEffect(() => {
-    if (loading.main && authState["successSignIn"] && authState["menu"]) {
+    if (loading && authState["successSignIn"] && authState["menu"]) {
       let menu = checkIsWrite(authState["menu"], Routes.projects);
       if (menu) setIsWrite(menu.isWrite);
       return onGetMasterData();
     }
   }, [
-    loading.main,
+    loading,
     authState["successSignIn"],
     authState["menu"],
   ]);
 
   useEffect(() => {
-    if (loading.main) {
+    if (loading) {
       if (!masterState["submittingGetAll"]) {
         if (masterState["successGetAll"] && !masterState["errorGetAll"]) {
           return onSuccess("MasterData");
@@ -129,14 +126,14 @@ function TaskDetails({history}) {
       }
     }
   }, [
-    loading.main,
+    loading,
     masterState["submittingGetAll"],
     masterState["successGetAll"],
     masterState["errorGetAll"],
   ]);
 
   useEffect(() => {
-    if (loading.main) {
+    if (loading) {
       if (!projectState["submittingTaskDetails"]) {
         if (projectState["successTaskDetails"] && !projectState["errorTaskDetails"]) {
           return onSuccess();
@@ -147,7 +144,7 @@ function TaskDetails({history}) {
       }
     }
   }, [
-    loading.main,
+    loading,
     projectState["submittingTaskDetails"],
     projectState["successTaskDetails"],
     projectState["errorTaskDetails"],
@@ -165,7 +162,7 @@ function TaskDetails({history}) {
     <React.Fragment>
       <Head title={t("project:main_title")} />
 
-      {!loading.main && !data.task && (
+      {!loading && !data.task && (
         <Content>
           <Row className="row g-gs preview-icon-svg">
             <Col xs="2" md="2" lg="3">
@@ -200,11 +197,11 @@ function TaskDetails({history}) {
         </Content>
       )}
 
-      {!loading.main && data.task && (
+      {!loading && data.task && (
         <ContentAlt>
           <div className={chatBodyClass}>
             <Overview
-              isLoading={loading.main}
+              isLoading={loading}
               isWrite={isWrite}
               isSidebar={view.sideBar}
               history={history}
@@ -218,7 +215,7 @@ function TaskDetails({history}) {
 
             <SimpleBar className={`nk-chat-profile ${view.sideBar ? "visible" : ""}`}>
               <Activities
-                isLoading={loading.main}
+                isLoading={loading}
                 isWrite={isWrite}
                 history={history}
                 commonState={commonState}
@@ -234,6 +231,8 @@ function TaskDetails({history}) {
           </div>
         </ContentAlt>
       )}
+
+      <Loading show={loading} />
     </React.Fragment>
   );
 };

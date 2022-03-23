@@ -29,12 +29,12 @@ import {
   InputSwitch,
   AlertConfirm,
 } from "../../../../components/Component";
+import RowSelectStatus from "../components/RowSelectStatus";
 /** COMMON */
 import Constants from "../../../../utils/constants";
 import {log, findUpper} from "../../../../utils/Utils";
 /** REDUX */
 import * as Actions from "../../../../redux/actions";
-import RowSelectStatus from "../components/RowSelectStatus";
 
 const STATUS_REJECT = 7;
 const STATUS_FINISHED = 5;
@@ -430,7 +430,7 @@ function Overview(props) {
     );
   };
   return (
-    <SimpleBar className="px-4 py-3 nk-chat" style={{overflowY: "scroll"}}>
+    <SimpleBar className="px-4 py-3 nk-chat overflow-auto border-right">
       <BlockHead className="mt-2">
         <BlockHeadContent>
           <div className="d-flex justify-content-between align-items-start">

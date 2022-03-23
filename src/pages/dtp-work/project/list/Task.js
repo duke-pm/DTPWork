@@ -31,6 +31,7 @@ import {
   RSelect,
   AlertConfirm,
   TooltipComponent,
+  Loading,
 } from "../../../../components/Component";
 import TableTask from "../table/Task";
 import AddEditTaskForm from "../form/AddEditTask";
@@ -492,12 +493,10 @@ function ListTasks({history}) {
                                 <DropdownMenu
                                   right
                                   className="filter-wg dropdown-menu-xl"
-                                  style={{ overflow: "visible" }}
+                                  style={{overflow: "visible"}}
                                 >
                                   <div className="dropdown-head">
-                                    <h6>
-                                      {t("task:filter_task").toUpperCase()}
-                                    </h6>
+                                    <h6>{t("task:filter_task")}</h6>
                                   </div>
                                   <div className="dropdown-body dropdown-body-rg">
                                     <Row className="gx-6 gy-3">
@@ -619,6 +618,7 @@ function ListTasks({history}) {
             </div>
             
             <TableTask
+              loading={disabled}
               isWrite={isWrite}
               disabled={disabled}
               dataTasks={data.list}
@@ -630,11 +630,7 @@ function ListTasks({history}) {
 
             {/** Paging table */}
             <PreviewAltCard>
-              {disabled ? (
-                <div className="text-center">
-                  <Spinner size="sm" color="primary" />
-                </div>
-              ) : 
+            {!disabled ? (
               data.list.length > 0 ? (
                 <PaginationComponent
                   itemPerPage={Configs.perPageProject}
@@ -646,45 +642,50 @@ function ListTasks({history}) {
                 <div className="text-center">
                   <span className="text-silent">{t("common:no_data")}</span>
                 </div>
-              )}
+              )) : (
+              <div className="text-center">
+                <Spinner size="sm" color="primary" />
+              </div>
+            )}
             </PreviewAltCard>
           </DataTable>
         </Block>
-
-        {/** Forms */}
-        <AddEditTaskForm
-          show={view.add || view.update || view.clone}
-          history={history}
-          createType={createType}
-          prjID={projectID}
-          isUpdate={view.update}
-          isClone={view.clone}
-          authState={authState}
-          commonState={commonState}
-          masterState={masterState}
-          updateItem={updateItem}
-          onClose={onCloseForm}
-        />
-
-        <AlertConfirm
-          loading={loading.remove}
-          show={view.confirm}
-          title={t("project:confirm_remove_task_title")}
-          content={
-            <>
-              {t("project:confirm_remove_task_des_1")}
-              <span className="fw-bold"> #{updateItem?.taskID} </span>
-              {t("project:confirm_remove_task_des_2")}
-            </>
-          }
-          onConfirm={onConfirmRemove}
-          onClose={toggleView}
-        />
-
-        {view.add && <div className="toggle-overlay" onClick={toggleView}></div>}
-        {view.update && <div className="toggle-overlay" onClick={toggleView}></div>}
-        {view.clone && <div className="toggle-overlay" onClick={toggleView}></div>}
       </Content>
+
+      {/** Forms */}
+      <AddEditTaskForm
+        show={view.add || view.update || view.clone}
+        history={history}
+        createType={createType}
+        prjID={projectID}
+        isUpdate={view.update}
+        isClone={view.clone}
+        authState={authState}
+        commonState={commonState}
+        masterState={masterState}
+        updateItem={updateItem}
+        onClose={onCloseForm}
+      />
+
+      <AlertConfirm
+        loading={loading.remove}
+        show={view.confirm}
+        title={t("project:confirm_remove_task_title")}
+        content={
+          <>
+            {t("project:confirm_remove_task_des_1")}
+            <span className="fw-bold"> #{updateItem?.taskID} </span>
+            {t("project:confirm_remove_task_des_2")}
+          </>
+        }
+        onConfirm={onConfirmRemove}
+        onClose={toggleView}
+      />
+
+      {view.add && <div className="toggle-overlay" onClick={toggleView}></div>}
+      {view.update && <div className="toggle-overlay" onClick={toggleView}></div>}
+      {view.clone && <div className="toggle-overlay" onClick={toggleView}></div>}
+      <Loading show={disabled} />
     </React.Fragment>
   );
 };

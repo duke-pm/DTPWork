@@ -27,6 +27,7 @@ import {
   Row,
   Col,
   RSelect,
+  Loading,
 } from "../../../../components/Component";
 import TableProjectsOverview from "../table/ProjectsOverview";
 /** COMMON */
@@ -328,148 +329,146 @@ function ProjectsOverview({history}) {
                 <div className="card-tools mr-n1">
                   <ul className="btn-toolbar gx-1">
                     <li>
-                    <ul className="btn-toolbar gx-1">
-                      <li>
-                        <UncontrolledDropdown>
-                          <DropdownToggle tag="a" className="btn btn-trigger btn-icon dropdown-toggle">
-                            <div className="dot dot-primary"></div>
-                            <Icon name="filter-alt"/>
-                          </DropdownToggle>
-                          <DropdownMenu
-                            right
-                            className="filter-wg dropdown-menu-xl"
-                            style={{ overflow: "visible" }}
-                          >
-                            <div className="dropdown-head">
-                              <h6>
-                                {t("project:filter_project").toUpperCase()}
-                              </h6>
-                            </div>
-                            <div className="dropdown-body dropdown-body-rg">
-                              <Row className="gx-6 gy-3">
-                                <Col size="12">
-                                  <FormGroup className="form-group" style={{zIndex: 10000}}>
-                                    <label className="overline-title overline-title-alt">
-                                      {t("project:year")}
-                                    </label>
-                                    <DatePicker
-                                      className="form-control"
-                                      disabled={disabled}
-                                      dateFormat="yyyy"
-                                      showYearPicker
-                                      selected={formData.year}
-                                      onChange={onChangeYear}
-                                    />
-                                  </FormGroup>
-                                </Col>
-                                {/* <Col xs="6" sm="6" md="6">
-                                  <FormGroup className="form-group">
-                                    <label className="overline-title overline-title-alt">
-                                      {t("projects_overview:from_date")}
-                                    </label>
-                                    <div className="form-control-wrap">
-                                      <div className="form-icon form-icon-left">
-                                        <Icon name="calendar"/>
-                                      </div>
+                      <ul className="btn-toolbar gx-1">
+                        <li>
+                          <UncontrolledDropdown>
+                            <DropdownToggle tag="a" className="btn btn-trigger btn-icon dropdown-toggle">
+                              <div className="dot dot-primary"></div>
+                              <Icon name="filter-alt"/>
+                            </DropdownToggle>
+                            <DropdownMenu
+                              right
+                              className="filter-wg dropdown-menu-xl"
+                              style={{overflow: "visible"}}
+                            >
+                              <div className="dropdown-head">
+                                <h6>{t("project:filter_project")}</h6>
+                              </div>
+                              <div className="dropdown-body dropdown-body-rg">
+                                <Row className="gx-6 gy-3">
+                                  <Col size="12">
+                                    <FormGroup className="form-group" style={{zIndex: 10000}}>
+                                      <label className="overline-title overline-title-alt">
+                                        {t("project:year")}
+                                      </label>
                                       <DatePicker
                                         className="form-control"
-                                        wrapperClassName="start-m"
-                                        selected={formData.rangeStart}
-                                        dateFormat="dd/MM/yyyy"
-                                        startDate={formData.rangeStart}
-                                        endDate={formData.rangeEnd}
                                         disabled={disabled}
-                                        selectsStart
-                                        onChange={date => onChangeDate("rangeStart", date)}
+                                        dateFormat="yyyy"
+                                        showYearPicker
+                                        selected={formData.year}
+                                        onChange={onChangeYear}
                                       />
-                                    </div>
-                                  </FormGroup>
-                                </Col>
-                                <Col xs="6" sm="6" md="6">
-                                  <FormGroup className="form-group">
-                                    <label className="overline-title overline-title-alt">
-                                      {t("projects_overview:to_date")}
-                                    </label>
-                                    <div className="form-control-wrap">
-                                      <div className="form-icon form-icon-left">
-                                        <Icon name="calendar"/>
+                                    </FormGroup>
+                                  </Col>
+                                  {/* <Col xs="6" sm="6" md="6">
+                                    <FormGroup className="form-group">
+                                      <label className="overline-title overline-title-alt">
+                                        {t("projects_overview:from_date")}
+                                      </label>
+                                      <div className="form-control-wrap">
+                                        <div className="form-icon form-icon-left">
+                                          <Icon name="calendar"/>
+                                        </div>
+                                        <DatePicker
+                                          className="form-control"
+                                          wrapperClassName="start-m"
+                                          selected={formData.rangeStart}
+                                          dateFormat="dd/MM/yyyy"
+                                          startDate={formData.rangeStart}
+                                          endDate={formData.rangeEnd}
+                                          disabled={disabled}
+                                          selectsStart
+                                          onChange={date => onChangeDate("rangeStart", date)}
+                                        />
                                       </div>
-                                      <DatePicker
-                                        className="form-control"
-                                        wrapperClassName="end-m"
-                                        selected={formData.rangeEnd}
-                                        dateFormat="dd/MM/yyyy"
-                                        startDate={formData.rangeStart}
-                                        endDate={formData.rangeEnd}
-                                        minDate={formData.rangeStart}
-                                        disabled={disabled}
-                                        selectsEnd
-                                        onChange={date => onChangeDate("rangeEnd", date)}
+                                    </FormGroup>
+                                  </Col>
+                                  <Col xs="6" sm="6" md="6">
+                                    <FormGroup className="form-group">
+                                      <label className="overline-title overline-title-alt">
+                                        {t("projects_overview:to_date")}
+                                      </label>
+                                      <div className="form-control-wrap">
+                                        <div className="form-icon form-icon-left">
+                                          <Icon name="calendar"/>
+                                        </div>
+                                        <DatePicker
+                                          className="form-control"
+                                          wrapperClassName="end-m"
+                                          selected={formData.rangeEnd}
+                                          dateFormat="dd/MM/yyyy"
+                                          startDate={formData.rangeStart}
+                                          endDate={formData.rangeEnd}
+                                          minDate={formData.rangeStart}
+                                          disabled={disabled}
+                                          selectsEnd
+                                          onChange={date => onChangeDate("rangeEnd", date)}
+                                        />
+                                      </div>
+                                    </FormGroup>
+                                  </Col> */}
+                                  <Col size="12">
+                                    <FormGroup className="form-group">
+                                      <label className="overline-title overline-title-alt">
+                                        {t("task:owner")}
+                                      </label>
+                                      <RSelect
+                                        name="owner"
+                                        isMulti={false}
+                                        isDisabled={disabled}
+                                        options={dataSelect.employees}
+                                        value={formData.ownerID}
+                                        placeholder={t("task:holder_owner")}
+                                        onChange={e => onChangeSelect({key: "ownerID", value: e})}
                                       />
-                                     </div>
-                                  </FormGroup>
-                                </Col> */}
-                                <Col size="12">
-                                  <FormGroup className="form-group">
-                                    <label className="overline-title overline-title-alt">
-                                      {t("task:owner")}
-                                    </label>
-                                    <RSelect
-                                      name="owner"
-                                      isMulti={false}
-                                      isDisabled={disabled}
-                                      options={dataSelect.employees}
-                                      value={formData.ownerID}
-                                      placeholder={t("task:holder_owner")}
-                                      onChange={e => onChangeSelect({key: "ownerID", value: e})}
-                                    />
-                                  </FormGroup>
-                                </Col>
-                                <Col size="12">
-                                  <FormGroup className="form-group">
-                                    <label className="overline-title overline-title-alt">
-                                      {t("task:status")}
-                                    </label>
-                                    <RSelect
-                                      name="status"
-                                      isMulti={false}
-                                      isDisabled={disabled}
-                                      options={dataSelect.status}
-                                      value={formData.statusID}
-                                      placeholder={t("task:holder_status")}
-                                      onChange={e => onChangeSelect({key: "statusID", value: e})}
-                                    />
-                                  </FormGroup>
-                                </Col>
-                                <Col size="12">
-                                  <FormGroup className="form-group">
-                                    <label className="overline-title overline-title-alt">
-                                      {t("task:sector")}
-                                    </label>
-                                    <RSelect
-                                      name="sector"
-                                      isMulti={false}
-                                      isDisabled={disabled}
-                                      options={dataSelect.sector}
-                                      value={formData.sectorID}
-                                      placeholder={t("task:holder_sector")}
-                                      onChange={e => onChangeSelect({key: "sectorID", value: e})}
-                                    />
-                                  </FormGroup>
-                                </Col>
-                              </Row>
-                            </div>
-                            <div className="dropdown-foot between">
-                              <Button color="primary" disabled={disabled} onClick={onSearchFilter}>
-                                {loading.search && <Spinner className="mr-1" size="sm" color="light" />}
-                                {!loading.search && <Icon name="filter"/>}
-                                <span>{t("common:filter")}</span>
-                              </Button>
-                            </div>
-                          </DropdownMenu>
-                        </UncontrolledDropdown>
-                      </li>
-                    </ul>
+                                    </FormGroup>
+                                  </Col>
+                                  <Col size="12">
+                                    <FormGroup className="form-group">
+                                      <label className="overline-title overline-title-alt">
+                                        {t("task:status")}
+                                      </label>
+                                      <RSelect
+                                        name="status"
+                                        isMulti={false}
+                                        isDisabled={disabled}
+                                        options={dataSelect.status}
+                                        value={formData.statusID}
+                                        placeholder={t("task:holder_status")}
+                                        onChange={e => onChangeSelect({key: "statusID", value: e})}
+                                      />
+                                    </FormGroup>
+                                  </Col>
+                                  <Col size="12">
+                                    <FormGroup className="form-group">
+                                      <label className="overline-title overline-title-alt">
+                                        {t("task:sector")}
+                                      </label>
+                                      <RSelect
+                                        name="sector"
+                                        isMulti={false}
+                                        isDisabled={disabled}
+                                        options={dataSelect.sector}
+                                        value={formData.sectorID}
+                                        placeholder={t("task:holder_sector")}
+                                        onChange={e => onChangeSelect({key: "sectorID", value: e})}
+                                      />
+                                    </FormGroup>
+                                  </Col>
+                                </Row>
+                              </div>
+                              <div className="dropdown-foot between">
+                                <Button color="primary" disabled={disabled} onClick={onSearchFilter}>
+                                  {loading.search && <Spinner className="mr-1" size="sm" color="light" />}
+                                  {!loading.search && <Icon name="filter"/>}
+                                  <span>{t("common:filter")}</span>
+                                </Button>
+                              </div>
+                            </DropdownMenu>
+                          </UncontrolledDropdown>
+                        </li>
+                      </ul>
                     </li>
                   </ul>
                 </div>
@@ -484,11 +483,7 @@ function ProjectsOverview({history}) {
 
             {/** Paging table */}
             <PreviewAltCard>
-              {disabled ? (
-                <div className="text-center">
-                  <Spinner size="sm" color="primary" />
-                </div>
-              ) : 
+            {!disabled ? (
               data.list.length > 0 ? (
                 <PaginationComponent
                   itemPerPage={Configs.perPageProject}
@@ -500,12 +495,17 @@ function ProjectsOverview({history}) {
                 <div className="text-center">
                   <span className="text-silent">{t("common:no_data")}</span>
                 </div>
-              )}
+              )) : (
+              <div className="text-center">
+                <Spinner size="sm" color="primary" />
+              </div>
+            )}
             </PreviewAltCard>
           </DataTable>
         </Block>
-        
       </Content>
+
+      <Loading show={disabled} />
     </React.Fragment>
   );
 };

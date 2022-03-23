@@ -15,6 +15,7 @@ import {getCookies} from "../../../../utils/Utils";
 function TableProject(props) {
   const {t} = useTranslation();
   const {
+    loading,
     isWrite,
     disabled,
     dataProjects,
@@ -82,7 +83,7 @@ function TableProject(props) {
         {isWrite && <DataTableRow className="nk-tb-col-tools" />}
       </DataTableHead>
 
-      {data.length > 0
+      {(!loading && data.length > 0)
         ? data.map((item, index) => {
           return (
             <RowProject

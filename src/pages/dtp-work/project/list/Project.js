@@ -29,6 +29,7 @@ import {
   RSelect,
   BlockBetween,
   AlertConfirm,
+  Loading,
 } from "../../../../components/Component";
 import TableProject from "../table/Project";
 import AddEditProjectForm from "../form/AddEditProject";
@@ -486,12 +487,9 @@ function ListProjects({history}) {
                                 <DropdownMenu
                                   right
                                   className="filter-wg dropdown-menu-xl"
-                                  style={{ overflow: "visible" }}
-                                >
+                                  style={{overflow: "visible"}}>
                                   <div className="dropdown-head">
-                                    <h6>
-                                      {t("project:filter_project").toUpperCase()}
-                                    </h6>
+                                    <h6>{t("project:filter_project")}</h6>
                                   </div>
                                   <div className="dropdown-body dropdown-body-rg">
                                     <Row className="gx-6 gy-3">
@@ -547,7 +545,7 @@ function ListProjects({history}) {
                                   </div>
                                   <div className="dropdown-foot between">
                                     <Button color="primary" disabled={disabled} onClick={onSearchFilter}>
-                                      {loading.search && <Spinner className="mr-1" size="sm" color="light" />}
+                                      {loading.search && <Spinner size="sm" color="light" />}
                                       {!loading.search && <Icon name="filter"/>}
                                       <span>{t("common:filter")}</span>
                                     </Button>
@@ -602,6 +600,7 @@ function ListProjects({history}) {
 
             {/** Data table */}
             <TableProject
+              loading={disabled}
               isWrite={isWrite}
               disabled={disabled}
               dataProjects={data.list}
@@ -613,11 +612,7 @@ function ListProjects({history}) {
 
             {/** Paging table */}
             <PreviewAltCard>
-              {disabled ? (
-                <div className="text-center">
-                  <Spinner size="sm" color="primary" />
-                </div>
-              ) : 
+            {!disabled ? (
               data.list.length > 0 ? (
                 <PaginationComponent
                   itemPerPage={Configs.perPageProject}
@@ -629,43 +624,48 @@ function ListProjects({history}) {
                 <div className="text-center">
                   <span className="text-silent">{t("common:no_data")}</span>
                 </div>
-              )}
+              )) : (
+              <div className="text-center">
+                <Spinner size="sm" color="primary" />
+              </div>
+            )}
             </PreviewAltCard>
           </DataTable>
         </Block>
-
-        {/** Forms */}
-        <AddEditProjectForm
-          show={view.add || view.update || view.clone}
-          history={history}
-          isUpdate={view.update}
-          isClone={view.clone}
-          authState={authState}
-          commonState={commonState}
-          masterState={masterState}
-          updateItem={updateItem}
-          onClose={onCloseForm}
-        />
-
-        <AlertConfirm
-          loading={loading.remove}
-          show={view.confirm}
-          title={t("project:confirm_remove_prj_title")}
-          content={
-            <>
-              {t("project:confirm_remove_prj_des_1")}
-              <span className="fw-bold"> #{updateItem?.prjID} </span>
-              {t("project:confirm_remove_prj_des_2")}
-            </>
-          }
-          onConfirm={onConfirmRemove}
-          onClose={toggleView}
-        />
-
-        {view.add && <div className="toggle-overlay" onClick={toggleView}></div>}
-        {view.update && <div className="toggle-overlay" onClick={toggleView}></div>}
-        {view.clone && <div className="toggle-overlay" onClick={toggleView}></div>}
       </Content>
+
+      {/** Forms */}
+      <AddEditProjectForm
+        show={view.add || view.update || view.clone}
+        history={history}
+        isUpdate={view.update}
+        isClone={view.clone}
+        authState={authState}
+        commonState={commonState}
+        masterState={masterState}
+        updateItem={updateItem}
+        onClose={onCloseForm}
+      />
+
+      <AlertConfirm
+        loading={loading.remove}
+        show={view.confirm}
+        title={t("project:confirm_remove_prj_title")}
+        content={
+          <>
+            {t("project:confirm_remove_prj_des_1")}
+            <span className="fw-bold"> #{updateItem?.prjID} </span>
+            {t("project:confirm_remove_prj_des_2")}
+          </>
+        }
+        onConfirm={onConfirmRemove}
+        onClose={toggleView}
+      />
+
+      {view.add && <div className="toggle-overlay" onClick={toggleView}></div>}
+      {view.update && <div className="toggle-overlay" onClick={toggleView}></div>}
+      {view.clone && <div className="toggle-overlay" onClick={toggleView}></div>}
+      <Loading show={disabled} />
     </React.Fragment>
   );
 };

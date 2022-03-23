@@ -387,9 +387,7 @@ function RequestAssetsHandle({history}) {
                                   style={{ overflow: "visible" }}
                                 >
                                   <div className="dropdown-head">
-                                    <h6>
-                                      {t("request_handle:filter_request").toUpperCase()}
-                                    </h6>
+                                    <h6>{t("request_handle:filter_request")}</h6>
                                   </div>
                                   <div className="dropdown-body dropdown-body-rg">
                                     <Row className="gx-6 gy-3">

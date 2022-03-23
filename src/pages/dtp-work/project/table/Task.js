@@ -11,6 +11,7 @@ import RowTask from "../components/RowTask";
 function TableTask(props) {
   const {t} = useTranslation();
   const {
+    loading,
     isWrite,
     disabled,
     dataTasks,
@@ -62,7 +63,7 @@ function TableTask(props) {
         {isWrite && <DataTableRow className="nk-tb-col-tools" />}
       </DataTableHead>
 
-      {data.length > 0
+      {(!loading && data.length > 0)
         ? data.map((item, index) => {
           return (
             <RowTask
