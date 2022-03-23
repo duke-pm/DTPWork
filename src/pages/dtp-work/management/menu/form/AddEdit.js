@@ -189,6 +189,7 @@ function AddEditForm(props) {
   };
 
   const onSuccess = type => {
+    dispatch(Actions.resetMenu());
     setLoading({main: false, submit: false});
     let message = "success:create_menu";
     if (type === "Update") message = "success:update_menu";
@@ -199,6 +200,7 @@ function AddEditForm(props) {
 
   const onError = error => {
     log('[LOG] === onError ===> ', error);
+    dispatch(Actions.resetMenu());
     setLoading({main: false, submit: false});
     toast(error, {type: "error"});
   };

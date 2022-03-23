@@ -341,7 +341,7 @@ function MenuManagement({history}) {
 
       {view.add && <div className="toggle-overlay" onClick={toggleView}></div>}
       {view.update && <div className="toggle-overlay" onClick={toggleView}></div>}
-      <Loading show={disabled} />
+      <Loading show={loading.main} />
     </React.Fragment>
   );
 };

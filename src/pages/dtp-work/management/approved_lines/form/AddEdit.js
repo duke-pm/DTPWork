@@ -97,6 +97,7 @@ function AddEditForm(props) {
   };
 
   const onSuccess = type => {
+    dispatch(Actions.resetApprovedLines());
     setLoading({main: false, submit: false});
     let message = "success:create_approved_lines";
     if (type === "Update") message = "success:update_approved_lines";
@@ -107,6 +108,7 @@ function AddEditForm(props) {
 
   const onError = error => {
     log('[LOG] === onError ===> ', error);
+    dispatch(Actions.resetApprovedLines());
     setLoading({main: false, submit: false});
     toast(error, {type: "error"});
   };

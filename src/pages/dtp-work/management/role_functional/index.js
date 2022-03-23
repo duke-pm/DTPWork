@@ -115,6 +115,7 @@ function RoleFunctional({history}) {
 
   const onSuccess = type => {
     if (type === "MasterData") {
+      dispatch(Actions.resetMasterData());
       let tmpDataGroups = masterState["userGroup"].map(item => {
         return {value: item.groupID, label: item.groupName};
       });
@@ -128,22 +129,23 @@ function RoleFunctional({history}) {
       });
     }
     if (type === "Search") {
+      dispatch(Actions.resetRole());
       setData({...data, role: managementState["role"]["lstPermissionItem"][0]});
       setLoading({main: false, submit: false, update: false});
-      dispatch(Actions.resetRole());
     }
     if (type === "Update") {
+      dispatch(Actions.resetRole());
       toast(t("success:update_role_functional"), {type: "success"});
       setLoading({main: false, submit: false, update: false});
-      dispatch(Actions.resetRole());
     }
   };
 
   const onError = error => {
     log('[LOG] === onError ===> ', error);
+    dispatch(Actions.resetMasterData());
+    dispatch(Actions.resetRole());
     setLoading({main: false, submit: false, update: false});
     toast(error, {type: "error"});
-    dispatch(Actions.resetRole());
   };
 
   /**
@@ -171,18 +173,15 @@ function RoleFunctional({history}) {
   ]);
 
   useEffect(() => {
-    if (loading.main) {
-      if (!masterState["submittingGetAll"]) {
-        if (masterState["successGetAll"] && !masterState["errorGetAll"]) {
-          return onSuccess("MasterData");
-        }
-        if (!masterState["successGetAll"] && masterState["errorGetAll"]) {
-          return onError("MasterData", masterState["errorHelperGetAll"]);
-        }
+    if (!masterState["submittingGetAll"]) {
+      if (masterState["successGetAll"] && !masterState["errorGetAll"]) {
+        return onSuccess("MasterData");
+      }
+      if (!masterState["successGetAll"] && masterState["errorGetAll"]) {
+        return onError("MasterData", masterState["errorHelperGetAll"]);
       }
     }
   }, [
-    loading.main,
     masterState["submittingGetAll"],
     masterState["successGetAll"],
     masterState["errorGetAll"],
@@ -315,7 +314,7 @@ function RoleFunctional({history}) {
         </Block>
       </Content>
 
-      <Loading show={loading.main || loading.search} />
+      <Loading show={loading.main} />
     </React.Fragment>
   );
 };

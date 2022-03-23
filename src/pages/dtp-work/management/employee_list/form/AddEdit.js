@@ -127,7 +127,6 @@ function AddEditForm(props) {
   };
 
   const onSetFormDataDetails = employee => {
-    log('[LOG] === onSetFormDataDetails ===> ', employee);
     let fSale = null,
       fGroup = null,
       fManager = null,
@@ -265,6 +264,7 @@ function AddEditForm(props) {
 
   const onSuccess = type => {
     if (type === "MasterData") {
+      dispatch(Actions.resetMasterData());
       let tmpDataBizlines = masterState["bizlines"].map(item => {
         return {value: item.bizLineID, label: item.bizLineName};
       });
@@ -295,21 +295,25 @@ function AddEditForm(props) {
         managers: [...dataSelect.managers, ...tmpDataUser],
         users: [...dataSelect.users, ...tmpDataEmployee],
       });
+      setLoading({...loading, main: false});
     }
     if (type === "Create" || type === "Update") {
+      dispatch(Actions.resetEmployee());
       let message = "success:create_employee";
       if (type === "Update") message = "success:update_employee";
       toast(t(message), {type: "success"});
       onResetData();
       onClose(type);
+      setLoading({...loading, submit: false});
     }
-    setLoading({main: false, submit: false});
   };
 
   const onError = error => {
     log('[LOG] === onError ===> ', error);
-    setLoading({main: false, submit: false});
+    dispatch(Actions.resetMasterData());
+    dispatch(Actions.resetEmployee());
     toast(error, {type: "error"});
+    setLoading({main: false, submit: false});
   };
 
   /**
@@ -343,19 +347,15 @@ function AddEditForm(props) {
   ]);
 
   useEffect(() => {
-    if (loading.main && show) {
-      if (!masterState["submittingGetAll"]) {
-        if (masterState["successGetAll"] && !masterState["errorGetAll"]) {
-          return onSuccess("MasterData");
-        }
-        if (!masterState["successGetAll"] && masterState["errorGetAll"]) {
-          return onError(masterState["errorHelperGetAll"]);
-        }
+    if (!masterState["submittingGetAll"]) {
+      if (masterState["successGetAll"] && !masterState["errorGetAll"]) {
+        return onSuccess("MasterData");
+      }
+      if (!masterState["successGetAll"] && masterState["errorGetAll"]) {
+        return onError(masterState["errorHelperGetAll"]);
       }
     }
   }, [
-    show,
-    loading.main,
     masterState["submittingGetAll"],
     masterState["successGetAll"],
     masterState["errorGetAll"],
