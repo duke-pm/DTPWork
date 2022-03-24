@@ -63,16 +63,16 @@ function TableMenu(props) {
   const onSuccess = () => {
     dispatch(Actions.resetMenu());
     setChoosedMenu(null);
-    setLoading(false);
     toast(t("success:update_menu"), {type: "success"});
+    setLoading(false);
   };
 
   const onError = error => {
     log('[LOG] === onError ===> ', error);
     dispatch(Actions.resetMenu());
     setChoosedMenu(null);
-    setLoading(false);
     toast(error, {type: "error"});
+    setLoading(false);
   };
 
   /**
@@ -108,7 +108,7 @@ function TableMenu(props) {
   return (
     <DataTableBody compact>
       <DataTableHead className="nk-tb-item">
-        <DataTableRow size="sm">
+        <DataTableRow size="md">
           <span className="fw-bold">{t("management:order")}</span>
         </DataTableRow>
         <DataTableRow>
@@ -141,21 +141,21 @@ function TableMenu(props) {
           idChkWeb = `check_web_${item.menuID}` ;
           idChkMobile = `check_mobile_${item.menuID}`;
           return (
-            <DataTableItem key={item.menuID + "_menu_mana_" + index}>
-              <DataTableRow size="sm">
+            <DataTableItem key={item.menuID + "_menu_" + index}>
+              <DataTableRow size="md">
                 <span>{item.visOrder}</span>
               </DataTableRow>
               <DataTableRow>
-                <span className={`${!item.inactive && "tb-lead"}`}>{item.menuName}</span>
+                <span className="tb-lead">{item.menuName}</span>
               </DataTableRow>
               <DataTableRow size="md">
                 <span>{item.typeName}</span>
               </DataTableRow>
               <DataTableRow size="md">
-                <span>{item.url}</span>
+                <span className="tb-lead">{item.url}</span>
               </DataTableRow>
               <DataTableRow size="md">
-                <span>{item.mName}</span>
+                <span className="tb-lead">{item.mName}</span>
               </DataTableRow>
               <DataTableRow>
                 <div className="form-control-wrap">
@@ -218,20 +218,19 @@ function TableMenu(props) {
                       <li>
                         <UncontrolledDropdown>
                           <DropdownToggle tag="a" className="btn btn-icon dropdown-toggle btn-trigger">
-                            <Icon name="more-h"/>
+                            <Icon name="more-h" />
                           </DropdownToggle>
                           <DropdownMenu right>
                             <ul className="link-list-opt no-bdr">
                               <li>
                                 <DropdownItem
                                   tag="a"
-                                  href="#actions"
+                                  className="cursor-pointer link link-sm"
                                   onClick={(ev) => {
                                     ev.preventDefault();
                                     !loading && onUpdate(item);
-                                  }}
-                                >
-                                  <Icon name="edit"/>
+                                  }}>
+                                  <Icon name="edit" />
                                   <span>{t("common:update")}</span>
                                 </DropdownItem>
                               </li>

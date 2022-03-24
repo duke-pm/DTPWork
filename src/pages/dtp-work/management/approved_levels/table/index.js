@@ -105,7 +105,7 @@ function TableApprovedLevels(props) {
                             <li>
                               <DropdownItem
                                 tag="a"
-                                href="#update"
+                                className="cursor-pointer link link-sm"
                                 onClick={(ev) => {
                                   ev.preventDefault();
                                   !disabled && onUpdate(item);
@@ -118,7 +118,7 @@ function TableApprovedLevels(props) {
                             <li>
                               <DropdownItem
                                 tag="a"
-                                href="#remove"
+                                className="cursor-pointer link link-sm"
                                 onClick={(ev) => {
                                   ev.preventDefault();
                                   !disabled && onRemove(item);

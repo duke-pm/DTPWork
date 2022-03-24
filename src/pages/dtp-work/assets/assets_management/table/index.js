@@ -706,7 +706,7 @@ function TableAssets(props) {
                         <span>{itemH.reasons}</span>
                       </DataTableRow>
                       <DataTableRow className="nk-tb-col-tools">
-                        {itemH.transStatus !== 5 && itemH.transStatus !== 5 && (
+                        {itemH.transStatus !== 5 && itemH.transStatus !== 4 && (
                           <ul className="nk-tb-actions gx-1">
                             <li>
                               <UncontrolledDropdown>

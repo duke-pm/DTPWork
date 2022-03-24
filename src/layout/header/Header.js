@@ -30,10 +30,10 @@ const Header = ({ fixed, theme, className, ...props }) => {
           </div>
           <div className="nk-header-tools">
             <ul className="nk-quick-nav">
-              <li className="user-dropdown">
+              <li className="notification-dropdown">
                 <Theme />
               </li>
-              <li className="user-dropdown">
+              <li className="notification-dropdown">
                 <Language />
               </li>
               <li className="user-dropdown">

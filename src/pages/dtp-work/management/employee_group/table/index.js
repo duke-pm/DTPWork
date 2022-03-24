@@ -60,16 +60,16 @@ function TableEmployeeGroup(props) {
   const onSuccess = () => {
     dispatch(Actions.resetEmployeeGroup());
     setChoosedGroup(null);
-    setLoading(false);
     toast(t("success:update_employee_group"), {type: "success"});
+    setLoading(false);
   };
 
   const onError = error => {
     log('[LOG] === onError ===> ', error);
     dispatch(Actions.resetEmployeeGroup());
     setChoosedGroup(null);
-    setLoading(false);
     toast(error, {type: "error"});
+    setLoading(false);
   };
 
   /**
@@ -96,7 +96,7 @@ function TableEmployeeGroup(props) {
     managementState["submittingUpdateEmpGro"],
     managementState["successUpdateEmpGro"],
     managementState["errorUpdateEmpGro"],
-  ])
+  ]);
 
   /**
    ** RENDER
@@ -127,10 +127,12 @@ function TableEmployeeGroup(props) {
                 <span className="tb-lead text-primary">#{item.groupID}</span>
               </DataTableRow>
               <DataTableRow>
-                <span className={`${!item.inactive && "tb-lead"}`}>{item.groupName}</span>
+                <span className="tb-lead">
+                  {item.groupName}
+                </span>
               </DataTableRow>
               <DataTableRow size="md">
-                <span>{item.description}</span>
+                <span>{item.description || "-"}</span>
               </DataTableRow>
               <DataTableRow>
                 <div className="form-control-wrap">
@@ -156,20 +158,19 @@ function TableEmployeeGroup(props) {
                     <li>
                       <UncontrolledDropdown>
                         <DropdownToggle tag="a" className="btn btn-icon dropdown-toggle btn-trigger">
-                          <Icon name="more-h"/>
+                          <Icon name="more-h" />
                         </DropdownToggle>
                         <DropdownMenu right>
                           <ul className="link-list-opt no-bdr">
                             <li>
                               <DropdownItem
                                 tag="a"
-                                href="#actions"
+                                className="cursor-pointer link link-sm"
                                 onClick={(ev) => {
                                   ev.preventDefault();
                                   !loading && onUpdate(item);
-                                }}
-                              >
-                                <Icon name="edit"/>
+                                }}>
+                                <Icon name="edit" />
                                 <span>{t("common:update")}</span>
                               </DropdownItem>
                             </li>

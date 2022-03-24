@@ -13,7 +13,6 @@ import * as Actions from "../../../../../redux/actions";
 function RowTable(props) {
   const {
     loading,
-    className,
     padding,
     disabled,
     index,
@@ -151,9 +150,7 @@ function RowTable(props) {
       }
       setCheck(tmpCheck);
     }
-  }, [
-    data,
-  ]);
+  }, [data]);
 
   useEffect(() => {
     if (data) {
@@ -171,10 +168,7 @@ function RowTable(props) {
         });
       }
     }
-  }, [
-    data,
-    changeAll,
-  ]);
+  }, [data, changeAll]);
 
   /**
    ** RENDER
@@ -201,7 +195,9 @@ function RowTable(props) {
           </DataTableRow>
         )}
         <DataTableRow>
-          <span className={`tb-lead ${className + padding}`}>{data.menuName}</span>
+          <span className="tb-lead" style={{paddingLeft: `${padding}px`}}>
+            {data.menuName}
+          </span>
         </DataTableRow>
         <DataTableRow>
           <div className="form-control-wrap">
@@ -266,8 +262,7 @@ function RowTable(props) {
         return (
           <RowTable
             key={item.menuID + "_menu_" + index}
-            className="ml-"
-            padding={padding + 2}
+            padding={padding + 10}
             loading={loading}
             index={index}
             data={item}

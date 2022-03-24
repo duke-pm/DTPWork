@@ -55,11 +55,8 @@ const Language = (props) => {
         <UncontrolledDropdown direction="down">
             <DropdownToggle
                 color="transparent"
-                className="dropdown-toggle"
-            >
-                <div className="icon-status icon-status-na">
-                    <img id="flag" src={vNameLanguage.image} alt="" className="language-flag" />
-                </div>
+                className="dropdown-toggle nk-quick-nav-icon">
+                <img id="flag" src={vNameLanguage.image} alt="" className="flag" />
                 <UncontrolledTooltip placement="bottom" target="flag">
                     {t(`common:${vNameLanguage.name}`)}
                 </UncontrolledTooltip>

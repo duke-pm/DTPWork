@@ -61,16 +61,16 @@ function TableApprovedLines(props) {
   const onSuccess = () => {
     dispatch(Actions.resetApprovedLines());
     setChoosedLines(null);
-    setLoading(false);
     toast(t("success:update_approved_lines"), {type: "success"});
+    setLoading(false);
   };
 
   const onError = error => {
     log('[LOG] === onError ===> ', error);
     dispatch(Actions.resetApprovedLines());
     setChoosedLines(null);
-    setLoading(false);
     toast(error, {type: "error"});
+    setLoading(false);
   };
 
   /**
@@ -97,7 +97,7 @@ function TableApprovedLines(props) {
     managementState["submittingApprovedLines"],
     managementState["successUpdateApprovedLines"],
     managementState["errorUpdateApprovedLines"],
-  ])
+  ]);
 
   /**
    ** RENDER
@@ -105,7 +105,7 @@ function TableApprovedLines(props) {
   return (
     <DataTableBody compact>
       <DataTableHead className="nk-tb-item">
-        <DataTableRow size="sm">
+        <DataTableRow size="md">
           <span className="fw-bold">{t("management:code_line")}</span>
         </DataTableRow>
         <DataTableRow>
@@ -121,7 +121,7 @@ function TableApprovedLines(props) {
         ? data.map((item, index) => {
           return (
             <DataTableItem key={item.roleID + "_app_line_" + index}>
-              <DataTableRow size="sm">
+              <DataTableRow size="md">
                 <span className="tb-lead text-primary">{item.roleCode}</span>
               </DataTableRow>
               <DataTableRow>
@@ -158,7 +158,7 @@ function TableApprovedLines(props) {
                             <li>
                               <DropdownItem
                                 tag="a"
-                                href="#update"
+                                className="cursor-pointer link link-sm"
                                 onClick={(ev) => {
                                   ev.preventDefault();
                                   !loading && onUpdate(item);
@@ -171,7 +171,7 @@ function TableApprovedLines(props) {
                             <li>
                               <DropdownItem
                                 tag="a"
-                                href="#remove"
+                                className="cursor-pointer link link-sm"
                                 onClick={(ev) => {
                                   ev.preventDefault();
                                   !loading && onRemove(item);

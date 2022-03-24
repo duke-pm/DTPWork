@@ -53,7 +53,6 @@ function TableRoleFunctional(props) {
           return (
             <RowTable
               key={item.menuID + "_menu_" + index}
-              className=""
               padding={padding}
               disabled={disabled}
               loading={loading}

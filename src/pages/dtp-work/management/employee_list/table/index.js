@@ -52,7 +52,6 @@ function TableEmployee(props) {
     let params = {
       ...employee,
       Inactive: !employee.inactive,
-      
       RefreshToken: authState["data"]["refreshToken"],
       Lang: commonState["language"],
     };
@@ -62,16 +61,16 @@ function TableEmployee(props) {
   const onSuccess = () => {
     dispatch(Actions.resetEmployee());
     setChoosedEmployee(null);
-    setLoading(false);
     toast(t("success:update_employee"), {type: "success"});
+    setLoading(false);
   };
 
   const onError = error => {
     log('[LOG] === onError ===> ', error);
     dispatch(Actions.resetEmployee());
     setChoosedEmployee(null);
-    setLoading(false);
     toast(error, {type: "error"});
+    setLoading(false);
   };
 
   /**
@@ -106,7 +105,7 @@ function TableEmployee(props) {
   return (
     <DataTableBody compact>
       <DataTableHead className="nk-tb-item">
-        <DataTableRow size="sm">
+        <DataTableRow size="md">
           <span className="fw-bold">{t("management:code_employee")}</span>
         </DataTableRow>
         <DataTableRow size="sm">
@@ -115,7 +114,7 @@ function TableEmployee(props) {
         <DataTableRow>
           <span className="fw-bold">{t("management:full_name_employee")}</span>
         </DataTableRow>
-        <DataTableRow>
+        <DataTableRow size="md">
           <span className="fw-bold">{t("management:group_employee")}</span>
         </DataTableRow>
         <DataTableRow>
@@ -127,27 +126,27 @@ function TableEmployee(props) {
       {(!loadingForm && data.length > 0)
         ? data.map((item, index) => {
           return (
-            <DataTableItem key={item.userID + "_emp_group_" + index}>
-              <DataTableRow size="sm">
+            <DataTableItem key={item.userID + "_emp_" + index}>
+              <DataTableRow size="md">
                 <span className="tb-lead text-primary">#{item.userID}</span>
               </DataTableRow>
               <DataTableRow size="sm">
-                <span className={`${!item.inactive && "tb-lead"}`}>{item.userName}</span>
+                <span className="tb-lead">{item.userName}</span>
               </DataTableRow>
               <DataTableRow>
                 <div className="user-card">
                   <UserAvatar className="sm" text={findUpper(item.fullName)} />
                   <div className="user-info">
-                    <span className={`tb-lead ${item.inactive && "text-gray"}`}>
+                    <span className="tb-lead">
                       {item.fullName}
                     </span>
-                    <span className={`ff-italic fs-10px ${item.inactive && "text-gray"}`}>
+                    <span className="ff-italic fs-10px">
                       {item.email}
                     </span>
                   </div>
                 </div>
               </DataTableRow>
-              <DataTableRow>
+              <DataTableRow size="md">
                 <span>{item.groupName}</span>
               </DataTableRow>
               <DataTableRow>
@@ -174,20 +173,19 @@ function TableEmployee(props) {
                     <li>
                       <UncontrolledDropdown>
                         <DropdownToggle tag="a" className="btn btn-icon dropdown-toggle btn-trigger">
-                          <Icon name="more-h"/>
+                          <Icon name="more-h" />
                         </DropdownToggle>
                         <DropdownMenu right>
                           <ul className="link-list-opt no-bdr">
                             <li>
                               <DropdownItem
                                 tag="a"
-                                href="#actions"
+                                className="cursor-pointer link link-sm"
                                 onClick={(ev) => {
                                   ev.preventDefault();
                                   !loading && onUpdate(item);
-                                }}
-                              >
-                                <Icon name="edit"/>
+                                }}>
+                                <Icon name="edit" />
                                 <span>{t("common:update")}</span>
                               </DropdownItem>
                             </li>
