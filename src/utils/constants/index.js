@@ -1,3 +1,6 @@
+import VietnamFlag from "../../images/flags/vietnam.png";
+import EnglishFlag from "../../images/flags/english.png";
+
 const typeTask = {
 	PHASE: 1,
 	TASK: 2,
@@ -15,6 +18,22 @@ const priorityColor = {
 	N: "primary",
 	I: "success",
 };
+const theme = {
+	LIGHT: "light",
+	DARK: "dark",
+};
+const language = [
+  {
+    code: "vi",
+    name: "language_vietnam",
+    image: VietnamFlag,
+  },
+  {
+    code: "en",
+    name: "language_english",
+    image: EnglishFlag,
+  },
+];
 
 const svgIcon = {
   reCheck: {
@@ -110,9 +129,11 @@ const svgIcon = {
 
 const Constants = {
   DEFAULT_LANGUAGE: "vi",
+  DEFAULT_THEME: "light",
 
   /** KEY LOCAL STORAGE */
   LS_LANGUAGE: "LS_LANGUAGE",
+  LS_THEME: "LS_THEME",
   LS_SIGN_IN: "LS_SIGN_IN",
   LS_U_P: "LS_U_P",
   LS_FROM_TO_REQUEST: "LS_FROM_TO_REQUEST",
@@ -173,6 +194,9 @@ const Constants = {
     {value: "23:00", label: "23:00"},
     {value: "23:30", label: "23:30"},
   ],
+
+  THEME: theme,
+  LANGUAGE: language,
 
   TYPE_TASK: typeTask,
   TYPE_TASK_COLOR: typeTaskColor,

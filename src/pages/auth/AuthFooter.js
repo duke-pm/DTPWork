@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
 import {
@@ -6,14 +6,13 @@ import {
   DropdownMenu,
   DropdownToggle,
   UncontrolledDropdown,
+  UncontrolledTooltip,
 } from "reactstrap";
 import moment from "moment";
 /** COMPONENTS */
 import {Row, Col} from "../../components/Component";
 /** COMMON */
 import Constants from "../../utils/constants";
-import EnglishFlag from "../../images/flags/english.png";
-import VietnamFlag from "../../images/flags/vietnam.png";
 /** REDUX */
 import * as Actions from "../../redux/actions";
 
@@ -25,26 +24,38 @@ const AuthFooter = () => {
   const dispatch = useDispatch();
   const commonState = useSelector(({common}) => common);
 
+  /** Use state */
+  const [language, setLanguage] = useState(0);
+
   /**
    ** FUNCTIONS
    */
-  const onChangeLanguage = newLang => {
+  const onChangeLanguage = idx => {
     let curLanguage = commonState["language"];
-    if (newLang !== curLanguage) {
-      i18n.changeLanguage(newLang);
-      dispatch(Actions.changeLanguage(newLang));
-      localStorage.setItem(Constants.LS_LANGUAGE, newLang);
+    let itemLang = Constants.LANGUAGE[idx];
+    if (itemLang.code !== curLanguage) {
+      i18n.changeLanguage(itemLang.code);
+      dispatch(Actions.changeLanguage(itemLang.code));
+      localStorage.setItem(Constants.LS_LANGUAGE, itemLang.code);
+      setLanguage(idx);
     }
   };
 
   /**
+   ** LIFE CYCLE 
+    */
+  useEffect(() => {
+    let localLang = localStorage.getItem(Constants.LS_LANGUAGE);
+    if (localLang) {
+      let fIndex = Constants.LANGUAGE.findIndex(f => f.code === localLang);
+      setLanguage(fIndex);
+    }
+  }, []);
+
+  /**
    ** RENDER 
    */
-  let vNameLanguage = t("common:language_vietnam");
-  if (commonState["language"] === "en") {
-    vNameLanguage = t("common:language_english");
-  }
-
+  let vNameLanguage = Constants.LANGUAGE[language];
   return (
     <div className="nk-footer nk-auth-footer-full">
       <div className="container wide-lg">
@@ -55,44 +66,34 @@ const AuthFooter = () => {
                 <UncontrolledDropdown direction="up">
                   <DropdownToggle
                     color="transparent"
-                    className="dropdown-toggle dropdown-indicator has-indicator nav-link"
+                    className="dropdown-toggle"
                   >
-                    <span>{vNameLanguage}</span>
+                    <img id="flag" src={vNameLanguage.image} alt="" className="language-flag" />
+                    <UncontrolledTooltip placement="bottom" target="flag">
+                      {t(`common:${vNameLanguage.name}`)}
+                    </UncontrolledTooltip>
                   </DropdownToggle>
                   <DropdownMenu right className="dropdown-menu-sm">
                     <ul className="language-list">
-                      <li>
-                        <DropdownItem
-                          tag="a"
-                          href="#dd_en"
-                          onClick={(ev) => {
-                            ev.preventDefault();
-                            onChangeLanguage("en");
-                          }}
-                          className="language-item"
-                        >
-                          <img src={EnglishFlag} alt="" className="language-flag" />
-                          <span className="language-name">
-                            {t("common:language_english")}
-                          </span>
-                        </DropdownItem>
-                      </li>
-                      <li>
-                        <DropdownItem
-                          tag="a"
-                          href="#dd_vi"
-                          onClick={(ev) => {
-                            ev.preventDefault();
-                            onChangeLanguage("vi");
-                          }}
-                          className="language-item"
-                        >
-                          <img src={VietnamFlag} alt="" className="language-flag" />
-                          <span className="language-name">
-                            {t("common:language_vietnam")}
-                          </span>
-                        </DropdownItem>
-                      </li>
+                      {Constants.LANGUAGE.map((item, index) => {
+                        return (
+                          <li key={item.code}>
+                            <DropdownItem
+                              tag="a"
+                              onClick={(ev) => {
+                                  ev.preventDefault();
+                                  onChangeLanguage(index);
+                              }}
+                              className="language-item cursor-pointer"
+                            >
+                              <img src={item.image} alt="" className="language-flag" />
+                              <span className="language-name">
+                                  {t(item.name)}
+                              </span>
+                            </DropdownItem>
+                          </li>
+                        );
+                    })}
                     </ul>
                   </DropdownMenu>
                 </UncontrolledDropdown>

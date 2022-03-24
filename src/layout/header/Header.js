@@ -3,6 +3,8 @@ import classNames from "classnames";
 import Toggle from "../sidebar/Toggle";
 import Logo from "../logo/Logo";
 import User from "./dropdown/user/User";
+import Theme from "./dropdown/theme/Theme";
+import Language from "./dropdown/language/Language";
 
 const Header = ({ fixed, theme, className, ...props }) => {
   const headerClass = classNames({
@@ -28,6 +30,12 @@ const Header = ({ fixed, theme, className, ...props }) => {
           </div>
           <div className="nk-header-tools">
             <ul className="nk-quick-nav">
+              <li className="user-dropdown">
+                <Theme />
+              </li>
+              <li className="user-dropdown">
+                <Language />
+              </li>
               <li className="user-dropdown">
                 <User />
               </li>

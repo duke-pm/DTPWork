@@ -3,6 +3,7 @@ import * as types from "../actions/types";
 
 export const initialState = {
   language: Constants.DEFAULT_LANGUAGE,
+  theme: Constants.DEFAULT_THEME,
 };
 
 export default function (state = initialState, action = {}) {
@@ -12,6 +13,12 @@ export default function (state = initialState, action = {}) {
       return {
         ...state,
         language: payload,
+      };
+
+    case types.CHANGE_THEME:
+      return {
+        ...state,
+        theme: payload,
       };
 
       default:

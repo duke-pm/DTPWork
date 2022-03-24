@@ -73,13 +73,13 @@ function TableGroupResource(props) {
                 <span className="tb-lead text-primary">#{item.groupID}</span>
               </DataTableRow>
               <DataTableRow>
-                <Icon name={item.icon} />
+                <Icon name={item.icon} className="text-primary" />
               </DataTableRow>
               <DataTableRow>
                 <span className="tb-lead">{item.groupName}</span>
               </DataTableRow>
               <DataTableRow size="md">
-                <span>{item.descr}</span>
+                <span>{item.descr || "-"}</span>
               </DataTableRow>
               <DataTableRow>
                 <div className="user-card">

@@ -29,6 +29,12 @@ const PrivateRoute = ({ exact, component: Component, ...rest }) => {
       dispatch(Actions.changeLanguage(localLanguage));
     }
 
+    /** Check theme */
+    let localTheme = localStorage.getItem(Constants.LS_THEME);
+    if (localTheme) {
+      dispatch(Actions.changeTheme(localTheme));
+    }
+
     /** Check info sign in */
     let localSignIn = localStorage.getItem(Constants.LS_SIGN_IN);
     if (localSignIn && !authState["data"]["accessToken"]) {

@@ -14,6 +14,7 @@ const Layout = () => {
 
   /** Use redux */
   const authState = useSelector(({auth}) => auth);
+  const commonState = useSelector(({common}) => common);
   
   /** Use state */
   const [showSidebar, setShowSidebar] = useState(false);
@@ -25,8 +26,6 @@ const Layout = () => {
     header: "white",
     skin: "light",
   });
-
-  document.body.className = "nk-body bg-lighter npc-default has-sidebar no-touch nk-nio-theme";
 
   /**
    ** FUNCTIONS
@@ -71,14 +70,15 @@ const Layout = () => {
   }, [
     showSidebar,
     authState["successSignIn"],
-  ]); 
+  ]);
 
   /**
    ** RENDER
    */
+  document.body.className = `nk-body bg-lighter npc-default has-sidebar no-touch nk-nio-theme ${commonState["theme"]}-mode`;
   return (
     <React.Fragment>
-      {/* <Head title={t("common:loading")} /> */}
+      <Head title={t("common:loading")} />
       <div className="nk-app-root">
         <div className="nk-main">
           {showSidebar &&

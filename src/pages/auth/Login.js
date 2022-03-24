@@ -71,6 +71,12 @@ const Login = () => {
       dispatch(Actions.changeLanguage(localLanguage));
     }
 
+    /** Check theme */
+    let localTheme = localStorage.getItem(Constants.LS_THEME);
+    if (localTheme) {
+      dispatch(Actions.changeTheme(localTheme));
+    }
+
     /** Check info sign in */
     let lEncodeSignin = localStorage.getItem(Constants.LS_U_P);
     if (lEncodeSignin && !authState["data"]["accessToken"]) {

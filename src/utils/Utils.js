@@ -33,9 +33,9 @@ export const findUpper = (string) => {
   let extractedString = [];
   extractedString = string.split(" ");
   if (extractedString.length > 1) {
-    return extractedString[extractedString.length - 2].charAt(0) + extractedString[extractedString.length - 1].charAt(0);
+    return (extractedString[extractedString.length - 2].charAt(0) + extractedString[extractedString.length - 1].charAt(0)).toUpperCase();
   } else {
-    return string.charAt(0);
+    return string.charAt(0).toUpperCase();
   }
 };
 

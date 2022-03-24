@@ -187,17 +187,17 @@ function TableAssets(props) {
         <DataTableRow size="lg">
           <span className="fw-bold">{t("assets:type")}</span>
         </DataTableRow>
-        {(idxTab === 0 || idxTab === 4) && (
-          <DataTableRow>
-            <span className="fw-bold">{t("assets:status")}</span>
-          </DataTableRow>
-        )}
         <DataTableRow size="lg">
           <span className="fw-bold">{t("assets:purchase_date")}</span>
         </DataTableRow>
         {(idxTab === 1 || idxTab === 2 || idxTab === 3) && (
           <DataTableRow size="lg">
             <span className="fw-bold">{t("assets:origin_price")}</span>
+          </DataTableRow>
+        )}
+        {(idxTab === 0 || idxTab === 4) && (
+          <DataTableRow>
+            <span className="fw-bold">{t("assets:status")}</span>
           </DataTableRow>
         )}
         {(idxTab !== 5) && (
@@ -254,7 +254,7 @@ function TableAssets(props) {
             <DataTableItem key={item.assetID + "_table_item_" + index}>
               <DataTableRow size="md">
                 <span className={`tb-lead ${item.isProcessing ? "text-danger" : "text-primary"}`}>
-                  #{item.assetCode}
+                  {item.assetCode}
                 </span>
               </DataTableRow>
               <DataTableRow>
@@ -266,20 +266,6 @@ function TableAssets(props) {
               <DataTableRow size="lg">
                 <span>{item.assetTypeName}</span>
               </DataTableRow>
-              {(idxTab === 0 || idxTab === 4) && (
-                <DataTableRow>
-                  <span
-                    className={`dot bg-${statusColor} d-mb-none`}
-                  ></span>
-                  <span
-                    className={`badge badge-sm badge-dot has-bg badge-${
-                      statusColor
-                    } d-none d-mb-inline-flex`}
-                  >
-                    {item.statusName}
-                  </span>
-                </DataTableRow>
-              )}
               <DataTableRow size="lg">
                 <span>
                   {moment(item.purchaseDate).format("DD/MM/YYYY")}
@@ -290,6 +276,16 @@ function TableAssets(props) {
                   <span>{item.originalPrice !== 0
                     ? numberFormat(item.originalPrice)
                     : "-"}
+                  </span>
+                </DataTableRow>
+              )}
+              {(idxTab === 0 || idxTab === 4) && (
+                <DataTableRow>
+                  <span className={`dot bg-${statusColor} d-mb-none`} />
+                  <span className={`badge badge-sm badge-dot has-bg badge-${
+                      statusColor
+                    } d-none d-mb-inline-flex`}>
+                    {item.statusName}
                   </span>
                 </DataTableRow>
               )}

@@ -7,7 +7,7 @@ import {Icon} from "../../../../components/Component";
 import {LinkList, LinkItem} from "../../../../components/links/Links";
 import UserAvatar from "../../../../components/user/UserAvatar";
 /** COMMON */
-import Constants from "utils/constants";
+import Constants from "../../../../utils/constants";
 
 const User = () => {
   const {t} = useTranslation();
@@ -30,8 +30,7 @@ const User = () => {
     <Dropdown isOpen={open} className="user-dropdown" toggle={toggle}>
       <DropdownToggle
         tag="a"
-        href="#toggle"
-        className="dropdown-toggle"
+        className="dropdown-toggle cursor-pointer"
         onClick={(ev) => {
           ev.preventDefault();
         }}

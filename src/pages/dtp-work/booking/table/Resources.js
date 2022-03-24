@@ -45,19 +45,19 @@ function TableResource(props) {
   return (
     <DataTableBody compact>
       <DataTableHead className="nk-tb-item">
-        <DataTableRow>
+        <DataTableRow size="md">
           <span className="fw-bold">{t("resources:code")}</span>
         </DataTableRow>
         <DataTableRow>
           <span className="fw-bold">{t("resources:name")}</span>
         </DataTableRow>
-        <DataTableRow size="sm">
+        <DataTableRow>
           <span className="fw-bold">{t("resources:group")}</span>
         </DataTableRow>
-        <DataTableRow size="md">
+        <DataTableRow size="lg">
           <span className="fw-bold">{t("resources:created_user")}</span>
         </DataTableRow>
-        <DataTableRow size="md">
+        <DataTableRow size="lg">
           <span className="fw-bold">{t("resources:updated_time")}</span>
         </DataTableRow>
         {isWrite && <DataTableRow className="nk-tb-col-tools" />}
@@ -67,20 +67,20 @@ function TableResource(props) {
         ? data.map((item, index) => {
           return (
             <DataTableItem key={item.resourceID + "_res_" + index}>
-              <DataTableRow>
+              <DataTableRow size="md">
                 <span className="tb-lead text-primary">#{item.resourceID}</span>
               </DataTableRow>
               <DataTableRow>
                 <Badge
                   style={{backgroundColor: item.color}}
-                  className="badge badge-dim badge-pill">
+                  className="badge badge-dim">
                   {item.resourceName}  
                 </Badge>
               </DataTableRow>
-              <DataTableRow size="sm">
+              <DataTableRow>
                 <span>{item.groupName}</span>
               </DataTableRow>
-              <DataTableRow size="md">
+              <DataTableRow size="lg">
                 <div className="user-card">
                   <UserAvatar className="sm" text={findUpper(item.crtdName)} />
                   <div className="user-info">
@@ -90,7 +90,7 @@ function TableResource(props) {
                   </div>
                 </div>
               </DataTableRow>
-              <DataTableRow size="md">
+              <DataTableRow size="lg">
                 <span>{item.strCrtdDate}</span>
               </DataTableRow>
               {isWrite && (

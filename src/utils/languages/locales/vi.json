@@ -52,7 +52,9 @@
     "september": "Tháng 9",
     "october": "Tháng 10",
     "november": "Tháng 11",
-    "december": "Tháng 12"
+    "december": "Tháng 12",
+    "change_to_darkmode": "Đổi sang giao diện tối",
+    "change_to_lightmode": "Đổi sang giao diện sáng"
   },
   "validate": {
     "empty": "Mục này không thể trống!",

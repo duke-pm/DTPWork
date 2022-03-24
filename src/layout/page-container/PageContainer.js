@@ -1,7 +1,11 @@
 import React from "react";
+import {useSelector} from "react-redux";
 
 const PageContainer = ({ ...props }) => {
-  document.body.className = "nk-body bg-lighter npc-default has-sidebar no-touch nk-nio-theme";
+  /** Use redux */
+  const commonState = useSelector(({common}) => common);
+
+  document.body.className = `nk-body bg-lighter npc-default has-sidebar no-touch nk-nio-theme ${commonState["theme"]}-mode`;
   return (
     <React.Fragment>
       <div className="nk-app-root">
