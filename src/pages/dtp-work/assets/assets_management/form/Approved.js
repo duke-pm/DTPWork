@@ -522,7 +522,7 @@ function ApprovedForm(props) {
    */
   const {handleSubmit} = useForm();
   const disabled = loading.approved || loading.recall || loading.history || loading.getData;
-
+  const showGetData = ["1", "6"].includes(authState["data"].groupID);
   return (
     <SimpleBar
       className={`nk-add-assets toggle-slide toggle-slide-right toggle-screen-any ${
@@ -658,13 +658,15 @@ function ApprovedForm(props) {
                       <label className="form-label" htmlFor="assetEmployee">
                         {t("approved_assets:approved_for")} <span className="text-danger">*</span>
                       </label>
-                      <a
-                        className="link link-sm cursor-pointer text-primary"
-                        onClick={onGetEmployee}>
-                        <span>{t("approved_assets:reload_employees")}</span>
-                        {loading.getData && <Spinner size="sm" color="primary" />}
-                        {!loading.getData && <Icon name="reload"/>}
-                      </a>
+                      {showGetData && (
+                        <a
+                          className="link link-sm cursor-pointer text-primary"
+                          onClick={onGetEmployee}>
+                          <span>{t("approved_assets:reload_employees")}</span>
+                          {loading.getData && <Spinner size="sm" color="primary" />}
+                          {!loading.getData && <Icon name="reload"/>}
+                        </a>
+                      )}
                     </div>
                     <div className="form-control-wrap">
                       <RSelect

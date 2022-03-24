@@ -34,7 +34,7 @@ const PaginationComponent = ({itemPerPage, totalItems, paginate, currentPage}) =
     <Pagination aria-label="Page navigation">
       <PaginationItem disabled={currentPage - 1 === 0 ? true : false}>
         <PaginationLink
-          className="page-link-prev cursor-pointer"
+          className="page-link-prev cursor-pointer round"
           onClick={prevPage}>
           <Icon name="chevrons-left" />
           <span>{t("common:prev")}</span>
@@ -59,7 +59,7 @@ const PaginationComponent = ({itemPerPage, totalItems, paginate, currentPage}) =
 
       <PaginationItem disabled={pageNumbers[pageNumbers.length - 1] === currentPage}>
         <PaginationLink
-          className="page-link-next cursor-pointer"
+          className="page-link-next cursor-pointer round"
           onClick={nextPage}>
           <span>{t("common:next")}</span>
           <Icon name="chevrons-right" />
