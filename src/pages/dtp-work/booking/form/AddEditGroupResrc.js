@@ -257,10 +257,10 @@ function AddEditGroupResrcForm(props) {
           <BlockBetween>
             <BlockHeadContent>
               {!isUpdate && (
-                <BlockTitle tag="h4">{t("group_resources:add_group")}</BlockTitle>
+                <BlockTitle tag="h5">{t("group_resources:add_group")}</BlockTitle>
               )}
               {isUpdate && (
-                <BlockTitle tag="h4">{t("group_resources:update_group")}</BlockTitle>
+                <BlockTitle tag="h5">{t("group_resources:update_group")}</BlockTitle>
               )}
             </BlockHeadContent>
             <BlockHeadContent>

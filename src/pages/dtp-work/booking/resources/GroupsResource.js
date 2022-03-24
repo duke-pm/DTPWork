@@ -250,7 +250,7 @@ function GroupsResource({history}) {
         <BlockHead size="sm">
           <BlockBetween>
             <BlockHeadContent>
-              <BlockTitle tag="h4">{t("group_resources:title")}</BlockTitle>
+              <BlockTitle tag="h5">{t("group_resources:title")}</BlockTitle>
             </BlockHeadContent>
             <BlockHeadContent>
               <div className="toggle-wrap nk-block-tools-toggle">
@@ -318,6 +318,7 @@ function GroupsResource({history}) {
                       type="text"
                       className="border-transparent form-focus-none form-control"
                       value={textSearch}
+                      autoFocus={true}
                       disabled={disabled}
                       placeholder={t("common:search")}
                       onKeyDown={ev => {

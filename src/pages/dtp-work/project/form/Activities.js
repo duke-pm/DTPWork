@@ -223,7 +223,7 @@ function Activities(props) {
           <div className="nk-chat-editor border-bottom">
             <BlockHead size="sm">
               <BlockHeadContent>
-                <BlockTitle tag="h4">{t("task:activities")}</BlockTitle>
+                <BlockTitle tag="h5">{t("task:activities")}</BlockTitle>
               </BlockHeadContent>
             </BlockHead>
           </div>

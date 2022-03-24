@@ -123,7 +123,7 @@ const ForgotPassword = () => {
             <PreviewCard className="card-bordered" bodyClass="card-inner-lg">
               <BlockHead>
                 <BlockContent>
-                  <BlockTitle tag="h4">{t("forgot_password:title")}</BlockTitle>
+                  <BlockTitle tag="h5">{t("forgot_password:title")}</BlockTitle>
                   <BlockDes><p>{t("forgot_password:sub_title")}</p></BlockDes>
                 </BlockContent>
               </BlockHead>
@@ -185,7 +185,7 @@ const ForgotPassword = () => {
                 <Col lg="7" md="7" sm="8" xs="8" className="d-flex flex-column justify-content-center">
                   <BlockHead>
                     <BlockContent className="flex-column align-items-center">
-                      <BlockTitle tag="h4" className="text-success">{t("success:send_reset_link_title")}</BlockTitle>
+                      <BlockTitle tag="h5" className="text-success">{t("success:send_reset_link_title")}</BlockTitle>
                       <BlockDes>{t("success:send_reset_link_sub_title")}</BlockDes>
                     </BlockContent>
                   </BlockHead>
@@ -207,7 +207,7 @@ const ForgotPassword = () => {
                 <Col lg="7" md="7" sm="8" xs="8" className="d-flex flex-column justify-content-center">
                   <BlockHead>
                     <BlockContent className="d-flex flex-column align-items-center">
-                      <BlockTitle tag="h4" className="text-danger">{t("error:title")}</BlockTitle>
+                      <BlockTitle tag="h5" className="text-danger">{t("error:title")}</BlockTitle>
                       <BlockDes>{errorVal}</BlockDes>
                     </BlockContent>
                   </BlockHead>

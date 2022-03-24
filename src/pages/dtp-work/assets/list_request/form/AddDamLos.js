@@ -284,10 +284,10 @@ function AddDamLosForm(props) {
           <BlockBetween>
             <BlockHeadContent>
               {typeRequest === "damage" && (
-                <BlockTitle tag="h4">{t("add_request_assets:damage_title")}</BlockTitle>
+                <BlockTitle tag="h5">{t("add_request_assets:damage_title")}</BlockTitle>
               )}
               {typeRequest === "lost" && (
-                <BlockTitle tag="h4">{t("add_request_assets:lost_title")}</BlockTitle>
+                <BlockTitle tag="h5">{t("add_request_assets:lost_title")}</BlockTitle>
               )}
             </BlockHeadContent>
             <BlockHeadContent>

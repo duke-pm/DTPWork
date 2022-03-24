@@ -250,7 +250,7 @@ function Resources({history}) {
         <BlockHead size="sm">
           <BlockBetween>
             <BlockHeadContent>
-              <BlockTitle tag="h4">{t("resources:title")}</BlockTitle>
+              <BlockTitle tag="h5">{t("resources:title")}</BlockTitle>
             </BlockHeadContent>
             <BlockHeadContent>
               <div className="toggle-wrap nk-block-tools-toggle">
@@ -317,8 +317,9 @@ function Resources({history}) {
                     <input
                       type="text"
                       className="border-transparent form-focus-none form-control"
-                      value={textSearch}
+                      autoFocus={true}
                       disabled={disabled}
+                      value={textSearch}
                       placeholder={t("common:search")}
                       onKeyDown={ev => {
                         if (ev.code === "Enter") onSearch();

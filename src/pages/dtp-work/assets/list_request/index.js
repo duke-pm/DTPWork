@@ -490,7 +490,7 @@ function RequestAssets({history}) {
         <BlockHead size="sm">
           <BlockBetween>
             <BlockHeadContent>
-              <BlockTitle tag="h4">{t("request_approved:title")}</BlockTitle>
+              <BlockTitle tag="h5">{t("request_approved:title")}</BlockTitle>
             </BlockHeadContent>
             <BlockHeadContent>
               <div className="toggle-wrap nk-block-tools-toggle">
@@ -729,6 +729,7 @@ function RequestAssets({history}) {
                       type="text"
                       className="border-transparent form-focus-none form-control"
                       disabled={disabled}
+                      autoFocus={true}
                       value={tabs[filterTab].search}
                       placeholder={t("common:search")}
                       onKeyDown={ev => {

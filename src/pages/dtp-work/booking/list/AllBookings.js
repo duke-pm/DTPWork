@@ -461,7 +461,7 @@ function AllBookings({history}) {
         <BlockHead size="sm">
           <BlockBetween>
             <BlockHeadContent>
-              <BlockTitle tag="h4">{t("all_booking:title")}</BlockTitle>
+              <BlockTitle tag="h5">{t("all_booking:title")}</BlockTitle>
             </BlockHeadContent>
             <BlockHeadContent>
               <div className="toggle-wrap nk-block-tools-toggle">
@@ -701,6 +701,7 @@ function AllBookings({history}) {
                       type="text"
                       className="border-transparent form-focus-none form-control"
                       disabled={disabled}
+                      autoFocus={true}
                       value={formData.search}
                       placeholder={t("common:search")}
                       onKeyDown={ev => {

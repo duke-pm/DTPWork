@@ -181,7 +181,7 @@ const Login = () => {
           <PreviewCard className="card-bordered" bodyClass="card-inner-lg">
             <BlockHead>
               <BlockContent>
-                <BlockTitle tag="h4">{t("sign_in:head_title")}</BlockTitle>
+                <BlockTitle tag="h5">{t("sign_in:head_title")}</BlockTitle>
                 <BlockDes>{t("sign_in:sub_title")}</BlockDes>
               </BlockContent>
             </BlockHead>

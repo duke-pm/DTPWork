@@ -330,19 +330,7 @@ function TableAssets(props) {
                 <DataTableRow className="nk-tb-col-tools">
                   <ul className="nk-tb-actions gx-1">
                     <li>
-                      {(item.statusID === 5 && !item.isProcessing)
-                      ? (
-                        <TooltipComponent
-                          tag="a"
-                          containerClassName="btn btn-trigger btn-icon"
-                          iconClass="text-danger"
-                          icon="info"
-                          direction="top"
-                          id={"tooltip_lost_" + index}
-                          text={t("assets:asset_was_lost")}
-                        />
-                      )
-                      : ((idxTab === 0 || idxTab === 2) && item.isProcessing)
+                      {((idxTab === 0 || idxTab === 2) && item.isProcessing)
                       ? (
                         <TooltipComponent
                           tag="a"
@@ -353,7 +341,7 @@ function TableAssets(props) {
                           id={"tooltip_" + index}
                           text={item.requestTypeName}
                         />
-                      ) : item.statusID !== 5 ? (
+                      ) : (
                         <UncontrolledDropdown>
                           <DropdownToggle tag="a" className="btn btn-icon dropdown-toggle btn-trigger">
                             <Icon name="more-h"/>
@@ -451,7 +439,7 @@ function TableAssets(props) {
                             </ul>
                           </DropdownMenu>
                         </UncontrolledDropdown>
-                      ) : null}
+                      )}
                     </li>
                   </ul>
                 </DataTableRow>
@@ -460,40 +448,26 @@ function TableAssets(props) {
                 <DataTableRow className="nk-tb-col-tools">
                   <ul className="nk-tb-actions gx-1">
                     <li>
-                      {(item.statusID === 5 && !item.isProcessing)
-                      ? (
-                        <TooltipComponent
-                          tag="a"
-                          containerClassName="btn btn-trigger btn-icon"
-                          iconClass="text-danger"
-                          icon="info"
-                          direction="top"
-                          id={"tooltip_lost_" + index}
-                          text={t("assets:asset_was_lost")}
-                        />
-                      ) : (
-                        <UncontrolledDropdown>
-                          {item.statusID === 4 && (
-                            <DropdownToggle tag="a" className="btn btn-icon dropdown-toggle btn-trigger">
-                              <Icon name="more-h"/>
-                            </DropdownToggle>
-                          )}
-                          {item.statusID == 4 && (
-                            <DropdownMenu right>
-                              <ul className="link-list-opt no-bdr">
-                                <li>
-                                  <DropdownItem
-                                    tag="a"
-                                    className="cursor-pointer link link-sm"
-                                    onClick={(ev) => {
-                                      ev.preventDefault();
-                                      onGetDetailsData(item);
-                                    }}
-                                  >
-                                    <Icon name="eye"/>
-                                    <span>{t("assets:view_details")}</span>
-                                  </DropdownItem>
-                                </li>
+                      <UncontrolledDropdown>
+                        <DropdownToggle tag="a" className="btn btn-icon dropdown-toggle btn-trigger">
+                          <Icon name="more-h"/>
+                        </DropdownToggle>
+                        <DropdownMenu right>
+                          <ul className="link-list-opt no-bdr">
+                            <li>
+                              <DropdownItem
+                                tag="a"
+                                className="cursor-pointer link link-sm"
+                                onClick={(ev) => {
+                                  ev.preventDefault();
+                                  onGetDetailsData(item);
+                                }}>
+                                <Icon name="eye"/>
+                                <span>{t("assets:view_details")}</span>
+                              </DropdownItem>
+                            </li>
+                            {item.statusID === 4 && (
+                              <>
                                 <li>
                                   <DropdownItem
                                     tag="a"
@@ -520,11 +494,11 @@ function TableAssets(props) {
                                     <span>{t("assets:repair_assets")}</span>
                                   </DropdownItem>
                                 </li>
-                              </ul>
-                            </DropdownMenu>
-                          )}
-                        </UncontrolledDropdown>
-                      )}
+                              </>
+                            )}
+                          </ul>
+                        </DropdownMenu>
+                      </UncontrolledDropdown>
                     </li>
                   </ul>
                 </DataTableRow>

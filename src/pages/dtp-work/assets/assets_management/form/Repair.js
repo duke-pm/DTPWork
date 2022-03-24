@@ -331,10 +331,10 @@ function RepairForm(props) {
           <BlockBetween>
             <BlockHeadContent>
               {!updateHistory && (
-                <BlockTitle tag="h4">{t("repair_assets:title")}</BlockTitle>
+                <BlockTitle tag="h5">{t("repair_assets:title")}</BlockTitle>
               )}
               {updateHistory && (
-                <BlockTitle tag="h4">{t("repair_assets:history_title")}</BlockTitle>
+                <BlockTitle tag="h5">{t("repair_assets:history_title")}</BlockTitle>
               )}
             </BlockHeadContent>
             <BlockHeadContent>

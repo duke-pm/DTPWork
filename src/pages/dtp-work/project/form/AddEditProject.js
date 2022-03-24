@@ -348,13 +348,13 @@ function AddEditProjectForm(props) {
           <BlockBetween>
             <BlockHeadContent>
               {!isUpdate && !isClone && (
-                <BlockTitle tag="h4">{t("project:add_project")}</BlockTitle>
+                <BlockTitle tag="h5">{t("project:add_project")}</BlockTitle>
               )}
               {isUpdate && (
-                <BlockTitle tag="h4">{t("project:update_project")}</BlockTitle>
+                <BlockTitle tag="h5">{t("project:update_project")}</BlockTitle>
               )}
               {isClone && (
-                <BlockTitle tag="h4">{t("project:clone_project")}</BlockTitle>
+                <BlockTitle tag="h5">{t("project:clone_project")}</BlockTitle>
               )}
             </BlockHeadContent>
             <BlockHeadContent>

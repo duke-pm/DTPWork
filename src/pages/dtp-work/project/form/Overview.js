@@ -450,7 +450,7 @@ function Overview(props) {
                 onClick={onGoBack}>
                 <Icon name="arrow-left"/>
               </Button>
-              <BlockTitle tag="h4" className="mr-3 ml-2">
+              <BlockTitle tag="h5" className="mr-3 ml-2">
                 <span style={{color: Constants.TYPE_TASK_COLOR[data.overview?.typeName]}}>
                   {data.overview?.typeName}
                 </span> {data.overview?.taskName}

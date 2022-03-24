@@ -218,7 +218,7 @@ function GanttTasks({history}) {
         {/** Header table */}
         <BlockHead size="sm">
           <BlockHeadContent>
-            <BlockTitle tag="h4">{`${t("task:grant_chart")} #${projectID}`}</BlockTitle>
+            <BlockTitle tag="h5">{`${t("task:grant_chart")} #${projectID}`}</BlockTitle>
           </BlockHeadContent>
         </BlockHead>
 

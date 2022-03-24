@@ -554,8 +554,8 @@ function AddEditForm(props) {
         <BlockHead>
           <BlockBetween>
             <BlockHeadContent>
-              {isAdd && <BlockTitle tag="h4">{t("add_assets:title")}</BlockTitle>}
-              {isUpdate && <BlockTitle tag="h4">{t("add_assets:update_title")}</BlockTitle>}
+              {isAdd && <BlockTitle tag="h5">{t("add_assets:title")}</BlockTitle>}
+              {isUpdate && <BlockTitle tag="h5">{t("add_assets:update_title")}</BlockTitle>}
             </BlockHeadContent>
             <BlockHeadContent>
               <ul className="nk-block-tools g-3">

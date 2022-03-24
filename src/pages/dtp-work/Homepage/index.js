@@ -25,7 +25,7 @@ const Homepage = () => {
         <BlockHead size="sm">
           <BlockBetween>
             <BlockHeadContent>
-              <BlockTitle tag="h4">{t("dashboard:main_title")}</BlockTitle>
+              <BlockTitle tag="h5">{t("dashboard:main_title")}</BlockTitle>
             </BlockHeadContent>
             
           </BlockBetween>

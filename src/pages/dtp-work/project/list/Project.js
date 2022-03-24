@@ -411,7 +411,7 @@ function ListProjects({history}) {
         <BlockHead size="sm">
           <BlockBetween>
             <BlockHeadContent>
-              <BlockTitle tag="h4">{t("project:title")}</BlockTitle>
+              <BlockTitle tag="h5">{t("project:title")}</BlockTitle>
             </BlockHeadContent>
             <BlockHeadContent>
               <div className="toggle-wrap nk-block-tools-toggle">
@@ -577,6 +577,7 @@ function ListProjects({history}) {
                       type="text"
                       className="border-transparent form-focus-none form-control"
                       disabled={disabled}
+                      autoFocus={true}
                       value={formData.search}
                       placeholder={t("common:search")}
                       onKeyDown={ev => {

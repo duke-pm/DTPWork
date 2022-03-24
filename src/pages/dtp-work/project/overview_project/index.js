@@ -317,7 +317,7 @@ function ProjectsOverview({history}) {
         {/** Header table */}
         <BlockHead size="sm">
           <BlockHeadContent>
-            <BlockTitle tag="h4">{t("projects_overview:title")}</BlockTitle>
+            <BlockTitle tag="h5">{t("projects_overview:title")}</BlockTitle>
           </BlockHeadContent>
         </BlockHead>
 

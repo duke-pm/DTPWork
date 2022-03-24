@@ -306,10 +306,10 @@ function LiquidationForm(props) {
           <BlockBetween>
             <BlockHeadContent>
               {!updateHistory && (
-                <BlockTitle tag="h4">{t("liquidation_assets:title")}</BlockTitle>
+                <BlockTitle tag="h5">{t("liquidation_assets:title")}</BlockTitle>
               )}
               {updateHistory && (
-                <BlockTitle tag="h4">{t("liquidation_assets:history_title")}</BlockTitle>
+                <BlockTitle tag="h5">{t("liquidation_assets:history_title")}</BlockTitle>
               )}
             </BlockHeadContent>
             <BlockHeadContent>

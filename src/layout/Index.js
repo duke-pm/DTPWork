@@ -78,7 +78,7 @@ const Layout = () => {
    */
   return (
     <React.Fragment>
-      <Head title={t("common:loading")} />
+      {/* <Head title={t("common:loading")} /> */}
       <div className="nk-app-root">
         <div className="nk-main">
           {showSidebar &&

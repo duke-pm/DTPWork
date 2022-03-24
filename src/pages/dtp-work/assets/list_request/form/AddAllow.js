@@ -346,7 +346,7 @@ function AddAllowForm(props) {
         <BlockHead>
           <BlockBetween>
             <BlockHeadContent>
-              <BlockTitle tag="h4">{t("add_request_assets:allow_title")}</BlockTitle>
+              <BlockTitle tag="h5">{t("add_request_assets:allow_title")}</BlockTitle>
             </BlockHeadContent>
             <BlockHeadContent>
               <ul className="nk-block-tools g-3">

@@ -186,10 +186,10 @@ function AddEditForm(props) {
           <BlockBetween>
             <BlockHeadContent>
               {!isUpdate && (
-                <BlockTitle tag="h4">{t("management:add_approved_lines")}</BlockTitle>
+                <BlockTitle tag="h5">{t("management:add_approved_lines")}</BlockTitle>
               )}
               {isUpdate && (
-                <BlockTitle tag="h4">{t("management:update_approved_lines")}</BlockTitle>
+                <BlockTitle tag="h5">{t("management:update_approved_lines")}</BlockTitle>
               )}
             </BlockHeadContent>
             <BlockHeadContent>

@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React from "react";
-import { Card } from "reactstrap";
+import {Card} from "reactstrap";
 
 export const DataTable = ({ className, bodyClassName, title, ...props }) => {
   return (

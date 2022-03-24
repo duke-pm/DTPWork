@@ -409,7 +409,8 @@
     "information_recall": "Thông tin thu hồi",
     "recall_date": "Ngày thu hồi",
     "reason_recall": "Lý do thu hồi",
-    "holder_reason_recall": "Lý do thu hồi..."
+    "holder_reason_recall": "Lý do thu hồi...",
+    "reload_employees": "Cập nhật thông tin nhân viên"
   },
   "repair_assets": {
     "title": "Sửa chữa - Bảo hành tài sản",

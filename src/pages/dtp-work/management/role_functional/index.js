@@ -237,7 +237,7 @@ function RoleFunctional({history}) {
         <BlockHead size="sm">
           <BlockBetween>
             <BlockHeadContent>
-              <BlockTitle tag="h4">{t("management:role_functional")}</BlockTitle>
+              <BlockTitle tag="h5">{t("management:role_functional")}</BlockTitle>
             </BlockHeadContent>
             <BlockHeadContent>
               <div className="toggle-wrap nk-block-tools-toggle">

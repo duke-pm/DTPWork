@@ -10,6 +10,7 @@ import {
   Label,
   Spinner,
 } from "reactstrap";
+import {toast} from "react-toastify";
 import moment from "moment";
 /** COMMON */
 import {
@@ -33,10 +34,10 @@ import {getCookies, log} from "../../../../../utils/Utils";
 /** REDUX */
 import * as Actions from "../../../../../redux/actions";
 
-const CustomDateInput = forwardRef(({ value, onClick, onChange }, ref) => (
+const CustomDateInput = forwardRef(({value, onClick, onChange}, ref) => (
   <div onClick={onClick} ref={ref}>
     <div className="form-icon form-icon-left">
-      <Icon name="calendar"/>
+      <Icon name="calendar" />
     </div>
     <input
       className="form-control date-picker"
@@ -72,6 +73,7 @@ function ApprovedForm(props) {
     approved: false,
     recall: false,
     history: false,
+    getData: false,
   });
   const [error, setError] = useState({
     employee: null,
@@ -249,6 +251,15 @@ function ApprovedForm(props) {
     dispatch(Actions.fFetchMasterData(params, history));
   };
 
+  const onGetEmployee = () => {
+    setLoading({...loading, getData: true});
+    let params = {
+      RefreshToken: authState["data"]["refreshToken"],
+      Lang: commonState["language"],
+    };
+    dispatch(Actions.fFetchDataEmployee(params, history));
+  };
+
   const onFormSubmit = () => {
     setError({employee: null});
     if (!updateHistory) {
@@ -320,48 +331,63 @@ function ApprovedForm(props) {
 	};
 
   const onSuccess = type => {
-    if (type === "MasterData") {
-      let tmpDataEmp = masterState["employee"].map(item => {
-        return {value: item.empCode, label: item.empName};
-      });
-      let tmpDataDep = masterState["department"].map(item => {
-        return {value: item.deptCode, label: item.deptName};
-      });
-      let tmpDataReg = masterState["region"].map(item => {
-        return {value: item.regionCode, label: item.regionName};
-      });
-      setDataSelect({
-        employee: [...dataSelect.employee, ...tmpDataEmp],
-        department: [...dataSelect.department, ...tmpDataDep],
-        region: [...dataSelect.region, ...tmpDataReg],
-      });
+    if (type === "GetData") {
+      dispatch(Actions.resetListAssets());
+      toast(t("success:get_data"), {type: "success"});
+      onGetMasterData();
+    } else {
+      if (type === "MasterData") {
+        dispatch(Actions.resetMasterData());
+        let tmpDataEmp = masterState["employee"].map(item => {
+          return {value: item.empCode, label: item.empName};
+        });
+        let tmpDataDep = masterState["department"].map(item => {
+          return {value: item.deptCode, label: item.deptName};
+        });
+        let tmpDataReg = masterState["region"].map(item => {
+          return {value: item.regionCode, label: item.regionName};
+        });
+        setDataSelect({
+          employee: [...dataSelect.employee, ...tmpDataEmp],
+          department: [...dataSelect.department, ...tmpDataDep],
+          region: [...dataSelect.region, ...tmpDataReg],
+        });
+      } else {
+        dispatch(Actions.fResetCreateAssets());
+        if (type === "Approved") {
+          onExportExcel(type, dataItem.id);
+          onResetData();
+          onClose(true, t("success:approved_assets"));
+        }
+        if (type === "Recall") {
+          onExportExcel(type, dataItem.id);
+          onResetData();
+          onClose(true, t("success:recall_assets"));
+        }
+        if (type === "History") {
+          onResetData();
+          onClose(true, t("success:update_history_assets"), isApproved ? "approved" : "recall", true);
+        }
+        setRemoveFile(false);
+      }
+      setLoading({main: false, approved: false, recall: false, history: false, getData: false});
     }
-    if (type === "Approved") {
-      onExportExcel(type, dataItem.id);
-      onResetData();
-      onClose(true, t("success:approved_assets"));
-    }
-    if (type === "Recall") {
-      onExportExcel(type, dataItem.id);
-      onResetData();
-      onClose(true, t("success:recall_assets"));
-    }
-    if (type === "History") {
-      onResetData();
-      onClose(true, t("success:update_history_assets"), isApproved ? "approved" : "recall", true);
-    }
-    setRemoveFile(false);
-    setLoading({main: false, approved: false, recall: false, history: false});
   };
 
   const onError = (type, error) => {
     log('[LOG] === onError ===> ', error);
+    dispatch(Actions.resetMasterData());
+    dispatch(Actions.resetListAssets());
+    dispatch(Actions.fResetCreateAssets());
     if (type === "Approved" || type === "Recall" || type === "History") {
       onResetData();
       onClose(false, error);
+      setRemoveFile(false);
     }
-    setRemoveFile(false);
-    setLoading({main: false, approved: false, recall: false, history: false});
+    if (type === "GetData") {
+      toast(error, {type: "error"});
+    }
+    setLoading({main: false, approved: false, recall: false, history: false, getData: false});
   };
 
   const onDownloadAttachFile = () => {
@@ -396,7 +422,7 @@ function ApprovedForm(props) {
   ]);
 
   useEffect(() => {
-    if (loading.main && show) {
+    if ((loading.main || loading.getData) && show) {
       if (!masterState["submittingGetAll"]) {
         if (masterState["successGetAll"] && !masterState["errorGetAll"]) {
           return onSuccess("MasterData");
@@ -409,6 +435,7 @@ function ApprovedForm(props) {
   }, [
     show,
     loading.main,
+    loading.getData,
     masterState["submittingGetAll"],
     masterState["successGetAll"],
     masterState["errorGetAll"],
@@ -471,11 +498,30 @@ function ApprovedForm(props) {
     approvedState["errorUpdateProcess"],
   ]);
 
+  useEffect(() => {
+    if (loading.getData) {
+      if (!approvedState["submittingDataEmployee"]) {
+        if (approvedState["successDataEmployee"] && !approvedState["errorDataEmployee"]) {
+          return onSuccess("GetData");
+        }
+
+        if (!approvedState["successDataEmployee"] && approvedState["errorDataEmployee"]) {
+          return onError("GetData", approvedState["errorHelperDataEmployee"]);
+        }
+      }
+    }
+  }, [
+    loading.getData,
+    approvedState["submittingDataEmployee"],
+    approvedState["successDataEmployee"],
+    approvedState["errorDataEmployee"],
+  ]);
+
   /**
    ** RENDER 
    */
   const {handleSubmit} = useForm();
-  const disabled = loading.approved || loading.recall || loading.history;
+  const disabled = loading.approved || loading.recall || loading.history || loading.getData;
 
   return (
     <SimpleBar
@@ -487,42 +533,21 @@ function ApprovedForm(props) {
         <BlockHead>
           <BlockBetween>
             <BlockHeadContent>
-              {isApproved && !updateHistory && <BlockTitle tag="h4">
+              {isApproved && !updateHistory && <BlockTitle tag="h5">
                 {t("approved_assets:title")}
               </BlockTitle>}
-              {isApproved && updateHistory && <BlockTitle tag="h4">
+              {isApproved && updateHistory && <BlockTitle tag="h5">
                 {t("approved_assets:history_approved_title")}
               </BlockTitle>}
-              {isRecall && !updateHistory && <BlockTitle tag="h4">
+              {isRecall && !updateHistory && <BlockTitle tag="h5">
                 {t("approved_assets:recall_title")}
               </BlockTitle>}
-              {isRecall && updateHistory && <BlockTitle tag="h4">
+              {isRecall && updateHistory && <BlockTitle tag="h5">
                 {t("approved_assets:history_recall_title")}
               </BlockTitle>}
             </BlockHeadContent>
             <BlockHeadContent>
               <ul className="nk-block-tools g-3">
-                {/* <li className="nk-block-tools-opt">
-                  <Button
-                    className="toggle btn-icon d-md-none"
-                    color="gray"
-                    type="button"
-                    disabled={disabled}
-                    onClick={onResetData}
-                  >
-                    <Icon name="undo"/>
-                  </Button>
-                  <Button
-                    className="toggle d-none d-md-inline-flex"
-                    color="gray"
-                    type="button"
-                    disabled={disabled}
-                    onClick={onResetData}
-                  >
-                    <Icon name="undo"/>
-                    <span>{t("common:reset")}</span>
-                  </Button>
-                </li> */}
                 <li className="nk-block-tools-opt">
                   <Button
                     className="toggle btn-icon d-md-none"
@@ -629,10 +654,17 @@ function ApprovedForm(props) {
               {!updateHistory && (
                 <Col md="8">
                   <FormGroup>
-                    <div className="form-label-group">
+                    <div className="form-label-group d-flex justify-content-between">
                       <label className="form-label" htmlFor="assetEmployee">
                         {t("approved_assets:approved_for")} <span className="text-danger">*</span>
                       </label>
+                      <a
+                        className="link link-sm cursor-pointer text-primary"
+                        onClick={onGetEmployee}>
+                        <span>{t("approved_assets:reload_employees")}</span>
+                        {loading.getData && <Spinner size="sm" color="primary" />}
+                        {!loading.getData && <Icon name="reload"/>}
+                      </a>
                     </div>
                     <div className="form-control-wrap">
                       <RSelect

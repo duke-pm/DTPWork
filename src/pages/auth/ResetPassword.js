@@ -233,7 +233,7 @@ const ResetPassword = () => {
                 <Col lg="7" md="7" sm="8" xs="8" className="d-flex flex-column justify-content-center">
                   <BlockHead>
                     <BlockContent>
-                      <BlockTitle tag="h4" className="text-success">{t("success:send_reset_pass_title")}</BlockTitle>
+                      <BlockTitle tag="h5" className="text-success">{t("success:send_reset_pass_title")}</BlockTitle>
                       <BlockDes>{t("success:send_reset_pass_sub_title")}</BlockDes>
                     </BlockContent>
                   </BlockHead>
@@ -252,7 +252,7 @@ const ResetPassword = () => {
             <PreviewCard className="card-bordered" bodyClass="card-inner-lg">
               <BlockHead>
                 <BlockContent className="d-flex flex-column align-items-center">
-                  <BlockTitle tag="h4" className="text-danger">{t("error:title")}</BlockTitle>
+                  <BlockTitle tag="h5" className="text-danger">{t("error:title")}</BlockTitle>
                   <BlockDes>{errorVal}</BlockDes>
                 </BlockContent>
               </BlockHead>

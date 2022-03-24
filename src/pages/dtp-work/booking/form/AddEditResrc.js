@@ -282,10 +282,10 @@ function AddEditResrcForm(props) {
           <BlockBetween>
             <BlockHeadContent>
               {!isUpdate && (
-                <BlockTitle tag="h4">{t("resources:add_resources")}</BlockTitle>
+                <BlockTitle tag="h5">{t("resources:add_resources")}</BlockTitle>
               )}
               {isUpdate && (
-                <BlockTitle tag="h4">{t("resources:update_resources")}</BlockTitle>
+                <BlockTitle tag="h5">{t("resources:update_resources")}</BlockTitle>
               )}
             </BlockHeadContent>
             <BlockHeadContent>

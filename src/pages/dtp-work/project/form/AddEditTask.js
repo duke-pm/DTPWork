@@ -486,19 +486,19 @@ function AddEditTaskForm(props) {
           <BlockBetween>
             <BlockHeadContent>
               {!isUpdate && !isClone && (
-                <BlockTitle tag="h4">
+                <BlockTitle tag="h5">
                   {t("task:add")} <span style={{color: Constants.TYPE_TASK_COLOR[typeTask]}}>
                     {typeTask}</span>
                 </BlockTitle>
               )}
               {isUpdate && (
-                <BlockTitle tag="h4">
+                <BlockTitle tag="h5">
                   {t("task:update")} <span style={{color: Constants.TYPE_TASK_COLOR[typeTask]}}>
                     {typeTask}</span>
                 </BlockTitle>
               )}
               {isClone && (
-                <BlockTitle tag="h4">
+                <BlockTitle tag="h5">
                   {t("task:clone")} <span style={{color: Constants.TYPE_TASK_COLOR[typeTask]}}>
                     {typeTask}</span>
                 </BlockTitle>

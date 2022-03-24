@@ -392,10 +392,10 @@ function AddEditBookingForm(props) {
           <BlockBetween>
             <BlockHeadContent>
               {!isUpdate && (
-                <BlockTitle tag="h4">{t("all_booking:add_booking")}</BlockTitle>
+                <BlockTitle tag="h5">{t("all_booking:add_booking")}</BlockTitle>
               )}
               {isUpdate && (
-                <BlockTitle tag="h4">{t("all_booking:update_booking")}</BlockTitle>
+                <BlockTitle tag="h5">{t("all_booking:update_booking")}</BlockTitle>
               )}
             </BlockHeadContent>
             <BlockHeadContent>

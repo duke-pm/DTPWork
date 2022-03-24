@@ -160,7 +160,7 @@ function ChangePassword({history}) {
           <PreviewCard className="card-bordered" bodyClass="card-inner-lg">
             <BlockHead>
               <BlockContent>
-                <BlockTitle tag="h4">{t("change_password:title")}</BlockTitle>
+                <BlockTitle tag="h5">{t("change_password:title")}</BlockTitle>
                 <BlockDes><p>{t("change_password:sub_title")}</p></BlockDes>
               </BlockContent>
             </BlockHead>

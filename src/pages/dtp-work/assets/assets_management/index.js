@@ -30,7 +30,11 @@ import ReUseForm from "./form/ReUse";
 import Configs from "../../../../configs";
 import RoutesApi from "../../../../services/routesApi";
 import Routes from "../../../../route/routes";
-import {checkIsWrite, getCookies, log} from "../../../../utils/Utils";
+import {
+  checkIsWrite,
+  getCookies,
+  log,
+} from "../../../../utils/Utils";
 /** REDUX */
 import * as Actions from "../../../../redux/actions";
 
@@ -146,7 +150,6 @@ function AssetsManagement({history, params}) {
   const [loading, setLoading] = useState({
     main: true,
     search: false,
-    getData: false,
   });
   const [view, setView] = useState({
     search: false,
@@ -340,15 +343,6 @@ function AssetsManagement({history, params}) {
     toggleView("reuse");
   };
 
-  const onGetEmployee = () => {
-    setLoading({...loading, getData: true});
-    let params = {
-      RefreshToken: authState["data"]["refreshToken"],
-      Lang: commonState["language"],
-    };
-    dispatch(Actions.fFetchDataEmployee(params, history));
-  };
-
   const onExportData = () => {
     let tmpAccessToken = getCookies("access_token");
     if (tmpAccessToken) {
@@ -464,29 +458,9 @@ function AssetsManagement({history, params}) {
     approvedState["errorListAssets"]
   ]);
 
-  useEffect(() => {
-    if (loading.getData) {
-      if (!approvedState["submittingDataEmployee"]) {
-        if (approvedState["successDataEmployee"] && !approvedState["errorDataEmployee"]) {
-          return onSuccess("GetData");
-        }
-
-        if (!approvedState["successDataEmployee"] && approvedState["errorDataEmployee"]) {
-          return onError(approvedState["errorHelperDataEmployee"]);
-        }
-      }
-    }
-  }, [
-    loading.getData,
-    approvedState["submittingDataEmployee"],
-    approvedState["successDataEmployee"],
-    approvedState["errorDataEmployee"],
-  ]);
-
   /** 
    ** RENDER
    */
-  const showGetData = ["1", "6"].includes(authState["data"].groupID);
   const disabled = loading.main || loading.search;
   return (
     <React.Fragment>
@@ -497,7 +471,7 @@ function AssetsManagement({history, params}) {
         <BlockHead size="sm">
           <BlockBetween>
             <BlockHeadContent>
-              <BlockTitle tag="h4">{t("assets:assets_management")}</BlockTitle>
+              <BlockTitle tag="h5">{t("assets:assets_management")}</BlockTitle>
             </BlockHeadContent>
             <BlockHeadContent>
               <div className="toggle-wrap nk-block-tools-toggle">
@@ -512,29 +486,6 @@ function AssetsManagement({history, params}) {
                         onClick={onExportData}>
                         <Icon name="download-cloud"/>
                         <span>{t("common:export")}</span>
-                      </Button>
-                    </li>
-                  )}
-                  {showGetData && (
-                    <li className="nk-block-tools-opt">
-                      <Button
-                        className="toggle btn-icon d-md-none"
-                        color="secondary"
-                        disabled={disabled}
-                        onClick={onGetEmployee}
-                      >
-                        {loading.getData && <Spinner color="light" size="sm" />}
-                        {!loading.getData && <Icon name="reload-alt"/>}
-                      </Button>
-                      <Button
-                        className="toggle d-none d-md-inline-flex"
-                        color="secondary"
-                        disabled={disabled}
-                        onClick={onGetEmployee}
-                      >
-                        {loading.getData && <Spinner color="light" size="sm" />}
-                        {!loading.getData && <Icon name="reload-alt"/>}
-                        <span>{t("assets:get_data")}</span>
                       </Button>
                     </li>
                   )}
@@ -598,9 +549,8 @@ function AssetsManagement({history, params}) {
                           ev.preventDefault();
                           !disabled && toggleView("search", null);
                         }}
-                        className="btn btn-icon search-toggle toggle-search cursor-pointer"
-                      >
-                        <Icon name="search"/>
+                        className="btn btn-icon search-toggle toggle-search cursor-pointer">
+                        <Icon name="search" />
                       </a>
                     </li>
                   </ul>
@@ -615,17 +565,16 @@ function AssetsManagement({history, params}) {
                       onClick={(ev) => {
                         ev.preventDefault();
                         toggleView("search");
-                      }}
-                    >
-                      <Icon name="arrow-left"/>
+                      }}>
+                      <Icon name="arrow-left" />
                     </Button>
                     <input
                       type="text"
                       className="border-transparent form-focus-none form-control"
                       disabled={disabled}
+                      autoFocus={true}
                       value={tabs[filterTab].search}
                       placeholder={t("common:search")}
-                      autoFocus={true}
                       onKeyDown={ev => {
                         if (ev.code === "Enter" && !disabled) {
                           onSearch(ev, filterTab);
@@ -636,9 +585,8 @@ function AssetsManagement({history, params}) {
                     <Button
                       className="search-submit"
                       disabled={disabled}
-                      onClick={ev => onSearch(ev, filterTab)}
-                    >
-                      <Icon name="search"/>
+                      onClick={ev => onSearch(ev, filterTab)}>
+                      <Icon name="search" />
                     </Button>
                   </div>
                 </div>
@@ -665,7 +613,7 @@ function AssetsManagement({history, params}) {
                       onReuseItem={onReuseItem}
                     />
                   </TabPane>
-                )
+                );
               })}
             </TabContent>
 

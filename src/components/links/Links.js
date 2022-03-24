@@ -1,6 +1,5 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import {Row, Col} from "reactstrap";
 import Icon from "../icon/Icon";
 import classNames from "classnames";
 

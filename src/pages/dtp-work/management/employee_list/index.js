@@ -204,7 +204,7 @@ function EmployeeList({history}) {
         <BlockHead size="sm">
           <BlockBetween>
             <BlockHeadContent>
-              <BlockTitle tag="h4">{t("management:employee_list")}</BlockTitle>
+              <BlockTitle tag="h5">{t("management:employee_list")}</BlockTitle>
             </BlockHeadContent>
             <BlockHeadContent>
               <div className="toggle-wrap nk-block-tools-toggle">
@@ -273,9 +273,9 @@ function EmployeeList({history}) {
                     <input
                       type="text"
                       className="border-transparent form-focus-none form-control"
+                      disabled={disabled}
                       autoFocus={true}
                       value={textSearch}
-                      disabled={disabled}
                       placeholder={t("common:search")}
                       onKeyDown={ev => {
                         if (ev.code === "Enter") onSearch();

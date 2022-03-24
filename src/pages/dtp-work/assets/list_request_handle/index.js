@@ -334,7 +334,7 @@ function RequestAssetsHandle({history}) {
         {/** Header table */}
         <BlockHead size="sm">
           <BlockHeadContent>
-            <BlockTitle tag="h4">{t("request_handle:title")}</BlockTitle>
+            <BlockTitle tag="h5">{t("request_handle:title")}</BlockTitle>
           </BlockHeadContent>
         </BlockHead>
 
@@ -523,6 +523,7 @@ function RequestAssetsHandle({history}) {
                       type="text"
                       className="border-transparent form-focus-none form-control"
                       disabled={disabled}
+                      autoFocus={true}
                       value={formData.search}
                       placeholder={t("common:search")}
                       onKeyDown={ev => {
