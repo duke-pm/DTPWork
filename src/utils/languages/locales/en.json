@@ -54,7 +54,8 @@
     "november": "November",
     "december": "December",
     "change_to_darkmode": "Change to darkmode",
-    "change_to_lightmode": "Change to lightmode"
+    "change_to_lightmode": "Change to lightmode",
+    "read_more": "read more..."
   },
   "validate": {
     "empty": "This item cannot be empty!",

@@ -115,3 +115,33 @@
 .flag {
 	width: 24px;
 }
+
+.display-text-group {
+  width: 100%;
+  display: flex;
+}
+
+.text-display-group:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.text-display-group {
+  padding-left: 2vw;
+  padding-right: 2vw;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.read-more-button {
+  display: inline-block;
+  margin-left: 3px;
+  color: $base-color;
+  cursor: pointer;
+}
+
+.read-more-button:hover {
+  color: #364a63;
+}

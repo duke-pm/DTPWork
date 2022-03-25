@@ -54,7 +54,8 @@
     "november": "Tháng 11",
     "december": "Tháng 12",
     "change_to_darkmode": "Đổi sang giao diện tối",
-    "change_to_lightmode": "Đổi sang giao diện sáng"
+    "change_to_lightmode": "Đổi sang giao diện sáng",
+    "read_more": "xem thêm..."
   },
   "validate": {
     "empty": "Mục này không thể trống!",

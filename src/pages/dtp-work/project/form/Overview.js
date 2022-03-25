@@ -28,6 +28,7 @@ import {
   TooltipComponent,
   InputSwitch,
   AlertConfirm,
+  ReadMoreText,
 } from "../../../../components/Component";
 import RowSelectStatus from "../components/RowSelectStatus";
 /** COMMON */
@@ -392,6 +393,18 @@ function Overview(props) {
   /**
    ** RENDER
    */
+  const disabled = isLoading || loading.submitStatus ||
+    loading.submitProgress || loading.submitRecieve ||
+    loading.submitFollow || !isWrite;
+  if (isLoading) {
+    return (
+      <React.Fragment>
+        <div className="text-center my-2">
+          <Spinner color="primary" size="sm" />
+        </div>
+      </React.Fragment>
+    );
+  };
   let statusColor = "info";
   switch (data.overview?.statusID) {
     case 2:
@@ -416,19 +429,6 @@ function Overview(props) {
       statusColor = "info";
       break;
   };
-
-  const disabled = isLoading || loading.submitStatus ||
-    loading.submitProgress || loading.submitRecieve ||
-    loading.submitFollow || !isWrite;
-  if (isLoading) {
-    return (
-      <React.Fragment>
-        <div className="text-center my-2">
-          <Spinner color="primary" size="sm" />
-        </div>
-      </React.Fragment>
-    );
-  };
   return (
     <SimpleBar className="px-4 py-3 nk-chat overflow-auto border-right">
       <BlockHead className="mt-2">
@@ -436,19 +436,17 @@ function Overview(props) {
           <div className="d-flex justify-content-between align-items-start">
             <div className="d-flex align-items-center">
               <Button
-                color="light"
-                outline
-                className="bg-white d-none d-sm-inline-flex"
+                className="btn-dim btn-icon"
+                color="secondary"
                 onClick={onGoBack}>
-                <Icon name="arrow-left"/>
-                <span>{t("common:back")}</span>
+                <Icon name="arrow-left" />
               </Button>
               <Button
                 color="light"
                 outline
                 className="btn-icon bg-white d-inline-flex d-sm-none"
                 onClick={onGoBack}>
-                <Icon name="arrow-left"/>
+                <Icon name="arrow-left" />
               </Button>
               <BlockTitle tag="h5" className="mr-3 ml-2">
                 <span style={{color: Constants.TYPE_TASK_COLOR[data.overview?.typeName]}}>
@@ -480,10 +478,10 @@ function Overview(props) {
                 )}
               </Button>
               <Button
-                className="btn-icon btn-dim ml-2"
+                className="btn-icon ml-2"
                 color="secondary"
                 onClick={toggleSideBar}>
-                <Icon name={isSidebar ? "arrow-right" : "arrow-left"} />
+                <Icon name="chat" />
               </Button>
             </div>
           </div>
@@ -507,7 +505,10 @@ function Overview(props) {
             <div className="profile-ud plain">
               <span className="profile-ud-label fw-bold">{t("task_details:description")}</span>
               <span className="profile-ud-value">
-                {data.overview?.descr || t("task_details:non_description")}
+                {data.overview?.descr
+                  ? <ReadMoreText text={data.overview?.descr} />
+                  : t("task_details:non_description")
+                }
               </span>
             </div>
           </Col>
@@ -525,9 +526,17 @@ function Overview(props) {
               <Col sm="6" md="6" lg="3">
                 <div className="profile-ud plain">
                   <span className="profile-ud-label fw-bold">{t("task_details:status")}</span>
-                  <span className={`profile-ud-value text-${statusColor}`}>
-                    {data.overview?.statusName}
-                  </span>
+                  <div className="d-flex">
+                    <>
+                      <span className={`dot bg-${statusColor} d-mb-none`} />
+                      <span
+                        className={`badge badge-sm badge-dot has-bg badge-${
+                          statusColor
+                        } d-none d-mb-inline-flex`}>
+                        {data.overview?.statusName}
+                      </span>
+                    </>
+                  </div>
                 </div>
               </Col>
             )}

@@ -14,9 +14,9 @@ const Routes = {
   approvedLevels: "/approved-levels",
 
   /** Approved routes */
-  assetsManagement: "/assets-management",
-  requestsApproved: "/list-request",
-  requestsApprovedHandle: "/list-request-handle",
+  assetsManagement: "/assets/assets-management",
+  requestsApproved: "/assets/list-request",
+  requestsApprovedHandle: "/assets/list-request-handle",
 
   /** Booking routes */
   allBookings: "/booking/bookings",

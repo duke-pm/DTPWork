@@ -406,7 +406,7 @@ function AssetsManagement({history, params}) {
   const onError = error => {
     log('[LOG] === onError ===> ', error);
     dispatch(Actions.resetListAssets());
-    toast(error, {type: "error"});
+    toast(error.message || error, {type: "error"});
     setLoading({main: false, search: false, getData: false});
   };
 
