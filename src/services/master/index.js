@@ -3,7 +3,7 @@ import Routes from "../routesApi";
 import API from "../axios";
 import {log} from "utils/Utils";
 
-export default {
+const MasterServices = {
   getAll: params => {
     return new Promise((resolve, reject) => {
       let tmpConfigs = {params: {}};
@@ -101,3 +101,5 @@ export default {
     });
   },
 };
+
+export default MasterServices;

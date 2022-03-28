@@ -3,7 +3,7 @@ import Routes from "../routesApi";
 import API from "../axios";
 import {log} from "utils/Utils";
 
-export default {
+const BookingServices = {
   /** Booking - List */
   listBooking: params => {
     return new Promise((resolve, reject) => {
@@ -224,3 +224,5 @@ export default {
     });
   },
 };
+
+export default BookingServices;

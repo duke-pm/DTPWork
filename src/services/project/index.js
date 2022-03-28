@@ -3,7 +3,7 @@ import Routes from "../routesApi";
 import API from "../axios";
 import {log} from "utils/Utils";
 
-export default {
+const ProjectServies = {
   /** Project */
   listProject: params => {
     return new Promise((resolve, reject) => {
@@ -363,3 +363,5 @@ export default {
   },
 
 };
+
+export default ProjectServies;

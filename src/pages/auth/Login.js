@@ -27,12 +27,6 @@ import LogoDark from "../../images/logo-dark.png";
 /** REDUX */
 import * as Actions from "../../redux/actions";
 
-/** All init */
-const INPUT_NAME = {
-  USER_NAME: "userName",
-  PASSWORD: "password",
-};
-
 const Login = () => {
   const {t, i18n} = useTranslation();
 

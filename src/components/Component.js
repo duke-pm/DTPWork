@@ -33,7 +33,6 @@ import Progress from "./progress/Progress";
 import Sidebar from "./sidebar/Sidebar";
 import RSelect from "./select/ReactSelect";
 import AlertConfirm from "./alert_confirm/AlertConfirm";
-import CInput from "./c_input";
 import Loading from "./loading";
 import ReadMoreText from "./read_more_text";
 
@@ -77,7 +76,6 @@ export {
   RSelect,
   Progress,
   AlertConfirm,
-  CInput,
   Loading,
   ReadMoreText,
 };

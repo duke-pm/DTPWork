@@ -3,7 +3,7 @@ import Routes from "../routesApi";
 import API from "../axios";
 import {log} from "utils/Utils";
 
-export default {
+const ManagementServices = {
   /** Employee group */
   getEmployeeGroup: params => {
     return new Promise((resolve, reject) => {
@@ -297,3 +297,5 @@ export default {
     });
   },
 };
+
+export default ManagementServices;

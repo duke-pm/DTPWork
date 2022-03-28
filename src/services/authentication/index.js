@@ -3,7 +3,7 @@ import Routes from "../routesApi";
 import API from "../axios";
 import {log} from "utils/Utils";
 
-export default {
+const AuthServices = {
   signIn: params => {
     return new Promise((resolve, reject) => {
       API.post(jwtServiceConfig.baseURL + Routes.AUTHENTICATION.LOGIN, params)
@@ -136,3 +136,5 @@ export default {
     });
   },
 };
+
+export default AuthServices;

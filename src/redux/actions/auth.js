@@ -193,10 +193,10 @@ export const fFetchResetPassword = params => {
 //** Refresh token module */
 export const fFetchRefreshToken = (params, history) => {
   return dispatch => {
-    dispatch({type: types.ERROR_REFRESH_TOKEN});
+    // dispatch({type: types.ERROR_REFRESH_TOKEN});
+    // dispatch(fErrorSignIn("error"));
     localStorage.removeItem(Constants.LS_U_P);
     localStorage.removeItem(Constants.LS_SIGN_IN);
-    dispatch(fErrorSignIn("error"));
     dispatch(Actions.fSignout());
     toast.warn("Your session is expired! Please login again to continue using!", {
       autoClose: 2000,

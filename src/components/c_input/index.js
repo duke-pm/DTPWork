@@ -30,7 +30,6 @@ const CInput = ({
   /** Use state */
   const [passState, setPassState] = useState(false);
   const [selectValue, setSelectValue] = useState(select);
-  const [selectDate, setSelectDate] = useState(new Date());
   
   /**
    ** FUNCTIONS
