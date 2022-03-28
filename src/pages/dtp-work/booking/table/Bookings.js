@@ -113,7 +113,7 @@ function TableBookings(props) {
               <DataTableRow size="md">
                 <Badge
                   style={{backgroundColor: item.color}}
-                  className="badge badge-dim badge-pill">
+                  className="badge badge-dim">
                   {item.resourceName}  
                 </Badge>
               </DataTableRow>
