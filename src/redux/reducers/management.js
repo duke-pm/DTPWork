@@ -1,6 +1,6 @@
 import * as types from "../actions/types";
 
-export const initialState = {
+const initialState = {
   submittingEmpGro: false,
   submittingCreateEmpGro: false,
   submittingUpdateEmpGro: false,
@@ -138,7 +138,7 @@ const findRole = (data, menuID, update) => {
   return null;
 };
 
-export default function (state = initialState, action = {}) {
+function ManagementReducers(state = initialState, action = {}) {
   const {type, payload} = action;
 
   switch (type) {
@@ -240,7 +240,7 @@ export default function (state = initialState, action = {}) {
         errorHelperRemoveApprovedLines: "",
       };
 
-    case types.RESET_APPROVED_LINES:
+    case types.RESET_APPROVED_LEVELS:
       return {
         ...state,
         submittingApprovedLevels: false,
@@ -905,3 +905,5 @@ export default function (state = initialState, action = {}) {
       return state;
   };
 };
+
+export default ManagementReducers;

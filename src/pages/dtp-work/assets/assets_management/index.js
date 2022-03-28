@@ -393,16 +393,6 @@ function AssetsManagement({history, params}) {
     }
   };
 
-  const onSuccess = type => {
-    dispatch(Actions.resetListAssets());
-    let tmphelper = "";
-    if (type === "GetData") {
-      tmphelper = "success:get_data";
-    }
-    setLoading({main: false, search: false, getData: false});
-    tmphelper!== "" && toast(tmphelper, {type: "success"});
-  };
-
   const onError = error => {
     log('[LOG] === onError ===> ', error);
     dispatch(Actions.resetListAssets());

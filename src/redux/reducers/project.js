@@ -2,7 +2,7 @@ import moment from "moment";
 import {expiredDate} from "utils/Utils";
 import * as types from "../actions/types";
 
-export const initialState = {
+const initialState = {
   submittingListProject: false,
   submittingCreateProject: false,
   submittingUpdateProject: false,
@@ -106,7 +106,7 @@ export const initialState = {
   pagesOverview: 0,
 };
 
-export default function (state = initialState, action = {}) {
+function ProjectReducers(state = initialState, action = {}) {
   const {type, payload} = action;
 
   switch (type) {
@@ -754,3 +754,5 @@ export default function (state = initialState, action = {}) {
       return state;
   };
 };
+
+export default ProjectReducers;

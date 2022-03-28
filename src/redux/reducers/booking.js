@@ -1,6 +1,6 @@
 import * as types from "../actions/types";
 
-export const initialState = {
+const initialState = {
   submittingAll: false,
   submittingCreateBooking: false,
   submittingUpdateBooking: false,
@@ -80,7 +80,7 @@ export const initialState = {
   numResrc: 0,
 };
 
-export default function (state = initialState, action = {}) {
+function BookingReducers(state = initialState, action = {}) {
   const {type, payload} = action;
 
   switch (type) {
@@ -545,3 +545,5 @@ export default function (state = initialState, action = {}) {
       return state;
   };
 };
+
+export default BookingReducers;

@@ -1,6 +1,6 @@
 import * as types from "../actions/types";
 
-export const initialState = {
+const initialState = {
   submitting: false,
   submittingChangePass: false,
   submittingForgotPass: false,
@@ -50,7 +50,7 @@ export const initialState = {
   menu: null,
 };
 
-export default function (state = initialState, action = {}) {
+function AuthReducers(state = initialState, action = {}) {
   const {type, payload} = action;
   switch (type) {
     case types.SIGN_OUT:
@@ -284,4 +284,6 @@ export default function (state = initialState, action = {}) {
     default:
       return state;
   }
-}
+};
+
+export default AuthReducers;

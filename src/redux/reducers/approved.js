@@ -1,6 +1,6 @@
 import * as types from "../actions/types";
 
-export const initialState = {
+const initialState = {
   submittingListAssets: false,
   submittingHistoryAsset: false,
   submittingDataEmployee: false,
@@ -107,7 +107,7 @@ export const initialState = {
   numAssetsLosted: 0,
 };
 
-export default function (state = initialState, action = {}) {
+function ApprovedReducers(state = initialState, action = {}) {
   const {type, payload} = action;
 
   switch (type) {
@@ -717,3 +717,5 @@ export default function (state = initialState, action = {}) {
       return state;
   };
 };
+
+export default ApprovedReducers;
