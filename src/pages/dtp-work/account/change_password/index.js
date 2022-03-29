@@ -130,6 +130,13 @@ function ChangePassword({history}) {
    ** LIFE CYCLE 
    */
   useEffect(() => {
+    dispatch(Actions.toggleShowSidebar());
+    return () => {
+      dispatch(Actions.toggleShowSidebar());
+    }
+  }, []);
+
+  useEffect(() => {
     if (loading) {
       if (!authState["submittingChangePass"]) {
         if (authState["successChangePass"] && !authState["errorChangePass"]) {

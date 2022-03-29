@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import {useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
@@ -76,15 +77,23 @@ const Layout = () => {
    ** RENDER
    */
   document.body.className = `nk-body bg-lighter npc-default has-sidebar no-touch nk-nio-theme ${commonState["theme"]}-mode`;
+  const shSidebar = commonState["sidebar"];
   return (
     <React.Fragment>
       <Head title={t("common:loading")} />
       <div className="nk-app-root">
         <div className="nk-main">
-          {showSidebar &&
-            <Sidebar sidebarToggle={toggleSidebar} fixed theme={themeState.sidebar} className={sidebarClass} />
-          }
-          {visibility && <div className="nk-sidebar-overlay" onClick={toggleSidebar}></div>}
+          {shSidebar && showSidebar && (
+            <Sidebar
+              className={sidebarClass}
+              theme={themeState.sidebar}
+              fixed
+              sidebarToggle={toggleSidebar}
+            />
+          )}
+          {shSidebar && visibility && (
+            <div className="nk-sidebar-overlay" onClick={toggleSidebar} />
+          )}
           <div className="nk-wrap">
             <Header sidebarToggle={toggleSidebar} fixed theme={themeState.header} />
             <Pages />
