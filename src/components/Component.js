@@ -35,6 +35,7 @@ import RSelect from "./select/ReactSelect";
 import AlertConfirm from "./alert_confirm/AlertConfirm";
 import Loading from "./loading";
 import ReadMoreText from "./read_more_text";
+import CInput from "./c_input";
 
 export {
   LinkItem,
@@ -78,4 +79,5 @@ export {
   AlertConfirm,
   Loading,
   ReadMoreText,
+  CInput,
 };

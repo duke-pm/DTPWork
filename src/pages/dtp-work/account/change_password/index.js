@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
@@ -5,7 +6,6 @@ import {useForm} from "react-hook-form";
 import {Link} from "react-router-dom";
 import {
   Form,
-  FormGroup,
   Spinner,
   Modal,
   ModalBody,
@@ -22,6 +22,7 @@ import {
   BlockDes,
   Icon,
   Button,
+  CInput,
   PreviewCard,
 } from "../../../../components/Component";
 /** COMMON */
@@ -40,7 +41,6 @@ function ChangePassword({history}) {
 
   /** Use state */
   const [loading, setLoading] = useState(false);
-  const [passState, setPassState] = useState(false);
   const [view, setView] = useState({
     confirm: false,
   });
@@ -57,8 +57,6 @@ function ChangePassword({history}) {
   /**
    ** FUNCTIONS 
    */
-  const togglePassState = () => setPassState(!passState);
-
   const toggleView = type => {
     setView({
       confirm: type === "confirm" ? true : false,
@@ -98,8 +96,8 @@ function ChangePassword({history}) {
     toggleView();
     setLoading(true);
     let params = {
-      CurrentPassword: form.oldPassword.trim(),
-      NewPassword: form.newPassword.trim(),
+      CurrentPassword: form.oldPassword,
+      NewPassword: form.newPassword,
       RefreshToken: authState["data"]["refreshToken"],
       Lang: commonState["language"],
     }
@@ -110,9 +108,9 @@ function ChangePassword({history}) {
     dispatch(Actions.resetChangePassword());
     localStorage.removeItem(Constants.LS_U_P);
     localStorage.removeItem(Constants.LS_SIGN_IN);
-    setLoading(false);
-    toast(t("success:change_password"), {type: "success"});
     dispatch(Actions.fSignout());
+    toast(t("success:change_password"), {type: "success"});
+    setLoading(false);
     window.history.replaceState(
       "auth-login",
       "auth-login",
@@ -123,8 +121,9 @@ function ChangePassword({history}) {
 
   const onError = error => {
     log('[LOG] === onError ===> ', error);
-    setLoading(false);
+    dispatch(Actions.resetChangePassword());
     toast(error || t("error:change_password"), {type: "error"});
+    setLoading(false);
   };
 
   /**
@@ -164,118 +163,65 @@ function ChangePassword({history}) {
                 <BlockDes><p>{t("change_password:sub_title")}</p></BlockDes>
               </BlockContent>
             </BlockHead>
+            
             <Form className="is-alter" onSubmit={handleSubmit(onFormSubmit)}>
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="oldPassword">
-                    {t("change_password:old_password")} <span className="text-danger">*</span>
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <a
-                    href="#oldPassword"
-                    onClick={togglePassState}
-                    className={`form-icon lg form-icon-right passcode-switch ${passState ? "is-hidden" : "is-shown"}`}
-                  >
-                    <Icon name="eye" className="passcode-icon icon-show"/>
-                    <Icon name="eye-off" className="passcode-icon icon-hide"/>
-                  </a>
-                  <input
-                    ref={register({ required: t("validate:empty") })}
-                    className={`form-control-lg form-control ${passState ? "is-hidden" : "is-shown"}`}
-                    type={passState ? "text" : "password"}
-                    id="oldPassword"
-                    name="oldPassword"
-                    disabled={loading}
-                    placeholder={t("change_password:holder_old_password")}
-                    autoComplete="12323"
-                  />
-                  {errors.oldPassword && (
-                    <span className="invalid">{errors.oldPassword.message}</span>
-                  )}
-                </div>
-              </FormGroup>
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="newPassword">
-                    {t("change_password:new_password")} <span className="text-danger">*</span>
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <a
-                    href="#newPassword"
-                    onClick={togglePassState}
-                    className={`form-icon lg form-icon-right passcode-switch ${passState ? "is-hidden" : "is-shown"}`}
-                  >
-                    <Icon name="eye" className="passcode-icon icon-show"/>
-                    <Icon name="eye-off" className="passcode-icon icon-hide"/>
-                  </a>
-                  <input
-                    ref={register({ required: t("validate:empty") })}
-                    className={`form-control-lg form-control ${passState ? "is-hidden" : "is-shown"}`}
-                    type={passState ? "text" : "password"}
-                    id="newPassword"
-                    name="newPassword"
-                    disabled={loading}
-                    placeholder={t("change_password:holder_new_password")}
-                    autoComplete="sdvdfbhfgbsdv"
-                  />
-                  {errors.newPassword && (
-                    <span className="invalid">{errors.newPassword.message}</span>
-                  )}
-                  {validate.newPassword && (
-                    <span className="invalid">{validate.newPassword.message}</span>
-                  )}
-                </div>
-              </FormGroup>
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="confirmPassword">
-                    {t("change_password:confirm_password")} <span className="text-danger">*</span>
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <a
-                    href="#confirmPassword"
-                    onClick={togglePassState}
-                    className={`form-icon lg form-icon-right passcode-switch ${passState ? "is-hidden" : "is-shown"}`}
-                  >
-                    <Icon name="eye" className="passcode-icon icon-show"/>
-                    <Icon name="eye-off" className="passcode-icon icon-hide"/>
-                  </a>
-                  <input
-                    ref={register({ required: t("validate:empty") })}
-                    className={`form-control-lg form-control ${passState ? "is-hidden" : "is-shown"}`}
-                    type={passState ? "text" : "password"}
-                    id="confirmPassword"
-                    name="confirmPassword"
-                    disabled={loading}
-                    placeholder={t("change_password:holder_confirm_password")}
-                    autoComplete="sdvdfbhfgbsdv"
-                  />
-                  {errors.confirmPassword && (
-                    <span className="invalid">{errors.confirmPassword.message}</span>
-                  )}
-                  {validate.confirmPassword && (
-                    <span className="invalid">{validate.confirmPassword.message}</span>
-                  )}
-                </div>
-              </FormGroup>
+              <CInput
+                id="oldPassword"
+                type="text"
+                password
+                required
+                disabled={loading}
+                leftLabel="change_password:old_password"
+                holder="change_password:holder_old_password"
+                validate={{required: t("validate:empty")}}
+                register={register}
+                errors={errors}
+                errorsCustom={validate}
+              />
+              <CInput
+                id="newPassword"
+                type="text"
+                password
+                required
+                disabled={loading}
+                leftLabel="change_password:new_password"
+                holder="change_password:holder_new_password"
+                validate={{required: t("validate:empty")}}
+                register={register}
+                errors={errors}
+                errorsCustom={validate}
+              />
+              <CInput
+                id="confirmPassword"
+                type="text"
+                password
+                required
+                disabled={loading}
+                leftLabel="change_password:confirm_password"
+                holder="change_password:holder_confirm_password"
+                validate={{required: t("validate:empty")}}
+                register={register}
+                errors={errors}
+                errorsCustom={validate}
+              />
 
-              <FormGroup>
-                <Button className="btn-block" type="submit" color="primary" disabled={loading}>
-                  {loading
-                    ? <Spinner size="sm" color="light" />
-                    : <Icon name="save" />
-                  }
-                  <span>{t("common:save")}</span>
-                </Button>
-                <div className="form-note-s2 text-center pt-4">
-                  <Link to={`${process.env.PUBLIC_URL}/`}>
-                    <strong>{t("common:close")}</strong>
-                  </Link>
-                </div>
-              </FormGroup>
+              <Button
+                className="btn-block"
+                type="submit"
+                color="primary"
+                disabled={loading}>
+                {loading
+                  ? <Spinner size="sm" color="light" />
+                  : <Icon name="save" />
+                }
+                <span>{t("common:save")}</span>
+              </Button>
+              
+              <div className="form-note-s2 text-center pt-4">
+                <Link to={`${process.env.PUBLIC_URL}/`}>
+                  <strong>{t("common:close")}</strong>
+                </Link>
+              </div>
             </Form>
           </PreviewCard>
         </Block>
@@ -286,8 +232,7 @@ function ChangePassword({history}) {
         className="modal-dialog-centered"
         modalClassName="zoom"
         size="sm"
-        toggle={loading ? undefined : toggleView}
-      >
+        toggle={loading ? undefined : toggleView}>
         <ModalBody className="modal-body-sm text-center">
           <div className="nk-modal">
             <Icon className="nk-modal-icon icon-circle icon-circle-xxl ni ni-alert bg-warning"/>
@@ -303,8 +248,7 @@ function ChangePassword({history}) {
                 <Button
                   color="success"
                   disabled={loading}
-                  onClick={onConfirm}
-                >
+                  onClick={onConfirm}>
                   {loading && <Spinner size="sm" color="light" />}
                   {!loading && <Icon name="check" />}
                   <span>{t("common:confirm")}</span>
@@ -315,8 +259,7 @@ function ChangePassword({history}) {
                   className="btn-dim"
                   color="danger"
                   disabled={loading}
-                  onClick={toggleView}
-                >
+                  onClick={toggleView}>
                   <Icon name="cross" />
                   <span>{t("common:close")}</span>
                 </Button>

@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
 import {Link} from "react-router-dom";
-import {Form, FormGroup, Spinner} from "reactstrap";
+import {Form, Spinner} from "reactstrap";
 import {toast} from "react-toastify";
 /** COMPONENTS */
 import {
@@ -14,7 +15,7 @@ import {
   BlockDes,
   PreviewCard,
   Button,
-  Icon,
+  CInput,
 } from "../../components/Component";
 import PageContainer from "../../layout/page-container/PageContainer";
 import Head from "../../layout/head/Head";
@@ -40,23 +41,14 @@ const Login = () => {
     main: true,
     submit: false,
   });
-  const [formData, setFormData] = useState({
+  const [form, setForm] = useState({
     userName: "",
     password: "",
-  })
-  const [passState, setPassState] = useState(false);
+  });
 
   /**
    ** FUNCTIONS 
    */
-  const onChangeInput = e => {
-    setFormData({...formData, [e.target.name]: e.target.value})
-  };
-
-  const togglePassState = () => {
-    setPassState(!passState);
-  };
-
   const onCheckLocalStorage = () => {
     /** Check language */
     let localLanguage = localStorage.getItem(Constants.LS_LANGUAGE);
@@ -75,10 +67,6 @@ const Login = () => {
     let lEncodeSignin = localStorage.getItem(Constants.LS_U_P);
     if (lEncodeSignin && !authState["data"]["accessToken"]) {
       lEncodeSignin = decodeData(lEncodeSignin);
-      setFormData({
-        userName: lEncodeSignin.userName,
-        password: lEncodeSignin.password,
-      });
       onSubmitLogin(lEncodeSignin.userName, lEncodeSignin.password);
     } else {
       localStorage.removeItem(Constants.LS_SIGN_IN);
@@ -86,22 +74,17 @@ const Login = () => {
     }
   };
 
-  const onForm = () => {
-    let valUsername = formData.userName.trim(),
-      valPassword = formData.password.trim();
-    if (valUsername !== "" && valPassword !== "") {
-      setLoading({...loading, submit: true});
-      onSubmitLogin(valUsername, valPassword);
-    } else {
-      toast(t("error:wrong_username_password"), {type: "warning"});
-    }
+  const onPrepareForm = formData => {
+    setLoading({...loading, submit: true});
+    onSubmitLogin(formData.userName, formData.password);
   };
 
   const onSubmitLogin = (userName, password) => {
+    setForm({userName, password});
     let params = {
       Username: userName,
       Password: password,
-      TypeLogin: 1,
+      TypeLogin: 1, // for WEB(1), MOBILE(2)
       Lang: commonState["language"],
     }
     dispatch(Actions.fFetchSignIn(params));
@@ -111,7 +94,7 @@ const Login = () => {
     let encodeSI = encodeData(authState["data"]);
     localStorage.setItem(Constants.LS_SIGN_IN, encodeSI);
 
-    let encodeUP = encodeData(formData);
+    let encodeUP = encodeData(form);
     localStorage.setItem(Constants.LS_U_P, encodeUP);
 
     onGoToHomepage();
@@ -128,8 +111,11 @@ const Login = () => {
 
   const onSignInError = error => {
     toast(error, {type: "error"});
-    setLoading({main: false, submit: false});
+    if (form.userName) {
+      setForm({userName: "", password: ""});
+    }
     dispatch(Actions.resetSignIn());
+    setLoading({main: false, submit: false});
   };
 
   /**
@@ -163,7 +149,7 @@ const Login = () => {
    ** RENDER 
    */
   const {errors, register, handleSubmit} = useForm();
-  const disabledInput = loading.main || loading.submit;
+  const disabled = loading.main || loading.submit;
 
   return (
     <React.Fragment>
@@ -186,80 +172,45 @@ const Login = () => {
               </BlockContent>
             </BlockHead>
 
-            <Form className="is-alter" onSubmit={handleSubmit(onForm)}>
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="userName">
-                  {t("sign_in:user_name")}
-                  </label>
-                </div>
-                <div className="form-control-wrap">
-                  <input
-                    ref={register({required: t("validate:empty")})}
-                    className="form-control"
-                    id="userName"
-                    name="userName"
-                    type="text"
-                    disabled={disabledInput}
-                    value={formData.userName}
-                    placeholder={t("sign_in:holder_user_name")}
-                    onChange={onChangeInput}
-                  />
-                  {errors.userName && (
-                    <span className="invalid">{errors.userName.message}</span>
-                  )}
-                </div>
-              </FormGroup>
-              <FormGroup>
-                <div className="form-label-group">
-                  <label className="form-label" htmlFor="password">
-                    {t("sign_in:password")}
-                  </label>
+            <Form className="is-alter" onSubmit={handleSubmit(onPrepareForm)}>
+              <CInput
+                id="userName"
+                type="text"
+                required
+                disabled={disabled}
+                leftLabel="sign_in:user_name"
+                holder="sign_in:holder_user_name"
+                validate={{required: t("validate:empty")}}
+                register={register}
+                errors={errors}
+              />
+
+              <CInput
+                id="password"
+                type="text"
+                password
+                required
+                disabled={disabled}
+                leftLabel="sign_in:password"
+                rightLabel={
                   <Link
                     className="link link-primary link-sm"
-                    to={disabledInput ? "#" : `${process.env.PUBLIC_URL}/auth-forgot`}
-                  >
+                    to={disabled ? undefined : `${process.env.PUBLIC_URL}/auth-forgot`}>
                     {t("sign_in:forgot_password")}
                   </Link>
-                </div>
-                <div className="form-control-wrap">
-                  <a
-                    href="#"
-                    onClick={togglePassState}
-                    className={`form-icon lg form-icon-right passcode-switch ${passState
-                      ? "is-hidden"
-                      : "is-shown"
-                    }`}
-                  >
-                    <Icon name="eye" className="passcode-icon icon-show"/>
-                    <Icon name="eye-off" className="passcode-icon icon-hide"/>
-                  </a>
-                  <input
-                    ref={register({required: t("validate:empty")})}
-                    className={`form-control ${passState
-                      ? "is-hidden"
-                      : "is-shown"
-                    }`}
-                    id="password"
-                    name="password"
-                    type={passState ? "text" : "password"}
-                    disabled={disabledInput}
-                    value={formData.password}
-                    placeholder={t("sign_in:holder_password")}
-                    onChange={onChangeInput}
-                  />
-                  {errors.password && (
-                    <span className="invalid">{errors.password.message}</span>
-                  )}
-                </div>
-              </FormGroup>
+                }
+                holder="sign_in:holder_password"
+                validate={{required: t("validate:empty")}}
+                register={register}
+                errors={errors}
+              />
+
               <Button
                 className="btn-block"
                 type="submit"
                 color="primary"
-                disabled={disabledInput}
-              >
-                {disabledInput
+                disabled={disabled}>
+                {disabled
                   ? <Spinner size="sm" color="light" />
                   : <span>{t("sign_in:title")}</span>
                 }

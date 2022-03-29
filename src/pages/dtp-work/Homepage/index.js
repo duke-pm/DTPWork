@@ -17,7 +17,6 @@ import { useTranslation } from "react-i18next";
 
 const Homepage = () => {
   const {t} = useTranslation();
-  const [sm, updateSm] = useState(false);
   return (
     <React.Fragment>
       <Head title={t("dashboard:main_title")}></Head>

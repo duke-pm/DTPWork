@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
@@ -5,7 +6,6 @@ import {useForm} from "react-hook-form";
 import {Link} from "react-router-dom";
 import {
   Form,
-  FormGroup,
   Spinner,
   Col,
   Row,
@@ -19,7 +19,7 @@ import {
   BlockTitle,
   PreviewCard,
   Button,
-  Icon,
+  CInput,
 } from "../../components/Component";
 import PageContainer from "../../layout/page-container/PageContainer";
 import Head from "../../layout/head/Head";
@@ -32,13 +32,9 @@ import LogoDark from "../../images/logo-dark.png";
 /** REDUX */
 import * as Actions from "../../redux/actions";
 
-/** All init */
-const INPUT_NAME = {
-  EMAIL: "email",
-};
-
 const ForgotPassword = () => {
   const {t} = useTranslation();
+  const {errors, register, handleSubmit} = useForm();
 
   /** Use redux */
   const dispatch = useDispatch();
@@ -55,21 +51,18 @@ const ForgotPassword = () => {
    */
   const onFormSubmit = formData => {
     setError("");
-    let valEmail = formData[INPUT_NAME.EMAIL].trim();
-    if (valEmail !== "") {
-      setLoading(true);
-      let params = {
-        Email: valEmail.toLowerCase(),
-        Lang: commonState["language"],
-      };
-      dispatch(Actions.fFetchForgotPassword(params));
-    }
+    setLoading(true);
+    let params = {
+      Email: formData.email.toLowerCase(),
+      Lang: commonState["language"],
+    };
+    dispatch(Actions.fFetchForgotPassword(params));
   };
 
   const onCompleteSend = isSuccess => {
-    if (isSuccess) {
-      setSuccess(isSuccess);
-    } else {
+    dispatch(Actions.resetForgotPassword());
+    setSuccess(isSuccess);
+    if (!isSuccess) {
       setError(authState["errorHelperForgotPass"]);
     }
     setLoading(false);
@@ -78,11 +71,6 @@ const ForgotPassword = () => {
   /**
    ** LIFE CYCLE
    */
-  useEffect(() => {
-    setError("");
-    dispatch(Actions.resetForgotPassword());
-  }, []);
-
   useEffect(() => {
     if (loading) {
       if (!authState["submittingForgotPass"]) {
@@ -104,8 +92,6 @@ const ForgotPassword = () => {
   /**
    ** RENDER 
    */
-  const {errors, register, handleSubmit} = useForm();
-
   return (
     <React.Fragment>
       <Head title={t("forgot_password:title")} />
@@ -129,36 +115,25 @@ const ForgotPassword = () => {
               </BlockHead>
 
               <Form className="is-alter" onSubmit={handleSubmit(onFormSubmit)}>
-                <FormGroup>
-                  <div className="form-label-group">
-                    <label className="form-label" htmlFor={INPUT_NAME.EMAIL}>
-                      {t("forgot_password:email")}
-                    </label>
-                  </div>
-                  <div className="form-control-wrap">
-                    <div className="form-icon form-icon-left">
-                      <Icon name="at" />
-                    </div>
-                    <input
-                      ref={register({
-                        required: t("validate:empty"),
-                        pattern: {
-                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                          message: t("validate:format_email"),
-                        },
-                      })}
-                      className="form-control"
-                      id={INPUT_NAME.EMAIL}
-                      name={INPUT_NAME.EMAIL}
-                      type={INPUT_NAME.EMAIL}
-                      placeholder={t("forgot_password:holder_email")}
-                      disabled={loading}
-                    />
-                    {errors[INPUT_NAME.EMAIL] && (
-                      <span className="invalid">{errors[INPUT_NAME.EMAIL].message}</span>
-                    )}
-                  </div>
-                </FormGroup>
+                <CInput
+                  id="email"
+                  type="email"
+                  required
+                  disabled={loading}
+                  icon="at"
+                  leftLabel="forgot_password:email"
+                  holder="forgot_password:holder_email"
+                  validate={{
+                    required: t("validate:empty"),
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: t("validate:format_email"),
+                    },
+                  }}
+                  register={register}
+                  errors={errors}
+                />
+                
                 <Button
                   className="btn-block"
                   type="submit"

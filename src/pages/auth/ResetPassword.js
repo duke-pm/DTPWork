@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
@@ -5,7 +6,6 @@ import {useForm} from "react-hook-form";
 import {Link, useParams} from "react-router-dom";
 import {
   Form,
-  FormGroup,
   Spinner,
   Col,
   Row,
@@ -19,7 +19,7 @@ import {
   BlockDes,
   PreviewCard,
   Button,
-  Icon,
+  CInput,
 } from "../../components/Component";
 import PageContainer from "../../layout/page-container/PageContainer";
 import Head from "../../layout/head/Head";
@@ -31,14 +31,10 @@ import LogoDark from "../../images/logo-dark.png";
 /** REDUX */
 import * as Actions from "../../redux/actions";
 
-/** All init */
-const INPUT_NAME = {
-  PASSWORD: "password",
-};
-
 const ResetPassword = () => {
   const {t} = useTranslation();
   const {tokenData} = useParams();
+  const {errors, register, handleSubmit} = useForm();
 
   /** Use redux */
   const dispatch = useDispatch();
@@ -47,50 +43,50 @@ const ResetPassword = () => {
 
   /** Use state */
   const [loading, setLoading] = useState({
-    check: false,
+    check: true,
     submit: false,
   });
   const [success, setSuccess] = useState(false);
   const [errorVal, setError] = useState("a");
-  const [passState, setPassState] = useState(false);
 
   /**
    ** FUNCTIONS 
    */
   const onCheckTokenExpired = () => {
-    let params = {
-      Token: tokenData || "not_token",
-      Lang: commonState["language"],
-    };
-    dispatch(Actions.fFetchCheckTokenPassword(params));
-    setLoading({...loading, check: true});
+    if (tokenData) {
+      let params = {
+        Token: tokenData,
+        Lang: commonState["language"],
+      };
+      dispatch(Actions.fFetchCheckTokenPassword(params));
+    } else {
+      onCompleteCheck(false, t("error:cannot_reset_password"));
+    }
   };
 
   const onFormSubmit = formData => {
     setError("");
-    let valPassword = formData[INPUT_NAME.PASSWORD].trim();
-    if (valPassword !== "") {
-      setLoading({...loading, submit: true});
-      let params = {
-        Lang: commonState["language"],
-        TokenData: tokenData || "not_token",
-        NewPassword: valPassword,
-      };
-      dispatch(Actions.fFetchResetPassword(params));
-    }
+    setLoading({...loading, submit: true});
+    let params = {
+      TokenData: tokenData,
+      NewPassword: formData.password,
+      Lang: commonState["language"],
+    };
+    dispatch(Actions.fFetchResetPassword(params));
   };
 
-  const onCompleteCheck = isSuccess => {
+  const onCompleteCheck = (isSuccess, message) => {
+    dispatch(Actions.resetResetPassword());
     if (!isSuccess) {
-      setError(authState["errorHelperCheckTokenPass"]);
+      setError(message || authState["errorHelperCheckTokenPass"]);
     }
     setLoading({...loading, check: false});
   };
 
-  const onCompleteChange = (status, message) => {
-    if (status) {
-      setSuccess(true);
-    } else {
+  const onCompleteChange = (isSuccess, message) => {
+    dispatch(Actions.resetResetPassword());
+    setSuccess(isSuccess);
+    if (!isSuccess) {
       setError(message || t("error:cannot_reset_password"));
     }
     setLoading({check: false, submit: false});
@@ -100,8 +96,6 @@ const ResetPassword = () => {
    ** LIFE CYCLE
    */
    useEffect(() => {
-    setError("");
-    dispatch(Actions.resetResetPassword());
     onCheckTokenExpired();
   }, []);
 
@@ -151,9 +145,7 @@ const ResetPassword = () => {
   /**
    ** RENDER 
    */
-  const {errors, register, handleSubmit} = useForm();
-  const disabledInput = loading.check || loading.submit;
-
+  const disabled = loading.check || loading.submit;
   return (
     <React.Fragment>
       <Head title={t("reset_password:title")} />
@@ -175,51 +167,32 @@ const ResetPassword = () => {
                 </BlockContent>
               </BlockHead>
               <Form className="is-alter" onSubmit={handleSubmit(onFormSubmit)}>
-                <FormGroup>
-                  <div className="form-label-group">
-                    <label className="form-label" htmlFor={INPUT_NAME.PASSWORD}>
-                      {t("reset_password:password")}
-                    </label>
-                  </div>
-                  <div className="form-control-wrap">
-                    <a
-                      href="#password"
-                      onClick={(ev) => {
-                        ev.preventDefault();
-                        setPassState(!passState);
-                      }}
-                      className={`form-icon lg form-icon-right passcode-switch ${passState ? "is-hidden" : "is-shown"}`}
-                    >
-                      <Icon name="eye" className="passcode-icon icon-show"/>
-                      <Icon name="eye-off" className="passcode-icon icon-hide"/>
-                    </a>
-                    <input
-                      ref={register({ required: t("validate:empty") })}
-                      className={`form-control-lg form-control ${passState ? "is-hidden" : "is-shown"}`}
-                      type={passState ? "text" : "password"}
-                      id={INPUT_NAME.PASSWORD}
-                      name={INPUT_NAME.PASSWORD}
-                      placeholder={t("reset_password:holder_password")}
-                      disabled={disabledInput}
-                    />
-                    {errors[INPUT_NAME.PASSWORD] && (
-                      <span className="invalid">{errors[INPUT_NAME.PASSWORD].message}</span>
-                    )}
-                  </div>
-                </FormGroup>
+                <CInput
+                  id="password"
+                  type="text"
+                  password
+                  required
+                  disabled={disabled}
+                  leftLabel="reset_password:password"
+                  holder="reset_password:holder_password"
+                  validate={{required: t("validate:empty")}}
+                  register={register}
+                  errors={errors}
+                />
+
                 <Button
                   className="btn-block"
                   type="submit"
                   color="primary"
-                  disabled={disabledInput}>
-                  {(loading.check || loading.submit)
+                  disabled={disabled}>
+                  {disabled
                     ? <Spinner size="sm" color="light" />
-                    : t("reset_password:btn_send")
+                    : <span>{t("reset_password:btn_send")}</span>
                   }
                 </Button>
               </Form>
               <div className="form-note-s2 text-center pt-4">
-                <Link to={disabledInput ? "#" : `${process.env.PUBLIC_URL}/auth-login`}>
+                <Link to={disabled ? "#" : `${process.env.PUBLIC_URL}/auth-login`}>
                   <strong>{t("reset_password:return_sign_in")}</strong>
                 </Link>
               </div>
