@@ -47,13 +47,24 @@ function RowTable(props) {
 
       if (tmpTrue.length === 0) {
         setCheckAll(status);
+        dispatch(Actions.updateRoleLocal({menuID: data.menuID, update: {
+          read: status,
+          write: status,
+          access: status,
+        }}));
       }
       if (tmpTrue.length > 0 && tmpTrue.length < data.lstPermissionItem.length) {
         setCheck({...check, access: true});
+        dispatch(Actions.updateRoleLocal({menuID: data.menuID, update: {...check, access: true}}));
       }
       if (tmpTrue.length > 0 && tmpTrue.length === data.lstPermissionItem.length) {
         setCheck({...check, access: status});
         setCheckAll(status);
+        dispatch(Actions.updateRoleLocal({menuID: data.menuID, update: {
+          read: status,
+          write: status,
+          access: status,
+        }}));
       }
     }
   };

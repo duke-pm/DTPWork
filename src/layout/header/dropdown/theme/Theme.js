@@ -2,7 +2,7 @@ import React from "react";
 import {useTranslation} from "react-i18next";
 import {useDispatch, useSelector} from "react-redux";
 /** COMPONENTS */
-import {TooltipComponent} from "../../../../components/Component";
+import {Button, TooltipComponent} from "../../../../components/Component";
 /** COMMON */
 import Constants from "../../../../utils/constants";
 /** REDUX */
@@ -34,7 +34,7 @@ const Theme = () => {
 		*/
 	const curTheme = commonState["theme"];;
 	return (
-		<li onClick={onChangeTheme}>
+		<Button className="btn-icon" size="sm" onClick={onChangeTheme}>
 			<TooltipComponent
 				tag="a"
 				containerClassName="btn btn-trigger btn-icon"
@@ -46,7 +46,7 @@ const Theme = () => {
 					: "common:change_to_lightmode"
 				)}
 			/>
-		</li>
+		</Button>
 	);
 };
 
