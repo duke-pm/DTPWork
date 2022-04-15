@@ -1,12 +1,14 @@
 import {useTranslation} from "react-i18next";
 import React from "react";
 import Select from "react-select";
+import { log } from "utils/Utils";
 
-const RSelect = ({ ...props }) => {
+const RSelect = ({...props}) => {
   const {t} = useTranslation();
   return (
     <div className="form-control-select">
       <Select
+        ref={props.inputRef}
         className={`react-select-container ${props.className ? props.className : ""}`}
         classNamePrefix="react-select"
         noOptionsMessage={() => <span>{t("common:no_data_select")}</span>}
